@@ -3,6 +3,10 @@
 require "bundler/gem_tasks"
 require "minitest/test_task"
 
+require_relative "lib/open_data"
+
+OpenData.load_tasks
+
 Minitest::TestTask.create
 
 require "rubocop/rake_task"
