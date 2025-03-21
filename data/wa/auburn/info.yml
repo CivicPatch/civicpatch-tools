@@ -1,0 +1,40 @@
+---
+council_members:
+- name: Cheryl Rakes
+  phone_number: ''
+  image: images/6504190e1bf3de698f8bd49f17736b86eefddd233b74cab70789b7350616b417.jpg
+  email: cheryl.rakes@auburnwa.gov
+  website: https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=19424702
+- name: Kate Baldwin
+  phone_number: ''
+  image: images/4ef2a3d4a7354e27644e4ace8ab1c6e8fa8404846d84325414c9df3aedb33d60.jpg
+  email: kate.baldwin@auburnwa.gov
+  website: https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118
+- name: Tracy Taylor-Turner
+  phone_number: ''
+  image: images/183e51dc5761eeff0d336567fcd767844015545a689e7af999ad98b196e653a4.jpg
+  email: tracy.taylor-turner@auburnwa.gov
+  website: https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603
+- name: Yolanda Trout-Manuel
+  phone_number: ''
+  image: images/debe4e62c74177b151c07f36ff82a39f12c87ed822c938905979477fd3f3764f.jpg
+  email: yolanda.trout-manuel@auburnwa.gov
+  website: https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=12521755
+- name: Clinton Taylor
+  phone_number: ''
+  image: images/6de6d3fb2affc5293689ceb25c5a7f91b5ccb4540f05eaa85a7630dbb6d11065.jpg
+  email: clinton.taylor@auburnwa.gov
+  website: https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622
+- name: Hanan Amer
+  phone_number: ''
+  image: images/e00edbf7108b6843befcc2c173fcdb5008127850d2440101b4159f21915d0288.jpg
+  email: hanan.amer@auburnwa.gov
+  website: https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=12521769
+city_leaders:
+- name: ''
+  position: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''
+council_url_site: https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708

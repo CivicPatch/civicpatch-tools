@@ -1,0 +1,34 @@
+---
+council_members:
+- name: Dawn Dofelmire
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''
+- name: Lynda Osborn
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''
+- name: Bill Thomas
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''
+- name: Troy Linnell
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''
+- name: Mike Dawkins
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''
+city_leaders:
+- name: David Hill
+  position: Mayor
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''

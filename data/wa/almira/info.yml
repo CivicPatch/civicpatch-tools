@@ -1,0 +1,33 @@
+---
+council_members:
+- name: Cathy Payne Ferris
+  phone_number: ''
+  image: ''
+  email: almiracouncil1@gmail.com
+  website: ''
+- name: Levi Mitchell
+  phone_number: ''
+  image: ''
+  email: almiracouncil2@gmail.com
+  website: ''
+- name: Cathy Florenzen
+  phone_number: ''
+  image: ''
+  email: almiracouncil3@gmail.com
+  website: ''
+- name: Natasha McCall
+  phone_number: ''
+  image: ''
+  email: almiracouncil4@gmail.com
+  website: ''
+- name: Jimmy Braun
+  phone_number: ''
+  image: ''
+  email: almircouncil5@gmail.com
+  website: ''
+city_leaders:
+- name: Jason Evers
+  phone_number: ''
+  image: ''
+  email: almiramayor@gmail.com
+  website: ''

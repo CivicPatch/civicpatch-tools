@@ -1,0 +1,33 @@
+---
+council_members:
+- name: John Perry
+  phone_number: ''
+  image: images/637768926344070000
+  email: john.perry@cityofcashmere.org
+  website: ''
+- name: Chris Carlson
+  phone_number: ''
+  image: images/637231429170830000
+  email: chris.carlson@cityofcashmere.org
+  website: ''
+- name: Shela Pistoresi
+  phone_number: ''
+  image: images/637768926344070000
+  email: shela.pistoresi@cityofcashmere.org
+  website: ''
+- name: Jayne Stephenson
+  phone_number: ''
+  image: images/637231396391570000
+  email: jayne.stephenson@cityofcashmere.org
+  website: ''
+- name: Jeff Johnson
+  phone_number: ''
+  image: images/637768926344070000
+  email: Jeff.Johnson@cityofcashmere.org
+  website: ''
+city_leaders:
+- name: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''

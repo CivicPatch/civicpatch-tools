@@ -1,0 +1,40 @@
+---
+council_members:
+- name: John Nohr
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr
+- name: Leslie Lewallen
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen
+- name: Tim Hein
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein
+- name: Marilyn Boerke
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke
+- name: Jennifer Senescu
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu
+- name: John Svilarich
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich
+city_leaders:
+- name: ''
+  position: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: ''
+council_url_site: https://www.cityofcamas.us/citycouncil/page/city-council-members
