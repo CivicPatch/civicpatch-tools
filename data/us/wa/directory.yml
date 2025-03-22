@@ -5,6 +5,7 @@ places:
   website: https://www.aberdeenwa.gov/
   scraper_misc:
     city_id: 270
+  last_city_scrape_run: '2025-03-22'
 - place: airway_heights
   website: https://cawh.org/
   scraper_misc:
