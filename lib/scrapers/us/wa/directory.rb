@@ -20,12 +20,13 @@ module Scrapers
               "place" => city["CityName"].downcase.split(" ").join("_"),
               "website" => city["Website"],
               "scraper_misc" => {
-                "city_id" => city["CityID"] # specific to only mrsc, subject to change. Used for self.get_representatives
-              }
+                "city_id" => city["CityID"], # specific to only mrsc, subject to change. Used for self.get_representatives
+                "population" => city["Population"]
+              },
             }
           end
 
-          cities
+          cities.sort_by { |city| city["scraper_misc"]["population"] }.reverse
         end
       end
     end

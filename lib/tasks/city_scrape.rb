@@ -12,7 +12,7 @@ require_relative "../scrapers/data_fetcher"
 
 namespace :city_scrape do
   desc "Pick cities from queue"
-  task :pick_cities, [ :state, :num_cities, :cities_to_ignore ] do |t, args|
+  task :pick_cities, [:state, :num_cities, :cities_to_ignore] do |t, args|
     state = args[:state]
     num_cities = args[:num_cities]
     cities_to_ignore = args[:cities_to_ignore].present? ? args[:cities_to_ignore].split(" ") : []
@@ -26,31 +26,31 @@ namespace :city_scrape do
 
     state_directory_file = PathHelper.project_path(File.join("data", "us", state, "directory.yml"))
 
-    if !File.exist?(state_directory_file)
+    unless File.exist?(state_directory_file)
       puts "Error: State directory file not found at #{state_directory_file}"
       exit 1
     end
 
     state_directory = YAML.load(File.read(state_directory_file))
 
-    cities = state_directory["places"].select { |c|
+    cities = state_directory["places"].select do |c|
       !cities_to_ignore.include?(c["place"]) &&
-      c["last_city_scrape_run"].nil? && c["website"].present?
-    }.first(num_cities.to_i)
+        c["last_city_scrape_run"].nil? && c["website"].present?
+    end.first(num_cities.to_i)
 
     puts cities.map { |c| c["place"] }.join(",")
   end
 
   desc "Find official cities for a state"
-  task :state_dir, [ :state ] do |t, args|
+  task :state_dir, [:state] do |t, args|
     state = args[:state]
 
     scraper = case state
-    when "wa"
-      Scrapers::Us::Wa::Directory
-    else
-      raise "Unsupported state: #{state}"
-    end
+              when "wa"
+                Scrapers::Us::Wa::Directory
+              else
+                raise "Unsupported state: #{state}"
+              end
 
     if state.blank?
       puts "Error: Missing required parameters"
@@ -65,7 +65,7 @@ namespace :city_scrape do
   end
 
   desc "Find city geojson data"
-  task :find_division_map, [ :state, :city ] => :environment do |t, args|
+  task :find_division_map, %i[state city] => :environment do |t, args|
     state = args[:state]
     city = args[:city]
 
@@ -88,7 +88,8 @@ namespace :city_scrape do
       openai_service,
       state, city,
       division_type,
-      candidate_division_maps)
+      candidate_division_maps
+    )
 
     if found_map
       puts "✅ Found valid division map"
@@ -99,12 +100,14 @@ namespace :city_scrape do
     end
 
     cities_yaml = YAML.load(File.read(Rails.root.join("data", state, "cities.yml")))
-    cities_yaml["cities"].find { |c| c["city"] == city }["last_city_info_division_map_run"] = Time.now.strftime("%Y-%m-%d")
+    cities_yaml["cities"].find do |c|
+      c["city"] == city
+    end["last_city_info_division_map_run"] = Time.now.strftime("%Y-%m-%d")
     File.write(Rails.root.join("data", state, "cities.yml"), cities_yaml.to_yaml)
   end
 
   desc "Extract city info for a specific city"
-  task :fetch, [ :state, :city ] do |t, args|
+  task :fetch, [:state, :city] do |t, args|
     state = args[:state]
     city = args[:city]
 
@@ -119,10 +122,11 @@ namespace :city_scrape do
     destination_dir, cache_destination_dir = prepare_directories(state, city)
 
     search_result_urls = []
-    search_result_urls = Scrapers::SiteCrawler.get_urls(state_city_entry["website"], { 
-      "mayor" => ["mayor"],
-      "council_members" => ["city council members", "council members", "councilmembers", "city council", "council" ]
-    })
+    search_result_urls = Scrapers::SiteCrawler.get_urls(state_city_entry["website"], {
+                                                          "mayor" => ["mayor"],
+                                                          "council_members" => ["city council members",
+                                                                                "council members", "councilmembers", "city council", "council"]
+                                                        })
 
     puts "Found #{search_result_urls.count} search result urls:"
     puts search_result_urls.join("\n")
@@ -151,25 +155,26 @@ namespace :city_scrape do
 
       updated_city_info = extract_city_info(openai_service, state, city, content_file, url)
 
-      if updated_city_info
-        council_members = people_with_names(updated_city_info["council_members"])
-        city_leaders = people_with_names(updated_city_info["city_leaders"])
+      next unless updated_city_info
 
-        if council_members.present?
-          city_directory["council_members"] = merge_arrays_by_field(
-            city_directory["council_members"], updated_city_info["council_members"], "name")
-        end
+      council_members = people_with_names(updated_city_info["council_members"])
+      city_leaders = people_with_names(updated_city_info["city_leaders"])
 
-        if city_leaders.present?
-          city_directory["city_leaders"] = merge_arrays_by_field(
-            city_directory["city_leaders"], updated_city_info["city_leaders"], "name")
-        end
-
-        city_directory["sources"] << url
-        source_dirs << candidate_dir
+      if council_members.present?
+        city_directory["council_members"] = merge_arrays_by_field(
+          city_directory["council_members"], updated_city_info["council_members"], "name"
+        )
       end
-    end
 
+      if city_leaders.present?
+        city_directory["city_leaders"] = merge_arrays_by_field(
+          city_directory["city_leaders"], updated_city_info["city_leaders"], "name"
+        )
+      end
+
+      city_directory["sources"] << url
+      source_dirs << candidate_dir
+    end
 
     # Are mayors important?
     if city_directory["council_members"].present?
@@ -178,7 +183,8 @@ namespace :city_scrape do
         city,
         city_directory,
         destination_dir,
-        source_dirs)
+        source_dirs
+      )
       FileUtils.rm_rf(cache_destination_dir)
       puts "✅ Successfully extracted city info"
       puts "Data saved to: #{PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))}"
@@ -195,49 +201,42 @@ namespace :city_scrape do
   private
 
   def validate_find_division_map_inputs(state, city)
-    if state.blank? || city.blank?
-      raise "Error: Missing required parameters state: #{state} and city: #{city}"
-    end
+    raise "Error: Missing required parameters state: #{state} and city: #{city}" if state.blank? || city.blank?
 
     info_file = Rails.root.join("data", state, city, "info.yml")
-    if !File.exist?(info_file)
-      raise "Error: City info file not found at #{info_file}"
-    end
+    raise "Error: City info file not found at #{info_file}" unless File.exist?(info_file)
 
     info_yaml = YAML.load(File.read(info_file))
-    division_type = info_yaml["division_type"]
-
-    division_type
+    info_yaml["division_type"]
   end
 
   def find_division_map_urls(map_finder, state, city, division_type)
     search_query = "#{city} #{state} city council #{division_type}s map"
-    search_result_urls = Services::Brave.get_search_result_urls(search_query, nil, [ "county" ])
+    search_result_urls = Services::Brave.get_search_result_urls(search_query, nil, ["county"])
 
     candidate_urls = []
     search_result_urls.each do |url|
       candidate_map_urls = map_finder.find_candidate_maps(url)
-      if candidate_map_urls.any?
-        candidate_urls << candidate_map_urls
-      end
+      candidate_urls << candidate_map_urls if candidate_map_urls.any?
     end
 
     candidate_urls = candidate_urls.flatten.uniq
   end
 
-  # TODO -- probably can just do this naively via district/ward search properties
+  # TODO: -- probably can just do this naively via district/ward search properties
   def process_candidate_division_maps(openai_service, state, city, division_type, candidate_division_maps)
     candidate_division_maps.each do |candidate_map|
       response = openai_service.extract_city_division_map_data(
         state, city, division_type,
         candidate_map[:file_path],
-        candidate_map[:url])
+        candidate_map[:url]
+      )
 
       if is_valid_division_map?(response)
-        return [ true, candidate_map ] # Successfully found a valid division map
+        return [true, candidate_map] # Successfully found a valid division map
       end
     end
-    [ false, nil ] # No valid division map found
+    [false, nil] # No valid division map found
   end
 
   def is_valid_division_map?(results)
@@ -245,21 +244,21 @@ namespace :city_scrape do
   end
 
   def save_division_data(state, city, candidate_map, division_type)
-      info_file_path = Rails.root.join("data", state, city, "info.yml")
-      info_yaml = YAML.load(File.read(info_file_path))
-      info_yaml["arcgis_map_url"] = candidate_map[:url]
+    info_file_path = Rails.root.join("data", state, city, "info.yml")
+    info_yaml = YAML.load(File.read(info_file_path))
+    info_yaml["arcgis_map_url"] = candidate_map[:url]
 
-      File.write(info_file_path, info_yaml.to_yaml)
+    File.write(info_file_path, info_yaml.to_yaml)
 
-      destination_path = Rails.root.join("data", state, city, "division_map.geojson")
+    destination_path = Rails.root.join("data", state, city, "division_map.geojson")
 
-      result = MapFinder.format_properties(state, city, candidate_map[:file_path], [ division_type ])
+    result = MapFinder.format_properties(state, city, candidate_map[:file_path], [division_type])
 
-      source_path = Rails.root.join("data", state, city, "map_source", "division_map.geojson")
-      FileUtils.mkdir_p(source_path)
-      FileUtils.mv(candidate_map[:file_path], source_path)
+    source_path = Rails.root.join("data", state, city, "map_source", "division_map.geojson")
+    FileUtils.mkdir_p(source_path)
+    FileUtils.mv(candidate_map[:file_path], source_path)
 
-      File.write(destination_path, result)
+    File.write(destination_path, result)
   end
 
   def update_state_directory(state, updated_places)
@@ -269,9 +268,7 @@ namespace :city_scrape do
       "places" => []
     }
 
-    if File.exist?(state_directory_file)
-      state_directory = YAML.load(File.read(state_directory_file))
-    end
+    state_directory = YAML.load(File.read(state_directory_file)) if File.exist?(state_directory_file)
 
     updated_places.each do |place|
       existing_place = state_directory["places"].find { |p| p["place"] == place["place"] }
@@ -295,12 +292,12 @@ namespace :city_scrape do
   end
 
   def validate_fetch_inputs(state, city)
-     if state.blank? || city.blank?
+    if state.blank? || city.blank?
       puts "Error: Missing required parameters"
       puts "Usage: rake 'city_info:fetch[state,city]'"
       puts "Example: rake 'city_info:fetch[wa,seattle]'"
       exit 1
-     end
+    end
 
     state_directory_file = PathHelper.project_path(File.join("data", "us", state, "directory.yml"))
     state_directory = YAML.load(File.read(state_directory_file))
@@ -322,12 +319,12 @@ namespace :city_scrape do
     FileUtils.mkdir_p(cache_destination_dir)
     FileUtils.rm_rf(PathHelper.project_path(File.join("data", "us", state, city, "city_scrape_sources")))
 
-    [ destination_dir, cache_destination_dir ]
+    [destination_dir, cache_destination_dir]
   end
 
   def fetch_content(data_fetcher, url, candidate_dir)
     data_fetcher.extract_content(url, candidate_dir)
-  rescue => e
+  rescue StandardError => e
     puts "Error fetch_content: #{e.message}"
     puts "Error backtrace: #{e.backtrace.join("\n")}"
     nil
@@ -349,14 +346,18 @@ namespace :city_scrape do
     city,
     city_directory_content,
     destination_dir,
-    source_dirs)
-    update_state_directory(state, [ { 
-      "place" => city,
-      "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d") }
-    ] )
+    source_dirs
+  )
+    update_state_directory(state, [{
+                             "place" => city,
+                             "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d")
+                           }])
+
+    sources_destination_dir = PathHelper.project_path(File.join(destination_dir, "city_scrape_sources"))
+    FileUtils.mkdir_p(sources_destination_dir)
 
     source_dirs.each do |source_dir|
-      FileUtils.mv(source_dir, PathHelper.project_path(File.join(destination_dir, "city_scrape_sources")))
+      FileUtils.mv(source_dir, sources_destination_dir)
     end
 
     city_info_file = PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))
@@ -381,20 +382,18 @@ namespace :city_scrape do
     lookup = arr2.each_with_object({}) { |obj, hash| hash[obj[field]] = obj }
 
     arr1.each do |obj1|
-      if lookup[obj1[field]]
-        # Merge the matching object from arr2 with obj1
-        merged << merge_objects_by_field(obj1, lookup[obj1[field]], field)
-      else
-        # If no match found, just add obj1 to the merged array
-        merged << obj1
-      end
+      merged << if lookup[obj1[field]]
+                  # Merge the matching object from arr2 with obj1
+                  merge_objects_by_field(obj1, lookup[obj1[field]], field)
+                else
+                  # If no match found, just add obj1 to the merged array
+                  obj1
+                end
     end
 
     # Add any objects from arr2 that were not in arr1
     arr2.each do |obj2|
-      unless arr1.any? { |obj1| obj1[field] == obj2[field] }
-        merged << obj2
-      end
+      merged << obj2 unless arr1.any? { |obj1| obj1[field] == obj2[field] }
     end
 
     merged
