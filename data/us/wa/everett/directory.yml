@@ -1,0 +1,60 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:everett
+people:
+- name: Cassie Franklin
+  position: mayor
+  phone_number: ''
+  image: images/37f3c64fc44cd5b4345941730bf6a7ecb9095e628d20095f126034944bf76f93
+  email: ''
+  website: http://everettwa.gov/1132/About-the-Mayor
+- name: Cassie Franklin
+  phone_number: ''
+  image: images/aaf422311499a3261b5ee9f941b771a28a6f30f6143bd51d1c439ccd21e3b835
+  email: ''
+  website: https://www.everettwa.gov/1132/About-Mayor-Franklin
+  position: council_member
+- name: Paula Rhyne
+  phone_number: ''
+  image: images/a7eb962a27ff1964f2735c177057f072543c2a0288facbebfc837d0b1adb2b9e
+  email: ''
+  website: https://www.everettwa.gov/2944/Paula-Rhyne---District-2
+  position: council_member
+- name: Scott Bader
+  phone_number: ''
+  image: images/fd58f1ccfe30d41c6dd9b04c329fa79c11473463cddf711829679e2cdc155126
+  email: ''
+  website: https://www.everettwa.gov/3060/Scott-Bader---At-Large
+  position: council_member
+- name: Don Schwab
+  phone_number: ''
+  image: images/37355c355ada05908217a52a29b03d7afc1b7f5dfaf4bfde8ad39427ae04a4c5
+  email: ''
+  website: https://www.everettwa.gov/3057/Don-Schwab---District-3
+  position: council_member
+- name: Judy Tuohy
+  phone_number: ''
+  image: images/6291a34bd00be5e95df4164eb9d0058d89689a746b72661aa42cdc18b43aa705
+  email: ''
+  website: https://www.everettwa.gov/3020/Judy-Tuohy---At-Large
+  position: council_member
+- name: Liz Vogeli
+  phone_number: ''
+  image: images/73720c978c4669f42317ccf61e813c3d1fc80a93583356f74a1188ffecd64325
+  email: ''
+  website: https://www.everettwa.gov/3058/Liz-Vogeli---District-4
+  position: council_member
+- name: Mary Fosse
+  phone_number: ''
+  image: images/8f81126a22bf26bd5dffe29bc049bb4ee0f157a8ad8e0960416380ab52893022
+  email: ''
+  website: https://www.everettwa.gov/3053/Mary-Fosse---District-1
+  position: council_member
+- name: Ben Zarlingo
+  phone_number: ''
+  image: images/7e98fe00069d1b12cb8f76c0670f64ec26f77c3f62542d413d69faa26a5aaa83
+  email: ''
+  website: https://www.everettwa.gov/3059/Ben-Zarlingo---District-5
+  position: council_member
+sources:
+- http://everettwa.gov/citycouncil
+- http://everettwa.gov/270
