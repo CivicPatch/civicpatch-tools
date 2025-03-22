@@ -27,6 +27,7 @@ places:
   scraper_misc:
     city_id: 12
     population: 155000
+  last_city_scrape_run: '2025-03-22'
 - place: kent
   website: https://www.kentwa.gov/
   scraper_misc:

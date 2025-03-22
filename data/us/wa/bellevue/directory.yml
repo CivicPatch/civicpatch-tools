@@ -1,0 +1,24 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:bellevue
+people:
+- name: Lynne Robinson
+  position: mayor
+  phone_number: 425-452-7810
+  image: images/8586278624cb630e25b81c880b99b04df7c5f10f37e6648af98e336d071ed373.jpg?itok=LKfVwr4q
+  email: counciloffice@bellevuewa.gov
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson
+- name: Claire Sumadiwirya
+  phone_number: ''
+  image: images/d71d51c35464ce9267436a2db6cefa1bebfac2baf34a25b4f6540fe92852ad84.jpg?h=8c780c0d&itok=fCie60sc
+  email: ''
+  website: https://bellevuewa.gov/city-news/council-roundup-3-18-25
+  position: council_member
+- name: Lynne Robinson
+  phone_number: 425-452-7810
+  image: images/8586278624cb630e25b81c880b99b04df7c5f10f37e6648af98e336d071ed373.jpg?itok=LKfVwr4q
+  email: counciloffice@bellevuewa.gov
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson
+  position: council_member
+sources:
+- https://bellevuewa.gov/city-news?dept=city-council
+- https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson
