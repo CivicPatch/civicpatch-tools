@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "openai"
 
 module Services
@@ -9,7 +11,7 @@ module Services
     end
 
     def extract_city_division_map_data(state, city, division_type, geojson_file_path, url)
-      truncated_geojson  = extract_simplified_geojson(geojson_file_path)
+      truncated_geojson = extract_simplified_geojson(geojson_file_path)
       truncated_geojson_text = truncated_geojson.to_json
 
       system_instructions = <<~INSTRUCTIONS
@@ -42,17 +44,13 @@ module Services
       ]
 
       response = run_prompt(messages)
-      response_yaml = response_to_yaml(response)
-
-      response_yaml
+      response_to_yaml(response)
     end
 
-    def extract_city_info(state, city, content_file, city_council_url)
+    def extract_city_info(_state, _city, content_file, city_council_url)
       content = File.read(content_file)
 
-      if content.split(" ").length > @@MAX_TOKENS
-        raise "Content for city council members is too long"
-      end
+      raise "Content for city council members is too long" if content.split(" ").length > @@MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(content, city_council_url)
 
@@ -69,10 +67,10 @@ module Services
       # Extract YAML content from the response
       # If the response is wrapped in ```yaml ... ``` or similar, extract just the YAML content
       yaml_content = if response_content.match?(/```(?:yaml|yml)?\s*(.*?)```/m)
-        response_content.match(/```(?:yaml|yml)?\s*(.*?)```/m)[1]
-      else
-        response_content
-      end
+                       response_content.match(/```(?:yaml|yml)?\s*(.*?)```/m)[1]
+                     else
+                       response_content
+                     end
 
       YAML.load(yaml_content)
     end
@@ -80,55 +78,55 @@ module Services
     def generate_city_info_prompt(content, city_council_url)
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
-      You are an expert data extractor.
-      Extract the following properties from the provided content:
+        You are an expert data extractor.
+        Extract the following properties from the provided content:
 
-      For each council member (leave empty if not found):
-        - council_members:
-            - name
-            - phone_number
-            - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL.)
-            - email
-            - website (Provide the absolute URL.)
-              If no specific website is provided, leave this empty — do not default to the general city or council page.)
+        For each council member (leave empty if not found):
+          - council_members:
+              - name
+              - phone_number
+              - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL.)
+              - email
+              - website (Provide the absolute URL.)
+                If no specific website is provided, leave this empty — do not default to the general city or council page.)
 
-      For each city leader (e.g., mayors, city managers. leave empty if not found):
-        - city_leaders:
-            - name
-            - position (e.g., Mayor, City Manager, etc.)
-            - phone_number
-            - image (Same rules as above.)
-            - email
-            - website (Same rules as above.)
+        For each city leader (e.g., mayors, city managers. leave empty if not found):
+          - city_leaders:
+              - name
+              - position (e.g., Mayor, City Manager, etc.)
+              - phone_number
+              - image (Same rules as above.)
+              - email
+              - website (Same rules as above.)
 
-      Basic rules:
-      - Youth council members are NOT city council members.
-      - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
-      - If you find just a list of names, with at least a website or email, they are likely to be council members.
-      - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
-      - If you cannot find any relevant information, return the following YAML:
-        - error: "No relevant information found"
+        Basic rules:
+        - Youth council members are NOT city council members.
+        - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
+        - If you find just a list of names, with at least a website or email, they are likely to be council members.
+        - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
+        - If you cannot find any relevant information, return the following YAML:
+          - error: "No relevant information found"
 
-      Example Output (YAML):
-      ---
-      council_members:
-        - name: "Jane Smith"
-          phone_number: "555-123-4567"
-          image: "images/smith.jpg"
-          email: "jsmith@cityofexample.gov"
-          website: "https://www.cityofexample.gov/council/smith"
-        - name: "John Doe"
-          phone_number: ""
-          image: ""
-          email: ""
-          website: "/council/doe"
-      city_leaders:
-        - name: "Robert Johnson"
-          position: "Mayor"
-          phone_number: "555-111-2222"
-          image: "images/mayor.jpg"
-          email: "mayor@cityofexample.gov"
-          website: "https://www.cityofexample.gov/mayor"
+        Example Output (YAML):
+        ---
+        council_members:
+          - name: "Jane Smith"
+            phone_number: "555-123-4567"
+            image: "images/smith.jpg"
+            email: "jsmith@cityofexample.gov"
+            website: "https://www.cityofexample.gov/council/smith"
+          - name: "John Doe"
+            phone_number: ""
+            image: ""
+            email: ""
+            website: "/council/doe"
+        city_leaders:
+          - name: "Robert Johnson"
+            position: "Mayor"
+            phone_number: "555-111-2222"
+            image: "images/mayor.jpg"
+            email: "mayor@cityofexample.gov"
+            website: "https://www.cityofexample.gov/mayor"
 
       INSTRUCTIONS
 
@@ -143,7 +141,7 @@ module Services
         #{content}
       USER
 
-      [ system_instructions, user_instructions ]
+      [system_instructions, user_instructions]
     end
 
     private
@@ -151,10 +149,10 @@ module Services
     def run_prompt(messages)
       response = @client.chat(
         parameters: {
-            model: "gpt-4o-mini",
-            # model: "gpt-3.5-turbo",
-            messages: messages,
-            temperature: 0.0
+          model: "gpt-4o-mini",
+          # model: "gpt-3.5-turbo",
+          messages: messages,
+          temperature: 0.0
         }
       )
 
@@ -168,14 +166,12 @@ module Services
 
       json_data = JSON.parse(File.read(geojson_file_path))
 
-      features = json_data["features"][0, 3].map do |feature|
+      json_data["features"][0, 3].map do |feature|
         {
           type: feature["type"],
           properties: feature["properties"]
         }
       end
-
-      features
     end
   end
 end

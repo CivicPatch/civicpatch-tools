@@ -7,10 +7,10 @@ module OpenData
   # Your code goes here...
 
   def self.load_tasks
-    require 'rake'
+    require "rake"
 
     # Load all task files from the tasks directory
-    Dir.glob(File.join(__dir__, 'tasks', '*.rb')).each do |file|
+    Dir.glob(File.join(__dir__, "tasks", "*.rb")).each do |file|
       require file
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "capybara"
 require "selenium-webdriver"
 
@@ -25,7 +27,7 @@ module Scrapers
       FileUtils.mkdir_p(destination_dir)
       FileUtils.mkdir_p(PathHelper.project_path(File.join(destination_dir, "images")))
 
-      File.write(PathHelper.project_path(File.join("#{destination_dir}", "step_1_original_html.html")), html)
+      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_1_original_html.html")), html)
 
       base_url, cleaned_html = clean_html(url, html, destination_dir)
 
@@ -33,15 +35,15 @@ module Scrapers
                       using_browser, browser_session)
       update_html_links(base_url, cleaned_html)
 
-      File.write(PathHelper.project_path(File.join("#{destination_dir}", "step_2_cleaned_html.html")),
+      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_cleaned_html.html")),
                  cleaned_html.to_html)
 
       markdown_content = Markitdown.from_nokogiri(cleaned_html)
 
-      File.write(PathHelper.project_path(File.join("#{destination_dir}", "step_3_markdown_content.md")),
+      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md")),
                  markdown_content)
 
-      content_file = PathHelper.project_path(File.join("#{destination_dir}", "step_3_markdown_content.md"))
+      content_file = PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
 
       browser_session.quit if using_browser
 
@@ -50,7 +52,7 @@ module Scrapers
 
     private
 
-    def clean_html(page_url, html, destination_dir)
+    def clean_html(page_url, html, _destination_dir)
       nokogiri_html = Nokogiri::HTML(html)
       # important for images to work -- don't want to clean it away and lose context
       base_url = get_page_base_url(nokogiri_html, page_url)
@@ -96,7 +98,7 @@ module Scrapers
     end
 
     def download_images(base_url, nokogiri_html, destination_dir, using_browser, browser_session)
-      nokogiri_html.css("img").each_with_index do |img, index|
+      nokogiri_html.css("img").each_with_index do |img, _index|
         image_url = img["src"]
         image_url = format_url(image_url)
 
@@ -180,8 +182,6 @@ module Scrapers
 
       Base64.decode64(image_data_base64)
     end
-
-    private
 
     def fetch_with_client(url)
       response = HTTParty.get(url, headers: {

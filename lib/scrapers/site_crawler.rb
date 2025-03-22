@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "nokogiri"
 require "httparty"
 require "markitdown"
@@ -25,10 +27,10 @@ module Scrapers
       grouped_urls.each do |group_name, urls|
         grouped_urls[group_name] = urls.sort_by do |url, text|
           keywords = keyword_groups[group_name]
-          root = URI.parse(url).scheme + "://" + URI.parse(url).host
-          segments_count = url.split('/').size
+          root = "#{URI.parse(url).scheme}://#{URI.parse(url).host}"
+          segments_count = url.split("/").size
           contains_keyword = keywords.any? { |keyword| text.downcase.include?(keyword.downcase) } ? 0 : 1
-          [root, segments_count, contains_keyword]  # Sort by root, then segments count, then keyword presence
+          [root, segments_count, contains_keyword] # Sort by root, then segments count, then keyword presence
         end
       end
 
@@ -42,71 +44,71 @@ module Scrapers
         end
       end
 
-      interlaced_results.map { |url, text| format_url(url) }.uniq
+      interlaced_results.map { |url, _text| format_url(url) }.uniq
     end
 
-  private
-
-  def self.format_url(url)
-    url.gsub(" ", "%20")
-  end
-
-  def self.process_links(url, keywords, base_domain)
-    url_text_pairs = []
-
-    begin
-      response = HTTParty.get(url)
-      document = Nokogiri::HTML(response.body)
-      page_base_url = document.css("base").first&.attr("href") || url
-      link_base_url = URI.parse(page_base_url).absolute? ? page_base_url : URI.join(base_domain, page_base_url)
-    rescue => e
-      puts "Error processing links: #{e}"
-      puts "Backtrace: #{e.backtrace}"
-      return url_text_pairs
+    def self.format_url(url)
+      url.gsub(" ", "%20")
     end
 
-    document.css("a").each do |link|
-      href = link["href"]&.strip  # Trim whitespace from href
-      next unless href
-      next if href.ends_with?(".xml", ".json", ".csv", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx")
+    def self.process_links(url, keywords, base_domain)
+      url_text_pairs = []
 
-      # Encode the URL to ensure it is ASCII only
-      href = URI::DEFAULT_PARSER.escape(href)
-      href = format_url(href)
-      # Check if the href is an absolute URL
-      full_url = URI.parse(href).absolute? ? href : URI.join(link_base_url, href).to_s
-      next unless URI(full_url).host == URI(base_domain).host  # Ensure the link belongs to the base domain
+      begin
+        response = HTTParty.get(url)
+        document = Nokogiri::HTML(response.body)
+        page_base_url = document.css("base").first&.attr("href") || url
+        link_base_url = URI.parse(page_base_url).absolute? ? page_base_url : URI.join(base_domain, page_base_url)
+      rescue StandardError => e
+        puts "Error processing links: #{e}"
+        puts "Backtrace: #{e.backtrace}"
+        return url_text_pairs
+      end
 
+      document.css("a").each do |link|
+        href = link["href"]&.strip # Trim whitespace from href
+        next unless href
+        next if href.ends_with?(".xml", ".json", ".csv", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx")
 
-      link_text = link.text.strip
-      url_text_pairs << [ full_url, link_text ] if keywords.any? { |keyword| link_text.downcase.include?(keyword.downcase) }
+        # Encode the URL to ensure it is ASCII only
+        href = URI::DEFAULT_PARSER.escape(href)
+        href = format_url(href)
+        # Check if the href is an absolute URL
+        full_url = URI.parse(href).absolute? ? href : URI.join(link_base_url, href).to_s
+        next unless URI(full_url).host == URI(base_domain).host # Ensure the link belongs to the base domain
+
+        link_text = link.text.strip
+        url_text_pairs << [full_url, link_text] if keywords.any? do |keyword|
+          link_text.downcase.include?(keyword.downcase)
+        end
+      end
+
+      url_text_pairs
     end
 
-    url_text_pairs
-  end
+    def self.crawl(url, keywords, visited, base_domain)
+      return [] if visited[url]
 
-  def self.crawl(url, keywords, visited, base_domain)
-    return [] if visited[url]
-    visited[url] = true  # Mark as visited before recursive call
+      visited[url] = true # Mark as visited before recursive call
 
-    url_text_pairs = process_links(url, keywords, base_domain)
+      url_text_pairs = process_links(url, keywords, base_domain)
 
-    # filter out links that are already visited
-    url_text_pairs = url_text_pairs.reject { |full_url, _| visited[full_url] }
+      # filter out links that are already visited
+      url_text_pairs = url_text_pairs.reject { |full_url, _| visited[full_url] }
 
-    # Collect URLs from the current level and recursively from deeper levels
-    url_text_pairs + url_text_pairs.each_with_object([]) do |(full_url, _), all_links|
-      all_links.concat(crawl(full_url, keywords, visited, base_domain))
+      # Collect URLs from the current level and recursively from deeper levels
+      url_text_pairs + url_text_pairs.each_with_object([]) do |(full_url, _), all_links|
+        all_links.concat(crawl(full_url, keywords, visited, base_domain))
+      end
     end
-  end
 
-  def self.score_text(text, keywords)
-    score = 0
-    keywords.each_with_index do |keyword, index|
-      if text.downcase.include?(keyword.downcase)
+    def self.score_text(text, keywords)
+      score = 0
+      keywords.each_with_index do |keyword, index|
+        if text.downcase.include?(keyword.downcase)
           # Multiply by (keywords.size - index) to prioritize earlier keywords
           score += (keywords.size - index) * (keywords.size - index)
-      end
+        end
       end
       score
     end

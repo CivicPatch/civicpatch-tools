@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PathHelper
   def self.project_path(relative_path)
     File.expand_path(relative_path, Dir.pwd)

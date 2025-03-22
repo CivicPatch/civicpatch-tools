@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Scrapers
   module Us
     module Wa
@@ -22,7 +24,7 @@ module Scrapers
               "scraper_misc" => {
                 "city_id" => city["CityID"], # specific to only mrsc, subject to change. Used for self.get_representatives
                 "population" => city["Population"]
-              },
+              }
             }
           end
 

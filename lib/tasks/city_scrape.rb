@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rake 'city_info:extract[wa,seattle,https://www.seattle.gov/council/meet-the-council]'
 # rake 'city_info:extract[tx,austin,https://www.austintexas.gov/austin-city-council]'
 # rake 'city_info:extract[nm,albuquerque,https://www.cabq.gov/council/find-your-councilor]'
@@ -12,7 +14,7 @@ require_relative "../scrapers/data_fetcher"
 
 namespace :city_scrape do
   desc "Pick cities from queue"
-  task :pick_cities, [:state, :num_cities, :cities_to_ignore] do |t, args|
+  task :pick_cities, [:state, :num_cities, :cities_to_ignore] do |_t, args|
     state = args[:state]
     num_cities = args[:num_cities]
     cities_to_ignore = args[:cities_to_ignore].present? ? args[:cities_to_ignore].split(" ") : []
@@ -42,7 +44,7 @@ namespace :city_scrape do
   end
 
   desc "Find official cities for a state"
-  task :state_dir, [:state] do |t, args|
+  task :state_dir, [:state] do |_t, args|
     state = args[:state]
 
     scraper = case state
@@ -65,7 +67,7 @@ namespace :city_scrape do
   end
 
   desc "Find city geojson data"
-  task :find_division_map, %i[state city] => :environment do |t, args|
+  task :find_division_map, %i[state city] => :environment do |_t, args|
     state = args[:state]
     city = args[:city]
 
@@ -107,21 +109,19 @@ namespace :city_scrape do
   end
 
   desc "Extract city info for a specific city"
-  task :fetch, [:state, :city] do |t, args|
+  task :fetch, [:state, :city] do |_t, args|
     state = args[:state]
     city = args[:city]
 
     state_city_entry = validate_fetch_inputs(state, city)
 
-    city_scraper = Scrapers::City.new
+    Scrapers::City.new
     openai_service = Services::Openai.new
     data_fetcher = Scrapers::DataFetcher.new
 
     puts "Extracting city info for #{city.capitalize}, #{state.upcase}..."
 
     destination_dir, cache_destination_dir = prepare_directories(state, city)
-
-    search_result_urls = []
     search_result_urls = Scrapers::SiteCrawler.get_urls(state_city_entry["website"], {
                                                           "mayor" => ["mayor"],
                                                           "council_members" => ["city council members",
@@ -140,7 +140,7 @@ namespace :city_scrape do
     source_dirs = []
 
     search_result_urls.each_with_index do |url, index|
-      break if city_directory["council_members"].count > 0 && city_directory["city_leaders"].count > 0
+      break if city_directory["council_members"].count.positive? && city_directory["city_leaders"].count.positive?
 
       candidate_dir = prepare_candidate_dir(cache_destination_dir, index)
       puts "Fetching #{url}"
@@ -192,9 +192,6 @@ namespace :city_scrape do
       puts "❌ Error: No valid city info extracted"
       exit 1
     end
-
-    puts "❌ Error: No valid city info extracted"
-    exit 1
   end
 
   private

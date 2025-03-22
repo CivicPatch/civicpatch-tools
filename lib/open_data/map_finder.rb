@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "capybara"
 require "selenium-webdriver"
 
@@ -18,13 +20,12 @@ class MapFinder
   # maps may be arcgis or, for example chicago, from openstreetmaps.
   # let's focus on just arcgis -- that seems to be overwhelmingly popular
   # flag the ones that don't match for manual verification
-  def find_candidate_maps(candidate_url, type = "district") # could also be "ward"
+  # could also be "ward"
+  def find_candidate_maps(candidate_url, _type = "district")
     puts "Finding candidate maps for #{candidate_url}"
     # source 1: maybe we are already on the map page
     candidate_uri = URI.parse(candidate_url)
-    if candidate_uri.host.ends_with?("arcgis.com")
-      candidate_urls = get_network_map_urls(candidate_url)
-    end
+    candidate_urls = get_network_map_urls(candidate_url) if candidate_uri.host.ends_with?("arcgis.com")
 
     # source 2: check if url contains iframe with src that contains arcgis
     # source 3: check if url contains link with href that contains arcgis
@@ -50,7 +51,7 @@ class MapFinder
     context
   end
 
-  def self.format_properties(state, city, geojson_file_path, fields_to_keep)
+  def self.format_properties(_state, _city, geojson_file_path, fields_to_keep)
     geojson = JSON.parse(File.read(geojson_file_path))
 
     filtered_features = geojson["features"].map do |feature|
@@ -60,7 +61,7 @@ class MapFinder
       remapped_properties = {}
 
       fields_to_keep.each do |target_field|
-        match = self.best_match(target_field, property_keys)
+        match = best_match(target_field, property_keys)
         remapped_properties[target_field] = properties[match] if match
       end
 
@@ -71,14 +72,11 @@ class MapFinder
       }
     end
 
-    filtered_geojson = {
+    {
       "type" => "FeatureCollection",
       "features" => filtered_features
     }.to_json
-
-    filtered_geojson
   end
-
 
   private
 
@@ -97,23 +95,19 @@ class MapFinder
 
     logs = @session.driver.browser.logs.get(:performance)
     logs.each do |log|
-      begin
       log_data = JSON.parse(log.message)["message"]
       if log_data["method"] == "Network.responseReceived"
         log_url = log_data["params"]["response"]["url"]
 
         # strip query params
         candidate_url = URI(log_url)
-        formatted_url = candidate_url.scheme + "://" + candidate_url.host + candidate_url.path
+        formatted_url = "#{candidate_url.scheme}://#{candidate_url.host}#{candidate_url.path}"
 
-        if formatted_url.include?("rest/services") && formatted_url.end_with?("/query")
-          candidate_urls << formatted_url
-        end
+        candidate_urls << formatted_url if formatted_url.include?("rest/services") && formatted_url.end_with?("/query")
       end
-      rescue => e
-        puts "Error parsing log: #{e}"
-        next
-      end
+    rescue StandardError => e
+      puts "Error parsing log: #{e}"
+      next
     end
 
     urls = candidate_urls.uniq
@@ -140,8 +134,8 @@ class MapFinder
 
       # Enable logging
       options.add_option("goog:loggingPrefs", {
-        "performance" => "ALL"
-      })
+                           "performance" => "ALL"
+                         })
 
       Capybara::Selenium::Driver.new(
         app,
@@ -157,7 +151,7 @@ class MapFinder
   def self.best_match(key, keys)
     threshold = 0.5 # Lower means stricter matching
     matcher = Amatch::PairDistance.new(key)
-    matches = keys.map { |field| [ field, matcher.match(field) ] }
+    matches = keys.map { |field| [field, matcher.match(field)] }
 
     best_match = matches.min_by { |_, score| score } # Lower score is better
     best_match[1] <= threshold ? best_match[0] : nil # Only accept close matches

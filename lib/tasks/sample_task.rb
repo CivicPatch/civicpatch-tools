@@ -1,4 +1,6 @@
-   # lib/open_data/tasks/sample_task.rb
+# frozen_string_literal: true
+
+# lib/open_data/tasks/sample_task.rb
 namespace :od do
   desc "Sample task from a separate file"
   task :sample do

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # lib/tasks/convert_shapefile.rake
 namespace :map do
   desc "Convert shapefile to GeoJSON"
-  task :generate, [ :state, :type ] do |t, args|
+  task :generate, [:state, :type] do |_t, args|
     state = args[:state]
     type = args[:type] # can be places or cds
 
@@ -29,7 +31,7 @@ namespace :map do
     end
   end
 
-  private 
+  private
 
   def validate_generate_args(state, type)
     if state.blank? || type.blank?
@@ -40,12 +42,11 @@ namespace :map do
     census_info_file = PathHelper.project_path(File.join("data", "us", "census", "info.yml"))
     puts "census_info_file: #{census_info_file}"
 
-    if !File.exist?(census_info_file)
+    unless File.exist?(census_info_file)
       puts "Error: Census info file not found at #{census_info_file}"
       exit 1
     end
 
-    census_info = YAML.load_file(census_info_file)
-    census_info
+    YAML.load_file(census_info_file)
   end
 end
