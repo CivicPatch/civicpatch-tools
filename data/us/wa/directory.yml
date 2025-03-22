@@ -565,3 +565,5 @@ places:
   website: https://www.cityofzillah.us/
 - seattle:
     last_city_scrape_run: '2025-03-21'
+  aberdeen:
+    last_city_scrape_run: '2025-03-22'
