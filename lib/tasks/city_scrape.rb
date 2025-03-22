@@ -132,7 +132,6 @@ namespace :city_scrape do
     puts search_result_urls.join("\n")
 
     city_directory = {
-      "ocd_id" => "ocd-division/country:us/state:#{state}/place:#{city}",
       "council_members" => [], # active council members
       "city_leaders" => [], # ex mayor, city manager, etc
       "sources" => []
@@ -370,8 +369,29 @@ namespace :city_scrape do
     end
 
     city_info_file = PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))
+    normalized_city_directory = normalize_city_directory(state, city, city_directory_content)
 
-    File.write(city_info_file, city_directory_content.to_yaml)
+    File.write(city_info_file, normalized_city_directory.to_yaml)
+  end
+
+  def normalize_city_directory(state, city, city_directory_content)
+    city_directory = {
+      "ocd_id" => "ocd-division/country:us/state:#{state}/place:#{city}",
+      "people" => [],
+      "sources" => city_directory_content["sources"]
+    }
+
+    city_directory_content["city_leaders"].each do |person|
+      person["position"] = person["position"]&.downcase || "city_leader"
+      city_directory["people"] << person
+    end
+
+    city_directory_content["council_members"].each do |person|
+      person["position"] = "council_member"
+      city_directory["people"] << person
+    end
+
+    city_directory
   end
 
   def merge_objects_by_field(obj1, obj2, field)

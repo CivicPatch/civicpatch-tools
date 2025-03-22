@@ -1,58 +1,66 @@
 ---
 ocd_id: ocd-division/country:us/state:wa/place:seattle
-council_members:
+people:
+- name: Bruce Harrell
+  position: mayor
+  phone_number: "(206) 684-4000"
+  image: images/8269b9ec4078f6475973d59aaba87d12b4d5b4a916d001f15cd26b3e072c8fc1.jpg
+  email: ''
+  website: https://www.seattle.gov/mayor
 - name: Sara Nelson
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/meet-the-council/sara-nelson
+  position: council_member
 - name: Joy Hollingsworth
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/hollingsworth
+  position: council_member
 - name: Robert Kettle
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/kettle
+  position: council_member
 - name: Cathy Moore
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/moore
+  position: council_member
 - name: Alexis Mercedes Rinck
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/rinck
+  position: council_member
 - name: Maritza Rivera
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/rivera
+  position: council_member
 - name: Rob Saka
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/saka
+  position: council_member
 - name: Mark Solomon
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/solomon
+  position: council_member
 - name: Dan Strauss
   phone_number: ''
   image: ''
   email: ''
   website: https://www.seattle.gov/council/strauss
-city_leaders:
-- name: Bruce Harrell
-  position: Mayor
-  phone_number: "(206) 684-4000"
-  image: images/8269b9ec4078f6475973d59aaba87d12b4d5b4a916d001f15cd26b3e072c8fc1.jpg
-  email: ''
-  website: https://www.seattle.gov/mayor
+  position: council_member
 sources:
 - https://www.seattle.gov/mayor
 - https://www.seattle.gov/council
