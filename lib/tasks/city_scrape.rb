@@ -356,7 +356,16 @@ namespace :city_scrape do
     sources_destination_dir = PathHelper.project_path(File.join(destination_dir, "city_scrape_sources"))
     FileUtils.mkdir_p(sources_destination_dir)
 
+    images_dir = PathHelper.project_path(File.join(destination_dir, "images"))
+    FileUtils.mkdir_p(images_dir)
+
     source_dirs.each do |source_dir|
+      # store images in combined images directory
+      puts "Copying images from #{source_dir}/images/* to #{images_dir}"
+      Dir.glob("#{source_dir}/images/*").each do |image|
+        FileUtils.cp(image, images_dir)
+      end
+
       FileUtils.mv(source_dir, sources_destination_dir)
     end
 

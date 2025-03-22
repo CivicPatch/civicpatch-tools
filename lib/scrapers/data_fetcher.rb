@@ -10,8 +10,7 @@ module Scrapers
 
       begin
         html = fetch_with_client(url)
-      rescue => e
-
+      rescue StandardError => e
         puts "Error fetching HTML: #{e.message}"
 
         puts "Retrying with browser..."
@@ -30,21 +29,21 @@ module Scrapers
 
       base_url, cleaned_html = clean_html(url, html, destination_dir)
 
-      download_images(base_url, cleaned_html, PathHelper.project_path(File.join(destination_dir, "images")), using_browser, browser_session)
+      download_images(base_url, cleaned_html, PathHelper.project_path(File.join(destination_dir, "images")),
+                      using_browser, browser_session)
       update_html_links(base_url, cleaned_html)
 
-      File.write(PathHelper.project_path(File.join("#{destination_dir}", "step_2_cleaned_html.html")), cleaned_html.to_html)
+      File.write(PathHelper.project_path(File.join("#{destination_dir}", "step_2_cleaned_html.html")),
+                 cleaned_html.to_html)
 
       markdown_content = Markitdown.from_nokogiri(cleaned_html)
 
-      File.write(PathHelper.project_path(File.join("#{destination_dir}", "step_3_markdown_content.md")), markdown_content)
+      File.write(PathHelper.project_path(File.join("#{destination_dir}", "step_3_markdown_content.md")),
+                 markdown_content)
 
       content_file = PathHelper.project_path(File.join("#{destination_dir}", "step_3_markdown_content.md"))
 
-
-      if using_browser
-        browser_session.quit
-      end
+      browser_session.quit if using_browser
 
       content_file
     end
@@ -57,45 +56,43 @@ module Scrapers
       base_url = get_page_base_url(nokogiri_html, page_url)
 
       found_element = nil
-        selectors = [
-          "#main-content", "#content-main", "#primary-content",
-          "#content", "#page-content",
-          "main.content",
-          "main",
-          "div.article", "div.main",
-          "#container-content",
-          "#container",
-          "#wrapper-content",
-          "#wrapper",
-          "#body-content",
-          "#body",
-          "#page",
-          "body", "html"
-        ]
+      selectors = [
+        "#main-content", "#content-main", "#primary-content",
+        "#content", "#page-content",
+        "main.content",
+        "main",
+        "div.article", "div.main",
+        "#container-content",
+        "#container",
+        "#wrapper-content",
+        "#wrapper",
+        "#body-content",
+        "#body",
+        "#page",
+        "body", "html"
+      ]
 
-        # Try each selector individually to see which one matches
-        selectors.each do |selector|
-          element = nokogiri_html.css(selector).first
-          if element &&
-            ![ "a", "img", "button", "span", "input",
-              "iframe", "script", "style", "meta", "link", "br", "hr" ].include?(element.name)
-            puts "Matched selector: #{selector}"
-            puts "Element name: #{element.name}"
-            puts "Element classes: #{element['class']}"
-            puts "Element ID: #{element['id']}"
-            puts "Element content length: #{element.content.length}"
-            found_element = element
-            break
-          end
-        end
+      # Try each selector individually to see which one matches
+      selectors.each do |selector|
+        element = nokogiri_html.css(selector).first
+        next unless element &&
+                    !%w[a img button span input
+                        iframe script style meta link br hr].include?(element.name)
 
-        # raise an error if no selector matches
-        if found_element.nil?
-          raise "No selector matched"
-        end
+        puts "Matched selector: #{selector}"
+        puts "Element name: #{element.name}"
+        puts "Element classes: #{element["class"]}"
+        puts "Element ID: #{element["id"]}"
+        puts "Element content length: #{element.content.length}"
+        found_element = element
+        break
+      end
+
+      # raise an error if no selector matches
+      raise "No selector matched" if found_element.nil?
 
       strip_html_content(found_element)
-      [ base_url, found_element ]
+      [base_url, found_element]
     end
 
     def download_images(base_url, nokogiri_html, destination_dir, using_browser, browser_session)
@@ -120,13 +117,18 @@ module Scrapers
 
         begin
           File.open(destination_path, "wb") do |file|
-            image_content = using_browser ? get_image_with_browser(browser_session, absolute_image_url) : get_image(absolute_image_url)
+            image_content = if using_browser
+                              get_image_with_browser(browser_session,
+                                                     absolute_image_url)
+                            else
+                              get_image(absolute_image_url)
+                            end
             file.write(image_content)
           end
 
           # update the img tag to point to the local file
           img["src"] = "images/#{filename}"
-        rescue => e
+        rescue StandardError => e
           puts "Error downloading image: #{e.message}"
           puts "Image URL: #{absolute_image_url}"
           puts "Destination path: #{destination_path}"
@@ -136,15 +138,13 @@ module Scrapers
 
     def update_html_links(base_url, nokogiri_html)
       nokogiri_html.css("a").each do |link|
-        if link["href"].blank?
-          next
-        end
+        next if link["href"].blank?
 
         link["href"] = format_url(link["href"])
 
         begin
           link["href"] = URI.join(base_url, link["href"]).to_s
-        rescue => e
+        rescue StandardError => e
           puts "Error updating link: #{e.message}"
           puts "Link: #{link["href"]}"
           link["href"] = nil
@@ -160,8 +160,7 @@ module Scrapers
       session.visit(image_url)
 
       # Ensure the image is loaded before extracting
-      session.assert_selector("img", wait: 5)  # Waits up to 5 seconds for an <img> tag
-
+      session.assert_selector("img", wait: 5) # Waits up to 5 seconds for an <img> tag
 
       # Extract image binary data
       image_data_base64 = session.evaluate_script(%(
@@ -186,16 +185,13 @@ module Scrapers
 
     def fetch_with_client(url)
       response = HTTParty.get(url, headers: {
-        "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-        "Accept-Language" => "en-US,en;q=0.9",
-        "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Referer" => "https://www.brave.com/"
-        },
-        )
+                                "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+                                "Accept-Language" => "en-US,en;q=0.9",
+                                "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                                "Referer" => "https://www.brave.com/"
+                              })
 
-      if response.code == 403
-        raise "fetch_with_client: Access Denied by #{url}"
-      end
+      raise "fetch_with_client: Access Denied by #{url}" if response.code == 403
 
       response.body
     end
@@ -208,7 +204,7 @@ module Scrapers
 
       html = session.html
 
-      [ html, session ]
+      [html, session]
     end
 
     def strip_html_content(nokogiri_html)
@@ -244,12 +240,10 @@ module Scrapers
 
       # Remove empty tags. If there are any image tags, don't remove the node
       nokogiri_html.css("p, div").each do |node|
-        if node.text.strip.empty?
-          if node.css("img").any?
-            next
-          end
-          node.remove
-        end
+        next unless node.text.strip.empty?
+        next if node.css("img").any?
+
+        node.remove
       end
 
       nokogiri_html.css(".b, .b-c, .g").each { |node| node.replace(node.inner_html) }
@@ -273,16 +267,16 @@ module Scrapers
     # base here means the base url as it relates to the html page
     # sometimes the base will be rewritten in the html, so links are relative to the base
     def get_page_base_url(nokogiri_html, page_url)
-      base_override_url  = nokogiri_html.css("base").first&.attr("href")
-        if base_override_url == "/"
-          # To get both scheme and host, we need to combine them
-          # For example, for "https://www.seattle.gov/council/meet-the-council"
-          # URI.parse(page_url).scheme returns "https"
-          # URI.parse(page_url).host returns "www.seattle.gov"
-          uri = URI.parse(page_url)
+      base_override_url = nokogiri_html.css("base").first&.attr("href")
+      if base_override_url == "/"
+        # To get both scheme and host, we need to combine them
+        # For example, for "https://www.seattle.gov/council/meet-the-council"
+        # URI.parse(page_url).scheme returns "https"
+        # URI.parse(page_url).host returns "www.seattle.gov"
+        uri = URI.parse(page_url)
 
-          base_override_url = "#{uri.scheme}://#{uri.host}"
-        end
+        base_override_url = "#{uri.scheme}://#{uri.host}"
+      end
 
       base_override_url || page_url
     end
