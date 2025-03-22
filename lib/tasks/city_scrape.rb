@@ -26,7 +26,7 @@ namespace :city_scrape do
       exit 1
     end
 
-    state_directory_file = PathHelper.project_path(File.join("data", "us", state, "directory.yml"))
+    state_directory_file = PathHelper.project_path(File.join("data", "us", state, "places.yml"))
 
     unless File.exist?(state_directory_file)
       puts "Error: State directory file not found at #{state_directory_file}"
