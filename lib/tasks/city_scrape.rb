@@ -8,7 +8,7 @@
 
 require_relative "../scrapers/city"
 require_relative "../services/openai"
-require_relative "../scrapers/us/wa/directory"
+require_relative "../scrapers/us/wa/places"
 require_relative "../scrapers/site_crawler"
 require_relative "../scrapers/data_fetcher"
 
@@ -44,7 +44,7 @@ namespace :city_scrape do
   end
 
   desc "Find official cities for a state"
-  task :state_dir, [:state] do |_t, args|
+  task :get_places, [:state] do |_t, args|
     state = args[:state]
 
     scraper = case state
@@ -56,14 +56,14 @@ namespace :city_scrape do
 
     if state.blank?
       puts "Error: Missing required parameters"
-      puts "Usage: rake 'city_info:find_official_city_websites[state]'"
-      puts "Example: rake 'city_info:find_official_city_websites[wa]'"
+      puts "Usage: rake 'city_info:get_places[state]'"
+      puts "Example: rake 'city_info:get_places[wa]'"
       exit 1
     end
 
     new_places = scraper.get_places
 
-    update_state_directory(state, new_places)
+    update_state_places(state, new_places)
   end
 
   desc "Find city geojson data"
@@ -257,8 +257,8 @@ namespace :city_scrape do
     File.write(destination_path, result)
   end
 
-  def update_state_directory(state, updated_places)
-    state_directory_file = PathHelper.project_path(File.join("data", "us", state, "directory.yml"))
+  def update_state_places(state, updated_places)
+    state_directory_file = PathHelper.project_path(File.join("data", "us", state, "places.yml"))
     state_directory = {
       "ocd_id" => "ocd-division/country:us/state:#{state}",
       "places" => []
@@ -295,7 +295,7 @@ namespace :city_scrape do
       exit 1
     end
 
-    state_directory_file = PathHelper.project_path(File.join("data", "us", state, "directory.yml"))
+    state_directory_file = PathHelper.project_path(File.join("data", "us", state, "places.yml"))
     state_directory = YAML.load(File.read(state_directory_file))
     city_entry = state_directory["places"].find { |p| p["place"] == city }
 
@@ -344,10 +344,10 @@ namespace :city_scrape do
     destination_dir,
     source_dirs
   )
-    update_state_directory(state, [{
-                             "place" => city,
-                             "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d")
-                           }])
+    update_state_places(state, [{
+                          "place" => city,
+                          "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d")
+                        }])
 
     sources_destination_dir = PathHelper.project_path(File.join(destination_dir, "city_scrape_sources"))
     FileUtils.mkdir_p(sources_destination_dir)
