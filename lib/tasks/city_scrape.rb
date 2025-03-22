@@ -42,7 +42,7 @@ namespace :city_scrape do
   end
 
   desc "Find official cities for a state"
-  task :scrape_state_dir, [ :state ] do |t, args|
+  task :state_dir, [ :state ] do |t, args|
     state = args[:state]
 
     scraper = case state
@@ -350,7 +350,10 @@ namespace :city_scrape do
     city_directory_content,
     destination_dir,
     source_dirs)
-    update_state_directory(state, [ { city => { "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d") } } ] )
+    update_state_directory(state, [ { 
+      "place" => city,
+      "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d") }
+    ] )
 
     source_dirs.each do |source_dir|
       FileUtils.mv(source_dir, PathHelper.project_path(File.join(destination_dir, "city_scrape_sources")))

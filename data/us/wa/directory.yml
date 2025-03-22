@@ -3,565 +3,1125 @@ ocd_id: ocd-division/country:us/state:wa
 places:
 - place: aberdeen
   website: https://www.aberdeenwa.gov/
+  scraper_misc:
+    city_id: 270
 - place: airway_heights
   website: https://cawh.org/
+  scraper_misc:
+    city_id: 269
 - place: albion
   website:
+  scraper_misc:
+    city_id: 2
 - place: algona
   website: https://www.algonawa.gov/
+  scraper_misc:
+    city_id: 3
 - place: almira
   website: http://www.almirawashington.com/
+  scraper_misc:
+    city_id: 4
 - place: anacortes
   website: https://www.anacorteswa.gov/
+  scraper_misc:
+    city_id: 5
 - place: arlington
   website: https://www.arlingtonwa.gov/
+  scraper_misc:
+    city_id: 6
 - place: asotin
   website: https://cityofasotin.org/
+  scraper_misc:
+    city_id: 7
 - place: auburn
   website: https://www.auburnwa.gov/
+  scraper_misc:
+    city_id: 8
 - place: bainbridge_island
   website: https://www.bainbridgewa.gov/
+  scraper_misc:
+    city_id: 9
 - place: battle_ground
   website: https://www.cityofbg.org/
+  scraper_misc:
+    city_id: 10
 - place: beaux_arts_village
   website: https://www.beauxarts-wa.gov/
+  scraper_misc:
+    city_id: 11
 - place: bellevue
   website: https://bellevuewa.gov/
+  scraper_misc:
+    city_id: 12
 - place: bellingham
   website: https://cob.org/
+  scraper_misc:
+    city_id: 13
 - place: benton_city
   website: https://www.ci.benton-city.wa.us/
+  scraper_misc:
+    city_id: 14
 - place: bingen
   website: https://www.bingenwashington.org/
+  scraper_misc:
+    city_id: 15
 - place: black_diamond
   website: https://www.blackdiamondwa.gov/
+  scraper_misc:
+    city_id: 16
 - place: blaine
   website: https://www.ci.blaine.wa.us/
+  scraper_misc:
+    city_id: 17
 - place: bonney_lake
   website: https://www.ci.bonney-lake.wa.us/
+  scraper_misc:
+    city_id: 18
 - place: bothell
   website: https://www.bothellwa.gov/
+  scraper_misc:
+    city_id: 19
 - place: bremerton
   website: https://www.bremertonwa.gov/
+  scraper_misc:
+    city_id: 20
 - place: brewster
   website: https://www.cityofbrewsterwashington.org/
+  scraper_misc:
+    city_id: 21
 - place: bridgeport
   website: https://bridgeportwashington.net/
+  scraper_misc:
+    city_id: 22
 - place: brier
   website: http://www.ci.brier.wa.us/
+  scraper_misc:
+    city_id: 23
 - place: buckley
   website: https://www.cityofbuckley.com/
+  scraper_misc:
+    city_id: 24
 - place: bucoda
   website: https://www.bucoda.us/
+  scraper_misc:
+    city_id: 25
 - place: burien
   website: https://www.burienwa.gov/
+  scraper_misc:
+    city_id: 267
 - place: burlington
   website: https://burlingtonwa.gov/
+  scraper_misc:
+    city_id: 26
 - place: camas
   website: https://www.cityofcamas.us/
+  scraper_misc:
+    city_id: 27
 - place: carbonado
   website: https://www.carbonado.org/
+  scraper_misc:
+    city_id: 28
 - place: carnation
   website: https://www.carnationwa.gov/
+  scraper_misc:
+    city_id: 29
 - place: cashmere
   website: https://www.cityofcashmere.org/
+  scraper_misc:
+    city_id: 30
 - place: castle_rock
   website: https://ci.castle-rock.wa.us/
+  scraper_misc:
+    city_id: 31
 - place: cathlamet
   website: https://www.townofcathlamet.com/
+  scraper_misc:
+    city_id: 32
 - place: centralia
   website: https://www.cityofcentralia.com/
+  scraper_misc:
+    city_id: 33
 - place: chehalis
   website: https://www.ci.chehalis.wa.us/
+  scraper_misc:
+    city_id: 34
 - place: chelan
   website: https://cityofchelan.us/
+  scraper_misc:
+    city_id: 35
 - place: cheney
   website: https://www.cityofcheney.org/
+  scraper_misc:
+    city_id: 36
 - place: chewelah
   website: https://www.cityofchewelah.org/
+  scraper_misc:
+    city_id: 37
 - place: clarkston
   website: https://clarkston-wa.com/
+  scraper_misc:
+    city_id: 38
 - place: cle_elum
   website: https://cleelum.gov/
+  scraper_misc:
+    city_id: 39
 - place: clyde_hill
   website: https://www.clydehill.org/
+  scraper_misc:
+    city_id: 40
 - place: colfax
   website: https://www.colfaxwa.org/
+  scraper_misc:
+    city_id: 41
 - place: college_place
   website: https://www.cpwa.us/
+  scraper_misc:
+    city_id: 42
 - place: colton
   website: http://www.coltonwashington.us/
+  scraper_misc:
+    city_id: 43
 - place: colville
   website: https://www.colville.wa.us/
+  scraper_misc:
+    city_id: 44
 - place: conconully
   website: http://townofconconully.com/
+  scraper_misc:
+    city_id: 45
 - place: concrete
   website: https://www.townofconcrete.com/
+  scraper_misc:
+    city_id: 46
 - place: connell
   website: https://www.cityofconnell.com/
+  scraper_misc:
+    city_id: 47
 - place: cosmopolis
   website: https://www.cosmopoliswa.gov/
+  scraper_misc:
+    city_id: 48
 - place: coulee_city
   website: https://couleecitywa.org/
+  scraper_misc:
+    city_id: 49
 - place: coulee_dam
   website: https://townofcouleedam.org/
+  scraper_misc:
+    city_id: 50
 - place: coupeville
   website: https://townofcoupeville.org/
+  scraper_misc:
+    city_id: 51
 - place: covington
   website: https://www.covingtonwa.gov/
+  scraper_misc:
+    city_id: 277
 - place: creston
   website:
+  scraper_misc:
+    city_id: 52
 - place: cusick
   website: https://www.townofcusick.com/
+  scraper_misc:
+    city_id: 53
 - place: darrington
   website: https://townofdarrington.com/
+  scraper_misc:
+    city_id: 54
 - place: davenport
   website: https://www.davenportwa.us/
+  scraper_misc:
+    city_id: 55
 - place: dayton
   website: https://www.daytonwa.com/
+  scraper_misc:
+    city_id: 56
 - place: deer_park
   website: https://www.cityofdeerparkwa.com/
+  scraper_misc:
+    city_id: 57
 - place: des_moines
   website: https://www.desmoineswa.gov/
+  scraper_misc:
+    city_id: 58
 - place: dupont
   website: https://www.dupontwa.gov/
+  scraper_misc:
+    city_id: 59
 - place: duvall
   website: https://www.duvallwa.gov/
+  scraper_misc:
+    city_id: 60
 - place: east_wenatchee
   website: https://www.eastwenatcheewa.gov/
+  scraper_misc:
+    city_id: 61
 - place: eatonville
   website: https://eatonville-wa.gov/
+  scraper_misc:
+    city_id: 62
 - place: edgewood
   website: https://www.cityofedgewood.org/
+  scraper_misc:
+    city_id: 274
 - place: edmonds
   website: https://www.edmondswa.gov/
+  scraper_misc:
+    city_id: 63
 - place: electric_city
   website: https://www.electriccity.us/
+  scraper_misc:
+    city_id: 64
 - place: ellensburg
   website: https://ci.ellensburg.wa.us/
+  scraper_misc:
+    city_id: 65
 - place: elma
   website: https://cityofelma.com/
+  scraper_misc:
+    city_id: 66
 - place: elmer_city
   website: https://www.townofelmercity.com/
+  scraper_misc:
+    city_id: 67
 - place: endicott
   website: https://endicottwa.wordpress.com/
+  scraper_misc:
+    city_id: 68
 - place: entiat
   website: https://www.entiatwa.us/
+  scraper_misc:
+    city_id: 69
 - place: enumclaw
   website: https://www.cityofenumclaw.net/
+  scraper_misc:
+    city_id: 70
 - place: ephrata
   website: https://www.ephrata.org/
+  scraper_misc:
+    city_id: 71
 - place: everett
   website: https://everettwa.gov/
+  scraper_misc:
+    city_id: 72
 - place: everson
   website: https://www.ci.everson.wa.us/
+  scraper_misc:
+    city_id: 73
 - place: fairfield
   website: https://fairfieldwa.com/
+  scraper_misc:
+    city_id: 74
 - place: farmington
   website: https://farmingtonwa.com/
+  scraper_misc:
+    city_id: 75
 - place: federal_way
   website: https://www.federalwaywa.gov/
+  scraper_misc:
+    city_id: 76
 - place: ferndale
   website: https://www.cityofferndale.org/
+  scraper_misc:
+    city_id: 77
 - place: fife
   website: https://www.cityoffife.org/
+  scraper_misc:
+    city_id: 78
 - place: fircrest
   website: https://www.cityoffircrest.net/
+  scraper_misc:
+    city_id: 79
 - place: forks
   website: https://forkswashington.org/
+  scraper_misc:
+    city_id: 80
 - place: friday_harbor
   website: http://www.fridayharbor.org/
+  scraper_misc:
+    city_id: 81
 - place: garfield
   website: https://garfieldwa.com/
+  scraper_misc:
+    city_id: 82
 - place: george
   website: http://www.cityofgeorge.org/
+  scraper_misc:
+    city_id: 83
 - place: gig_harbor
   website: https://www.gigharborwa.gov/
+  scraper_misc:
+    city_id: 84
 - place: gold_bar
   website: https://cityofgoldbar.us/
+  scraper_misc:
+    city_id: 85
 - place: goldendale
   website: https://www.ci.goldendale.wa.us/
+  scraper_misc:
+    city_id: 86
 - place: grand_coulee
   website: https://gccitywa.org/
+  scraper_misc:
+    city_id: 87
 - place: grandview
   website: https://www.grandview.wa.us/
+  scraper_misc:
+    city_id: 88
 - place: granger
   website: https://www.grangerwashington.org/
+  scraper_misc:
+    city_id: 89
 - place: granite_falls
   website: https://ci.granite-falls.wa.us/
+  scraper_misc:
+    city_id: 90
 - place: hamilton
   website: https://www.townofhamiltonwa.com/
+  scraper_misc:
+    city_id: 91
 - place: harrah
   website:
+  scraper_misc:
+    city_id: 92
 - place: harrington
   website:
+  scraper_misc:
+    city_id: 93
 - place: hartline
   website:
+  scraper_misc:
+    city_id: 94
 - place: hatton
   website:
+  scraper_misc:
+    city_id: 95
 - place: hoquiam
   website: https://cityofhoquiam.com/
+  scraper_misc:
+    city_id: 96
 - place: hunts_point
   website: https://huntspoint-wa.gov/
+  scraper_misc:
+    city_id: 97
 - place: ilwaco
   website: https://ilwaco-wa.gov/
+  scraper_misc:
+    city_id: 98
 - place: index
   website:
+  scraper_misc:
+    city_id: 99
 - place: ione
   website:
+  scraper_misc:
+    city_id: 100
 - place: issaquah
   website: https://www.issaquahwa.gov/
+  scraper_misc:
+    city_id: 101
 - place: kahlotus
   website:
+  scraper_misc:
+    city_id: 102
 - place: kalama
   website: https://www.cityofkalama.com/
+  scraper_misc:
+    city_id: 103
 - place: kelso
   website: https://www.kelso.gov/
+  scraper_misc:
+    city_id: 104
 - place: kenmore
   website: https://www.kenmorewa.gov/
+  scraper_misc:
+    city_id: 278
 - place: kennewick
   website: https://www.go2kennewick.com/
+  scraper_misc:
+    city_id: 105
 - place: kent
   website: https://www.kentwa.gov/
+  scraper_misc:
+    city_id: 106
 - place: kettle_falls
   website: https://www.cityofkettlefalls.org/
+  scraper_misc:
+    city_id: 107
 - place: kirkland
   website: https://www.kirklandwa.gov/Home
+  scraper_misc:
+    city_id: 108
 - place: kittitas
   website: http://www.cityofkittitas.com/
+  scraper_misc:
+    city_id: 109
 - place: krupp
   website:
+  scraper_misc:
+    city_id: 110
 - place: la_center
   website: https://ci.lacenter.wa.us/
+  scraper_misc:
+    city_id: 111
 - place: la_conner
   website: https://www.townoflaconner.org/
+  scraper_misc:
+    city_id: 112
 - place: lacey
   website: https://cityoflacey.org/
+  scraper_misc:
+    city_id: 113
 - place: lacrosse
   website: https://www.lacrossewa.us/
+  scraper_misc:
+    city_id: 114
 - place: lake_forest_park
   website: https://www.cityoflfp.gov/
+  scraper_misc:
+    city_id: 115
 - place: lake_stevens
   website: https://www.lakestevenswa.gov/
+  scraper_misc:
+    city_id: 116
 - place: lakewood
   website: https://cityoflakewood.us/
+  scraper_misc:
+    city_id: 275
 - place: lamont
   website:
+  scraper_misc:
+    city_id: 117
 - place: langley
   website: https://www.langleywa.org/
+  scraper_misc:
+    city_id: 118
 - place: latah
   website:
+  scraper_misc:
+    city_id: 119
 - place: leavenworth
   website: https://cityofleavenworth.com/
+  scraper_misc:
+    city_id: 120
 - place: liberty_lake
   website: https://www.libertylakewa.gov/
+  scraper_misc:
+    city_id: 280
 - place: lind
   website:
+  scraper_misc:
+    city_id: 121
 - place: long_beach
   website: https://www.longbeachwa.gov/
+  scraper_misc:
+    city_id: 122
 - place: longview
   website: https://www.mylongview.com/
+  scraper_misc:
+    city_id: 123
 - place: lyman
   website: https://townoflyman.com/
+  scraper_misc:
+    city_id: 124
 - place: lynden
   website: https://www.lyndenwa.org/
+  scraper_misc:
+    city_id: 125
 - place: lynnwood
   website: https://www.lynnwoodwa.gov/Home
+  scraper_misc:
+    city_id: 126
 - place: mabton
   website: https://www.cityofmabton.com/
+  scraper_misc:
+    city_id: 127
 - place: malden
   website: https://maldenwaorg.wordpress.com/
+  scraper_misc:
+    city_id: 128
 - place: mansfield
   website: https://townofmansfield.net/
+  scraper_misc:
+    city_id: 129
 - place: maple_valley
   website: https://www.maplevalleywa.gov/
+  scraper_misc:
+    city_id: 276
 - place: marcus
   website:
+  scraper_misc:
+    city_id: 130
 - place: marysville
   website: https://marysvillewa.gov/
+  scraper_misc:
+    city_id: 131
 - place: mattawa
   website: https://www.cityofmattawa.com/
+  scraper_misc:
+    city_id: 132
 - place: mccleary
   website: https://www.cityofmccleary.com/
+  scraper_misc:
+    city_id: 133
 - place: medical_lake
   website: https://medical-lake.org/
+  scraper_misc:
+    city_id: 134
 - place: medina
   website: https://www.medina-wa.gov/
+  scraper_misc:
+    city_id: 135
 - place: mercer_island
   website: https://www.mercerisland.gov/
+  scraper_misc:
+    city_id: 136
 - place: mesa
   website:
+  scraper_misc:
+    city_id: 137
 - place: metaline
   website:
+  scraper_misc:
+    city_id: 138
 - place: metaline_falls
   website:
+  scraper_misc:
+    city_id: 139
 - place: mill_creek
   website: https://www.cityofmillcreek.com/
+  scraper_misc:
+    city_id: 140
 - place: millwood
   website: https://www.millwoodwa.us/
+  scraper_misc:
+    city_id: 141
 - place: milton
   website: https://www.cityofmilton.net/
+  scraper_misc:
+    city_id: 142
 - place: monroe
   website: https://www.monroewa.gov/
+  scraper_misc:
+    city_id: 143
 - place: montesano
   website: https://cityofmontesano.com/
+  scraper_misc:
+    city_id: 144
 - place: morton
   website: https://www.visitmorton.com/
+  scraper_misc:
+    city_id: 145
 - place: moses_lake
   website: https://www.cityofml.com/
+  scraper_misc:
+    city_id: 146
 - place: mossyrock
   website: https://www.cityofmossyrock.com/
+  scraper_misc:
+    city_id: 147
 - place: mount_vernon
   website: https://www.mountvernonwa.gov/
+  scraper_misc:
+    city_id: 148
 - place: mountlake_terrace
   website: https://www.cityofmlt.com/
+  scraper_misc:
+    city_id: 149
 - place: moxee
   website: https://cityofmoxee.us/
+  scraper_misc:
+    city_id: 150
 - place: mukilteo
   website: https://mukilteowa.gov/
+  scraper_misc:
+    city_id: 151
 - place: naches
   website: https://townofnaches.com/
+  scraper_misc:
+    city_id: 152
 - place: napavine
   website: https://www.cityofnapavine.com/
+  scraper_misc:
+    city_id: 153
 - place: nespelem
   website: https://www.townofnespelem.com/
+  scraper_misc:
+    city_id: 154
 - place: newcastle
   website: https://www.newcastlewa.gov/
+  scraper_misc:
+    city_id: 271
 - place: newport
   website: https://newport-wa.org/
+  scraper_misc:
+    city_id: 155
 - place: nooksack
   website: http://www.cityofnooksack.com/
+  scraper_misc:
+    city_id: 156
 - place: normandy_park
   website: https://normandyparkwa.gov/
+  scraper_misc:
+    city_id: 157
 - place: north_bend
   website: https://northbendwa.gov/
+  scraper_misc:
+    city_id: 158
 - place: north_bonneville
   website: https://northbonneville.net/
+  scraper_misc:
+    city_id: 159
 - place: northport
   website:
+  scraper_misc:
+    city_id: 160
 - place: oak_harbor
   website: https://www.oakharbor.gov/
+  scraper_misc:
+    city_id: 161
 - place: oakesdale
   website: https://www.oakesdale.org/
+  scraper_misc:
+    city_id: 162
 - place: oakville
   website: https://www.oakvillecityhall.com/
+  scraper_misc:
+    city_id: 163
 - place: ocean_shores
   website: https://www.osgov.com/
+  scraper_misc:
+    city_id: 164
 - place: odessa
   website: https://odessawa.org/
+  scraper_misc:
+    city_id: 165
 - place: okanogan
   website: https://www.okanogancity.com/
+  scraper_misc:
+    city_id: 166
 - place: olympia
   website: https://www.olympiawa.gov/
+  scraper_misc:
+    city_id: 167
 - place: omak
   website: https://www.omakcity.com/
+  scraper_misc:
+    city_id: 168
 - place: oroville
   website: https://oroville-wa.com/
+  scraper_misc:
+    city_id: 169
 - place: orting
   website: https://www.cityoforting.org/
+  scraper_misc:
+    city_id: 170
 - place: othello
   website: https://www.othellowa.gov/
+  scraper_misc:
+    city_id: 171
 - place: pacific
   website: https://www.pacificwa.gov/
+  scraper_misc:
+    city_id: 172
 - place: palouse
   website: https://www.palousewa.gov/
+  scraper_misc:
+    city_id: 173
 - place: pasco
   website: https://www.pasco-wa.gov/
+  scraper_misc:
+    city_id: 174
 - place: pateros
   website: https://www.pateros.com/
+  scraper_misc:
+    city_id: 175
 - place: pe_ell
   website: https://www.townofpeell.com/
+  scraper_misc:
+    city_id: 176
 - place: pomeroy
   website: https://www.cityofpomeroy1.com/
+  scraper_misc:
+    city_id: 177
 - place: port_angeles
   website: https://www.cityofpa.us/
+  scraper_misc:
+    city_id: 178
 - place: port_orchard
   website: https://portorchardwa.gov/
+  scraper_misc:
+    city_id: 179
 - place: port_townsend
   website: https://cityofpt.us/
+  scraper_misc:
+    city_id: 180
 - place: poulsbo
   website: https://cityofpoulsbo.com/
+  scraper_misc:
+    city_id: 181
 - place: prescott
   website:
+  scraper_misc:
+    city_id: 182
 - place: prosser
   website: https://cityofprosser.com/
+  scraper_misc:
+    city_id: 183
 - place: pullman
   website: https://www.pullman-wa.gov/
+  scraper_misc:
+    city_id: 184
 - place: puyallup
   website: https://www.cityofpuyallup.org/
+  scraper_misc:
+    city_id: 185
 - place: quincy
   website: https://www.quincywashington.us/
+  scraper_misc:
+    city_id: 186
 - place: rainier
   website: https://www.cityofrainierwa.org/
+  scraper_misc:
+    city_id: 187
 - place: raymond
   website: https://cityofraymond.com/
+  scraper_misc:
+    city_id: 188
 - place: reardan
   website:
+  scraper_misc:
+    city_id: 189
 - place: redmond
   website: https://www.redmond.gov/
+  scraper_misc:
+    city_id: 190
 - place: renton
   website: https://www.rentonwa.gov/
+  scraper_misc:
+    city_id: 191
 - place: republic
   website: https://www.cityofrepublic.org/
+  scraper_misc:
+    city_id: 192
 - place: richland
   website: https://www.ci.richland.wa.us/
+  scraper_misc:
+    city_id: 193
 - place: ridgefield
   website: https://ridgefieldwa.us/
+  scraper_misc:
+    city_id: 194
 - place: ritzville
   website: https://www.cityofritzville.com/
+  scraper_misc:
+    city_id: 195
 - place: riverside
   website:
+  scraper_misc:
+    city_id: 196
 - place: rock_island
   website: https://www.rockislandwa.gov/
+  scraper_misc:
+    city_id: 197
 - place: rockford
   website: https://www.rockfordwa.com/
+  scraper_misc:
+    city_id: 198
 - place: rosalia
   website: https://townofrosalia.net/
+  scraper_misc:
+    city_id: 199
 - place: roslyn
   website: https://www.ci.roslyn.wa.us/
+  scraper_misc:
+    city_id: 200
 - place: roy
   website: https://cityofroywa.us/
+  scraper_misc:
+    city_id: 201
 - place: royal_city
   website: https://www.royalcitywa.org/
+  scraper_misc:
+    city_id: 202
 - place: ruston
   website: https://www.rustonwa.org/
+  scraper_misc:
+    city_id: 203
 - place: sammamish
   website: https://www.sammamish.us/
+  scraper_misc:
+    city_id: 279
 - place: seatac
   website: https://www.seatacwa.gov/
+  scraper_misc:
+    city_id: 204
 - place: seattle
   website: https://www.seattle.gov/
+  scraper_misc:
+    city_id: 1
 - place: sedro-woolley
   website: https://www.sedro-woolley.gov/
+  scraper_misc:
+    city_id: 205
 - place: selah
   website: https://selahwa.gov
+  scraper_misc:
+    city_id: 206
 - place: sequim
   website: https://www.sequimwa.gov/
+  scraper_misc:
+    city_id: 207
 - place: shelton
   website: https://www.sheltonwa.gov/
+  scraper_misc:
+    city_id: 208
 - place: shoreline
   website: https://www.shorelinewa.gov/
+  scraper_misc:
+    city_id: 273
 - place: skykomish
   website: https://skykomishwa.gov/
+  scraper_misc:
+    city_id: 209
 - place: snohomish
   website: https://www.snohomishwa.gov/
+  scraper_misc:
+    city_id: 210
 - place: snoqualmie
   website: https://www.snoqualmiewa.gov/
+  scraper_misc:
+    city_id: 211
 - place: soap_lake
   website: https://www.soaplakewa.gov
+  scraper_misc:
+    city_id: 212
 - place: south_bend
   website: https://southbend-wa.gov/
+  scraper_misc:
+    city_id: 213
 - place: south_cle_elum
   website:
+  scraper_misc:
+    city_id: 214
 - place: south_prairie
   website: https://www.townofsp.com/
+  scraper_misc:
+    city_id: 215
 - place: spangle
   website:
+  scraper_misc:
+    city_id: 216
 - place: spokane
   website: https://my.spokanecity.org/
+  scraper_misc:
+    city_id: 217
 - place: spokane_valley
   website: https://www.spokanevalleywa.gov/
+  scraper_misc:
+    city_id: 281
 - place: sprague
   website: https://sprague-wa.us/
+  scraper_misc:
+    city_id: 218
 - place: springdale
   website:
+  scraper_misc:
+    city_id: 219
 - place: st._john
   website: https://www.stjohnwa.com/
+  scraper_misc:
+    city_id: 220
 - place: stanwood
   website: https://stanwoodwa.org/
+  scraper_misc:
+    city_id: 221
 - place: starbuck
   website:
+  scraper_misc:
+    city_id: 222
 - place: steilacoom
   website: https://townofsteilacoom.org/
+  scraper_misc:
+    city_id: 223
 - place: stevenson
   website: https://www.ci.stevenson.wa.us/
+  scraper_misc:
+    city_id: 224
 - place: sultan
   website: https://www.ci.sultan.wa.us/
+  scraper_misc:
+    city_id: 225
 - place: sumas
   website: https://www.cityofsumas.com/
+  scraper_misc:
+    city_id: 226
 - place: sumner
   website: https://sumnerwa.gov/
+  scraper_misc:
+    city_id: 227
 - place: sunnyside
   website: https://www.sunnyside-wa.gov/
+  scraper_misc:
+    city_id: 228
 - place: tacoma
   website: https://www.cityoftacoma.org/
+  scraper_misc:
+    city_id: 229
 - place: tekoa
   website: https://www.tekoawa.com/
+  scraper_misc:
+    city_id: 230
 - place: tenino
   website: https://www.cityoftenino.us/
+  scraper_misc:
+    city_id: 231
 - place: tieton
   website: https://cityoftieton.com/
+  scraper_misc:
+    city_id: 232
 - place: toledo
   website: https://toledowa.us/
+  scraper_misc:
+    city_id: 233
 - place: tonasket
   website: https://www.tonasketwa.gov/
+  scraper_misc:
+    city_id: 234
 - place: toppenish
   website: https://www.toppenish.gov/
+  scraper_misc:
+    city_id: 235
 - place: tukwila
   website: https://www.tukwilawa.gov/
+  scraper_misc:
+    city_id: 236
 - place: tumwater
   website: https://www.ci.tumwater.wa.us/
+  scraper_misc:
+    city_id: 237
 - place: twisp
   website: https://www.townoftwisp.com/
+  scraper_misc:
+    city_id: 238
 - place: union_gap
   website: https://uniongapwa.gov/
+  scraper_misc:
+    city_id: 239
 - place: uniontown
   website: https://uniontownwa.org/
+  scraper_misc:
+    city_id: 240
 - place: university_place
   website: https://www.cityofup.com/
+  scraper_misc:
+    city_id: 272
 - place: vader
   website: https://www.vaderwa.org/
+  scraper_misc:
+    city_id: 241
 - place: vancouver
   website: https://www.cityofvancouver.us/
+  scraper_misc:
+    city_id: 242
 - place: waitsburg
   website: https://www.cityofwaitsburg.com/
+  scraper_misc:
+    city_id: 243
 - place: walla_walla
   website: https://www.wallawallawa.gov/
+  scraper_misc:
+    city_id: 244
 - place: wapato
   website: https://wapato-city.org/
+  scraper_misc:
+    city_id: 245
 - place: warden
   website: https://cityofwarden.org/
+  scraper_misc:
+    city_id: 246
 - place: washougal
   website: https://www.cityofwashougal.us/
+  scraper_misc:
+    city_id: 247
 - place: washtucna
   website: https://washtucna.org/
+  scraper_misc:
+    city_id: 248
 - place: waterville
   website: https://www.watervillewa.com/
+  scraper_misc:
+    city_id: 249
 - place: waverly
   website:
+  scraper_misc:
+    city_id: 250
 - place: wenatchee
   website: https://www.wenatcheewa.gov/
+  scraper_misc:
+    city_id: 251
 - place: west_richland
   website: https://www.westrichland.org/
+  scraper_misc:
+    city_id: 252
 - place: westport
   website: https://www.ci.westport.wa.us/
+  scraper_misc:
+    city_id: 253
 - place: white_salmon
   website: https://www.whitesalmonwa.gov/
+  scraper_misc:
+    city_id: 254
 - place: wilbur
   website: http://www.wilburwa.com/
+  scraper_misc:
+    city_id: 255
 - place: wilkeson
   website: https://www.townofwilkeson.com/
+  scraper_misc:
+    city_id: 256
 - place: wilson_creek
   website: http://www.wilsoncreekwa.com/
+  scraper_misc:
+    city_id: 257
 - place: winlock
   website: https://cityofwinlock.com/
+  scraper_misc:
+    city_id: 258
 - place: winthrop
   website: http://www.townofwinthrop.com/
+  scraper_misc:
+    city_id: 259
 - place: woodinville
   website: https://www.ci.woodinville.wa.us/
+  scraper_misc:
+    city_id: 268
 - place: woodland
   website: https://www.ci.woodland.wa.us/
+  scraper_misc:
+    city_id: 260
 - place: woodway
   website: https://www.townofwoodway.com/
+  scraper_misc:
+    city_id: 261
 - place: yacolt
   website: https://www.townofyacolt.com/
+  scraper_misc:
+    city_id: 262
 - place: yakima
   website: https://www.yakimawa.gov/
+  scraper_misc:
+    city_id: 263
 - place: yarrow_point
   website: https://yarrowpointwa.gov/
+  scraper_misc:
+    city_id: 264
 - place: yelm
   website: https://www.yelmwa.gov/
+  scraper_misc:
+    city_id: 265
 - place: zillah
   website: https://www.cityofzillah.us/
-- seattle:
-    last_city_scrape_run: '2025-03-21'
+  scraper_misc:
+    city_id: 266
