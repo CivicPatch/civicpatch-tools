@@ -12,6 +12,7 @@ places:
   scraper_misc:
     city_id: 217
     population: 233000
+  last_city_scrape_run: '2025-03-22'
 - place: tacoma
   website: https://www.cityoftacoma.org/
   scraper_misc:

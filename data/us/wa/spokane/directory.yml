@@ -1,0 +1,19 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:spokane
+people:
+- name: Lisa Brown
+  position: mayor
+  phone_number: 509.625.6250
+  image: images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg
+  email: ''
+  website: https://my.spokanecity.org/mayor/
+- name: Lisa Brown
+  phone_number: 509.625.6250
+  image: images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg
+  email: ''
+  website: https://my.spokanecity.org/mayor/
+  position: council_member
+sources:
+- https://my.spokanecity.org/mayor/
+- https://my.spokanecity.org/mayor/about/
+- https://my.spokanecity.org/mayor/ask-the-mayor/
