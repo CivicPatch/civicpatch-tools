@@ -1,0 +1,59 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:tacoma
+people:
+- name: Victoria Woodards
+  position: mayor
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/government/mayor/
+- name: John Hines
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913
+  position: council_member
+- name: Sarah Rumbaugh
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010
+  position: council_member
+- name: Jamika Scott
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019
+  position: council_member
+- name: Sandesh Sadalge
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929
+  position: council_member
+- name: Joe Bushnell
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933
+  position: council_member
+- name: Kiara Daniels
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230
+  position: council_member
+- name: Olgy Diaz
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002
+  position: council_member
+- name: Kristina Walker
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937
+  position: council_member
+sources:
+- https://www.cityoftacoma.org/neighborhoodcouncils

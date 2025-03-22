@@ -17,6 +17,7 @@ places:
   scraper_misc:
     city_id: 229
     population: 225100
+  last_city_scrape_run: '2025-03-22'
 - place: vancouver
   website: https://www.cityofvancouver.us/
   scraper_misc:
