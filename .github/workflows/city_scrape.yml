@@ -1,4 +1,4 @@
-name: Populate City Info - Council Members
+name: City Scrape
 
 # Number of cities to process in each workflow run
 env:
@@ -48,7 +48,7 @@ jobs:
 
           city_names_to_ignore=$(echo $cities_to_ignore | sed -E 's/pipeline-city-changes-[^-]+-([^-]+)-[0-9]+/\1/g')
 
-          cities=$(rake "city_scrape:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $city_names_to_ignore]") 
+          cities=$(bundle exec rake "city_scrape:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $city_names_to_ignore]") 
 
           # Echo comma-separated list to JSON array for github output
           cities_json=$(echo "$cities" | jq -R -s -c 'split(",") | map( .| gsub("\\s+"; "") )')
@@ -75,7 +75,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: '3.4.2'
           bundler-cache: true
 
       - name: Install dependencies

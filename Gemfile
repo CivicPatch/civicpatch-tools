@@ -22,3 +22,7 @@ gem "json"
 gem "ruby-openai"
 
 gem "markitdown"
+
+gem "capybara", "~> 3.40"
+
+gem "selenium-webdriver", "~> 4.30"
