@@ -2,8 +2,7 @@ name: Populate City Info - Council Members
 
 # Number of cities to process in each workflow run
 env:
-  PIPELINE_RAILS_KEY: ${{ secrets.PIPELINE_RAILS_KEY }}
-  RAILS_ENV: pipeline
+  OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
 
 on:
   workflow_dispatch:
@@ -33,25 +32,23 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: '3.4.2' 
           bundler-cache: true
 
-      - name: Decrypt Rails credentials
+      - name: Install dependencies
         run: |
-          mkdir -p config/credentials
-          echo "$PIPELINE_RAILS_KEY" > config/credentials/pipeline.key
+          bundle install
 
       - name: Read cities from queue
         id: set-cities
         run: |
           # Load the cities queue file and take the first N cities
-          # where "last_city_info_council_members_run" has not been filled out
-          # ignore cities that already have PRs open
+          # and ignore cities that already have PRs open
           cities_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-city-changes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
 
           city_names_to_ignore=$(echo $cities_to_ignore | sed -E 's/pipeline-city-changes-[^-]+-([^-]+)-[0-9]+/\1/g')
 
-          cities=$(bundle exec rake "city_info:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $city_names_to_ignore]") 
+          cities=$(rake "city_scrape:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $city_names_to_ignore]") 
 
           # Echo comma-separated list to JSON array for github output
           cities_json=$(echo "$cities" | jq -R -s -c 'split(",") | map( .| gsub("\\s+"; "") )')
@@ -59,7 +56,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  populate_city_info:
+  populate_city_directory:
     permissions:
       contents: write
       pull-requests: write
@@ -81,6 +78,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Install dependencies
+        run: |
+          bundle install
+
       - name: Set up git
         run: |
           git config --global user.name "github-actions[bot]"
@@ -94,15 +95,10 @@ jobs:
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV  # Store the branch name as an environment variable
           git checkout -b $BRANCH_NAME
       
-      - name: Decrypt Rails credentials
-        run: |
-          mkdir -p config/credentials
-          echo "$RAILS_PIPELINE_KEY" > config/credentials/pipeline.key
-      
       - name: Get city council member data
         run: |
           echo "Processing city: ${{ matrix.city }}, State: ${{ github.event.inputs.state }}"
-          bundle exec rake 'city_info:fetch[${{ github.event.inputs.state }},${{ matrix.city }}]'
+          bundle exec rake 'city_scrape:fetch[${{ github.event.inputs.state }},${{ matrix.city }}]'
 
       - name: Commit council member changes
         run: |

@@ -1,0 +1,6 @@
+---
+census_places_map_url: https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_53_place.zip # 2024, we know this is really cities
+census_congressional_districts_map_url: https://www2.census.gov/geo/tiger/TIGER2024/CD/tl_2024_53_cd119.zip # 2024, we know this is really congressional districts
+
+places_file: place_2024/tl_2024_53_place.shp
+cds_file: cd_2024/tl_2024_53_cd119.shp

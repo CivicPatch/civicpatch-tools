@@ -1,0 +1,58 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:seattle
+council_members:
+- name: Sara Nelson
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/meet-the-council/sara-nelson
+- name: Joy Hollingsworth
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/hollingsworth
+- name: Robert Kettle
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/kettle
+- name: Cathy Moore
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/moore
+- name: Alexis Mercedes Rinck
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/rinck
+- name: Maritza Rivera
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/rivera
+- name: Rob Saka
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/saka
+- name: Mark Solomon
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/solomon
+- name: Dan Strauss
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.seattle.gov/council/strauss
+city_leaders:
+- name: Bruce Harrell
+  position: Mayor
+  phone_number: "(206) 684-4000"
+  image: images/8269b9ec4078f6475973d59aaba87d12b4d5b4a916d001f15cd26b3e072c8fc1.jpg
+  email: ''
+  website: https://www.seattle.gov/mayor
+sources:
+- https://www.seattle.gov/mayor
+- https://www.seattle.gov/council
