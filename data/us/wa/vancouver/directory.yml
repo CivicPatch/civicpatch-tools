@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:vancouver
+people:
+- email: ''
+  image: images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg
+  name: Anne McEnerny-Ogle
+  phone_number: ''
+  position: mayor
+  position_misc: ''
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+- email: ''
+  image: images/662aa4772aa8600cc726985a79a4f7b068c96139d68ee4df9f40c4592cffcb3c.jpg
+  name: Kim D. Harless
+  phone_number: ''
+  position: council_member
+  position_misc: council_seat_1
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+- email: ''
+  image: images/b26d44af2adababb837eb77899019123142b5b0affa91f40cff38bcc4c7ec1d1.jpg
+  name: Diana H. Perez
+  phone_number: ''
+  position: council_member
+  position_misc: council_seat_3
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+- email: ''
+  image: images/498cff4ba9d1d32447f3973f74f17bc56a6595d3f3078b7927d4834b10776097.jpg
+  name: Bart Hansen
+  phone_number: ''
+  position: council_member
+  position_misc: council_seat_4
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+- email: ''
+  image: images/3513dd82bb9e3d945600ffdd61863b7bf833402ab1052e6835f3ef45fb2ca9b8.jpg
+  name: Ty Stober
+  phone_number: ''
+  position: council_member
+  position_misc: council_seat_5
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+- email: ''
+  image: images/e5127c06da210aef85707033efa775f1e3a1b9d65287f908c077491372668f82.jpg
+  name: Sarah J. Fox
+  phone_number: ''
+  position: council_member
+  position_misc: council_seat_6
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+- email: ''
+  image: images/3fe804910455b7e1bbce7b23fba74f256c2ab7df53bd8bbb16cceb9db68b4f62.jpg
+  name: Erik Paulsen
+  phone_number: ''
+  position: council_member
+  position_misc: mayor_pro_tem,_council_seat_2
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+sources:
+- https://www.cityofvancouver.us/government/mayor-and-city-council/
