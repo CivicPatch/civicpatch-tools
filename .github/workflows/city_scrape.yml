@@ -3,6 +3,7 @@ name: City Scrape
 # Number of cities to process in each workflow run
 env:
   OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
+  BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
 
 on:
   workflow_dispatch:
