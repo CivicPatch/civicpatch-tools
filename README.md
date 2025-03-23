@@ -1,11 +1,23 @@
 # OpenData
 
+## How this works
+
+```mermaid
+flowchart TD;
+    A[Manual Pipeline: Grab a list of cities from STATE/places.yml] --> B[Scrape City Data for people -- council members, mayor, etc.]
+    B --> C[Bot opens a Pull Request for Review]
+    C --> D[Contributors Review and Merge Changes]
+    %% Pull Request Link: https://github.com/CivicPatch/open-data/pull/17
+    D.special[/You, the volunteer/] --> D
+    D --> F[Data coverage improves]
+```
+
 ## Priorities
 
 ### City Directory
 - [ ] Grab council members & city leaders for:
-  - [ ] Washington
-    - [ ] Top 10 cities by population
+  - [x] Washington
+    - [x] Top 10 cities by population
     - [ ] Bottom 10 cities by population
   - [ ] Michigan
     - [ ] Top 10 cities by population
