@@ -7,6 +7,7 @@ module Scrapers
   class DataFetcher
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
+      puts "Extracting content from #{url}"
       using_browser = false
       browser_session = nil
 
@@ -93,31 +94,31 @@ module Scrapers
       # raise an error if no selector matches
       raise "No selector matched" if found_element.nil?
 
-      strip_html_content(found_element)
+      #strip_html_content(found_element) TODO: this is stripping too much
       [base_url, found_element]
     end
 
     def download_images(base_url, nokogiri_html, destination_dir, using_browser, browser_session)
       nokogiri_html.css("img").each_with_index do |img, _index|
-        image_url = img["src"]
-        image_url = format_url(image_url)
-
-        absolute_image_url = URI.join(base_url, image_url).to_s
-
-        # hash the image url
-        image_hash = Digest::SHA256.hexdigest(absolute_image_url)
-        # determine the extension from the url
-        extension = File.extname(absolute_image_url)
-
-        filename = "#{image_hash}#{extension}"
-
-        # filename = File.basename(absolute_image_url)
-        ## get rid of query params
-        # filename = filename.split("?").first
-
-        destination_path = File.join(destination_dir, filename)
-
         begin
+          image_url = img["src"]
+          image_url = format_url(image_url)
+
+          absolute_image_url = URI.join(base_url, image_url).to_s
+
+          # hash the image url
+          image_hash = Digest::SHA256.hexdigest(absolute_image_url)
+          # determine the extension from the url
+          extension = File.extname(absolute_image_url)
+
+          filename = "#{image_hash}#{extension}"
+
+          # filename = File.basename(absolute_image_url)
+          ## get rid of query params
+          # filename = filename.split("?").first
+
+          destination_path = File.join(destination_dir, filename)
+
           File.open(destination_path, "wb") do |file|
             image_content = if using_browser
                               get_image_with_browser(browser_session,
@@ -184,12 +185,15 @@ module Scrapers
     end
 
     def fetch_with_client(url)
+      puts "Fetching with client: #{url}"
       response = HTTParty.get(url, headers: {
                                 "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
                                 "Accept-Language" => "en-US,en;q=0.9",
                                 "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                                "Accept-Encoding" => "gzip, deflate, br",
                                 "Referer" => "https://www.brave.com/"
                               })
+      puts "Response: #{response.code}"
 
       raise "fetch_with_client: Access Denied by #{url}" if response.code == 403
 

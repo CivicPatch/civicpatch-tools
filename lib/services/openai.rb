@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "openai"
-
+# TODO: track token usage
 module Services
   class Openai
-    @@MAX_TOKENS = 9400
+    @@MAX_TOKENS = 100_000
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
@@ -50,7 +50,7 @@ module Services
     def extract_city_info(_state, _city, content_file, city_council_url)
       content = File.read(content_file)
 
-      raise "Content for city council members is too long" if content.split(" ").length > @@MAX_TOKENS
+      return { error: "Content for city council members is too long" } if content.split(" ").length > @@MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(content, city_council_url)
 
@@ -60,7 +60,27 @@ module Services
       ]
       response_yaml = run_prompt(messages)
 
-      response_to_yaml(response_yaml)
+      response = response_to_yaml(response_yaml)
+
+      return response if response["error"].present?
+
+      # filter out invalid people
+      response["people"] = response["people"].select do |person|
+        person["name"].present? &&
+          (person["position"].present? || person["position_misc"].present?) &&
+          (person["phone_number"].present? || person["email"].present? || person["website"].present?)
+      end
+
+      response["people"].map do |person|
+        next unless person["position_misc"].present?
+
+        person["position_misc"] = person["position_misc"].downcase.gsub(/[ .]+/, "_")
+        person["position_misc"] = "" if %w[member chair].include?(person["position_misc"])
+
+        person["position"] = "council_member" if council_member_position?(person["position"], person["position_misc"])
+      end
+
+      response
     end
 
     def response_to_yaml(response_content)
@@ -81,48 +101,44 @@ module Services
         You are an expert data extractor.
         Extract the following properties from the provided content:
 
-        For each council member (leave empty if not found):
-          - council_members:
+        For each city leader or council member (leave empty if not found):
+          - people:
               - name
+              - position (Strictly mayor, council_president, or council_member)
+              - position_misc (Can be loosely interpreted, if available - Examples: position_2, district_3, city_attorney, seat_4, etc.)
               - phone_number
               - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL.)
               - email
               - website (Provide the absolute URL.)
                 If no specific website is provided, leave this empty — do not default to the general city or council page.)
 
-        For each city leader (e.g., mayors, city managers. leave empty if not found):
-          - city_leaders:
-              - name
-              - position (e.g., Mayor, City Manager, etc.)
-              - phone_number
-              - image (Same rules as above.)
-              - email
-              - website (Same rules as above.)
-
         Basic rules:
         - Youth council members are NOT city council members.
         - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
         - If you find just a list of names, with at least a website or email, they are likely to be council members.
+        - If the content is a press release, do not extract any people data from the content.
         - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
         - If you cannot find any relevant information, return the following YAML:
           - error: "No relevant information found"
+        - To make it on the people list, they must be associated with either "position" OR "position_misc)
 
         Example Output (YAML):
         ---
-        council_members:
+        people:
           - name: "Jane Smith"
+            position: council_member
             phone_number: "555-123-4567"
             image: "images/smith.jpg"
             email: "jsmith@cityofexample.gov"
             website: "https://www.cityofexample.gov/council/smith"
           - name: "John Doe"
+            position_misc: city_attorney
             phone_number: ""
             image: ""
             email: ""
             website: "/council/doe"
-        city_leaders:
           - name: "Robert Johnson"
-            position: "Mayor"
+            position: "mayor"
             phone_number: "555-111-2222"
             image: "images/mayor.jpg"
             email: "mayor@cityofexample.gov"
@@ -172,6 +188,15 @@ module Services
           properties: feature["properties"]
         }
       end
+    end
+
+    def council_member_position?(position, position_misc)
+      position.blank? && keywords_present?(position_misc)
+    end
+
+    def keywords_present?(position_misc)
+      keywords = %w[position seat district ward]
+      keywords.any? { |keyword| position_misc.include?(keyword) }
     end
   end
 end

@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "../scrapers/common"
+
 module Services
   class Brave
-    def self.get_search_result_urls(query, with_site = "", discard_urls_with_partial = [])
+    def self.get_search_result_urls(query, with_site = "", keyword_groups = {}, discard_urls_with_partial = [])
       formatted_query = URI.encode_www_form_component(query)
       formatted_query = "#{formatted_query} site:#{with_site}" if with_site.present?
 
@@ -15,17 +17,19 @@ module Services
         headers: {
           "Accept" => "application/json",
           "Accept-Encoding" => "gzip",
-          "X-Subscription-Token" => Rails.application.credentials.brave_token
+          "X-Subscription-Token" => ENV["BRAVE_TOKEN"]
         }
       )
       results_content = JSON.parse(results.body)
 
-      results_content["web"]["results"].map { |result| format_url(result["url"]) }
-    end
+      url_text_pairs = results_content["web"]["results"].map do |result|
+        {
+          "url" => result["url"],
+          "text" => result["title"]
+        }
+      end
 
-    # fix other areas of code that use URI.parse on URL with spaces
-    def self.format_url(url)
-      url.gsub(" ", "%20")
+      url_text_pairs.map { |pair| Scrapers::Common.format_url(pair["url"]) }
     end
   end
 end

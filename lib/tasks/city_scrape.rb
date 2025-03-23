@@ -7,10 +7,12 @@
 # rake 'city_info:find_geojson[nm,albuquerque,district]'
 
 require_relative "../scrapers/city"
+require_relative "../services/brave"
 require_relative "../services/openai"
 require_relative "../scrapers/us/wa/places"
 require_relative "../scrapers/site_crawler"
 require_relative "../scrapers/data_fetcher"
+require_relative "../scrapers/common"
 
 namespace :city_scrape do
   desc "Pick cities from queue"
@@ -122,61 +124,84 @@ namespace :city_scrape do
     puts "Extracting city info for #{city.capitalize}, #{state.upcase}..."
 
     destination_dir, cache_destination_dir = prepare_directories(state, city)
-    search_result_urls = Scrapers::SiteCrawler.get_urls(state_city_entry["website"], {
-                                                          "mayor" => ["mayor"],
-                                                          "council_members" => ["city council members",
-                                                                                "council members", "councilmembers", "city council", "council"]
-                                                        })
-
-    puts "Found #{search_result_urls.count} search result urls:"
-    puts search_result_urls.join("\n")
 
     city_directory = {
-      "council_members" => [], # active council members
-      "city_leaders" => [], # ex mayor, city manager, etc
+      "ocd_id" => "ocd-division/country:us/state:#{state}/place:#{city}",
+      "people" => [],
       "sources" => []
     }
 
+    website = state_city_entry["website"]
     source_dirs = []
 
-    search_result_urls.each_with_index do |url, index|
-      break if city_directory["council_members"].count.positive? && city_directory["city_leaders"].count.positive?
+    search_engines = %w[manual brave]
+    search_result_urls = []
+    search_pointer = 0
 
-      candidate_dir = prepare_candidate_dir(cache_destination_dir, index)
-      puts "Fetching #{url}"
+    search_engines.each do |engine|
+      # add unique urls only
+      new_results = get_candidate_city_directory_urls(engine, state, city, website)
+      search_result_urls.concat(new_results).uniq!
 
-      content_file = fetch_content(data_fetcher, url, candidate_dir)
+      puts "Search engine #{engine} found #{new_results.count} urls"
+      puts new_results.join("\n")
 
-      unless content_file
-        puts "❌ Error extracting content from #{url}"
-        next
-      end
+      while search_pointer < search_result_urls.count
+        url = search_result_urls[search_pointer]
+        search_pointer += 1
 
-      updated_city_info = extract_city_info(openai_service, state, city, content_file, url)
+        council_member_count = city_directory["people"].select { |person| person["position"] == "council_member" }.count
+        city_leader_count = city_directory["people"].select do |person|
+          %w[mayor].include?(person["position"])
+        end.count
 
-      next unless updated_city_info
+        break if council_member_count > 1 && city_leader_count.positive? # TODO: needs more "legit" rule?
 
-      council_members = people_with_names(updated_city_info["council_members"])
-      city_leaders = people_with_names(updated_city_info["city_leaders"])
+        puts "Fetching #{url}"
+        candidate_dir = prepare_candidate_dir(cache_destination_dir, search_pointer)
+        content_file = fetch_content(data_fetcher, url, candidate_dir)
 
-      if council_members.present?
-        city_directory["council_members"] = merge_arrays_by_field(
-          city_directory["council_members"], updated_city_info["council_members"], "name"
+        unless content_file
+          puts "❌ Error extracting content from #{url}"
+          next
+        end
+
+        updated_city_info = extract_city_info(openai_service, state, city, content_file, url)
+
+        # append to chat.txt
+        File.write(PathHelper.project_path("chat.txt"), updated_city_info.to_yaml, mode: "a")
+
+        next unless updated_city_info && updated_city_info["people"].present?
+
+        new_people = people_with_names(updated_city_info["people"])
+
+        next unless new_people.present?
+
+        city_directory["people"] = merge_people_lists(
+          city_directory["people"], new_people
         )
-      end
+        city_directory["people"] = city_directory["people"].map do |person|
+          person.sort_by { |key, _| key }.to_h
+        end
 
-      if city_leaders.present?
-        city_directory["city_leaders"] = merge_arrays_by_field(
-          city_directory["city_leaders"], updated_city_info["city_leaders"], "name"
-        )
-      end
+        # Ensure that each person has a position before sorting
+        city_directory["people"] = city_directory["people"].sort_by do |person|
+          # Sort by position in the specified order, then by position_misc
+          position_priority = { "mayor" => 1, "council_president" => 2, "council_member" => 3 }
+          [
+            position_priority.fetch(person["position"], 4),
+            person["position_misc"] || "",
+            person["name"]
+          ]
+        end
 
-      city_directory["sources"] << url
-      source_dirs << candidate_dir
+        city_directory["sources"] << url
+
+        source_dirs << candidate_dir
+      end
     end
 
-    # Are mayors important?
-    if city_directory["council_members"].present?
+    if city_directory["people"].length > 1 # maybe needs a more "legit" rule?
       update_city_directory(
         state,
         city,
@@ -195,6 +220,41 @@ namespace :city_scrape do
   end
 
   private
+
+  # Sometimes mayors end up in both the council members and city leaders arrays
+  def deduplicate_people(council_members, city_leaders)
+    council_members.each do |council_member|
+      if city_leaders.any? { |leader| leader["name"] == council_member["name"] }
+        city_leaders.delete_if { |leader| leader["name"] == council_member["name"] }
+      end
+    end
+
+    [council_members, city_leaders]
+  end
+
+  def get_candidate_city_directory_urls(engine, state, city, website)
+    keyword_groups = {
+      "council_members" => ["mayor and city council",
+                            "meet the council",
+                            "city council members",
+                            "council members",
+                            "councilmembers",
+                            "city council",
+                            "council"],
+      "city_leaders" => ["meet the mayor",
+                         "mayor",
+                         "council president"]
+    }
+    case engine
+    when "manual"
+      urls = Scrapers::SiteCrawler.get_urls(website, keyword_groups)
+    when "brave"
+      search_query = "#{city} #{state} city council members"
+      urls = Services::Brave.get_search_result_urls(search_query, website, keyword_groups)
+    end
+
+    Scrapers::Common.urls_without_segments(urls, ["news", "events"])
+  end
 
   def validate_find_division_map_inputs(state, city)
     raise "Error: Missing required parameters state: #{state} and city: #{city}" if state.blank? || city.blank?
@@ -366,66 +426,40 @@ namespace :city_scrape do
     end
 
     city_info_file = PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))
-    normalized_city_directory = normalize_city_directory(state, city, city_directory_content)
 
-    File.write(city_info_file, normalized_city_directory.to_yaml)
-  end
-
-  def normalize_city_directory(state, city, city_directory_content)
-    city_directory = {
-      "ocd_id" => "ocd-division/country:us/state:#{state}/place:#{city}",
-      "people" => [],
-      "sources" => city_directory_content["sources"]
-    }
-
-    city_directory_content["city_leaders"].each do |person|
-      person["position"] = person["position"]&.downcase || "city_leader"
-      city_directory["people"] << person
-    end
-
-    city_directory_content["council_members"].each do |person|
-      person["position"] = "council_member"
-      city_directory["people"] << person
-    end
-
-    city_directory
-  end
-
-  def merge_objects_by_field(obj1, obj2, field)
-    return nil unless obj1[field] == obj2[field] # Check if they refer to the same object
-
-    merged = obj1.dup # Start with a duplicate of the first object
-    obj2.each do |key, value|
-      merged[key] = value if value.present? # Merge properties, preferring non-nil values
-    end
-    merged
-  end
-
-  def merge_arrays_by_field(arr1, arr2, field)
-    merged = []
-
-    # Create a hash for quick lookup of objects in arr2 by the specified field
-    lookup = arr2.each_with_object({}) { |obj, hash| hash[obj[field]] = obj }
-
-    arr1.each do |obj1|
-      merged << if lookup[obj1[field]]
-                  # Merge the matching object from arr2 with obj1
-                  merge_objects_by_field(obj1, lookup[obj1[field]], field)
-                else
-                  # If no match found, just add obj1 to the merged array
-                  obj1
-                end
-    end
-
-    # Add any objects from arr2 that were not in arr1
-    arr2.each do |obj2|
-      merged << obj2 unless arr1.any? { |obj1| obj1[field] == obj2[field] }
-    end
-
-    merged
+    File.write(city_info_file, city_directory_content.to_yaml)
   end
 
   def people_with_names(people)
     people.select { |person| person["name"].present? }
+  end
+
+  def merge_people_lists(list1, list2)
+    # Create a hash to store merged people by full name
+    people_hash = {}
+
+    # Helper method to generate full name
+    full_name = ->(person) { "#{person['name'].split.first} #{person['name'].split.last}" }
+
+    # Add people from the first list
+    list1.each do |person|
+      name_key = full_name.call(person)
+      people_hash[name_key] ||= person.dup # Use dup to avoid modifying the original object
+    end
+
+    # Merge people from the second list
+    list2.each do |person|
+      name_key = full_name.call(person)
+      if people_hash[name_key]
+        # Merge properties if the person already exists, prefer properties from the first list unless the first list is empty
+        people_hash[name_key].merge!(person) { |_key, old_val, new_val| old_val.present? ? old_val : new_val }
+      else
+        people_hash[name_key] = person.dup
+      end
+    end
+
+    # Convert the hash back to an array
+    merged = people_hash.values
+    merged
   end
 end
