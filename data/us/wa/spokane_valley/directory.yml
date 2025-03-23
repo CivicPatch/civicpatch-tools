@@ -1,0 +1,56 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:spokane_valley
+people:
+- email: ''
+  image: images/9d1d60554e19638955eb72466412bc0bdcc0d7f376b95b0da0b78ad5f532eb8c
+  name: Rod Higgins
+  phone_number: 509-720-5066
+  position: council_member
+  position_misc: position_1
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=17
+- email: ''
+  image: ''
+  name: Jessica Yaeger
+  phone_number: 509-720-5064
+  position: council_member
+  position_misc: position_2
+  website: https://spokanevalleywa.gov/directory.aspx?EID=18
+- email: ''
+  image: ''
+  name: Al Merkel
+  phone_number: 509-720-5062 (desk)
+  position: council_member
+  position_misc: position_3
+  website: https://spokanevalleywa.gov/directory.aspx?EID=19
+- email: ''
+  image: ''
+  name: Ben Wick
+  phone_number: 509-720-5065
+  position: council_member
+  position_misc: position_4
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=20
+- email: ''
+  image: ''
+  name: Pam Haley
+  phone_number: 509-720-5060
+  position: council_member
+  position_misc: position_5
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=21
+- email: ''
+  image: images/647bec1b2ff2d273d57afa56c81228e54e3a7a162ceeef71d69e3f450cc11cc0
+  name: Tim Hattenburg
+  phone_number: 509-720-5063
+  position: council_member
+  position_misc: position_6
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=22
+- email: ''
+  image: ''
+  name: Laura Padden
+  phone_number: 509-720-5061
+  position: council_member
+  position_misc: position_7
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=23
+sources:
+- https://www.spokanevalleywa.gov/193/City-Council
+- https://www.spokanevalleywa.gov/Directory.aspx?did=8
+- https://www.spokanevalleywa.gov/directory.aspx?EID=22
