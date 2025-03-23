@@ -219,7 +219,35 @@ namespace :city_scrape do
     end
   end
 
+  desc "Generate PR comment for city directory"
+  task :get_pr_comment, [:state, :city, :github_sha] do |_t, args|
+    state = args[:state]
+    city = args[:city]
+    github_sha = args[:github_sha]
+
+    # Assuming you have a method to fetch the city data
+    city_data = fetch_city_directory(state, city)
+
+    markdown_content = <<~MARKDOWN
+      * **Name:** #{city_data[:name]}
+        **Position:** #{city_data[:position]}
+        **Position Misc:** #{city_data[:position_misc]}
+        **Email:** #{city_data[:email]}
+        **Phone:** #{city_data[:phone_number]}
+        **Website:** [Link](#{city_data[:website]})
+        ![Image](data/us/#{state}/#{city}/#{city_data[:image]}?raw=true&ref=#{github_sha})
+    MARKDOWN
+
+    puts markdown_content
+  end
+
   private
+
+  def fetch_city_directory(state, city)
+    city_directory_file = PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))
+    city_directory = YAML.load(File.read(city_directory_file))
+    city_directory
+  end
 
   # Sometimes mayors end up in both the council members and city leaders arrays
   def deduplicate_people(council_members, city_leaders)

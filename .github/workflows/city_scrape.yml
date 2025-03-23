@@ -132,3 +132,18 @@ jobs:
             --body "Populate city info via github actions pipeline."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Generate Markdown for PR Comment
+        id: generate_markdown
+        run: |
+          # Run the Rake task to generate the Markdown
+          markdown_content=$(bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city }},${{ github.sha }}]')
+
+          # Set the output for the next step
+          echo "markdown_content=$markdown_content" >> $GITHUB_ENV
+
+      - name: Comment on PR
+        run: |
+          gh pr comment ${{ env.BRANCH_NAME }} --body "${{ env.markdown_content }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
