@@ -1,0 +1,62 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:renton
+people:
+- email: mayor@rentonwa.gov
+  image: images/eaaec0f95046687d9f113dc01cd47fa0cd3cf5d1d96f3af441392c2b698431f5.jpg?dimension=featuredimage&w=1140
+  name: Armondo Pavone
+  phone_number: 425-430-6500
+  position: mayor
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
+- email: ''
+  image: images/a7563edb9e5e6eceffeea430d853eed0ea5b4440241341a751d8cce8891247a4.jpg?dimension=largethumbnail&w=345&h=189
+  name: Carmen Rivera
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/City-Council/rivera
+- email: ''
+  image: images/f3fc48949048716e12c928c57114af13c99ffa89cacfc85ea10f9aa471d35153.jpg?dimension=largethumbnail&w=345&h=189
+  name: Ed Prince
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/City-Council/prince
+- email: ''
+  image: images/b77494aa9a13521c2a68098179fa6a4b5c03a90a4fff6796d6b6470fac0c32ff.jpg?dimension=largethumbnail&w=345&h=189
+  name: James Alberson, Jr.
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/City-Council/alberson
+- email: ''
+  image: "/files/assets/city/v/1/elected/city-council/images/kim-khánh-văn_900x900.jpg?dimension=largethumbnail&w=345&h=189"
+  name: Kim-Khánh Văn
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/City-Council/van
+- email: ''
+  image: "/files/assets/city/v/1/elected/city-council/images/ruth-pérez_900x900.jpg?dimension=largethumbnail&w=345&h=189"
+  name: Ruth Pérez
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/City-Council/perez
+- email: ''
+  image: images/999a6d823af197ffeaf8a9a4e9c67e08441dcdfc22e79a62451a923e16467592.jpg?dimension=largethumbnail&w=345&h=189
+  name: Ryan McIrvin
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/City-Council/mcirvin
+- email: ''
+  image: images/aba48dfbc1248a95a8284965a115ff4e1a7e3714c09b14552b15cbcfa78d55e1.jpg?dimension=largethumbnail&w=345&h=189
+  name: Valerie O'Halloran
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.rentonwa.gov/Government/City-Council/ohalloran
+sources:
+- https://www.rentonwa.gov/Government/City-Council
+- https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
