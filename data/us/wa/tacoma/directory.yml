@@ -1,0 +1,68 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:tacoma
+people:
+- email: ''
+  image: images/82ebc4bfd402168014f39ce08e653d6d0a9cbe0ef7ef190efdb396fc18838224.jpg
+  name: Victoria Woodards
+  phone_number: 253-591-5100
+  position: mayor
+  position_misc: ''
+  website: http://www.cityoftacoma.org/mayor/
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/2b80a380151736d62741b25c9864d8908d8a6e29db87813a25051cca3f58340b.jpg
+  name: John Hines
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_1
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/5afb31d01c772eed7a4dc399421ea5406828c130eb79396eb04d6c8ec8ecd066.jpg
+  name: Sarah Rumbaugh
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_2
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/50a6a62ed23947904d7fc53a539a2801a22a23ad74d49023d5e8cda51546dcf6.jpg
+  name: Jamika Scott
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_3
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/ff984a583cf779516643a481bad5489954c2bf44a4172748116ada8527e270a9.jpg
+  name: Sandesh Sadalge
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_4
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/0c806cf6ac944ad285cbcc7ccdfe7983ad90eb0cb64695392d3e92d4d02c95cc.jpg
+  name: Joe Bushnell
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_5
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/d590cc5cc1652449eee3b198ba2342364e8f024ca9ddc88fb6380f41b1fe45b6.jpg
+  name: Kiara Daniels
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_6
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/79569fa4d8f43ac965f0d1a70ef6481ab9935ddbfff1ece509b6f5f2fa88a241.jpg
+  name: Olgy Diaz
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_7
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002
+- email: https://survey123.arcgis.com/share/2ac66d58a46a4ea58a31678e0bde8775
+  image: images/bd3c35055ab2ad54c5058e09684f2607c343aff2c02df6e338e9b92514523599.jpg
+  name: Kristina Walker
+  phone_number: 253-591-5100
+  position: council_member
+  position_misc: position_8
+  website: http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937
+sources:
+- https://www.cityoftacoma.org/government/city_council
