@@ -95,6 +95,7 @@ places:
   scraper_misc:
     city_id: 190
     population: 80040
+  last_city_scrape_run: '2025-03-23'
 - place: marysville
   website: https://marysvillewa.gov/
   scraper_misc:

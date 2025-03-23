@@ -1,0 +1,63 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:redmond
+people:
+- email: ''
+  image: images/14d394e4f0272aa740ce101854ec040dd05958ed8c12aa64e8d580c2d5a3d3c6
+  name: Angela Birney
+  phone_number: ''
+  position: mayor
+  position_misc: ''
+  website: http://www.redmond.gov/284
+- email: ''
+  image: ''
+  name: Jessica Forsythe
+  phone_number: 425-305-7206
+  position: council_president
+  position_misc: ''
+  website: http://www.redmond.gov/directory.aspx?EID=859
+- email: ''
+  image: ''
+  name: Vanessa Kritzer
+  phone_number: 425-305-9892
+  position: council_president
+  position_misc: ''
+  website: http://www.redmond.gov/directory.aspx?EID=886
+- email: ''
+  image: ''
+  name: Angie Nuevacamina
+  phone_number: 425-556-5846
+  position: council_member
+  position_misc: ''
+  website: http://www.redmond.gov/directory.aspx?EID=985
+- email: ''
+  image: "/images/1a2e20592ea769ca6e540891a67926627fed2d31f85295418c80c55d78dfe6ab"
+  name: Jeralee Anderson
+  phone_number: 425-588-1619
+  position: council_member
+  position_misc: ''
+  website: http://www.redmond.gov/directory.aspx?EID=855
+- email: ''
+  image: ''
+  name: Melissa Stuart
+  phone_number: 425-556-2110
+  position: council_member
+  position_misc: ''
+  website: http://www.redmond.gov/directory.aspx?EID=940
+- email: ''
+  image: ''
+  name: Osman Salahuddin
+  phone_number: 425-556-5845
+  position: council_member
+  position_misc: ''
+  website: http://www.redmond.gov/directory.aspx?EID=986
+- email: ''
+  image: ''
+  name: Steve Fields
+  phone_number: 425-403-9476
+  position: council_member
+  position_misc: ''
+  website: http://www.redmond.gov/directory.aspx?EID=858
+sources:
+- http://www.redmond.gov/284
+- https://www.redmond.gov/CivicAlerts.aspx?AID=1757
+- http://www.redmond.gov/Directory.aspx?did=33

@@ -1,0 +1,2991 @@
+<body class="wide hideContent">
+
+	<script>jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});</script>
+
+	<div id="fb-root"></div>
+<div id="skipToContentLinks">
+<a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1757#contentarea" target="_self" class="skipToContentLink">Skip to Main Content</a>
+</div>
+	<form id="frmReferenceFormForTelerikEditorDialogs"></form>
+
+		<input type="hidden" id="GoogleMapsKey" value="AIzaSyDWUuE-ifkbhxblF920N8MjpBdTg1Wt784">
+
+
+
+	<input type="hidden" id="cpcDomain" value="https://cp-civicplusuniversity2.civicplus.com">
+	<input type="hidden" id="hdnStructureID" value="2">
+	<input type="hidden" id="hdnContentCollectionID" value="3c182709-3953-40ed-8654-00dfd988445f">
+	<input type="hidden" id="hdnWorkingCopyID" value="00000000-0000-0000-0000-000000000000">
+	<input type="hidden" id="hdnThemeID" value="16">
+	<input type="hidden" id="pageIsFrontEnd" value="true">
+	<input type="hidden" id="pageModuleID" value="1">
+	<input type="hidden" id="pagePageID">
+
+		<input type="hidden" id="hdnModuleID" value="1">
+		<div id="stickyPlaceholder"></div>
+	<div id="outer-wrap" class="outer-wrap">
+		<div id="inner-wrap" class="inner-wrap">
+				<div id="divToolbars" class="cpToolbars newCP mui-fixed" style="">
+					
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700); 
+.alertText .customAlert {
+    color: #EAEAEA;
+    display: inline-block;
+    font-family: 'Open Sans Condensed', sans-serif; 
+    text-transform: uppercase;
+    font-weight: bold;
+    height: 27px;
+    left: 57px;
+    line-height: 27px;
+    overflow: hidden;
+    position: absolute;
+    top: 15px;
+    white-space: nowrap;
+    width: 268px;
+}
+</style>
+  <div id="1_divAlertBar" class="alertToolbar cpToolbar" style="background: #2C353E;">
+    <div id="1_divAlertToolbarInner" class="alertToolbarInner" style="font-size: 16px;">
+        <a href="https://www.redmond.gov/2241" id="1_lnkAlertText" class="alertText" style="border-right: 1px solid #000000;">
+            <img src="images/f4b5d2ae8474c05e5e31a78595368f26c24f59f2fc9a59746d10c354ab3ef3d9" id="1_imgDot" alt="Emergency Alert" class="redDot">
+            <span id="1_customAlert" class="customAlert">Info</span>
+        </a>
+        <span id="1_spnAlertContainer" class="alertContainer"><a href="https://www.redmond.gov/AlertCenter.aspx?AID=Immigration-Resources-78" target="_self" class="alert" style="border-left: 1px solid #635e65; border-right: 1px solid #000000;background: #222; color: #FFFFFF;">
+	Immigration Resources
+	<span style="color: #FFCE62; font-weight: bold;">Click for more information</span>
+</a>
+</span>
+    </div>
+  </div>
+  <div id="1_divAlertBarEmpty" class="alertBarEmpty"></div>
+  
+
+
+
+				</div>
+			<div id="bodyWrapper">
+				<div id="mainNavHolderMobile" class="mainNavHolderMobile"></div>
+				
+<!-- Parent structural container -->
+<div data-cprole="structuralContainer" id="structuralContainer1">
+<!-- Header Container --><div data-cprole="stickyStructuralContainer" id="stickyStructuralContainer2">
+<div id="stickyStructuralContainer_d4c6b8fd-2947-4d31-90cf-01a5f706cde2" class="stickyInnerDiv  ">
+<div class="siteWrap">
+<!-- Logo/Site ID --><div data-cprole="banner" id="banner2" class="logo empty">
+
+
+
+
+				<a id="banner2-50" style="			display: block; text-align: left;
+" class="bannerObject" href="https://www.redmond.gov/" target="_self"><img alt="City of Redmond logo - black" class="bannerObject" src="images/ab04ca98a01dd0d970551202fa9d6d1883c76f37c31eafc21e5c6a4b8953c32a"></a>
+</div>
+<!-- Navigation --><nav data-cprole="nav" id="mainNav" class="siteNav mainNav" role="navigation">
+<ol id="mainNavMenu" data-parent="1" class="rootNavMenu" role="menu">
+<!--
+--><li id="MainItem1678" class="topMenuItem" role="none" data-pageid="1678" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavNews" class="navMainItem mainNavItem mainNavItem1" href="https://www.redmond.gov/" target="_self">   News </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem9" class="topMenuItem" role="none" data-pageid="9" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavIWantTo" class="navMainItem mainNavItem mainNavItem2" href="https://www.redmond.gov/9/I-Want-To" target="_self">   I Want To... </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem101" class="topMenuItem" role="none" data-pageid="101" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavCommunity" class="navMainItem mainNavItem mainNavItem3" href="https://www.redmond.gov/101/Community" target="_self">   Community </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem35" class="topMenuItem" role="none" data-pageid="35" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavBusiness" class="navMainItem mainNavItem mainNavItem4" href="https://www.redmond.gov/35/Business" target="_self">   Business </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem27" class="topMenuItem" role="none" data-pageid="27" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavGovernment" class="navMainItem mainNavItem mainNavItem5" href="https://www.redmond.gov/27/Government" target="_self">   Government </a>			<!--
+			--><!--
+			-->
+</li>
+<!---->
+</ol>
+
+
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded',function () {
+					var menuID = 'mainNavMenu';
+					var menuType = MAIN_MENU;
+
+					//setup menu manager properties for main menu
+					if (!menuManager.mobileMainNav && false)
+						menuManager.adjustMainItemsWidth('#' + menuID);
+					menuManager.isMainMenuEditable = false;
+					menuManager.mainMenuMaxSubMenuLevels = 4;
+					menuManager.setMOMMode(2, menuType);
+
+					//Init main menu
+					var setupDraggable = menuManager.isMainMenuEditable;
+					var urlToGetHiddenMenus = '/Pages/MenuMain/HiddenMainSubMenus?pageID=1&moduleID=1&themeID=16&menuContainerID=mainNav';
+
+					menuManager.setupMenu(menuID, 'mainNav', menuType, setupDraggable, urlToGetHiddenMenus);
+					menuManager.mainMenuInit = true;
+					menuManager.mainMenuTextResizer = true;
+					if (1.00 > 0)
+						menuManager.mainMenuTextResizerRatio = 1.00;
+					if (window.isResponsiveEnabled)
+						menuManager.mainMenuReady.resolve();
+
+		});
+	</script>
+
+
+<!-- Mega Menu --><aside data-cprole="megaMenu" id="megaMenu" class="megaMenu" style="display: none;"><input type="hidden" id="megaMenuPopupDirection" value="0"><input type="hidden" id="megaMenuWidthReference" value="0"><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu1678" class="contentTop mainNavMegaMenu megaMenuContainer pageID_1678 hidden" data-orientation="horizontal">	<div id="cc2d817acb-181c-4148-bc47-49e89adc65a8" data-containerid="2d817acb-181c-4148-bc47-49e89adc65a8" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu9" class="contentTop mainNavMegaMenu megaMenuContainer pageID_9 hidden" data-orientation="horizontal">	<div id="ccc5edf63d-1b47-467b-b0a5-67db58b64fca" data-containerid="c5edf63d-1b47-467b-b0a5-67db58b64fca" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu101" class="contentTop mainNavMegaMenu megaMenuContainer pageID_101 hidden" data-orientation="horizontal">	<div id="cc58b35088-7f32-4ed1-b765-f69ba472a2db" data-containerid="58b35088-7f32-4ed1-b765-f69ba472a2db" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu35" class="contentTop mainNavMegaMenu megaMenuContainer pageID_35 hidden" data-orientation="horizontal">	<div id="cca7f6800a-18f3-4ee7-b995-a232a3aae42a" data-containerid="a7f6800a-18f3-4ee7-b995-a232a3aae42a" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu27" class="contentTop mainNavMegaMenu megaMenuContainer pageID_27 hidden" data-orientation="horizontal">	<div id="cc9fa4182e-810f-4ec6-a595-7e166105e099" data-containerid="9fa4182e-810f-4ec6-a595-7e166105e099" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside></aside></nav>
+</div>
+</div>
+</div>
+<!-- Top Banner --><div data-cprole="structuralContainer" id="structuralContainer3">
+<div class="siteWrap2"><div data-cprole="banner" id="banner1">
+<div data-cprole="structuralContainer" id="structuralContainer4">
+<!-- Search container --><aside data-cprole="contentContainer" id="contentContainer4a" class="search_ts">	<div id="cc9fd09b8c-16f8-40d9-a969-786260b279fd" data-containerid="9fd09b8c-16f8-40d9-a969-786260b279fd" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="12277dc7-8fb5-43a2-8f23-ba0df6f1e727">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last idae6321dd-af09-4a67-af79-715356777b88" style="" data-widgetcontainerid="ae6321dd-af09-4a67-af79-715356777b88">	
+ 
+	<div data-widget-id="3cf9d891-c42d-4076-99ee-9a548c5f93a2" data-modulename="customHtml" id="widgetCustomHtml3cf9d891-c42d-4076-99ee-9a548c5f93a2" class="widget widgetCustomHtml skin43 narrow">
+	<div class="widgetBody pageStyles" id="widgetBody3cf9d891-c42d-4076-99ee-9a548c5f93a2">
+		<div id="customHtml3cf9d891-c42d-4076-99ee-9a548c5f93a2"><div>
+<style>
+.pageStyles td.gsc-search-button,
+.pageStyles td.gsc-input, 
+.pageStyles td.gsib_a, 
+.pageStyles td.gsib_b, 
+.pageStyles th.gsc-search-button {
+background-color: transparent;
+}
+
+form.gsc-search-box {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    width: 100%;
+    color: #656565;
+    background-color: rgba(255,255,255,1);
+    font-family: Lato;
+    font-weight: normal;
+    font-size: 1.2em;
+}
+
+td#gs_tti50 {
+    padding-left: 1.6em;
+}
+
+.gsc-input-box {
+    border: none;
+    background: none;
+}
+
+.gsst_a .gscb_a {
+    color: #656565;
+}
+
+td.gsc-search-button {
+    padding-right: 1.6em;
+}
+
+td.gsc-input {
+    padding: 0px;
+    height:60px
+}
+</style>
+
+<script async="" src="https://cse.google.com/cse.js?cx=001121890526140639040:zh3by1d9q84"></script>
+<div class="gcse-searchbox-only"></div>
+</div></div>
+	</div>
+	</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</aside>
+</div>
+
+
+
+
+		<div id="bannerImagesJSON49" class="hidden"></div>
+		<div id="bannerSlideshowControls_banner1" class="bannerSlideshowControlsNew none " style="display:none">
+			<a id="arrowPrev_banner1" tabindex="0" class="arrowNew prev" aria-label="Banner Arrow Previous"><svg style=" " class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowLeft"></use></svg></a>
+			<a id="arrowNext_banner1" tabindex="0" class="arrowNew next" aria-label="Banner Arrow Next"><svg style=" " class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowRight"></use></svg></a>
+		</div>
+			<script type="text/javascript">
+				$(window).on("load", function () {
+					$.when(window.Pages.rwdSetupComplete)
+						.done(function () {
+							renderExternalBannerSlideshow('banner1',
+								{"BannerOptionID":49,"ThemeID":16,"SlotName":"banner1","Name":"Default","IsDefault":true,"BannerMode":2,"SlideShowSlideTiming":null,"SlideshowTransition":0,"SlideShowTransitionTiming":null,"ImageScale":true,"ImageAlignment":1,"ImageScroll":true,"MuteSound":true,"VideoType":0,"Status":40,"SlideshowControlsPosition":0,"SlideshowControlsAlignment":0,"SlideshowBannerControlsColorScheme":0,"DisplayVideoPauseButton":false,"VideoPauseButtonAlignment":1,"VideoPauseButtonControlsAlignment":0,"VideoPauseButtonStyle":"#FFFFFF","VideoPauseButtonBackgroundStyle":"#000000","VideoPauseButtonAlignmentClass":"alignRight viewport","DisplaySlideshowPauseButton":true,"SlideshowControlsColor":"#FFFFFF","SlideshowControlsBackgroundColor":"#000000","SlideshowPauseButtonClass":"isHidden","BannerImages":[{"BannerImageID":60,"BannerOptionID":49,"FileName":"/ImageRepository/Document?documentID=105","Height":399,"Width":1698,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":1,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":186,"BannerOptionID":49,"FileName":"/ImageRepository/Document?documentID=5157","Height":399,"Width":1698,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":2,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""}],"BannerVideos":[],"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/"},
+								'/App_Themes/Simple/Images/',
+								'Rotating');
+						});
+				});
+			</script>
+
+</div></div>
+</div>
+<!-- Main content container --><div data-cprole="structuralContainer" id="structuralContainer5">
+<div class="siteWrap2"><div data-cprole="structuralContainer" id="structuralContainer6" class="mainWrap" role="main">
+<div data-cprole="structuralContainer" id="structuralContainer7" class="outerContentWrap">
+<div data-cprole="structuralContainer" id="structuralContainer8" class="contentWrap">
+<div data-cprole="breadCrumbs" class="breadCrumbContainer" id="breadCrumbs">		<ol class="semanticList breadCrumbs">
+			<li><a class="breadCrumb" href="https://www.redmond.gov/">Home</a></li>
+<li>News Flash</li>
+		</ol>
+
+	   
+    
+</div>
+<div data-cprole="mainContentContainer" id="moduleContent">
+
+<div id="ctl00_ctl00_MainContent_BodyWrapper">
+	
+	<script type="text/javascript"><!--
+	var isie6 = false, isie7 = false, isie6or7 = false;
+	var intCountryCode = 840;
+
+	function setUrlLength(editor) {
+		//Toggle Image Context Menu Items
+		setMenuItems(editor);
+		//setContentBackgroundColor(editor);
+		removeIEParagraphs(editor);
+	}
+	function setUrlLengthAndToolToggle(editor) {
+		var minToolsGroups = 2; // Number of MinimumSetOfTools tools groups.
+		
+		// Hide the MinimumSetOfTools on load.
+		var toolbar = editor.get_toolContainer(); // Get toolbar container.
+		var toolgroups = toolbar.getElementsByTagName("UL"); // Get all toolgroups containers.
+		
+		for (var i = toolgroups.length - 1; i >= minToolsGroups; i--)			toolgroups[i].style.display = "none";
+		
+		if (editor.isIE) {
+			var elem = editor.get_element();
+			elem.style.height = "430px";
+ 			elem.style.minHeight = "430px";
+		}
+		
+		// Toggle Image Context Menu Items.
+		setMenuItems(editor);
+		//setContentBackgroundColor(editor);
+		removeIEParagraphs(editor);
+	}
+//--></script><!--[if IE 6]><script type="text/javascript">isie6 = true; isie6or7 = true;</script><![endif]-->
+<!--[if IE 7]><script type="text/javascript">isie7 = true; isie6or7 = true;</script><![endif]-->
+
+	
+
+	<form name="aspnetForm" method="post" action="./CivicAlerts.aspx?AID=1757" id="aspnetForm" style="display:inline;" onsubmit="return headerValidationCallback();" enctype="multipart/form-data" autocomplete="off">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="6S6NkGXmCwdt27J8AB7QZL+2k9S7eYp4nbWis0PFTQNYPG0zQDcJ/4qxWUkbUimtvnjD1B/0qHlAnluka/c4ligDKEAqzj3Wly0iA61exDBi/2I0C7y9FRmOlRi3db0agZQyveIODyoxLu6mG0H3JiKi78YNwb6DdxZYdaHCOsvXx715E1h9nuhm8vCHQ7nlPPH8fxPYdVKgvHQj47cmOq5D3Ui888+OAROzzs9dbtf4+rDGfbpFT3RKbNG2z9toviWaKE0nC2lDeurSDcDcZHPxdiIl77W7ZOBTtSLOmrQFHjIkbRA44aJs5h3LGhEE/s1Qhlu/EI2zzfh/uWwMHS7bk86kxi98w+lkCQN+TmAQJb6APAANZx8ATDYEdK+XNmwZ1t892vMVg/zP8A5APhlRsqaraZsV57EUdWssS9ydYv2ntLpavnSDd86qvuinQS138oFFa/aTtx33dt4xcw+5ieW7rrlPMAVK95l68vxCLUuB+20W0KUws8vqWLM7LZ3tH0BxR/hGu/ozFZbTPDW8tVryg7NHXhAOFWdweWwSpRiGFeZPwVWAUdDJBsjnZuwsl+8APklJ5sXrgTZtldoCTp5afQTnDgFTJEdVBvq3HPtaFnDBSuEobPvjUq5RIHLtEE/HXRzNhxwyB2C8JgiJNbNaKb4vsVXwLubq00M6Uy+uhRcKjD2IdK/VRtjQta2jlb6a8QFg+zJRIsidtNqdk0IO2dsmkb4J1E4MZf4S2+sUmzK2So4CmXFTspsRFCKwOOKFD+vaSnhtdcgQQgbGEeuXKSxaUmj/ipfRFUvY1iqKDY7CxBVATmdI0GzNcpVScTqO1O13zDcNpdyCf8pjmMr0glsyo68C925HINhjRkn6e0IwmjPHMKMMa4ILdoqP+/YeThIgpaufqPruapjLDVhRwyOyKEnHsBqL3ft/b4rhegpdMRILle7eJi1Y8l4w3Px/ihMmqrKuM4ivZMcASL3IsXJfxAR3gG8E4Ag8lv92BB00bLAelUe3yRebJvTy4/OtgWIat+/pz72xicPGsGKZVHfzTQrHiMZ/ikSl9HM3hKEv0LFu+uJFmsPjxDFzwIihDHfhc+2HL23ec2QDvC2qE3RIlrjHjBsSQ9LSI5O0KWzibeOh9/vxbRyKTUBs5QNfUFqwtetL4bSMh8E4JGGPaR8ixgZ7UEUS9hSj6vvU/cXWba0zVXyEjuUHTB5A6rrbaq/f15JsazFDR35Ky00y3yLcpOxO+f6kp0ZBayRUxdnckRpw0HykOmQ5rYSN88CBS662QsCnwyiscvb+4GiDGho/OYikNN6rjxx0WOdRWQpkAzTTI8Kv0oX2THuz/aAB6Jp2oBwaPD8ZGfGH6/B+vtyLr0NsObQmoHYnaLCnraJ8pdX2POVxpCM6mF4D5U+jqYkFEL9/RhPbYQI2TkOOJM5uencO/4v197iQVJb9hL/DmZtaDwcjSV9xpc5ZIFqASawHn3lpWQbIjMZWCqG0CG1oI5D1GmZReQrs8hkHr6DaRlofhVeenckU7fgB2V4iiIb2A8NWGtiNHsID4ajAI67+5f/CnHHI3Lx4gDUj4E54Z50Y11yUidMccOrQmOerG0kEDqJBviBsQ91isqOAs+/bC1dsknI921u13iEdB5r6VCXjJIPxoLQyMj3Om6J0PqeL9fyRb0KR50npfaVyeldSiDkZm5nf5fqI+DRVhB/CSY7vc8wG5SMo89RCFJ263JGkmJeDY94mY08dvyGIyTsl+tyRLqXT3ObNxWdWfgCk2yw1y9ancCkEMYZ6cj3kRgjXqJuDjGB4jNjfq4FbIqa3i5+Gwfu/VjycWDen0eW7EGALWOoemyqDD8cENxQWspTSkLcpUtscQtq0AhauAgKnZugP4zL4WKOWz4JoWyOkbH41rb730rmE+FLCHiAbrjw8Pr+w2AWe9Lx4VOI9p9A38kCCulvn/51QX+p4sJMesP2kKbn6Paq4qip54SqOqd2os7bn/yZNbw2sIiCtezTVS5YIlb4TdmW9uIwM8gP3PYoN3XFEmWydoiuDje2J+wz+xmieussmz+NFYr0K90aOi34QuXvGlIcKbSWETLb1CIuIT+KI2Opn9KO8Z1znuisKmYGmjJ7BUKJ3skcJKpl+6PE1xaMPnL2YRjvQq50PLnS1IRMzzp+6VafrVyQpDj1hLvN2NaaXWkFKnvWscQpOi4MPbDT1TcbG+8T18X+jnrJn/h6gErE8cwitpX6mRQoNx9JjsuHQp+2VpKTwxpC3iCL29g8+DhGkb+GnLzogEv/1sQEX4sFkj91HKTNELjFsFgalIfeQwJoI8u9OJG8bP59T5voFFM2tiG+TXj22f2CEVi8em3VIFCA1UUoI8XH4JoubH4QhK5pHdOjJ4I+6dBIUiawdwUsC2lQov3rg7OfuJtksOOhFrPPgJthqo313q1mkLauX2sOOTTQQRgCzvLOZMPdSuf3cIkvtHqCCinYoAZVWTncAAnWRC7ZzWKVFU3K+ygLOIWTuEqzG4BLt3WsvaVYH/cYeqWu3EgYvUQCoLUPmRXutTtf9SJSO4ewyfdqtyvNVl/KeA6INoyHLX8n0YwJgxJRJJgaZMnbcuD9SUgHt2gKuTA5Mz8mVGndozZkHcpIXyHl4bGe5OWRoG2JhKuTzDab9Sn+lEDt7s3YUNb93MMFqypmXIQd43E6YnmIE9zbZidv2YbR8bQLC5+NXjOCKjfhxz0UlILk/tT6dH/jGaxqoeeT/P82pabwROfUOeUYgFoVf3Z5eFsbFYC9n4uCjms19mqFeLmXJfF0QluiP/+6Zou4j6JwqAGRvPDrY1e3idKOIEBDsVVNR6SyRWCbf8nIrlOnayg9VaeeAEB9suU9IHYREWMvcuEY06qJQz+rq5Znhe0avSsVX1qNnBleRgGPqqGfr8bHOr/WzVAJgLeOO">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZDLabodcikOjfaxGftwY9HZ4kdGjeaKe0dWaPQB1vgEd44eKAO0Ba1XMxE47-4twmw2&amp;t=638627972640000000" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=kB9kqJ8G5bbVUkLIbkM_oWnWnbqKfmnijNvsGOdktAJN6X3E4IB1Ohim-XfL1bXqyhvHpFA6calISmsC9Do0K1jLgqaX5q7C12oYcoh4sn7Rb0pnPcc8nqSRG7UU7_90wNYn3HODMfqBMb-_fPUnBOi0lNqIP-V5iT54maOgYENrXw1cY5S_BKzgEKHC0oaJ0c8919qI0FCmCP3OGvShdDSMG4Ugcx-gfnVT0scxcMGBbz99a6uiw_3nP-VsLsbWwdhtEpb7o0k09629luJjVJub_8Rxcey54Z4TXug-4PjZv-2tKlkixzjql8wiTe4mP9VgLO1pXyY20BKVwpRkD8OErQCEy_Ncn6XLVZRKhBUKaUh-qSShvq5dwhcOEfDuDbOk8K0LNIDT19SrfEiL3OEOre_183ge7-WreFhCnLbba8t7J3g_GxHH8h6_tiPN_-sv0gX-93CSvG6Zro_ES91NsNKn1vvoKHK9qmyw1MAU91rxqlCtoXJAtqpKcMih1HIupSwbnYeMdZ6WQIxsvNNHhpfuoMjaur6u0VrYAmtJYIAA2XtF1-Rsw64yk136yplYJFNKndmGvYDrPOdAWr62DbwZfVZ0k-dKZ9uE56dzOQRCS5g5PTU62iFnnXQeQqWDKMBuATfJcBvKIZDkIrS0ohTWuIz-eq7xXKyWjASPArtOIPELf8w9wDA7qDwkPgnLpAGgAzXAwtqw7bD5dGnOSIW6N8GqF8FNjXdMlF_GdxSUMh_T6pAa_T_pstGGOpVUyg36NnlrD6f1VhWq9bzb05Ix0kPiXJcxFHrAF3BqLEHInjYE9CXuhVA_tCSbNS-teTycuhdXs3AZmB5iHvpvdvtAzKYttSC4rR39Ip01" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="B6028D83">
+</div>
+		<!--for archiving purpose-->
+		<input name="ysnNotifyMe" type="hidden">
+		<input name="strPage" type="hidden">
+		<input name="intArchMainCatID" type="hidden">
+		<input name="intArchMainItemID" type="hidden">
+		 <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl00$MainContent$scriptManager', 'aspnetForm', ['tctl00$ctl00$MainContent$ModuleContent$ctl00$contentUpdatePanel','','tctl00$ctl00$MainContent$ModuleContent$ctl00$UpdatePanel','','tctl00$ctl00$MainContent$ModuleContent$ctl00$UpdatePanelOthers11',''], [], [], 90, 'ctl00$ctl00');
+//]]>
+</script>
+
+		<script type="text/javascript">
+			Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(beginRequest);
+			Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(pageLoaded);
+		</script>
+		
+		<div id="modulecontent" name="modulecontent.aspx" style="padding-top: 0px;">
+<div id="contentarea"></div>
+
+
+<!-- BEGIN CivicAlertContent.aspx ***** -->
+<link href="/1686906140.css" rel="stylesheet" type="text/css">
+<script src="/1757422876.js" type="text/javascript"></script>
+<div id="NewsFlashContent" class="newCP moduleContentNew pageStyles">
+
+
+<div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_contentUpdatePanel">
+	
+	<div id="divSideBar" class="sidebar">
+		<section aria-labelledby="moduleSearchHeader" class="section search">
+			<h3 id="moduleSearchHeader" for="searchButton">Module Search</h3>
+			<div class="searchInput">	<label id="searchTermsLabel" class="visuallyHidden" for="searchTerms">Enter Search Terms</label>
+	<input type="text" id="searchTerms" name="searchTerms" placeholder="Word or Phrase" value="">
+	<input id="searchButton" class="searchButton" type="image" title="News Flash Search" alt="search" src="/Common/Images/ModuleSearchIcon.png" onkeypress="this.onclick()" onclick="CivicAlertSearch(); return false;">
+</div>
+<select id="categorySelect" aria-label="Select a Category" name="CID">
+	<option value="-1">All categories</option>
+<option value="1">Home</option>
+<option value="7">Parks &amp; Rec</option>
+<option value="8">Redmond Police Blotter</option>
+<option value="10">Environment</option>
+<option value="11">News Releases</option>
+<option value="12">Community Resources and Services</option>
+<option value="13">cp-test</option>
+<option value="14">Redmond in the News</option>
+</select>
+
+		</section>
+		<section aria-labelledby="moduleToolsHeader" class="section tools">
+			<h3 id="moduleToolsHeader">Tools</h3>
+			<ol>
+				<li><a href="https://www.redmond.gov/rss.aspx#rssCivicAlerts" class="RSS">RSS</a></li>
+				<li><a class="notifyMe" href="https://www.redmond.gov/civicalerts.aspx?Mode=Subscribe">Notify Me®</a></li>
+				<li>
+					<span id="ctl00_ctl00_MainContent_ModuleContent_ctl00_ArchivePanelWithCID" class="archLinkColor"><a class="archLinkColor" style="font-weight: normal;" href="https://www.redmond.gov/CivicAlerts.aspx?ARC=L&amp;What=2&amp;CC=2&amp;ItemID=1757&amp;From=AID%3d1757">View Archived</a></span>
+					
+				</li>
+			</ol>
+		</section>
+		<section aria-labelledby="categoryPagesHeader" class="section categories">
+			<h3 id="categoryPagesHeader">Categories</h3>
+			<ol>
+						<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx">All Categories</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=1">Home</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=7">Parks &amp; Rec</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=8">Redmond Police Blotter</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=10">Environment</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=11">News Releases</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=12">Community Resources and Services</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=13">cp-test</a>
+		</li>
+		<li>
+			<a href="https://www.redmond.gov/CivicAlerts.aspx?CID=14">Redmond in the News</a>
+		</li>
+
+			</ol>
+		</section>
+	</div>
+	<div class="contentMain selfClear">
+		
+		
+		<div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_UpdatePanel">
+		<h1 class="visuallyHidden">News Flash</h1>	<div class="single">
+		<h2>
+News Releases		</h2>
+<div class="item">
+<span class="date">Posted on: December 6, 2023</span><h3>Redmond Mayor and City Councilmembers Sworn In</h3>
+<span class="thumb alignRight"><img alt="Councilmembers Salahuddin, Kritzer, Forsythe, and Nuevacamina, and Mayor Birney" src="images/a65c378ca7bc38b0a13c45914c5cb728be7a50343554c45b0b02b490d6802410" width="225px" style="width:225px; "></span><div class="content fr-view">	<p></p>
+<p id="isPasted"><strong>REDMOND, WA</strong> – At last night’s Redmond City Council meeting, newly elected Redmond Councilmembers Osman Salahuddin (Council Position No. 1) and Angie Nuevacamina (Council Position No. 7), along with re-elected incumbents Jessica Forsythe (Council Position No. 3), Vanessa Kritzer (Council Position No. 5), and Angela Birney (Mayor) were officially sworn in. Their terms are effective from January 2024 through December 2027.</p>
+<p style="text-align: left;">Birney was re-elected to her second term as Mayor, a position she was first elected to in 2019, after serving on the City Council beginning in 2015, including as Council President from 2018 to 2019. Birney represents Redmond on several regional boards and committees. She grew up in Eastern Washington and moved to Redmond in 1998. Before entering public office, she earned a Master of Education from Heritage University and a Bachelor of Arts in biology education from Eastern Washington University and worked as a middle school science teacher. Birney lives on Education Hill with her husband.</p>
+<p style="text-align: left;">Forsythe is an award-winning Creative Director and owner of a small graphic design studio that works primarily with clients who seek to better their community. Originally from Northeast Ohio, she graduated from Kent State University with a Bachelor of Fine Arts in visual communication design with a concentration in environmental design. Forsythe has worked in environmental design, architecture, and marketing and branding. She is honored to be elected to serve a second term.</p>
+<p style="text-align: left;">Kritzer has been honored to serve on the City Council for the last four years and is looking forward to continuing to provide community-centered leadership in a second term. She has devoted her career to working for social and environmental justice. Kritzer has experience in the nonprofit, government, and private sectors. In addition to her council work, she is currently the Executive Director of the Washington Association of Land Trusts, where she works to protect Washington’s lands, waterways, and wildlife for future generations. Kritzer attended undergrad at Vassar College, earning a Bachelor of Arts in Latin American and Latinx studies and political science, and obtained a Master of Business Administration from the University of Washington Foster School of Business and a Master of Public Administration from the UW Evans School of Public Policy and Governance. Before joining Council, Kritzer served on the City of Redmond’s Planning Commission. She lives in Education Hill with husband and two young kids.</p>
+<p style="text-align: left;">Salahuddin is a lifelong resident of Redmond. After graduating from the Lake Washington School District, he earned a Bachelor of Science in neurobiology with a minor in English from the University of Washington, where he also served as the student body president. His career has included management at a medical device research consulting firm and research at both Fred Hutchinson Cancer Research Center and UW Medicine. He has also volunteered as a member of the Fire Corp with Eastside Fire and Rescue, and helped found the BIPOC Health Careers Ecosystem, a nonprofit. Currently, Salahuddin works as the communications and community engagement manager for King County Councilmember Sarah Perry.</p>
+<p style="text-align: left;">Nuevacamina is a longtime Redmond resident. She is a veteran of the United States Navy, where she served as an aviation electrician and studied philosophy and art history at Oakland University. Nuevacamina's career experience includes working as a financial service professional, consulting small businesses, and previous public service experience serving on the City of Redmond Planning Commission. She lives in Redmond with her family.</p>
+<p style="text-align: left;">For more information about the Redmond City Council, including meeting times, how to participate, Council’s priorities, and how Redmond’s government works, visit <a href="http://www.redmond.gov/Council">redmond.gov/Council</a>.</p>
+<p><strong>MEDIA CONTACT:</strong><br>Brant DeLarme, Communications and Marketing Project Administrator<a href="https://www.redmond.gov/cdn-cgi/l/email-protection#97f5f3f2fbf6e5faf2d7e5f2f3faf8f9f3b9f0f8e1"></a><br><a href="https://www.redmond.gov/cdn-cgi/l/email-protection#412325242d20332c24013324252c2e2f256f262e37"><span class="__cf_email__" data-cfemail="accec8c9c0cddec1c9ecdec9c8c1c3c2c882cbc3da">[email protected]</span></a>, 425-556-2165</p>
+<p style="text-align: center;">###<em> </em></p>
+</div>	</div>
+</div>
+	</div>
+<div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_UpdatePanelOthers11">
+		<a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.redmond.gov%2fCivicAlerts.aspx%3fAID%3d1757&amp;t=Check%20out%20this%20news%20article%20for%20Redmond,%20WA" class="button" target="_blank">
+	<span><img src="images/b045feaa859d1365ade037c83e9bd9dbc2ddb2a3742fd27921711d507ad831aa.png" alt="Facebook" title="Share on Facebook"></span>
+</a>
+<a href="https://twitter.com/share?url=https%3a%2f%2fwww.redmond.gov%2fCivicAlerts.aspx%3fAID%3d1757&amp;text=Check%20out%20this%20news%20article%20for%20Redmond,%20WA" class="button" target="_blank">
+	<span><img src="images/089ae2b0cd5f75744152e5658ea78ee66c84922c9fef68f1f9a67ff573792d62.png" alt="Twitter" title="Share on Twitter"></span>
+</a>
+
+
+<a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1757#" id="shareViaEmailButton" class="button" target="_blank" data-email-subject="Check out this news article for Redmond, WA" data-share-url="https://www.redmond.gov/CivicAlerts.aspx?AID=1757">
+	<span><img src="images/4faf67ce28294dc0f853a54b47df39a1f8e46e09f8fa1d7ba630f4d28b0854e4.png" alt="Email" title="Share via Email"></span>
+</a>
+
+	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script language="javascript" type="text/javascript" src="/Assets/Scripts/SocialShare.js"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function () {
+			var socialShareJs = new SocialShare();
+			socialShareJs.setup('Check out this news article for Redmond, WA', 'https://www.redmond.gov/CivicAlerts.aspx?AID=1757');
+		});
+	</script>
+<div class="nextPreviousNav">
+<a class="prev" href="https://www.redmond.gov/CivicAlerts.aspx?AID=1758"><span class="arrow">⇐</span>Previous <span>Redmond Police Search for More Child Victims in Sex Predator Case</span></a><a class="next" href="https://www.redmond.gov/CivicAlerts.aspx?AID=1750">Next<span class="arrow">⇒</span><span> City Accepting Applications for the Library Board of Trustees</span></a>
+</div>
+<div class="others">
+	<h2>
+Other News in News Releases</h2>
+<div class="listing">
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Text to 911" src="images/a0e37486dc3325520ae8a00151f8131648a8c4525fc4cd2346e25ea26872934b" style="width:50px; height:95px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2450">Redmond Announces New Text-to-911 Language Translation Service</a></h3>
+<span class="date">Posted on: March 20, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Buckland Darrell" src="images/d5cca5fb78a0ab2938fcb041c406c0ab4e95fc3da1bdb522653969fb85569040" style="width:50px; height:66px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2443">Additional Victims Come Forward in Child Molestation Case</a></h3>
+<span class="date">Posted on: March 13, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2442">Redmond Mayor Angela Birney Joins America’s Housing Comeback Advisory Group</a></h3>
+<span class="date">Posted on: March 13, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2440">City of Redmond Transitions Teen Programs from Old Fire House</a></h3>
+<span class="date">Posted on: March 11, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2434">Eastside Climate Partnership Launches Solarize Eastside</a></h3>
+<span class="date">Posted on: March 6, 2025 | Last Modified on: March 5, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2433">Mark Your Calendars: Redmond’s Derby Days is Back This July</a></h3>
+<span class="date">Posted on: March 6, 2025 | Last Modified on: March 6, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Vertical image of Councilmember Stuart" src="images/3597f1f048cb6da5977b59fad03ebd9e7a7ac928669c4889dd99d83910e6ef37" style="width:50px; height:60px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2398">City Councilmember Melissa Stuart Appointed to Serve on a National League of Cities Committee</a></h3>
+<span class="date">Posted on: February 5, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2396">City Seeks Volunteer Arts and Culture Commissioner</a></h3>
+<span class="date">Posted on: February 5, 2025 | Last Modified on: February 5, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2390">Redmond Celebrates Arrival of First Electric Fire Engine in Washington State</a></h3>
+<span class="date">Posted on: February 3, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2389">City Seeks Two Parks, Trails, and Recreation Commissioners</a></h3>
+<span class="date">Posted on: January 30, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2388">City of Redmond and Redmond Fire Department Unveil State's First Electric Fire Truck</a></h3>
+<span class="date">Posted on: January 28, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2382">Redmond Recognized as a Silver-Level Bicycle Friendly Community by the League of American Bicyclists</a></h3>
+<span class="date">Posted on: January 28, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2366">Redmond Fire Department Deploys Crew to Support California Wildfires</a></h3>
+<span class="date">Posted on: January 9, 2025 | Last Modified on: January 9, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Patrol vehicle - fall" src="images/e1409b23f7fbefededbbc0d3e3532705dfc53e29c567cc80979bc5907c37197a" style="width:75px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2364">Redmond Police Department Partners with ForceMetrics to Improve Real-Time Decision-Making</a></h3>
+<span class="date">Posted on: January 8, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2358">Human Services Commission Seeks New Members</a></h3>
+<span class="date">Posted on: January 6, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="988 Crisis Line - Patrol Vehicles" src="images/72229364f280fefc35dcf8c0aed5d1daef3608ecfe022ba539aed19a2803a9e5" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2356">Redmond Police Patrol Cars Highlight 988 Crisis Lifeline</a></h3>
+<span class="date">Posted on: January 6, 2025 | Last Modified on: January 6, 2025</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2340">Redmond 2050 Advances Equity and Inclusion</a></h3>
+<span class="date">Posted on: December 17, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2339">Redmond Council President Vanessa Kritzer Elected Chair of WRIA 8 Salmon Recovery Council</a></h3>
+<span class="date">Posted on: December 16, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="BlueBridge - Foundation donation" src="images/edab55fd5a0e14a093e2f5e3097802299e95f9d9630e03e9241274754f43e775" style="width:75px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2337">Redmond Police Department Joins Program to Help Those in Need</a></h3>
+<span class="date">Posted on: December 16, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="J. Butz" src="images/449397e0c252c77b4192f765b355dcfca8f9a1368ff48dc5624140c173e8c394" style="width:50px; height:66px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2330">Northshore School District Teacher Arrested for Attempted Child Rape</a></h3>
+<span class="date">Posted on: December 11, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Chief Lowe" src="images/e11038cbe0b0b9fd10d7ed0c4f5e1ff9bba9ecbc7753df15535ca8b99b9c96c9" style="width:75px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2328">Redmond Police Chief Named to Attorney General-Elect Brown’s Transition Committee</a></h3>
+<span class="date">Posted on: December 10, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="DSC02712" src="images/1f09af6b7375b6155784493863432f41cce46678c941db7aec48f67676174f56" style="width:75px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2316">Redmond Police Department Expands Drone Program with BRINC and Skydio for Enhanced Public Safety</a></h3>
+<span class="date">Posted on: December 4, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="case photos" src="images/ba3f9fe95208690dce35cc19dbabdf45e45d9dbed511b7897050b1fda9b64e54" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2295">Two Men Arrested for Burglary of Redmond Home</a></h3>
+<span class="date">Posted on: November 27, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2294">Redmond Names Snowplows</a></h3>
+<span class="date">Posted on: December 2, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="DFR program" src="images/08d397a5f4ff8996125bf04a745f58cc14ca07ebd043457f29fe73c0ec63361d" style="width:75px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2291">Redmond First in State to Receive FAA Approval for Drones without Visual Observers</a></h3>
+<span class="date">Posted on: November 25, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2276">Redmond Mayor Issues Proclamation of Local Emergency</a></h3>
+<span class="date">Posted on: November 20, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2275">Redmond City Council Adopts 2025 – 2026 Budget</a></h3>
+<span class="date">Posted on: November 20, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2274">Redmond City Council Adopts Redmond 2050</a></h3>
+<span class="date">Posted on: November 20, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2262">Shop Small in Redmond and Win Prizes</a></h3>
+<span class="date">Posted on: November 18, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2255">Redmond Firefighters Return from Hurricane Deployment</a></h3>
+<span class="date">Posted on: November 12, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2240">Redmond Lights Returns to Downtown Park</a></h3>
+<span class="date">Posted on: October 23, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2232">Redmond City Council Adopts Resolution Opposing Washington Initiative 2066</a></h3>
+<span class="date">Posted on: October 16, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="7-11 Robbery Oct. 8 2024 - 1" src="images/d0ccb1a7b01444156b0ffee1c4d046374b6fca832a28023620bb6a8b2cffcda8" style="width:67px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2220">Armed Robbery at Redmond 7-Eleven Leads to Pursuit; Suspects Still at Large</a></h3>
+<span class="date">Posted on: October 8, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Chief Darrell Lowe - Pink Patch" src="images/b51cdc70cb38b7327c8353e4fc420eb4cff457fa1d4cdc529fa54de0c9ea7174" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2211">Redmond Police Join Forces with Pink Patch Project to Support Breast Cancer Awareness</a></h3>
+<span class="date">Posted on: October 7, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2210">Redmond Mayor Angela Birney Introduces Preliminary 2025 – 2026 Budget</a></h3>
+<span class="date">Posted on: October 2, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Jewelry theft" src="images/9bf74ac4dc9aa705fd86edffcca10bcac229dc4c6a41fb77a6db0f2be33d6e18" style="width:78px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2194">Redmond Police Warn Public About Organized Crime Group Targeting Asian Community</a></h3>
+<span class="date">Posted on: September 20, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2193">Redmond City Council Approves New Projects for Community Facilities District</a></h3>
+<span class="date">Posted on: September 18, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="News Release" src="images/6547fbba900e0a7b26a855179e073dc1228c4a38a08cb713c6c114e27a8b4950" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2191">Redmond Police Seeks Assistance in Identifying Fatal Hit-and-Run Victim</a></h3>
+<span class="date">Posted on: September 18, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Louie - Leonardo" src="images/a0dbecc126b89eafc2136f5cb70090bd769dfe083c9ad2983a9efc02bfed737f" style="width:50px; height:66px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2181">YMCA Counselor Arrested for Inappropriate Contact with Children</a></h3>
+<span class="date">Posted on: September 13, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="24-022644 vehicle 8-28-24 robbery" src="images/f65080c9674c6a0ec836eb0a61068faefe120fd5793c137333de382399979f1b" style="width:92px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2165">Police Warn Public about Organized Crime Group Targeting Asian Community</a></h3>
+<span class="date">Posted on: September 6, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2164">Redmond City Council Adopts Resolution Opposing Initiative 2117 to Repeal the Climate Commitment Act</a></h3>
+<span class="date">Posted on: September 4, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2145">City of Redmond Joins Nearly 350 U.S. Mayors on New Commitment to Electrify Municipal Fleets</a></h3>
+<span class="date">Posted on: August 13, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2134">Ching-In Chen Receives Academy of American Poets Laureate Fellowship</a></h3>
+<span class="date">Posted on: August 8, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2103">Downtown Redmond Art Walk Returns to Downtown Park</a></h3>
+<span class="date">Posted on: August 7, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="CAC renewal " src="images/1f9269a8f4077afddcbd3f69bf703d8a9c53d4ce115a2942dbc860bc3bbe1d82" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2101">Redmond Police Department Renews Certified Autism Center™ Designation, Enhancing Inclusivity</a></h3>
+<span class="date">Posted on: July 22, 2024 | Last Modified on: July 22, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2093">Apply for 2025 Tourism Grant Funding</a></h3>
+<span class="date">Posted on: August 1, 2024 | Last Modified on: August 1, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2094">City Seeks a Youth Advocate for the Parks, Trails, and Recreation Commission</a></h3>
+<span class="date">Posted on: July 22, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Shoplift with Assault collage" src="images/3724561f34cc96bc93d72746a62086ea02ef226f4f8b8388cfc9b0e824a46dfd" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2091">Redmond Police Seek Public's Help Identifying Shoplift and Assault Suspects</a></h3>
+<span class="date">Posted on: July 17, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Jewelry theft" src="images/5013f5e12c8a193cafbf3fc2310a6355144b6157604fe1071c1a0320eacd137e" style="width:86px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2084">Redmond Police Searching for Suspects in Recent Robberies Targeting Older Adults</a></h3>
+<span class="date">Posted on: July 12, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2083">City Seeks Volunteer to Help Shape and Support Public Safety</a></h3>
+<span class="date">Posted on: July 9, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Take Me Home collage" src="images/32aaaf047d3cfa1f7aad6cbae96ad743f1c252adbe948cb5583705b7e1cba951" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2052">Redmond Police Launches Program to Enhance Safety for Individuals with Cognitive Disabilities</a></h3>
+<span class="date">Posted on: June 18, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2034">City Seeks Volunteer Civil Service Commissioner</a></h3>
+<span class="date">Posted on: June 7, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="NNO 2024" src="images/3057d3b2a7573d3e31103f05c1879b08754db4751f33d1094ce17537cc65a601" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2031">National Night Out Returns to Redmond on August 6</a></h3>
+<span class="date">Posted on: June 3, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="NEWS RELEASE" src="images/d41ab21f8bee3a867da6725a538cfa7fe920cb7e32d9a09d3776ae5432fe978f" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2028">Redmond High School Counselor Arrested for Having Inappropriate Relationship with a Student</a></h3>
+<span class="date">Posted on: May 31, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2026">Redmond Seeks Volunteer Salary Commissioners</a></h3>
+<span class="date">Posted on: May 30, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Chief Lowe and WASPC" src="images/db4426d40bf841bd2da3d187300e1f4c25df4541d61901be1ac196d9e11b3329" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2024">Redmond Police Chief Darrell Lowe Named President of Statewide Law Enforcement Organization</a></h3>
+<span class="date">Posted on: May 29, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Chief Lowe at NNO party" src="images/0a8c7ff31cd295554d0a4828333529e5848c63e7cf6162c3f524d19c2607eb2a" style="width:65px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2020">National Night Out Returns to Redmond on August 6</a></h3>
+<span class="date">Posted on: June 3, 2024 | Last Modified on: May 30, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2016">Redmond Downtown Park Receives Award of Excellence</a></h3>
+<span class="date">Posted on: May 28, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=2007">City of Redmond Earns Housing Development Consortium’s Community Champions Award</a></h3>
+<span class="date">Posted on: May 15, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1990">City of Redmond Demonstrates Leadership and Commitment to Environmental Stewardship</a></h3>
+<span class="date">Posted on: May 8, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1949">Explore the Overlake Neighborhood with Redmond’s New Overlake Passport Challenge</a></h3>
+<span class="date">Posted on: April 29, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1947">Lodging Tax Advisory Commission Seeks New Hotel Members</a></h3>
+<span class="date">Posted on: April 23, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1946">New Redmond Technology Station Bridge Opens</a></h3>
+<span class="date">Posted on: April 22, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1935">Eastside Cities Take Important Step Toward Coordinated Climate Action</a></h3>
+<span class="date">Posted on: April 11, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1932">Pop-Up Dog Parks to Return to Redmond</a></h3>
+<span class="date">Posted on: April 4, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1915">New Redmond Senior &amp; Community Center Earns LEED Recognition</a></h3>
+<span class="date">Posted on: March 27, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1914">Apply for Redmond’s Derby Days Do-Gooder Scholarship</a></h3>
+<span class="date">Posted on: April 1, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1913">New Redmond Senior &amp; Community Center Set to Host Grand Opening Celebrations</a></h3>
+<span class="date">Posted on: March 28, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1905">Redmond Gears Up For its Annual Derby Days</a></h3>
+<span class="date">Posted on: March 14, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Narcotics Analyzer" src="images/9acf75232a12103c17ff6c471e76268c5b5f9a2fc0e42739330fd40357d2c16f" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1884">Redmond Police Department Implements New Tool to Identify Drugs</a></h3>
+<span class="date">Posted on: March 12, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1857">Redmond Looks to Take on Supportive Housing Project</a></h3>
+<span class="date">Posted on: February 14, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1856">Volunteer Opportunity: Redmond Arts and Culture Commissioner</a></h3>
+<span class="date">Posted on: February 13, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Patrol vehicle" src="images/f8df495ecbc538199123fb27553b31839f6a181c770f45d35a1bcbcf154a51d3" style="width:77px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1826">Redmond Police Investigating Alleged Threats Toward Rose Hill Middle School</a></h3>
+<span class="date">Posted on: January 28, 2024 | Last Modified on: January 28, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1825">City of Redmond and Sound Transit Celebrate Opening of Overlake Village Pedestrian Bridge</a></h3>
+<span class="date">Posted on: January 25, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Dailey A" src="images/b8ba7a38d6321b13f1950f7369b03cd717eba63476cd1b71d967cf65c8647147" style="width:50px; height:66px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1818">Redmond Police Searching for Additional Victims of Renton Man Charged with Rape</a></h3>
+<span class="date">Posted on: January 18, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1808">City Seeks Volunteer Civil Service Commissioner</a></h3>
+<span class="date">Posted on: January 16, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1791">City Seeks Volunteer Arts and Culture Commissioner</a></h3>
+<span class="date">Posted on: January 8, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Patrol vehicle" src="images/f8df495ecbc538199123fb27553b31839f6a181c770f45d35a1bcbcf154a51d3" style="width:77px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1802">Redmond Police Arrest Man Tied to Multiple Residential Burglaries</a></h3>
+<span class="date">Posted on: January 5, 2024</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1790">Redmond Appoints Ching-In Chen as New Poet Laureate</a></h3>
+<span class="date">Posted on: January 4, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Nissan Pathfinder" src="images/00d45386f54b32a6fe1d0e6f9916bd5d644027ad8e0eef0df9d3aaee679b7cb1" style="width:75px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1786">Teen Arrested in Fatal Hit-and-Run in Redmond</a></h3>
+<span class="date">Posted on: December 21, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Redmond Police Department Patrol Vehicle" src="images/bc6f2ddf255034e4f18d1c2a667796c829e7be0a2fcd68a7e77c33f914ff7c8d" style="width:73px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1772">2018 Redmond, Washington Officer Involved Shooting Inquest Findings Released</a></h3>
+<span class="date">Posted on: December 13, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Gray Nissan Pathfinder - 23-033519" src="images/0342aadda197744b6ea1ceeffee24daea6b8aee2195247b0843fa50235df27c2" style="width:75px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1788">Redmond Police Seek Public’s Help Locating Fatal Hit-and-Run Driver</a></h3>
+<span class="date">Posted on: December 7, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Remsing - childrens clothing" src="images/5917fbdc5bd6fd6a307ffe2241ac244c384548c0fec1c2f923dfe976fbc0a651" style="width:90px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1758">Redmond Police Search for More Child Victims in Sex Predator Case</a></h3>
+<span class="date">Posted on: December 5, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1750">City Accepting Applications for the Library Board of Trustees</a></h3>
+<span class="date">Posted on: November 30, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1749">Incentives Program Launches to Help Eastside ‘Make the Switch’ to Heat Pumps</a></h3>
+<span class="date">Posted on: November 30, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1741">Redmond Seeks New Planning Commission Members</a></h3>
+<span class="date">Posted on: November 29, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1728">Human Services Commission Seeks New Member</a></h3>
+<span class="date">Posted on: November 6, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1723">Redmond Lights Returns to Downtown Park</a></h3>
+<span class="date">Posted on: November 2, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Domestic Violence Apprehension Sweep" src="images/9361316bd5b738d03f2c7719cf1fd4317098b56a227b540092b42d2ed91159f8" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1726">Domestic Violence Suspects Arrested in Redmond During Annual Sweep</a></h3>
+<span class="date">Posted on: November 1, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1710">Esterra Park Opens in Overlake Neighborhood</a></h3>
+<span class="date">Posted on: October 25, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="REQUESTING INFO " src="images/5255029d8e5f06f96217661a9d528f67941e1f67e4e99ee1a0230a6a55639c05" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1708">Redmond Police Seek Information About Recent Home Burglaries</a></h3>
+<span class="date">Posted on: October 20, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1688">Redmond to Launch a Small Business Resiliency Grant Program</a></h3>
+<span class="date">Posted on: October 12, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1686">Affordable Housing Committee Recognizes Redmond’s Housing Element</a></h3>
+<span class="date">Posted on: October 4, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Chief Darrell Lowe - Pink Patch" src="images/b51cdc70cb38b7327c8353e4fc420eb4cff457fa1d4cdc529fa54de0c9ea7174" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1684">Redmond Police Join Forces with Pink Patch Project to Support Breast Cancer Awareness</a></h3>
+<span class="date">Posted on: October 3, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Redmond Police Patrol Vehicle" src="images/05842703a135a48b91c3fc40c65fd99d25e8873ce1adda44f58a1e3e9dbae3ce" style="width:78px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1659">Redmond Police Arrest 30-Year-Old Man in Operation Targeting Online Child Predators</a></h3>
+<span class="date">Posted on: September 15, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1656">City Seeks Feedback on Fee Studies</a></h3>
+<span class="date">Posted on: September 11, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1642">City Debuts New Asphalt Artwork in Downtown Redmond</a></h3>
+<span class="date">Posted on: September 5, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="School Bus Laws in WA" src="images/fcdf9348ca81223d9e895f2696c39dac504d3daf3f8fa114aec88123e7e81390" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1636">Redmond Police Remind Everyone to Follow Important School Zone Safety Tips</a></h3>
+<span class="date">Posted on: August 30, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1613">City Seeks Applicants for Parks, Trails, and Recreation Commissioners and Youth Advocates</a></h3>
+<span class="date">Posted on: August 10, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1612">Redmond Receives Grant from National League of Cities to Support Small Businesses and Entrepreneurs</a></h3>
+<span class="date">Posted on: August 9, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="MESSAGE FROM CHIEF OF POLICE - Twitter" src="images/0a5980e28ced926b17951efcab3200d870f96fb0745d1e85cfc463e5fbfe5b90" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1606">Message from Chief of Police Darrell Lowe</a></h3>
+<span class="date">Posted on: August 7, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Community Safety Forum" src="images/6c2716e49f1e801aec51de09f4266ad6db5cdb835769a0d4ba3e212f1c819f28" style="width:50px; height:64px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1598">Area Police Departments Partner with Community Group to Spotlight Hate Crimes and Bias Incidents</a></h3>
+<span class="date">Posted on: August 3, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1597">Redmond’s Poet Laureate Receives Academy of American Poets Laureate Fellowship</a></h3>
+<span class="date">Posted on: August 3, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Redmond Finance Director Kelley Cochran" src="images/df86d4705041279e48e6f81cd8957c2fc6fa582f395ad4b3d7a69dca3350254f" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1589">Redmond Appoints New Finance Director</a></h3>
+<span class="date">Posted on: August 3, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1585">Apply for 2024 Tourism Grant Funding</a></h3>
+<span class="date">Posted on: July 26, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1571">Downtown Redmond Art Walk Debuts in the Downtown Corridor</a></h3>
+<span class="date">Posted on: July 25, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Arson - July 14 2023" src="images/1d39a83921f25fcdc7cf8adc923ab2c8b2ef3c872b8b0b7361924b108dd86004" style="width:98px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1578">Woman Charged for Arson at Redmond Apartment Complex</a></h3>
+<span class="date">Posted on: July 22, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Redmond Police Explorers - triage bags" src="images/067e83c521d694c5bdda575851377bf9a5be7f132c5b55a8b9044026dd5c7221" style="width:62px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1574">Mental Health Triage Kits Contain Items to Help Police Comfort Those with Autism and Small Children</a></h3>
+<span class="date">Posted on: July 19, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Youth Leadership Program " src="images/be6221207cfa0d1104d3b2dabeaeaa6960a5ba5a7252aed6001b9fc343781ed4" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1562">Redmond High School Student Completes FBI Leadership Program</a></h3>
+<span class="date">Posted on: July 13, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1551">Redmond Selected to Participate in National League of Cities Capstone Project</a></h3>
+<span class="date">Posted on: July 10, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1539">Redmond Named Most Livable Small City in the United States</a></h3>
+<span class="date">Posted on: June 29, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1530">City Seeks Volunteers for the Design Review Board</a></h3>
+<span class="date">Posted on: June 28, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="CIT Team" src="images/b06dbf43f74793367fda14b939f42d287fe80638dbe70f26d3e550b83fe0a0e5" style="width:50px; height:63px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1518">Redmond Police Department Recognized for Co-Responder Program</a></h3>
+<span class="date">Posted on: June 16, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1515">Drone Light Show Returns to Redmond’s Derby Days</a></h3>
+<span class="date">Posted on: June 21, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1492">City Selects Pilot Project to Improve Access to Light Rail</a></h3>
+<span class="date">Posted on: May 31, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1477">City Seeks New Parks, Trails, and Recreation Commissioner and Youth Advocates</a></h3>
+<span class="date">Posted on: May 31, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1473">City Accepting Applications for the Library Board of Trustees</a></h3>
+<span class="date">Posted on: May 30, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1465">City Seeks Volunteer Arts and Culture Commissioner</a></h3>
+<span class="date">Posted on: May 30, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1426">Redmond Opens First Pop-Up Dog Park</a></h3>
+<span class="date">Posted on: April 24, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="NEWS RELEASE " src="images/162c16af08913a8ddd2a66d50dfa5f2099ab100de931a6808402ba8ed4ef6d33" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1422">Awards Ceremony Celebrates Redmond Police Department Staff</a></h3>
+<span class="date">Posted on: April 20, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="ARRESTED graphic" src="images/0aada813e0a70b75ad0fc3432280d375112aac2b8353d8771c4246798e6247b6" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1410">Redmond Police Re-Arrest Local Man on New Child Molestation Charges</a></h3>
+<span class="date">Posted on: April 17, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1395">Lodging Tax Advisory Commission Seeks New Hotelier Member</a></h3>
+<span class="date">Posted on: April 6, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1383">Redmond Seeks Applicants for Derby Days "Do-Gooder" Scholarship</a></h3>
+<span class="date">Posted on: March 29, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="ARRESTED graphic" src="images/0aada813e0a70b75ad0fc3432280d375112aac2b8353d8771c4246798e6247b6" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1371">Redmond Man Arrested for Attempted Child Rape as Part of Undercover Operation</a></h3>
+<span class="date">Posted on: March 23, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1370">Redmond Mayor Working to Identify Housing Solutions</a></h3>
+<span class="date">Posted on: March 23, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="NEWS RELEASE " src="images/162c16af08913a8ddd2a66d50dfa5f2099ab100de931a6808402ba8ed4ef6d33" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1366">Redmond Man Arrested for Child Molestation</a></h3>
+<span class="date">Posted on: March 21, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Shooting at Redmond residence" src="images/8ef8921e889a77c14df0ca5b21bac2162f121fe32566945f70d86153091702e5" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1346">Three Dead After Shooting in Redmond Home</a></h3>
+<span class="date">Posted on: March 10, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="wheel lock" src="images/691db63667f469097a33e1fa498b069ba1f8c327ac6e272825f0f2ac3efef5a5" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1339">Redmond Police to Distribute Steering Wheel Locks to Kia and Hyundai Drivers</a></h3>
+<span class="date">Posted on: March 7, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1334">Redmond is Gearing Up for its Annual Derby Days</a></h3>
+<span class="date">Posted on: March 7, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1318">Eastside Climate Challenge Extended Into 2023</a></h3>
+<span class="date">Posted on: February 16, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1317">City Seeks Volunteers for the Library Board of Trustees</a></h3>
+<span class="date">Posted on: February 14, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1316">Redmond Affirms Commitment to Sustainability with the Purchase of an Electric Fire Engine</a></h3>
+<span class="date">Posted on: February 14, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="StarChase closeup" src="images/4d1e40f9683df0e73077657bb2770b28bde543db0ab39779744ddaa9b9b376cc" style="width:80px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1298">Redmond Police Department Deploys GPS-based Pursuit Management Technology</a></h3>
+<span class="date">Posted on: February 3, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="NEWS RELEASE " src="images/162c16af08913a8ddd2a66d50dfa5f2099ab100de931a6808402ba8ed4ef6d33" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1293">Redmond Police Department Launches Crime Data Dashboards</a></h3>
+<span class="date">Posted on: February 1, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1285">City Seeks Volunteer for Landmark Commission</a></h3>
+<span class="date">Posted on: January 31, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1284">City Seeks Volunteer Arts and Culture Commissioners</a></h3>
+<span class="date">Posted on: January 31, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1281">Redmond Senior &amp; Community Center Celebrates Construction Milestone</a></h3>
+<span class="date">Posted on: January 25, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1275">City Seeks New Parks and Trails Commissioner</a></h3>
+<span class="date">Posted on: January 24, 2023</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="NEWS RELEASE" src="images/d41ab21f8bee3a867da6725a538cfa7fe920cb7e32d9a09d3776ae5432fe978f" style="width:88px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1273">Redmond Police Department Kicks Off Community Police Academy</a></h3>
+<span class="date">Posted on: January 18, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1265">Human Services Commission Seeks New Member</a></h3>
+<span class="date">Posted on: January 12, 2023</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1246">Redmond Police Chief Darrell Lowe Elected President of King County Police Chiefs and Sheriffs</a></h3>
+<span class="date">Posted on: December 28, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1215">Redmond City Council Adopts 2023 – 2024 Budget</a></h3>
+<span class="date">Posted on: December 7, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1203">Volunteers Needed for Redmond Salary Commission</a></h3>
+<span class="date">Posted on: December 5, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Lorill Sinclaire " src="images/cff7eb40eb134f434eead1cfeec41e23bcb3df7979e7ebb2ba6eccd624295bca" style="width:78px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1177">Redmond Detectives Arrest Suspect in a 2011 Cold Case</a></h3>
+<span class="date">Posted on: November 17, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="WASPC reaccreditation" src="images/0939cdfd292dbb77f805cabc851f83e5ceb680e3ee9d32bca37921b95c000992" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1175">Redmond Police Department Reaccredited for Highest Professional Standard of Policing</a></h3>
+<span class="date">Posted on: November 17, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1169">City Seeks Volunteer Arts and Culture Commissioners</a></h3>
+<span class="date">Posted on: November 16, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1160">City of Redmond Celebrates Groundbreaking for Final Phase of Redmond Central Connector</a></h3>
+<span class="date">Posted on: November 3, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1152">Redmond Lights Returns to Downtown Park</a></h3>
+<span class="date">Posted on: November 1, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1144">Redmond Recognized with Gold Award for Economic Development</a></h3>
+<span class="date">Posted on: October 24, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="CAC - badge" src="images/2989bcd2e679e97e5e20de99a8daafc18d283a80cd21bdc3ceae6e920ef882eb" style="width:59px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1137">Redmond Police Department Becomes Washington’s First Autism-Certified Police</a></h3>
+<span class="date">Posted on: October 13, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Redmond Police Pink " src="images/59e2f6d704d86b7b2b6ffa73c06899cf702f5d3009e5ba1c0ddf2e9cac794753" style="width:50px; height:60px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1135">Redmond Police Join Pink Patch Project to Support Breast Cancer Awareness</a></h3>
+<span class="date">Posted on: October 12, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1119">Redmond Mayor Angela Birney Introduces Preliminary 2023 – 2024 Budget</a></h3>
+<span class="date">Posted on: October 5, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1111">Redmond Celebrates One Year of Adopt-a-Drain</a></h3>
+<span class="date">Posted on: September 26, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1104">Redmond Seeks New Planning Commission Member</a></h3>
+<span class="date">Posted on: September 20, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="BWC photo" src="images/22f667bd5ab6a6a238304ed952eb38e41c2bfd901e002589d2eb15477c7f5b4e" style="width:118px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1102">Redmond Police Department Deploys Body-Worn and In-Car Camera Systems</a></h3>
+<span class="date">Posted on: September 15, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1100">Community Invited to Hear Project Ideas to Enhance Redmond’s Parks and Recreation</a></h3>
+<span class="date">Posted on: September 26, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1078">Redmond Celebrates Welcoming Week</a></h3>
+<span class="date">Posted on: September 7, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1072">City Council Selects Name for New Community Center</a></h3>
+<span class="date">Posted on: August 22, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1051">Apply for Special Event and Tourism Grant Funding</a></h3>
+<span class="date">Posted on: August 1, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1041">Redmond City Council Approves Resolution in Support of New Public Safety Levy</a></h3>
+<span class="date">Posted on: July 21, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1039">Redmond Hosts Second of Five Public Hearings on City Budget</a></h3>
+<span class="date">Posted on: July 25, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1038">Energy Smart Eastside Campaign Brings Savings  on Heating and Cooling to Eastside Residents</a></h3>
+<span class="date">Posted on: July 20, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1026">Help Plan the Future of Redmond</a></h3>
+<span class="date">Posted on: July 11, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1019">Community Invited to Share Feedback on Improving Diversity, Equity, and Inclusion in Redmond</a></h3>
+<span class="date">Posted on: July 5, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1014">City Accepting Applications for the Library Board of Trustees</a></h3>
+<span class="date">Posted on: June 30, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=1008">Register Your Neighborhood for National Night Out</a></h3>
+<span class="date">Posted on: June 27, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="arrested TW" src="images/a3cb696900a8f7e2f80fac42ae14573e8d922f8d5fc8eb1a46caa3c40978b912" style="width:100px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=998">Man Charged with Murder in 2019 Assault in Redmond</a></h3>
+<span class="date">Posted on: June 21, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=995">Redmond to Host Four Public Hearings on City Budget</a></h3>
+<span class="date">Posted on: June 21, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=994">Human Services Commission Seeks New Member</a></h3>
+<span class="date">Posted on: June 16, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=983">U.S. Conference of Mayors Honors Mayor Angela Birney  for Climate Leadership</a></h3>
+<span class="date">Posted on: June 7, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=975">Letters of Interest Due to Serve on  Pro and Con Property Tax Levy Lift Committees</a></h3>
+<span class="date">Posted on: June 1, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=964">Redmond Community Invited to Attend a Meeting About the Future of Redmond’s Parks and Recreation</a></h3>
+<span class="date">Posted on: May 23, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=957">City Seeks Community Members for Budget Team - UPDATED: June 16, 2022</a></h3>
+<span class="date">Posted on: May 17, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=956">Redmond Appoints New Directors of the Parks and Recreation and Public Works Departments</a></h3>
+<span class="date">Posted on: May 18, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=953">Community Invited to Celebrate Groundbreaking of the New Redmond Senior &amp; Community Center</a></h3>
+<span class="date">Posted on: May 12, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Message from Chief of Police graphic" src="images/d98fc2f4d685d3b4740fcc54801ca0096a576eca3b6859773d70c0ff36e24caa" style="width:50px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=938">Message from Chief Lowe on Settlement with Churna Family</a></h3>
+<span class="date">Posted on: April 27, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=927">Apply Now for the Derby Days Do-Gooder Scholarship</a></h3>
+<span class="date">Posted on: April 20, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="cat - con etched" src="images/c601fd1c003114600bf2e1387b7afb29788a441f5182227f0f15b12d6d4beb4d" style="width:66px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=920">Redmond Police to Host Community Catalytic Converter Etching Event</a></h3>
+<span class="date">Posted on: April 14, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="news release image with police patch" src="images/5bafc534be9c71e7527bb4f721edfbec4a950343e9c4d709561d1cf72613180a" style="width:100px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=906">Redmond Police Arrest Suspect in Moving Company Scam</a></h3>
+<span class="date">Posted on: March 31, 2022</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="news release image with police patch" src="images/5bafc534be9c71e7527bb4f721edfbec4a950343e9c4d709561d1cf72613180a" style="width:100px; height:50px;"></span><h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=897">Oregon Elementary Teacher Arrested for Attempted Rape of Two Children</a></h3>
+<span class="date">Posted on: March 28, 2022</span>
+</div>
+<div class="item">
+<h3><a href="https://www.redmond.gov/CivicAlerts.aspx?AID=823">Redmond Appoints Laura Da’ as New Poet Laureate</a></h3>
+<span class="date">Posted on: January 10, 2022</span>
+</div>	</div>
+</div>
+	</div>
+	</div>
+
+</div>
+
+<input type="hidden" name="doSubmit" value="false">
+<input type="hidden" name="ysnSave" value="">
+<input type="hidden" name="curPage" value="CivicAlertForm">
+<input type="hidden" name="ysnSend" value="0">
+<input type="hidden" name="ysnSendAtStart" value="0">
+<input type="hidden" name="ysnSendBeforeDays" value="0">
+<input type="hidden" name="intSendBeforeDays" value="-1">
+<input type="hidden" name="txtComments" value="">
+<input type="hidden" name="dtiCurDate" value="3/23/2025 1:27:58 PM ">
+<input type="hidden" name="txtSMSComments" value="">
+<input type="hidden" id="hConfirmRebuilt" name="hConfirmRebuilt" value="-1">
+</div>
+
+<script type="text/javascript" language="javascript"><!--
+function redrawContent(closeModal) {
+raiseAsyncPostback('ctl00_ctl00_MainContent_ModuleContent_ctl00_contentUpdatePanel', '', closeModal);
+}
+
+$(document).ready(function () {
+if (!window.isResponsiveEnabled) {
+	$('div.moduleContentNew').addClass('minWidth320px');
+}
+
+var color = $("div.moduleContentNew").css("color") + " !important";
+var style = $('<style>span.arrow { color:' + color + '; }</style>');
+$('html > head').append(style);
+});
+
+function pageLoad() {
+$('#newsSortBy').bind('change', function () {
+	var url = $(this).val();
+	if (url) {
+		window.location = url;
+	}
+	return false;
+});
+}
+//--></script>
+
+<!-- END CivicAlertContent.aspx ***** -->
+
+</div>
+<script type="text/javascript">order+='ModuleContent\n'</script>
+
+		<div id="ctl00_ctl00_MainContent_ctl00_liveEditPopupWindow" class="modalContainer modalContainerCP" style="display: none;">
+	<div id="ctl00_liveEditTitleBar" class="modalTitleLeft">
+<h3 id="ctl00_LiveEditModalTitle" class="modalTitle">Live Edit</h3>
+<a id="ctl00_LiveEditCloseButton" class="modalClose" aria-label="Close this modal" href="https://www.redmond.gov/" title="Close this window"><svg viewbox="0 0 25 25" id="modalIconClose"><polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon></svg></a>
+</div>
+<div id="ctl00_liveEditContentLeft" class="modalContentLeft"><div id="ctl00_liveEditContentRight" class="modalContentRight"><div id="ctl00_liveEditContent" class="modalContent"><iframe style="display: none; border: none;" src="about:blank" id="liveEditDialog" title="Live Edit Dialog" name="liveEditDialog"></iframe></div></div></div>
+<div id="ctl00_liveEditFooter" class="modalBottomLeft"><div id="ctl00_liveEditfooterbar" class="modalBottomRight"><div id="ctl00_liveEditfooterbar1" class="modalBottom"></div></div></div>
+</div>
+<input type="submit" name="ctl00$ctl00$MainContent$ctl00_liveEditSpawnWindow" value="" id="ctl00_ctl00_MainContent_ctl00_liveEditSpawnWindow" disabled aria-hidden="true" style="display: none;">
+	
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","CancelControlID":"ctl00_LiveEditCloseButton","PopupControlID":"ctl00_ctl00_MainContent_ctl00_liveEditPopupWindow","PopupDragHandleControlID":"ctl00_liveEditTitleBar","dynamicServicePath":"/CivicAlerts.aspx","id":"editItemBehavior"}, null, null, $get("ctl00_ctl00_MainContent_ctl00_liveEditSpawnWindow"));
+});
+//]]>
+</script>
+</form>
+	<form id="aspnetSearchForm" name="aspnetSearchForm" style="display:none;" action="/Search.aspx" method="get">
+		<input name="SearchString" type="hidden" value="">
+	</form>
+	
+	<form name="frmCivicAlertsArchives" style="display: inline;" action="CivicAlerts.aspx" method="get">
+<input type="hidden" name="CID" value="-1"><input type="hidden" name="lngNewPage" value="">
+</form>
+<form name="frmCivicAlertSearch" method="GET">
+<input type="hidden" name="searchTerms"><input type="hidden" name="CID">
+</form>
+
+	
+	</div>
+	 
+</div>	
+
+</div>
+</div>
+</div></div>
+</div>
+<!-- Graphic Links --><div data-cprole="structuralContainer" id="structuralContainer10">
+<div class="siteWrap"><aside data-cprole="contentContainer" id="contentContainer10a">	<div id="ccc8b52102-18bd-4e11-a1ae-798c98947ae3" data-containerid="c8b52102-18bd-4e11-a1ae-798c98947ae3" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="70">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col12 first" style="" data-widgetcontainerid="24805b3c-922b-4fe3-9615-8c03fd64069a">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col12 first last id889a990c-8171-49d8-888b-a0bad80fcea6" style="" data-widgetcontainerid="889a990c-8171-49d8-888b-a0bad80fcea6">	
+<div data-widget-id="069bc261-52bd-4e5e-ba01-d4b739afc85d" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget069bc261-52bd-4e5e-ba01-d4b739afc85d" class="widget widgetGraphicLinks skin45 widgetOptionSet29 wide" data-elementqueryclasses='{"wide-narrow":"min-width:35em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid3 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/calendar.aspx" target="_self" class="fancyButton fancyButton316 ">
+		<span>
+			<span><span class="text">Calendar</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton316.fancyButton:link,.fancyButton316.fancyButton:visited, .fancyButton316div.fancyButton{
+	height: 71px;
+	padding-top: 71px;
+	background-image: url('/ImageRepository/Document?documentID=4685');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: background ease-in-out .3s;
+margin-bottom:55px;}
+.fancyButton316.fancyButton:hover,.fancyButton316.fancyButton:focus,.fancyButton316.fancyButton:active,.fancyButton316.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=4687');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton316.fancyButton:link > span,.fancyButton316.fancyButton:visited > span, .fancyButton316div.fancyButton > span{
+}
+.fancyButton316.fancyButton:hover > span,.fancyButton316.fancyButton:focus > span,.fancyButton316.fancyButton:active > span,.fancyButton316.fancyButton.hover > span{
+}
+.fancyButton316.fancyButton .text{
+	color: #2c353e;
+	font-size: 1.2em;
+	font-family: "Lato";
+	text-align: center;
+	padding-top: 1em;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 1em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+text-transform: uppercase;}
+.fancyButton316.fancyButton:hover .text,.fancyButton316.fancyButton:focus .text,.fancyButton316.fancyButton:active .text,.fancyButton316.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/898" target="_self" class="fancyButton fancyButton317 ">
+		<span>
+			<span><span class="text">Permits</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton317.fancyButton:link,.fancyButton317.fancyButton:visited, .fancyButton317div.fancyButton{
+	height: 71px;
+	padding-top: 71px;
+	background-image: url('/ImageRepository/Document?documentID=4675');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: background ease-in-out .3s;
+margin-bottom:55px;}
+.fancyButton317.fancyButton:hover,.fancyButton317.fancyButton:focus,.fancyButton317.fancyButton:active,.fancyButton317.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=4760');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton317.fancyButton:link > span,.fancyButton317.fancyButton:visited > span, .fancyButton317div.fancyButton > span{
+}
+.fancyButton317.fancyButton:hover > span,.fancyButton317.fancyButton:focus > span,.fancyButton317.fancyButton:active > span,.fancyButton317.fancyButton.hover > span{
+}
+.fancyButton317.fancyButton .text{
+	color: #2c353e;
+	font-size: 1.2em;
+	font-family: "Lato";
+	text-align: center;
+	padding-top: 1em;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 1em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+text-transform: uppercase;}
+.fancyButton317.fancyButton:hover .text,.fancyButton317.fancyButton:focus .text,.fancyButton317.fancyButton:active .text,.fancyButton317.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/294" target="_self" class="fancyButton fancyButton318 ">
+		<span>
+			<span><span class="text">Events</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton318.fancyButton:link,.fancyButton318.fancyButton:visited, .fancyButton318div.fancyButton{
+	height: 71px;
+	padding-top: 71px;
+	background-image: url('/ImageRepository/Document?documentID=4688');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: background ease-in-out .3s;
+margin-bottom:55px;}
+.fancyButton318.fancyButton:hover,.fancyButton318.fancyButton:focus,.fancyButton318.fancyButton:active,.fancyButton318.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=4690');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton318.fancyButton:link > span,.fancyButton318.fancyButton:visited > span, .fancyButton318div.fancyButton > span{
+}
+.fancyButton318.fancyButton:hover > span,.fancyButton318.fancyButton:focus > span,.fancyButton318.fancyButton:active > span,.fancyButton318.fancyButton.hover > span{
+}
+.fancyButton318.fancyButton .text{
+	color: #2c353e;
+	font-size: 1.2em;
+	font-family: "Lato";
+	text-align: center;
+	padding-top: 1em;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 1em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+text-transform: uppercase;}
+.fancyButton318.fancyButton:hover .text,.fancyButton318.fancyButton:focus .text,.fancyButton318.fancyButton:active .text,.fancyButton318.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col12 last" style="" data-widgetcontainerid="f8fc8767-c80a-489e-aa9c-a7e3ee456f08">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col12 first last id21a878ad-7366-48a9-b18c-96d3e0a1a838" style="" data-widgetcontainerid="21a878ad-7366-48a9-b18c-96d3e0a1a838">	
+<div data-widget-id="6583703b-28bb-4879-b94c-7f76282c1f72" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget6583703b-28bb-4879-b94c-7f76282c1f72" class="widget widgetGraphicLinks skin45 widgetOptionSet29 wide" data-elementqueryclasses='{"wide-narrow":"min-width:35em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid3 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://redmondwa.qscend.com/311/" target="_self" class="fancyButton fancyButton303 ">
+		<span>
+			<span><span class="text">Report an Issue</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton303.fancyButton:link,.fancyButton303.fancyButton:visited, .fancyButton303div.fancyButton{
+	height: 71px;
+	padding-top: 71px;
+	background-image: url('/ImageRepository/Document?documentID=4572');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: background ease-in-out .3s;
+margin-bottom:55px;}
+.fancyButton303.fancyButton:hover,.fancyButton303.fancyButton:focus,.fancyButton303.fancyButton:active,.fancyButton303.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=4573');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton303.fancyButton:link > span,.fancyButton303.fancyButton:visited > span, .fancyButton303div.fancyButton > span{
+}
+.fancyButton303.fancyButton:hover > span,.fancyButton303.fancyButton:focus > span,.fancyButton303.fancyButton:active > span,.fancyButton303.fancyButton.hover > span{
+}
+.fancyButton303.fancyButton .text{
+	color: #2c353e;
+	font-size: 1.2em;
+	font-family: "Lato";
+	text-align: center;
+	padding-top: 1em;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 1em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+text-transform: uppercase;}
+.fancyButton303.fancyButton:hover .text,.fancyButton303.fancyButton:focus .text,.fancyButton303.fancyButton:active .text,.fancyButton303.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/449" target="_self" class="fancyButton fancyButton375 ">
+		<span>
+			<span><span class="text">UTILITY BILLING</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton375.fancyButton:link,.fancyButton375.fancyButton:visited, .fancyButton375div.fancyButton{
+	height: 71px;
+	padding-top: 71px;
+	background-image: url('/ImageRepository/Document?documentID=4679');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: background ease-in-out .3s;
+margin-bottom:55px;}
+.fancyButton375.fancyButton:hover,.fancyButton375.fancyButton:focus,.fancyButton375.fancyButton:active,.fancyButton375.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=8734');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton375.fancyButton:link > span,.fancyButton375.fancyButton:visited > span, .fancyButton375div.fancyButton > span{
+}
+.fancyButton375.fancyButton:hover > span,.fancyButton375.fancyButton:focus > span,.fancyButton375.fancyButton:active > span,.fancyButton375.fancyButton.hover > span{
+}
+.fancyButton375.fancyButton .text{
+	color: #2c353e;
+	font-size: 1.2em;
+	font-family: "Lato";
+	text-align: center;
+	padding-top: 1em;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 1em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+text-transform: uppercase;}
+.fancyButton375.fancyButton:hover .text,.fancyButton375.fancyButton:focus .text,.fancyButton375.fancyButton:active .text,.fancyButton375.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/406" target="_self" class="fancyButton fancyButton315 ">
+		<span>
+			<span><span class="text">Projects</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton315.fancyButton:link,.fancyButton315.fancyButton:visited, .fancyButton315div.fancyButton{
+	height: 71px;
+	padding-top: 71px;
+	background-image: url('/ImageRepository/Document?documentID=4694');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: background ease-in-out .3s;
+margin-bottom:55px;}
+.fancyButton315.fancyButton:hover,.fancyButton315.fancyButton:focus,.fancyButton315.fancyButton:active,.fancyButton315.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=4696');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton315.fancyButton:link > span,.fancyButton315.fancyButton:visited > span, .fancyButton315div.fancyButton > span{
+}
+.fancyButton315.fancyButton:hover > span,.fancyButton315.fancyButton:focus > span,.fancyButton315.fancyButton:active > span,.fancyButton315.fancyButton.hover > span{
+}
+.fancyButton315.fancyButton .text{
+	color: #2c353e;
+	font-size: 1.2em;
+	font-family: "Lato";
+	text-align: center;
+	padding-top: 1em;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 1em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+text-transform: uppercase;}
+.fancyButton315.fancyButton:hover .text,.fancyButton315.fancyButton:focus .text,.fancyButton315.fancyButton:active .text,.fancyButton315.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</aside></div>
+</div>
+<!-- Footer --><div data-cprole="structuralContainer" id="structuralContainer11" class="siteFooter">
+<div class="siteWrap">
+<footer data-cprole="contentContainer" id="contentContainer11a">	<div id="cc259f9a4f-e0ea-4d86-9af5-548c61d2a05d" data-containerid="259f9a4f-e0ea-4d86-9af5-548c61d2a05d" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="50">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col4 first" style="" data-widgetcontainerid="1e56bd8c-19e0-473e-83ac-073b1f077415">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col4 first last id97f6ef42-8a0e-4398-bd2f-30a15e27561d" style="" data-widgetcontainerid="97f6ef42-8a0e-4398-bd2f-30a15e27561d">	
+	<div data-widget-id="0163fe7a-13bf-4d91-9f65-d677c08477ad" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink0163fe7a-13bf-4d91-9f65-d677c08477ad" class="widget widgetQuickLinks skin55 widgetOptionSet41 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader0163fe7a-13bf-4d91-9f65-d677c08477ad">
+			<header class="widgetHeader" id="quickLinksHeader0163fe7a-13bf-4d91-9f65-d677c08477ad">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=105">Popular</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/" target="_self">Home</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/294" target="_self">Events</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.governmentjobs.com/careers/redmondwa" target="_self">Jobs</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/184/Activities" target="_self">Recreation Activities</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col4" style="" data-widgetcontainerid="9c8740b4-5d72-4996-8e87-c3b4bb410524">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col4 first last id4e632359-5a3f-4456-99e4-46d88df76374" style="" data-widgetcontainerid="4e632359-5a3f-4456-99e4-46d88df76374">	
+	<div data-widget-id="d77c9a5c-f413-4d2f-b801-916b9026d7f6" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinkd77c9a5c-f413-4d2f-b801-916b9026d7f6" class="widget widgetQuickLinks skin55 widgetOptionSet41 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeaderd77c9a5c-f413-4d2f-b801-916b9026d7f6">
+			<header class="widgetHeader" id="quickLinksHeaderd77c9a5c-f413-4d2f-b801-916b9026d7f6">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=106">Find</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/189" target="_self">City Council</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/186" target="_self">Parks &amp; Trails</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/898" target="_self">Permits</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/221" target="_self">Transportation</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col4" style="" data-widgetcontainerid="a54153f7-d655-492e-839b-1d10c572e143">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col4 first last ideec01acf-ffbe-4a96-a8a5-df1de562edbb" style="" data-widgetcontainerid="eec01acf-ffbe-4a96-a8a5-df1de562edbb">	
+	<div data-widget-id="8961dfbb-d760-441b-b16c-9b7b68f2e999" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink8961dfbb-d760-441b-b16c-9b7b68f2e999" class="widget widgetQuickLinks skin55 widgetOptionSet41 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader8961dfbb-d760-441b-b16c-9b7b68f2e999">
+			<header class="widgetHeader" id="quickLinksHeader8961dfbb-d760-441b-b16c-9b7b68f2e999">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=107">Report / Request</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://redmondwa.qscend.com/311/" target="_self">Report an Issue</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://redmondwa.qscend.com/311/" target="_self">Request a Service</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/777" target="_self">Public Record</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/698" target="_self">Police Record</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col5" style="" data-widgetcontainerid="12202823-176e-45c4-8c60-d0b8c8dfc67b">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col5 first last idab7b9a8c-fbfb-4ab6-a912-cdb12ecf3280" style="" data-widgetcontainerid="ab7b9a8c-fbfb-4ab6-a912-cdb12ecf3280">	
+	<div data-widget-id="16caf043-4720-4b1d-891a-825f8f004de8" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink16caf043-4720-4b1d-891a-825f8f004de8" class="widget widgetQuickLinks skin55 widgetOptionSet41 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader16caf043-4720-4b1d-891a-825f8f004de8">
+			<header class="widgetHeader" id="quickLinksHeader16caf043-4720-4b1d-891a-825f8f004de8">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=108">Helpful Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/871" target="_self">ADA Program</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/857" target="_self">Title VI</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/873/5722/Web-Accessibility" target="_self">Website Accessibility</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/385" target="_self">Website Policies</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col7 last" style="" data-widgetcontainerid="0951f65b-e97f-436d-888d-28ac230fca3a">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col7 first last idd9b5e23f-3cf9-417b-9170-3360bb01ef58" style="" data-widgetcontainerid="d9b5e23f-3cf9-417b-9170-3360bb01ef58">	
+    <div data-widget-id="43c89b7e-a2c7-4ad4-922d-43ac5f4330dd" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdv43c89b7e-a2c7-4ad4-922d-43ac5f4330dd" class="widget widgetInfoAdvanced skin58 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="header43c89b7e-a2c7-4ad4-922d-43ac5f4330dd">
+			<header class="widgetHeader" id="header43c89b7e-a2c7-4ad4-922d-43ac5f4330dd">
+		<div class="">
+					<h3>Sign up for our Newsletters</h3>
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row  wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<form id="email-signup GD-snippet-form" action="https://public.govdelivery.com/accounts/WAREDMOND/subscribers/qualify" accept-charset="UTF-8" method="post">
+    <input name="utf8" type="hidden" value="?">
+    <input type="hidden" name="authenticity_token" value="d1XsUGSqIbCzpfoDnY1Bd18w3Jfq5s1TyGsy1pL+pGMLw9UPYHYvi365FkgIY1MJv47vMF7lriO8oOiF2U9GQQ==">
+    <input type="email" name="email" id="email" placeholder="Your Email Address">
+    <input type="submit" name="commit" value="Sign Up!" class="form_button">
+</form>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv43c89b7e-a2c7-4ad4-922d-43ac5f4330dd .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col7 first last id34d571cb-3a09-4a3a-8042-8ec910d80aa7" style="" data-widgetcontainerid="34d571cb-3a09-4a3a-8042-8ec910d80aa7">	
+<div data-widget-id="d1376b9f-96c7-4715-bd13-78ce8e52959c" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidgetd1376b9f-96c7-4715-bd13-78ce8e52959c" class="widget widgetGraphicLinks skin55 widgetOptionSet31 wide" data-elementqueryclasses='{"wide-narrow":"min-width:1em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid4 ">	
+			<div class="row autoWidths left wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.redmond.gov/facebook" target="_self" aria-label="Facebook graphic"><img src="images/42ae8df51ad69861722de7743982c7fd29da676b19c5de95a96606f9ed3b0b41" class="graphicButtonLink" alt="Facebook" onmouseover="this.src='/ImageRepository/Document?documentID=126'" onmouseout="this.src='/ImageRepository/Document?documentID=125'" onfocus="this.src='/ImageRepository/Document?documentID=126'" onblur="this.src='/ImageRepository/Document?documentID=125'"> </a></div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.redmond.gov/twitter" target="_self" aria-label="Twitter graphic"><img src="images/f038d32d8a8b07fe853a794be03b853f7bfa276c474ba90fd2fac9516c5f96fd" class="graphicButtonLink" alt="Twitter" onmouseover="this.src='/ImageRepository/Document?documentID=130'" onmouseout="this.src='/ImageRepository/Document?documentID=129'" onfocus="this.src='/ImageRepository/Document?documentID=130'" onblur="this.src='/ImageRepository/Document?documentID=129'"> </a></div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.redmond.gov/instagram" target="_self" aria-label="Instagram graphic"><img src="images/07f3d0f2127116092b0b899c29c906131317356520d5215240c1540244edcdc4" class="graphicButtonLink" alt="Instagram" onmouseover="this.src='/ImageRepository/Document?documentID=128'" onmouseout="this.src='/ImageRepository/Document?documentID=127'" onfocus="this.src='/ImageRepository/Document?documentID=128'" onblur="this.src='/ImageRepository/Document?documentID=127'"> </a></div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.redmond.gov/youtube" target="_self" aria-label="Youtube graphic"><img src="images/acb290f49d7226a18b8f64b36289d9c9de6e4abc86899c57c5fda46117a0bc69" class="graphicButtonLink" alt="Youtube" onmouseover="this.src='/ImageRepository/Document?documentID=132'" onmouseout="this.src='/ImageRepository/Document?documentID=131'" onfocus="this.src='/ImageRepository/Document?documentID=132'" onblur="this.src='/ImageRepository/Document?documentID=131'"> </a></div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</footer><footer data-cprole="contentContainer" id="contentContainer11b">	<div id="cca96273d2-e530-4359-be0a-91515fa53a56" data-containerid="a96273d2-e530-4359-be0a-91515fa53a56" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="50">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col6 first" style="" data-widgetcontainerid="ead3ad8c-5b28-4128-9fb4-1feba464870f">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col6 first last idc851c825-7e8f-422a-a0f7-24bcc6a4117f" style="" data-widgetcontainerid="c851c825-7e8f-422a-a0f7-24bcc6a4117f">	
+    <div data-widget-id="dee2236f-ed0d-4072-81d2-69a3a738167d" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdvdee2236f-ed0d-4072-81d2-69a3a738167d" class="widget widgetInfoAdvanced skin57 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="headerdee2236f-ed0d-4072-81d2-69a3a738167d">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row  wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<img style="max-width: 210px;" src="images/033f075b6331f4a5b7122ab61000f19ec11e27957fcbf85a84a641bfc3d64e68" alt="CityofRedond" title="CityofRedond">
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdvdee2236f-ed0d-4072-81d2-69a3a738167d .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col18 last" style="" data-widgetcontainerid="fc82eafd-4820-47eb-96e8-467cef78252e">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col18 first last id05fd0f4f-22bb-440d-8ee2-843e3795ad9e" style="" data-widgetcontainerid="05fd0f4f-22bb-440d-8ee2-843e3795ad9e">	
+    <div data-widget-id="0183e4ce-450c-42cd-b41c-e337d047fd84" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+<style type="text/css">.row.outer.wide .widgetOptionSet33 .col1 li:after {
+	content: "•"; float: right; padding: 0 0 0 1em;
+}
+.widgetOptionSet33 .col1.last li:after {
+	display: none;
+}
+
+.row.outer:not(.wide) .widgetOptionSet33 .row {
+justify-content: center;
+}</style>
+
+	<section id="divInfoAdv0183e4ce-450c-42cd-b41c-e337d047fd84" class="widget widgetInfoAdvanced skin60 widgetOptionSet33 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:50em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="header0183e4ce-450c-42cd-b41c-e337d047fd84">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid4 ">
+		<div class="row autoWidths right wide">
+					<div class="col col1 first ">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	Phone: <a href="tel:425-556-2900">425-556-2900</a>
+</li>						</ol>
+					</div>
+					<div class="col col1  ">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<a href="https://goo.gl/maps/CJcLDqJFWRpxZxbL6" target="_self" class="Hyperlink">15670 NE 85th Street</a>
+</li>						</ol>
+					</div>
+					<div class="col col1  ">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	P.O. Box 97010
+</li>						</ol>
+					</div>
+					<div class="col col1  last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<a href="https://goo.gl/maps/CJcLDqJFWRpxZxbL6" target="_self" class="Hyperlink">Redmond, WA 98073-9710</a>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv0183e4ce-450c-42cd-b41c-e337d047fd84 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col18 first last id9ea6fd8d-e2f2-466d-ac67-b941cd3dbdcb" style="" data-widgetcontainerid="9ea6fd8d-e2f2-466d-ac67-b941cd3dbdcb">	
+	<div data-widget-id="aa39326a-9879-4ff1-a85c-aa36f6112dff" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinkaa39326a-9879-4ff1-a85c-aa36f6112dff" class="widget widgetQuickLinks skin57 widgetOptionSet43 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:50em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Quick Links">
+			<header class="widgetHeader" id="quickLinksHeaderaa39326a-9879-4ff1-a85c-aa36f6112dff">
+		<div class="">
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid3 ">
+        <div class="row autoWidths right narrow">
+				<div class="col col1 first ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/directory" target="_self">Contact Us</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/sitemap" target="_self">Site Map</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/FormCenter/Communications-12/Website-Feedback-87" target="_self">Website Feedback</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</footer>
+</div>
+</div>
+<!-- Subfooter --><div data-cprole="structuralContainer" id="structuralContainer12">
+<div class="siteWrap"><footer data-cprole="contentContainer" id="contentContainer12a">	<div id="cc6ce8559d-face-4134-8f4a-ab094cdb2fc6" data-containerid="6ce8559d-face-4134-8f4a-ab094cdb2fc6" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="50">
+				                
+
+
+
+	</div>
+</footer></div>
+</div>
+</div>
+
+			</div>
+		</div>
+	</div>
+
+
+<link href="/745732998.css" rel="stylesheet" type="text/css">
+
+<div tabindex="0"></div>
+<div id="SplashMessageWrapper" class="cp-Splash-wrapper">
+	<div role="dialog" aria-labelledby="cp-Splash-title" aria-describedby="editorContentDesc" aria-modal="true" tabindex="-1" id="SplashMessage" class="hidden cp-Splash cp-Splash--modal is-open">
+		<div class="cp-Splash-header">
+			<span class="cp-Splash-title" id="cp-Splash-title">Loading</span>
+			<button class="cp-Splash-Btn cp-Splash-close" aria-label="Close this modal" title="Close this window">
+				<svg id="iconClose" viewbox="0 0 25 25">
+					<polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon>
+				</svg>
+			</button>
+		</div>
+		<div class="cp-Splash-body">
+			<div class="cp-Splash-Prose editorContent fr-view fr-element" id="editorContentDesc">
+				<!-- Content from the Froala Editor will go here. -->
+				Loading
+			</div>
+		</div>
+		<div class="cp-Splash-footer">
+			<button class="cp-Splash-Btn cp-Splash-Btn--NoShow">Do Not Show Again</button>
+			<button class="cp-Splash-Btn cp-Splash-Btn--Close">Close</button>
+		</div>
+	</div>
+</div>
+<div tabindex="0"></div>
+
+<script src="/Assets/Scripts/APIClient.js"></script>
+<script src="/Assets/Mystique/Shared/Scripts/Moment/Moment.min.js"></script>
+<script src="/Assets/Scripts/SplashModal/SplashModalRender.js"></script>
+<script>
+
+		$(document).ready(function () {
+			var filter = {
+				targetId: '',
+				targetType: 0
+			}
+
+			new SplashModalRender().triggerRender(filter);
+		});
+</script>
+	
+	
+	<script type="text/javascript">function dynamicStretchContainers () {Core.Layout.stretchContainers('#structuralContainer1, #structuralContainer3, #structuralContainer7');}</script>
+
+
+
+
+
+
+	<script src="/-1135462429.js" type="text/javascript"></script>
+	<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const getValueTS = (elem, attr) => {
+      const val = window.getComputedStyle(elem)[attr];
+      return val ? parseInt(val, 10) : undefined;
+    };
+
+    const clampTS = (number, min, max) => Math.min(Math.max(number, min), max);
+
+    const isPageEditingTS = () => {
+      return document.querySelector("#doneEditing") !== null || typeof DesignCenter !== "undefined";
+    };
+
+    const isTransparentTS = (elem) => {
+      const bg = window.getComputedStyle(elem)['background-color'];
+      const bgColorRegexTS = /rgba\((\d+), (\d+), (\d+), (\d*\.?\d*)\)/;
+      const matchState = bg.match(bgColorRegexTS);
+      if (!matchState || matchState.length !== 5) return false;
+      const alpha = parseFloat(matchState[4], 10);
+      return alpha >= 0 && alpha < 1;
+    };
+
+    const iterateLeftPads = (callback) => {
+      const containersTS = document.querySelectorAll("[class^='siteWrap'],[class*=' siteWrap']");
+      containersTS.forEach(containerTS => {
+        if (containerTS.id !== "bodyContainerTS" && containerTS.getAttribute('data-skip-leftpad') === null) {
+          callback(containerTS);
+        }
+      });
+    };
+
+    const iterateRightPads = (callback) => {
+      const containersTS = document.querySelectorAll("[class^='siteWrap'],[class*=' siteWrap']");
+      containersTS.forEach(containerTS => {
+        if (containerTS.id !== "bodyContainerTS" && containerTS.getAttribute('data-skip-rightpad') === null) {
+          callback(containerTS);
+        }
+      });
+    };
+
+    const anchor = document.getElementById("divToolbars");
+    const bodyWrapper = document.getElementById("bodyWrapper");
+    const outerSizingTS = document.getElementById("bannerContainerTS");
+    const innerSizingTS = document.getElementById("bannerSizingTS");
+    const bodyContainerTS = document.getElementById("bodyContainerTS");
+    const headerContainerTS = document.getElementById("headerContainerTS");
+
+    const fixedTopTS = document.querySelector(".fixedTopTS");
+    const fixedBottomTS = document.querySelector(".fixedBottomTS");
+    const fixedLeftTS = document.querySelector(".fixedLeftTS");
+    const fixedRightTS = document.querySelector(".fixedRightTS");
+
+    let initialTopTS;
+    let topAttachTS;
+    if (fixedTopTS) {
+      initialTopTS = getValueTS(fixedTopTS, 'top');
+      const attachment = fixedTopTS.getAttribute('data-attach');
+      if (attachment) topAttachTS = document.getElementById(attachment);
+    }
+
+    const resizeAdjustmentTS = () => {
+      const editing = isPageEditingTS();
+      const anchorStyle = getComputedStyle(anchor);
+      const anchorPaddingTop = parseInt(anchorStyle.paddingTop, 10);
+      // console.log("Padding Top:", anchorPaddingTop); 
+
+      // Sticky Top Adjustment
+      if (fixedTopTS) {
+        if (editing) {
+          fixedTopTS.classList.add("forceUnfixTS");
+        } else {
+          fixedTopTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedTopTS).position === "sticky") {
+          const anchorHeight = anchor ? anchor.offsetHeight - 1 : 0;
+          fixedTopTS.style.top = `${anchorHeight + initialTopTS}px`;
+          bodyWrapper.style.paddingTop = `${anchorHeight - anchorPaddingTop}px`;
+
+          if (isTransparentTS(fixedTopTS)) {
+            innerSizingTS.style.paddingTop = `${initialTopTS + fixedTopTS.offsetHeight - 1}px`;
+            outerSizingTS.style.paddingTop = "";
+          } else {
+            outerSizingTS.style.paddingTop = "";
+            innerSizingTS.style.paddingTop = "";
+          }
+        } else {
+          const mobileMenu = document.getElementById("nav-open-btn");
+          const mobileMenuHeight = mobileMenu ? mobileMenu.offsetHeight : 0;
+          fixedTopTS.style.top = "";
+          bodyWrapper.style.paddingTop = `${anchor.offsetHeight + mobileMenuHeight - anchorPaddingTop}px`;
+        }
+      }
+
+      // Sticky Bottom Adjustment
+      if (fixedBottomTS) {
+        if (editing || fixedBottomTS.offsetHeight > 200) {
+          fixedBottomTS.classList.add("forceUnfixTS");
+        } else {
+          fixedBottomTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedBottomTS).position === "fixed") {
+          bodyContainerTS.style.paddingBottom = `${fixedBottomTS.offsetHeight}px`;
+          bodyWrapper.style.paddingTop = `${anchor.offsetHeight - anchorPaddingTop}px`;
+        } else {
+          bodyContainerTS.style.paddingBottom = "";
+          bodyWrapper.style.paddingTop = `${anchor.offsetHeight - anchorPaddingTop}px`;
+        }
+      }
+
+      // Fixed Left Adjustment
+      if (fixedLeftTS) {
+        if (editing) {
+          fixedLeftTS.classList.add("forceUnfixTS");
+        } else {
+          fixedLeftTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedLeftTS).position === "fixed") {
+          const anchorHeight = anchor ? anchor.offsetHeight - 1 : 0;
+          const headerHeight = headerContainerTS.offsetHeight - 1;
+          fixedLeftTS.style.top = `${anchorHeight + headerHeight + 100}px`;
+
+          const leftBoundingTS = fixedLeftTS.getBoundingClientRect();
+          iterateLeftPads(containerTS => {
+            const containerBoundingTS = containerTS.getBoundingClientRect();
+            if (containerBoundingTS.left <= leftBoundingTS.right) {
+              containerTS.style.paddingLeft = `${leftBoundingTS.width + 16}px`;
+            }
+          });
+        }
+      }
+
+      // Fixed Right Adjustment
+      if (fixedRightTS) {
+        if (editing) {
+          fixedRightTS.classList.add("forceUnfixTS");
+        } else {
+          fixedRightTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedRightTS).position === "fixed") {
+          const anchorHeight = anchor ? anchor.offsetHeight - 1 : 0;
+          const headerHeight = headerContainerTS.offsetHeight - 1;
+          fixedRightTS.style.top = `${anchorHeight + headerHeight + 100}px`;
+
+          const rightBoundingTS = fixedRightTS.getBoundingClientRect();
+          iterateRightPads(containerTS => {
+            const containerBoundingTS = containerTS.getBoundingClientRect();
+            if (containerBoundingTS.left <= rightBoundingTS.right) {
+              containerTS.style.paddingRight = `${rightBoundingTS.width + 16}px`;
+            }
+          });
+        }
+      }
+    };
+
+    const scrollAdjustmentTS = () => {
+      if (!fixedTopTS || !topAttachTS) return;
+      const topPosition = getComputedStyle(fixedTopTS).position;
+      if (topPosition === "sticky" || topPosition === "absolute") {
+        const anchorBounding = anchor.getBoundingClientRect();
+        const attachBounding = topAttachTS.getBoundingClientRect();
+        fixedTopTS.style.top = `${Math.max(anchorBounding.bottom - 1, attachBounding.bottom)}px`;
+      } else {
+        fixedTopTS.style.top = `${initialTopTS}px`;
+      }
+    };
+
+    // Event Listeners for Scroll and Resize
+    window.addEventListener("scroll", scrollAdjustmentTS);
+    window.addEventListener("resize", () => {
+      clearTimeout(this.adjustTimeout);
+      this.adjustTimeout = setTimeout(resizeAdjustmentTS, 350);
+    });
+
+    // Initial adjustment on page load
+    resizeAdjustmentTS();
+  });
+</script>
+
+<!-- email signup code -->
+<script>
+if (document.location.pathname == "/list.aspx") {
+	const urlParams = new URLSearchParams(window.location.search);
+	const theEmail = urlParams.get('email');
+    if (theEmail) {
+        $("#emailAddressSignIn").val(theEmail);
+		signIn();
+    }
+}
+</script>
+<!-- end Email signup code -->
+
+<!-- preload graphic button hover images -->
+<script>
+$(document).ready(function() {
+    // Preload Images for Graphic Buttons .5 seconds after page loads
+    var waitToPreload = 500;
+
+    // Parse through the styles on the page, finding any image URLs
+    $($("style").text().match(/url\s*\('?\/?(?:[^/]+\/)*?([^/:]+)'?\)/g)).each(function() {
+        var url = this.replace("url(","").replace(")","").replaceAll("'","").replaceAll('"',"");
+        setTimeout(preloadImage, waitToPreload, url);
+    });
+
+    function preloadImage(url) {
+        var image = $("<img />");
+        $(image).attr('src',url).appendTo('body').hide();
+    }
+});
+</script>
+
+<script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"></script>
+
+<!-- Start SiteImprove Script -->
+<script type="text/javascript">
+/*<![CDATA[*/
+(function() {
+var sz = document.createElement('script'); sz.type = 'text/javascript'; sz.async = true;
+sz.src = '//siteimproveanalytics.com/js/siteanalyze_6745.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sz, s);
+})();
+/*]]>*/
+</script>
+<!-- End SiteImprove Script -->
+
+
+<script type="text/javascript">
+    window._monsido = window._monsido || {
+        token: "gUHJ1NzC3wpOQrmj03jgIg",
+        statistics: {
+            enabled: true,
+            cookieLessTracking: false,
+            documentTracking: {
+                enabled: true,
+                documentCls: "monsido_download",
+                documentIgnoreCls: "monsido_ignore_download",
+                documentExt: [],
+            },
+        },
+        heatmap: {
+            enabled: true,
+        },
+        pageAssistV2: {
+            enabled: true,
+            theme: "light",
+            mainColor: "#783CE2",
+            textColor: "#ffffff",
+            linkColor: "#783CE2",
+            buttonHoverColor: "#783CE2",
+            mainDarkColor: "#052942",
+            textDarkColor: "#ffffff",
+            linkColorDark: "#FFCF4B",
+            buttonHoverDarkColor: "#FFCF4B",
+            greeting: "Discover your personalization options",
+            direction: "leftbottom",
+            coordinates: "undefined undefined undefined undefined",
+            iconShape: "circle",
+            title: "Personalization Options",
+            titleText: "Welcome to PageAssist&#8482; toolbar! Adjust the options below to cater the website to your accessibility needs.",
+            iconPictureUrl: "logo",
+            logoPictureUrl: "",
+            logoPictureBase64: "",
+            languages: [""],
+            defaultLanguage: "",
+            skipTo: false,
+            alwaysOnTop: false,
+hotkeyEnabled: false
+        },
+    };
+</script>
+<script type="text/javascript" async src="https://app-script.monsido.com/v2/monsido-script.js"></script>
+
+<!-- THIS SCRIPT WAS ESTABLISHED TO ALLOW FOR RESPONSIVE RESIZING OF THE FACEBOOK IFRAMES SITE-WIDE -->
+
+<style>
+  .facebook-container {
+    text-align: center;
+    width: 100%;
+    max-width: 500px; /* Adjust as needed */
+    margin: 0 auto;
+  }
+</style>
+
+<script>
+  (function () {
+    const minWidth = 220;
+    const maxWidth = 500; // Facebook widget will not expand past 500
+
+    function clamp__TS(num, min, max) {
+      return Math.min(Math.max(num, min), max);
+    }
+
+    function adjustFacebookContainers__TS() {
+      const iframes = document.querySelectorAll('iframe[src*="facebook.com"]');
+      iframes.forEach(iframe => {
+        if (!iframe.parentElement.classList.contains('facebook-container')) {
+          const container = document.createElement('div');
+          container.classList.add('facebook-container');
+          iframe.parentNode.insertBefore(container, iframe);
+          container.appendChild(iframe);
+        }
+        adjustContainer__TS(iframe.parentElement);
+      });
+    }
+
+    function adjustContainer__TS(container) {
+      const frame = container.querySelector('iframe');
+      if (!frame) {
+        console.warn("No facebook widget found...");
+        return;
+      }
+      const containerWidth = container.clientWidth;
+      const newWidth = clamp__TS(containerWidth, minWidth, maxWidth);
+
+      // Use jQuery to manipulate the iframe's src and dimensions
+      const src = new URL(frame.getAttribute("src"));
+      src.searchParams.set("width", newWidth);
+      frame.setAttribute("src", src);
+      frame.setAttribute("width", newWidth);
+    }
+
+    window.addEventListener('load', adjustFacebookContainers__TS);
+    window.addEventListener('resize', adjustFacebookContainers__TS);
+  })();
+</script>
+
+
+<!-- THIS SCRIPT WAS ESTABLISHED TO ALLOW FOR BACKGROUNDS TO RETAIN FIXED POSITIONING ON MOBILE  -->
+
+<!-- Moves the assigned banner to the outer wrap.  Make sure the selector below matches the selector specified in your site's XML files! -->
+
+<script>
+  function moveBannerToOuterWrap() {
+    if ($(".fixedBannerTS #bannerDivbanner2").length) {
+      $(".fixedBannerTS #bannerDivbanner2").appendTo("#outer-wrap");
+    } else {
+      setTimeout(function () {
+        moveBannerToOuterWrap();
+      }, 500);
+    }
+  }
+
+  moveBannerToOuterWrap();
+</script>
+
+<!----------Google Translate (Mobile Friendly)--------->
+
+
+
+<style>#google-translate-container {float: right;padding: 3px 5px 0px 0px;}.goog-te-combo,.goog-te-banner ,.goog-te-ftab,.goog-te-menu ,.goog-te-menu2,.goog-te-balloon * {font-family: arial;font-size: 10pt;background-image: url("https://theme.zdassets.com/theme_assets/958586/bae8aa24db8d43595871692a9d259186f2db3fb4.png");background-position: 3px 4px;background-size: 22px;background-repeat: no-repeat;text-indent: 20px;background-color: #fff;color: #000 !important;}.goog-logo-link {display: none !important;}.goog-te-gadget {color: transparent !important;}.goog-te-gadget .goog-te-combo {margin: 2px 0 !important;border-radius: 15px !important;}.goog-te-combo{border: 1px solid !important;border-color: #bcc9d7 #96a3b1 #96a3b1 #bcc9d7 !important;border-radius: 0 !important;height:32px; !important;padding: 0 1px 0 .25rem !important;}
+
+#launcher-wrapper {bottom: 50px !important;}
+
+</style>
+
+<div id="google-translate-container">
+
+<div id="google_translate_element" style="position: fixed; bottom: 0px; right: 20px; z-index: 5;"></div>
+
+</div>
+
+<script>
+
+function googleTranslateElementInit() {
+
+new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
+
+// begin accessibility compliance
+
+$('img.goog-te-gadget-icon').attr('alt','Google Translate');
+
+$('div#goog-gt-tt div.logo img').attr('alt','translate');
+
+$('div#goog-gt-tt .original-text').css('text-align','left');
+
+$('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+
+$('.goog-te-combo').attr('aria-label','google translate languages');
+
+$('svg.goog-te-spinner').attr('title','Google Translate Spinner');
+
+$('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+
+}
+
+$(function() {
+
+$.getScript("//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit");
+
+});
+
+</script>
+
+
+
+<!--------------End Google Translate----------------->
+
+
+	<script type="text/javascript">
+		$(function () {
+			document.cookie = "responsiveGhost=0; path=/";
+		});
+		$(window).on("load", function () {
+			$('body').addClass('doneLoading').removeClass('hideContent');
+
+			if ($('#404Content').length > 0)
+				$('div#bodyWrapper').css('padding', '0px');
+		});
+	</script>
+
+	<noscript>
+		<style>
+			body.hideContent {
+				opacity: 1 !important;
+			}
+		</style>
+	</noscript>
+
+		
+<div style="display: none;">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+		<symbol id="iconArrow--left" viewbox="0 0 25 25">
+			<title>Arrow Left</title>
+			<polygon style="fill:currentcolor" points="18.044,25 19.498,23.545 8.409,12.454 19.408,1.455 17.954,0 5.502,12.452"></polygon>
+		</symbol>
+
+		<symbol id="iconArrow--right" viewbox="0 0 25 25">
+			<title>Arrow Right</title>
+			<polygon style="fill:currentcolor" points="6.957,0 5.502,1.455 16.591,12.546 5.592,23.545 7.047,25 19.498,12.548"></polygon>
+		</symbol>
+
+	</svg>
+</div>
+	<script type="text/javascript">loadCSS('//fonts.googleapis.com/css?family=Lato:300,300italic,700,700italic,900,900italic,italic,regular|Libre+Baskerville:700,italic,regular|Roboto:700,900|Roboto+Condensed:700|Roboto+Slab:700|');</script>
+	
+
+	<div class="hidden activeWidgetSkinComponentsOnPageJson">[{"WidgetSkinID":56,"ComponentType":0,"FontFamily":"","FontVariant":"","FontColor":"","FontSize":0.00,"FontStyle":0,"TextAlignment":0,"ShadowColor":"","ShadowBlurRadius":0,"ShadowSpreadRadius":0,"ShadowOffsetX":0,"ShadowOffsetY":0,"ShadowInset":false,"ShadowColor2":"","ShadowBlurRadius2":0,"ShadowSpreadRadius2":0,"ShadowOffsetX2":0,"ShadowOffsetY2":0,"ShadowInset2":false,"ShadowColor3":"","ShadowBlurRadius3":0,"ShadowSpreadRadius3":0,"ShadowOffsetX3":0,"ShadowOffsetY3":0,"ShadowInset3":false,"ShadowColor4":"","ShadowBlurRadius4":0,"ShadowSpreadRadius4":0,"ShadowOffsetX4":0,"ShadowOffsetY4":0,"ShadowInset4":false,"ShadowColor5":"","ShadowBlurRadius5":0,"ShadowSpreadRadius5":0,"ShadowOffsetX5":0,"ShadowOffsetY5":0,"ShadowInset5":false,"Capitalization":0,"HeaderMiscellaneousStyles1":"","HeaderMiscellaneousStyles2":"","HeaderMiscellaneousStyles3":"","BulletStyle":0,"BulletWidth":2.00,"BulletColor":"","LinkNormalColor":"","LinkNormalUnderlined":false,"LinkNormalMiscellaneousStyles":"","LinkVisitedColor":"","LinkVisitedMiscellaneousStyles":"","LinkHoverColor":"","LinkHoverUnderlined":false,"LinkHoverMiscellaneousStyles":"","LinkSelectedUnderlined":false,"ForceReadOnLinkToNewLine":false,"DisplayColumnSeparator":false,"ColumnSeparatorWidth":0.0000,"HoverBackgroundColor":"","HoverBackgroundGradientStartingColor":"","HoverBackgroundGradientEndingColor":"","HoverBackgroundGradientDirection":0,"HoverBackgroundGradientDegrees":0.0000000,"HoverBackgroundImageFileName":"","HoverBackgroundImagePositionXUseKeyword":true,"HoverBackgroundImagePositionXKeyword":0,"HoverBackgroundImagePositionX":{"Value":0.0000,"Unit":0},"HoverBackgroundImagePositionYUseKeyword":true,"HoverBackgroundImagePositionYKeyword":0,"HoverBackgroundImagePositionY":{"Value":0.0000,"Unit":0},"HoverBackgroundImageRepeat":0,"HoverBorderStyle":0,"HoverBorderWidth":0,"HoverBorderColor":"","HoverBorderSides":15,"HoverBorderRadiusTopLeft":{"Value":null,"Unit":1},"HoverBorderRadiusTopRight":{"Value":null,"Unit":1},"HoverBorderRadiusBottomRight":{"Value":null,"Unit":1},"HoverBorderRadiusBottomLeft":{"Value":null,"Unit":1},"SelectedBackgroundColor":"","SelectedBackgroundGradientStartingColor":"","SelectedBackgroundGradientEndingColor":"","SelectedBackgroundGradientDirection":0,"SelectedBackgroundGradientDegrees":0.0000000,"SelectedBackgroundImageFileName":"","SelectedBackgroundImagePositionXUseKeyword":true,"SelectedBackgroundImagePositionXKeyword":0,"SelectedBackgroundImagePositionX":{"Value":0.0000,"Unit":0},"SelectedBackgroundImagePositionYUseKeyword":true,"SelectedBackgroundImagePositionYKeyword":0,"SelectedBackgroundImagePositionY":{"Value":0.0000,"Unit":0},"SelectedBackgroundImageRepeat":0,"SelectedBorderStyle":0,"SelectedBorderWidth":0,"SelectedBorderColor":"","SelectedBorderSides":15,"SelectedBorderRadiusTopLeft":{"Value":null,"Unit":1},"SelectedBorderRadiusTopRight":{"Value":null,"Unit":1},"SelectedBorderRadiusBottomRight":{"Value":null,"Unit":1},"SelectedBorderRadiusBottomLeft":{"Value":null,"Unit":1},"HoverFontFamily":"","HoverFontVariant":"","HoverFontColor":"","HoverFontSize":0.00,"HoverFontStyle":0,"HoverTextAlignment":0,"HoverShadowColor":"","HoverShadowBlurRadius":0,"HoverShadowSpreadRadius":0,"HoverShadowOffsetX":0,"HoverShadowOffsetY":0,"HoverShadowInset":false,"HoverShadowColor2":"","HoverShadowBlurRadius2":0,"HoverShadowSpreadRadius2":0,"HoverShadowOffsetX2":0,"HoverShadowOffsetY2":0,"HoverShadowInset2":false,"HoverShadowColor3":"","HoverShadowBlurRadius3":0,"HoverShadowSpreadRadius3":0,"HoverShadowOffsetX3":0,"HoverShadowOffsetY3":0,"HoverShadowInset3":false,"HoverShadowColor4":"","HoverShadowBlurRadius4":0,"HoverShadowSpreadRadius4":0,"HoverShadowOffsetX4":0,"HoverShadowOffsetY4":0,"HoverShadowInset4":false,"HoverShadowColor5":"","HoverShadowBlurRadius5":0,"HoverShadowSpreadRadius5":0,"HoverShadowOffsetX5":0,"HoverShadowOffsetY5":0,"HoverShadowInset5":false,"HoverCapitalization":0,"SelectedFontFamily":"","SelectedFontVariant":"","SelectedFontColor":"","SelectedFontSize":0.00,"SelectedFontStyle":0,"SelectedShadowColor":"","SelectedShadowBlurRadius":0,"SelectedShadowSpreadRadius":0,"SelectedShadowOffsetX":0,"SelectedShadowOffsetY":0,"SelectedShadowInset":false,"SpaceBetweenTabs":0,"SpaceBetweenTabsUnits":"","Trigger":4,"AnimationId":"00000000-0000-0000-0000-000000000000","AnimationClass":"animation00000000000000000000000000000000","ScrollOffset":80,"TriggerNameLowerCase":"scroll","ParentComponentWithTrigger":null,"BackgroundColor":"rgb(44, 53, 62)","BackgroundGradientStartingColor":"","BackgroundGradientEndingColor":"","BackgroundGradientDirection":0,"BackgroundGradientDegrees":0.0000000,"BackgroundImageFileName":"","BackgroundImagePositionXUseKeyword":true,"BackgroundImagePositionXKeyword":0,"BackgroundImagePositionX":{"Value":0.0,"Unit":0},"BackgroundImagePositionYUseKeyword":true,"BackgroundImagePositionYKeyword":0,"BackgroundImagePositionY":{"Value":0.0,"Unit":0},"BackgroundImageRepeat":0,"BorderStyle":0,"BorderWidth":0,"BorderColor":"","BorderSides":15,"BorderRadiusTopLeft":{"Value":null,"Unit":1},"BorderRadiusTopRight":{"Value":null,"Unit":1},"BorderRadiusBottomRight":{"Value":null,"Unit":1},"BorderRadiusBottomLeft":{"Value":null,"Unit":1},"MarginTop":{"Value":null,"Unit":0},"MarginRight":{"Value":null,"Unit":0},"MarginBottom":{"Value":null,"Unit":0},"MarginLeft":{"Value":null,"Unit":0},"PaddingTop":{"Value":null,"Unit":0},"PaddingRight":{"Value":null,"Unit":0},"PaddingBottom":{"Value":null,"Unit":0},"PaddingLeft":{"Value":null,"Unit":0},"MiscellaneousStyles":"box-shadow: 0px 3px 6px #00000029;","RecordStatus":0}]</div>
+		<div style="display: none;">
+			<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+				<symbol id="iconSlideshowArrowLeft" viewbox="0 0 22.68 40">
+					<title>Slideshow Left Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M20,40a2.67,2.67,0,0,1-1.9-.79L.79,21.9a2.68,2.68,0,0,1,0-3.79L18.1.79a2.68,2.68,0,1,1,3.79,3.79L6.47,20,21.89,35.42A2.68,2.68,0,0,1,20,40Z"></path>
+					</g>
+				</symbol>
+				<symbol id="iconSlideshowArrowRight" viewbox="0 0 22.68 40">
+					<title>Slideshow Right Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M2.68,0a2.67,2.67,0,0,1,1.9.79L21.89,18.1a2.68,2.68,0,0,1,0,3.79L4.58,39.21A2.68,2.68,0,0,1,.79,35.42L16.21,20,.79,4.58A2.68,2.68,0,0,1,2.68,0Z"></path>
+					</g>
+				</symbol>
+			</svg>
+		</div>
+	
+	
+
+	<div id="root-picker-outlet"></div>
+</body>
