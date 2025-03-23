@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:bellevue
+people:
+- email: ''
+  image: images/dcdf985af77eac8fb6722d90f57e1e9c6bf533c4ab6b0e77fe032ae805679706.JPG?h=e42cde40&itok=oTNuWBmO
+  name: Lynne Robinson
+  phone_number: ''
+  position: mayor
+  position_misc: 1/1/14-12/31/25
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson
+- email: ''
+  image: ''
+  name: John Stokes
+  phone_number: ''
+  position: council_member
+  position_misc: 1/1/12-12/31/27
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes
+- email: ''
+  image: ''
+  name: Jared Nieuwenhuis
+  phone_number: ''
+  position: council_member
+  position_misc: 1/1/18-12/31/25
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis
+- email: ''
+  image: ''
+  name: Dave Hamilton
+  phone_number: ''
+  position: council_member
+  position_misc: 1/1/24-12/31/27
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton
+- email: ''
+  image: ''
+  name: Mo Malakoutian
+  phone_number: ''
+  position: council_member
+  position_misc: 1/1/24-12/31/27
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian
+- email: ''
+  image: ''
+  name: Conrad Lee
+  phone_number: ''
+  position: council_member
+  position_misc: 1/1/94-12/31/25
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee
+- email: ''
+  image: ''
+  name: Janice Zahn
+  phone_number: ''
+  position: council_member
+  position_misc: 11/28/17-12/31/27
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/janice-zahn
+sources:
+- https://bellevuewa.gov/city-government/city-council/councilmembers
