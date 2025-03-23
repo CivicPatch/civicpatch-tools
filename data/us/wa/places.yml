@@ -64,6 +64,7 @@ places:
   scraper_misc:
     city_id: 263
     population: 99370
+  last_city_scrape_run: '2025-03-23'
 - place: bellingham
   website: https://cob.org/
   scraper_misc:
