@@ -102,6 +102,9 @@ module Scrapers
       nokogiri_html.css("img").each_with_index do |img, _index|
         begin
           image_url = img["src"]
+
+          next if image_url.blank? || image_url.start_with?("data:image")
+
           image_url = format_url(image_url)
 
           absolute_image_url = URI.join(base_url, image_url).to_s
