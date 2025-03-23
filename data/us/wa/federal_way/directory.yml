@@ -1,0 +1,43 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:federal_way
+people:
+- email: jim.ferrell@federalwaywa.gov
+  image: images/d50151e0588c194dfe130fc54a95cb2b15dcffa5e5b2abd0b675b87f3d0b2a6d.jpg
+  name: Jim Ferrell
+  phone_number: "(253) 835-2402"
+  position: mayor
+  position_misc: ''
+  website: https://www.federalwaywa.gov/page/about-jim-ferrell
+- email: ''
+  image: ''
+  name: Hoang Tran
+  phone_number: ''
+  position: council_member
+  website: https://www.cityoffederalway.com/page/councilmember-hoang-v-tran
+- email: ''
+  image: ''
+  name: Jack Dovey
+  phone_number: ''
+  position: council_member
+  website: https://www.cityoffederalway.com/page/councilmember-jack-dovey
+- email: ''
+  image: ''
+  name: Jack Walsh
+  phone_number: ''
+  position: council_member
+  website: https://www.cityoffederalway.com/page/councilmember-jack-walsh
+- email: Sara.Gilchrist@cityoffederalway.com
+  image: ''
+  name: Sara Gilchrist
+  phone_number: ''
+  position_misc: admin_asst_ii
+  website: ''
+- email: EJ.Walsh@cityoffederalway.com
+  image: ''
+  name: EJ Walsh
+  phone_number: ''
+  position_misc: public_works_director
+  website: ''
+sources:
+- https://www.federalwaywa.gov/mayors-office
+- https://www.federalwaywa.gov/page/LUTC
