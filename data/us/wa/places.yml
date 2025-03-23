@@ -100,6 +100,7 @@ places:
   scraper_misc:
     city_id: 131
     population: 74390
+  last_city_scrape_run: '2025-03-23'
 - place: sammamish
   website: https://www.sammamish.us/
   scraper_misc:

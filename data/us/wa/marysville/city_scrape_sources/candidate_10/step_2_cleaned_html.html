@@ -1,0 +1,2279 @@
+<body class="wide ">
+
+	<script>jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});</script>
+
+	<div id="fb-root"></div>
+<div id="skipToContentLinks">
+<a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1180#contentarea" target="_self" class="skipToContentLink">Skip to Main Content</a>
+</div>
+	<form id="frmReferenceFormForTelerikEditorDialogs"></form>
+
+		<input type="hidden" id="GoogleMapsKey" value="AIzaSyDWUuE-ifkbhxblF920N8MjpBdTg1Wt784">
+
+
+
+	<input type="hidden" id="cpcDomain" value="https://cp-civicplusuniversity2.civicplus.com">
+	<input type="hidden" id="hdnStructureID" value="5">
+	<input type="hidden" id="hdnContentCollectionID" value="23b79f2c-d670-40d7-8fd3-0e07379f9aab">
+	<input type="hidden" id="hdnWorkingCopyID" value="00000000-0000-0000-0000-000000000000">
+	<input type="hidden" id="hdnThemeID" value="7">
+	<input type="hidden" id="pageIsFrontEnd" value="true">
+	<input type="hidden" id="pageModuleID" value="1">
+	<input type="hidden" id="pagePageID">
+
+		<input type="hidden" id="hdnModuleID" value="1">
+		<div id="stickyPlaceholder"></div>
+	<div id="outer-wrap" class="outer-wrap">
+		<div id="inner-wrap" class="inner-wrap">
+				<div id="divToolbars" class="cpToolbars newCP mui-fixed" style="">
+					
+
+
+
+				</div>
+			<div id="bodyWrapper">
+				<div id="mainNavHolderMobile" class="mainNavHolderMobile"></div>
+				
+<div data-cprole="structuralContainer" id="bodyContainerTS">
+<!-- <div data-cpRole="banner" id="banner2" class="fixedBannerTS"></div> --><!-- Header Container --><header data-cprole="structuralContainer" id="headerContainerTS" class="fixedTopTS">
+<div class="siteWrap10">
+<div data-cprole="banner" id="bannerLogoTS" class="bannerLogoTS empty">
+
+
+
+
+				<a id="bannerLogoTS-12" style="			display: block; text-align: center;
+" class="bannerObject" href="https://marysvillewa.gov/" target="_self"><img alt="Marysville WA Homepage" class="bannerObject" height="108" src="images/a985fc77722742094384da2aee75781621c224b301c586254d8d2044fc2e5288" width="550"></a>
+</div>
+<div data-cprole="contentContainer" id="searchTS">	<div id="cc53181905-df3b-4bc7-8e5a-3c708dcbe6b7" data-containerid="53181905-df3b-4bc7-8e5a-3c708dcbe6b7" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="34077412-78a8-4e59-a541-2e9e4c972b61">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last idda168d6f-898c-4d58-8b4b-55a33bde0794" style="" data-widgetcontainerid="da168d6f-898c-4d58-8b4b-55a33bde0794">	
+<div data-widget-id="78570ba9-141d-4146-a5f6-8a59c837a768" data-widget-controller-path="/Layout/WidgetSearch">
+	
+	<script defer type="text/javascript" src="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.js"></script>
+	<script defer src="/Areas/Layout/Assets/Scripts/Search.js" type="text/javascript"></script>
+	<script defer type="text/javascript">
+
+		$(document).ready(function () {
+			try {
+				$(".widgetSearchButton.widgetSearchButton78570ba9-141d-4146-a5f6-8a59c837a768").click(function (e) {
+				e.preventDefault();
+					if (false||$("#ysnSearchOnlyDept78570ba9-141d-4146-a5f6-8a59c837a768").is(':checked'))
+					{
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), Number(0));
+					}
+					else {
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), 0);
+					}
+			});
+			$("#searchField78570ba9-141d-4146-a5f6-8a59c837a768").keypress(function (e) {
+				if (window.clipboardData) {
+					if (e.keyCode === 13) {
+						if ($("#ysnSearchOnlyDept78570ba9-141d-4146-a5f6-8a59c837a768").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				} else {
+					if (e.which === 13) {
+						if ($("#ysnSearchOnlyDept78570ba9-141d-4146-a5f6-8a59c837a768").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				}
+				return true;
+			});
+
+				if (true) {
+					var currentRequest = null;
+					var $searchField = $("#searchField78570ba9-141d-4146-a5f6-8a59c837a768").autocomplete({
+						source: function (request, response) {
+							currentRequest = $.ajax({
+								url: '/Search/AutoComplete' + ($("#ysnSearchOnlyDept78570ba9-141d-4146-a5f6-8a59c837a768").is(':checked') || false? '?departmentId=0' : ''),
+								dataType: "json",
+								timeout: 10000,
+								beforeSend: function () {
+									if (currentRequest != null) {
+										currentRequest.abort();
+									}
+								},
+								data:
+								{
+									term: request.term,
+								},
+								success: function (data) {
+									response(data);
+									$('.autoCompleteError').remove();
+								},
+								error: function (xmlhttprequest, textstatus, message) {
+									if (textstatus === "timeout") {
+										if ($("#searchField78570ba9-141d-4146-a5f6-8a59c837a768").siblings('.autoCompleteError').length == 0)
+											$('<span class="autoCompleteError"><p class="alert error">Search autocomplete is currently not responding. Please try again later.</p></span>').insertAfter($("#searchField78570ba9-141d-4146-a5f6-8a59c837a768"));
+									}
+								}
+							});
+						},
+						html: true,
+						delay: 500,
+						select: function (event, ui) {
+							$(this).val(ui.item.value);
+							$(this).next().click();
+						}
+					});
+
+					$searchField.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $("<li class=\"itemList\"></li>")
+							.data("ui-autocomplete-item", item)
+							.append("<a>" + item.label + "</a>")
+							.appendTo(ul);
+					};
+}
+}
+			catch(e) {} //we're going to eat this error. Autocomplete won't work but we dont wan't to break anything else on the page.
+		});
+	</script>
+
+	<section id="widgetPreviewSearch" class="widget widgetSearch skin15 widgetOptionSet26" style="display: block;" aria-label="Search">
+				<!-- For the button right and inside -->
+		<div class="widgetBody buttonRightInside">
+			<input class="widgetSearchBox widgetSearchBox78570ba9-141d-4146-a5f6-8a59c837a768" cp5ph="true" id="searchField78570ba9-141d-4146-a5f6-8a59c837a768" name="searchField" onchange="searchBtnApplyQuery();" placeholder="Search…" title="Search…" type="text" value="">
+						<a href="https://marysvillewa.gov/Search/Results" id="btnSearchIcon" class="widgetSearchButton widgetSearchButton78570ba9-141d-4146-a5f6-8a59c837a768" role="button"><img alt="Search" class="imageHover" data-hover="/ImageRepository/Document?documentID=12580" data-image="/ImageRepository/Document?documentID=12579" src="images/edd0a1cac0f58f262275738908cdef7e90e7909771ec6659ef304ce40233c65b"></a>
+
+			<label class="searchLabel" for="searchField78570ba9-141d-4146-a5f6-8a59c837a768">Search</label>
+		</div>
+
+	</section>
+
+
+<style scoped>
+	  
+		.widgetSearch ::-webkit-input-placeholder {
+		color: #FFFFFF;
+	  }
+		.widgetSearch :-moz-placeholder { /* Firefox 18- */
+	   color: #FFFFFF;
+	}
+		.widgetSearch ::-moz-placeholder {  /* Firefox 19+ */
+	   color: #FFFFFF;
+	}
+	.widgetSearch :-ms-input-placeholder {
+	   color: #FFFFFF;
+	}
+	
+
+	.widgetSearch .widgetBody .widgetSearchBox78570ba9-141d-4146-a5f6-8a59c837a768
+	{
+		color: #FFFFFF;
+		height:60px;
+background:#737763;
+padding:0 65px 0 17px;
+font-family:AR One Sans;
+font-weight:500;
+font-size:1em;
+border:none;
+box-shadow: 0px 3px 10px #00000067;
+border-radius: 5px;
+	}
+	.widgetSearch .widgetBody .widgetSearchButton78570ba9-141d-4146-a5f6-8a59c837a768
+	{
+		margin:6px 11px 6px 0;
+	}
+	.widgetSearch .widgetSearch-onlyDept78570ba9-141d-4146-a5f6-8a59c837a768
+	{
+		display: inline-block;
+		color: #333;
+		
+		
+		 padding-top: 10px;
+	}
+	#ysnSearchOnlyDept78570ba9-141d-4146-a5f6-8a59c837a768
+	{
+		position: relative;
+		top: .125em;
+	}
+
+</style>
+
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.css">
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.theme.min.css">
+
+
+
+<script type="text/javascript">
+	//Updates search icons href to have the correct queryString
+	function searchBtnApplyQuery() {
+		document.getElementById("btnSearchIcon").href = "/Search?searchPhrase=" + document.getElementById("searchField78570ba9-141d-4146-a5f6-8a59c837a768").value;
+	}
+	</script>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+<nav data-cprole="nav" id="mainNav" class="siteNav mainNav" role="navigation">
+<ol id="mainNavMenu" data-parent="1" class="rootNavMenu" role="menu">
+<!--
+--><li id="MainItem70" class="topMenuItem" role="none" data-pageid="70" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavIWantTo" class="navMainItem mainNavItem mainNavItem1" href="https://marysvillewa.gov/70/I-Want-To" target="_self">   I Want To... </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem27" class="topMenuItem" role="none" data-pageid="27" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavGovernment" class="navMainItem mainNavItem mainNavItem2" href="https://marysvillewa.gov/27/Government" target="_self">   Government </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem31" class="topMenuItem" role="none" data-pageid="31" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavCommunity" class="navMainItem mainNavItem mainNavItem3" href="https://marysvillewa.gov/31/Community" target="_self">   Community </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem35" class="topMenuItem" role="none" data-pageid="35" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavEconomicDevelopment" class="navMainItem mainNavItem mainNavItem4" href="https://marysvillewa.gov/35/Economic-Development" target="_self">   Economic Development </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem9" class="topMenuItem" role="none" data-pageid="9" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavVisiting" class="navMainItem mainNavItem mainNavItem5" href="https://marysvillewa.gov/9/Visiting" target="_self">   Visiting </a>			<!--
+			--><!--
+			-->
+</li>
+<!---->
+</ol>
+
+
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded',function () {
+					var menuID = 'mainNavMenu';
+					var menuType = MAIN_MENU;
+
+					//setup menu manager properties for main menu
+					if (!menuManager.mobileMainNav && true)
+						menuManager.adjustMainItemsWidth('#' + menuID);
+					menuManager.isMainMenuEditable = false;
+					menuManager.mainMenuMaxSubMenuLevels = 4;
+					menuManager.setMOMMode(2, menuType);
+
+					//Init main menu
+					var setupDraggable = menuManager.isMainMenuEditable;
+					var urlToGetHiddenMenus = '/Pages/MenuMain/HiddenMainSubMenus?pageID=1&moduleID=1&themeID=7&menuContainerID=mainNav';
+
+					menuManager.setupMenu(menuID, 'mainNav', menuType, setupDraggable, urlToGetHiddenMenus);
+					menuManager.mainMenuInit = true;
+					menuManager.mainMenuTextResizer = true;
+					if (1.00 > 0)
+						menuManager.mainMenuTextResizerRatio = 1.00;
+					if (window.isResponsiveEnabled)
+						menuManager.mainMenuReady.resolve();
+
+		});
+	</script>
+
+
+<aside data-cprole="megaMenu" id="megaMenu" class="megaMenu" style="display: none;"><input type="hidden" id="megaMenuPopupDirection" value="0"><input type="hidden" id="megaMenuWidthReference" value="1"><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu70" class="contentTop mainNavMegaMenu megaMenuContainer pageID_70 hidden" data-orientation="horizontal">	<div id="ccae305ca7-3faa-418a-84ce-dde6fb5eb31c" data-containerid="ae305ca7-3faa-418a-84ce-dde6fb5eb31c" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu27" class="contentTop mainNavMegaMenu megaMenuContainer pageID_27 hidden" data-orientation="horizontal">	<div id="cced85dced-604e-410f-a2ba-6dd04c4210ce" data-containerid="ed85dced-604e-410f-a2ba-6dd04c4210ce" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu31" class="contentTop mainNavMegaMenu megaMenuContainer pageID_31 hidden" data-orientation="horizontal">	<div id="ccaa93baf9-b2ac-428f-a39e-2ae5cd0532a3" data-containerid="aa93baf9-b2ac-428f-a39e-2ae5cd0532a3" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu35" class="contentTop mainNavMegaMenu megaMenuContainer pageID_35 hidden" data-orientation="horizontal">	<div id="cc64a206a6-87eb-4429-bb07-a3cccdf1f1de" data-containerid="64a206a6-87eb-4429-bb07-a3cccdf1f1de" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu9" class="contentTop mainNavMegaMenu megaMenuContainer pageID_9 hidden" data-orientation="horizontal">	<div id="ccc455e8e7-c071-4c62-8e2d-13c36d3191b0" data-containerid="c455e8e7-c071-4c62-8e2d-13c36d3191b0" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside></aside></nav>
+</div>
+</header><!-- Banner --><div data-cprole="structuralContainer" id="bannerContainerTS" class="noOverflowTS">
+<div data-cprole="banner" id="banner1">
+<div data-cprole="structuralContainer" id="bannerSizingTS">
+<div data-cprole="structuralContainer" id="bannerSearchTS">
+<div class="siteWrap4"></div>
+</div>
+</div>
+
+
+
+
+		<div id="banner1-13" style="display: none"></div>
+			<script type="text/javascript">
+				$(window).on("load", function () {
+					$.when(window.Pages.rwdSetupComplete)
+						.done(function () {
+							renderBanner('banner1-13',
+								'banner1',
+								{"BannerOptionID":13,"ThemeID":7,"SlotName":"banner1","Name":"Default","IsDefault":true,"BannerMode":1,"SlideShowSlideTiming":"5","SlideshowTransition":0,"SlideShowTransitionTiming":"1","ImageScale":true,"ImageAlignment":1,"ImageScroll":true,"MuteSound":true,"VideoType":0,"Status":40,"SlideshowControlsPosition":0,"SlideshowControlsAlignment":0,"SlideshowBannerControlsColorScheme":0,"DisplayVideoPauseButton":false,"VideoPauseButtonAlignment":1,"VideoPauseButtonControlsAlignment":0,"VideoPauseButtonStyle":"#FFFFFF","VideoPauseButtonBackgroundStyle":"#000000","VideoPauseButtonAlignmentClass":"alignRight viewport","DisplaySlideshowPauseButton":true,"SlideshowControlsColor":"#FFFFFF","SlideshowControlsBackgroundColor":"#000000","SlideshowPauseButtonClass":"isHidden","BannerImages":[{"BannerImageID":27,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=12573","Height":600,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":2,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":null},{"BannerImageID":28,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=12574","Height":600,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":3,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":null},{"BannerImageID":29,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=12575","Height":600,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":4,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":null}],"BannerVideos":[{"BannerVideoID":2,"BannerOptionID":13,"VideoFileName":"","ImageFileName":"EmptyBannerBkg202312021209560463.png","IsLink":false,"LinkAddress":null,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","VideoFileID":"00000000-0000-0000-0000-000000000000","ImageFileID":"00000000-0000-0000-0000-000000000000","VideoWidth":0,"VideoHeight":0,"ImageWidth":0,"ImageHeight":0,"LinkedVideoUrl":"","RecordStatus":0,"AltText":null}],"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/"},
+								{"BannerImageID":27,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=12573","Height":600,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":2,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":null},
+								'/App_Themes/2023 - Interior/Images/',
+								'<img alt="" class="bannerObject" src="/ImageRepository/Document?documentID=12573" />');
+						});
+				});
+			</script>
+
+</div>
+</div>
+<!-- Content container --><div data-cprole="structuralContainer" id="mainContainerTS">
+<div class="siteWrap4"><div data-cprole="structuralContainer" id="mainWrapTS" class="mainWrap" role="main">
+<div data-cprole="structuralContainer" id="outerContentWrapTS" class="outerContentWrap">
+<div data-cprole="structuralContainer" id="contentWrapTS" class="contentWrap">
+<div data-cprole="breadCrumbs" id="breadCrumbs" class="breadCrumbContainer">		<ol class="semanticList breadCrumbs">
+			<li><a class="breadCrumb" href="https://marysvillewa.gov/">Home</a></li>
+<li>News Flash</li>
+		</ol>
+
+	   
+    
+</div>
+<div data-cprole="mainContentContainer" id="moduleContent">
+
+<div id="ctl00_ctl00_MainContent_BodyWrapper">
+	
+	<script type="text/javascript"><!--
+	var isie6 = false, isie7 = false, isie6or7 = false;
+	var intCountryCode = 840;
+
+	function setUrlLength(editor) {
+		//Toggle Image Context Menu Items
+		setMenuItems(editor);
+		//setContentBackgroundColor(editor);
+		removeIEParagraphs(editor);
+	}
+	function setUrlLengthAndToolToggle(editor) {
+		var minToolsGroups = 2; // Number of MinimumSetOfTools tools groups.
+		
+		// Hide the MinimumSetOfTools on load.
+		var toolbar = editor.get_toolContainer(); // Get toolbar container.
+		var toolgroups = toolbar.getElementsByTagName("UL"); // Get all toolgroups containers.
+		
+		for (var i = toolgroups.length - 1; i >= minToolsGroups; i--)			toolgroups[i].style.display = "none";
+		
+		if (editor.isIE) {
+			var elem = editor.get_element();
+			elem.style.height = "430px";
+ 			elem.style.minHeight = "430px";
+		}
+		
+		// Toggle Image Context Menu Items.
+		setMenuItems(editor);
+		//setContentBackgroundColor(editor);
+		removeIEParagraphs(editor);
+	}
+//--></script><!--[if IE 6]><script type="text/javascript">isie6 = true; isie6or7 = true;</script><![endif]-->
+<!--[if IE 7]><script type="text/javascript">isie7 = true; isie6or7 = true;</script><![endif]-->
+
+	
+
+	<form name="aspnetForm" method="post" action="./CivicAlerts.aspx?AID=1180" id="aspnetForm" style="display:inline;" onsubmit="return headerValidationCallback();" enctype="multipart/form-data" autocomplete="off">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="yjRxEeSeHkDiJ6Wt9d12/Y4Uh8jM0IRH01wS/nxN0g6UfbvuaaU8YHMFjWoadyznm9TyqDg2Eu3w2n5+sjIbDmAdGAia63HBKgcG7DKDOFel21nm9ncOIfb1H0lNHd6HC04iBlyBwtRnzCwCDqMoJ3LBdTj6dPkk3D5QHyosnGEDxKksU/Q9UznaP4+64Now6HTIXoNhxIVaul5D5ulAofC1vJl72qmOxuNnbYypAGhTJ7kHHsk4Zt+ua/JFDoMrHYPh+ZTqqYDwhAy3/tk2efO/NLA4bWMT+2TC2BdIhZ0VlBwfV83HGSSojX5v4X/wU+c2Qa670mZuh6SdujjLrzJg7gyKAIZ0Pu3UV4CYnaI4kmswZCyjWOCgD/twafza/1AbVX9D3YvyVJdbfqN6HUyNdhcUed82LQ7LAv5gZcbzngAwK7Hq62hhUhNAX5i+EgBU3/NdZqa+jrwjkL6w46DKG7XKlusG6+T/zOrvflF4zkG2uxdaegaa/uwczP2CFl50+eUTLJPtd83Fsn1c+Gj6KW+0QiDfxGgAN56AFgaGdQUZkvYjvMzZeTSBAP5QSyAXBOO8ldSeNqELYEqzFqIeKa5fWYkSWfYMKUuKh9NxBnxvjS1D1qW0W3Qa2ElcB9KA3u1kKsZQkBlg1xi50P1G6AYoQGlxcw3jK6Cso8XC6nxYeL7tM0BdNd0sxDfXrP0zOBGHdygud6jLj2iJFG8O0m2o6FfO0JRQv3SyBfHBhpC6a9/cSe3FVQyPnIEMfb8m+Xx3L6Rpl6jSJUua7qiS/03X5+No8A7TGV6VGtNTNvoUUw8txV9EntDooghk7vxqjv4A/nnoPI+ufmZEf3iM3+r75rOBaTLHuYKqab8GCWGsZyTQm2ty6IkTKWDICMzjD29WR8pWq2V0aiGbw2TPiR8Np/JdTMBVEklxR+pXVojddUQnLFGFJETUxfxo9d5+5ggdvGw7ZTHyd8gjuMQSYBYPE9RUpFuNAkTP1FS8umhjLR1SezuydzMH2VF2CeNuIkyqZJUVF9m8LdNEyQNqKbZMjdlGScqSDxVN9ZtaUsETYPHMe7hpHJKoRCWqkyQMak+CRE5MmcLEhSPOsVWyG/K//bZG2vq1+7s7fZP7fq/6CQnGKijaSMV0SjTTyLqt0iPgehj04uE37C99VJvohcnqmrpobpYIBB6hYv2Pz122picGntq6MAhyFUl+kpR41BtvpOZ6vKyBlAvdSsrfhZ6ooX/RmOMfqfshfhcGHp7mIdfOBkJZkNFmtJcyORm1rga/5/K/gPq4H/IpcNjLbmBeUGTCbrJ9MJDwO2R2irloa36GHfLZ0oom3pnCj3CIJbMpkVlhXH2g4WCtG9D3OklTu5osyTFbz85C+KUweWGXekKKesWJk3riPqvkycp4FEhanwz30xDnIkC0zHho3mQpMF4oQlITTUfxOef3oU4NpZCnQb86e057T5rfPHMe3jhnxk7nhxEoPG82YlZt7JmGw8kuzqDjCE8wGKqUceb0xSxK+q0gfZCjow+6Kq+PGAPLT1tkWqqG/E2JZO6gsTJbeaFtuvGT48HVu/Jd3F08jW2hhG2qQ6d2i/lPJDFoZqOKLd3lArf5GdNd98m3cwNg96/M3PivFVRk6WwatizDQCFee+JWb7+8IdGLxSxOjXl6XziMn+CQEAijfO370cF8ziin/XbtrKPR1PQNOa6mTObbaPShX7+pXU1WcdXwsu1UFvEiTo+tZmXgN15k6wJ2OvHOr6a8KXNHqFdcIph8NlyQFFp7OlT1WD0kXphyPuf3vVqLFn2+J0ntePdZ3pnrJH0dlcUSkwq0SNN/Wd7r0XelsQNUl6kqTo3Q0h7czQ+dc/lS6p7MWdR0DMfxZDlbY0Tq3IU+sl372f1jOBWVgPFn8WDaGRdeYYgOV2tQbrOddpkN9W/ct8U20Rf3ELgOm9ffF+M4/Oc9m9jwMJxYwNf9XdjYdXgc/XubfEnguemBqbUROPKcJ5LSWao/SiQebTk8oIUfXyWeXXFeeH84yIOtFzsm3mkkvV+fclXU7sIerSiUFsOvSnx4uC48HsKNDLBWvr0nabun35QOFEIJedWbXMLNQ+ysmlMsMwC4uen2QojPqDnArsAAaWvzjjbdH8vac7kpBvd6CYKeCQsLNHg4RoiDGa5KUmWy3XZPhNu/r5TjO//hAwKsggHw6BvDlZuKbiPmkohKxkfOkQSn4qoKFLsieVjUIBLsncS8QqHxJiZDpSfeyAiqctHPXkDlvtLIn2c+KgHUeczLnHwBpH6ZzSgxumyyRd3jzwsRc1f3ma6MYkG32FxiU5IaWCUKBWi7ZTYJQ8jxPKHYFfj6K5zof8cWHiK+9m7VeHHNClXotXYz0z/hLmcqv3sZkmJqJBTgmZwdb78h6tR9iz85YJ/16BVORtfUjvD+X7YLor/rEJc0H6+22eZiNCFsZazQZ7F2Ieci1xD0Eq8aSlO4hgzkkq8Vdx88O6zgJXuz8ObWeR3nDUaCUxQHJtdIMKTcvppsT8li4wNkWJk=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZDLabodcikOjfaxGftwY9HZ4kdGjeaKe0dWaPQB1vgEd44eKAO0Ba1XMxE47-4twmw2&amp;t=638628044640000000" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=kB9kqJ8G5bbVUkLIbkM_oWnWnbqKfmnijNvsGOdktAJN6X3E4IB1Ohim-XfL1bXqyhvHpFA6calISmsC9Do0K1jLgqaX5q7C12oYcoh4sn7Rb0pnPcc8nqSRG7UU7_90wNYn3HODMfqBMb-_fPUnBOi0lNqIP-V5iT54maOgYENrXw1cY5S_BKzgEKHC0oaJ0c8919qI0FCmCP3OGvShdDSMG4Ugcx-gfnVT0scxcMGBbz99a6uiw_3nP-VsLsbWwdhtEpb7o0k09629luJjVJub_8Rxcey54Z4TXug-4PjZv-2tKlkixzjql8wiTe4mP9VgLO1pXyY20BKVwpRkD8OErQCEy_Ncn6XLVZRKhBUKaUh-qSShvq5dwhcOEfDuDbOk8K0LNIDT19SrfEiL3OEOre_183ge7-WreFhCnLbba8t7J3g_GxHH8h6_tiPN_-sv0gX-93CSvG6Zro_ES91NsNKn1vvoKHK9qmyw1MAU91rxqlCtoXJAtqpKcMih1HIupSwbnYeMdZ6WQIxsvNNHhpfuoMjaur6u0VrYAmtJYIAA2XtF1-Rsw64yk136yplYJFNKndmGvYDrPOdAWr62DbwZfVZ0k-dKZ9uE56dzOQRCS5g5PTU62iFnnXQeQqWDKMBuATfJcBvKIZDkIrS0ohTWuIz-eq7xXKyWjASPArtOIPELf8w9wDA7qDwkPgnLpAGgAzXAwtqw7bD5dGnOSIW6N8GqF8FNjXdMlF_GdxSUMh_T6pAa_T_pstGGOpVUyg36NnlrD6f1VhWq9bzb05Ix0kPiXJcxFHrAF3BqLEHInjYE9CXuhVA_tCSbNS-teTycuhdXs3AZmB5iHvpvdvtAzKYttSC4rR39Ip01" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="B6028D83">
+</div>
+		<!--for archiving purpose-->
+		<input name="ysnNotifyMe" type="hidden">
+		<input name="strPage" type="hidden">
+		<input name="intArchMainCatID" type="hidden">
+		<input name="intArchMainItemID" type="hidden">
+		 <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl00$MainContent$scriptManager', 'aspnetForm', ['tctl00$ctl00$MainContent$ModuleContent$ctl00$contentUpdatePanel','','tctl00$ctl00$MainContent$ModuleContent$ctl00$UpdatePanel','','tctl00$ctl00$MainContent$ModuleContent$ctl00$UpdatePanelOthers1',''], [], [], 90, 'ctl00$ctl00');
+//]]>
+</script>
+
+		<script type="text/javascript">
+			Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(beginRequest);
+			Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(pageLoaded);
+		</script>
+		
+		<div id="modulecontent" name="modulecontent.aspx" style="padding-top: 0px;">
+<div id="contentarea"></div>
+
+
+<!-- BEGIN CivicAlertContent.aspx ***** -->
+<link href="/1686906140.css" rel="stylesheet" type="text/css">
+<script src="/1757422876.js" type="text/javascript"></script>
+<div id="NewsFlashContent" class="newCP moduleContentNew pageStyles">
+
+
+<div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_contentUpdatePanel">
+	
+	<div id="divSideBar" class="sidebar">
+		<section aria-labelledby="moduleSearchHeader" class="section search">
+			<h3 id="moduleSearchHeader" for="searchButton">Module Search</h3>
+			<div class="searchInput">	<label id="searchTermsLabel" class="visuallyHidden" for="searchTerms">Enter Search Terms</label>
+	<input type="text" id="searchTerms" name="searchTerms" placeholder="Word or Phrase" value="">
+	<input id="searchButton" class="searchButton" type="image" title="News Flash Search" alt="search" src="/Common/Images/ModuleSearchIcon.png" onkeypress="this.onclick()" onclick="CivicAlertSearch(); return false;">
+</div>
+<select id="categorySelect" aria-label="Select a Category" name="CID">
+	<option value="-1">All categories</option>
+<option value="1">City news releases </option>
+<option value="6">Parks and Recreation</option>
+<option value="7">Police Department</option>
+<option value="14">Community Development</option>
+<option value="15">Public Notices - Land use</option>
+</select>
+
+		</section>
+		<section aria-labelledby="moduleToolsHeader" class="section tools">
+			<h3 id="moduleToolsHeader">Tools</h3>
+			<ol>
+				<li><a href="https://marysvillewa.gov/rss.aspx#rssCivicAlerts" class="RSS">RSS</a></li>
+				<li><a class="notifyMe" href="https://marysvillewa.gov/civicalerts.aspx?Mode=Subscribe">Notify Me</a></li>
+				<li>
+					
+					
+				</li>
+			</ol>
+		</section>
+		<section aria-labelledby="categoryPagesHeader" class="section categories">
+			<h3 id="categoryPagesHeader">Categories</h3>
+			<ol>
+						<li>
+			<a href="https://marysvillewa.gov/CivicAlerts.aspx">All Categories</a>
+		</li>
+		<li>
+			<a href="https://marysvillewa.gov/CivicAlerts.aspx?CID=1">City news releases </a>
+		</li>
+		<li>
+			<a href="https://marysvillewa.gov/CivicAlerts.aspx?CID=6">Parks and Recreation</a>
+		</li>
+		<li>
+			<a href="https://marysvillewa.gov/CivicAlerts.aspx?CID=7">Police Department</a>
+		</li>
+		<li>
+			<a href="https://marysvillewa.gov/CivicAlerts.aspx?CID=14">Community Development</a>
+		</li>
+		<li>
+			<a href="https://marysvillewa.gov/CivicAlerts.aspx?CID=15">Public Notices - Land use</a>
+		</li>
+
+			</ol>
+		</section>
+	</div>
+	<div class="contentMain selfClear">
+		
+		
+		<div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_UpdatePanel">
+		<h1 class="visuallyHidden">News Flash</h1>	<div class="single">
+		<h2>
+City news releases 		</h2>
+<div class="item">
+<span class="date">Posted on: January 2, 2025</span><h3>You're invited: Mayor’s State of the City address Jan. 28</h3>
+<span class="thumb alignRight"><img alt="Mayor Jon Nehring" src="images/06d65aae005f8ff45e7afc1c5466ea4ff01ee105483454096ab394eb8f3d1c09" width="225px" style="width:225px; "></span><div class="content fr-view">	<p></p>
+<p id="isPasted" style="margin: 0px 0px 6px; box-sizing: inherit;" fr-original-style="">Mayor Jon Nehring invites you to join him for his State of the City presentation on Tuesday, Jan. 28. He will describe the City of Marysville’s major accomplishments in 2024 and offer a preview of what's ahead in 2025 and beyond. The free program will wrap up with the opportunity for the public to ask questions. </p>
+<ul style="list-style: disc; box-sizing: inherit;" fr-original-style="">
+<li style="box-sizing: inherit;" fr-original-style="">Tuesday, Jan. 28</li>
+<li style="box-sizing: inherit;" fr-original-style="">Doors open at 6 p.m.; program starts at 6:30</li>
+<li style="box-sizing: inherit;" fr-original-style="">Marysville Civic Center, 501 Delta Ave. (2nd Floor, Council Chambers) and livestream on city Facebook page @MarysvilleWashington</li>
+</ul>
+<p style="margin: 0px 0px 6px; box-sizing: inherit;" fr-original-style="">“Marysville is in a solid position to continue serving our residents well with the city services they expect and deserve,” Mayor Nehring said. “I appreciate the shared fiscal values and positive working relationship with our City Council that allow the City of Marysville to continue making progress on long-term priority programs without facing drastic budget cuts or raising taxes.” </p>
+<p style="margin: 0px 0px 6px; box-sizing: inherit;" fr-original-style="">The recorded presentation will be available in February on the city website (<a data-fr-linked="true" href="https://www.marysvillewa.gov" style="background-color: transparent; transition: color 333ms cubic-bezier(0.45, 0.45, 0.45, 1), background-color 333ms cubic-bezier(0.45, 0.45, 0.45, 1); color: rgb(11, 84, 134); user-select: auto; box-sizing: inherit;" fr-original-style="">www.marysvillewa.gov</a>) and on Marysville public access TV channels, Comcast channel 21 and Ziply channel 25.</p>
+<p style="margin: 0px 0px 6px; box-sizing: inherit;" fr-original-style=""><br style="box-sizing: inherit;" fr-original-style=""></p>
+</div>	</div>
+</div>
+	</div>
+<div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_UpdatePanelOthers1">
+		<a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fmarysvillewa.gov%2fCivicAlerts.aspx%3fAID%3d1180&amp;t=Check%20out%20this%20news%20article%20for%20Marysville,%20WA" class="button" target="_blank">
+	<span><img src="images/e70e5f45efbe7afda3b6556fef64966efb83608153cf44c6c6a5e2d0e7dd3658.png" alt="Facebook" title="Share on Facebook"></span>
+</a>
+<a href="https://twitter.com/share?url=https%3a%2f%2fmarysvillewa.gov%2fCivicAlerts.aspx%3fAID%3d1180&amp;text=Check%20out%20this%20news%20article%20for%20Marysville,%20WA" class="button" target="_blank">
+	<span><img src="images/cf167bb628c900e1323a5830b12f81189fb265a19b1bf563d15e08a0c2fb8357.png" alt="Twitter" title="Share on Twitter"></span>
+</a>
+
+
+<a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1180#" id="shareViaEmailButton" class="button" target="_blank" data-email-subject="Check out this news article for Marysville, WA" data-share-url="https://marysvillewa.gov/CivicAlerts.aspx?AID=1180">
+	<span><img src="images/02d33645b99c5040f746a7471ecaff7cf4c24d2522d26cf21a294ea9c7f65e8e.png" alt="Email" title="Share via Email"></span>
+</a>
+
+	<script language="javascript" type="text/javascript" src="/Assets/Scripts/SocialShare.js"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function () {
+			var socialShareJs = new SocialShare();
+			socialShareJs.setup('Check out this news article for Marysville, WA', 'https://marysvillewa.gov/CivicAlerts.aspx?AID=1180');
+		});
+	</script>
+<div class="nextPreviousNav">
+<a class="prev" href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1186"><span class="arrow">⇐</span>Previous <span>Memories await you at Father-Daughter Valentine’s Dance</span></a><a class="next" href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1169">Next<span class="arrow">⇒</span><span> MPD achieves professional excellence with state accreditation</span></a>
+</div>
+<div class="others">
+	<h2>
+Other News in City news releases </h2>
+<div class="listing">
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Mayor Jon Nehring speaking at podium at Coffee Klatch in City Council chambers; people in audience." src="images/eef57595ea094219d72bf3ebcfc20e25fcd66ce046f1b4a7e6f0657c08d78ab8" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1191">Mayor Nehring invites you: Coffee Klatch March 24</a></h3>
+<span class="date">Posted on: February 11, 2025 | Last Modified on: February 11, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="City workers helping unload items from truck bed at Clean Sweep in Marysville, 2024. " src="images/81b9e9c4b7cff9a371f862589f9e0ac38b0edae3e19a2393619f651859ceb3e0" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1203">Spring cleaning? City events can help</a></h3>
+<span class="date">Posted on: March 20, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Graphic of gold ribbon award with city logo, dark green background" src="images/f808615e9a029411046d6902c7cd6e396e6e39bfb697478ce6c7a357c1475e79" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1196">Nominations open for Marysville Business Awards</a></h3>
+<span class="date">Posted on: February 26, 2025</span>
+</div>
+<div class="item">
+<a href="https://www.surveymonkey.com/r/BDGTZL6" class="thumb alignRight" target="_blank"><img loading="lazy" alt="Children run down a path at Jennings Nature Park, with trees and playground equipment in background" src="images/a6664486cae584bee5dfb9a3098a3170a2510a9db93eb15d9b488b6bcddcf886" style="width:50px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1201">Help shape future of Marysville parks, programs</a></h3>
+<span class="date">Posted on: March 18, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Person holding pen and writing during a hazard mapping exercise in Marysville, WA" src="images/63a38a65fb632463379526411f5d073445cc6bb22532f5f27c7cbecdf14efbde" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1198">You can help protect Marysville from disasters</a></h3>
+<span class="date">Posted on: March 4, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Photo of forest woodland with rustic trail at Mother Nature's Window Park in Marysville WA " src="images/00ce114b1de8624fcbcc8f1cd7116c3d78dc3d7c6e069a3a4e14c63477137498" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1199">Come review plans for Mother Nature’s Window Park</a></h3>
+<span class="date">Posted on: March 6, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Person looking at My Marysville app on mobile phone" src="images/7f9cfecee4bbf3275c9c55cefebb4149f788910d4b7661adbcdc14ae6101b260" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1187">New My Marysville mobile app! Engage with city on the go</a></h3>
+<span class="date">Posted on: January 29, 2025 | Last Modified on: February 26, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Red ribbon award with words The Herald Best of Snohomish County 2024 Winner" src="images/298cd787c8cfa03f31355b7a350ef98b67eee6d41a3e2663dd400119a5478cd3" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1190">Opera House, golf course among Best of Snohomish Co</a></h3>
+<span class="date">Posted on: February 11, 2025</span>
+</div>
+<div class="item">
+<a href="https://www.marysvillewa.gov/1197/Treat-Your-Self-Womens-Expo" class="thumb alignRight" target="_blank"><img loading="lazy" alt="" src="images/2aa90f03e6b1254467ef858a12fe6dad43394280ee04f8113e9f2808d3017c73" style="width:75px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1195">Grab Your Girlfriends for the Treat Your Self Women’s Expo</a></h3>
+<span class="date">Posted on: February 19, 2025 | Last Modified on: February 20, 2025</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="A father and daughter smiling for the camera at the Father-Daughter Valentine's Dance." src="images/2d523c2f22d0a53f518ec24375d1363f0314dd86b696fc59bbf1ed5cbcd4b567" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1186">Memories await you at Father-Daughter Valentine’s Dance</a></h3>
+<span class="date">Posted on: January 24, 2025</span>
+</div>
+<div class="item">
+<a href="https://www.marysvillewa.gov/Police" class="thumb alignRight" target="_blank"><img loading="lazy" alt="" src="images/2662879c5f595ee50d2a760257c573d6f83d5f62260ca2ccee4c647223728a00" style="width:50px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1169">MPD achieves professional excellence with state accreditation</a></h3>
+<span class="date">Posted on: November 26, 2024</span>
+</div>
+<div class="item">
+<a href="https://www.marysvillewa.gov/PlanningCommission" class="thumb alignRight" target="_blank"><img loading="lazy" alt="City of Marysville logo" src="images/401cc04f68afa3424f2bdbfcd230b77ba49867b6654672cedf5945fb34bcd2d6" style="width:50px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1182">Apply now to serve on city Planning Commission</a></h3>
+<span class="date">Posted on: January 6, 2025</span>
+</div>
+<div class="item">
+<a href="http://www.marysvillewa.gov/Budget" class="thumb alignRight" target="_blank"><img loading="lazy" alt="News release logo graphic" src="images/56cfff81a55e45a892ebe76dab6827b2c17812bf0e2aa49d8712fd76cc419d2f" style="width:50px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1170">City adopts $450 million biennial budget for 2025-2026</a></h3>
+<span class="date">Posted on: December 3, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Staff recycling Christmas tree in parking lot" src="images/44d31016b9585811aeed82bb233def98b31337fa7ce8261384ee943540ee7519" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1173">Free post-holiday recycling &amp; tree-cycling Jan. 4</a></h3>
+<span class="date">Posted on: December 5, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Lighted vehicle and large inflatable snowman are shown in Electric Lights Parade" src="images/3008921042944eb99f80b995b9c5e5d603c907f7d43212306d98224857cd678b" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1165">Make it a Merrysville holiday weekend!</a></h3>
+<span class="date">Posted on: November 25, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Electric Lights Parade map with detour route" src="images/d42d9cfb4cccba738d93c9538592fdcc04d73008ba44e78c308d72e08313abf3" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1166">State Ave. closure Saturday, Dec. 7, for holiday parade</a></h3>
+<span class="date">Posted on: November 25, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Larry Jubie, Grand Marshal of 2024 Electric Lights Parade, Marysville WA " src="images/bce11c81046b426ee5cae2ec0e8a3f961b32bb1647adefaec7230a2627bafd66" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1168">Meet Larry Jubie, holiday parade grand marshal</a></h3>
+<span class="date">Posted on: November 26, 2024 | Last Modified on: November 26, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Graphic image: scales of justice with law books and gavel" src="images/e46282d92741e0a822a0253e8b5400177d9ef6c44dff82e3c0bd186b5918638a" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1159">City strengthens mandatory minimum sentences for repeat offenders</a></h3>
+<span class="date">Posted on: November 7, 2024</span>
+</div>
+<div class="item">
+<a href="http://www.marysvillewa.gov/CityCouncil" class="thumb alignRight" target="_blank"><img loading="lazy" alt="City of Marysville logo" src="images/401cc04f68afa3424f2bdbfcd230b77ba49867b6654672cedf5945fb34bcd2d6" style="width:50px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1146">Share your input: 2025-26 budget, new Capital Improvements Plan</a></h3>
+<span class="date">Posted on: October 11, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignLeft"><img loading="lazy" alt="" src="images/32043f0c93e3973b9bb3bf4ac151ce77fe65850013f6c84408ff99432568d564" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1155">Police increase enforcement amid rise in speed-related crashes</a></h3>
+<span class="date">Posted on: November 1, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="MPD logo with background" src="images/c9f1b03966f527ef37f50c4b6937ec45377adf209df4247eebadb25435503104" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1148">Missing child from 2021 located</a></h3>
+<span class="date">Posted on: October 23, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="News release" src="images/5eac12a9feac45d2877752f5beda8f04e671eb23155114cad71e100ccdedf908" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1150">Lockdown lifted following report of threat at Marysville Pilchuck High School</a></h3>
+<span class="date">Posted on: October 25, 2024</span>
+</div>
+<div class="item">
+<a href="https://www.marysvillewa.gov/1190/Halloween" class="thumb alignRight" target="_blank"><img loading="lazy" alt="2023 Halloween Drive Thru" src="images/f01de1e840032a4d95f893d83beddbc9d8116f9f07a2a113ce429a97a617d52b" style="width:70px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1141">Have a monster of a time in Marysville this Halloween Season</a></h3>
+<span class="date">Posted on: October 2, 2024</span>
+</div>
+<div class="item">
+<a href="https://www.marysvillewa.gov/touchatruck" class="thumb alignRight" target="_blank"><img loading="lazy" alt="Young girl in driver's seat of big rig at Marysville WA Touch-A-Truck in 2023" src="images/2b5d1cb0ec7d1c57a3c50f05228d9bfc16495aebfa4fa39dca0c1e981c626407" style="width:50px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1126">Hop in the driver's seat at Touch-A-Truck Sept. 14</a></h3>
+<span class="date">Posted on: August 12, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="Marysville WA Police Dept logo " src="images/600f743c27bc5c9b9a2731e8f3cbecce5db60310d890f3f4d28cb0201b912a50" style="width:50px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1128">Everett man arrested for attempted kidnapping</a></h3>
+<span class="date">Posted on: August 15, 2024</span>
+</div>
+<div class="item">
+<span class="thumb alignRight"><img loading="lazy" alt="MPD logo" src="images/b105c98fd475df4b32d159c6d6188917d59d9811d92adaecffd924b62c615ea3" style="width:72px; height:50px;"></span><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1083">Body located on Tulalip Reservation</a></h3>
+<span class="date">Posted on: April 22, 2024</span>
+</div>
+<div class="item">
+<a href="https://www.marysvillewa.gov/1336/Community-Academy" class="thumb alignRight" target="_blank"><img loading="lazy" alt="Marysville Police Department Community Academy" src="images/0b9130b01ec27bae83e27e2161838c02d36c5a4a0aa8a61ef9c5fc2d405bad96" style="width:50px; height:50px;"></a><h3><a href="https://marysvillewa.gov/CivicAlerts.aspx?AID=1047">Learn about law enforcement at Police Community Academy</a></h3>
+<span class="date">Posted on: February 14, 2024</span>
+</div>	</div>
+</div>
+	</div>
+	</div>
+
+</div>
+
+<input type="hidden" name="doSubmit" value="false">
+<input type="hidden" name="ysnSave" value="">
+<input type="hidden" name="curPage" value="CivicAlertForm">
+<input type="hidden" name="ysnSend" value="0">
+<input type="hidden" name="ysnSendAtStart" value="0">
+<input type="hidden" name="ysnSendBeforeDays" value="0">
+<input type="hidden" name="intSendBeforeDays" value="-1">
+<input type="hidden" name="txtComments" value="">
+<input type="hidden" name="dtiCurDate" value="3/23/2025 1:29:28 PM ">
+<input type="hidden" name="txtSMSComments" value="">
+<input type="hidden" id="hConfirmRebuilt" name="hConfirmRebuilt" value="-1">
+</div>
+
+<script type="text/javascript" language="javascript"><!--
+function redrawContent(closeModal) {
+raiseAsyncPostback('ctl00_ctl00_MainContent_ModuleContent_ctl00_contentUpdatePanel', '', closeModal);
+}
+
+$(document).ready(function () {
+if (!window.isResponsiveEnabled) {
+	$('div.moduleContentNew').addClass('minWidth320px');
+}
+
+var color = $("div.moduleContentNew").css("color") + " !important";
+var style = $('<style>span.arrow { color:' + color + '; }</style>');
+$('html > head').append(style);
+});
+
+function pageLoad() {
+$('#newsSortBy').bind('change', function () {
+	var url = $(this).val();
+	if (url) {
+		window.location = url;
+	}
+	return false;
+});
+}
+//--></script>
+
+<!-- END CivicAlertContent.aspx ***** -->
+
+</div>
+<script type="text/javascript">order+='ModuleContent\n'</script>
+
+		<div id="ctl00_ctl00_MainContent_ctl00_liveEditPopupWindow" class="modalContainer modalContainerCP" style="display: none;">
+	<div id="ctl00_liveEditTitleBar" class="modalTitleLeft">
+<h3 id="ctl00_LiveEditModalTitle" class="modalTitle">Live Edit</h3>
+<a id="ctl00_LiveEditCloseButton" class="modalClose" aria-label="Close this modal" href="https://marysvillewa.gov/" title="Close this window"><svg viewbox="0 0 25 25" id="modalIconClose"><polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon></svg></a>
+</div>
+<div id="ctl00_liveEditContentLeft" class="modalContentLeft"><div id="ctl00_liveEditContentRight" class="modalContentRight"><div id="ctl00_liveEditContent" class="modalContent"><iframe style="display: none; border: none;" src="about:blank" id="liveEditDialog" title="Live Edit Dialog" name="liveEditDialog"></iframe></div></div></div>
+<div id="ctl00_liveEditFooter" class="modalBottomLeft"><div id="ctl00_liveEditfooterbar" class="modalBottomRight"><div id="ctl00_liveEditfooterbar1" class="modalBottom"></div></div></div>
+</div>
+<input type="submit" name="ctl00$ctl00$MainContent$ctl00_liveEditSpawnWindow" value="" id="ctl00_ctl00_MainContent_ctl00_liveEditSpawnWindow" disabled aria-hidden="true" style="display: none;">
+	
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","CancelControlID":"ctl00_LiveEditCloseButton","PopupControlID":"ctl00_ctl00_MainContent_ctl00_liveEditPopupWindow","PopupDragHandleControlID":"ctl00_liveEditTitleBar","dynamicServicePath":"/CivicAlerts.aspx","id":"editItemBehavior"}, null, null, $get("ctl00_ctl00_MainContent_ctl00_liveEditSpawnWindow"));
+});
+//]]>
+</script>
+</form>
+	<form id="aspnetSearchForm" name="aspnetSearchForm" style="display:none;" action="/Search.aspx" method="get">
+		<input name="SearchString" type="hidden" value="">
+	</form>
+	
+	<form name="frmCivicAlertsArchives" style="display: inline;" action="CivicAlerts.aspx" method="get">
+<input type="hidden" name="CID" value="-1"><input type="hidden" name="lngNewPage" value="">
+</form>
+<form name="frmCivicAlertSearch" method="GET">
+<input type="hidden" name="searchTerms"><input type="hidden" name="CID">
+</form>
+
+	
+	</div>
+	 
+</div>	
+
+</div>
+<aside data-cprole="contentContainer" id="featureColumn" class="secondaryContent">	<div id="cc3416593f-bd42-4737-ba4d-07353204ddf9" data-containerid="3416593f-bd42-4737-ba4d-07353204ddf9" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div>
+<div data-cprole="structuralContainer" id="siteSidebarTS" class="siteSidebar">
+<aside data-cprole="contentContainer" id="sidebarContainer1TS">	<div id="cc20cadfe1-e753-48a9-a8fd-bcf20acf31a9" data-containerid="20cadfe1-e753-48a9-a8fd-bcf20acf31a9" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><nav data-cprole="nav" id="secondaryNav" class="siteNav secondaryNav">
+
+
+
+
+
+	<ol role="menu" id="secondaryMenusecondaryNav" data-parent="735" class="rootNavMenu accordionNav">
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem748" data-pageid="748">
+		<div class="accordionNavItem">
+			<a href="https://marysvillewa.gov/748/Comments-or-questions" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Comments or questions</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem765" data-pageid="765">
+		<div class="accordionNavItem">
+			<a href="http://www.marysvillewa.gov/763/Emergencies-and-Inclement-Weather" target="_blank" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Emergency information</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem736" data-pageid="736">
+		<div class="accordionNavItem">
+			<a href="https://marysvillewa.gov/342" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Mayor's welcome</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem742" data-pageid="742">
+		<div class="accordionNavItem">
+			<a href="http://www.codepublishing.com/wa/marysville/" target="_blank" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Municipal code</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem739" data-pageid="739">
+		<div class="accordionNavItem">
+			<a href="https://marysvillewa.gov/144" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Municipal Court</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem1277" data-pageid="1277">
+		<div class="accordionNavItem">
+			<a href="https://www.marysvillewa.gov/FormCenter/Code-violations-8/Code-Violation-reporting-form-Shopping-C-157" target="_blank" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Report abandoned shopping carts</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem1276" data-pageid="1276">
+		<div class="accordionNavItem">
+			<a href="https://seeclickfix.com/web_portal/Q7ZF315u8rbyzDsTELXyo93T/report/category/55397/location" target="_blank" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Report graffiti</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem740" data-pageid="740">
+		<div class="accordionNavItem">
+			<a href="https://marysvillewa.gov/340" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Utility billing</a>
+		</div>
+			</li>
+
+	</ol>
+
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			//setup menu manager properties for secondary menu
+			menuManager.isSideMenuEditable = false;
+			menuManager.sideMenuMaxSubMenuLevels = 4;
+			menuManager.sideMenuHasCustomLinks = true;
+		});
+	</script>
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			$('*[id^="SideItem"]').each(function () {
+				var ids = $('[id="' + this.id + '"]');
+				if (ids.length > 1)
+					$.each(ids, function (index, value) {
+						value.id = value.id + '_' + index;
+					});
+			});
+
+			$('.hasAccordionChildren .openAccordionNav').click(function (e) {
+				e.preventDefault();
+				showHideAccordionMenuForSecondaryNav($(this));
+			});
+
+			$("#secondaryNav .grippy").each(function () {
+				menuManager.setupDraggableElement($(this), SIDE_MENU, '#secondaryNav');
+			});
+
+			$("#secondaryNav li").each(function () {
+				menuManager.setupDroppableAccordionElement($(this), SIDE_MENU);
+			});
+		});
+	</script>
+
+
+
+</nav><aside data-cprole="contentContainer" id="sidebarContainer2TS">	<div id="cc30e6a322-dd81-450a-b45e-26c1595cbc24" data-containerid="30e6a322-dd81-450a-b45e-26c1595cbc24" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div>
+</div></div>
+</div>
+<!-- GBs --><div data-cprole="structuralContainer" id="gbsContainerTS">
+<div class="siteWrap4"><div data-cprole="contentContainer" id="gbsTS">	<div id="cc1abca3b8-8876-4164-a27c-b4622d33ee4f" data-containerid="1abca3b8-8876-4164-a27c-b4622d33ee4f" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="35">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col8 first" style="" data-widgetcontainerid="0936bc23-461b-4549-8dca-6c20e0b4b37b">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id3322a33e-30c4-4b53-b1f6-8f7d3b715615" style="" data-widgetcontainerid="3322a33e-30c4-4b53-b1f6-8f7d3b715615">	
+<div data-widget-id="56facb57-0e4b-4d4e-8a16-479ecbbf8eec" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget56facb57-0e4b-4d4e-8a16-479ecbbf8eec" class="widget widgetGraphicLinks skin18 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:20em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://marysvillewa.billingdoc.net/login" target="_self" class="fancyButton fancyButton318 ">
+		<span>
+			<span><span class="text">Pay Bill</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton318.fancyButton:link,.fancyButton318.fancyButton:visited, .fancyButton318div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=12581');
+	background-repeat: no-repeat;
+	background-position: center 3px ;
+background-size:134px;
+transition:all .3s ease-in-out;}
+.fancyButton318.fancyButton:hover,.fancyButton318.fancyButton:focus,.fancyButton318.fancyButton:active,.fancyButton318.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center top;
+background-size:142px;
+transition:all .3s ease-in-out;}
+.fancyButton318.fancyButton:link > span,.fancyButton318.fancyButton:visited > span, .fancyButton318div.fancyButton > span{
+}
+.fancyButton318.fancyButton:hover > span,.fancyButton318.fancyButton:focus > span,.fancyButton318.fancyButton:active > span,.fancyButton318.fancyButton.hover > span{
+}
+.fancyButton318.fancyButton .text{
+	color: rgb(82, 78, 65);
+	font-size: 1.25em;
+	font-family: "AR One Sans";
+	padding-top: 136px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 136px;
+	background-image: url('/ImageRepository/Document?documentID=12587');
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+transition:all .3s ease-in-out;line-height:1.2;}
+.fancyButton318.fancyButton:hover .text,.fancyButton318.fancyButton:focus .text,.fancyButton318.fancyButton:active .text,.fancyButton318.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://marysvillewa.gov/137/City-of-Marysville-jobs-and-how-to-apply" target="_self" class="fancyButton fancyButton319 ">
+		<span>
+			<span><span class="text">We’re Hiring</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton319.fancyButton:link,.fancyButton319.fancyButton:visited, .fancyButton319div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=12582');
+	background-repeat: no-repeat;
+	background-position: center 3px ;
+background-size:134px;
+transition:all .3s ease-in-out;}
+.fancyButton319.fancyButton:hover,.fancyButton319.fancyButton:focus,.fancyButton319.fancyButton:active,.fancyButton319.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center top;
+background-size:142px;
+transition:all .3s ease-in-out;}
+.fancyButton319.fancyButton:link > span,.fancyButton319.fancyButton:visited > span, .fancyButton319div.fancyButton > span{
+}
+.fancyButton319.fancyButton:hover > span,.fancyButton319.fancyButton:focus > span,.fancyButton319.fancyButton:active > span,.fancyButton319.fancyButton.hover > span{
+}
+.fancyButton319.fancyButton .text{
+	color: rgb(82, 78, 65);
+	font-size: 1.25em;
+	font-family: "AR One Sans";
+	padding-top: 136px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 136px;
+	background-image: url('/ImageRepository/Document?documentID=12590');
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+transition:all .3s ease-in-out;line-height:1.2;}
+.fancyButton319.fancyButton:hover .text,.fancyButton319.fancyButton:focus .text,.fancyButton319.fancyButton:active .text,.fancyButton319.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8" style="" data-widgetcontainerid="f7741d95-4bbc-4898-a147-ab6fab11cc07">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id8883e4d5-306d-46fe-a667-5afab21186f4" style="" data-widgetcontainerid="8883e4d5-306d-46fe-a667-5afab21186f4">	
+<div data-widget-id="07d10bcf-7211-465d-9e1f-3b3ecfb1db3d" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget07d10bcf-7211-465d-9e1f-3b3ecfb1db3d" class="widget widgetGraphicLinks skin18 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:20em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://marysvillewa.gov/172/Solid-Waste-Recycling" target="_self" class="fancyButton fancyButton320 ">
+		<span>
+			<span><span class="text">Garbage &amp; Recycling</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton320.fancyButton:link,.fancyButton320.fancyButton:visited, .fancyButton320div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=12583');
+	background-repeat: no-repeat;
+	background-position: center 3px ;
+background-size:134px;
+transition:all .3s ease-in-out;}
+.fancyButton320.fancyButton:hover,.fancyButton320.fancyButton:focus,.fancyButton320.fancyButton:active,.fancyButton320.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center top;
+background-size:142px;
+transition:all .3s ease-in-out;}
+.fancyButton320.fancyButton:link > span,.fancyButton320.fancyButton:visited > span, .fancyButton320div.fancyButton > span{
+}
+.fancyButton320.fancyButton:hover > span,.fancyButton320.fancyButton:focus > span,.fancyButton320.fancyButton:active > span,.fancyButton320.fancyButton.hover > span{
+}
+.fancyButton320.fancyButton .text{
+	color: rgb(82, 78, 65);
+	font-size: 1.25em;
+	font-family: "AR One Sans";
+	padding-top: 136px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 136px;
+	background-image: url('/ImageRepository/Document?documentID=12585');
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+transition:all .3s ease-in-out;line-height:1.2;}
+.fancyButton320.fancyButton:hover .text,.fancyButton320.fancyButton:focus .text,.fancyButton320.fancyButton:active .text,.fancyButton320.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://marysvillewa.gov/147/Parks-Culture-Recreation" target="_self" class="fancyButton fancyButton321 ">
+		<span>
+			<span><span class="text">Parks &amp; Activities</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton321.fancyButton:link,.fancyButton321.fancyButton:visited, .fancyButton321div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=12584');
+	background-repeat: no-repeat;
+	background-position: center 3px ;
+background-size:134px;
+transition:all .3s ease-in-out;}
+.fancyButton321.fancyButton:hover,.fancyButton321.fancyButton:focus,.fancyButton321.fancyButton:active,.fancyButton321.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center top;
+background-size:142px;
+transition:all .3s ease-in-out;}
+.fancyButton321.fancyButton:link > span,.fancyButton321.fancyButton:visited > span, .fancyButton321div.fancyButton > span{
+}
+.fancyButton321.fancyButton:hover > span,.fancyButton321.fancyButton:focus > span,.fancyButton321.fancyButton:active > span,.fancyButton321.fancyButton.hover > span{
+}
+.fancyButton321.fancyButton .text{
+	color: rgb(82, 78, 65);
+	font-size: 1.25em;
+	font-family: "AR One Sans";
+	padding-top: 136px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 136px;
+	background-image: url('/ImageRepository/Document?documentID=12586');
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+transition:all .3s ease-in-out;line-height:1.2;}
+.fancyButton321.fancyButton:hover .text,.fancyButton321.fancyButton:focus .text,.fancyButton321.fancyButton:active .text,.fancyButton321.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8 last" style="" data-widgetcontainerid="ec94bad9-c3e9-402c-b107-f7446be11972">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id200942cc-35ce-4c83-b63e-615e0c643515" style="" data-widgetcontainerid="200942cc-35ce-4c83-b63e-615e0c643515">	
+<div data-widget-id="cf952978-f0f8-4690-87c4-a99822d41f18" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidgetcf952978-f0f8-4690-87c4-a99822d41f18" class="widget widgetGraphicLinks skin18 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:20em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://marysvillewa.gov/369/Report" target="_self" class="fancyButton fancyButton322 ">
+		<span>
+			<span><span class="text">Report an Issue</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton322.fancyButton:link,.fancyButton322.fancyButton:visited, .fancyButton322div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=12581');
+	background-repeat: no-repeat;
+	background-position: center 3px ;
+background-size:134px;
+transition:all .3s ease-in-out;}
+.fancyButton322.fancyButton:hover,.fancyButton322.fancyButton:focus,.fancyButton322.fancyButton:active,.fancyButton322.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center top;
+background-size:142px;
+transition:all .3s ease-in-out;}
+.fancyButton322.fancyButton:link > span,.fancyButton322.fancyButton:visited > span, .fancyButton322div.fancyButton > span{
+}
+.fancyButton322.fancyButton:hover > span,.fancyButton322.fancyButton:focus > span,.fancyButton322.fancyButton:active > span,.fancyButton322.fancyButton.hover > span{
+}
+.fancyButton322.fancyButton .text{
+	color: rgb(82, 78, 65);
+	font-size: 1.25em;
+	font-family: "AR One Sans";
+	padding-top: 136px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 136px;
+	background-image: url('/ImageRepository/Document?documentID=12588');
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+transition:all .3s ease-in-out;line-height:1.2;}
+.fancyButton322.fancyButton:hover .text,.fancyButton322.fancyButton:focus .text,.fancyButton322.fancyButton:active .text,.fancyButton322.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://marysvillewa.gov/list.aspx" target="_self" class="fancyButton fancyButton323 ">
+		<span>
+			<span><span class="text">Subscribe</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton323.fancyButton:link,.fancyButton323.fancyButton:visited, .fancyButton323div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=12582');
+	background-repeat: no-repeat;
+	background-position: center 3px ;
+background-size:134px;
+transition:all .3s ease-in-out;}
+.fancyButton323.fancyButton:hover,.fancyButton323.fancyButton:focus,.fancyButton323.fancyButton:active,.fancyButton323.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center top;
+background-size:142px;
+transition:all .3s ease-in-out;}
+.fancyButton323.fancyButton:link > span,.fancyButton323.fancyButton:visited > span, .fancyButton323div.fancyButton > span{
+}
+.fancyButton323.fancyButton:hover > span,.fancyButton323.fancyButton:focus > span,.fancyButton323.fancyButton:active > span,.fancyButton323.fancyButton.hover > span{
+}
+.fancyButton323.fancyButton .text{
+	color: rgb(82, 78, 65);
+	font-size: 1.25em;
+	font-family: "AR One Sans";
+	padding-top: 136px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 136px;
+	background-image: url('/ImageRepository/Document?documentID=12589');
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+transition:all .3s ease-in-out;line-height:1.2;}
+.fancyButton323.fancyButton:hover .text,.fancyButton323.fancyButton:focus .text,.fancyButton323.fancyButton:active .text,.fancyButton323.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 29px ;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+<!-- Calendar/Carousel --><!-- <div data-cpRole="structuralContainer" id="homeContainer1">
+    <div class="siteWrap2">
+      <div data-cpRole="contentContainer" id="homeContent1a"></div>
+    </div>
+  </div> --><!-- Footer --><footer data-cprole="structuralContainer" id="footerContainerTS">
+<div class="siteWrap4"><div data-cprole="contentContainer" id="footerTS">	<div id="ccb4f41b11-b912-45d8-855f-1b817fa4c974" data-containerid="b4f41b11-b912-45d8-855f-1b817fa4c974" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="77">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col6 first" style="" data-widgetcontainerid="91c52eef-36d3-422a-8603-cdc824ee5210">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col6 first last iddb77a35f-5fb5-4c05-a170-f3317506648f" style="" data-widgetcontainerid="db77a35f-5fb5-4c05-a170-f3317506648f">	
+    <div data-widget-id="550d16fe-5c3c-417d-af03-2f8d464fe438" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdv550d16fe-5c3c-417d-af03-2f8d464fe438" class="widget widgetInfoAdvanced skin15 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="header550d16fe-5c3c-417d-af03-2f8d464fe438">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row  wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<p><a href="https://marysvillewa.gov/"><img src="images/11b048876dfe937de8de477cd729aa18e273ddeb70c51fe446900652090666a5" class="fr-dib" alt="WA MarysvilleHomepage"></a></p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv550d16fe-5c3c-417d-af03-2f8d464fe438 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col1" style="" data-widgetcontainerid="56a48cfd-1136-4f28-bbfd-31b4cee9735c">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col1 first last id3ea9f531-76a2-432b-a87b-91e7050cfd49" style="" data-widgetcontainerid="3ea9f531-76a2-432b-a87b-91e7050cfd49">	
+
+<div class="widget widgetSpacer" id="0ab8f0e3-72e9-42bc-8252-79f16effb016"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col9" style="" data-widgetcontainerid="1a9effea-cb6a-482b-a455-091de2f531d1">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col9 first last idb6a41a17-c99e-4295-8a3e-0d39273e79bc" style="" data-widgetcontainerid="b6a41a17-c99e-4295-8a3e-0d39273e79bc">	
+    <div data-widget-id="d71e523c-ed06-4811-a3d8-3dac550b01e7" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdvd71e523c-ed06-4811-a3d8-3dac550b01e7" class="widget widgetInfoAdvanced skin17 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="headerd71e523c-ed06-4811-a3d8-3dac550b01e7">
+			<header class="widgetHeader" id="headerd71e523c-ed06-4811-a3d8-3dac550b01e7">
+		<div class="">
+					<h3>Contact Us</h3>
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid2 ">
+		<div class="row  wide">
+					<div class="col col1 first ">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Marysville City Hall</p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>501 Delta Avenue</p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Marysville, WA 98270</p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Phone: <a href="tel:3603638000">360-363-8000</a></p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Fax:<a href="tel:3606515033"> 360-651-5033</a></p>
+</li>						</ol>
+					</div>
+					<div class="col col1  last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Hours:</p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Open Monday through Friday</p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>8 a.m. - 4:30 p.m.</p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdvd71e523c-ed06-4811-a3d8-3dac550b01e7 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col1" style="" data-widgetcontainerid="a1746f19-3e3d-41d8-9c84-aceaed0b472b">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col1 first last idd888903b-fed7-46a2-a01c-551e02ed0734" style="" data-widgetcontainerid="d888903b-fed7-46a2-a01c-551e02ed0734">	
+
+<div class="widget widgetSpacer" id="073eb244-7538-4e6f-afaf-235663fe6ae0"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col7 last" style="" data-widgetcontainerid="3da151d5-6c9d-4190-b356-917b19e52864">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col7 first last id57736450-6741-40a1-a8a8-b08602e2b5e5" style="" data-widgetcontainerid="57736450-6741-40a1-a8a8-b08602e2b5e5">	
+	<div data-widget-id="1117d906-98a4-4557-a66c-5af7a9e1a649" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink1117d906-98a4-4557-a66c-5af7a9e1a649" class="widget widgetQuickLinks skin17 widgetOptionSet16 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:15em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader1117d906-98a4-4557-a66c-5af7a9e1a649">
+			<header class="widgetHeader" id="quickLinksHeader1117d906-98a4-4557-a66c-5af7a9e1a649">
+		<div class="">
+					<h3><a style="" href="https://marysvillewa.gov/QuickLinks.aspx?CID=89">Helpful Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid2 ">
+        <div class="row autoWidths left narrow">
+				<div class="col col1 first ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://marysvillewa.gov/" target="_self">Home</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://marysvillewa.gov/accessibility" target="_self">Accessibility</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.marysvillewa.gov/724/ADA-Accommodation" target="_self">ADA accommodation</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://marysvillewa.gov/748/CommentsQuestions" target="_self">Contact us</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://marysvillewa.gov/site/copyright" target="_self">Copyright notices</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://marysvillewa.gov/civicalerts.aspx" target="_self">Latest news</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://marysvillewa.gov/772/Privacy-Policy-and-Disclaimer" target="_self">Privacy policy and disclaimer</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</footer><!-- Powered By --><div data-cprole="structuralContainer" id="poweredByContainerTS">
+<div class="siteWrap4"><div data-cprole="contentContainer" id="poweredByTS">	<div id="ccf6276daa-2036-42ff-87f2-27e1aa85b274" data-containerid="f6276daa-2036-42ff-87f2-27e1aa85b274" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="73">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col14 first" style="" data-widgetcontainerid="5535c9ab-bdcf-4c92-8e10-f377d4348b42">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col14 first last idfd48924d-99aa-4d41-975f-ad0cb7df28e4" style="" data-widgetcontainerid="fd48924d-99aa-4d41-975f-ad0cb7df28e4">	
+	<div data-widget-id="727802b9-4d5e-4ba8-9904-2897ed0dd8c2" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink727802b9-4d5e-4ba8-9904-2897ed0dd8c2" class="widget widgetQuickLinks skin21 widgetOptionSet16 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Quick Links">
+			<header class="widgetHeader" id="quickLinksHeader727802b9-4d5e-4ba8-9904-2897ed0dd8c2">
+		<div class="">
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid4 ">
+        <div class="row autoWidths left narrow">
+				<div class="col col1 first ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://marysvillewa.gov/" target="_self">Home</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://marysvillewa.gov/accessibility" target="_self">Accessibility</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.marysvillewa.gov/724/ADA-Accommodation" target="_self">ADA accommodation</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://marysvillewa.gov/748/CommentsQuestions" target="_self">Contact us</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col2" style="" data-widgetcontainerid="6bf6a7dd-0f1f-470a-a891-caba0e4ca94d">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col2 first last id80f09689-315a-4951-820c-bfbe0716efe3" style="" data-widgetcontainerid="80f09689-315a-4951-820c-bfbe0716efe3">	
+
+<div class="widget widgetSpacer" id="fd70874d-8f8e-428e-8503-c352a03f4db9"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8 last" style="" data-widgetcontainerid="45c28bd7-075f-4443-ab74-b88c90e23588">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id853d04a9-a7ba-4d92-b63c-666ad99c68d5" style="" data-widgetcontainerid="853d04a9-a7ba-4d92-b63c-666ad99c68d5">	
+ 
+	<div data-widget-id="ae3204f8-22ee-46ea-b94c-c5ae37b8ef0e" data-modulename="customHtml" id="widgetCustomHtmlae3204f8-22ee-46ea-b94c-c5ae37b8ef0e" class="widget widgetCustomHtml skin20 narrow">
+	<div class="widgetBody pageStyles" id="widgetBodyae3204f8-22ee-46ea-b94c-c5ae37b8ef0e">
+		<div id="customHtmlae3204f8-22ee-46ea-b94c-c5ae37b8ef0e"><div>
+<style>
+  /* CP icon */
+  .cpBylineIconTS {
+    color: #fff;
+  }
+  /* CP Text */
+  .cpBylineTextTS,
+  .cpBylineTextTS a:link {
+    color: #fff;
+  }
+
+  .cpBylineTS {
+    text-align: center;
+  }
+  
+  .cpBylineIconTS {
+    fill: currentColor;
+    width: 39px;
+    height: 26px;
+    display: inline;
+    vertical-align: middle;
+  }
+</style>
+
+<div class="widgetItem cpBylineTS">
+  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100" class="cpBylineIconTS">
+    <path class="c" d="M73.4,23.2h-19v16.7h19c2.8,0,5,2.2,5,5c0,2.8-2.2,5-5,5h-19v28.4h5.5l11.3-11.7h2.2c11.9,0,21.6-9.7,21.6-21.6C95,33,85.3,23.2,73.4,23.2"></path>
+    <path class="p" d="M45.8,66.5H26.6C14.7,66.5,5,56.8,5,44.9C5,33,14.7,23.2,26.6,23.2h19.1v16.7H26.6c-2.8,0-5,2.2-5,5c0,2.8,2.2,5,5,5h19.1V66.5z"></path>
+  </svg>
+  <span class="cpBylineTextTS">Government Websites by <a href="https://connect.civicplus.com/referral">CivicPlus®</a></span>
+</div>
+</div></div>
+	</div>
+	</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+</div>
+
+			</div>
+		</div>
+	</div>
+
+
+<link href="/745732998.css" rel="stylesheet" type="text/css">
+
+<div tabindex="0"></div>
+<div id="SplashMessageWrapper" class="cp-Splash-wrapper">
+	<div role="dialog" aria-labelledby="cp-Splash-title" aria-describedby="editorContentDesc" aria-modal="true" tabindex="-1" id="SplashMessage" class="hidden cp-Splash cp-Splash--modal is-open">
+		<div class="cp-Splash-header">
+			<span class="cp-Splash-title" id="cp-Splash-title">Loading</span>
+			<button class="cp-Splash-Btn cp-Splash-close" aria-label="Close this modal" title="Close this window">
+				<svg id="iconClose" viewbox="0 0 25 25">
+					<polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon>
+				</svg>
+			</button>
+		</div>
+		<div class="cp-Splash-body">
+			<div class="cp-Splash-Prose editorContent fr-view fr-element" id="editorContentDesc">
+				<!-- Content from the Froala Editor will go here. -->
+				Loading
+			</div>
+		</div>
+		<div class="cp-Splash-footer">
+			<button class="cp-Splash-Btn cp-Splash-Btn--NoShow">Do Not Show Again</button>
+			<button class="cp-Splash-Btn cp-Splash-Btn--Close">Close</button>
+		</div>
+	</div>
+</div>
+<div tabindex="0"></div>
+
+<script src="/Assets/Scripts/APIClient.js"></script>
+<script src="/Assets/Mystique/Shared/Scripts/Moment/Moment.min.js"></script>
+<script src="/Assets/Scripts/SplashModal/SplashModalRender.js"></script>
+<script>
+
+		$(document).ready(function () {
+			var filter = {
+				targetId: '',
+				targetType: 0
+			}
+
+			new SplashModalRender().triggerRender(filter);
+		});
+</script>
+	
+	
+	
+
+
+
+
+
+
+	<script src="/-700606170.js" type="text/javascript"></script>
+	<!----------Google Translate (Mobile Friendly)--------->
+
+<style>
+  #google-translate-container {
+    float: right;
+    padding: 3px 5px 0px 0px;
+    position: fixed; 
+    bottom: 16px; 
+    right: 10px; 
+    z-index: 5;
+  }
+  
+  .goog-te-combo, .goog-te-banner *, .goog-te-ftab *, .goog-te-menu *, .goog-te-menu2 *, .goog-te-balloon * {
+    font-family: arial;
+    font-size: 10pt;
+    background-image: url("https://www.gstatic.com/images/branding/product/2x/translate_24dp.png");
+    background-position: 5px 5px;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    text-indent: 16px;
+    background-color: #fff;
+    color: #000 !important;
+  }
+  
+  .goog-logo-link {
+    display: none !important;
+  }
+  
+  .goog-te-gadget {
+    color: transparent !important;
+  }
+  
+  .goog-te-gadget .goog-te-combo {
+    margin: 2px 0 !important;
+    border-radius: 15px !important;
+    }
+  
+  .goog-te-combo{
+    border: 1px solid !important;
+    border-color: #bcc9d7 #96a3b1 #96a3b1 #bcc9d7 !important;
+    border-radius: 50px !important;
+    height:31px !important;
+    padding: 0 1px 0 .25rem !important;
+                width: 156px;
+  }
+
+  #launcher-wrapper {
+    bottom: 50px !important;
+  }
+
+</style>
+
+<div id="google-translate-container">
+  <div id="google_translate_element">
+  </div>
+</div>
+
+<script>
+
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
+    // begin accessibility compliance
+    $('img.goog-te-gadget-icon').attr('alt','Google Translate');
+    $('div#goog-gt-tt div.logo img').attr('alt','translate');
+    $('div#goog-gt-tt .original-text').css('text-align','left');
+    $('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+    $('.goog-te-combo').attr('aria-label','google translate languages');
+    $('svg.goog-te-spinner').attr('title','Google Translate Spinner');
+    $('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+  }
+
+  $(function() {
+    $.getScript("//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit");
+  });
+
+</script>
+
+<!--------------End Google Translate----------------->
+
+
+<!-- Fixed Nav Adjustment -->
+<script>
+  function getValueTS(elem, attr) {
+    const val = elem.css(attr);
+    if (val === undefined) return undefined;
+    const num = parseInt(val, 10);
+    if (num === NaN) return undefined;
+    return num;
+  }
+
+  function clampTS(number, min, max) {
+    return Math.min(Math.max(number, min), max);
+  }
+
+  function isPageEditingTS() {
+    return (
+      $("#doneEditing").length > 0 || // In live edit
+      typeof DesignCenter !== "undefined" // In theme manager
+    );
+  }
+
+  const bgColorRegexTS = /rgba((d+), (d+), (d+), (d*.?d*))/;
+  function isTransparentTS(elem) {
+    const bg = elem.css('background-color');
+    if (typeof bg !== "string" || !bg.startsWith('rgba(')) return false;
+    const matchState = bg.match(bgColorRegexTS);
+    if (!matchState || matchState.length !== 5) return false;
+    const alpha = parseFloat(matchState[4], 10);
+    if (!(alpha >= 0 && alpha < 1)) return false;
+    return true;
+  }
+
+  function iterateLeftpads(cb) {
+    const containersTS = $("[class^='siteWrap'],[class*=' siteWrap']");
+    for (let i = 0; i < containersTS.length; i++) {
+      const containerTS = containersTS[i];
+      // Skip the body container and anything with data-skip-leftpad
+      if (
+        containerTS.id !== "bodyContainerTS" &&
+        containerTS.getAttribute('data-skip-leftpad') === null
+      ) {
+        cb(containerTS);
+      }
+    }
+  }
+
+  const anchor = $("#divToolbars");
+  const anchor2 = $("#headerContainerTS")
+
+  // Outer banner padding (push banner down)
+  const outerSizingTS = $("#bannerContainerTS");
+  // Inner banner padding (push banner content down) - Transparent header OR on attaching headers
+  const innerSizingTS = $("#bannerSizingTS");
+  const bodyContainerTS = $("#bodyContainerTS");
+
+  const forceUnfixClassTS = "forceUnfixTS";
+
+  const fixedTopTS = $(".fixedTopTS");
+  const fixedBottomTS = $(".fixedBottomTS");
+  const fixedLeftTS = $(".fixedLeftTS");
+
+  var initialTopTS;
+  var topAttachTS;
+  if (fixedTopTS && fixedTopTS.length === 1) {
+    initialTopTS = getValueTS(fixedTopTS, 'top');
+    const attachment = fixedTopTS.attr('data-attach');
+    if (attachment) topAttachTS = $("#" + attachment);
+    if (!topAttachTS || topAttachTS.length !== 1) topAttachTS = undefined;
+  }
+
+  function resizeAdjustmentTS() {
+    const editing = isPageEditingTS();
+
+    // Fixed top script
+    (function () {
+      if (!fixedTopTS || fixedTopTS.length !== 1 || initialTopTS === undefined) return;
+
+      if (editing) {
+        fixedTopTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedTopTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      const topPosition = fixedTopTS.css('position');
+      if (topPosition === 'fixed') {
+        if (topAttachTS) {
+          scrollAdjustmentTS();
+        } else {
+          const anchorHeight = anchor.outerHeight() - 1;
+          fixedTopTS.css('top', anchorHeight + initialTopTS);
+        }
+      } else {
+        fixedTopTS.css('top', initialTopTS);
+      }
+
+      if (topPosition === 'fixed' || topPosition === 'absolute') {
+        // Bump the banner content down
+        if (isTransparentTS(fixedTopTS)) {
+          innerSizingTS.css('padding-top', initialTopTS + fixedTopTS.outerHeight() - 1);
+          outerSizingTS.css('padding-top', '');
+
+          try {
+            window.Pages.onResizeHandlersExecute();
+          } catch (e) { }
+        } else {
+          outerSizingTS.css('padding-top', fixedTopTS.outerHeight() - 1);
+          innerSizingTS.css('padding-top', '');
+        }
+      } else {
+        innerSizingTS.css('padding-top', '');
+        outerSizingTS.css('padding-top', '');
+      }
+    })();
+
+    // Fixed bottom script
+    (function () {
+      if (!fixedBottomTS || fixedBottomTS.length === 0) return;
+
+      // If the widget has gone narrow, force unfix
+      if (editing || fixedBottomTS.outerHeight() > 200) {
+        fixedBottomTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedBottomTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      if (fixedBottomTS.css('position') === 'fixed') {
+        bodyContainerTS.css('padding-bottom', fixedBottomTS.outerHeight());
+      } else {
+        bodyContainerTS.css('padding-bottom', '');
+      }
+    })();
+
+    // Fixed left script
+    (function () {
+      if (!fixedLeftTS || fixedLeftTS.length === 0) return;
+
+      if (editing) {
+        fixedLeftTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedLeftTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      if (fixedLeftTS.css('position') === 'fixed') {
+        const anchorHeight = anchor.outerHeight() - 1;
+        fixedLeftTS.css('top', anchorHeight);
+        const leftBoundingTS = fixedLeftTS[0].getBoundingClientRect();
+        iterateLeftpads(function (containerTS) {
+          const containerBoundingTS = containerTS.getBoundingClientRect();
+          if (containerBoundingTS.left <= leftBoundingTS.right) {
+            $(containerTS).css('padding-left', leftBoundingTS.width + 16);
+          }
+        });
+      } else {
+        fixedLeftTS.css('top', '');
+        iterateLeftpads(function (containerTS) {
+          $(containerTS).css('padding-left', '');
+        });
+      }
+    })();
+  }
+
+  function scrollAdjustmentTS() {
+    if (!fixedTopTS || fixedTopTS.length !== 1 || !topAttachTS || topAttachTS.length !== 1) return;
+    const topPosition = fixedTopTS.css('position');
+    if (topPosition === 'fixed' || topPosition === 'absolute') {
+      const anchorBounding = anchor[0].getBoundingClientRect();
+      const attachBounding = topAttachTS[0].getBoundingClientRect();
+      const scrollTop = $(window).scrollTop();
+
+      fixedTopTS.css('top', Math.max(anchorBounding.bottom - 1, attachBounding.bottom));
+    } else {
+      fixedTopTS.css('top', initialTopTS);
+    }
+  }
+
+  $(window).load(function () {
+    setTimeout(function () {
+      resizeAdjustmentTS();
+    }, 350);
+
+    $(window).scroll(function () {
+      scrollAdjustmentTS();
+    });
+
+    var adjustTimeoutTS;
+    $(window).resize(function () {
+      clearTimeout(adjustTimeoutTS);
+      adjustTimeoutTS = setTimeout(function () {
+        resizeAdjustmentTS();
+      }, 350);
+    });
+
+    $.when(window.Pages.angularToolbarComplete).done(function () {
+      resizeAdjustmentTS();
+    });
+  });
+</script>
+<!-- End Fixed Nav Adjustment -->
+
+<script type="text/javascript">!function(){var b=function(){window.__AudioEyeSiteHash = "adb4fbfbe42b12d0edb697e62b2c65b1"; var a=document.createElement("script");a.src="https://wsmcdn.audioeye.com/aem.js";a.type="text/javascript";a.setAttribute("async","");document.getElementsByTagName("body")[0].appendChild(a)};"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",b):window.attachEvent&&window.attachEvent("onload",b):b()}();</script>
+
+<!----------START Monsido Script--------->
+<script type="text/javascript">
+    window._monsido = window._monsido || {
+        token: "apNBSLj1VVKTlQCRgOg6kg",
+        statistics: {
+            enabled: true,
+            cookieLessTracking: true,
+            documentTracking: {
+                enabled: true,
+                documentCls: "monsido_download",
+                documentIgnoreCls: "monsido_ignore_download",
+                documentExt: ["pdf","doc","ppt","docx","pptx"],
+            },
+        },
+        heatmap: {
+            enabled: true,
+        },
+        pageCorrect: {
+            enabled: true,
+        },
+    };
+</script>
+<script type="text/javascript" async src="https://app-script.monsido.com/v2/monsido-script.js"></script>
+<!----------END Monsido Script--------->
+
+
+	<script type="text/javascript">
+		$(function () {
+			document.cookie = "responsiveGhost=0; path=/";
+		});
+		$(window).on("load", function () {
+			$('body').addClass('doneLoading').removeClass('hideContent');
+
+			if ($('#404Content').length > 0)
+				$('div#bodyWrapper').css('padding', '0px');
+		});
+	</script>
+
+	<noscript>
+		<style>
+			body.hideContent {
+				opacity: 1 !important;
+			}
+		</style>
+	</noscript>
+
+		
+<div style="display: none;">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+		<symbol id="iconArrow--left" viewbox="0 0 25 25">
+			<title>Arrow Left</title>
+			<polygon style="fill:currentcolor" points="18.044,25 19.498,23.545 8.409,12.454 19.408,1.455 17.954,0 5.502,12.452"></polygon>
+		</symbol>
+
+		<symbol id="iconArrow--right" viewbox="0 0 25 25">
+			<title>Arrow Right</title>
+			<polygon style="fill:currentcolor" points="6.957,0 5.502,1.455 16.591,12.546 5.592,23.545 7.047,25 19.498,12.548"></polygon>
+		</symbol>
+
+	</svg>
+</div>
+	<script type="text/javascript">loadCSS('//fonts.googleapis.com/css?family=AR+One+Sans:500,600,700,regular|Arimo:700,700italic,italic,regular|Open+Sans:300,300italic,500,500italic,600,600italic,700,700italic,800,800italic,italic,regular|Oswald:200,300,500,600,700,regular|Oxygen:700,regular|Roboto+Condensed:700,700italic,regular|');</script>
+	
+
+	<div class="hidden activeWidgetSkinComponentsOnPageJson">[]</div>
+		<div style="display: none;">
+			<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+				<symbol id="iconSlideshowArrowLeft" viewbox="0 0 22.68 40">
+					<title>Slideshow Left Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M20,40a2.67,2.67,0,0,1-1.9-.79L.79,21.9a2.68,2.68,0,0,1,0-3.79L18.1.79a2.68,2.68,0,1,1,3.79,3.79L6.47,20,21.89,35.42A2.68,2.68,0,0,1,20,40Z"></path>
+					</g>
+				</symbol>
+				<symbol id="iconSlideshowArrowRight" viewbox="0 0 22.68 40">
+					<title>Slideshow Right Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M2.68,0a2.67,2.67,0,0,1,1.9.79L21.89,18.1a2.68,2.68,0,0,1,0,3.79L4.58,39.21A2.68,2.68,0,0,1,.79,35.42L16.21,20,.79,4.58A2.68,2.68,0,0,1,2.68,0Z"></path>
+					</g>
+				</symbol>
+			</svg>
+		</div>
+	
+	
+
+	<div id="root-picker-outlet"></div>
+</body>

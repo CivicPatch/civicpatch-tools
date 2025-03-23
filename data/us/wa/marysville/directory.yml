@@ -1,0 +1,34 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:marysville
+people:
+- email: jnehring@marysvillewa.gov
+  image: images/902e6e3fe2abb97b0b6eb8d1cd791ec2b45688e56c737e15b3f42e0ecd95a6fc
+  name: Jon Nehring
+  phone_number: 360-363-8000
+  position: mayor
+  position_misc: ''
+  website: https://marysvillewa.gov/188/About-the-Mayor
+- email: ''
+  image: images/902e6e3fe2abb97b0b6eb8d1cd791ec2b45688e56c737e15b3f42e0ecd95a6fc
+  name: Nehring
+  phone_number: ''
+  position: mayor
+  position_misc: ''
+  website: https://marysvillewa.gov/1127/Mayors-priorities
+- email: pcondyles@marysvillewa.gov
+  image: images/5de70a29ad3de46cbfb5c3c21ef8c314d3212c094e5d746fa96d91b4b53dc09f
+  name: Peter Condyles
+  phone_number: 425-501-6578
+  position: council_member
+  position_misc: pos_1
+  website: https://marysvillewa.gov/954/Vacant---Pos-1
+sources:
+- https://marysvillewa.gov/188/About-the-Mayor
+- https://marysvillewa.gov/1127/Mayors-priorities
+- https://marysvillewa.gov/187/Office-of-the-Mayor
+- https://marysvillewa.gov/342/Welcome-from-the-Mayor
+- https://marysvillewa.gov/342
+- https://marysvillewa.gov/Calendar.aspx?EID=2737
+- https://marysvillewa.gov/CivicAlerts.aspx?AID=1180
+- https://marysvillewa.gov/954/Vacant---Pos-1
+- https://www.marysvillewa.gov/188/About-the-Mayor
