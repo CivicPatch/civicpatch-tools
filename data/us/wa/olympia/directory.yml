@@ -1,0 +1,47 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:olympia
+people:
+- email: ''
+  image: ''
+  name: Dontae Payne
+  phone_number: ''
+  position: mayor
+  position_misc: ''
+  website: https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
+- email: ''
+  image: ''
+  name: Clark Gilman
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php
+- email: ''
+  image: ''
+  name: Dani Madrone
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php
+- email: ''
+  image: ''
+  name: Jim Cooper
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php
+- email: ''
+  image: ''
+  name: Robert Vanderpool
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php
+- email: ''
+  image: ''
+  name: Yến Huỳnh
+  phone_number: ''
+  position: council_member
+  position_misc: mayor_pro-tem
+  website: https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php
+sources:
+- https://www.olympiawa.gov/government/city_council___mayor/index.php
