@@ -119,6 +119,7 @@ places:
   scraper_misc:
     city_id: 193
     population: 64190
+  last_city_scrape_run: '2025-03-23'
 - place: shoreline
   website: https://www.shorelinewa.gov/
   scraper_misc:

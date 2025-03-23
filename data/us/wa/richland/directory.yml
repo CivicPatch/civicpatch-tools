@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:richland
+people:
+- email: ''
+  image: images/54fa5318f439fdbd019907977dac4e905f0718de378a580182d764296e24a031
+  name: Theresa Richardson
+  phone_number: ''
+  position: mayor
+  position_misc: position_no_2
+  website: https://www.ci.richland.wa.us/government/city-council/theresa-richardson
+- email: ''
+  image: images/bce2ce417324a4f43056fd6c04c0875e1211603d54121377db37ece9b2dbbdcf
+  name: Jhoanna Jones
+  phone_number: ''
+  position: council_member
+  position_misc: position_no_1
+  website: https://www.ci.richland.wa.us/government/city-council/jhoanna-jones
+- email: ''
+  image: images/6f96d53f9e138dde51756d890a996c190dad28792d6bc058d4082c84ee0449b3
+  name: Sandra Kent
+  phone_number: ''
+  position: council_member
+  position_misc: position_no_3
+  website: https://www.ci.richland.wa.us/government/city-council/sandra-kent
+- email: ''
+  image: images/2a03555e45b43606a66696b6248b9a85a89c5c3fce68e9a3e9a0326d3630320b
+  name: Ryan Lukson
+  phone_number: ''
+  position: council_member
+  position_misc: position_no_4
+  website: https://www.ci.richland.wa.us/government/city-council/ryan-lukson
+- email: ''
+  image: images/d7e6b281c5d2ed612989f5f726e353d0cb3efd07e32bd692fa8629accb08cc39
+  name: Shayne VanDyke
+  phone_number: ''
+  position: council_member
+  position_misc: position_no_5
+  website: https://www.ci.richland.wa.us/government/city-council/shayne-vandyke
+- email: ''
+  image: images/3cd08462c3166968f795604f7d23bd19d18ead069d62cbef0fdb9cd5abe83c1b
+  name: Kurt Maier
+  phone_number: ''
+  position: council_member
+  position_misc: position_no_6
+  website: https://www.ci.richland.wa.us/government/kurt-maier
+- email: ''
+  image: images/9419e12c457972ebef2be531fa86f3c7ecf25195b44b09f201d2089bb8a95916
+  name: Ryan Whitten
+  phone_number: ''
+  position: council_member
+  position_misc: position_no_7
+  website: https://www.ci.richland.wa.us/government/city-council/ryan-whitten
+sources:
+- https://www.ci.richland.wa.us/government/city-council
