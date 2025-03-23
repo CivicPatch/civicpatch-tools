@@ -31,6 +31,7 @@ places:
   scraper_misc:
     city_id: 106
     population: 140400
+  last_city_scrape_run: '2025-03-23'
 - place: everett
   website: https://everettwa.gov/
   scraper_misc:
