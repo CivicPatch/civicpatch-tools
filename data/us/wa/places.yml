@@ -6,6 +6,7 @@ places:
   scraper_misc:
     city_id: 1
     population: 797700
+  last_city_scrape_run: '2025-03-23'
 - place: spokane
   website: https://my.spokanecity.org/
   scraper_misc:
