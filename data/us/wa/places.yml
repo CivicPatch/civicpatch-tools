@@ -110,6 +110,7 @@ places:
   scraper_misc:
     city_id: 275
     population: 64620
+  last_city_scrape_run: '2025-03-23'
 - place: richland
   website: https://www.ci.richland.wa.us/
   scraper_misc:
