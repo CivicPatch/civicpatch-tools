@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:kennewick
+people:
+- email: gretl.crawford@ci.kennewick.wa.us
+  image: images/c35e4c66a5a4dccb8710f80e90ed6e52468654dee990feb09f36150ad396db46
+  name: Gretl Crawford
+  phone_number: 509-531-0454
+  position: mayor
+  position_misc: council_member_-_ward_1_position_1
+  website: https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page
+- email: jason.mcshane@ci.kennewick.wa.us
+  image: images/e805c596f31ad9a4d5e9360531197bfb4055132e32ea8e463e8996ae06910294
+  name: Jason McShane
+  phone_number: 509-537-5903
+  position: council_member
+  position_misc: at_large_position_4_(all_wards)
+  website: https://www.go2kennewick.com/873/John-Trumbo-Bio-Page
+- email: brad.beauchamp@ci.kennewick.wa.us
+  image: images/68f9a39621a28e2e689a44df42a3474c2a68c28b2af4b4c28a12b523f84b9f0f
+  name: Brad Beauchamp
+  phone_number: 509-308-6556
+  position: council_member
+  position_misc: at_large_position_6_(all_wards)
+  website: https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page
+- email: jim.millbauer@ci.kennewick.wa.us
+  image: images/13fe0c51a622799adefec01dd1096228f71025d6e94c0285064dbde68a59b47e
+  name: Jim Millbauer
+  phone_number: 509-531-4134
+  position: council_member
+  position_misc: at_large_position_7_(all_wards)
+  website: https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page
+- email: chuck.torelli@ci.kennewick.wa.us
+  image: images/d30baef0dff6147ba16128a861431e956187f29722a75f3859f6c97d47921541
+  name: Charles Torelli
+  phone_number: 509-405-2156
+  position: council_member
+  position_misc: mayor_pro_tem_,_council_member_-_at_large_position_5_(all_wards)
+  website: https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page
+- email: loren.anderson@ci.kennewick.wa.us
+  image: images/b6c45fc41cf4efedde4d911aa4faae570df48f1c5e85ce166ecf73575b0fc412
+  name: Loren Anderson
+  phone_number: 509-586-5532
+  position: council_member
+  position_misc: ward_2_position_2
+  website: https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page
+- email: john.trumbo@ci.kennewick.wa.us
+  image: images/8125685dff22afd357bec7c726c176701bf03371a102b592726b4ce7c0c5789b
+  name: John Trumbo
+  phone_number: 509- 366-2241
+  position: council_member
+  position_misc: ward_3_position_3
+  website: https://www.go2kennewick.com/873/John-Trumbo-Bio-Page
+sources:
+- https://www.go2kennewick.com/531/City-Council
