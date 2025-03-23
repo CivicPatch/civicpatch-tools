@@ -168,8 +168,8 @@ namespace :city_scrape do
 
         updated_city_info = extract_city_info(openai_service, state, city, content_file, url)
 
-        # append to chat.txt
-        #File.write(PathHelper.project_path("chat.txt"), updated_city_info.to_yaml, mode: "a")
+        # append to chat.txt - for debugging
+        File.write(PathHelper.project_path("chat.txt"), updated_city_info.to_yaml, mode: "a")
 
         next unless updated_city_info && updated_city_info["people"].present?
 
