@@ -150,6 +150,7 @@ places:
   scraper_misc:
     city_id: 63
     population: 43420
+  last_city_scrape_run: '2025-03-23'
 - place: puyallup
   website: https://www.cityofpuyallup.org/
   scraper_misc:

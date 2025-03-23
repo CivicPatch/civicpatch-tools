@@ -1,0 +1,62 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:edmonds
+people:
+- email: c5a8acaea0ebb7aab6a0ab85a0a1a8aaaba1b6b2a4eba2aab3
+  image: images/9f87d4b0a28616f3cee7bb920c6d365eb28ab7633813ec51da6b5a0dc611ca0d.jpg
+  name: Mike Rosen
+  phone_number: 425-771-0246
+  position: mayor
+  position_misc: ''
+  website: https://www.edmondswa.gov/cms/one.aspx?portalId=16495016&pageId=17291997
+- email: ceck@edmondswa.gov
+  image: ''
+  name: Chris Eck
+  phone_number: ''
+  position: council_member
+  position_misc: position
+  website: ''
+- email: jnand@edmondswa.gov
+  image: ''
+  name: Jenna Nand
+  phone_number: ''
+  position: council_member
+  position_misc: position
+  website: ''
+- email: mdotsch@edmondswa.gov
+  image: ''
+  name: Michelle Dotsch
+  phone_number: ''
+  position: council_member
+  position_misc: position
+  website: ''
+- email: ntibbott@edmondswa.gov
+  image: ''
+  name: Neil Tibbott
+  phone_number: ''
+  position: council_member
+  position_misc: position
+  website: ''
+- email: spaine@edmondswa.gov
+  image: ''
+  name: Susan Paine
+  phone_number: ''
+  position: council_member
+  position_misc: position
+  website: ''
+- email: volson@edmondswa.gov
+  image: ''
+  name: Vivian Olson
+  phone_number: ''
+  position: council_member
+  position_misc: position
+  website: ''
+- email: wchen@edmondswa.gov
+  image: ''
+  name: Will Chen
+  phone_number: ''
+  position: council_member
+  position_misc: position
+  website: ''
+sources:
+- https://www.edmondswa.gov/government/mayor
+- https://www.edmondswa.gov/government/city_council/contact_city_council_members

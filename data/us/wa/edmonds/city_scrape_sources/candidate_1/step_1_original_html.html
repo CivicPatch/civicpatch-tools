@@ -1,0 +1,586 @@
+<!DOCTYPE html><html id="ctl00_html" xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head id="ctl00_Head1"><title>
+	Mayor's Office - City of Edmonds, WA
+</title>
+	<style>
+		.cssIESearch {
+			border:dashed !important;
+			border-width:thin !important;
+		}
+	</style>
+	<script>
+		function focusInInput(id) {
+			var ua = window.navigator.userAgent;
+	
+				// IE 10 or older
+				var msie = ua.indexOf('MSIE ');
+				if (msie > 0) {
+						if (parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10) <= 10 )
+							$(id).toggleClass('cssIESearch');
+					}
+
+				// IE 11
+				var trident = ua.indexOf('Trident/');
+				if (trident > 0) {
+					var rv = ua.indexOf('rv:');
+					if (parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10) === 11)
+						$(id).toggleClass('cssIESearch');
+				}
+		};
+
+		function focusOutInput(id) {
+			$(id).removeClass('cssIESearch');
+		}; 
+	</script>
+    <script id="ctl00_00f77616769f0d4f891b41dfda94e8b04f53f1c11d0172b581e651aeac6863a9" src="https://cdnsm1-hosted.civiclive.com/bundle/js/vendor.cfcd208495d565ef66e7dff9f98764da.js" type="text/javascript"></script><link id="ctl00_c8f4c6c953812b601a957ffb85881e061f80eb01e5e8c670167b133b4d5e4bbf" href="https://cdnsm1-hosted.civiclive.com/bundle/css/vendor.cfcd208495d565ef66e7dff9f98764da.css" rel="stylesheet" type="text/css" media="all" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta id="viewport" name="viewport" content="width=device-width, initial-scale=1" /><link type="text/css" rel="stylesheet" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/css/slick18.css" /><link type="text/css" rel="stylesheet" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/css/animate.css" /><link type="text/css" rel="stylesheet" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/css/aos.css" /><link type="text/css" rel="stylesheet" media="screen" href="https://cdnsm4-hosted.civiclive.com/common/resources/DesignPortfolio/SiteThemes/CommonLib/skeletons/sharpschool-skeleton-2016.css" /><!-- Favicon --><link rel="apple-touch-icon" sizes="76x76" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/img/favicon/apple-touch-icon.png" /><link rel="icon" type="image/png" sizes="32x32" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/img/favicon/favicon-32x32.png" /><link rel="icon" type="image/png" sizes="16x16" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/img/favicon/favicon-16x16.png" /><link rel="manifest" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/img/favicon/site.webmanifest" /><link rel="mask-icon" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/img/favicon/safari-pinned-tab.svg" color="#5bbad5" /><meta name="msapplication-TileColor" content="#ffffff" /><meta name="theme-color" content="#ffffff" /><!-- End of Favicon --><script src="https://cdnsm4-hosted.civiclive.com/common/resources/DesignPortfolio/SiteThemes/CommonLib/scripts/url-script-v4.js" type="text/javascript"></script><script async="async" scr="https://www.googletagmanager.com/gtm.js?id=GTM-WBVMVVZ"></script><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+
+      j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+
+      })(window,document,'script','dataLayer','GTM-WBVMVVZ');</script><!-- End Google Tag Manager --><meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><script id="ctl00_d811866f2347c45bd3a0fe77a237af6a60765b254d2e04324bf23e6319644c76" src="https://cdnsm2-hosted.civiclive.com/common/JavaScript/resourcelibrary/ReactPortlets/reactPortletLoader.js" type="text/javascript"></script><script id="ctl00_007e1919cd42cdd5583cdcdfaf4437f725a9db464eba46f47def4954760764c0" src="https://cdnsm2-hosted.civiclive.com/common/JavaScript/resourcelibrary/ReactPortletsInit.js" type="text/javascript"></script><link href="https://cdnsm2-hosted.civiclive.com/App_Themes/default/merged.css" type="text/css" rel="stylesheet" /><link id="ctl00_42adf4ee004ee7b701a8d82fd550fbe8ec53abe0ea6a2f06899eeed24dd69073" href="https://cdnsm5-hosted.civiclive.com/UserFiles/TemplateStyles/Server_16494932/5992.css" rel="stylesheet" type="text/css" media="all" /><meta property="og:title" content="Mayor&#39;s Office" /><meta property="og:url" content="https://edmondswa.gov/government/departments/mayors_office" /><link href="https://edmondswa.gov/government/departments/mayors_office/" rel="canonical" /><script async src="https://www.googletagmanager.com/gtag/js?id=G-GK506XC3FG"></script><script type="text/javascript">
+window.dataLayer = window.dataLayer || []
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-GK506XC3FG');
+gtag('config', 'UA-26700630-4');
+</script>
+<link id="ctl00_c11ee3292ac9e5a4417635135583c4bbfdb8ea29573b674250c4d49a2a0ace54" href="https://cdnsm2-hosted.civiclive.com/App_Themes/jquery.mmenu.all.css" rel="stylesheet" type="text/css" media="all" /><script id="ctl00_c322b83bd68baadb3b50174e9bb777a6e2a207f953b71156195b3059ebbbf2a1" src="https://cdnsm1-hosted.civiclive.com/javascript/jquery.mmenu.min.all.js" type="text/javascript"></script><link id="ctl00_e3d4af6c4d0e29c10b6f8cb2ed471b3a1ea375e1b5ecd657abceb55cdf4d2751" href="https://cdnsm5-hosted.civiclive.com/UserFiles/TemplateStyles/Server_16494932/6426.css" rel="stylesheet" type="text/css" media="all" /><link id="ctl00_62d5b5acfac205ee192873312c44badb262caa3410605faf69de8c378b5dc098" href="/Common/controls/ContentItemModern/css/common.css" rel="stylesheet" type="text/css" media="all" /><link id="ctl00_1203452f11c58bf168ae874c3503f8e47397b129d7baa5935b5b0670ab9a2d81" href="/common/pages/PortalThemeStyle.ashx?templateId=5991" rel="stylesheet" type="text/css" media="all" /><link rel="stylesheet" type="text/css" href="/common/RichTextConfig/CustomFCKWebStyle.aspx?portalId=16495016" /><link href="/Telerik.Web.UI.WebResource.axd?d=PMrIT5dOWaVYIcpFWUE4nPnmLmO0BrM2PYzxkd0onrXbUpetimu5wKgzw7EGIxmOOVDwEK6CbI01fyEW3Y62LEDBs-5cgre4MBpJPijaMfuobTlR0&amp;t=638670252375123338&amp;compress=1&amp;_TSM_CombinedScripts_=%3b%3bTelerik.Web.UI%2c+Version%3d2022.3.1109.40%2c+Culture%3dneutral%2c+PublicKeyToken%3d121fae78165ba3d4%3aen-US%3a7cbc26f6-ca02-483b-84bf-df04c025957c%3a92753c09%3a91f742eb" type="text/css" rel="stylesheet" /></head>
+<body id="ctl00_PageBody" style="margin: 0px">
+    
+
+<div id="mobile_banner"></div>
+
+    <form method="post" action="./one.aspx?pageId=17238708" id="aspnetForm">
+<input type="hidden" name="ctl00_RadStyleSheetManager1_TSSM" id="ctl00_RadStyleSheetManager1_TSSM" value="" />
+<input type="hidden" name="ctl00_ScriptManager1_TSM" id="ctl00_ScriptManager1_TSM" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="nChYItPiKfgugFhOyOlwcY7rxEWaLyU7f/y/eOp7hDybwsM4RWrIBzZjX7QuP8cdy762OEAMcIifWWH/vsV3e06fLPq6JPorIIifCDvW7imzfNG+mV3INJpZgzivR3k2mmPtiAF2fHizGV5jE58hSDsu/QTfcIrBdwVSr2jgAU8n0KKcgbKezSd6l7wzu0Nfc+ij9nCyPLq9KtanDjEfcySau23WOrYtErZC7PJnHO1otWLk9YW20iU+8tBd5BeU1cEcKbKWaqfxkX95DgN+M45bNRQcdGWQkYKfb+NXTMg2nTwikOwxWurDfXZ+WxXgDgdvrSC7JEKV9CM4WnRNEixz8T/5JUPye6MZYxo6M+Q5OKsgwGT0wiiy84OkYEuiYKFNi24xDFTWrL5st5sRrAUG0iRsnNcuJxeubrIyUnwwUWwMDrrDm7lPyt1Mlvu0TJ1E0jxkl2rYn3RHglr79EIGaFD0oSMSuWug23ZsqA6OEWYKYN3s8WjSIiidnHYLnrGQu7lkO7JwEoOl4dtjok2o3qMZ9TqTnfbyMwPI4ijEAhrruyi/46VyLCnsuatvQLaYMpvZ6DcI149LUGSnXUqVZH+PV87Fo7aTG340k1kMinY4NC94diRcSz+wUZxQwu2QhyBWySENfXIQAyyv5nDiRUrhHJc3NKNrk97acZdub5cDqZq871H9RayRnSa6Guyhaz7zkqtdGPGI+QGAiwH9kvC4Rjp+owoPbe3NDFMvINW9EocHn7lR9RKCS63KCRU2paV0HyWyFwJ6xIvEQMwGAVtRyT9q8BmHlnfKi94+isx0PrQvOp7/eV37ZbXphgRG6/fD22ySNcwWaZfMIuOwhTFRMKo5PTwZtNtuWQGwcNR9VE+TjtCcPMjE15QL+RQm3bgo3l5X2xAv6xwESALPR7eNloKvhBcXkOdDilvWIR1M4LKtFUwmSOM/dvQCZqEPV61WRPGtz9zfHTxtm/7ZZUmDbaH0/ulwBwNG451JhTztwDHp9fW3zZcj+YqbAwJZjLBeTsLO2B6CTiOpO1Nxv3WgkdIeKDuui+XZO1R+MPKxgJiqJ8r+TKXtALkPsm8s0Xa+xn9Y+qvKzSdS+TEQlgaoy/uxg+6tVCHkSFojbDVENQFuM+YxSXCVtUZbDkZzKJ4evIy3cscVlnvPmU+eUXFB7TOwQ3D7xAixwnQMkhpigOvHTWJuQ7lDKqPzMA8EHR6SwIiXwaDeOsDEWygKAgy8na+En9DQsgXRQ1F2usp0XvAivgyZCWwFTL3MLeaREx2rnp1Cjfuu/9+E/xbfwTXkaCea2/sbhBaZlLKXejAW3Hj1vfA/TFACNOCgff7FCL3z/+OFBJsWzl5i7l8XLCGo/ZOsJ7AlSTWz3aRBdaYUuWAlWFby1XfzS/RB/yIMfMzLoyze7jsBMmthup5iyAXcGvNDtNMif8jRm3HggCZpWjCtiVIAIYdrBAhThtqluop9zSno9DMSK0QPg8Ld2VC2yzGyCwsMJeMT7S3OLClL/LdUxzBd8XV5SvtT/teb5X+kXSMI3V/DcValsmpgjsxW4Uaki8cqQgmKhNi0Bed85bBgJ+JrNv/dv3PtMYC4FRbHNLRB3I12drHFBAUZHIoxjpynscIl2vFw4MmLLcQMdPE1p6oyiT7+erQ7hgL2eQ0tmdguKO0zu7oOKOWSfyk8vUfdvSejz4nv5ocu32uqbqqePwmRl85UPj4LvuRR/hJ9MEi5DCtkORt1+Ff+qPryAYepEoDQ8a6QwZc9+yvw6mBUBpl2LVj9GpSl3niUwSZyo6uuiyVpbzugBmhkXFw83SmD2yYtjpuuclrL51FCOFlcBXTklkP3bK5j+UDbhZwtSUbDv1YG98CblAE29YvNfTSZqNo3kXzOJPMgZJUdqAFdi5GYwVfmyJNecA9AHNKUUXCs/NSREOZWXP0jZGi4zrhhEgHqKOuEkJxM2qWLbN/iXQ5bTxqjMcXGCv70WpDIj2Ld3Jp28QYdM3h6I+VWjhD7PeZSZ3x1BD0UnK4TqsiL328ZRASC1X9e6MFiDoy3MCx7mOUoqXdmLbMezTmIoJoNpRe5Qw3OGmjYoqz9futFtRMx2iqtbtJiQexl7NkpxrdUqWrMtuqellYDVrKamJpDZJfmEZ0RtFjZ85d/0Dn5Q2/Vqqv9Go4iTTylbNZq7pms2AsVRMphKVOuMaIbtZfT8tlSd7fI2WueeL/oKosi5F+EYk2hhOaZCWsD6hgug6nZoghX1lDaxUx+n7NqTtzJ2jQAqR85AN5a8iinMukW6+dBbsj45o0lo4gd0Nd4mPNc35NoG3sRVQoVG0IBlGEJuSLJuVcAcRBoFoP9s+FdfQ8UZZAUkjTeWVxpYq3CzbG9DeXS8j+PJLyhnpb+unwUP6Yf2GEqhn/BnFg0lw2lqSCP8X0UEHPPatvhD00VGu/m+HCSjswqPYecJ/b8rXM5uRhhMhJnVTyvJe0ToLZ1hckTjr/eeiBWIDrP3nZuS4EuYxCVn10Xo9wkn3YxbOTe/qAtVwcoOp161iU4faPnu8VJjJeHqWL/1nE0Ng1ohAbAxr3UxslrmcIB5fiM55TRV1ipb3v9aL2vMjlZ5jpLeRo8KH/MrZ5S5FnhC3PquefYP1fQaDrzP/SPyyg/BsAWaPPBczFqh6jmB2gqO6oixugK5qdbnAcQWU/+4DgU3aLKsKxFhxnxguvb3jbxsZuxi3VF2QwWehJQ7vdavJQMEsHzJZO0igQazZVqdhwKCsT4Ev/JjmldpkJWoiawFkys12qx6LvOwg6KgvOJoyeHXZvdPKzJ5aDu6WRc3ODEzLtt5ddLUICRpb7RkxzGDesfODiS5P6mRYhQ0GmHh0fwR9sTFiufb6I1RG90iEeSUvxrvHawHdvngzaFysM5RLrPOomt+rZtFBaPgthAkoroKTILmVF3gGM27iaOlwrS7M3brScktTorO7f0LhVWSBTNBCwr5Ud931ByuiaXBIJs7rIu42giJHBUULZ+gkQXCMeCe+inhq70sOqJUV3/+1YyO2QgPDg6uD43tgrec0mGj1jMYHlB3gGRLZ9vDrdOt9x2DJnoK1xUghvWMQ8vR+iueoCx5xxx9+N9icXDus1dBHNo3vQqd5jnerWstFYgSvP9/lmUZpIwrJrE5kMXDIUZSH+oPZ8hv4GHDxZ3Qiy64Lq+tbj0+gSYNYNRqrnX1sO4rlKBPrdyOwSZvcmRhHT8LCIeCAB5D/CtOouIfFd1khv10OsvbKUO7PANGYVJbV3+HHiw2MHbH7kV/BsA5K8oaUbAnWrn0KRwsfKGr3XZ0OwNsuZhiDa0dWrYEjBZVEurRrITb1wG+/Bi6w/Tqs05YIcc7wX1lVKwotSoAlG9XERWsmRQ7ItcDXEdv5hlE2yQFmt9RrdakEoUS7tTYyMyY8Em6xJiCqhbulJP+CnGcYuzrDWuTAzj2087ty5CaivIS34FCR0PSnSKET893U1i4hJbgOa2lH6FNOlKPNprntMGVH4g42/SSawvDC+xS72gqkH+dXa+vmzbz4JHbCswSSGakW+68KztusWpqyE3feg8/NZheZ9I4bMuSwYv1r/JgDen9oyamfETYXjyptV88HNEGWlZV/kBaB59RD6iRMuozI9sRPKdSTaVoAlP2+t6mDQGs37af5TGmyyxxPkqtMVRL97vtHx6XeEavGSvlsUoC9AsacFx82caiD3bruXlrgZHitTauK2Vb75obZLRupzh0Ycq6zwiGCIqt08d5UPnoB2smj+cVyonN1R7ozxWOMmqg55jo9/4qAGyxFaNfiTtYcItlbLPGtalM53xmFjJtFyqLkYbR33sEI47HOd/eAmZxFaNj0dzNSxLmeJCIZb66ARbwbMxAyoYa1Gflv3N2xM4MDz/41CLlaRppg2bK6sagLbdEBW+ZB0ui3Sb7qugn8OXE3I1OFtxDNQ4dbrJ45UByxUC10Hrs3d0uAZvxygGbPPOd/j6XJXtPtJhFKKNLfnYey5MMu22gdfgpfrB0bXl0HyDQWj/Tm0oNL2bBJOWbNAxisMIqmxlzxDJnuXuNofqjZ/V4sbJbnV2fpML3cjR8bQ9khV5iFTbKI03wVDQJvbC9p6KxWhJd95v6p+qOKzncD7jFyjcgaaubggO5HuZhslSjh6mYpznPCcE3KIWVnB8TqMgz99ldMctvt6cepwVqtiPw+2m/ONEzMLPI2Me/VE32F964miB9S8JLuvLJcA+39FjPzauhATXBJw+zBHtI/1q3m8CK91D67vCn0FuWWP51Ku+E+3cR8LqbKw/hBIGbxNTTSArj4yUWpnEzVaj54bZJgMyVE7xeHym62P7geoAUvqpDXYDmstWI2frTjy+5cPCN5Evi1iRWt5YBQGPugoCxyIEKYhWSQ/ZUQEZkG2uGZ737yh/YDzTdnrwolAuUHkGT8rXTs5lUQ4GOHqFQA8prd6EE5tBL4vfyXCZOALrouO4yTwUOd1+mxhBC3jyov8QS7NTBGnfe9xFyYvqhGY07VFxhSQr4BRQVoUEI5pl5g2/ZtSHkgg/kAk1AUQlATVVo7MkbKZ4xbT9W8R6YLVBBFz6LB2TQDK2qItnCEd2Ui3rgbPOp6P8eI/bukZNd7Vmhst7rqkXKUa/PMTs6zw+v7A0+NvgoWO4+45hhjyJwXdQ0DEinz7lvMDMEhGWikR0V6UiGpoLgWeLXl5E7k4Iy5Wwn/Ds0tOaR6zGpiSdf0hsaCAPkXwoLOei0x4/+mkgfzurj2VvwOVTtDvlZ2R9FZJF1K+EA8EFPb0BRmHq7mzHgvX9wor2KDPwE8qpEAgkSzewybN1dR+0Y7h6UmsFtvhiCHA3mESL2lWBYytidfzb0fG6uIrfVTMkbPR/bJiw7tCAe/SPFryue9A9tG0d2UgiKZfAHkAA6F1X45CifQ+pSvVqWayX0kdyKG8ijWo0877MzyOL4GoAkewkxri9zXqDYf3uCV4gJ+YuUe10xNMgOM1K96w7paDK5f06BPjKsrBU1ZoW2dTusLASlKeNMdKiEZS7uB3iaqoQfFvF+ZNChKKVyZgPF/WiI6G3FQJd7aBdgMMN1wD9I2ndEtsuhIIvdk2vXcL2bUp6upT/F//7FBe6V86vAsGgrPyQjlGWKlTWlDjGNiXIw9oidsEN5Z6538dGOvS7xfYXi1ntQItDMUMmVkH8NGvSKoPJiN54qtBTng1d0v5jTwNV2GgdztcYBv5CzFrxg9yWDo4iB6CJdVJC23p9R17DI9SyPH6Evu+WmVH2YpTcUWlzCnms9RgCbwpxOZYf4n/30YokjnbniXb1mXp0QXImj6p5goJr+qwhvMjmx0NAZlYwhWFXgYgYW0iVIUeB3JGDCujqmiFg5Ld4WkgE6iwgk8mnZrYSCs75jHuP2kcp9qFIKAvVlOlnr1HUcXdcPXXQ4Uh0tX0B5r8NAdco4aNKfua+NwKLz2zi/gldxJlCHdJ3O/CRuNDC9WSKt+jRMfn/4bv0fPyIRobux7zqmJyrmZ5dEQikuQtjro+eY0hEolbgmzvrCqVK3TNKwSHXoKAYohlB1OowxtqpzuG9LmsYMaWHZyki5Yg6S+Brm+dyBrUsAKJHY5jCwDor0J/KpLUlHhNZSlgrGJrykYOYHwAcAR0qab/tA8mwXusn1DztGW1Okjh25CKaa1rwacb3KUaG36+iHgJrGX61U2KCAGzZxydraztbP8vWGmTBX12yVW593MTFSa1fEybN8YitsBi54is8EtTZdqMHWAnACkhTQtbyh8VtciH6m8CziHKXxsqxNpNGDSbKqgwxvm7LK974hrwwsMT6Wnt922QbhuXA9I4vwPw0DMIxRitVTah/jMx3xQ/O8EvgRPgw+9zpOQ1JoSvv08O6Gz0Rk/cUgBywjYgqBDc9Nu2wUcW7dtVIFb7dWquSMgEZvp+L+DYNrkvsOOq28Am4qvO9I2sYj9TKEWCb+Fg+8rWLho0KA2t7cV4IWU1W6S6zVBqn+OYulTSzNV/qtPAZC6Nv7gZIVv9WN64MUawj88RL8PWwBnA8KtATaJwdytrkBsso4B6dz5AiKGY29apMjvg/ZhKUdYAWc7cwdGDAyNHm25PwGyNkiWMrileFecppB29WqxjaWWxK/AWnckcygweCCnCKAWOHmwzxexdXupgItjRWkKizeSNxSWh/aUernLwpSZ1auC3SgIh8aw7k8MrThqHPYPt4bJF2iIBiI/1kWVpSGsUvmCXhEfQeZk5C2scBxIqxvRaVAiC0dSYEkeybWXOGzkUACPpDPkK10o2psqRGJQMjAJxvVVRRACuBYpZkV6ia6OmHMDOTnyPhwcV08DNioPHshJN1PI877OjTDSLjQDLRsDoMPXT2IT4vr5qqbIPvj/2/GJcX5AeWAclkY5drh4u6hfe+5T2UAEb17uwYJdL2bm5kmOy6ANUfwygAW2BJFfG0A7+2L7RubtLiBwZeMseaSbtkzBk+IF9SGV6jErAr3E+Stz8Xnd8lxHY0rtLbCSaaPkZXfqjXOeH8lTw9dkW8L8hg8rypzQbBXFi12+QQfjgLuVbD2qcwAEoq/RG9GPKUimQZ2YVD75z1v8SAyzCcxGFyOhjiKelxisdqgy0k6GIZ7F6xqMPLGMsAQIhZLBXAgTKePMU6nu9bTeDb6PTNdxmlCpoFUj98uUx/s6UeuMggozq7BMouZZThnYMe4NqEdiAz4aleKTHSXpHjnYR8uHFmSr4yfQ6SFNdi85wgcm/cKQrLjw7mgyIH5Z8Sb45zwUW3tJy4h/4cooyQi0hoJDVLuf+Ef6tlOlT7veX0KBr3f8y/zFhEMn/Uych2Glv+7gb0pNx17R31mPsG1MQCIenO7z00P/GNSiC+fZGiY8gYQMQRi5S7TdqI0FzpesamPEhDJlOYBg0nYLlkeyM4NShP8SgKax2DWpKeTWc3NfmGSpBH/TsMCC/Wj23ccN5yYm6RdgsvrrNFoYQ+TuJgkgo8Ow8z3MAFzGack67whDTBX4IMt61glxWGTRYfWxNX3bOPJG+46F4xjw3X8G2g3OD7CAmeLn3BJq9Fju+ZHp3VsCqJUGiVhPZwAFh+zwRS9VaWVO/AnvwslMx77hdVYt/hXli8dZEPFc+y3YGtAz4xIeMgQyLngLNEQM3K/oC9ouRqHSCLHSei3kBFGNZwSvjb+JJy2tT4KaDKeDroyj9y6WyWtgMVIIyWuN2S8lVKyWoqFuk2eb2UnH9Rtb6hQHuFPspDTflG9aG5Piq42585Rt+AzNlhFXHwZF/ZHcJvBMTAAQUEFU+6UzbZ6afTv3qOSoeo8w3Wx3T1g0vU6VbsUAz9VN30XjEYtgm8TbO8e5MBuS3dDbdEjT5pFfuhnELwi3haWYQ7+daAmHYEwEwRFz5DslP7BsFNCmvdO1aEmlYJWF/sWPhYtX3NUawo4/acTbB/D8jQ5oPKP/ey13F92nqIlM2bv6zQopYlBHnVQWdBnc5Bs4UtotRceOqQpIs1/+CsKvs+EHsvwTlSy8o7Sd9OKsbPOr2MNe0x0GE08zPZtK/uuYFDmoYyUNah5Zo0Fkszz9FY1trU9gljLkxzMRFp7wKnwIyWTkAORaitnul1N/LJ/2MQD1ja73Skk/OD8gD2Ybb7GbQCfdrumDX6uPNVuhnInkSZo0pcib1Az9zhNINHoGSZ9YsET0iTPcBFv4xFfQ4NjnQ9harlXvPsG1gOiw0pfZWmnxO0LrPVWE/UyqLruzOkOYqhf9Pepm2FkPzXz67wdD/XLbA0riNCy+bR+5/Y12ZytehXA+4RJ7R+aB0jorZ9nJ7pPC+dw+rFzmFkksH9RpP9AnktV4C2UCNyM1g8zpzY4gCSnkFM96blWIczmb6O5hNdfwAWBunEx4g/J7+SsJUsf+joynfGCovrvG2Le6TX/btLR3hZt1MrqlWaK3v0Wb/zXJdaDHqo2ynekgSLJUUqKu2vOr0UXBljYSwDFIdJODxu6H+/eZWZnl46/BhShDk6JcA7dfo2Xa9KHUluIiyuqKD+3dSY49RM2HcpqAFq1oR6ZOl/+bbP9IejhpsaB8yEgFDG5mw9u45yhSMFVPVf5ouRTCjQpe3+j7nYnygHFmoL65N3VOSP1VHL62i43IH34Qf+8MtLY+tPVGQP/kLMhN/5g084HEMcg1U9eF/wfQmw1S4U0Y5NxxKdLBbPjmK4NSWhn6RPXSVWuepVY+2BoKNtRSWVSTbT1AEzBuY6BmpsvzfghMSqSg5XhtLb5oExhYvMj7/dGxhPihbeLLtha0u+zrdwmS397tefdLT5ZitLFL1lRdhsp2yECLnw5EKU6A0vpihE48Y5qDjq2X/2csymtV52+O0t6ly9ZrM3CutjT70Aq4cMGt7wUovV7q1GZW49PO6F6/3WRETgVqff0tN3dcxtWHYby8FL5YkTf6niI+pcWjjjpZ+8ucWSQuHZ71PedibKcLfMDFQmbfSRO1o4F1jnN6dZV8psBCFki/n8+2X53llPEHRKN5SYxUc8z+NjUVgeOUiAsEWyOVPK0dNa5Jsff3gSNvU3/q2rpKlobd9SNNElixMgQGNwyZvqT4LJnd3rlkk3xDDZHPX9iLDZSUZ9ecQPrvASEt3D5OORG8IkBOLn7IuQ/aIKtiQC7/KrNaFrb4P14/5ykXhjni3EtQegib9vtDgmBCgUrNuv3QpF9dNfUBSyVzaajpAMUxFB2GQfdW4tBd5hWyMRfQFF6mYBllf1eBLgGWn6cDS9gC1KEO1j4kLwJCoIj3rWFLeQkkAkTiYIdaQkmCMQbtyz8b7YSt0gvXgdNVo8cx0D1chCt+hbjRmnQCC2fgQtyNoeTC5Ul3z4Ur6onUE6LjdF7o8CfIKFep8wmABR0bYv46PPDRfo9x5BLzLG/dAztX6ezuhuKtHMyKeDeGXWWXkkivls7k3kGPYXjKnJDB2mjgL4NLcmOueoJcXQ9dDtxUdvi43D7bYaC+mbWWiYsgMB5jIksjPfyraUlsUnvC2CeAetiVYJ2PKcnyF5xi0lwsQm4QWqzlGULSxzwEkZlyJQfD9dYB3Bd7dZhiR8UFo1dajlIryXj2M10yTLtWO6jzEKiHX/niLAS4u6uvgKmVHWA9B8OiipGkpC7vU8IkSpI4rUlXqgsv2GIjvQ5ml6fZ4dPb7yWSXxYQZFOQaWFaN1OvZO9PKMO06NdsJ7DHdojTV0vQCJeJ3Zg0QHrF0p6H8d/Ba4wEvMLUvFS5ZYBhxgegcNCl7AS7Mv4LAAPZ8vUk3FXVsecR4UbcKDrhJYChelIe8ViQhws1o8KhO7ml8Elniw6iP7mTcRrTZcLOsGfZerceISbrmpE/bUR2qOYmGjU1XZT4iuPMnAl8pAbuHcxdJavmdW3Adx7lckRYCyKQ9w5/5KqrD5Swg7v9NszgiEQyZUBQyOSEV5k7BGqX8Y1d47SZ1aRVCSMDwLGv6hnsQY6+hZ9j++MB0NoZfOmrUxGhlSFc21877J3eg4lkxHw0D8w0sxJk3mFp1EcqxHk+1HmdBaMBrjNs1PDdOf09ZHjh/J8EazISye7aNx4wICwFInzBDQKPSgQG2hlmtnErDmzcE7ifJ8xm/nsQo+feMyIO5yhSrLQzMGg4rHDdo6RJI1dWB1ngg77zreR5s+HKIY29UePTRbqZZyL7j9burT6CduV3wse7Cgg515RaH36m0n+7SOO+5RvUCF9Ta6J70gyQL9HUI2kdF2e50cTYI12a12U18JjUHTWeSBhfn9DD4Y4ukhJ95OlahmFCGT+t0dL2eBkisEikfIxhHrdw3sqQ9wU4MV+AOkZREQws7xOGLA45al3ljgsy8LEOsfee8I07HieZtW/IWmIsV1xkaGIGTKnxItauNloYopSIM/gufNVk6P5cCy1uKd7rHNp7a/fTvn5/2TXsgxUn6ZRlXVaPkZiqXoknM6mbStjcL+Jjrf1r+lgL/xWFIYpqc5xWRKZKr9aFVQEUj9IaCP73doNaK3ri2JtZ0o6Gv0JID84E5QV4gAW8zqRBXaEZo6+C1/S1UCpYQeJBFCnZ8LKFl66Xo33vOSfjFizVygIzzXTryHRtzXFXf30uBV84KiN7DL+QOH/E/3UtMo2BzXd5ZR8r/VcET5O2O84eQwyFAJPrCVzMogkbql6NYJrK9Gt4pgdAW9366ifqfMKB+ersMCpuQPdL16Ut6Zk5NxectBOgT7SnyM9aJrHSJk1A105QecR0117o3pjSqdFAA2YzADkAZlKxE23tqDadQ47n9WetuZvl+RdN9HAQqFjhWNBWmqaDJt8JG5jDjnL6EnBCPOzGFsnUUnDvoqIOC55fRNo35jproahdvZci41NFiS1VsLwcyWIgd5ZMFviwVtqbMwTnSiIB32sea65QVMPhhw6NIoVkAvyDdYCSOOibM7HJaFiDsYfr94/DuDEkJrcBYLFJgEm24tjLUw6qYbIWa+Cfc/PG0z3oUqnWiIGftisWDa5XoBzeKQM1KXldjS0vw0yb+w4tcHzAT9qoNaCUY19b/xD3GauqrbB3WPu9BiNYmsrVnM/8WLeI3vbQiq9JyG2pXQOfuoRC5ATSXjgHepq0KMyn5qbh6Sf3w+ddYjmynKVQWhmK6RtiJUjH7mCUK24FYHybIRn1YGI/cxOIgYs1J7bhHbXodEwsfjv140BfhXjBvoKDzzh0eh1I+a7OpDBTpmQvY02L2EBeZmGPEAlbFIHqzgUN/PKvQPIeq57eJy/fPrRcIfEuNTLpYh1hOuit+mtZXA/88LDJQbFchmAtZ2Qq9LN2R1mRk6YBTcOhlUatgVr0pvvKPbrk0doC3naKYOKvYliSCkVilNeV7iEejTr/KMX/o0QsYglfI2an61sVpKx3fYuipMlB/yZh17dRWjyKlNYnCsBCNrJIe3XOmNL89r5vQgYWJtWkjgdbAWr3KTI0vMLqdGymrD1DWsXKDv8GROHocAseA7feN63F4pheaYsnb5niHZZWmjMZKQtLfvVZZvdAfF3mk8iP3X14asrfAKTs18TYsIIqk66tgh2g5s6g+QXeeO0s6fb2mQsk9+z21i23tVhFs4dECV5DDbUm9dgpjNsZC44vwvoy4/NCgHzAKHW9nXs+5FBY3qsnM2Z4rTlfQhBgR+ACojVS9Jin0mhLYIOAmdi1+600Jy/ElA4y4nl52OiGw8eX9ZJ+Qd58fFZXz/PzntJ613rQIVgBaq24icMEyoTWDXck85mFlAXyBZO5aBRh3wFmLlhIiQNWHKyEKBB9/rZiyrWeADOIAoIFijD4yP0x6iRoqsdrn/eMA5KwL+Sm44hwLpwJOu+GZ46a/kKu1BjpQMsyga0UjoFyu3K9rRgty9HtGI9KpVLdtGm9/qm1LeUSwRV54uSaaXjetKsHAd1dpMpGKWueUxxhiHW4ct9/p85wC2/vdrFvPZp8N++1419j0zeXt8u69jdORkNrxMGZ84qf2/ZJ6vgXSwPdIaXsO/W3p+Pg3Fl3/ZP2LhnT9CpIDcWgwyxt+o2RfNagyPWtX6+uIlbHxdwHW/hy6YETE0M1eVPXU3OqHdxY0gJ2rh1WVka2/VVJo01+pXtaiZarS2xQo8jMDX/zQJUnq/yA8oS3zfneB2ovvcpkr8xqu6YKq20CsNjX8eSc0hTffwx3vBxaJgvWjTqxI1v+lURduV02LmY7NtnM2ZhfRq82WhbnCwTBjw/gZp1gXu2/ZNQ3PM6e9C7lJsrVDuh6J9hmlz2Z4GTlqG9jXzcmsh1WJHtYjdvBZkO8qkzGviqTlGoNigXoJybCa06iPDC6WYTewendQ9IIM7Gzp3B0dPTWT3OF0regR3DaFegPDr7XpAN23Sw5RDj2p+OCqAX3NBOWAw2cqOtrzO2fGPLJZsy9+eaGIAK17/mPrCNO00n2qHThdtaSN7Kyx0ZuZjeH1cQ4hy3jupmS2nNkYpJ7VHKRCEii2v5onrpaiO+YzQAai1Ud/iADh2qYcRUTQBT4A7llN9KntMcpVsOFxMYJMkCsXmWDvgBsqiOuZ1aPP9dT1kFOHLzg6u4+OR+2t+AfuvP8wNq2IDSwbj4V7SGW61amMW8311UnemykABMjihmH728or40okGIWnf4fWgYga4p9/gPF0DMUxab4167EZ4h60N8FXbbcPWzbTlDxIk7DHSDSMtBSZ7InQ0EPKvf06MOzCVq9Jtpy3j2Td9Y+YT/9iaEU0C3RgKvxNtQRImejiDBuTRInVzlKMGZ1SB5l3zOtozBOHjIHRlCIbOqCmUxt5VjzuvFoK+WHI4+z9bGRIVTIEY0ohWtk3bhOjRmmmF3WAvEnZy7X89K2SpupusILqk7u1D6do+EeKULiP4dl1T/i/eGzJQ5uiSVG00Ha9e32p8P5j7jjpksj56zbFOF35qe8FY2X3DN74sTopzd1YnpwZP+LPn7bovjfNgBo44lBHSRwJ4hgoQY9WLdkr59bjlL/rICsW8VyzvwRVV2bbZPSf26JhSPa15eK0Y0BoCHP3/aFSYBprW8BJ703DPuPhX7psknXYGB4t1b1tv+p3+Qe2Xnrd6/4NhEgB8MePVX0NogMHzmx9CxVYM4aUoMXN7whVktbIOaVh/a2Ub8FrzjisONa8XBVwBz+9JxnvsWnZeWbfdQDG26SsKxPOix3WbtEbV7VVRC6bJsJXbP+IgFQZQYLf8dBDVTzr8fCOUz87Wab8HezAx8WTsgpgq2tggFmKGEtSlFs9CayuejkHhdDXBER1tTBVGJzOIytrTgLSYyw9aOpk11Qr/FDvoSnS09xz8tFucgPYMcjpShLXAI2IZdUUpzANvZu+c5EfFw2eJmiYVji+YukT/b6lBDOIkXAqr6+BreBaNM5B9cx67u44XEeLiw3PCqTAGrsdBnX/fmBl5bwtbyK9D/nfSmjJaoFKzkVV1S7bqJrcOfekDEScN96PN5kxZwHd1F9fpGM7TpZtckhQ/SWqHKltymlwtG1RQY5/fSFliDv2M8kloeNSzbtKFy3j669HEdncmVKzvmv66wwNxV4aqdOItCA467++wXPkCtFXSTQeGp8Edm8B/v1LqJfN2/fqgMV907qXaQsI+wVlkOe6V17EyKFvm9jg9OkDfUQ9wCms3fE7j8rmOD29a6s45g+I/RTr6UNbHUW5EG6UyWnI10uUhD6qBeV0aMRmwkkHjNOaTtvHY2o3lfQFGjTKFYNT9Ij1q20c7HC+e1WPtqCro4gS5Q7fs8nz5oBfQ2fdgZqZLPY79i5rrnQRvUez43fB8CbwvWDIOc0o8DDDnXc3QCAueqiUtmpwkfLZFKZQLutKLCXDvTwjHD7U+b6W07G46dU7xy12AAg+yapO5NFYjd5oOowEhMYhBvorbfYZp+RkrvvWpUT1qAjP0YeydisM0i6zUS1Ye98vlocCnoNWQzs9ja8Ez8/6kyA9TR216i1aYHWrkvIq8F6XkFoW+czPzwMnxmx8NWpT5BhzYh07xatAlkk9NVgu/k6OXKE9U52bugvKKhcaEnOKbbYPKu3n383Z6tCVCE0ETCARnUZ5ezM6y2G65oESbWKOSlG7gGNhckGDmDWlSYZG4EdCWuJDJhcSDyBZHYg3vTsvba8mS1NL2/Nuy13xSsKDpAZjbKWHEXheL6GMieMzziCfQ36Tfv2qtGLx9VH+I/8fJ900eDku8NeA99Qkq/cebT6c76jzO05QZdg86N3O+b7KM9eucA/+usn/FeYGX0o3MSU2AIEVMfnL0BzP4Yg5PNtseBqjZCJ8hA24MemSQCkeNT0fxVpv2tXD/I+HtNGhGpv0jW9o/14TrYXWvqcBG8BD9uSlRm00OSIuXYiQZmy+Ek+X5QVZyQsa/uI+k+Tu59O8y1nZe+JsX4aYlHkKaW5co0w42MOF2TryBPm5SgzwDBT8Zj2qHS4kaUZd4aqwYeKqfyD6C9Zt94o3WyXBg1zomc4/c7O+c2GgKcRG/L+ftXfuwnNV6/TO8r8G0Weq/ZJGotYd9Z+a2IZhxFS2yNoETlUD3IIeZMvNQ3EOaAQjU8LbhfszDACUxrKoGqbfQ6ZEXFHJVU31ZKqXBJUlX+5XsK57nxfcUQMpBayE7ZXXEOnGWSGrzdxapsRgEUSo8UyXvLHoRQQ/8sEKSu42DvMd+0Jjg/qNQUG0SuCq1ABQT36LCyul3GuviVKv3MCyqYpV6dV+NR1CmGujUbufDCfH87+yU4UoQrMF2iuxRuhbzvxMbPqreHbAUYJ0uxDdK5jaYFVu/ZpiMFbv2pWlpk/3EDZ3HpFFVisV+Bl0pjiJAgMDTs6y/ZWJy0ztw9vkFZZVTZ2vcyz6VRWfEkR2XMknWYl6LpeBVIZ5RIf95ptzz6cY3uIlfbFXbHLYcQ7PXK4tkmO2JVMbOGduUSq/B/KFV1gRZTVVrFdtuBIGXvr6DliQEgjz4HSdWfURPM7mkJpg4zr22ULLd9HV7+7+GxqvrWfV+DDCwUrLxEvinmT2mafJw4wK71QNKLhG7MQgIrSTTQq0lAT8fCTj/SHyCvaP8M7iH35ws4CLjrOwEdFUQl6oPbaulIUCPlOJQ+lfKbMv4aOyyc/4GzxkDthKywbB1btMl7HWe1kAdtWBRHiZdL/Dcqw4+LxqIoNLngNUyhZnvv3FR8bJnD4xnueSkWnQ/ep3A+XmW4OKFNwcyui2m4DTJwyfW/nXvnf3RoSzIa0rSC/vwmCQuBQV2xh43lPX5JM/FUYmVQrr+UupHzFiahH97GxbmmgrTS4AhGpGXvArp5S/iEXCVX4dmT8vVYbqCTOWrztw8gL1JEo8jWDcv/mP/D0NXHAjA0x4Vn9QzQzhTrGFTrK4cVr/8F81u0ZEK1LzRv1EhZFZ5uSpjlzh1+VNlcxhLbqRWXy9fAhA8Abzg9wWdlESGaeUZ4sH9QPkoyFmv4NC3CLOgQv1P+pNw7O2FUKz1MNHnHoSFUoyScoDU49xHdnDmF/qwxvBD50uZycCWAa2BigITBL/jFZmZe1xJVpjFjxRaQyKGzSmjcvC6ClSD2Mm3HEqe8Au1pdOdWWSJky5XoCE2o8Dz2wJz8X/P2TSZ4uX5ZPALoUJeNINOYNq2HlxNGAbeoRhVqSzk7pe7cQFP0MKQpGmlcfLFNt9taQU4x46wVoLz7TveoQ7GLUZCEgcVIHYnh6bwt/KM5FWvbv+XD86BU9GyU/8cINQs8c8Qx5u7Gm41HHSsuykDwQcFqdCrb5td1BLjBwQuaJtBiB87KdAJ6soaVa0IbUCPE01tn1802rUR2TEvPwBj0s4VIksJGQUDgHYMEQ+Bk+Ebz+mCX9TUQ0Xf78voOBZ9csqMCuVVW8Zy6LVwxLQc9EE05+RKtiQ9bHlJjtFbyQxKbnJBSgmjOPBUojmf7KDjvhX+jOV0BZJ+7dYmhiSwhYYMBsuK7e+7Cr8OX3daExVLI4ScBj0Y7LJGxPrYmftayLgMaTt0YW9N3I7PJ5fcuWtQl7XrRnrJwFpvRceJ7M8R0zM3lD18D2PpJXEVgMG8+KLaKt17/0cqojbVQMHx4wZZXzxwtI4hqiDiKCcyNRKNIylZzpZfG0kX8cdSqkGPUai8qm8FsSUlHnMwRBBGVpP5jPyjk/SPazjB85z25Aq9wE5b7jw20ZVMWKVnx9vM2Iu4SJIFHTC3Vt9bIW1NJg0v4lhAI4kIAmG17/PRDTdM3Lumld7MhEyJ1RsmbWL31mfRycF/zHCicQn7lz+DFcbDsf1MyIWTSH0t2wCPOb4LysRqA0Ad2dE+a0JADfddE6kYeoHYsGy1gf5ZQErlvwVGLNAPY/gN/Sng36jVJwkAgNCFhAttrjbbYIqmRm8NZOM0gcqJrh/ZZq+7HmwQgJ4py21WkTkdBk1oKy+rlu8KkY5ygtHU4NtWyyVWmH0I2PvVQN5AY5QUoFmyVXAti9P4o7o1o8/mZpDjQh4H5/+56kIFT0eH6o7wclMZ/MkDismoM2v9N6iSwSzrs/Wk7GB191XaSEb18vhvlaR6bCOvsFUqyDcTbVu0nmC9Wh9dgTXy8Bkb5yApdnPcGu2lBvmlfOyw/Jp9frT6DvZ5dmPDtg33LbUOdCcEVfkFUrRRw2ZUbsUcdr77fTMFeukaBCvjyOiY2fhF+jX3S6q/iMiN5uEnj10Wv8clH3/KmXgliOpp0JWXPcppgRg9m/0TAcZucRdNs6/aijnWruyiJf7iBJGswjc7ZaNVOkNcyf4VAuxSGMbrV8kT5cHPNzuWKtuWJVXMVOudS6uFoKiJtERQRvGS5fIxfPUKmuOPUYNTxIkboQ7UHA89LcsZawr1IC3gOiY8w0IB/pBhq/llGer6S6E4tIQKWSbUAWl4x8Yu8ZDBCI4bvZXzBOA4DvBh/Wtq8CvdPaeHKI2YWjjZKmlkUCHiR46Vv5S5ZxDPRrugDl0BoTWL5vDIf1UfnwRUTvR7mmkL88vcru4UsJGEaiwivdDtqbOyYG0telc1UwDz3qDTo/I3sAkNT+6kYh0pam2B7qNf61snuzqD9mKF2YGnsXcSywtwVAYVLacik2Lx0TRLRaow6LYFiEUAfVTKVNm2auggBeCtejsz6vN9AAnJxG0GgQHQ6A+dgf07rQkco2CPStQDsRRcz9LkrrydmLxX+FEH5ADFcy6a8Kpr7nR1qm1CsTxy4kuC0wnCdBkKMNi4zWnHiWLlYwFvczQcj55vcJ9TybqA6b2GlXfqjckBAsxG+8cVuoMgHkLqh3DYm2Nor0LGAsZJ/HFdd6CAc/YiCd7ZuYeKB0QuoppB5lrD4Fk+bCGt9HGIQJiwH9uPl1trqjRPDUjvCS1uRZXCihANfOtYpe+cMswnfGAkzO1VXADYwLnME3HW5Ij51u/qY6V47Sn+pvP9BrmZpdmQuZT2qRIFpRng7LWMpr5cSrCxnQGwafurDKKZQ+6rJsF4GP3SHAHyotxOAdtjLhdLbIdZRmqTDNE6SFs+D7AZo+YYRVAQhmwhHZQywtj3J4EWObxdtgq74u4yNVD8Uy7Th/2rPsCYEt7wcD1RsY8eU0Jqpl2GmBB1/4HisvnfDDhuwBzbXPluIQ2xMKsctCMaUG34Ht94im47qooMZAQnb/EAh7IzE3wCAfgYW0BixcdTlYAqtHBkdyWhQB3IeSk9VgrKRAqaFFbEaB5nO2burH87qvuU7ym+rdkGUzdYF/aZW6Q5497HGLnaEfQ8eFCOrIeJkmqq2R7ldR2Hy3dVP28cL8rV5njTn06sD7aPtINNpA7vF5foW33e2eRivyL3YONN9JCLZPfbut9llH7usNjUvjQiZb4Wyj38LtUE2cZZiSaqIqvSqVhssavJAkSvx0pma9iwbifak8sIawjJHE5zPhBul+tyz55BLH3EKhvb1lK2V1C6wjwf5+AonrQn" />
+
+
+<script src="https://cdnsm2-hosted.civiclive.com/common/JavaScript/Json2.js" type="text/javascript"></script>
+<script src="https://cdnsm2-hosted.civiclive.com/common/JavaScript/JQuery/jquery-cookie.js" type="text/javascript"></script><script type="text/javascript">
+            
+                function OpenNewWindow(url, arguments)
+                {  
+                    return window.open(url, "",arguments);
+                }
+
+                function OpenNewWindowJS(url, ignore, arguments){  
+                    return OpenNewWindow(url, arguments);  
+                }
+
+
+                function OpenNewWindowNoReturn(url, arguments){  
+                    OpenNewWindow(url, arguments);  
+                }
+
+              </script> 
+<script type="text/javascript">
+//<![CDATA[
+function _search(){var frm=document.forms['aspnetForm'];if(!frm)frm=document.aspnetForm;window.location='/workspaces/Search.aspx?contextId='+frm.ctl00_SearchPlace.value+'&place='+frm.ctl00_SearchOne.value+'&searchTerm='+escape(frm.ctl00_SearchTerm.value).replace(/\+/g, '%2C').replace(/\"/g,'%22').replace(/'/g, '%27');}
+            function clickButton(e, buttonid)
+            { 
+              var bt = document.getElementById(buttonid); 
+              if (typeof bt == 'object')
+		        { 
+
+                    if (navigator.appName.indexOf('Microsoft Internet Explorer')>(-1)){ 
+                          if (event.keyCode == 13){ 
+                                bt.click(); 
+                                return false; 
+                          } 
+                    } 
+	    	        else
+			        {
+	                  if (e.keyCode == 13)
+	          	        { 
+                                bt.click(); 
+                                return false; 
+                          } 
+                    } 
+              } 
+            } //]]>
+</script>
+
+<script src="https://cdnsm2-hosted.civiclive.com/Common/JavaScript/Common_Control.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+
+function InputConstraint_OnLoad(textBoxControlId, oRegExp)            
+{
+    oTextBoxControl = document.getElementById(textBoxControlId);
+	if (oTextBoxControl)
+	{
+		if (oRegExp.test(oTextBoxControl.value))
+			oTextBoxControl.OldValue = oTextBoxControl.value;
+		else 
+			oTextBoxControl.value = oTextBoxControl.OldValue = '';
+	}
+}
+function InputConstraint_OnChange(oTextBoxControl, oRegExp)         
+{
+    if (oRegExp.test(oTextBoxControl.value))
+        oTextBoxControl.OldValue = oTextBoxControl.value;
+    else {
+        if (typeof(oTextBoxControl.OldValue) == 'undefined' || oTextBoxControl.value == '') 
+            oTextBoxControl.OldValue = '';
+        oTextBoxControl.value = oTextBoxControl.OldValue;
+    } 
+}
+
+;$(function() { $('nav#mobile-nav').mmenu({"slidingSubmenus":false,"position":"left","zposition":"back"}, {"pageNodetype":"form"});});//]]>
+</script>
+
+<script src="https://cdnsm1-hosted.civiclive.com/ScriptResource.axd?d=qph9tUZ6hGPLbkznkRkqTc6sslt3VBxKsKaOsMkgDhBUIK4VeSNrR567Oujh-9r3p-v83OZlKXS3oddHkUoa3BeagcZ1DHb7zL1wTa7ulWzZJz8E0&amp;t=f2cd5c5" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/Core.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/Helpers/IETouchActionManager.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/jQuery.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/jQueryPlugins.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/Widgets/Draggable.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/Widgets/Resizable.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/MaterialRipple/MaterialRippleScripts.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/AnimationFramework/AnimationFramework.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/Animation/AnimationScripts.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/Popup/PopupScripts.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/TouchScrollExtender.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Common/ShortCutManager/ShortCutManagerScripts.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Window/RadWindowScripts.js" type="text/javascript"></script>
+<script src="https://cdnsm1-clradscript.civiclive.com/ajax/2022.3.1109/Window/RadWindowManager.js" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="F495CFC0" />
+    
+    
+		
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+            
+            
+    
+    
+            
+    
+    
+    
+    
+    
+    
+    
+            
+    
+            
+    
+    
+    
+    
+    
+    
+            
+    
+    
+    
+    
+    
+
+    
+    <div id="skip"><a href="#page" class="offScreen">Skip to Content</a></div><!-- Search Box --><div class="search-container"><div class="divSearchBox">
+
+</div></div><!-- End of Search Box --><!--<div id="pace-screen"></div>--><div class="responsiveTemplate"><a id="Btop" href="javascript:void(0);" title="Back to the Top" class="show"><span class="fa fa-arrow-up"></span></a><div id="wrapper"><header><div class="container"><div class="top-sec"><div class="sub-social-links"><!-- Socia llinks go here --></div><div class="logo" data-aos="fade-down" data-aos-easing="ease-in-out-cubic" data-aos-once="true"><a href="/" title="City of Edmonds - Washington"><img src="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/img/logo.png" alt="City of Edmonds - Washington"></img><div class="city-name"><span class="top-name">City of Edmonds</span><span class="bottom-name"><span>Washington</span></span></div></a></div><div class="right-sec"><div class="social-links__edited__"><!-- Socia llinks go here --><div class="social-links-container"><ul class="social-icons"><li class="facebook"><a href="https://www.facebook.com/cityofedmonds/" title="Facebook" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span><span class="offScreen">Facebook</span></a></li><li class="twitter"><a href="https://twitter.com/waedmonds?lang=en" title="Twitter" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span><span class="offScreen">Twitter</span></a></li></ul></div></div><a href="javascript:void(0);" id="searchBtn" title="Open Search box"><span class="fa fa-search" aria-hidden="true"></span><span class="offScreen">Open Search Box</span></a><div class="search-container"><div class="divSearchBox">
+	<input name="ctl00$SearchTerm" type="text" id="ctl00_SearchTerm" class="SearchTerm" aria-label="Search" onkeypress="return clickButton(event,&#39;ctl00_btnSearch&#39;)" onfocus="focusInInput(&#39;#ctl00_SearchTerm&#39;)" onfocusout="focusOutInput(&#39;#ctl00_SearchTerm&#39;)" /><input type="hidden" name="ctl00$SearchOne" id="ctl00_SearchOne" value="workspaces" /><a id="ctl00_btnSearch" title="Search" title="Search" href="javascript:__doPostBack(&#39;ctl00$btnSearch&#39;,&#39;&#39;)"><img src="https://cdnsm3-hosted.civiclive.com/common/resources/en_US/default/images/templates/default/header_search_button.gif" id="ctl00_searchImage" alt="Search" class="SearchButton" /></a>
+</div></div><div id="translation"><a href="javascript:void(0);" id="otherLang"><span><span class="fa fa-globe" aria-hidden="true"></span>Language</span></a><div id="translate__el" style="display: none;"></div><ul class="translate__list"><!-- languages go here --></ul></div></div></div><div class="mainNav" data-aos="fade" data-aos-easing="ease-in-out-cubic" data-aos-once="true"></div></div></header><div id="content-wrapper" class="fs-text">
+
+    <style>
+		/* disable CKEditor orignal image & flash manager */
+		.cke_button__image {
+			display:none !important;
+		}
+
+		.cke_button__flash {
+			display:none !important;
+		}
+
+	</style>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#divOverlay').css('width', $(document).width());
+        $('#divOverlay').css('height', $(document).height());
+    });
+    </script>
+
+    <!-- richeditor full screen mode overlay element -->
+    <div id="divOverlay" unselectable="on" class="TelerikModalOverlayFullScreen" style="position: absolute; left: 0px; top: 0px; z-index: 100001; background-color: rgb(170, 170, 170); opacity: 0.5; display: none;"></div>
+    
+        <script type="text/javascript">
+            function setPreventHttpRedirectParam(url) {
+                url = (url || '').trim();
+                if (url === '') return url;
+                var parser = document.createElement('a');
+                parser.href = url;
+                var search = '?preventHttpRedirect=1';
+                if (parser.search.length > 0)
+                    search += '&' + parser.search.substr(1);
+                parser.search = search;
+                return parser.href;
+            }
+
+            function openRadWindowLoadingContentTree(url) {
+                var wnd = $find("ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree");
+                showModal(url, wnd, 750, 630);
+                return false;
+            }
+
+            function openPermissionControlWindow(url) {
+                var wnd = $find("ctl00_ContentPlaceHolder1_RadWindowPermissionControl");
+                showModal(url, wnd, 150, 61);
+                return false;
+            }
+
+            function showModal(url, wnd, width, height) {
+                var scheme = window.location.href.split('/')[0] || 'http:';
+                radopen(scheme === 'https:' || $('.secureform').length > 0
+                    ? setPreventHttpRedirectParam(url) : url, wnd, width + 'px', height + 'px').center();
+            }
+
+            function RadWindowLoadFunction(url) {
+                window.location = url;
+            }
+        </script>
+
+        <style type="text/css">
+            /* force to set z-index as max value */
+            .WindowLoadingContentTreeRadWindow {
+                z-index: 53001 !important;
+            }
+        </style>
+        <div id="ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree" class="WindowLoadingContentTreeRadWindow" style="display:none;">
+	<!-- 2022.3.1109.40 --><div id="ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree_alerttemplate" style="display:none;">
+        <div class="rwDialogPopup radalert">
+            <div class="rwDialogText">
+            {1}
+            </div>
+
+            <div>
+                <a  onclick="$find('{0}').close(true);"
+                class="rwPopupButton" href="javascript:void(0);">
+                    <span class="rwOuterSpan">
+                        <span class="rwInnerSpan">##LOC[OK]##</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        </div><div id="ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree_prompttemplate" style="display:none;">&nbsp;</div><div id="ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree_confirmtemplate" style="display:none;">&nbsp;</div><input id="ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree_ClientState" name="ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree_ClientState" type="hidden" />
+</div><div id="ctl00_ContentPlaceHolder1_RadWindowLoadingContentTree" style="display:none;">
+	<div id="ctl00_ContentPlaceHolder1_RadWindowLoadingContentTree_C" style="display:none;">
+
+	</div><input id="ctl00_ContentPlaceHolder1_RadWindowLoadingContentTree_ClientState" name="ctl00_ContentPlaceHolder1_RadWindowLoadingContentTree_ClientState" type="hidden" />
+</div><div id="ctl00_ContentPlaceHolder1_RadWindowPermissionControl" style="display:none;">
+	<div id="ctl00_ContentPlaceHolder1_RadWindowPermissionControl_C" style="display:none;">
+
+	</div><input id="ctl00_ContentPlaceHolder1_RadWindowPermissionControl_ClientState" name="ctl00_ContentPlaceHolder1_RadWindowPermissionControl_ClientState" type="hidden" />
+</div>
+    
+<div id="subpage"><h1 class="offScreen">City of Edmonds - Washington</h1><div id="theme"><div id="menubar"><div class="inside-padding"><?xml version="1.0" encoding="utf-16"?><script src="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/js/jquery-accessibleMegaMenu.js" type="text/javascript" xmlns:msxml="urn:schemas-microsoft-com:xslt">//</script><link type="text/css" rel="stylesheet" href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/css/mm-style.css" xmlns:msxml="urn:schemas-microsoft-com:xslt" /><div class="megamenu tester" xmlns:msxml="urn:schemas-microsoft-com:xslt"><nav><ul class="nav-menu"><li class="nav-item m_item level0 parent" id="16495024"><a href="/cms/One.aspx?portalId=16495016&amp;pageId=16495024" target="">Home</a></li><li class="nav-item m_item level0 parent" id="17238697"><a href="/cms/One.aspx?portalId=16495016&amp;pageId=17238697" target="">Government</a><div class="sub-nav mega-dd"><div class="nav-lists level1"><ul class="sub-nav-group category"><li id="p17291997"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17291997" title="Go to Mayor page" target=""><span class="text">Mayor</span></a></div></li><li id="p17291993"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17291993" title="Go to City Employment page" target=""><span class="text">City Employment</span></a></div></li><li id="p17238702"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238702" title="Go to Departments page" target=""><span class="text">Departments</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17238708"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238708" title="Go to Mayor's Office page" target=""><span class="text">Mayor's Office</span></a></div></li><li id="p17290706"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290706" title="Go to Cultural Services page" target=""><span class="text">Cultural Services</span></a></div></li><li id="p17238860"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238860" title="Go to Finance page" target=""><span class="text">Finance</span></a></div></li><li id="p17717855"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17717855" title="Go to City Clerk page" target=""><span class="text">City Clerk</span></a></div></li><li id="p17241708"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17241708" title="Go to Community Services page" target=""><span class="text">Community Services</span></a></div></li><li id="p17251235"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17251235" title="Go to Planning and Development page" target=""><span class="text">Planning and Development</span></a></div></li><li id="p17251155"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17251155" title="Go to Economic Development page" target=""><span class="text">Economic Development</span></a></div></li><li id="p17263445"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17263445" title="Go to Human Resources page" target=""><span class="text">Human Resources</span></a></div></li><li id="p17241848"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17241848" title="Go to Human Services page" target=""><span class="text">Human Services</span></a></div></li><li id="p17263459"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17263459" title="Go to Municipal Court page" target=""><span class="text">Municipal Court</span></a></div></li><li id="p17250255"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17250255" title="Go to Parks &amp; Recreation page" target=""><span class="text">Parks &amp; Recreation</span></a></div></li><li id="p17263540"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17263540" title="Go to Police Department page" target=""><span class="text">Police Department</span></a></div></li><li id="p17263628"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17263628" title="Go to Public Works and Utilities page" target=""><span class="text">Public Works and Utilities</span></a></div></li></div></li><li id="p17291994"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17291994" title="Go to Municipal Court page" target=""><span class="text">Municipal Court</span></a></div></li><li id="p17777711"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17777711" title="Go to City Codes page" target="_blank"><span class="text">City Codes</span></a></div></li><li id="p17278119"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17278119" title="Go to Meeting Agendas page" target="_blank"><span class="text">Meeting Agendas</span></a></div></li><li id="p17260737"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17260737" title="Go to City Council page" target=""><span class="text">City Council</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17266610"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266610" title="Go to Agendas &amp; Packets page" target="_blank"><span class="text">Agendas &amp; Packets</span></a></div></li><li id="p17266612"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266612" title="Go to City Council Meetings Overview page" target=""><span class="text">City Council Meetings Overview</span></a></div></li><li id="p17562262"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17562262" title="Go to City Council Resources page" target=""><span class="text">City Council Resources</span></a></div></li><li id="p19691940"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=19691940" title="Go to Contact City Council Members  page" target=""><span class="text">Contact City Council Members </span></a></div></li><li id="p17266641"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266641" title="Go to Council Meeting Minutes page" target="_blank"><span class="text">Council Meeting Minutes</span></a></div></li><li id="p17266611"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266611" title="Go to Agenda Planner page" target="_blank"><span class="text">Agenda Planner</span></a></div></li><li id="p17266622"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266622" title="Go to Mission &amp; Purpose page" target=""><span class="text">Mission &amp; Purpose</span></a></div></li><li id="p17266648"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266648" title="Go to Ordinances &amp; Resolutions page" target=""><span class="text">Ordinances &amp; Resolutions</span></a></div></li><li id="p18451526"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18451526" title="Go to Online Public Comment page" target=""><span class="text">Online Public Comment</span></a></div></li></div></li><li id="p20635353"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20635353" title="Go to Fire/EMS Annexation Ballot Info page" target=""><span class="text">Fire/EMS Annexation Ballot Info</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p20718717"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20718717" title="Go to Cost Calculator page" target=""><span class="text">Cost Calculator</span></a></div></li></div></li><li id="p20430121"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20430121" title="Go to City Budget page" target=""><span class="text">City Budget</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p20430125"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20430125" title="Go to Blue Ribbon Panel page" target=""><span class="text">Blue Ribbon Panel</span></a></div></li><li id="p20430128"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20430128" title="Go to Community Advisory Panel page" target=""><span class="text">Community Advisory Panel</span></a></div></li><li id="p20430132"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20430132" title="Go to Community Survey page" target=""><span class="text">Community Survey</span></a></div></li><li id="p20430145"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20430145" title="Go to Budgeting by Priority page" target=""><span class="text">Budgeting by Priority</span></a></div></li></div></li><li id="p17282697"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282697" title="Go to Districts page" target=""><span class="text">Districts</span></a></div></li><li id="p17282713"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282713" title="Go to Communications page" target=""><span class="text">Communications</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17282731"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282731" title="Go to Press Releases page" target=""><span class="text">Press Releases</span></a></div></li><li id="p17292022"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17292022" title="Go to Police Press Releases page" target=""><span class="text">Police Press Releases</span></a></div></li><li id="p18606138"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18606138" title="Go to City Chat Column page" target=""><span class="text">City Chat Column</span></a></div></li><li id="p17238743"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238743" title="Go to Our Edmonds Newsletter page" target=""><span class="text">Our Edmonds Newsletter</span></a></div></li><li id="p17290345"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290345" title="Go to Government Channel page" target=""><span class="text">Government Channel</span></a></div></li><li id="p17586143"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17586143" title="Go to News page" target=""><span class="text">News</span></a></div></li><li id="p17251142"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17251142" title="Go to Calendars page" target=""><span class="text">Calendars</span></a></div></li><li id="p20002932"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20002932" title="Go to Historical Proclamations page" target=""><span class="text">Historical Proclamations</span></a></div></li></div></li><li id="p17260704"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17260704" title="Go to Boards and Commissions page" target=""><span class="text">Boards and Commissions</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17282631"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282631" title="Go to Boards &amp; Commissions Openings page" target=""><span class="text">Boards &amp; Commissions Openings</span></a></div></li><li id="p20468096"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20468096" title="Go to Agendas page" target="_blank"><span class="text">Agendas</span></a></div></li><li id="p17282584"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282584" title="Go to Architectural Design Board (Suspended) page" target=""><span class="text">Architectural Design Board (Suspended)</span></a></div></li><li id="p17266598"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266598" title="Go to Arts Commission (Suspended) page" target=""><span class="text">Arts Commission (Suspended)</span></a></div></li><li id="p17282591"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282591" title="Go to Cemetery Board page" target=""><span class="text">Cemetery Board</span></a></div></li><li id="p17266638"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17266638" title="Go to Civil Service Commission page" target=""><span class="text">Civil Service Commission</span></a></div></li><li id="p17282687"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282687" title="Go to LEOFF 1 Disability Board page" target=""><span class="text">LEOFF 1 Disability Board</span></a></div></li><li id="p17269271"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17269271" title="Go to Diversity, Equity, Inclusion, and Accessibility  page" target=""><span class="text">Diversity, Equity, Inclusion, and Accessibility </span></a></div></li><li id="p17272143"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17272143" title="Go to Economic Development Commission page" target=""><span class="text">Economic Development Commission</span></a></div></li><li id="p17282628"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282628" title="Go to Hearing Examiner page" target=""><span class="text">Hearing Examiner</span></a></div></li><li id="p17272144"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17272144" title="Go to Historic Preservation Commission (Suspended) page" target=""><span class="text">Historic Preservation Commission (Suspended)</span></a></div></li><li id="p17282623"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17282623" title="Go to Lodging Tax advisory Committee page" target=""><span class="text">Lodging Tax advisory Committee</span></a></div></li><li id="p17278143"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17278143" title="Go to Mayors' Climate Protection Committee page" target=""><span class="text">Mayors' Climate Protection Committee</span></a></div></li><li id="p17260708"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17260708" title="Go to Planning Board page" target=""><span class="text">Planning Board</span></a></div></li><li id="p17272291"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17272291" title="Go to Salary Commission page" target=""><span class="text">Salary Commission</span></a></div></li><li id="p17278076"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17278076" title="Go to Sister City Commission page" target=""><span class="text">Sister City Commission</span></a></div></li><li id="p17290381"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290381" title="Go to Tree Board (Suspended) page" target=""><span class="text">Tree Board (Suspended)</span></a></div></li><li id="p17278173"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17278173" title="Go to Youth Commission page" target=""><span class="text">Youth Commission</span></a></div></li><li id="p19784059"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=19784059" title="Go to Transportation Committee page" target=""><span class="text">Transportation Committee</span></a></div></li></div></li><li id="p19670391"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=19670391" title="Go to Festivals and Events page" target="_blank"><span class="text">Festivals and Events</span></a></div></li></div></div></li><li class="nav-item m_item level0 parent" id="17238686"><a href="/cms/One.aspx?portalId=16495016&amp;pageId=17238686" target="">Services</a><div class="sub-nav mega-dd"><div class="nav-lists level1"><ul class="sub-nav-group category"><li id="p17291978"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17291978" title="Go to Human Services page" target=""><span class="text">Human Services</span></a></div></li><li id="p17290753"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290753" title="Go to Utility Payments page" target="_blank"><span class="text">Utility Payments</span></a></div></li><li id="p17292008"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17292008" title="Go to Police Department page" target=""><span class="text">Police Department</span></a></div></li><li id="p17290724"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290724" title="Go to Fire page" target=""><span class="text">Fire</span></a></div></li><li id="p17238694"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238694" title="Go to Permit Assistance page" target=""><span class="text">Permit Assistance</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17566432"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17566432" title="Go to Permit Record Search page" target=""><span class="text">Permit Record Search</span></a></div></li><li id="p17238705"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238705" title="Go to Apply For A Permit page" target=""><span class="text">Apply For A Permit</span></a></div></li><li id="p17566559"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17566559" title="Go to Permit Information, Forms &amp; Fees page" target=""><span class="text">Permit Information, Forms &amp; Fees</span></a></div></li><li id="p17238844"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238844" title="Go to Codes and Standards page" target=""><span class="text">Codes and Standards</span></a></div></li><li id="p17238711"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17238711" title="Go to Construction &amp; Inspections page" target=""><span class="text">Construction &amp; Inspections</span></a></div></li><li id="p17330520"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17330520" title="Go to GIS Web Map - Utility Map page" target="_blank"><span class="text">GIS Web Map - Utility Map</span></a></div></li></div></li><li id="p17255961"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17255961" title="Go to Maps/GIS page" target=""><span class="text">Maps/GIS</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17287068"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17287068" title="Go to GIS Web Map page" target="_blank"><span class="text">GIS Web Map</span></a></div></li><li id="p17287069"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17287069" title="Go to GIS Data Request Form page" target=""><span class="text">GIS Data Request Form</span></a></div></li><li id="p17287091"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17287091" title="Go to Maps page" target=""><span class="text">Maps</span></a></div></li></div></li><li id="p17290424"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290424" title="Go to Public Involvement page" target=""><span class="text">Public Involvement</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17290645"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290645" title="Go to City Council Information page" target=""><span class="text">City Council Information</span></a></div></li><li id="p17290683"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290683" title="Go to Boards and Commissions page" target=""><span class="text">Boards and Commissions</span></a></div></li><li id="p17290684"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290684" title="Go to Meeting Agendas and Materials page" target="_blank"><span class="text">Meeting Agendas and Materials</span></a></div></li><li id="p17290699"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290699" title="Go to Public Notices page" target=""><span class="text">Public Notices</span></a></div></li><li id="p17291977"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17291977" title="Go to Citizen Liaison Program page" target=""><span class="text">Citizen Liaison Program</span></a></div></li></div></li><li id="p17257616"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17257616" title="Go to Sustainability page" target=""><span class="text">Sustainability</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17257621"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17257621" title="Go to Sustainability Initiatives page" target=""><span class="text">Sustainability Initiatives</span></a></div></li><li id="p17296225"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17296225" title="Go to Climate Change page" target=""><span class="text">Climate Change</span></a></div></li><li id="p17269287"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17269287" title="Go to Water page" target=""><span class="text">Water</span></a></div></li><li id="p17296271"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17296271" title="Go to Energy page" target=""><span class="text">Energy</span></a></div></li><li id="p17956175"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17956175" title="Go to Trees page" target=""><span class="text">Trees</span></a></div></li></div></li><li id="p17292240"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17292240" title="Go to Cemetery page" target=""><span class="text">Cemetery</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17292551"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17292551" title="Go to Services and Prices page" target=""><span class="text">Services and Prices</span></a></div></li><li id="p17311593"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17311593" title="Go to Grave Search page" target="_blank"><span class="text">Grave Search</span></a></div></li><li id="p17292815"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17292815" title="Go to Abandoned Lot Program page" target=""><span class="text">Abandoned Lot Program</span></a></div></li></div></li><li id="p17290778"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290778" title="Go to Community Resources page" target=""><span class="text">Community Resources</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p20610983"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20610983" title="Go to Community Resource Guide page" target="_blank"><span class="text">Community Resource Guide</span></a></div></li><li id="p17292115"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17292115" title="Go to Website Feedback Form page" target=""><span class="text">Website Feedback Form</span></a></div></li><li id="p20281376"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=20281376" title="Go to Website Accessibility page" target=""><span class="text">Website Accessibility</span></a></div></li></div></li><li id="p18070941"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18070941" title="Go to Environmental Resources Portal page" target=""><span class="text">Environmental Resources Portal</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p18077124"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18077124" title="Go to Leadership and Volunteering page" target=""><span class="text">Leadership and Volunteering</span></a></div></li></ul><ul class="sub-nav-group category"><span>Environmental Resource Page</span><li id="p18125331"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18125331" title="Go to Conservation At Home page" target=""><span class="text">Conservation At Home</span></a></div></li><li id="p18125337"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18125337" title="Go to Parks and Greenspaces page" target=""><span class="text">Parks and Greenspaces</span></a></div></li><li id="p18125341"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18125341" title="Go to Plants and Wildlife page" target=""><span class="text">Plants and Wildlife</span></a></div></li></div></li><li id="p18232069"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=18232069" title="Go to Emergency Management page" target=""><span class="text">Emergency Management</span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p19107043"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=19107043" title="Go to Disaster Videos page" target=""><span class="text">Disaster Videos</span></a></div></li><li id="p19108091"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=19108091" title="Go to Disaster Preparation  page" target=""><span class="text">Disaster Preparation </span></a></div></li></div></li></div></div></li><li class="nav-item m_item level0 parent" id="17251208"><a href="/cms/One.aspx?portalId=16495016&amp;pageId=17251208" target="">Doing Business</a><div class="sub-nav mega-dd"><div class="nav-lists level1"><ul class="sub-nav-group category"><li id="p17292297"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17292297" title="Go to Start/Expand Your Business page" target=""><span class="text">Start/Expand Your Business</span></a></div></li><li id="p17251223"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17251223" title="Go to Community and Business Resources page" target=""><span class="text">Community and Business Resources</span></a></div></li><li id="p17304564"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17304564" title="Go to Business Licenses page" target=""><span class="text">Business Licenses</span></a></div></li><li id="p17278052"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17278052" title="Go to Bids, RFP's, and RFQ's page" target=""><span class="text">Bids, RFP's, and RFQ's</span></a></div></li><li id="p17296154"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17296154" title="Go to Edmonds Taxes and Incentives page" target=""><span class="text">Edmonds Taxes and Incentives</span></a></div></li><li id="p17296157"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17296157" title="Go to Multi-Family Tax Exemption page" target=""><span class="text">Multi-Family Tax Exemption</span></a></div></li><li id="p17296163"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17296163" title="Go to Visit Our Business Districts page" target=""><span class="text">Visit Our Business Districts</span></a></div></li><li id="p17251200"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17251200" title="Go to Edmonds Creative District  page" target=""><span class="text">Edmonds Creative District </span></a></div><div class="nav-lists level2"><ul class="sub-nav-group category"><li id="p17251212"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17251212" title="Go to 4th Avenue Cultural Corridor page" target=""><span class="text">4th Avenue Cultural Corridor</span></a></div></li></div></li><li id="p17290400"><div><a href="/cms/one.aspx?portalid=16495016&amp;pageid=17290400" title="Go to Edmonds Businesses Reopen page" target=""><span class="text">Edmonds Businesses Reopen</span></a></div></li></div></div></li><li class="nav-item m_item level0 parent" id="17292095"><a href="/cms/One.aspx?portalId=16495016&amp;pageId=17292095" target="">I Want To…</a></li><li class="nav-item m_item level0 parent" id="17251152"><a href="/cms/One.aspx?portalId=16495016&amp;pageId=17251152" target="_blank">Explore Edmonds</a></li><li class="nav-item m_item level0 parent" id="19533137"><a href="/cms/One.aspx?portalId=16495016&amp;pageId=19533137" target="">City Jobs</a></li></ul></nav></div><script type="text/javascript" xmlns:msxml="urn:schemas-microsoft-com:xslt">
+            
+            $("nav:first").accessibleMegaMenu({
+            /* prefix for generated unique id attributes, which are required 
+            to indicate aria-owns, aria-controls and aria-labelledby */
+            uuidPrefix: "accessible-megamenu",
+
+            /* css class used to define the megamenu styling */
+            menuClass: "nav-menu",
+
+            /* css class for a top-level navigation item in the megamenu */
+            topNavItemClass: "nav-item",
+
+            /* css class for a megamenu panel */
+            panelClass: "sub-nav",
+
+            /* css class for a group of items within a megamenu panel */
+            panelGroupClass: "sub-nav-group",
+
+            /* css class for the hover state */
+            hoverClass: "hover",
+
+            /* css class for the focus state */
+            focusClass: "focus",
+
+            /* css class for the open state */
+            openClass: "open"
+            });
+            
+        </script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a.mm-subopen').each(function (i, item) {
+            setExpandCollapse();
+
+            $(item).click(function () {
+                setExpandCollapse();
+            });
+
+            function setExpandCollapse() {
+                var parent = $(item).parent();
+                var expandCollapse = 'Expand menu item';
+                if (parent !== undefined && parent.length > 0) {
+                    var selected = parent[0].classList.contains("mm-opened");
+                    if (selected !== undefined && selected === true) {
+                        expandCollapse = 'Collapse menu item';;
+                    }
+                    else {
+                        expandCollapse = 'Expand menu item';
+                    }
+                }
+
+                $(item).html("<span class=\"offScreen\">" + expandCollapse + " " + $(item).next().text() + "</span>");
+            }
+        });
+    });
+</script>
+<nav id="mobile-nav" class="mm-menu, cms-responsive-menu"><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=16495024">Home</a></li><li class="mm-selected, mm-opened"><a href="/cms/One.aspx?portalId=16495016&pageId=17238697">Government</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17291997">Mayor</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17291993">City Employment</a></li><li class="mm-opened"><a href="/cms/One.aspx?portalId=16495016&pageId=17238702">Departments</a><ul><li class="mm-selected"><a href="#">Mayor&#39;s Office</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290706">Cultural Services</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17238860">Finance</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17717855">City Clerk</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17241708">Community Services</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251235">Planning and Development</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251155">Economic Development</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17263445">Human Resources</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17241848">Human Services</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17263459">Municipal Court</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17250255">Parks &amp; Recreation</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17263540">Police Department</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17263628">Public Works and Utilities</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17291994">Municipal Court</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17777711" target="_blank">City Codes</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17278119" target="_blank">Meeting Agendas</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17260737">City Council</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266610" target="_blank">Agendas &amp; Packets</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266612">City Council Meetings Overview</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17562262">City Council Resources</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=19691940">Contact City Council Members </a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266641" target="_blank">Council Meeting Minutes</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266611" target="_blank">Agenda Planner</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266622">Mission &amp; Purpose</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266648">Ordinances &amp; Resolutions</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=18451526">Online Public Comment</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20635353">Fire/EMS Annexation Ballot Info</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=20718717">Cost Calculator</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20430121">City Budget</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=20430125">Blue Ribbon Panel</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20430128">Community Advisory Panel</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20430132">Community Survey</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20430145">Budgeting by Priority</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282697">Districts</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282713">Communications</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282731">Press Releases</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292022">Police Press Releases</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=18606138">City Chat Column</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17238743">Our Edmonds Newsletter</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290345">Government Channel</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17586143">News</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251142">Calendars</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20002932">Historical Proclamations</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17260704">Boards and Commissions</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282631">Boards &amp; Commissions Openings</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20468096" target="_blank">Agendas</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282584">Architectural Design Board (Suspended)</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266598">Arts Commission (Suspended)</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282591">Cemetery Board</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17266638">Civil Service Commission</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282687">LEOFF 1 Disability Board</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17269271">Diversity, Equity, Inclusion, and Accessibility </a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17272143">Economic Development Commission</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282628">Hearing Examiner</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17272144">Historic Preservation Commission (Suspended)</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17282623">Lodging Tax advisory Committee</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17278143">Mayors&#39; Climate Protection Committee</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17260708">Planning Board</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17272291">Salary Commission</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17278076">Sister City Commission</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290381">Tree Board (Suspended)</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17278173">Youth Commission</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=19784059">Transportation Committee</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=19670391" target="_blank">Festivals and Events</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17238686">Services</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17291978">Human Services</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290753" target="_blank">Utility Payments</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292008">Police Department</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290724">Fire</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17238694">Permit Assistance</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17566432">Permit Record Search</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17238705">Apply For A Permit</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17566559">Permit Information, Forms &amp; Fees</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17238844">Codes and Standards</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17238711">Construction &amp; Inspections</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17330520" target="_blank">GIS Web Map - Utility Map</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17255961">Maps/GIS</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17287068" target="_blank">GIS Web Map</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17287069">GIS Data Request Form</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17287091">Maps</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290424">Public Involvement</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290645">City Council Information</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290683">Boards and Commissions</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290684" target="_blank">Meeting Agendas and Materials</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290699">Public Notices</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17291977">Citizen Liaison Program</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17257616">Sustainability</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17257621">Sustainability Initiatives</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17296225">Climate Change</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17269287">Water</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17296271">Energy</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17956175">Trees</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292240">Cemetery</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292551">Services and Prices</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17311593" target="_blank">Grave Search</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292815">Abandoned Lot Program</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290778">Community Resources</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=20610983" target="_blank">Community Resource Guide</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292115">Website Feedback Form</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=20281376">Website Accessibility</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=18070941">Environmental Resources Portal</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=18077124">Leadership and Volunteering</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=18125331">Conservation At Home</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=18125337">Parks and Greenspaces</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=18125341">Plants and Wildlife</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=18232069">Emergency Management</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=19107043">Disaster Videos</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=19108091">Disaster Preparation </a></li></ul></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251208">Doing Business</a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292297">Start/Expand Your Business</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251223">Community and Business Resources</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17304564">Business Licenses</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17278052">Bids, RFP&#39;s, and RFQ&#39;s</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17296154">Edmonds Taxes and Incentives</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17296157">Multi-Family Tax Exemption</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17296163">Visit Our Business Districts</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251200">Edmonds Creative District </a><ul><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251212">4th Avenue Cultural Corridor</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17290400">Edmonds Businesses Reopen</a></li></ul></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17292095">I Want To…</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=17251152" target="_blank">Explore Edmonds</a></li><li><a href="/cms/One.aspx?portalId=16495016&pageId=19533137">City Jobs</a></li></ul></nav><a href="#mobile-nav" id="mobile-bar" title="Mobile Menu"><em class="fa fa-bars"></em>MENU</a></div></div><div id="page"><div class="sub-bg" data-aos="fade" data-aos-easing="ease-in-out-cubic" data-aos-once="true"><style>
+						.sub-bg {background-image: url("/UserFiles/Servers/Server_16494932/Image/banner_2.jpg"); }
+					</style></div><div class="main-container fs-text" id="subPageContent"><div class="sidebar" data-aos="fade-right" data-aos-easing="ease-in-out-cubic" data-aos-once="true"><a href="javascript:void(0);" class="mobile-side-nav"><span>Side Navigation</span><i class="fa fa-plus" aria-hidden="true"></i></a><div class="ptl_col_1"><div class="ptl_portlet_vertical"><div id="ctl00_ContentPlaceHolder1_ctl04_divView">
+	<div class="skip-nav"><a href="#ctl00_ContentPlaceHolder1_ctl04_linkLastNav">Skip Sidebar Navigation</a></div>
+	<style>
+		.skip-nav a {
+			position: absolute;
+			left: -10000px;
+			top: auto;
+			overflow: hidden;
+		}
+
+		.skip-nav a:focus {
+			padding: 0.5em 0.5em 0.4em;
+			font-size: 14px;
+			margin: 0.6em 0;
+			border-radius: 5px;
+			font-weight: 600;
+			color: #654106;
+			background: #ffe1b1;
+			position: fixed;
+			z-index: 9000;
+			left: 10px;
+			top: auto;
+			position:relative;
+		}
+
+		.skip-last-nav {
+			visibility:hidden;
+		}
+	</style>
+	<?xml version="1.0" encoding="utf-16"?><div id="inside-nav"><div class="sitenavl0 navWrp&#xA;          "><a class="navLink" HREF="/cms/One.aspx?portalId=16495016&amp;pageId=16495024" title="Home" target="_self"><span>Home</span></a></div><div class="sitenavl0 currentparent navWrp&#xA;          "><a class="navLink" HREF="/cms/One.aspx?portalId=16495016&amp;pageId=17238702" title="Departments" target="_self"><span>Departments</span></a></div><div class="sitenavl1 currentpage navWrp&#xA;          "><a class="navLink" HREF="/cms/One.aspx?portalId=16495016&amp;pageId=17238708" title="Mayor's Office" target="_self"><span>Mayor's Office</span></a></div><div class="sitenavl2 navWrp&#xA;          "><a class="navLink" HREF="/cms/One.aspx?portalId=16495016&amp;pageId=17238837" title="Mayor's Statements" target="_self"><span>Mayor's Statements</span></a></div><div class="sitenavl2 navWrp&#xA;          "><a class="navLink" HREF="/cms/One.aspx?portalId=16495016&amp;pageId=17630319" title="Mayor's Proclamations" target="_self"><span>Mayor's Proclamations</span></a></div><div class="sitenavl2 navWrp&#xA;          "><a class="navLink" HREF="/cms/One.aspx?portalId=16495016&amp;pageId=18047149" title="Resources on Indigenous Peoples" target="_self"><span>Resources on Indigenous Peoples</span></a></div></div>
+	<a href="portlets/#" id="ctl00_ContentPlaceHolder1_ctl04_linkLastNav" class="skip-last-nav">Last item for navigation</a>
+	
+</div>
+    
+
+
+</div></div></div><div class="main-content" data-aos="fade-left" data-aos-easing="ease-in-out-cubic" data-aos-once="true"><div class="breadcrumbs fs-text"><nav aria-label="Breadcrumb" class="portal-breadcrumb"><div><a href="/cms/One.aspx?portalId=16495016">City of Edmonds, WA</a>&nbsp;&raquo;&nbsp;<a href="/cms/One.aspx?portalId=16495016&pageId=17238697">Government</a>&nbsp;&raquo;&nbsp;<a href="/cms/One.aspx?portalId=16495016&pageId=17238702">Departments</a>&nbsp;&raquo;&nbsp;<span aria-label="Current Page" id="spanBreadcrumbPageId">Mayor&#39;s Office</span></div></nav></div><h2 class="pageTitle">Mayor&#39;s Office</h2><div class="inside-padding">
+
+<div class="reactComponent unifiedPublishingAlertComponent" data-portlet-instance-id="0"></div>
+<div class="ptl_page"><div class="ptl_col_2_3"><div class="ptl_portlet_vertical"><div class="ptl_top_portlet" style="display:none;"></div><div id="ctl00_ContentPlaceHolder1_ctl10_pnlPortlet">
+	
+    <div class="reactComponent bannerComponent"
+        data-portlet-instance-id="A2A90800"
+        data-is-carousel-mode="True"
+        data-dangerous-html-regex-pattern="\bon[a-z]+\s*=|javascript:|<\s*(script|iframe|object)"
+        data-cdn-location="cdnsm5-hosted.civiclive.com">
+    </div>
+    <script type="text/javascript">
+        window.addEventListener("onbannerclose", function () {
+            window.location.href = "/cms/One.aspx?portalId=16495016&pageId=17238708";
+            });
+    </script>
+
+</div>
+</div><div class="ptl_portlet_vertical"><div class="ptl_top_portlet" style="display:none;"></div><div id="ctl00_ContentPlaceHolder1_ctl13_divContent"><p><br />
+</p>
+<h2>Mayor Mike Rosen</h2>
+<p>
+Mayor Mike Rosen was elected Mayor in November 2023. He officially took office on January 1, 2024. His term expires on December 31, 2027.
+</p>
+<h3>2025 Budget Address</h3>
+<p>Edmonds Mayor Mike Rosen's 2025 Budget Address was presented on Tuesday, October 1, 2024 at the Edmonds Waterfront Center. The Address, along with the Proposed Budget can be found at the following links:&nbsp;<br>
+<a href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/File/Government/Departments/Administrative%20Services/Financial%20Reports/2025-2026/2025-2026%20Budget%20Document%20with%20Cover%20-%2010-2-24.pdf" target="_blank" title="website"></a></p>
+<p><a href="https://www.youtube.com/watch?v=1DXx1fu9QXc" target="_blank" title="website">Mayor's 2025 Budget Presentation</a></p>
+<p><a href="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/File/Government/Departments/Administrative%20Services/Financial%20Reports/2025-2026/2025-2026%20Budget%20Document%20with%20Cover%20-%2010-2-24.pdf" target="_blank" title="website">Mayor’s Proposed 2025-26 Biennium Budget</a></p>
+<hr></div>
+</div></div><div class="ptl_col_1_3"><div class="ptl_portlet_vertical"><div class="ptl_top_portlet" style="display:none;"></div><div id="ctl00_ContentPlaceHolder1_ctl17_divContent"><h3>Contact</h3>
+<p><img src="https://www.edmondswa.gov/UserFiles/Servers/Server_16494932/Image/Government/Departments/Mayor's%20Office/Mike%20Rosen%20for%20website.jpg" alt="portrait of the Mayor" longdesc="https://www.edmondswa.gov/cms/Mayor%20Mike%20Rosen" title="portrait of the Mayor" style="width: 275px; height: 318px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; vertical-align: top;"></p>
+<p>Mike Rosen, Mayor<br>
+<a href="/cdn-cgi/l/email-protection#c5a8acaea0ebb7aab6a0ab85a0a1a8aaaba1b6b2a4eba2aab3" class="ApplyClass">email&nbsp;</a><br>
+425-771-0246</p>
+<p>Carolyn LaFave, Executive Assistant to the Mayor<br>
+<a href="/cdn-cgi/l/email-protection#3c5f5d4e5350455212505d5a5d4a597c5958515352584f4b5d125b534a" class="ApplyClass">email</a><br>
+425-771-0247</p>
+<p><strong>Media Inquiries</strong><br>
+Kelsey Foster, Communications Strategist/PIO<br>
+<a href="/cdn-cgi/l/email-protection#b3d8d6dfc0d6ca9dd5dcc0c7d6c1f3d6d7dedcddd7c0c4d29dd4dcc5" class="ApplyClass"><span class="__cf_email__" data-cfemail="d2b9b7bea1b7abfcb4bda1a6b7a092b7b6bfbdbcb6a1a5b3fcb5bda4">[email&#160;protected]</span></a><br>
+425-480-2397</p>
+<p>Edmonds City Hall<br>
+121 5th Avenue North<br>
+Edmonds, WA&nbsp; &nbsp;98020</p>
+<p><strong><a title="PDF of Mayor's Equity and Social Justice Task Force Report on Public Safety and Policing" href="/UserFiles/Servers/Server_16494932/File/Government/Departments/Mayor's Office/Equity_and_Social_Justice_Task_Force_Report_1_26_2021.pdf" target="_blank"><span style="font-size: 13px;">Mayor's Equity and Social Justice Task Force Report on Public Safety and Policing</span></a></strong></p>
+<h3>2025 STATE OF THE CITY ADDRESS</h3>
+<h3><span style="font-size: 12px;"><a href="https://youtu.be/x4aprjdYL0c" target="_blank" title="YouTube">WATCH THE ADDRESS</a>&nbsp;|&nbsp;<a href="https://www.edmondswa.gov/UserFiles/Servers/Server_16494932/File/Government/Departments/Mayor's%20Office/State%20of%20the%20City%203-20-25%20FINAL%20(1).pdf" target="_blank" title="pdf">PDF OF ADDRESS</a></span><a href="https://www.edmondswa.gov/UserFiles/Servers/Server_16494932/File/Government/Departments/Mayor's%20Office/Rosen%20State%20of%20the%20City%202024%20FINAL.pdf" target="_blank" title="pdf" style="letter-spacing: 0.3px; background-color: rgb(255, 255, 255); font-size: 16px;"></a></h3>
+<h3>&nbsp;</h3>
+<h3>2024 STATE OF THE CITY ADDRESS<br>
+<span style="font-size: 12px;"><a href="https://youtu.be/KNK1juVk60Y" target="_blank" title="SOTC">WATCH THE ADDRESS</a>&nbsp;| <a href="https://www.edmondswa.gov/UserFiles/Servers/Server_16494932/File/Government/Departments/Mayor's%20Office/Rosen%20State%20of%20the%20City%202024%20FINAL.pdf" target="_blank" title="pdf">PDF OF THE ADDRESS</a></span><a href="https://www.edmondswa.gov/UserFiles/Servers/Server_16494932/File/Government/Departments/Mayor's%20Office/Rosen%20State%20of%20the%20City%202024%20FINAL.pdf" target="_blank" title="pdf">&nbsp;</a></h3>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="chrome-extension://hhojmcideegachlhfgfdhailpfhgknjm/web_accessible_resources/index.js"></script></div>
+</div><div class="ptl_portlet_vertical"><div class="ptl_top_portlet" style="display:none;"></div>
+</div></div></div></div></div></div>&nbsp;</div></div><script>
+
+			$(document).ready(function() {
+			var test = 'url("' + $(location).attr("href") + '")';
+			var bg = 'url("/UserFiles/Servers/Server_16494932/Templates/img/sub-bg.jpg")';
+			var fImg = $('.sub-bg').css('background-image');
+			var pImg = "one.aspx";
+			if(fImg.indexOf(pImg) > 0){
+			$('.sub-bg').css('background-image', bg);
+			console.log('one.aspx');
+			}
+			if(fImg == "none"){
+			$('.sub-bg').css('background-image', bg);
+			console.log('none');
+			}
+			});
+
+		</script></div></div><footer><div class="container"><div class="left-sec"><div class="logo"><a href="/" title="City of Edmonds - Washington"><img src="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/img/logo.png" alt="City of Edmonds - Washington"></img><div class="city-name"><span class="top-name">City of Edmonds</span><span class="bottom-name"><span>Washington</span></span></div></a></div></div><div class="right-sec"><div class="col-30 address"><div class="header-title">City Hall</div><span>121 5th Ave N</span><span>Edmonds, WA 98020</span><span>425-775-2525</span></div><div class="col-35"><div class="header-title">Additional Links</div><ul class="links"><li><a href="https://edmondswa.iqm2.com/Citizens/default.aspx" title="Watch Council Meetings">Watch Council Meetings</a></li><li><a href="/cms/one.aspx?portalId=16495016&pageId=17292115" title="Website Feedback">Website Feedback</a></li><li><a href="/cms/one.aspx?portalId=16495016&pageId=17296115" title="Contact Us">Contact Us</a></li><li><a href="/i_want_to_/privacy_policy" title="Privacy Policy">Privacy Policy</a></li><li><a href="/cms/one.aspx?portalid=16495016&pageid=20281376" title="Website Accessibility">Website Accessibility</a></li></ul></div><div class="col-35"><div class="header-title">Stay connected</div><ul class="social-icons"><li class="facebook"><a href="https://www.facebook.com/cityofedmonds/" title="Facebook" target="_blank"><span class="fa fa-facebook" aria-hidden="true"></span><span class="offScreen">Facebook</span></a></li><li class="twitter"><a href="https://twitter.com/waedmonds?lang=en" title="Twitter" target="_blank"><span class="fa fa-twitter" aria-hidden="true"></span><span class="offScreen">Twitter</span></a></li></ul><div class="staff-login"><a id="ctl00_lnkGateway" class="admin_menu" href="/gateway/Login.aspx?returnUrl=%2fcms%2fone.aspx%3fpageId%3d17238708">Login</a></div></div></div></div><div class="credit"><div class="container"><span>City of Edmonds WA, USA  l  Rights Reserved  |  Powered By <a href="https://www.civiclive.com/" title="CivicLive" target="_blank">CivicLive©</a><span>&#x20<script>document.write(new Date().getFullYear())</script> PowerSchool Corporation</span></span></div></div></footer></div></div><script type="text/javascript">
+      function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+      pageLanguage: 'la', 
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+      }, 'translate__el');
+      setTimeout(setTranslateDropDown, 1000);
+      $(document).on('click', '.translate__item', function() {
+      console.log('clicked');
+      var $translateSelect = $('.goog-te-combo'),
+      db = $translateSelect.get(0),
+      thisDataVal = $(this).data("value");
+      $translateSelect.val(thisDataVal);
+      $('button').text(thisDataVal);
+      fireEvent(db, 'change');
+      $('.translate__list').toggle();
+      //$translateSelect.blur();
+      //setTimeout(setDropDown, 500);
+      });
+      }
+      function fireEvent(element,event){
+      if (document.createEventObject){
+      // dispatch for IE
+      var evt = document.createEventObject();
+      return element.fireEvent('on'+event,evt)
+      } else{
+      // dispatch for firefox + others
+      var evt = document.createEvent("HTMLEvents");
+      evt.initEvent(event, true, true ); // event type, bubbling, cancelable
+      return !element.dispatchEvent(evt);
+      }
+      }
+      function setTranslateDropDown() {
+      var $translateSelect = $('.goog-te-combo'),
+      $translateList = $('.translate__list');
+      $translateList.empty();
+      $translateSelect.children('option').each(function() {
+      var thisVal = $(this).val();
+      if (thisVal != '') {
+      $translateList.append('<li><a href="javascript:void(0);" class="notranslate translate__item" data-value="' + thisVal + '">' + $(this).text() + '</a></li>');
+      }
+      });
+      }
+    </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script><script src="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/js/dependencies.min.js?v=1.1"></script><script src="https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_16494932/Templates/js/global.min.js"></script><script>
+
+      $(document).ready(function() {
+
+      /* Google Translate */
+
+      $('#otherLang').click(function() {
+      $(this).siblings('.translate__list').slideToggle(200);
+      });
+
+      /* Photo Gallery */
+
+      $.multifieldportlet({
+      portletName : 'Photo-Gallery',
+      itemHTML : photogalleryHTML
+      });
+      function photogalleryHTML (struct)
+      {
+      return '<div style="position: relative;max-width:100%; overflow:hidden;"><div class="captionbox" style="width: 90%; font-size: 14px; line-height: 1.2em; padding: 5px;"><img style="width: 100%;" src="' + struct.image + '"></img><span class="feature-summary" style="width: 95%;">' + struct.title_1 + '</span></div><span class="fa fa-' + struct.icon + '"></span></div>';
+      }
+
+      if ($('footer .staff-login a').text() == 'Login' ) {
+      $('footer .staff-login a').text('Staff Login');
+      }
+
+      });
+
+
+    </script><script>
+      // Subpage feature image Write on the Sound
+      $(document).ready(function() {
+      if( ($('#spanBreadcrumbPageId').text()) == 'Write on the Sound'){
+      $('.sub-bg').css('background-image','url("/UserFiles/Servers/Server_16494932/Templates/img/wos.png")');
+      }
+      });
+    </script><script>
+$(document).ready(function() {
+	var limit = 3;
+	var checkboxgroup = $('#checkboxgroup input');
+	checkboxgroup.click(function(){
+		var checkedcount = 0;
+		for (var i = 0 ; i < checkboxgroup.length ; i++) {
+			checkedcount += (checkboxgroup[i].checked) ? 1 : 0;
+		}
+		if (checkedcount > limit) {
+			alert("You can select maximum of " + limit + " checkbox.");
+			$(this).prop('checked', false);
+		}
+	});
+});
+</script><script>
+$(document).ready(function() {
+$('#main-slider .banner-container .banner-slide').each(function(){
+   $(this).removeAttr('role');
+});
+});
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+window.__TsmHiddenField = $get('ctl00_ScriptManager1_TSM');InputConstraint_OnLoad('ctl00_ContentPlaceHolder1_ctl00_addNewPageModal_txtFriendlyUrl', /^[\w-]*$/);;(function() {
+                        function loadHandler() {
+                            var hf = $get('ctl00_RadStyleSheetManager1_TSSM');
+                            if (!hf._RSSM_init) { hf._RSSM_init = true; hf.value = ''; }
+                            hf.value += ';Telerik.Web.UI, Version=2022.3.1109.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4:en-US:7cbc26f6-ca02-483b-84bf-df04c025957c:92753c09:91f742eb';
+                            Sys.Application.remove_load(loadHandler);
+                        };
+                        Sys.Application.add_load(loadHandler);
+                    })();Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadWindowManager, {"behaviors":4,"clientStateFieldID":"ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree_ClientState","formID":"aspnetForm","iconUrl":"","minimizeIconUrl":"","name":"RadWindowManagerLoadingContentTree","skin":"Default","windowControls":"[]"}, null, null, $get("ctl00_ContentPlaceHolder1_RadWindowManagerLoadingContentTree"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":4,"clientStateFieldID":"ctl00_ContentPlaceHolder1_RadWindowLoadingContentTree_ClientState","formID":"aspnetForm","iconUrl":"","minimizeIconUrl":"","name":"RadWindowLoadingContentTree","showContentDuringLoad":false,"skin":"Default","title":"Content Properties"}, null, null, $get("ctl00_ContentPlaceHolder1_RadWindowLoadingContentTree"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":4,"clientStateFieldID":"ctl00_ContentPlaceHolder1_RadWindowPermissionControl_ClientState","formID":"aspnetForm","iconUrl":"","minimizeIconUrl":"","name":"RadWindowPermissionControl","showContentDuringLoad":false,"skin":"Default","title":"Permission Control"}, null, null, $get("ctl00_ContentPlaceHolder1_RadWindowPermissionControl"));
+});
+//]]>
+</script>
+</form>
+    <script type="text/javascript">
+        window.isMobile = 0 == 1;
+    </script>
+</body>
+</html>
+
