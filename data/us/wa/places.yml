@@ -41,6 +41,7 @@ places:
   scraper_misc:
     city_id: 72
     population: 114800
+  last_city_scrape_run: '2025-03-23'
 - place: spokane_valley
   website: https://www.spokanevalleywa.gov/
   scraper_misc:
