@@ -80,6 +80,7 @@ places:
   scraper_misc:
     city_id: 8
     population: 88950
+  last_city_scrape_run: '2025-03-23'
 - place: kennewick
   website: https://www.go2kennewick.com/
   scraper_misc:

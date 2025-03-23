@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:auburn
+people:
+- email: mayor@auburnwa.gov
+  image: images/a8f4f267ffdc6ee290ca05d3281b927e3fe88332e991c6f14d4da63d8f2653ff.jpg
+  name: Nancy Backus
+  phone_number: 253-931-3041
+  position: mayor
+  position_misc: ''
+  website: https://www.auburnwa.gov/city_hall/mayor/
+- email: ''
+  image: ''
+  name: Cheryl Rakes
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702
+- email: ''
+  image: ''
+  name: Clinton Taylor
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622
+- email: ''
+  image: ''
+  name: Hanan Amer
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769
+- email: ''
+  image: ''
+  name: Kate Baldwin
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118
+- email: ''
+  image: ''
+  name: Tracy Taylor-Turner
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603
+- email: ''
+  image: ''
+  name: Yolanda Trout-Manuel
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755
+sources:
+- https://www.auburnwa.gov/mayor
