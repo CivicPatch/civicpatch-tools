@@ -143,11 +143,6 @@ jobs:
 
       - name: Comment on PR
         run: |
-          # Ensure the markdown content is available before commenting
-          if [ -n "${{ env.markdown_content }}" ]; then
-            echo "${{ env.markdown_content }}" | gh pr comment ${{ env.BRANCH_NAME }} --body -
-          else
-            echo "No markdown content to comment."
-          fi
+          gh pr comment ${{ env.BRANCH_NAME }} --body "${{ env.markdown_content }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
