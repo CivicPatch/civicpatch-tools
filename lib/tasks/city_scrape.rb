@@ -253,8 +253,7 @@ namespace :city_scrape do
 
   def fetch_city_directory(state, city)
     city_directory_file = PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))
-    city_directory = YAML.load(File.read(city_directory_file))
-    city_directory
+    YAML.load(File.read(city_directory_file))
   end
 
   # Sometimes mayors end up in both the council members and city leaders arrays
@@ -276,6 +275,7 @@ namespace :city_scrape do
                             "council members",
                             "councilmembers",
                             "city council",
+                            "government",
                             "council"],
       "city_leaders" => ["meet the mayor",
                          "about the mayor",
@@ -290,7 +290,7 @@ namespace :city_scrape do
       urls = Services::Brave.get_search_result_urls(search_query, website, keyword_groups)
     end
 
-    Scrapers::Common.urls_without_segments(urls, ["news", "events"])
+    Scrapers::Common.urls_without_segments(urls, %w[news events])
   end
 
   def validate_find_division_map_inputs(state, city)
@@ -476,7 +476,7 @@ namespace :city_scrape do
     people_hash = {}
 
     # Helper method to generate full name
-    full_name = ->(person) { "#{person['name'].split.first} #{person['name'].split.last}" }
+    full_name = ->(person) { "#{person["name"].split.first} #{person["name"].split.last}" }
 
     # Add people from the first list
     list1.each do |person|
@@ -496,7 +496,6 @@ namespace :city_scrape do
     end
 
     # Convert the hash back to an array
-    merged = people_hash.values
-    merged
+    people_hash.values
   end
 end

@@ -30,16 +30,16 @@ module Scrapers
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_1_original_html.html")), html)
 
-      base_url, cleaned_html = clean_html(url, html, destination_dir)
+      base_url, parsed_html = parse_html(url, html)
 
-      download_images(base_url, cleaned_html, PathHelper.project_path(File.join(destination_dir, "images")),
+      download_images(base_url, parsed_html, PathHelper.project_path(File.join(destination_dir, "images")),
                       using_browser, browser_session)
-      update_html_links(base_url, cleaned_html)
+      update_html_links(base_url, parsed_html)
 
-      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_cleaned_html.html")),
-                 cleaned_html.to_html)
+      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_parsed_html.html")),
+                 parsed_html.to_html)
 
-      markdown_content = Markitdown.from_nokogiri(cleaned_html)
+      markdown_content = Markitdown.from_nokogiri(parsed_html)
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md")),
                  markdown_content)
@@ -53,92 +53,52 @@ module Scrapers
 
     private
 
-    def clean_html(page_url, html, _destination_dir)
+    def parse_html(page_url, html)
       nokogiri_html = Nokogiri::HTML(html)
       # important for images to work -- don't want to clean it away and lose context
       base_url = get_page_base_url(nokogiri_html, page_url)
-
-      found_element = nil
-      selectors = [
-        "#main-content", "#content-main", "#primary-content",
-        "#content", "#page-content",
-        "main.content",
-        "main",
-        "div.article", "div.main",
-        "#container-content",
-        "#container",
-        "#wrapper-content",
-        "#wrapper",
-        "#body-content",
-        "#body",
-        "#page",
-        "body", "html"
-      ]
-
-      # Try each selector individually to see which one matches
-      selectors.each do |selector|
-        element = nokogiri_html.css(selector).first
-        next unless element &&
-                    !%w[a img button span input
-                        iframe script style meta link br hr].include?(element.name)
-
-        puts "Matched selector: #{selector}"
-        puts "Element name: #{element.name}"
-        puts "Element classes: #{element["class"]}"
-        puts "Element ID: #{element["id"]}"
-        puts "Element content length: #{element.content.length}"
-        found_element = element
-        break
-      end
-
-      # raise an error if no selector matches
-      raise "No selector matched" if found_element.nil?
-
-      #strip_html_content(found_element) TODO: this is stripping too much
-      [base_url, found_element]
+      [base_url, nokogiri_html]
     end
 
     def download_images(base_url, nokogiri_html, destination_dir, using_browser, browser_session)
       nokogiri_html.css("img").each_with_index do |img, _index|
-        begin
-          image_url = img["src"]
+        image_url = img["src"]
 
-          next if image_url.blank? || image_url.start_with?("data:image")
+        next if image_url.blank? || image_url.start_with?("data:image")
 
-          image_url = format_url(image_url)
+        image_url = format_url(image_url)
 
-          absolute_image_url = URI.join(base_url, image_url).to_s
+        absolute_image_url = URI.join(base_url, image_url).to_s
 
-          # hash the image url
-          image_hash = Digest::SHA256.hexdigest(absolute_image_url)
-          # determine the extension from the url
-          extension = File.extname(absolute_image_url)
+        # hash the image url
+        image_hash = Digest::SHA256.hexdigest(absolute_image_url)
+        # determine the extension from the url
+        extension = File.extname(absolute_image_url)
 
-          filename = "#{image_hash}#{extension}"
+        filename = "#{image_hash}#{extension}"
 
-          # filename = File.basename(absolute_image_url)
-          ## get rid of query params
-          # filename = filename.split("?").first
+        # filename = File.basename(absolute_image_url)
+        ## get rid of query params
+        # filename = filename.split("?").first
 
-          destination_path = File.join(destination_dir, filename)
+        destination_path = File.join(destination_dir, filename)
 
-          File.open(destination_path, "wb") do |file|
-            image_content = if using_browser
-                              get_image_with_browser(browser_session,
-                                                     absolute_image_url)
-                            else
-                              get_image(absolute_image_url)
-                            end
-            file.write(image_content)
-          end
-
-          # update the img tag to point to the local file
-          img["src"] = "images/#{filename}"
-        rescue StandardError => e
-          puts "Error downloading image: #{e.message}"
-          puts "Image URL: #{absolute_image_url}"
-          puts "Destination path: #{destination_path}"
+        File.open(destination_path, "wb") do |file|
+          image_content = if using_browser
+                            get_image_with_browser(browser_session,
+                                                   absolute_image_url)
+                          else
+                            get_image(absolute_image_url)
+                          end
+          file.write(image_content)
         end
+
+        # update the img tag to point to the local file
+        img["src"] = "images/#{filename}"
+      rescue StandardError => e
+        puts "Error downloading image: #{e.message}"
+        puts "Image URL: #{absolute_image_url}"
+        puts "Destination path: #{destination_path}"
       end
     end
 
