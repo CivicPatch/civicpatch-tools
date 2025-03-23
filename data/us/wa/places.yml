@@ -140,6 +140,7 @@ places:
   scraper_misc:
     city_id: 19
     population: 50670
+  last_city_scrape_run: '2025-03-23'
 - place: bremerton
   website: https://www.bremertonwa.gov/
   scraper_misc:
