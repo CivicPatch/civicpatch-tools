@@ -132,3 +132,25 @@ jobs:
             --body "Populate city info via github actions pipeline."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Comment directory.yml contents
+        run: |
+          # Read the contents of the directory.yml file
+          directory_contents=$(cat $directory_yml)
+
+          # Convert YAML to Markdown format
+          markdown_content=$(echo "$directory_contents" | yq eval -o=json | jq -r '
+            .people[] | 
+            "* **Name:** \(.name) \n" \
+            "  **Position:** \(.position) \n" \
+            "  **Position Misc:** \(.position_misc) \n" \
+            "  **Email:** \(.email) \n" \
+            "  **Phone:** \(.phone_number) \n" \
+            "  **Website:** [Link](\(.website)) \n" \
+            "  ![Image](us/${{ github.event.inputs.state }}/${{ matrix.city }}/\(.image)?raw=true&ref=${{ github.sha }}) \n"
+          ' | paste -sd "\n")
+
+          # Comment on the PR with the formatted content
+          gh pr comment ${{ env.BRANCH_NAME }} --body "Here is the directory information:\n\n$markdown_content"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
