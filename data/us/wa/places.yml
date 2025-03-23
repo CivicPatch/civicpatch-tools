@@ -85,6 +85,7 @@ places:
   scraper_misc:
     city_id: 105
     population: 87120
+  last_city_scrape_run: '2025-03-23'
 - place: pasco
   website: https://www.pasco-wa.gov/
   scraper_misc:
