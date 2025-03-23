@@ -1,0 +1,67 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:bremerton
+people:
+- email: ''
+  image: ''
+  name: Greg Wheeler
+  phone_number: ''
+  position: mayor
+  website: https://www.bremertonwa.gov/194/Mayor
+- email: ''
+  image: ''
+  name: Mayor Wheeler
+  phone_number: ''
+  position: mayor
+  website: https://www.bremertonwa.gov/155/City-Council
+- email: ''
+  image: ''
+  name: Jennifer Chamberlin
+  phone_number: ''
+  position: council_member
+  position_misc: district_1
+  website: https://www.bremertonwa.gov/155/City-Council
+- email: ''
+  image: ''
+  name: Denise Frey
+  phone_number: ''
+  position: council_member
+  position_misc: district_2
+  website: https://www.bremertonwa.gov/155/City-Council
+- email: ''
+  image: ''
+  name: Jeff Coughlin
+  phone_number: ''
+  position: council_member
+  position_misc: district_3
+  website: https://www.bremertonwa.gov/155/City-Council
+- email: ''
+  image: ''
+  name: Jane Rebelowski
+  phone_number: ''
+  position: council_member
+  position_misc: district_4
+  website: https://www.bremertonwa.gov/155/City-Council
+- email: ''
+  image: ''
+  name: Michael Goodnow
+  phone_number: ''
+  position: council_member
+  position_misc: district_5
+  website: https://www.bremertonwa.gov/155/City-Council
+- email: ''
+  image: images/95dac42a20c2a6e000fb9ee53bfca6a6eefdf340dad32b84d69d78fc8126d89a
+  name: Anna Mockler
+  phone_number: ''
+  position: council_member
+  position_misc: district_6
+  website: https://www.bremertonwa.gov/155/City-Council
+- email: ''
+  image: ''
+  name: Eric Younger
+  phone_number: ''
+  position: council_member
+  position_misc: district_7,_council_president
+  website: https://www.bremertonwa.gov/155/City-Council
+sources:
+- https://www.bremertonwa.gov/194/Mayor
+- https://www.bremertonwa.gov/155/City-Council
