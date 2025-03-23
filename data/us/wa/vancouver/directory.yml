@@ -1,0 +1,57 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:vancouver
+people:
+- email: ''
+  image: images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg
+  name: Anne McEnerny-Ogle
+  phone_number: ''
+  position: mayor
+  position_misc: ''
+  website: https://www.cityofvancouver.us/government/mayor-and-city-council/
+- email: ''
+  image: images/50d7ce6b3f9ad792a50fde75d7c9b01beacd5609d5e9ad915b257e4cf9ea5629.jpg
+  name: Abbie Layne
+  phone_number: ''
+  position: council_president
+  position_misc: ''
+  website: https://www.cityofvancouver.us/government/public-facilities-district-board/#section1Abbie%20Layne
+- email: ''
+  image: images/2a161b3a8d9fa31345505521f23f460ba67af4bf8a7757d8997d4c5c9d833a83.jpg
+  name: Hunter Byrnes
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.cityofvancouver.us/government/public-facilities-district-board/#section3Hunter%20Byrnes
+- email: ''
+  image: images/39b1974e437794a6ed8f0f4e08b2e1f4818fdf8b24202133533d4b77a28c1cd9.jpg
+  name: Ken O’Hollaren
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.cityofvancouver.us/government/public-facilities-district-board/#section4Ken%20O'Hollaren
+- email: ''
+  image: images/92e2d5dcd2c9a7db31d23381b4544a6847cf0d105e9a98a981ce50747b2afebd.jpg
+  name: Azsha Preble
+  phone_number: ''
+  position: council_member
+  position_misc: secretary/treasurer
+  website: https://www.cityofvancouver.us/government/public-facilities-district-board/#section2Azsha%20Preble
+- email: laura.shepard@cityofvancouver.us
+  image: ''
+  name: Laura Shepard
+  phone_number: ''
+  position_misc: communications_director
+  website: ''
+- email: tim.becker@cityofvancouver.us
+  image: ''
+  name: Tim Becker
+  phone_number: ''
+  position_misc: strategic_communications_manager
+  website: ''
+sources:
+- https://www.cityofvancouver.us/government/mayor-and-city-council/
+- https://www.cityofvancouver.us/vancouvers-state-of-the-city-and-council-community-forum/
+- https://www.cityofvancouver.us/government/calendar/
+- https://www.cityofvancouver.us/departments/mayor-city-council/
+- https://www.cityofvancouver.us/
+- https://www.cityofvancouver.us/government/public-facilities-district-board/
