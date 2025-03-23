@@ -71,7 +71,7 @@ module Scrapers
         href = URI::DEFAULT_PARSER.escape(href)
         href = Scrapers::Common.format_url(href)
         # Check if the href is an absolute URL
-        full_url = URI.parse(href).absolute? ? href : URI.join(link_base_url, href).to_s
+        full_url = URI.parse(href).absolute? ? URI.parse(href).to_s : URI.join(link_base_url, href).to_s
         next unless URI(full_url).host == URI(base_domain).host # Ensure the link belongs to the base domain
 
         link_text = link.text.strip

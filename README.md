@@ -32,8 +32,8 @@ flowchart TD;
       - [x] everett
       - [x] spokane_valley
       - [x] renton
-      - [x] federal_way
-      - [ ] yakima
+      - [ ] federal_way
+      - [x] yakima
       - [ ] bellingham
       - [ ] kirkland
       - [ ] auburn

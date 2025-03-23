@@ -220,7 +220,7 @@ namespace :city_scrape do
   end
 
   desc "Generate PR comment for city directory"
-  task :get_pr_comment, [:state, :city, :github_sha] do |_t, args|
+  task :get_pr_comment, [:state, :city, :branch_name] do |_t, args|
     state = args[:state]
     city = args[:city]
     github_sha = args[:github_sha]
@@ -278,6 +278,7 @@ namespace :city_scrape do
                             "city council",
                             "council"],
       "city_leaders" => ["meet the mayor",
+                         "about the mayor",
                          "mayor",
                          "council president"]
     }

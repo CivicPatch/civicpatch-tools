@@ -65,7 +65,6 @@ jobs:
     needs: get_cities_from_queue
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       fail-fast: false
       matrix:
         city: ${{ fromJson(needs.get_cities_from_queue.outputs.cities) }}
@@ -136,7 +135,7 @@ jobs:
       - name: Generate Markdown for PR Comment
         id: generate_markdown
         run: |
-          markdown_content=$(bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city }},${{ github.sha }}]')
+          markdown_content=$(bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city }},${{ env.BRANCH_NAME }}]')
           echo "markdown_content<<EOF" >> $GITHUB_ENV
           echo "$markdown_content" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
