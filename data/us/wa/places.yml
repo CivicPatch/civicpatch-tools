@@ -134,6 +134,7 @@ places:
   scraper_misc:
     city_id: 167
     population: 57450
+  last_city_scrape_run: '2025-03-23'
 - place: burien
   website: https://www.burienwa.gov/
   scraper_misc:
