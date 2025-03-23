@@ -135,6 +135,7 @@ places:
   scraper_misc:
     city_id: 267
     population: 53000
+  last_city_scrape_run: '2025-03-23'
 - place: bothell
   website: https://www.bothellwa.gov/
   scraper_misc:

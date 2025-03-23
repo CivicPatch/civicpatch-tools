@@ -1,0 +1,47 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:burien
+people:
+- email: ''
+  image: ''
+  name: Sofia Aragon
+  phone_number: ''
+  position: mayor
+  position_misc: ''
+  website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
+- email: ''
+  image: ''
+  name: Alex Andrade
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.burienwa.gov/city_hall/city_council/alex_andrade
+- email: ''
+  image: ''
+  name: Jimmy Matta
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.burienwa.gov/city_hall/city_council/jimmy_matta
+- email: ''
+  image: ''
+  name: Kevin Schilling
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
+- email: ''
+  image: ''
+  name: Linda Akey
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.burienwa.gov/city_hall/city_council/linda_akey
+- email: ''
+  image: ''
+  name: Stephanie Mora
+  phone_number: ''
+  position: council_member
+  position_misc: ''
+  website: https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora
+sources:
+- https://www.burienwa.gov/city_hall/city_council/council_roundups/council_roundup_december_18_2023
