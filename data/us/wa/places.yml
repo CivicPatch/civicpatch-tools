@@ -70,6 +70,7 @@ places:
   scraper_misc:
     city_id: 13
     population: 97270
+  last_city_scrape_run: '2025-03-23'
 - place: kirkland
   website: https://www.kirklandwa.gov/Home
   scraper_misc:
