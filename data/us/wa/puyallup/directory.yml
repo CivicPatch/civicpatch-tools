@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:puyallup
+people:
+- name: Jim Kastama
+  position: mayor
+  position_misc: ''
+  phone_number: ''
+  image: images/88e813fdbdea3e8b4e880bb263ab330430574c18311aaf6301b034daa9a862e6
+  email: ''
+  website: https://www.cityofpuyallup.org/634/Mayor---Jim-Kastama
+- name: Dennis King
+  position: council_member
+  position_misc: deputy_mayor
+  phone_number: ''
+  image: images/7f7ba708d85f53aad1968eb228a5b9fbf5bd5f4efe6e46bd6bef332387ad818a
+  email: ''
+  website: https://www.cityofpuyallup.org/638/Deputy-Mayor---Dennis-King
+- name: Lauren Adler
+  position: council_member
+  position_misc: district_1
+  phone_number: ''
+  image: images/9b4aecb6f918d31f1b084fbb100a29f0f63c3f065b3a516eb3fdee8b664e5a57
+  email: ''
+  website: https://www.cityofpuyallup.org/635/District-1---Lauren-Adler
+- name: Dean Johnson
+  position: council_member
+  position_misc: district_2
+  phone_number: ''
+  image: images/0b4c260dd9d309e29115bac2dba84ccf3017c98ebadf61b161a65ca81ca0e410
+  email: ''
+  website: https://www.cityofpuyallup.org/671/District-2---Dean-Johnson
+- name: Julie Door
+  position: council_member
+  position_misc: district_3
+  phone_number: ''
+  image: images/4b7205aadad11f22e3008d3b3d0013c44d235324a63a2640ab3925093a32deaa
+  email: ''
+  website: https://www.cityofpuyallup.org/666/District-3---Julie-Door
+- name: Ned Witting
+  position: council_member
+  position_misc: district_3
+  phone_number: ''
+  image: images/e9464fe14b155b8790e789807788b9566d9b2935fd4ef4b8e97d4cf25ff0d475
+  email: ''
+  website: https://www.cityofpuyallup.org/669/District-3---Ned-Witting
+- name: Renne Gilliam
+  position: council_member
+  position_misc: at_large
+  phone_number: ''
+  image: images/0f1839d6cc617c62e3fb7bf096c3ab06c4e9e0ab3fecfb72f41b11ec36e3aef1
+  email: ''
+  website: https://www.cityofpuyallup.org/665/At-Large---Renne-Gilliam
+sources:
+- https://www.cityofpuyallup.org/633/Meet-the-Council
