@@ -132,6 +132,7 @@ places:
   scraper_misc:
     city_id: 113
     population: 60210
+  last_city_scrape_run: '2025-03-24'
 - place: olympia
   website: https://www.olympiawa.gov/
   scraper_misc:
