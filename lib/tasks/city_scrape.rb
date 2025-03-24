@@ -151,7 +151,7 @@ namespace :city_scrape do
     city = args[:city]
     branch_name = args[:branch_name]
 
-    image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/data/us/#{state}/#{city}"
+    base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/data/us/#{state}/#{city}"
 
     # Assuming you have a method to fetch the city data
     city_data = fetch_city_directory(state, city)
@@ -162,6 +162,14 @@ namespace :city_scrape do
       #{city_data["sources"].join("\n")}
       ## People
       #{city_data["people"].map do |person|
+        image_markdown = if person["image"].present?
+          image_url = "#{base_image_url}/#{person["image"]}?raw=true"
+          <<~IMAGE
+            ![Image](#{image_url})
+          IMAGE
+        else
+          "" # Ensure image_markdown is an empty string if no image is present
+        end
         <<~PERSON
           * ## **Name:** #{person["name"]}
             **Position:** #{person["position"]}
@@ -169,7 +177,7 @@ namespace :city_scrape do
             **Email:** #{person["email"]}
             **Phone:** #{person["phone_number"]}
             **Website:** [Link](#{person["website"]})
-            ![Image](#{image_url}?raw=true)
+            #{image_markdown}
         PERSON
       end.join("\n")}
     MARKDOWN
