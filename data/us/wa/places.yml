@@ -76,6 +76,7 @@ places:
   scraper_misc:
     city_id: 108
     population: 96710
+  last_city_scrape_run: '2025-03-24'
 - place: auburn
   website: https://www.auburnwa.gov/
   scraper_misc:
