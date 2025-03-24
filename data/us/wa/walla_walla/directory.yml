@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:walla_walla
+people:
+- name: Tom Scribner
+  position: mayor
+  position_misc: at-large,_position_6
+  phone_number: ''
+  image: images/3ffaa3c3f4d1268a2322ada02db189ea7af00324b8f165f10834d6496c4823e6
+  email: tscribner@wallawallawa.gov
+  website: https://www.wallawallawa.gov/government/city-council
+- name: Steve Moss
+  position: council_president
+  position_misc: at-large,_position_7
+  phone_number: ''
+  image: images/32737b0847c37648b6a97f06e2d7010b9645fc2ba71ab17095509268139b9997
+  email: smoss@wallawallawa.gov
+  website: https://www.wallawallawa.gov/government/city-council
+- name: Brian Casey
+  position: council_member
+  position_misc: central_ward,_position_2
+  phone_number: ''
+  image: images/742dad2959c6a1af9c30f5ecabdf7ac94c254eef48fc0f24993252559d4bde7c
+  email: bcasey@wallawallawa.gov
+  website: https://www.wallawallawa.gov/government/city-council
+- name: Rick Eskil
+  position: council_member
+  position_misc: south_ward,_position_1
+  phone_number: ''
+  image: images/3ad9008348e85884c825a158e2b4600f0893b022d605f145937c8728a5d0f7a2
+  email: reskil@wallawallawa.gov
+  website: https://www.wallawallawa.gov/government/city-council
+- name: Monte A. Willis
+  position: council_member
+  position_misc: east_ward,_position_4
+  phone_number: ''
+  image: images/b138ccde117b8a41f3987d6d3c7be8b2eeb16ae88533847809e356c29cf94b2d
+  email: mwillis@wallawallawa.gov
+  website: https://www.wallawallawa.gov/government/city-council
+- name: Jeffrey Robinson
+  position: council_member
+  position_misc: west_ward,_position_5
+  phone_number: ''
+  image: images/e2e64f176518b052096dbe6a4fae954ac7a0e3bf7a311182a4d3c0e5f36d08b7
+  email: jrobinson@wallawallawa.gov
+  website: https://www.wallawallawa.gov/government/city-council
+- name: Gustavo Reyna
+  position: council_member
+  position_misc: at-large,_position_3
+  phone_number: ''
+  image: images/15b6acb004517b6591afcd92e312b7f81335b61d23680c2d1e16484960c55164
+  email: greyna@wallawallawa.gov
+  website: https://www.wallawallawa.gov/government/city-council
+sources:
+- https://www.wallawallawa.gov/government/city-council

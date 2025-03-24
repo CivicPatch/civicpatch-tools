@@ -206,6 +206,7 @@ places:
   scraper_misc:
     city_id: 244
     population: 34580
+  last_city_scrape_run: '2025-03-24'
 - place: pullman
   website: https://www.pullman-wa.gov/
   scraper_misc:
