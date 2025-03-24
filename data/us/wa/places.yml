@@ -181,6 +181,7 @@ places:
   scraper_misc:
     city_id: 126
     population: 41500
+  last_city_scrape_run: '2025-03-24'
 - place: longview
   website: https://www.mylongview.com/
   scraper_misc:

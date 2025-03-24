@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:lynnwood
+people:
+- name: George Hurst
+  position: council_member
+  position_misc: position
+  phone_number: ''
+  image: images/6be6edea3121bb6a04bbd0db11c24f7ff40ce9b6855eb4f0903c855fd434ae7d.jpg
+  email: ''
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format
+- name: Derica Escamilla
+  position: council_member
+  position_misc: position
+  phone_number: ''
+  image: images/97af0dc9cb3654398f904b8e957ddbc530c5dcd1d18ed4323b1deb8003dbb33f.jpeg
+  email: ''
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Council-Member-Escamilla
+- name: Patrick Decker
+  position: council_member
+  position_misc: position
+  phone_number: ''
+  image: images/2a7b336eac833c30e14fb1ae88f66e59c129af2170b25e85f3707243a8f30bf7.jpg
+  email: ''
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Decker-new-format
+- name: Josh Binda
+  position: council_member
+  position_misc: position
+  phone_number: ''
+  image: images/d202f3fe0643df09800385e72914e32f539e785d98fd65f839daaa47681b389b.png
+  email: ''
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Binda-new-format
+- name: Nick Coelho
+  position: council_member
+  position_misc: position
+  phone_number: ''
+  image: images/7d03936dd9414a97dea65a66bec9599a8cedcee2b6bd22cd9ed874efcebb9040.jpg
+  email: ''
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Coelho-new-format
+- name: David Parshall
+  position: council_member
+  position_misc: position
+  phone_number: ''
+  image: images/3e32e079e37d9033d58714af7fcf9c79370133825e846a855f8461cc5cb04e2c.jpg
+  email: ''
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Parshall-new-format
+- name: Christine Frizzell
+  position: mayor
+  phone_number: 425-670-5001
+  image: images/32d75c0cece4701cbc67b161b85f1ec18c77685a387e44e5762530989d4d7451.jpg?w=150&h=218
+  email: mayor@LynnwoodWA.gov
+  website: https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell
+sources:
+- https://www.lynnwoodwa.gov/Government/City-Council
+- https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell
