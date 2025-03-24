@@ -510,6 +510,7 @@ namespace :city_scrape do
   def finalize_city_directory(state, city, updated_city_directory, source_dirs)
     cache_directory = PathHelper.project_path(File.join("data", "us", state, city, "cache"))
     if updated_city_directory["people"].length > 1
+      updated_city_directory["people"] = sort_people(updated_city_directory["people"])
       update_city_directory(state, city, updated_city_directory, source_dirs)
       FileUtils.rm_rf(cache_directory)
       puts "✅ Successfully extracted city info"
@@ -523,12 +524,17 @@ namespace :city_scrape do
 
   def sort_people(people)
     # sort by position - mayor first, then council_president, then council_member
-    # if there is no position, then sort by position_misc, then name
+    # if there is no position, then sort by position_misc alphabetically, then name
     # position and position_misc are optional, so we need to handle nil values
+    position_order = {
+      "mayor" => 0,
+      "council_president" => 1,
+      "council_member" => 2
+    }
     people.sort_by do |person|
       [
-        person["position"] || "",
-        person["position_misc"] || "",
+        position_order[person["position"]] || Float::INFINITY,
+        person["position_misc"].to_s.downcase.gsub(/[ .]+/, "_") || "",
         person["name"]
       ]
     end
