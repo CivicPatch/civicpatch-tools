@@ -24,7 +24,7 @@ module Scrapers
     def self.fetch_html(url, session)
       begin
         html = fetch_with_client(url)
-      rescue StandardError => e
+      rescue StandardError
         html = fetch_with_browser(url, session)
       end
 
@@ -101,6 +101,7 @@ module Scrapers
       # Collect URLs from the current level and recursively from deeper levels
       url_text_pairs + url_text_pairs.each_with_object([]) do |(full_url, _), all_links|
         break all_links if all_links.size >= max_links # Stop if max_links is reached
+
         all_links.concat(crawl(full_url, keywords, visited, base_domain, session, max_links))
       end
     end

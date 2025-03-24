@@ -118,7 +118,7 @@ namespace :city_scrape do
     state_city_entry = validate_fetch_inputs(state, city)
 
     openai_service = Services::Openai.new
-    data_fetcher = Scrapers::DataFetcher.new
+    Scrapers::DataFetcher.new
 
     puts "Extracting city info for #{city.capitalize}, #{state.upcase}..."
 
@@ -163,13 +163,13 @@ namespace :city_scrape do
       ## People
       #{city_data["people"].map do |person|
         image_markdown = if person["image"].present?
-          image_url = "#{base_image_url}/#{person["image"]}?raw=true"
-          <<~IMAGE
-            ![Image](#{image_url})
-          IMAGE
-        else
-          "" # Ensure image_markdown is an empty string if no image is present
-        end
+                           image_url = "#{base_image_url}/#{person["image"]}?raw=true"
+                           <<~IMAGE
+                             ![Image](#{image_url})
+                           IMAGE
+                         else
+                           "" # Ensure image_markdown is an empty string if no image is present
+                         end
         <<~PERSON
           * ## **Name:** #{person["name"]}
             **Position:** #{person["position"]}
@@ -457,7 +457,8 @@ namespace :city_scrape do
     openai_service,
     state, city,
     updated_city_directory,
-    source_dirs)
+    source_dirs
+  )
     city_directory = PathHelper.project_path(File.join("data", "us", state, city))
     cache_destination_dir = PathHelper.project_path(File.join(city_directory, "cache"))
 
@@ -478,13 +479,17 @@ namespace :city_scrape do
       page_city_info = extract_city_info(openai_service, state, city, content_file, url)
 
       next unless page_city_info && page_city_info["people"].present?
-      
+
       source_dirs << candidate_dir
 
       update_city_directory_with_info(updated_city_directory, page_city_info, url)
 
-      council_member_count = updated_city_directory["people"].select { |person| person["position"] == "council_member" }.count
-      city_leader_count = updated_city_directory["people"].select { |person| %w[mayor].include?(person["position"]) }.count
+      council_member_count = updated_city_directory["people"].select do |person|
+        person["position"] == "council_member"
+      end.count
+      city_leader_count = updated_city_directory["people"].select do |person|
+        %w[mayor].include?(person["position"])
+      end.count
 
       puts "council_member_count: #{council_member_count}, city_leader_count: #{city_leader_count}"
       return [true, source_dirs] if council_member_count > 1 && city_leader_count.positive?
@@ -513,6 +518,19 @@ namespace :city_scrape do
     else
       puts "❌ Error: No valid city info extracted"
       exit 1
+    end
+  end
+
+  def sort_people(people)
+    # sort by position - mayor first, then council_president, then council_member
+    # if there is no position, then sort by position_misc, then name
+    # position and position_misc are optional, so we need to handle nil values
+    people.sort_by do |person|
+      [
+        person["position"] || "",
+        person["position_misc"] || "",
+        person["name"]
+      ]
     end
   end
 end

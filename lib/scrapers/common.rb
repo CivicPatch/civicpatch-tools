@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Scrapers
   module Common
     def self.sort_url_pairs(url_pairs, keyword_groups)
