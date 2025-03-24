@@ -127,6 +127,7 @@ places:
   scraper_misc:
     city_id: 273
     population: 61910
+  last_city_scrape_run: '2025-03-24'
 - place: lacey
   website: https://cityoflacey.org/
   scraper_misc:

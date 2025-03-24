@@ -1,0 +1,50 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:shoreline
+people:
+- name: Laura Mork
+  position: council_member
+  position_misc: deputy_mayor,_position_3
+  phone_number: "(206) 801-2207"
+  image: images/40745ef44879f713bed706714588fa35d5cbef76306328019501b717165cfa6f
+  email: lmork@shorelinewa.gov
+  website: https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork
+- name: Chris Roberts
+  position: mayor
+  position_misc: ''
+  phone_number: ''
+  image: images/279e3ac99b8e0b4593353b6f200c2dd2eb4efacb28640c8d8ba2b7c4120cf2f9
+  email: ''
+  website: https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts
+- name: Annette Ademasu
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu
+- name: Eben Pobee
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee
+- name: John Ramsdell
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell
+- name: Betsy Robertson
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson
+- name: Keith Scully
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully
+sources:
+- https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork
+- https://www.shorelinewa.gov/government/city-council
