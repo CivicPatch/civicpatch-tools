@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+<!-- Google Tag Manager for GA4 -->
+				<script>(function(w,d,s,l,i){w.GAMeasurementID='G-Z3P2RHQYW1';w[l]=w[l]||[];w[l].push({'gtm.start':
+				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+				})(window,document,'script','cpDataLayerGA4','GTM-K73C5PS');</script>
+				<!-- End Google Tag Manager for GA4 -->
+				<script type="text/javascript">
+					var enableTelemetry = 'false'
+					var aiConfig = {
+					instrumentationKey: '1cde048e-3185-4906-aa46-c92a7312b60f'						
+					}
+					var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c.queue.push(function () { c[a].apply(c, b) }) } } var c = { config: a }, d = document, e = window; setTimeout(function () { var b = d.createElement('script'); b.src = a.url || 'https://az416426.vo.msecnd.net/scripts/a/ai.0.js', d.getElementsByTagName('script')[0].parentNode.appendChild(b) }); try { c.cookie = d.cookie } catch (a) { } c.queue = []; for (var f = ['Event', 'Exception', 'Metric', 'PageView', 'Trace', 'Dependency']; f.length;)b('track' + f.pop()); if (b('setAuthenticatedUserContext'), b('clearAuthenticatedUserContext'), b('startTrackEvent'), b('stopTrackEvent'), b('startTrackPage'), b('stopTrackPage'), b('flush'), !a.disableExceptionTracking) { f = 'onerror', b('_' + f); var g = e[f]; e[f] = function (a, b, d, e, h) { var i = g && g(a, b, d, e, h); return !0 !== i && c['_' + f](a, b, d, e, h), i } } return c }(aiConfig);
+					window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length;
+					// Add telemetry initializer
+					appInsights.queue.push(function() {
+						appInsights.context.addTelemetryInitializer(function(envelope) {
+							var telemetryItem = envelope.data.baseData;
+							// To check the telemetry item’s type:
+							if (!false)
+							{
+								//If the telemetry is not enabled, we still want to capture Google map custom event, so only allow that
+								if (envelope.name.indexOf('.Event') == -1)
+									return false;
+							}
+						});
+					});						
+					appInsights.trackPageView();
+				</script>
+	<script>
+		function populateAntiForgery(token) {
+			var input = document.createElement("input");
+			input.name = "__RequestVerificationToken";
+			input.type = "hidden";
+			input.value = token;
+			var absPat = /^https?:\/\/|^\/\//i;
+			var forms = document.getElementsByTagName("form");
+			for (var i = 0; i < forms.length; i++) {
+				if (forms[i].method == "post" &&
+					!forms[i].querySelector('[name="__RequestVerificationToken"]') &&
+					!absPat.test(forms[i].getAttribute("action"))) {
+					forms[i].appendChild(input.cloneNode());
+				}
+			}
+		}
+
+		function getAntiForgeryToken(callback, error) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/antiforgery");
+			xhr.addEventListener("load", function() {
+				try {
+					if (this.status !== 200) {
+						throw Error("Invalid status. Could not retrieve antiforgery token.");
+		}
+					var obj = JSON.parse(this.responseText);
+					callback(obj.token);
+				} catch (e) {
+					typeof error === "function" && error(e);
+				}
+			});
+			xhr.send();
+		}
+
+		getAntiForgeryToken(function(token) {
+			if (document.readyState === "complete"
+				|| document.readyState === "loaded" 
+				|| document.readyState === "interactive") {
+				populateAntiForgery(token);
+				return;
+			}
+			document.addEventListener("DOMContentLoaded", function() {
+				populateAntiForgery(token);
+			}, false);
+		}, console.error);
+			</script>
+			
+
+	<script type="text/javascript">
+		window.departmentHeader = {};
+		window.pageSectionTracker = {};
+		window.isResponsiveEnabled = true;
+		window.isRemoveSetHeights= false;
+		if (window.isRemoveSetHeights) {
+			document.documentElement.className += ' removeSetHeights';
+		}
+		window.mainMenuMediaQuery = 'screen and (max-width: 40em)';
+		window.isMobileBrowserIncludingTablets = false;
+		window.fixedResponsiveMenu = false;
+		window.fullWidthResponsiveMenu = false;
+		window.responsiveMenuHeight = '';
+		window.responsiveMenuFontSize = '';
+		(function () {
+			window.setSizeCookie = function () {
+				document.cookie = "dpi=" + window.devicePixelRatio + "; path=/";
+				document.cookie = "viewportWidth=" + window.innerWidth + "; path=/";
+				document.cookie = "viewportHeight=" + window.innerHeight + "; path=/";
+				if (screen && screen.width && screen.height) {
+					document.cookie = "screenWidth=" + screen.width + "; path=/";
+					document.cookie = "screenHeight=" + screen.height + "; path=/";
+				}
+				document.cookie = "responsiveGhost=1; path=/";
+			};
+
+			setSizeCookie();
+		}());
+	</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<meta name="category0" content="Home">
+<meta name="category1" content="Your Government">
+<meta name="category2" content="City Council">
+
+	
+	<meta name="theme-color" content="#355e76">
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+		<title>City Council | Mount Vernon, WA - Official Website</title>
+
+		<meta name="description" content="View your council and their meeting times.">
+		<meta name="keywords" content="City Council">
+			<script src="/Assets/Scripts/jQuery/jquery-2.2.4.min.js"></script>
+	<script src="/Assets/Scripts/jQuery/jQuery-migrate-1.4.1.js" type="text/javascript"></script>
+	
+
+	<!--[if IE 6]><script language="JavaScript" type="text/javascript"> var isie6 = true; </script><![endif]-->
+	<!--[if IE 7]><script language="JavaScript" type="text/javascript"> var isie7 = true; </script><![endif]-->
+	<!--[if IE 8]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<!--[if IE 9]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<script type="text/javascript"><!--
+	var intCountryCode = 840;
+	var externalSiteDialogHeight = '390px';
+	var order = '';
+//--></script>
+	
+	<link href="/2045813088.css" rel="stylesheet" type="text/css">	<link href="/-1894608134.css" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" type="text/css" href="/Assets/Styles/Print.css" media="print">
+	<script type="text/javascript">
+		window.Pages = window.Pages || {};
+		// FrontEnd RWD initialization
+		window.Pages.rwdReady = $.Deferred();
+		window.Pages.toolBarDeferred = $.Deferred();
+		window.Pages.rwdSetupComplete = $.Deferred();
+		window.Pages.megaMenuLoaded = $.Deferred();
+		window.Pages.angularToolbarComplete = $.Deferred();
+		window.Pages.frontEndToolbarComplete = $.Deferred();
+	</script>
+	<!--CPHeadContent-->
+	<script src="/-980062917.js" type="text/javascript"></script>
+	
+	
+	
+	
+
+
+
+
+	<!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="/App_Themes/ie8.css"><![endif]-->
+	<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/App_Themes/ie7.css"><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/App_Themes/ie6.css"><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="/Scripts/html5.js"></script><![endif]-->
+
+	<script type="text/javascript">
+		setEditorVariables(false, 840);
+		function getPrintPreviewType() { return 0; } function printPreview() {pPreview(getPrintPreviewType()); }
+	</script>
+	<script src="/Assets/Scripts/AlpineJS/3.14.1/alpine.min.js" type="text/javascript" defer></script>
+</head>
+<body class="wide ">
+
+	<script>jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});</script>
+
+	<div id="fb-root"></div>
+<div id="skipToContentLinks">
+<a href="https://www.mountvernonwa.gov/98/City-Council#cc3a25e4e6-1a28-459a-a74a-fa4dc2a09462" target="_self" class="skipToContentLink">Skip to Main Content</a>
+</div>
+	<form id="frmReferenceFormForTelerikEditorDialogs"></form>
+
+		<input type="hidden" id="GoogleMapsKey" value="AIzaSyDWUuE-ifkbhxblF920N8MjpBdTg1Wt784">
+
+
+
+	<input type="hidden" id="cpcDomain" value="https://cp-civicplusuniversity2.civicplus.com">
+	<input type="hidden" id="hdnStructureID" value="5">
+	<input type="hidden" id="hdnContentCollectionID" value="f93e4c32-1de8-43d0-872c-1a0c15e48f77">
+	<input type="hidden" id="hdnWorkingCopyID" value="00000000-0000-0000-0000-000000000000">
+	<input type="hidden" id="hdnThemeID" value="7">
+	<input type="hidden" id="pageIsFrontEnd" value="true">
+	<input type="hidden" id="pageModuleID">
+	<input type="hidden" id="pagePageID" value="98">
+
+		<div id="stickyPlaceholder"></div>
+	<div id="outer-wrap" class="outer-wrap">
+		<div id="inner-wrap" class="inner-wrap">
+				<div id="divToolbars" class="cpToolbars newCP mui-fixed" style="">
+					
+
+
+
+<!-- Begin Signed Out Bar -->
+<div class="cpToolbar user public">
+    <div class="inner selfClear">
+        <p class="dropdown"><a href="https://www.mountvernonwa.gov/MyAccount/ProfileCreate" role="link" class="myConnections" id="signedOutToolbarCreateProfileButton">Create a Website Account</a> <span class="welcomeMessage">- Manage notification subscriptions, save form progress and more.   </span></p>
+        <ul class="nav secondary">
+	        <li><a href="https://www.mountvernonwa.gov/MyAccount" role="link" class="button" id="loggedOutToolbarSignInButton"><span>Website Sign In</span></a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#signedOutToolbarCreateProfileButton').keypress(function (e) { if (e.which === 0) return; $(this).click(); });
+        $('#signedOutToolbarCreateProfileButton').click(function (event) {
+        	event.preventDefault();
+        	window.location.href = '/MyAccount/ProfileCreate?from=url&url=/&dn=' + window.location.origin;
+        });
+
+			
+				$('#loggedOutToolbarSignInButton').click(function (event) {
+					event.preventDefault();
+					window.location.href = '/MyAccount/?from=url&url=' + encodeURIComponent(window.location.href.replace(window.location.origin, '')) + '&dn=' + window.location.host;
+				});
+			
+
+		if ('False' == 'True') {
+            $('#loggedOutToolbarSignInButton').hide();
+		}
+    })
+</script>
+<!-- End Signed Out Bar -->
+
+				</div>
+			<div id="bodyWrapper">
+				<div id="mainNavHolderMobile" class="mainNavHolderMobile"></div>
+				
+<div data-cprole="structuralContainer" id="bodyContainerTS">
+<!-- Header Container --><header data-cprole="structuralContainer" id="headerContainerTS" class="fixedTopTS">
+<div class="siteWrap2">
+<div data-cprole="contentContainer" id="searchTS">	<div id="cc423e5e20-a68f-4829-9a95-02790b74c81f" data-containerid="423e5e20-a68f-4829-9a95-02790b74c81f" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="b1bb1822-bfa4-4508-ac87-ea396cb2dbfa">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last id058047d4-9596-4c19-8efe-23d54a2278b7" style="" data-widgetcontainerid="058047d4-9596-4c19-8efe-23d54a2278b7">	
+<div data-widget-id="2c514e8f-81a0-48ad-bc35-378e00a68315" data-widget-controller-path="/Layout/WidgetSearch">
+	
+	<script defer type="text/javascript" src="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.js"></script>
+	<script defer src="/Areas/Layout/Assets/Scripts/Search.js" type="text/javascript"></script>
+	<script defer type="text/javascript">
+
+		$(document).ready(function () {
+			try {
+				$(".widgetSearchButton.widgetSearchButton2c514e8f-81a0-48ad-bc35-378e00a68315").click(function (e) {
+				e.preventDefault();
+					if (false||$("#ysnSearchOnlyDept2c514e8f-81a0-48ad-bc35-378e00a68315").is(':checked'))
+					{
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), Number(0));
+					}
+					else {
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), 0);
+					}
+			});
+			$("#searchField2c514e8f-81a0-48ad-bc35-378e00a68315").keypress(function (e) {
+				if (window.clipboardData) {
+					if (e.keyCode === 13) {
+						if ($("#ysnSearchOnlyDept2c514e8f-81a0-48ad-bc35-378e00a68315").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				} else {
+					if (e.which === 13) {
+						if ($("#ysnSearchOnlyDept2c514e8f-81a0-48ad-bc35-378e00a68315").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				}
+				return true;
+			});
+
+				if (true) {
+					var currentRequest = null;
+					var $searchField = $("#searchField2c514e8f-81a0-48ad-bc35-378e00a68315").autocomplete({
+						source: function (request, response) {
+							currentRequest = $.ajax({
+								url: '/Search/AutoComplete' + ($("#ysnSearchOnlyDept2c514e8f-81a0-48ad-bc35-378e00a68315").is(':checked') || false? '?departmentId=0' : ''),
+								dataType: "json",
+								timeout: 10000,
+								beforeSend: function () {
+									if (currentRequest != null) {
+										currentRequest.abort();
+									}
+								},
+								data:
+								{
+									term: request.term,
+								},
+								success: function (data) {
+									response(data);
+									$('.autoCompleteError').remove();
+								},
+								error: function (xmlhttprequest, textstatus, message) {
+									if (textstatus === "timeout") {
+										if ($("#searchField2c514e8f-81a0-48ad-bc35-378e00a68315").siblings('.autoCompleteError').length == 0)
+											$('<span class="autoCompleteError"><p class="alert error">Search autocomplete is currently not responding. Please try again later.</p></span>').insertAfter($("#searchField2c514e8f-81a0-48ad-bc35-378e00a68315"));
+									}
+								}
+							});
+						},
+						html: true,
+						delay: 500,
+						select: function (event, ui) {
+							$(this).val(ui.item.value);
+							$(this).next().click();
+						}
+					});
+
+					$searchField.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $("<li class=\"itemList\"></li>")
+							.data("ui-autocomplete-item", item)
+							.append("<a>" + item.label + "</a>")
+							.appendTo(ul);
+					};
+}
+}
+			catch(e) {} //we're going to eat this error. Autocomplete won't work but we dont wan't to break anything else on the page.
+		});
+	</script>
+
+	<section id="widgetPreviewSearch" class="widget widgetSearch skin15 widgetOptionSet26" style="display: block;" aria-label="Search">
+				<!-- For the button right and inside -->
+		<div class="widgetBody buttonRightInside">
+			<input class="widgetSearchBox widgetSearchBox2c514e8f-81a0-48ad-bc35-378e00a68315" cp5ph="true" id="searchField2c514e8f-81a0-48ad-bc35-378e00a68315" name="searchField" onchange="searchBtnApplyQuery();" placeholder="I'm looking for…" title="I'm looking for…" type="text" value="">
+						<a href="https://www.mountvernonwa.gov/Search/Results" id="btnSearchIcon" class="widgetSearchButton widgetSearchButton2c514e8f-81a0-48ad-bc35-378e00a68315" role="button"><img alt="Search button" class="imageHover" data-hover="/ImageRepository/Document?documentID=14223" data-image="/ImageRepository/Document?documentID=14224" src="images/460e3bd2c7f9f64e03d1d72318530f95e17020e20d7523602edbdded422718db"></a>
+
+			<label class="searchLabel" for="searchField2c514e8f-81a0-48ad-bc35-378e00a68315">Search</label>
+		</div>
+
+	</section>
+
+
+<style scoped>
+	  
+		.widgetSearch ::-webkit-input-placeholder {
+		color: #383838;
+	  }
+		.widgetSearch :-moz-placeholder { /* Firefox 18- */
+	   color: #383838;
+	}
+		.widgetSearch ::-moz-placeholder {  /* Firefox 19+ */
+	   color: #383838;
+	}
+	.widgetSearch :-ms-input-placeholder {
+	   color: #383838;
+	}
+	
+
+	.widgetSearch .widgetBody .widgetSearchBox2c514e8f-81a0-48ad-bc35-378e00a68315
+	{
+		color: #383838;
+		background-color: #E8E8E5;
+border: none;
+border-radius: 50px;
+height: 69px;
+font-family: Open Sans;
+padding: 0 67px 0 28px;
+	}
+	.widgetSearch .widgetBody .widgetSearchButton2c514e8f-81a0-48ad-bc35-378e00a68315
+	{
+		margin: 8.5px 8.5px 0 0;
+	}
+	.widgetSearch .widgetSearch-onlyDept2c514e8f-81a0-48ad-bc35-378e00a68315
+	{
+		display: inline-block;
+		color: #333;
+		
+		
+		 padding-top: 10px;
+	}
+	#ysnSearchOnlyDept2c514e8f-81a0-48ad-bc35-378e00a68315
+	{
+		position: relative;
+		top: .125em;
+	}
+
+</style>
+
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.css">
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.theme.min.css">
+
+
+
+<script type="text/javascript">
+	//Updates search icons href to have the correct queryString
+	function searchBtnApplyQuery() {
+		document.getElementById("btnSearchIcon").href = "/Search?searchPhrase=" + document.getElementById("searchField2c514e8f-81a0-48ad-bc35-378e00a68315").value;
+	}
+	</script>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+<nav data-cprole="nav" id="mainNav" class="siteNav mainNav" role="navigation">
+<ol id="mainNavMenu" data-parent="1" class="rootNavMenu" role="menu">
+<!--
+--><li id="MainItem27" class="topMenuItem" role="none" data-pageid="27" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavYourGovernment" class="navMainItem mainNavItem mainNavItem1" href="https://www.mountvernonwa.gov/27/Your-Government" target="_self">   Your Government </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem8" class="topMenuItem" role="none" data-pageid="8" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavDepartments" class="navMainItem mainNavItem mainNavItem2" href="https://www.mountvernonwa.gov/8/Departments" target="_self">   Departments </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem31" class="topMenuItem" role="none" data-pageid="31" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavCityServices" class="navMainItem mainNavItem mainNavItem3" href="https://www.mountvernonwa.gov/31/City-Services" target="_self">   City Services </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem35" class="topMenuItem" role="none" data-pageid="35" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavDoingBusiness" class="navMainItem mainNavItem mainNavItem4" href="https://www.mountvernonwa.gov/35/Doing-Business" target="_self">   Doing Business </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem9" class="topMenuItem" role="none" data-pageid="9" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavOurCommunity" class="navMainItem mainNavItem mainNavItem5" href="https://www.mountvernonwa.gov/9/Our-Community" target="_self">   Our Community </a>			<!--
+			--><!--
+			-->
+</li>
+<!---->
+</ol>
+
+
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded',function () {
+					var menuID = 'mainNavMenu';
+					var menuType = MAIN_MENU;
+
+					//setup menu manager properties for main menu
+					if (!menuManager.mobileMainNav && true)
+						menuManager.adjustMainItemsWidth('#' + menuID);
+					menuManager.isMainMenuEditable = false;
+					menuManager.mainMenuMaxSubMenuLevels = 4;
+					menuManager.setMOMMode(2, menuType);
+
+					//Init main menu
+					var setupDraggable = menuManager.isMainMenuEditable;
+					var urlToGetHiddenMenus = '/Pages/MenuMain/HiddenMainSubMenus?pageID=1&moduleID=&themeID=7&menuContainerID=mainNav';
+
+					menuManager.setupMenu(menuID, 'mainNav', menuType, setupDraggable, urlToGetHiddenMenus);
+					menuManager.mainMenuInit = true;
+					menuManager.mainMenuTextResizer = true;
+					if (1.00 > 0)
+						menuManager.mainMenuTextResizerRatio = 1.00;
+					if (window.isResponsiveEnabled)
+						menuManager.mainMenuReady.resolve();
+
+		});
+	</script>
+
+
+<aside data-cprole="megaMenu" id="megaMenu" class="megaMenu" style="display: none;"><input type="hidden" id="megaMenuPopupDirection" value="0"><input type="hidden" id="megaMenuWidthReference" value="0"><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu27" class="contentTop mainNavMegaMenu megaMenuContainer pageID_27 hidden" data-orientation="horizontal">	<div id="ccaae790f9-a1c4-4f99-84b6-4c2bdf8b0f19" data-containerid="aae790f9-a1c4-4f99-84b6-4c2bdf8b0f19" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu8" class="contentTop mainNavMegaMenu megaMenuContainer pageID_8 hidden" data-orientation="horizontal">	<div id="cc40db1a7f-a6d1-4f7d-8248-381476e516f9" data-containerid="40db1a7f-a6d1-4f7d-8248-381476e516f9" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu31" class="contentTop mainNavMegaMenu megaMenuContainer pageID_31 hidden" data-orientation="horizontal">	<div id="ccb0db2056-34fc-42f4-8f36-951e069d05d0" data-containerid="b0db2056-34fc-42f4-8f36-951e069d05d0" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu35" class="contentTop mainNavMegaMenu megaMenuContainer pageID_35 hidden" data-orientation="horizontal">	<div id="ccad8a0d7e-c17a-4974-804a-7d9d0a5196e7" data-containerid="ad8a0d7e-c17a-4974-804a-7d9d0a5196e7" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu9" class="contentTop mainNavMegaMenu megaMenuContainer pageID_9 hidden" data-orientation="horizontal">	<div id="cc9a60c248-ffd9-4ae5-b781-e45d542f3a59" data-containerid="9a60c248-ffd9-4ae5-b781-e45d542f3a59" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside></aside></nav>
+</div>
+</header><!-- Banner --><div data-cprole="structuralContainer" id="bannerContainerTS" class="noOverflowTS">
+<div data-cprole="banner" id="banner1">
+<div data-cprole="structuralContainer" id="bannerSizingTS">
+<div data-cprole="structuralContainer" id="bannerSearchTS">
+<div class="siteWrap2"><div data-cprole="banner" id="bannerLogoTS" class="bannerLogoTS empty">
+
+
+
+
+				<a id="bannerLogoTS-12" style="			display: block; text-align: center;
+" class="bannerObject" href="https://www.mountvernonwa.gov/" target="_self"><img alt="City of Mount Vernon" class="bannerObject" height="95" src="images/4a26b0b3c068e5f94b5b6d7e04bc212c44970503b1197fbd070f0f1317373571" width="1345"></a>
+</div></div>
+</div>
+</div>
+
+
+
+
+		<div id="bannerImagesJSON13" class="hidden"></div>
+		<div id="bannerSlideshowControls_banner1" class="bannerSlideshowControlsNew none " style="display:none">
+			<a id="arrowPrev_banner1" tabindex="0" class="arrowNew prev" aria-label="Banner Arrow Previous"><svg style=" " class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowLeft"></use></svg></a>
+			<a id="arrowNext_banner1" tabindex="0" class="arrowNew next" aria-label="Banner Arrow Next"><svg style=" " class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowRight"></use></svg></a>
+		</div>
+			<script type="text/javascript">
+				$(window).on("load", function () {
+					$.when(window.Pages.rwdSetupComplete)
+						.done(function () {
+							renderExternalBannerSlideshow('banner1',
+								{"BannerOptionID":13,"ThemeID":7,"SlotName":"banner1","Name":"Default","IsDefault":true,"BannerMode":2,"SlideShowSlideTiming":"5","SlideshowTransition":0,"SlideShowTransitionTiming":"1","ImageScale":true,"ImageAlignment":1,"ImageScroll":true,"MuteSound":true,"VideoType":0,"Status":40,"SlideshowControlsPosition":0,"SlideshowControlsAlignment":0,"SlideshowBannerControlsColorScheme":0,"DisplayVideoPauseButton":false,"VideoPauseButtonAlignment":1,"VideoPauseButtonControlsAlignment":0,"VideoPauseButtonStyle":"#FFFFFF","VideoPauseButtonBackgroundStyle":"#000000","VideoPauseButtonAlignmentClass":"alignRight viewport","DisplaySlideshowPauseButton":true,"SlideshowControlsColor":"#FFFFFF","SlideshowControlsBackgroundColor":"#000000","SlideshowPauseButtonClass":"isHidden","BannerImages":[{"BannerImageID":67,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=14201","Height":525,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":1,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":""},{"BannerImageID":68,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=14202","Height":525,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":2,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":""},{"BannerImageID":69,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=14203","Height":525,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":3,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":""},{"BannerImageID":70,"BannerOptionID":13,"FileName":"/ImageRepository/Document?documentID=14204","Height":525,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":4,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","AltText":""}],"BannerVideos":[{"BannerVideoID":9,"BannerOptionID":13,"VideoFileName":"","ImageFileName":"EmptyBannerBkg202208251326535386.png","IsLink":false,"LinkAddress":null,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/","VideoFileID":"00000000-0000-0000-0000-000000000000","ImageFileID":"00000000-0000-0000-0000-000000000000","VideoWidth":0,"VideoHeight":0,"ImageWidth":0,"ImageHeight":0,"LinkedVideoUrl":"","RecordStatus":0,"AltText":null}],"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135575200000)\/"},
+								'/App_Themes/2022 - Interior/Images/',
+								'Rotating');
+						});
+				});
+			</script>
+
+</div>
+</div>
+<!-- Content container --><div data-cprole="structuralContainer" id="mainContainerTS">
+<div class="siteWrap2"><div data-cprole="structuralContainer" id="mainWrapTS" class="mainWrap" role="main">
+<div data-cprole="structuralContainer" id="outerContentWrapTS" class="outerContentWrap">
+<div data-cprole="structuralContainer" id="contentWrapTS" class="contentWrap">
+<div data-cprole="breadCrumbs" id="breadCrumbs" class="breadCrumbContainer">		<ol class="semanticList breadCrumbs">
+			<li><a class="breadCrumb" href="https://www.mountvernonwa.gov/">Home</a></li>
+<li><a class="breadCrumb" href="https://www.mountvernonwa.gov/27/Your-Government">Your Government</a></li>
+<li id="currentBCPage" data-pageid="98">City Council</li>
+		</ol>
+
+	   
+    
+</div>
+<div data-cprole="mainContentContainer" id="moduleContent">
+	
+	<div id="page" class="moduleContentNew">
+		
+
+	<input id="hdnPageID" name="hdnPageID" type="hidden" value="98">
+	<input id="hdnParentID" name="hdnParentID" type="hidden" value="27">
+	<input id="hdnVersionID" name="hdnVersionID" type="hidden" value="11021">
+	<input id="pageMenuTitle" name="pageMenuTitle" type="hidden" value="City Council">
+	<input id="pageShowFeatureColumn" name="pageShowFeatureColumn" type="hidden" value="False">
+	<input id="hdnIsLayoutPage" name="hdnIsLayoutPage" type="hidden" value="False">
+	<input id="hdnPageStatus" name="hdnPageStatus" type="hidden" value="Published">
+
+				<h1 id="versionHeadLine" class="headline">
+
+City Council		</h1>
+	
+		<div id="cc3a25e4e6-1a28-459a-a74a-fa4dc2a09462" data-containerid="3a25e4e6-1a28-459a-a74a-fa4dc2a09462" class="pageContent cpGrid cpGrid24" data-smoothscrolling="True">
+			
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col6 first" style="" data-widgetcontainerid="7fbe8909-d913-4d31-9051-871005884e29">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id1a8194d2-35f5-466c-8eb8-7f7244609bef" style="" data-widgetcontainerid="1a8194d2-35f5-466c-8eb8-7f7244609bef">	
+
+<div class="widget image pageStyles" id="divImageOuter69e29420-123a-4215-91b7-9708d0fdf151" data-widget-id="69e29420-123a-4215-91b7-9708d0fdf151">
+    
+	<div class="widgetBody imageBorder" id="divImage69e29420-123a-4215-91b7-9708d0fdf151">				<a href="https://mountvernonwa.gov/879/Juan-Morales" target="_blank"><img src="images/66b573d6b7ee16c567bcb699ffff77c2b5a31fe8becd5f5d23f85b981d0983e7" alt="Councilmember Tercero" title="Councilmember Tercero"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last id8ab64a0f-31b1-4dc0-9809-d353f530ff0e" style="" data-widgetcontainerid="8ab64a0f-31b1-4dc0-9809-d353f530ff0e">	
+<div class="widget editor pageStyles narrow" id="divEditorb6d5bb87-31e6-4db9-93cb-ef933da7f286" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1" style="text-align: left;"><a aria-label="Juan Morales Opens in new window" href="https://mountvernonwa.gov/879/Navor-Tercero" rel="noopener" target="_blank">Navor Tercero</a></h2>
+<p style="text-align: left;">Ward 1<br>Term: 1/2024 - 12/2027</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'b6d5bb87-31e6-4db9-93cb-ef933da7f286'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col6" style="" data-widgetcontainerid="0caa5163-bee5-49bd-b125-77c6fd0350fd">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id96ff50ef-574e-4a3b-8efc-e6b96e7d316c" style="" data-widgetcontainerid="96ff50ef-574e-4a3b-8efc-e6b96e7d316c">	
+
+<div class="widget image pageStyles" id="divImageOuter43d8948c-6009-440e-97bd-a7efa7d2472c" data-widget-id="43d8948c-6009-440e-97bd-a7efa7d2472c">
+    
+	<div class="widgetBody imageBorder" id="divImage43d8948c-6009-440e-97bd-a7efa7d2472c">				<a href="http://www.mountvernonwa.gov/512/Iris-Carias" target="_blank"><img src="images/3069f8f243059e519bcb224c57de468f11c799e9357d5415a7a415257c76a331" alt="Councilmember Iris Carias" title="Councilmember Iris Carias"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last id1b83bb86-3719-46c8-8940-ed34d366be1c" style="" data-widgetcontainerid="1b83bb86-3719-46c8-8940-ed34d366be1c">	
+<div class="widget editor pageStyles narrow" id="divEditor09c500b2-4bbd-4c0d-a4fb-d0975a58516d" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1"><a href="http://www.mountvernonwa.gov/512/Iris-Carias" rel="noopener noreferrer" target="_blank">Iris Carias</a></h2>
+<p>Ward 1<br>Term: 1/2022 - 12/2025</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '09c500b2-4bbd-4c0d-a4fb-d0975a58516d'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col6" style="" data-widgetcontainerid="07ce812e-81fe-4563-9246-2bbd60cf697b">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id0bec9c85-d819-4105-bc54-a433ce11ca80" style="" data-widgetcontainerid="0bec9c85-d819-4105-bc54-a433ce11ca80">	
+
+<div class="widget image pageStyles" id="divImageOutere4158493-e8c3-4285-b1a8-9c737ca137d2" data-widget-id="e4158493-e8c3-4285-b1a8-9c737ca137d2">
+    
+	<div class="widgetBody imageBorder" id="divImagee4158493-e8c3-4285-b1a8-9c737ca137d2">				<a href="https://www.mountvernonwa.gov/513/Mark-Hulst" target="_self"><img src="images/2724448724927fbb12c2364d7b30444de72ab14e91f7e8a26051e9ca1d30a766" alt="Councilmember Vander Stoep" title="Councilmember Vander Stoep"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last id74614002-4a2c-4048-917b-5eee195f92ec" style="" data-widgetcontainerid="74614002-4a2c-4048-917b-5eee195f92ec">	
+<div class="widget editor pageStyles narrow" id="divEditord953b192-6fe4-4897-b01a-f13e92b97f04" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1"><a class="Hyperlink" href="https://www.mountvernonwa.gov/513/Andrew-VanderStoep">Andrew Vander Stoep</a></h2>
+<p>Ward 2<br>Term: 1/2024 - 12/2027</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'd953b192-6fe4-4897-b01a-f13e92b97f04'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col6 last" style="" data-widgetcontainerid="df8aed09-d6f1-4432-acab-c4f179eb6a59">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id3fd4483b-8baa-41da-86b1-bfbb42948a9d" style="" data-widgetcontainerid="3fd4483b-8baa-41da-86b1-bfbb42948a9d">	
+
+<div class="widget image pageStyles" id="divImageOuter2865b576-bf3c-4fcb-a557-1e300d0c7242" data-widget-id="2865b576-bf3c-4fcb-a557-1e300d0c7242">
+    
+	<div class="widgetBody imageBorder" id="divImage2865b576-bf3c-4fcb-a557-1e300d0c7242">				<a href="https://www.mountvernonwa.gov/514/Gary-Molenaar" target="_self"><img src="images/e9301ee4749b821c93ecec63269584effd049774cd36977bfc7149fc1863d699" alt="Councilmember Molenaar" title="Councilmember Molenaar"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last ide540ada2-9987-4386-8d2d-fb81017a2807" style="" data-widgetcontainerid="e540ada2-9987-4386-8d2d-fb81017a2807">	
+<div class="widget editor pageStyles narrow" id="divEditor39fa2838-98bd-4a00-97c0-dd4518224aab" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1"><a class="Hyperlink" href="https://www.mountvernonwa.gov/514/Gary-Molenaar" target="_self">Gary Molenaar</a></h2>
+<p>Ward 2<br>Term: 1/2022 - 12/2025</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '39fa2838-98bd-4a00-97c0-dd4518224aab'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col6 first" style="" data-widgetcontainerid="1c8e5164-99f8-4eed-96fa-82c168e73040">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id89d1d1f7-c485-44da-bd02-1599343e14a1" style="" data-widgetcontainerid="89d1d1f7-c485-44da-bd02-1599343e14a1">	
+
+<div class="widget image pageStyles" id="divImageOuter3cfeda89-5a27-4769-9fb4-d27ce425eae8" data-widget-id="3cfeda89-5a27-4769-9fb4-d27ce425eae8">
+    
+	<div class="widgetBody imageBorder" id="divImage3cfeda89-5a27-4769-9fb4-d27ce425eae8">				<a href="https://www.mountvernonwa.gov/880/Melissa-Beaton" target="_blank"><img src="images/19042d3ff46df246e64f90321fe08000bb52b7ade458272421efe6df292888e5" alt="Councilmember Melissa Beaton" title="Councilmember Melissa Beaton"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last idbd4ee61b-6e2f-4ff0-9b20-322cf7983ff6" style="" data-widgetcontainerid="bd4ee61b-6e2f-4ff0-9b20-322cf7983ff6">	
+<div class="widget editor pageStyles narrow" id="divEditor630f4204-6c8c-4db7-965a-bf65fa8d00c3" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1"><a href="https://www.mountvernonwa.gov/880/Melissa-Beaton" rel="noopener noreferrer" target="_blank">Melissa Beaton</a></h2>
+<p>Ward 3<br>Term: 1/2022 - 12/2025</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '630f4204-6c8c-4db7-965a-bf65fa8d00c3'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col6" style="" data-widgetcontainerid="27c829b7-91c8-4ca0-8eca-96a6da7cef34">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id91117188-783d-4405-8a68-9f420d45da16" style="" data-widgetcontainerid="91117188-783d-4405-8a68-9f420d45da16">	
+
+<div class="widget image pageStyles" id="divImageOuter2e88d926-503f-451e-ae51-2e0dd1d7c0e2" data-widget-id="2e88d926-503f-451e-ae51-2e0dd1d7c0e2">
+    
+	<div class="widgetBody imageBorder" id="divImage2e88d926-503f-451e-ae51-2e0dd1d7c0e2">				<a href="https://www.mountvernonwa.gov/517/Mary-Hudson" target="_blank"><img src="images/ebc0494e9ec0ef1688f3df1576486e56ebb4b1cffdd21c859f511c9d8886f877" alt="Councilmember Hudson" title="Councilmember Hudson"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last id3c1c0eee-3bce-4b49-abe9-43f22aec8989" style="" data-widgetcontainerid="3c1c0eee-3bce-4b49-abe9-43f22aec8989">	
+<div class="widget editor pageStyles narrow" id="divEditorfb094ed2-ae43-475d-ac59-5a38db745d4c" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1"><a class="Hyperlink" href="https://www.mountvernonwa.gov/517/Mary-Hudson" target="_self">Mary Hudson</a></h2>
+<p>Ward 3<br>1/2024 - 12/2027</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'fb094ed2-ae43-475d-ac59-5a38db745d4c'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col6" style="" data-widgetcontainerid="2569118b-59a3-4408-8e4e-bddb9a98d557">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id922d287d-7182-4540-b988-555e4be10cb8" style="" data-widgetcontainerid="922d287d-7182-4540-b988-555e4be10cb8">	
+
+<div class="widget image pageStyles" id="divImageOuter345dd8e0-6e7d-49fd-a201-8a4ea1293523" data-widget-id="345dd8e0-6e7d-49fd-a201-8a4ea1293523">
+    
+	<div class="widgetBody imageBorder" id="divImage345dd8e0-6e7d-49fd-a201-8a4ea1293523">				<a href="https://www.mountvernonwa.gov/881/Richard-Brocksmith" target="_blank"><img src="images/1dc092a89ee402f0e8cac3f35e8e5f5e73d8e8c70d7e97fc7af27e2514e8ec54" alt="Councilmember Brocksmith" title="Councilmember Brocksmith"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last id41df968e-9d85-4a3e-a9a9-533c0eccbee5" style="" data-widgetcontainerid="41df968e-9d85-4a3e-a9a9-533c0eccbee5">	
+<div class="widget editor pageStyles narrow" id="divEditor3b1761d2-7235-4bb7-92c0-0b185029da4e" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1"><a aria-label="Richard Brocksmith Opens in new window" href="https://www.mountvernonwa.gov/881/Richard-Brocksmith" rel="noopener noreferrer" target="_blank">Richard Brocksmith</a></h2>
+<p>Council At Large<br>1/2022 - 12/2025</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '3b1761d2-7235-4bb7-92c0-0b185029da4e'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col6 last" style="" data-widgetcontainerid="9d28ec5d-5a0c-462e-a426-330d052d54d0">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col6 first last id922544d7-7dac-46b5-8047-e989cf44e918" style="" data-widgetcontainerid="922544d7-7dac-46b5-8047-e989cf44e918">	
+
+<div class="widget image pageStyles" id="divImageOutercc893e67-f210-42d3-b008-20c02a93fa1f" data-widget-id="cc893e67-f210-42d3-b008-20c02a93fa1f">
+    
+	<div class="widgetBody imageBorder" id="divImagecc893e67-f210-42d3-b008-20c02a93fa1f">				<a href="https://mountvernonwa.gov/DocumentCenter/View/15324/2023-Ward-Map" target="_blank"><img src="images/c8f2aa06546245c7217392d781de5bffba9214407059d7f475e20d631a840e00" alt="2023 Ward Map" title="2023 Ward Map"></a>
+	</div></div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest wide">
+	
+	<div class="inner col col6 first last id04351ae9-f412-4952-8481-f64200f89cb7" style="" data-widgetcontainerid="04351ae9-f412-4952-8481-f64200f89cb7">	
+
+<div class="widget widgetSpacer" id="752eedf4-8d8f-4a77-a802-313be6d4af5e"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col6 first last id01371bfc-4d25-407f-a8ed-c889270fa5e6" style="" data-widgetcontainerid="01371bfc-4d25-407f-a8ed-c889270fa5e6">	
+<div class="widget editor pageStyles narrow" id="divEditor46b12e15-0052-4e97-8fca-da9a5c4fc9f9" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1" style="text-align: center;"><a href="https://mountvernonwa.gov/DocumentCenter/View/15324/2023-Ward-Map" target="_blank" rel="noopener" aria-label="City Council Ward Map Opens in new window">City Council Ward Map</a></h2>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '46b12e15-0052-4e97-8fca-da9a5c4fc9f9'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="26e3a88e-2c7d-4b35-8dba-56c7283bcc5c">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last idf13e3892-4c30-46c7-b726-f150e083ebb5" style="" data-widgetcontainerid="f13e3892-4c30-46c7-b726-f150e083ebb5">	
+<div class="widget editor pageStyles narrow" id="divEditorb283d727-ca6d-444a-a235-9629e1218687" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1">About City Council</h2>
+<p>The City Council is comprised of two members from each of the three wards within the city, and one that represents the city at-large. The Mount Vernon City Council is governed by <a href="" rel="noopener" target="_blank">MVMC Chapter 2.12</a> "City Council".</p>
+<p><br><span class="subhead1">Meetings</span><br>Councilmembers meet for regular Council Meetings on the second and fourth Wednesdays each month and for Study Sessions on the first and third Wednesdays. Please check the <a href="http://mountvernonwa.gov/AgendaCenter" rel="noopener" target="_blank">upcoming Council agenda</a> to confirm dates and times.<br><br>Hearing assistance equipment is available for use by the hearing impaired at City Council meetings. Please call the ADA Coordinator at (360) 336-6204 or <a href="mailto:michelem@mountvernonwa.gov">email the ADA Coordinator</a> to arrange for any special accommodations that you require. Click <a href="https://mountvernonwa.gov/936/ADA-Notice" rel="noopener" target="_blank">here</a> for additional ADA information.<br><br></p>
+<h2 class="subhead1">Agendas</h2>
+<p>Meeting agendas are available for public review <a href="https://www.mountvernonwa.gov/AgendaCenter/City-Council-4" target="_blank" rel="noopener">here</a>.</p>
+<p><br><span class="subhead1">Public Comment</span><br>Mount Vernon City Council values and encourages community input and looks forward to hearing from you. Public comment is any comment provided as part of a public meeting. Council public comment can be provided in-person or remotely during regular Council Meetings.<br><br>Interpretation services for Community Comments are available on request. Please contact the City Clerk at <a href="mailto:beckyj@mountvernonwa.gov">beckyj@mountvernonwa.gov</a> or 360-419-3253 at least two business days prior to the meeting if you would like an interpreter to share your comments with City Council.<br><br><strong>In-Person Comment</strong><br>In person speakers sign up the night of the meeting and will be called upon to speak. <br><br><strong>Remote Public Comment</strong><br>If you are unable to attend the meeting and would like to make your comments via Zoom, please submit a request to speak via email to <a href="mailto:communitycomments@mountvernonwa.gov">communitycomments@mountvernonwa.gov</a> or by telephone at (360) 336-6211. Requests must be received by 4pm the day of the Council meeting.<br><br><strong>Guidelines and Tips</strong></p>
+<ul>
+<li>Please limit comments to three (3) minutes or less.</li>
+<li>State your name and city of residence.</li>
+<li>Under normal circumstances, the Mayor and Council will not respond immediately to Community Comments. If you would like someone to follow up with you regarding the topic of your comments, please leave your name and contact information on the form at the entrance to Council Chambers.<br><br>
+</li>
+</ul>
+<h2 class="subhead1">Watch Council Live</h2>
+<p>A live television (TV10) and online (YouTube) feed of the meeting is available to the public:</p>
+<ul>
+<li>Comcast/Xfinity Channel 10</li>
+<li>
+<a href="https://www.youtube.com/channel/UCUob_hcQUmd4S93YkletdrA">https://www.youtube.com/channel/UCUob_hcQUmd4S93YkletdrA</a><br><br>
+</li>
+</ul>
+<p><strong><span class="subhead1">Contact City Council</span><br></strong>Email addresses for City Councilmembers can be found in the table above, leave a message at (360) 336-6211, or write to 910 Cleveland Avenue, Mount Vernon, WA 98273.</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'b283d727-ca6d-444a-a235-9629e1218687'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+		</div>
+
+	</div>
+
+	
+	<div class="newCP">
+
+	</div>
+</div>
+</div>
+<aside data-cprole="contentContainer" id="featureColumn" class="secondaryContent">	<div id="cc32e0ffe7-0394-4996-b54d-b9d517705ae5" data-containerid="32e0ffe7-0394-4996-b54d-b9d517705ae5" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div>
+<div data-cprole="structuralContainer" id="siteSidebarTS" class="siteSidebar">
+<aside data-cprole="contentContainer" id="sidebarContainer1TS">	<div id="cc17288664-3ce0-4b0c-8b62-df47a3613c3a" data-containerid="17288664-3ce0-4b0c-8b62-df47a3613c3a" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><nav data-cprole="nav" id="secondaryNav" class="siteNav secondaryNav">
+
+
+
+
+
+	<ol role="menu" id="secondaryMenusecondaryNav" data-parent="27" class="rootNavMenu accordionNav">
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem91" data-pageid="91">
+		<div class="accordionNavItem">
+			<a href="https://www.mountvernonwa.gov/91/Mayor" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Mayor</a>
+				<a href="https://www.mountvernonwa.gov/98/City-Council#" class="openAccordionNav accordionSecondaryNavItem" title="Expand Mayor Submenu"></a>
+		</div>
+					<ol role="menu" aria-hidden="true" class="accordionNavContainer accordionNavContainer--lvl1" style="display: none;" data-parent="91">
+						<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem681" data-pageid="681">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/681/Mission-Vision" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Mission &amp; Vision</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem94" data-pageid="94">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/94/Mayors-Coffee-Hour" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Mayor's Coffee Hour</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem95" data-pageid="95">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/95/Newsletter" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Newsletter</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem96" data-pageid="96">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/96/Organizational-Structure" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Organizational Structure</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem97" data-pageid="97">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/Archive.aspx?AMID=51" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Press Releases</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem933" data-pageid="933">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/933/Mount-Vernon-Library-Commons-Project" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Mount Vernon Library Commons Project</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1309" data-pageid="1309">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1309/Mount-Vernon-Affordable-Housing-Grant" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Mount Vernon Affordable Housing Grant</span></a>
+			</div>
+					</li>
+
+			</ol>
+	</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem98" data-pageid="98">
+		<div class="accordionNavItem">
+			<a href="https://www.mountvernonwa.gov/98/City-Council" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">City Council</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem100" data-pageid="100">
+		<div class="accordionNavItem">
+			<a href="https://www.mountvernonwa.gov/AgendaCenter/City-Council-4" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Agendas &amp; Minutes</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem99" data-pageid="99">
+		<div class="accordionNavItem">
+			<a href="https://www.mountvernonwa.gov/99/Boards-Commissions" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Boards &amp; Commissions</a>
+				<a href="https://www.mountvernonwa.gov/98/City-Council#" class="openAccordionNav accordionSecondaryNavItem" title="Expand Boards &amp; Commissions Submenu"></a>
+		</div>
+					<ol role="menu" aria-hidden="true" class="accordionNavContainer accordionNavContainer--lvl1" style="display: none;" data-parent="99">
+						<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem101" data-pageid="101">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/101/Arts-Commission" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Arts Commission</span></a>
+					<a href="https://www.mountvernonwa.gov/98/City-Council#" class="openAccordionNav accordionNavMenuItem" title="Expand Arts Commission Submenu"></a>
+			</div>
+							<ol role="menu" aria-hidden="true" class="accordionNavContainer accordionNavContainer--lvl2" style="display: none;" data-parent="101">
+							<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1129" data-pageid="1129">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1129/About-Us" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">About Us</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem498" data-pageid="498">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/498/Member-Duties-Responsibilities" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Member Duties &amp; Responsibilities</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem713" data-pageid="713">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/713/Arts-Commission-Board-Member-Vacancies" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Arts Commission Board Member Vacancies</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem499" data-pageid="499">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/499/Art-In-Mount-Vernon" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Art In Mount Vernon</span></a>
+					<a href="https://www.mountvernonwa.gov/98/City-Council#" class="openAccordionNav accordionNavMenuItem" title="Expand Art In Mount Vernon Submenu"></a>
+			</div>
+							<ol role="menu" aria-hidden="true" class="accordionNavContainer accordionNavContainer--lvl3" style="display: none;" data-parent="499">
+							<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem502" data-pageid="502">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/502/Alpha-Helix---Skagit-Transit-Station" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Alpha Helix - Skagit Transit Station</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem501" data-pageid="501">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/501/Mount-Vernon-Welcome-Sign--Kincaid-Third" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Mount Vernon Welcome Sign- Kincaid &amp; Third Streets</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem550" data-pageid="550">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/550/Jasper-Gates-Statue---First-and-Gates-St" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Jasper Gates Statue - First and Gates Streets</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem500" data-pageid="500">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/500/Locomotion---Skagit-Transit-Station" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Locomotion - Skagit Transit Station</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1006" data-pageid="1006">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1006/Blue-Square---Skagit-Riverwalk" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Blue Square - Skagit Riverwalk</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1009" data-pageid="1009">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1009/West-Side-Geese---West-Division-Street" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">West Side Geese - West Division Street</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1011" data-pageid="1011">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1011/Tulip-Dance---Skagit-Riverwalk-Park" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Tulip Dance - Skagit Riverwalk Park</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1012" data-pageid="1012">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1012/River-Keepers-Memorial---Skagit-Riverwal" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">River Keepers Memorial - Skagit Riverwalk</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1014" data-pageid="1014">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1014/Tulip-Stack---Downtown-Mount-Vernon" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Tulip Stack - Downtown Mount Vernon</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1015" data-pageid="1015">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1015/Valley-of-Our-Spirits---Skagit-Riverwalk" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Valley of Our Spirits - Skagit Riverwalk</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1021" data-pageid="1021">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1021/Butterfly---Kiwanis-Park" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Butterfly - Kiwanis Park</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1022" data-pageid="1022">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1022/Fern---Mount-Vernon-Library" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Fern - Mount Vernon Library</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1052" data-pageid="1052">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1052/Fish-Vane---Hillcrest-Park" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Fish Vane - Hillcrest Park</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1054" data-pageid="1054">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1054/Fractal-II-Goddess---Hillcrest-Park" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Fractal II:  Goddess - Hillcrest Park</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1055" data-pageid="1055">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1055/Halo---Hillcrest-Park" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Halo - Hillcrest Park</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1056" data-pageid="1056">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1056/Window---Hillcrest-Park" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Window - Hillcrest Park</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1057" data-pageid="1057">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1057/The-Guardian---Little-Mountain-Park" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">The Guardian - Little Mountain Park</span></a>
+			</div>
+					</li>
+
+				</ol>
+		</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem497" data-pageid="497">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/497/Contact-the-Arts-Commission" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Contact the Arts Commission</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1017" data-pageid="1017">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/DocumentCenter/View/11290/Mount-Vernon-Arts-Commission-Brochure---Art-On-Display" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">MVAC - Art on Display Brochure</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem1344" data-pageid="1344">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/1344/The-New-Old-Time-Chautauquas-Big-Vaudevi" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">The New Old Time Chautauqua's Big Vaudeville Variety Show</span></a>
+			</div>
+					</li>
+
+				</ol>
+		</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem102" data-pageid="102">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/102/Civil-Service" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Civil Service</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem105" data-pageid="105">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/105/Library-Board" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Library Board</span></a>
+			</div>
+					</li>
+		<li role="menuitem" aria-haspopup="true" class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem106" data-pageid="106">
+			<div class="accordionNavItem">
+				<a href="https://www.mountvernonwa.gov/130/Planning-Commission" target="_self" class="navMenuItem cpComponent" data-type="SecondaryMenuItem"><span lang="en">Planning Commission</span></a>
+			</div>
+					</li>
+
+			</ol>
+	</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem107" data-pageid="107">
+		<div class="accordionNavItem">
+			<a href="https://www.mountvernonwa.gov/129/Municipal-Code" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Municipal Code &amp; Amendments</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem561" data-pageid="561">
+		<div class="accordionNavItem">
+			<a href="https://www.mountvernonwa.gov/561/CDBG" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">CDBG</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem1273" data-pageid="1273">
+		<div class="accordionNavItem">
+			<a href="https://www.mountvernonwa.gov/1273/Social-Media" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Social Media</a>
+		</div>
+			</li>
+
+	</ol>
+
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			//setup menu manager properties for secondary menu
+			menuManager.isSideMenuEditable = false;
+			menuManager.sideMenuMaxSubMenuLevels = 4;
+			menuManager.sideMenuHasCustomLinks = false;
+		});
+	</script>
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			$('*[id^="SideItem"]').each(function () {
+				var ids = $('[id="' + this.id + '"]');
+				if (ids.length > 1)
+					$.each(ids, function (index, value) {
+						value.id = value.id + '_' + index;
+					});
+			});
+
+			$('.hasAccordionChildren .openAccordionNav').click(function (e) {
+				e.preventDefault();
+				showHideAccordionMenuForSecondaryNav($(this));
+			});
+
+			$("#secondaryNav .grippy").each(function () {
+				menuManager.setupDraggableElement($(this), SIDE_MENU, '#secondaryNav');
+			});
+
+			$("#secondaryNav li").each(function () {
+				menuManager.setupDroppableAccordionElement($(this), SIDE_MENU);
+			});
+		});
+	</script>
+
+
+
+</nav><aside data-cprole="contentContainer" id="sidebarContainer2TS">	<div id="cca7bf4fce-9a65-4ffc-b893-81959b469873" data-containerid="a7bf4fce-9a65-4ffc-b893-81959b469873" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div>
+</div></div>
+</div>
+<!-- GBs --><div data-cprole="structuralContainer" id="gbsContainerTS">
+<div class="siteWrap"><div data-cprole="contentContainer" id="gbsTS">	<div id="cc9543e1eb-7f1c-46f9-9432-877ce95f7075" data-containerid="9543e1eb-7f1c-46f9-9432-877ce95f7075" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="35">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col8 first" style="" data-widgetcontainerid="149c4868-139f-426a-8804-10cc5e6845ed">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id58b18882-81e9-4076-be31-d8ad828ce21a" style="" data-widgetcontainerid="58b18882-81e9-4076-be31-d8ad828ce21a">	
+<div data-widget-id="226e8d21-f07b-4c26-bcff-5939fc0d2322" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget226e8d21-f07b-4c26-bcff-5939fc0d2322" class="widget widgetGraphicLinks skin18 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:23em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.mountvernonwa.gov/agendacenter" target="_self" class="fancyButton fancyButton315 ">
+		<span>
+			<span><span class="text">Agendas &amp; Minutes</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton315.fancyButton:link,.fancyButton315.fancyButton:visited, .fancyButton315div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton315.fancyButton:hover,.fancyButton315.fancyButton:focus,.fancyButton315.fancyButton:active,.fancyButton315.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton315.fancyButton:link > span,.fancyButton315.fancyButton:visited > span, .fancyButton315div.fancyButton > span{
+}
+.fancyButton315.fancyButton:hover > span,.fancyButton315.fancyButton:focus > span,.fancyButton315.fancyButton:active > span,.fancyButton315.fancyButton.hover > span{
+}
+.fancyButton315.fancyButton .text{
+	color: #ffffff;
+	font-size: 1.1em;
+	font-family: "Open Sans";
+	padding-top: 70px;
+	font-weight: 600;
+	text-decoration: none;
+	padding-top: 70px;
+	background-image: url('/ImageRepository/Document?documentID=14207');
+	background-repeat: no-repeat;
+	background-position: center 10px ;
+transition: all .3s ease-in-out;
+}
+.fancyButton315.fancyButton:hover .text,.fancyButton315.fancyButton:focus .text,.fancyButton315.fancyButton:active .text,.fancyButton315.fancyButton.hover .text{
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=14208');
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="http://www.governmentjobs.com/careers/mtvernonwa" target="_self" class="fancyButton fancyButton316 ">
+		<span>
+			<span><span class="text">Employment</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton316.fancyButton:link,.fancyButton316.fancyButton:visited, .fancyButton316div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton316.fancyButton:hover,.fancyButton316.fancyButton:focus,.fancyButton316.fancyButton:active,.fancyButton316.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton316.fancyButton:link > span,.fancyButton316.fancyButton:visited > span, .fancyButton316div.fancyButton > span{
+}
+.fancyButton316.fancyButton:hover > span,.fancyButton316.fancyButton:focus > span,.fancyButton316.fancyButton:active > span,.fancyButton316.fancyButton.hover > span{
+}
+.fancyButton316.fancyButton .text{
+	color: #ffffff;
+	font-size: 1.1em;
+	font-family: "Open Sans";
+	padding-top: 70px;
+	font-weight: 600;
+	text-decoration: none;
+	padding-top: 70px;
+	background-image: url('/ImageRepository/Document?documentID=14209');
+	background-repeat: no-repeat;
+	background-position: center 10px ;
+transition: all .3s ease-in-out;
+}
+.fancyButton316.fancyButton:hover .text,.fancyButton316.fancyButton:focus .text,.fancyButton316.fancyButton:active .text,.fancyButton316.fancyButton.hover .text{
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=14210');
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8" style="" data-widgetcontainerid="7787330d-d724-470d-863e-c68e6ac646cc">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last idc84de628-288c-453b-bee0-60c3bc343f6e" style="" data-widgetcontainerid="c84de628-288c-453b-bee0-60c3bc343f6e">	
+<div data-widget-id="3b808445-ea50-4b00-866b-c78feb13c319" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget3b808445-ea50-4b00-866b-c78feb13c319" class="widget widgetGraphicLinks skin18 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:23em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.youtube.com/channel/UCUob_hcQUmd4S93YkletdrA" target="_self" class="fancyButton fancyButton317 ">
+		<span>
+			<span><span class="text">Video Center</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton317.fancyButton:link,.fancyButton317.fancyButton:visited, .fancyButton317div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton317.fancyButton:hover,.fancyButton317.fancyButton:focus,.fancyButton317.fancyButton:active,.fancyButton317.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton317.fancyButton:link > span,.fancyButton317.fancyButton:visited > span, .fancyButton317div.fancyButton > span{
+}
+.fancyButton317.fancyButton:hover > span,.fancyButton317.fancyButton:focus > span,.fancyButton317.fancyButton:active > span,.fancyButton317.fancyButton.hover > span{
+}
+.fancyButton317.fancyButton .text{
+	color: #ffffff;
+	font-size: 1.1em;
+	font-family: "Open Sans";
+	padding-top: 70px;
+	font-weight: 600;
+	text-decoration: none;
+	padding-top: 70px;
+	background-image: url('/ImageRepository/Document?documentID=14217');
+	background-repeat: no-repeat;
+	background-position: center 10px ;
+transition: all .3s ease-in-out;
+}
+.fancyButton317.fancyButton:hover .text,.fancyButton317.fancyButton:focus .text,.fancyButton317.fancyButton:active .text,.fancyButton317.fancyButton.hover .text{
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=14218');
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://ci-mountvernon-wa.smartgovcommunity.com/Public/Home" target="_self" class="fancyButton fancyButton318 ">
+		<span>
+			<span><span class="text">Online Permitting</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton318.fancyButton:link,.fancyButton318.fancyButton:visited, .fancyButton318div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton318.fancyButton:hover,.fancyButton318.fancyButton:focus,.fancyButton318.fancyButton:active,.fancyButton318.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton318.fancyButton:link > span,.fancyButton318.fancyButton:visited > span, .fancyButton318div.fancyButton > span{
+}
+.fancyButton318.fancyButton:hover > span,.fancyButton318.fancyButton:focus > span,.fancyButton318.fancyButton:active > span,.fancyButton318.fancyButton.hover > span{
+}
+.fancyButton318.fancyButton .text{
+	color: #ffffff;
+	font-size: 1.1em;
+	font-family: "Open Sans";
+	padding-top: 70px;
+	font-weight: 600;
+	text-decoration: none;
+	padding-top: 70px;
+	background-image: url('/ImageRepository/Document?documentID=14211');
+	background-repeat: no-repeat;
+	background-position: center 10px ;
+transition: all .3s ease-in-out;
+}
+.fancyButton318.fancyButton:hover .text,.fancyButton318.fancyButton:focus .text,.fancyButton318.fancyButton:active .text,.fancyButton318.fancyButton.hover .text{
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=14212');
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8 last" style="" data-widgetcontainerid="2f8bd190-77f5-4137-bd86-914da2112d54">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id514e9118-58b5-44c7-9058-d120f89d7a03" style="" data-widgetcontainerid="514e9118-58b5-44c7-9058-d120f89d7a03">	
+<div data-widget-id="5f8f4a8a-5a68-45bd-ac5c-c89c0d1a1a97" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget5f8f4a8a-5a68-45bd-ac5c-c89c0d1a1a97" class="widget widgetGraphicLinks skin18 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:23em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row   wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.mountvernonwa.gov/175/Library" target="_self" class="fancyButton fancyButton319 ">
+		<span>
+			<span><span class="text">Public Library</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton319.fancyButton:link,.fancyButton319.fancyButton:visited, .fancyButton319div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton319.fancyButton:hover,.fancyButton319.fancyButton:focus,.fancyButton319.fancyButton:active,.fancyButton319.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton319.fancyButton:link > span,.fancyButton319.fancyButton:visited > span, .fancyButton319div.fancyButton > span{
+}
+.fancyButton319.fancyButton:hover > span,.fancyButton319.fancyButton:focus > span,.fancyButton319.fancyButton:active > span,.fancyButton319.fancyButton.hover > span{
+}
+.fancyButton319.fancyButton .text{
+	color: #ffffff;
+	font-size: 1.1em;
+	font-family: "Open Sans";
+	padding-top: 70px;
+	font-weight: 600;
+	text-decoration: none;
+	padding-top: 70px;
+	background-image: url('/ImageRepository/Document?documentID=14213');
+	background-repeat: no-repeat;
+	background-position: center 10px ;
+transition: all .3s ease-in-out;
+}
+.fancyButton319.fancyButton:hover .text,.fancyButton319.fancyButton:focus .text,.fancyButton319.fancyButton:active .text,.fancyButton319.fancyButton.hover .text{
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=14214');
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://ipn.paymentus.com/cp/cmv" target="_self" class="fancyButton fancyButton320 ">
+		<span>
+			<span><span class="text">Utility Billing</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton320.fancyButton:link,.fancyButton320.fancyButton:visited, .fancyButton320div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton320.fancyButton:hover,.fancyButton320.fancyButton:focus,.fancyButton320.fancyButton:active,.fancyButton320.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton320.fancyButton:link > span,.fancyButton320.fancyButton:visited > span, .fancyButton320div.fancyButton > span{
+}
+.fancyButton320.fancyButton:hover > span,.fancyButton320.fancyButton:focus > span,.fancyButton320.fancyButton:active > span,.fancyButton320.fancyButton.hover > span{
+}
+.fancyButton320.fancyButton .text{
+	color: #ffffff;
+	font-size: 1.1em;
+	font-family: "Open Sans";
+	padding-top: 70px;
+	font-weight: 600;
+	text-decoration: none;
+	padding-top: 70px;
+	background-image: url('/ImageRepository/Document?documentID=14215');
+	background-repeat: no-repeat;
+	background-position: center 10px ;
+transition: all .3s ease-in-out;
+}
+.fancyButton320.fancyButton:hover .text,.fancyButton320.fancyButton:focus .text,.fancyButton320.fancyButton:active .text,.fancyButton320.fancyButton.hover .text{
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=14216');
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+<!-- Calendar/Carousel --><!-- <div data-cpRole="structuralContainer" id="homeContainer1">
+    <div class="siteWrap2">
+      <div data-cpRole="contentContainer" id="homeContent1a"></div>
+    </div>
+  </div> --><!-- Footer --><footer data-cprole="structuralContainer" id="footerContainerTS">
+<div class="siteWrap"><div data-cprole="contentContainer" id="footerTS">	<div id="cc15f97c20-7390-4a5b-8a4f-507802dded90" data-containerid="15f97c20-7390-4a5b-8a4f-507802dded90" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="50">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col5 first" style="" data-widgetcontainerid="ff21f8d5-1d1e-4ddf-b811-3f813f87d3b5">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col5 first last ida9490f79-4e1e-4c23-8a4b-1bb34bd1f2a4" style="" data-widgetcontainerid="a9490f79-4e1e-4c23-8a4b-1bb34bd1f2a4">	
+    <div data-widget-id="12126d23-2ae9-4ac9-ba31-89cf027f2929" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdv12126d23-2ae9-4ac9-ba31-89cf027f2929" class="widget widgetInfoAdvanced skin17 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="header12126d23-2ae9-4ac9-ba31-89cf027f2929">
+			<header class="widgetHeader" id="header12126d23-2ae9-4ac9-ba31-89cf027f2929">
+		<div class="">
+					<h3>Contact Us</h3>
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row  wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>City of Mount Vernon<br>910 Cleveland Avenue<br>Mount Vernon, WA 98273</p>
+<p>Phone: <a href="tel:3603366211">360-336-6211</a><br>Fax: <a href="tel:3603360623">360-336-0623</a><br><a href="mailto:mvmayor@mountvernonwa.gov">Email Us</a><br><a href="https://www.mountvernonwa.gov/Directory.aspx">More contact info &gt;</a></p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv12126d23-2ae9-4ac9-ba31-89cf027f2929 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col1" style="" data-widgetcontainerid="3fc54db7-5c16-463f-a7d2-b76b7e670dc4">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col1 first last id76540b16-012f-454f-b532-659ff5979486" style="" data-widgetcontainerid="76540b16-012f-454f-b532-659ff5979486">	
+
+<div class="widget widgetSpacer" id="d174d7e4-8ff2-423e-adc5-96d798199b2d"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col4" style="" data-widgetcontainerid="10955c24-7bfd-44d0-b1b7-d108210be976">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col4 first last id0920391c-4aa3-464f-a0f7-c67eb6297334" style="" data-widgetcontainerid="0920391c-4aa3-464f-a0f7-c67eb6297334">	
+<div data-widget-id="eea0a96f-fb2c-4090-b7a3-a24db2a78d98" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidgeteea0a96f-fb2c-4090-b7a3-a24db2a78d98" class="widget widgetGraphicLinks skin17 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+			<h3>Follow </h3>
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid1 ">	
+			<div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://twitter.com/mountvernonwa" target="_self" class="fancyButton fancyButton322 ">
+		<span>
+			<span><span class="text">Twitter</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton322.fancyButton:link,.fancyButton322.fancyButton:visited, .fancyButton322div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton322.fancyButton:hover,.fancyButton322.fancyButton:focus,.fancyButton322.fancyButton:active,.fancyButton322.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton322.fancyButton:link > span,.fancyButton322.fancyButton:visited > span, .fancyButton322div.fancyButton > span{
+}
+.fancyButton322.fancyButton:hover > span,.fancyButton322.fancyButton:focus > span,.fancyButton322.fancyButton:active > span,.fancyButton322.fancyButton.hover > span{
+}
+.fancyButton322.fancyButton .text{
+	color: #f7fafd;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-left: 27px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 27px;
+	background-image: url('/ImageRepository/Document?documentID=14221');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 18px;
+}
+.fancyButton322.fancyButton:hover .text,.fancyButton322.fancyButton:focus .text,.fancyButton322.fancyButton:active .text,.fancyButton322.fancyButton.hover .text{
+	color: #d2d37f;
+	font-family: Open Sans;
+	font-weight: 600;
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left center;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.facebook.com/Mt-Vernon-WA-154457071245372/" target="_self" class="fancyButton fancyButton321 ">
+		<span>
+			<span><span class="text">Facebook</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton321.fancyButton:link,.fancyButton321.fancyButton:visited, .fancyButton321div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton321.fancyButton:hover,.fancyButton321.fancyButton:focus,.fancyButton321.fancyButton:active,.fancyButton321.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton321.fancyButton:link > span,.fancyButton321.fancyButton:visited > span, .fancyButton321div.fancyButton > span{
+}
+.fancyButton321.fancyButton:hover > span,.fancyButton321.fancyButton:focus > span,.fancyButton321.fancyButton:active > span,.fancyButton321.fancyButton.hover > span{
+}
+.fancyButton321.fancyButton .text{
+	color: #f7fafd;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-left: 27px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 27px;
+	background-image: url('/ImageRepository/Document?documentID=14219');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 18px;
+}
+.fancyButton321.fancyButton:hover .text,.fancyButton321.fancyButton:focus .text,.fancyButton321.fancyButton:active .text,.fancyButton321.fancyButton.hover .text{
+	color: #d2d37f;
+	font-family: Open Sans;
+	font-weight: 600;
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left center;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.mountvernonwa.gov/facebook" target="_self" class="fancyButton fancyButton323 ">
+		<span>
+			<span><span class="text">Instagram</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton323.fancyButton:link,.fancyButton323.fancyButton:visited, .fancyButton323div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton323.fancyButton:hover,.fancyButton323.fancyButton:focus,.fancyButton323.fancyButton:active,.fancyButton323.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton323.fancyButton:link > span,.fancyButton323.fancyButton:visited > span, .fancyButton323div.fancyButton > span{
+}
+.fancyButton323.fancyButton:hover > span,.fancyButton323.fancyButton:focus > span,.fancyButton323.fancyButton:active > span,.fancyButton323.fancyButton.hover > span{
+}
+.fancyButton323.fancyButton .text{
+	color: #f7fafd;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-left: 27px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 27px;
+	background-image: url('/ImageRepository/Document?documentID=14220');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 18px;
+}
+.fancyButton323.fancyButton:hover .text,.fancyButton323.fancyButton:focus .text,.fancyButton323.fancyButton:active .text,.fancyButton323.fancyButton.hover .text{
+	color: #d2d37f;
+	font-family: Open Sans;
+	font-weight: 600;
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left center;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.youtube.com/channel/UCUob_hcQUmd4S93YkletdrA" target="_self" class="fancyButton fancyButton324 ">
+		<span>
+			<span><span class="text">YouTube</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton324.fancyButton:link,.fancyButton324.fancyButton:visited, .fancyButton324div.fancyButton{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton324.fancyButton:hover,.fancyButton324.fancyButton:focus,.fancyButton324.fancyButton:active,.fancyButton324.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.fancyButton324.fancyButton:link > span,.fancyButton324.fancyButton:visited > span, .fancyButton324div.fancyButton > span{
+}
+.fancyButton324.fancyButton:hover > span,.fancyButton324.fancyButton:focus > span,.fancyButton324.fancyButton:active > span,.fancyButton324.fancyButton.hover > span{
+}
+.fancyButton324.fancyButton .text{
+	color: #f7fafd;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-left: 27px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 27px;
+	background-image: url('/ImageRepository/Document?documentID=14222');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 18px;
+}
+.fancyButton324.fancyButton:hover .text,.fancyButton324.fancyButton:focus .text,.fancyButton324.fancyButton:active .text,.fancyButton324.fancyButton.hover .text{
+	color: #d2d37f;
+	font-family: Open Sans;
+	font-weight: 600;
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left center;
+
+
+}
+</style>
+
+ </div>
+<!--
+			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col1" style="" data-widgetcontainerid="fd03df1e-792a-4358-be32-dfc39c987cc2">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col1 first last id4fa4b95f-97d5-49b8-b26a-b138a1b4f863" style="" data-widgetcontainerid="4fa4b95f-97d5-49b8-b26a-b138a1b4f863">	
+
+<div class="widget widgetSpacer" id="a2f53e7a-ec8f-4627-8fd9-76d64fa12796"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col9" style="" data-widgetcontainerid="5d7331f1-fc55-4115-8b2d-5728dbb4f69e">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col9 first last idf60b7919-f23f-44cd-a459-4279e54540ec" style="" data-widgetcontainerid="f60b7919-f23f-44cd-a459-4279e54540ec">	
+	<div data-widget-id="7bc365b6-4825-4dde-924e-832d1e98bff4" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink7bc365b6-4825-4dde-924e-832d1e98bff4" class="widget widgetQuickLinks skin17 widgetOptionSet17 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader7bc365b6-4825-4dde-924e-832d1e98bff4">
+			<header class="widgetHeader" id="quickLinksHeader7bc365b6-4825-4dde-924e-832d1e98bff4">
+		<div class="">
+					<h3><a style="" href="https://www.mountvernonwa.gov/QuickLinks.aspx?CID=11">Quick Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.mountvernonchamber.com/" target="_blank" aria-label="Mount Vernon Chamber of Commerce opens in new window">Mount Vernon Chamber of Commerce</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.skagit.org/" target="_blank" aria-label="Economic Development Alliance of Skagit County (EDASC) opens in new window">Economic Development Alliance of Skagit County (EDASC)</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.visitskagitvalley.com/" target="_blank" aria-label="Skagit County Tourism opens in new window">Skagit County Tourism</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.mountvernondowntown.org/" target="_blank" aria-label="Mount Vernon Downtown Association opens in new window">Mount Vernon Downtown Association</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.portofskagit.com/" target="_blank" aria-label="Port of Skagit County opens in new window">Port of Skagit County</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="http://www.skagitcounty.net/Departments/Home" target="_blank" aria-label="Skagit County opens in new window">Skagit County</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.mountvernonwa.gov/list.aspx" target="_self">Notify Me</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col1" style="" data-widgetcontainerid="dc4e2ba2-7957-4d42-8e22-eda51f84c71b">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col1 first last id5e475954-31e1-4e69-992b-50c6c56ecd56" style="" data-widgetcontainerid="5e475954-31e1-4e69-992b-50c6c56ecd56">	
+
+<div class="widget widgetSpacer" id="bee68eed-b6ee-4e68-a396-bab72b34ef07"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col3 last" style="" data-widgetcontainerid="3f09ab65-b02e-444d-8bb9-365a5a55c49b">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col3 first last ide9e59e6d-2e32-488a-a2a2-bdcfe965867a" style="" data-widgetcontainerid="e9e59e6d-2e32-488a-a2a2-bdcfe965867a">	
+	<div data-widget-id="9d0e5da4-0205-4fba-910f-ef0e14aa5a6a" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink9d0e5da4-0205-4fba-910f-ef0e14aa5a6a" class="widget widgetQuickLinks skin17 widgetOptionSet17 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader9d0e5da4-0205-4fba-910f-ef0e14aa5a6a">
+			<header class="widgetHeader" id="quickLinksHeader9d0e5da4-0205-4fba-910f-ef0e14aa5a6a">
+		<div class="">
+					<h3><a style="" href="https://www.mountvernonwa.gov/QuickLinks.aspx?CID=105">Site Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://mountvernonwa.gov/936/ADA-Notice" target="_blank" aria-label="ADA Notice opens in new window">ADA Notice</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://mountvernonwa-gov.translate.goog/?_x_tr_sl=auto&amp;_x_tr_tl=es&amp;_x_tr_hl=en" target="_self">Google Translate</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.mountvernonwa.gov/sitemap" target="_self">Site Map</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.mountvernonwa.gov/directory.aspx" target="_self">Contact Us</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.mountvernonwa.gov/Accessibility" target="_self">Accessibility</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.mountvernonwa.gov/site/copyright" target="_self">Copyright Notices</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</footer><!-- Powered By --><div data-cprole="structuralContainer" id="poweredByContainerTS">
+<div class="siteWrap"><div data-cprole="contentContainer" id="poweredByTS">	<div id="cc55458318-dbfb-44da-8a60-df589d72ba39" data-containerid="55458318-dbfb-44da-8a60-df589d72ba39" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="b3254030-5ca8-47a7-b2c7-1a52b2bdafac">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last id41d17cb3-dbd2-467e-9100-f7d5872007da" style="" data-widgetcontainerid="41d17cb3-dbd2-467e-9100-f7d5872007da">	
+ 
+	<div data-widget-id="3d48b716-5495-4e45-b676-a5bcd921950f" data-modulename="customHtml" id="widgetCustomHtml3d48b716-5495-4e45-b676-a5bcd921950f" class="widget widgetCustomHtml skin20 narrow">
+	<div class="widgetBody pageStyles" id="widgetBody3d48b716-5495-4e45-b676-a5bcd921950f">
+		<div id="customHtml3d48b716-5495-4e45-b676-a5bcd921950f"><div>
+<style>
+  /* CP icon */
+  .cpBylineIconTS {
+    color: #232324;
+  }
+  /* CP Text */
+  .cpBylineTextTS,
+  .cpBylineTextTS a:link {
+    color: #232324;
+  }
+
+  .cpBylineTS {
+    text-align: center;
+  }
+  
+  .cpBylineIconTS {
+    fill: currentColor;
+    width: 39px;
+    height: 26px;
+    display: inline;
+    vertical-align: middle;
+  }
+
+  .p {
+    fill: #AF282E;
+  }
+</style>
+
+<div class="widgetItem cpBylineTS">
+  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100" class="cpBylineIconTS">
+    <path class="c" d="M73.4,23.2h-19v16.7h19c2.8,0,5,2.2,5,5c0,2.8-2.2,5-5,5h-19v28.4h5.5l11.3-11.7h2.2c11.9,0,21.6-9.7,21.6-21.6C95,33,85.3,23.2,73.4,23.2"></path>
+    <path class="p" d="M45.8,66.5H26.6C14.7,66.5,5,56.8,5,44.9C5,33,14.7,23.2,26.6,23.2h19.1v16.7H26.6c-2.8,0-5,2.2-5,5c0,2.8,2.2,5,5,5h19.1V66.5z"></path>
+  </svg>
+  <span class="cpBylineTextTS">Government Websites by <a href="https://connect.civicplus.com/referral">CivicPlus®</a></span>
+</div>
+</div></div>
+	</div>
+	</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+</div>
+
+			</div>
+		</div>
+	</div>
+
+<link href="/745732998.css" rel="stylesheet" type="text/css">
+
+<div tabindex="0"></div>
+<div id="SplashMessageWrapper" class="cp-Splash-wrapper">
+	<div role="dialog" aria-labelledby="cp-Splash-title" aria-describedby="editorContentDesc" aria-modal="true" tabindex="-1" id="SplashMessage" class="hidden cp-Splash cp-Splash--modal is-open">
+		<div class="cp-Splash-header">
+			<span class="cp-Splash-title" id="cp-Splash-title">Loading</span>
+			<button class="cp-Splash-Btn cp-Splash-close" aria-label="Close this modal" title="Close this window">
+				<svg id="iconClose" viewbox="0 0 25 25">
+					<polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon>
+				</svg>
+			</button>
+		</div>
+		<div class="cp-Splash-body">
+			<div class="cp-Splash-Prose editorContent fr-view fr-element" id="editorContentDesc">
+				<!-- Content from the Froala Editor will go here. -->
+				Loading
+			</div>
+		</div>
+		<div class="cp-Splash-footer">
+			<button class="cp-Splash-Btn cp-Splash-Btn--NoShow">Do Not Show Again</button>
+			<button class="cp-Splash-Btn cp-Splash-Btn--Close">Close</button>
+		</div>
+	</div>
+</div>
+<div tabindex="0"></div>
+
+<script src="/Assets/Scripts/APIClient.js"></script>
+<script src="/Assets/Mystique/Shared/Scripts/Moment/Moment.min.js"></script>
+<script src="/Assets/Scripts/SplashModal/SplashModalRender.js"></script>
+<script>
+
+		$(document).ready(function () {
+			var filter = {
+				targetId: '98',
+				targetType: 1
+			}
+
+			new SplashModalRender().triggerRender(filter);
+		});
+</script>
+
+	
+	
+	
+	
+	
+
+
+
+	
+
+
+
+
+
+
+	<script src="/-700606170.js" type="text/javascript"></script>
+	<!-- Fixed Nav Adjustment -->
+<script>
+  function getValueTS(elem, attr) {
+    const val = elem.css(attr);
+    if (val === undefined) return undefined;
+    const num = parseInt(val, 10);
+    if (num === NaN) return undefined;
+    return num;
+  }
+
+  function clampTS(number, min, max) {
+    return Math.min(Math.max(number, min), max);
+  }
+
+  function isPageEditingTS() {
+    return (
+      $("#doneEditing").length > 0 || // In live edit
+      typeof DesignCenter !== "undefined" // In theme manager
+    );
+  }
+
+  const bgColorRegexTS = /rgba\((\d+), (\d+), (\d+), (\d*\.?\d*)\)/;
+  function isTransparentTS(elem) {
+    const bg = elem.css('background-color');
+    if (typeof bg !== "string" || !bg.startsWith('rgba(')) return false;
+    const matchState = bg.match(bgColorRegexTS);
+    if (!matchState || matchState.length !== 5) return false;
+    const alpha = parseFloat(matchState[4], 10);
+    if (!(alpha >= 0 && alpha < 1)) return false;
+    return true;
+  }
+
+  function iterateLeftpads(cb) {
+    const containersTS = $("[class^='siteWrap'],[class*=' siteWrap']");
+    for (let i = 0; i < containersTS.length; i++) {
+      const containerTS = containersTS[i];
+      // Skip the body container and anything with data-skip-leftpad
+      if (
+        containerTS.id !== "bodyContainerTS" &&
+        containerTS.getAttribute('data-skip-leftpad') === null
+      ) {
+        cb(containerTS);
+      }
+    }
+  }
+
+  const anchor = $("#divToolbars");
+  const anchor2 = $("#headerContainerTS")
+
+  // Outer banner padding (push banner down)
+  const outerSizingTS = $("#bannerContainerTS");
+  // Inner banner padding (push banner content down) - Transparent header OR on attaching headers
+  const innerSizingTS = $("#bannerSizingTS");
+  const bodyContainerTS = $("#bodyContainerTS");
+
+  const forceUnfixClassTS = "forceUnfixTS";
+
+  const fixedTopTS = $(".fixedTopTS");
+  const fixedBottomTS = $(".fixedBottomTS");
+  const fixedLeftTS = $(".fixedLeftTS");
+
+  var initialTopTS;
+  var topAttachTS;
+  if (fixedTopTS && fixedTopTS.length === 1) {
+    initialTopTS = getValueTS(fixedTopTS, 'top');
+    const attachment = fixedTopTS.attr('data-attach');
+    if (attachment) topAttachTS = $("#" + attachment);
+    if (!topAttachTS || topAttachTS.length !== 1) topAttachTS = undefined;
+  }
+
+  function resizeAdjustmentTS() {
+    const editing = isPageEditingTS();
+
+    // Fixed top script
+    (function () {
+      if (!fixedTopTS || fixedTopTS.length !== 1 || initialTopTS === undefined) return;
+
+      if (editing) {
+        fixedTopTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedTopTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      const topPosition = fixedTopTS.css('position');
+      if (topPosition === 'fixed') {
+        if (topAttachTS) {
+          scrollAdjustmentTS();
+        } else {
+          const anchorHeight = anchor.outerHeight() - 1;
+          fixedTopTS.css('top', anchorHeight + initialTopTS);
+        }
+      } else {
+        fixedTopTS.css('top', initialTopTS);
+      }
+
+      if (topPosition === 'fixed' || topPosition === 'absolute') {
+        // Bump the banner content down
+        if (isTransparentTS(fixedTopTS)) {
+          innerSizingTS.css('padding-top', initialTopTS + fixedTopTS.outerHeight() - 1);
+          outerSizingTS.css('padding-top', '');
+
+          try {
+            window.Pages.onResizeHandlersExecute();
+          } catch (e) { }
+        } else {
+          outerSizingTS.css('padding-top', fixedTopTS.outerHeight() - 1);
+          innerSizingTS.css('padding-top', '');
+        }
+      } else {
+        innerSizingTS.css('padding-top', '');
+        outerSizingTS.css('padding-top', '');
+      }
+    })();
+
+    // Fixed bottom script
+    (function () {
+      if (!fixedBottomTS || fixedBottomTS.length === 0) return;
+
+      // If the widget has gone narrow, force unfix
+      if (editing || fixedBottomTS.outerHeight() > 200) {
+        fixedBottomTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedBottomTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      if (fixedBottomTS.css('position') === 'fixed') {
+        bodyContainerTS.css('padding-bottom', fixedBottomTS.outerHeight());
+      } else {
+        bodyContainerTS.css('padding-bottom', '');
+      }
+    })();
+
+    // Fixed left script
+    (function () {
+      if (!fixedLeftTS || fixedLeftTS.length === 0) return;
+
+      if (editing) {
+        fixedLeftTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedLeftTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      if (fixedLeftTS.css('position') === 'fixed') {
+        const anchorHeight = anchor.outerHeight() - 1;
+        fixedLeftTS.css('top', anchorHeight);
+        const leftBoundingTS = fixedLeftTS[0].getBoundingClientRect();
+        iterateLeftpads(function (containerTS) {
+          const containerBoundingTS = containerTS.getBoundingClientRect();
+          if (containerBoundingTS.left <= leftBoundingTS.right) {
+            $(containerTS).css('padding-left', leftBoundingTS.width + 16);
+          }
+        });
+      } else {
+        fixedLeftTS.css('top', '');
+        iterateLeftpads(function (containerTS) {
+          $(containerTS).css('padding-left', '');
+        });
+      }
+    })();
+  }
+
+  function scrollAdjustmentTS() {
+    if (!fixedTopTS || fixedTopTS.length !== 1 || !topAttachTS || topAttachTS.length !== 1) return;
+    const topPosition = fixedTopTS.css('position');
+    if (topPosition === 'fixed' || topPosition === 'absolute') {
+      const anchorBounding = anchor[0].getBoundingClientRect();
+      const attachBounding = topAttachTS[0].getBoundingClientRect();
+      const scrollTop = $(window).scrollTop();
+
+      fixedTopTS.css('top', Math.max(anchorBounding.bottom - 1, attachBounding.bottom));
+    } else {
+      fixedTopTS.css('top', initialTopTS);
+    }
+  }
+
+  $(window).load(function () {
+    setTimeout(function () {
+      resizeAdjustmentTS();
+    }, 350);
+
+    $(window).scroll(function () {
+      scrollAdjustmentTS();
+    });
+
+    var adjustTimeoutTS;
+    $(window).resize(function () {
+      clearTimeout(adjustTimeoutTS);
+      adjustTimeoutTS = setTimeout(function () {
+        resizeAdjustmentTS();
+      }, 350);
+    });
+
+    $.when(window.Pages.angularToolbarComplete).done(function () {
+      resizeAdjustmentTS();
+    });
+  });
+</script>
+<!-- End Fixed Nav Adjustment -->
+
+
+	<script type="text/javascript">
+		$(function () {
+			document.cookie = "responsiveGhost=0; path=/";
+		});
+		$(window).on("load", function () {
+			$('body').addClass('doneLoading').removeClass('hideContent');
+
+			if ($('#404Content').length > 0)
+				$('div#bodyWrapper').css('padding', '0px');
+		});
+	</script>
+
+	<noscript>
+		<style>
+			body.hideContent {
+				opacity: 1 !important;
+			}
+		</style>
+	</noscript>
+
+		
+<div style="display: none;">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+		<symbol id="iconArrow--left" viewbox="0 0 25 25">
+			<title>Arrow Left</title>
+			<polygon style="fill:currentcolor" points="18.044,25 19.498,23.545 8.409,12.454 19.408,1.455 17.954,0 5.502,12.452"></polygon>
+		</symbol>
+
+		<symbol id="iconArrow--right" viewbox="0 0 25 25">
+			<title>Arrow Right</title>
+			<polygon style="fill:currentcolor" points="6.957,0 5.502,1.455 16.591,12.546 5.592,23.545 7.047,25 19.498,12.548"></polygon>
+		</symbol>
+
+	</svg>
+</div>
+	<script type="text/javascript">loadCSS('//fonts.googleapis.com/css?family=Alumni+Sans:100,100italic,200,200italic,300,300italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic,italic,regular|Balsamiq+Sans:700,700italic,italic,regular|Montserrat:500,600,700,regular|Open+Sans:300,300italic,500,500italic,600,600italic,700,700italic,800,800italic,italic,regular|Roboto:100,100italic,300,300italic,500,500italic,700,700italic,900,900italic,italic,regular|Ropa+Sans:italic,regular|');</script>
+	
+
+	<div class="hidden activeWidgetSkinComponentsOnPageJson">[]</div>
+		<div style="display: none;">
+			<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+				<symbol id="iconSlideshowArrowLeft" viewbox="0 0 22.68 40">
+					<title>Slideshow Left Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M20,40a2.67,2.67,0,0,1-1.9-.79L.79,21.9a2.68,2.68,0,0,1,0-3.79L18.1.79a2.68,2.68,0,1,1,3.79,3.79L6.47,20,21.89,35.42A2.68,2.68,0,0,1,20,40Z"></path>
+					</g>
+				</symbol>
+				<symbol id="iconSlideshowArrowRight" viewbox="0 0 22.68 40">
+					<title>Slideshow Right Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M2.68,0a2.67,2.67,0,0,1,1.9.79L21.89,18.1a2.68,2.68,0,0,1,0,3.79L4.58,39.21A2.68,2.68,0,0,1,.79,35.42L16.21,20,.79,4.58A2.68,2.68,0,0,1,2.68,0Z"></path>
+					</g>
+				</symbol>
+			</svg>
+		</div>
+	
+	
+
+	<div id="root-picker-outlet"></div>
+</body>
+</html>

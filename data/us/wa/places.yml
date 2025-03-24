@@ -201,6 +201,7 @@ places:
   scraper_misc:
     city_id: 148
     population: 35800
+  last_city_scrape_run: '2025-03-24'
 - place: walla_walla
   website: https://www.wallawallawa.gov/
   scraper_misc:

@@ -1,0 +1,62 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:mount_vernon
+people:
+- name: Navor Tercero
+  position: council_member
+  position_misc: ward_1
+  phone_number: ''
+  image: images/66b573d6b7ee16c567bcb699ffff77c2b5a31fe8becd5f5d23f85b981d0983e7
+  email: ''
+  website: https://mountvernonwa.gov/879/Navor-Tercero
+- name: Iris Carias
+  position: council_member
+  position_misc: ward_1
+  phone_number: ''
+  image: images/3069f8f243059e519bcb224c57de468f11c799e9357d5415a7a415257c76a331
+  email: ''
+  website: http://www.mountvernonwa.gov/512/Iris-Carias
+- name: Andrew Vander Stoep
+  position: council_member
+  position_misc: ward_2
+  phone_number: ''
+  image: images/2724448724927fbb12c2364d7b30444de72ab14e91f7e8a26051e9ca1d30a766
+  email: ''
+  website: https://www.mountvernonwa.gov/513/Andrew-VanderStoep
+- name: Gary Molenaar
+  position: council_member
+  position_misc: ward_2
+  phone_number: ''
+  image: images/e9301ee4749b821c93ecec63269584effd049774cd36977bfc7149fc1863d699
+  email: ''
+  website: https://www.mountvernonwa.gov/514/Gary-Molenaar
+- name: Melissa Beaton
+  position: council_member
+  position_misc: ward_3
+  phone_number: ''
+  image: images/19042d3ff46df246e64f90321fe08000bb52b7ade458272421efe6df292888e5
+  email: ''
+  website: https://www.mountvernonwa.gov/880/Melissa-Beaton
+- name: Mary Hudson
+  position: council_member
+  position_misc: ward_3
+  phone_number: ''
+  image: images/ebc0494e9ec0ef1688f3df1576486e56ebb4b1cffdd21c859f511c9d8886f877
+  email: ''
+  website: https://www.mountvernonwa.gov/517/Mary-Hudson
+- name: Richard Brocksmith
+  position: council_member
+  position_misc: council_at_large
+  phone_number: ''
+  image: images/1dc092a89ee402f0e8cac3f35e8e5f5e73d8e8c70d7e97fc7af27e2514e8ec54
+  email: ''
+  website: https://www.mountvernonwa.gov/881/Richard-Brocksmith
+- name: Peter Donovan
+  position: mayor
+  position_misc: ''
+  phone_number: "(360) 336-6211"
+  image: images/f48de2110b06ffa093264f45b196efb8b7ee90d848fcc3e8bfb4170c9059ac2b
+  email: mvmayor@mountvernonwa.gov
+  website: https://www.mountvernonwa.gov/91/Mayor
+sources:
+- https://www.mountvernonwa.gov/98/City-Council
+- https://www.mountvernonwa.gov/91/Mayor
