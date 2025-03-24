@@ -63,9 +63,14 @@ module Scrapers
       end
 
       document.css("a").each do |link|
+        # ignore if the link is a mailto link
         href = link["href"]&.strip # Trim whitespace from href
         next unless href
+        next if href.starts_with?("mailto:")
         next if href.ends_with?(".xml", ".json", ".csv", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx")
+
+        # Skip URLs with non-ASCII characters
+        next unless href.ascii_only? # Skip if href contains non-ASCII characters
 
         # Encode the URL to ensure it is ASCII only
         href = URI::DEFAULT_PARSER.escape(href)

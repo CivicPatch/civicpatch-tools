@@ -117,106 +117,32 @@ namespace :city_scrape do
 
     state_city_entry = validate_fetch_inputs(state, city)
 
-    Scrapers::City.new
     openai_service = Services::Openai.new
     data_fetcher = Scrapers::DataFetcher.new
 
     puts "Extracting city info for #{city.capitalize}, #{state.upcase}..."
 
-    destination_dir, cache_destination_dir = prepare_directories(state, city)
-
-    city_directory = {
-      "ocd_id" => "ocd-division/country:us/state:#{state}/place:#{city}",
-      "people" => [],
-      "sources" => []
-    }
-
-    website = state_city_entry["website"]
-    source_dirs = []
+    prepare_directories(state, city)
+    updated_city_directory = initialize_city_directory(state, city)
 
     search_engines = %w[manual brave]
     search_result_urls = []
-    search_pointer = 0
+    source_dirs = []
 
     search_engines.each do |engine|
-      # add unique urls only
-      new_results = get_candidate_city_directory_urls(engine, state, city, website)
-      search_result_urls.concat(new_results).uniq!
+      search_result_urls = fetch_search_results(engine, state, city, state_city_entry["website"], search_result_urls)
 
-      puts "Search engine #{engine} found #{new_results.count} urls"
-      puts new_results.join("\n")
+      success, source_dirs = process_search_results(search_result_urls,
+                                                    openai_service,
+                                                    state,
+                                                    city,
+                                                    updated_city_directory,
+                                                    source_dirs)
 
-      while search_pointer < search_result_urls.count
-        url = search_result_urls[search_pointer]
-        search_pointer += 1
-
-        council_member_count = city_directory["people"].select { |person| person["position"] == "council_member" }.count
-        city_leader_count = city_directory["people"].select do |person|
-          %w[mayor].include?(person["position"])
-        end.count
-
-        break if council_member_count > 1 && city_leader_count.positive? # TODO: needs more "legit" rule?
-
-        puts "Fetching #{url}"
-        candidate_dir = prepare_candidate_dir(cache_destination_dir, search_pointer)
-        content_file = fetch_content(data_fetcher, url, candidate_dir)
-
-        unless content_file
-          puts "❌ Error extracting content from #{url}"
-          next
-        end
-
-        updated_city_info = extract_city_info(openai_service, state, city, content_file, url)
-
-        # append to chat.txt - for debugging
-        File.write(PathHelper.project_path("chat.txt"), updated_city_info.to_yaml, mode: "a")
-
-        next unless updated_city_info && updated_city_info["people"].present?
-
-        new_people = people_with_names(updated_city_info["people"])
-
-        next unless new_people.present?
-
-        city_directory["people"] = merge_people_lists(
-          city_directory["people"], new_people
-        )
-        city_directory["people"] = city_directory["people"].map do |person|
-          person.sort_by { |key, _| key }.to_h
-        end
-
-        # Ensure that each person has a position before sorting
-        city_directory["people"] = city_directory["people"].sort_by do |person|
-          # Sort by position in the specified order, then by position_misc
-          position_priority = { "mayor" => 1, "council_president" => 2, "council_member" => 3 }
-          [
-            position_priority.fetch(person["position"], 4),
-            person["position_misc"] || "",
-            person["name"]
-          ]
-        end
-
-        city_directory["sources"] << url
-
-        source_dirs << candidate_dir
-      end
+      break if success
     end
 
-    if city_directory["people"].length > 1 # maybe needs a more "legit" rule?
-      update_city_directory(
-        state,
-        city,
-        city_directory,
-        destination_dir,
-        source_dirs
-      )
-      FileUtils.rm_rf(cache_destination_dir)
-      puts "✅ Successfully extracted city info"
-      puts "Data saved to: #{PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))}"
-      exit 0 # Exit if successful
-    else
-      puts "❌ Error: No valid city info extracted"
-      exit 1
-    end
+    finalize_city_directory(state, city, updated_city_directory, source_dirs)
   end
 
   desc "Generate PR comment for city directory"
@@ -368,7 +294,8 @@ namespace :city_scrape do
     updated_places.each do |place|
       existing_place = state_directory["places"].find { |p| p["place"] == place["place"] }
       if existing_place
-        existing_place.merge!(place)
+        new_place = existing_place.merge(place)
+        state_directory["places"] = state_directory["places"].map { |p| p["place"] == place["place"] ? new_place : p }
       else
         state_directory["places"] << place
       end
@@ -413,8 +340,6 @@ namespace :city_scrape do
     FileUtils.mkdir_p(destination_dir)
     FileUtils.mkdir_p(cache_destination_dir)
     FileUtils.rm_rf(PathHelper.project_path(File.join("data", "us", state, city, "city_scrape_sources")))
-
-    [destination_dir, cache_destination_dir]
   end
 
   def fetch_content(data_fetcher, url, candidate_dir)
@@ -439,19 +364,19 @@ namespace :city_scrape do
   def update_city_directory(
     state,
     city,
-    city_directory_content,
-    destination_dir,
+    updated_city_directory,
     source_dirs
   )
+    city_directory = PathHelper.project_path(File.join("data", "us", state, city))
     update_state_places(state, [{
                           "place" => city,
                           "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d")
                         }])
 
-    sources_destination_dir = PathHelper.project_path(File.join(destination_dir, "city_scrape_sources"))
+    sources_destination_dir = PathHelper.project_path(File.join(city_directory, "city_scrape_sources"))
     FileUtils.mkdir_p(sources_destination_dir)
 
-    images_dir = PathHelper.project_path(File.join(destination_dir, "images"))
+    images_dir = PathHelper.project_path(File.join(city_directory, "images"))
     FileUtils.mkdir_p(images_dir)
 
     source_dirs.each do |source_dir|
@@ -464,9 +389,9 @@ namespace :city_scrape do
       FileUtils.mv(source_dir, sources_destination_dir)
     end
 
-    city_info_file = PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))
+    city_info_file = PathHelper.project_path(File.join(city_directory, "directory.yml"))
 
-    File.write(city_info_file, city_directory_content.to_yaml)
+    File.write(city_info_file, updated_city_directory.to_yaml)
   end
 
   def people_with_names(people)
@@ -499,5 +424,87 @@ namespace :city_scrape do
 
     # Convert the hash back to an array
     people_hash.values
+  end
+
+  def initialize_city_directory(state, city)
+    {
+      "ocd_id" => "ocd-division/country:us/state:#{state}/place:#{city}",
+      "people" => [],
+      "sources" => []
+    }
+  end
+
+  def fetch_search_results(engine, state, city, website, existing_urls)
+    new_results = get_candidate_city_directory_urls(engine, state, city, website)
+    existing_urls.concat(new_results).uniq!
+
+    puts "Search engine #{engine} found #{new_results.count} urls"
+    puts new_results.join("\n")
+
+    existing_urls
+  end
+
+  def process_search_results(
+    search_result_urls,
+    openai_service,
+    state, city,
+    updated_city_directory,
+    source_dirs)
+    city_directory = PathHelper.project_path(File.join("data", "us", state, city))
+    cache_destination_dir = PathHelper.project_path(File.join(city_directory, "cache"))
+
+    search_pointer = 0
+
+    data_fetcher = Scrapers::DataFetcher.new
+
+    while search_pointer < search_result_urls.count
+      url = search_result_urls[search_pointer]
+      search_pointer += 1
+
+      puts "Fetching #{url}"
+      candidate_dir = prepare_candidate_dir(cache_destination_dir, search_pointer)
+      content_file = fetch_content(data_fetcher, url, candidate_dir)
+
+      next unless content_file
+
+      page_city_info = extract_city_info(openai_service, state, city, content_file, url)
+
+      next unless page_city_info && page_city_info["people"].present?
+      
+      source_dirs << candidate_dir
+
+      update_city_directory_with_info(updated_city_directory, page_city_info, url)
+
+      council_member_count = updated_city_directory["people"].select { |person| person["position"] == "council_member" }.count
+      city_leader_count = updated_city_directory["people"].select { |person| %w[mayor].include?(person["position"]) }.count
+
+      puts "council_member_count: #{council_member_count}, city_leader_count: #{city_leader_count}"
+      return [true, source_dirs] if council_member_count > 1 && city_leader_count.positive?
+
+    end
+
+    [false, source_dirs]
+  end
+
+  def update_city_directory_with_info(city_directory, page_city_info, url)
+    new_people = people_with_names(page_city_info["people"])
+    return unless new_people.present?
+
+    city_directory["people"] = merge_people_lists(city_directory["people"], new_people)
+    city_directory["sources"] << url
+  end
+
+  def finalize_city_directory(state, city, updated_city_directory, source_dirs)
+    cache_directory = PathHelper.project_path(File.join("data", "us", state, city, "cache"))
+    if updated_city_directory["people"].length > 1
+      update_city_directory(state, city, updated_city_directory, source_dirs)
+      FileUtils.rm_rf(cache_directory)
+      puts "✅ Successfully extracted city info"
+      puts "Data saved to: #{PathHelper.project_path(File.join("data", "us", state, city, "directory.yml"))}"
+      exit 0 # Exit if successful
+    else
+      puts "❌ Error: No valid city info extracted"
+      exit 1
+    end
   end
 end

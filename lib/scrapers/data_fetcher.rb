@@ -106,6 +106,12 @@ module Scrapers
       nokogiri_html.css("a").each do |link|
         next if link["href"].blank?
 
+        # ignore if the link is a mailto link
+        next if link["href"].starts_with?("mailto:")
+
+        # remove non-ascii characters
+        link["href"] = link["href"].gsub(/[^\x00-\x7F]/, "")
+
         link["href"] = format_url(link["href"])
 
         begin

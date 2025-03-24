@@ -56,7 +56,7 @@ module Scrapers
 
     def self.urls_without_segments(urls, segments)
       urls.select do |url|
-        url_segments = url.split("/")
+        url_segments = url.split("/").map(&:downcase)
         url_segments.none? { |segment| segments.include?(segment) }
       end
     end

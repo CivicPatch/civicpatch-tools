@@ -22,6 +22,8 @@ module Services
       )
       results_content = JSON.parse(results.body)
 
+      return [] if results_content["web"].blank?
+
       url_text_pairs = results_content["web"]["results"].map do |result|
         {
           "url" => result["url"],
