@@ -223,7 +223,9 @@ namespace :city_scrape do
   task :get_pr_comment, [:state, :city, :branch_name] do |_t, args|
     state = args[:state]
     city = args[:city]
-    github_sha = args[:github_sha]
+    branch_name = args[:branch_name]
+
+    image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/data/us/#{state}/#{city}"
 
     # Assuming you have a method to fetch the city data
     city_data = fetch_city_directory(state, city)
@@ -241,7 +243,7 @@ namespace :city_scrape do
             **Email:** #{person["email"]}
             **Phone:** #{person["phone_number"]}
             **Website:** [Link](#{person["website"]})
-            ![Image](data/us/#{state}/#{city}/#{person["image"]}?raw=true&ref=#{github_sha})
+            ![Image](#{image_url}?raw=true)
         PERSON
       end.join("\n")}
     MARKDOWN
