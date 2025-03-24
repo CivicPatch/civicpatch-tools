@@ -186,6 +186,7 @@ places:
   scraper_misc:
     city_id: 123
     population: 38230
+  last_city_scrape_run: '2025-03-24'
 - place: wenatchee
   website: https://www.wenatcheewa.gov/
   scraper_misc:

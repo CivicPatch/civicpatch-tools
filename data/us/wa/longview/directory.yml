@@ -1,0 +1,54 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:longview
+people:
+- name: Spencer Boudreau
+  position: mayor
+  position_misc: ''
+  phone_number: ''
+  image: images/abd0250913d563d623f9b225b15fa9609ded2da4ea6bf0278de60b9570c05f04
+  email: ''
+  website: https://www.mylongview.com/Directory.aspx?EID=109
+- name: Erik Halvorson
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: images/82b0e2c439277587dd5f3fb87d890bca1748a6e9060d4faedd6170f8dcc27c33
+  email: ''
+  website: https://www.mylongview.com/Directory.aspx?EID=120
+- name: Ruth Kendall
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: images/06c9b09abda96e1a95af51e78e6c96bc34648d955c82f51436acd92eacdd8624
+  email: ''
+  website: https://www.mylongview.com/629/Ruth-Kendall
+- name: Kalei LaFave
+  position: council_president
+  position_misc: mayor_pro-tem
+  phone_number: ''
+  image: images/df3eaa177239aabfa9824984462dd7dfb2d05d17938cfbacad0b1fb5202bc209
+  email: ''
+  website: https://www.mylongview.com/Directory.aspx?EID=121
+- name: MaryAlice Wallis
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: images/83ca57f1fd8d951c1e887c31ca2c7fba0927eac4205fa3f02b738dfd60b881c1
+  email: ''
+  website: https://www.mylongview.com/Directory.aspx?EID=83
+- name: Angie Wean
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: images/4c30ce577c4da90e8561aeeb0459e46fc6893199e419150774913521d515e66b
+  email: ''
+  website: https://www.mylongview.com/Directory.aspx?EID=108
+- name: Keith Young
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: images/186a263fc7d3dfe02c1a40af99ad0c12670a8c3eebd53572b55e89ee8e8aa606
+  email: ''
+  website: https://www.mylongview.com/895/Keith-Young
+sources:
+- https://www.mylongview.com/497/City-Council
