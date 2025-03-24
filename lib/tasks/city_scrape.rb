@@ -165,7 +165,7 @@ namespace :city_scrape do
         image_markdown = if person["image"].present?
                            image_url = "#{base_image_url}/#{person["image"]}?raw=true"
                            <<~IMAGE
-                             ![Image](#{image_url})
+                             <img src="#{image_url}" width="150" />)
                            IMAGE
                          else
                            "" # Ensure image_markdown is an empty string if no image is present
