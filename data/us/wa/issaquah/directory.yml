@@ -1,0 +1,53 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:issaquah
+people:
+- name: Mary Lou Pauly
+  position: mayor
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor
+- name: Lindsey Walsh
+  position: council_president
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President
+- name: Zach Hall
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember
+- name: Kelly Jiang
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember
+- name: Russell Joe
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember
+- name: Barbara de Michele
+  position_misc: deputy_council_president
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-President
+- name: Chris Reh
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/532/Chris-Reh-Councilmember
+- name: Tola Marts
+  position: council_member
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.issaquahwa.gov/534/Tola-Marts-Councilmember
+sources:
+- https://www.issaquahwa.gov/316/City-Council

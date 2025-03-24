@@ -176,6 +176,7 @@ places:
   scraper_misc:
     city_id: 101
     population: 41500
+  last_city_scrape_run: '2025-03-24'
 - place: lynnwood
   website: https://www.lynnwoodwa.gov/Home
   scraper_misc:

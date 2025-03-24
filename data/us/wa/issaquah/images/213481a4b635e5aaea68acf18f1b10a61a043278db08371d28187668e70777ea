@@ -1,0 +1,10 @@
+<svg id="Search" xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55">
+  <circle id="Ellipse_16" data-name="Ellipse 16" cx="27.5" cy="27.5" r="27.5" fill="#fff"/>
+  <g id="vuesax_outline_search-normal" data-name="vuesax/outline/search-normal" transform="translate(-412 -172)">
+    <g id="search-normal">
+      <path id="Vector" d="M10.25,20.5A10.25,10.25,0,1,1,20.5,10.25,10.264,10.264,0,0,1,10.25,20.5Zm0-19A8.75,8.75,0,1,0,19,10.25,8.76,8.76,0,0,0,10.25,1.5Z" transform="translate(429.25 189.25)" fill="#21558a"/>
+      <path id="Vector-2" data-name="Vector" d="M2.748,3.5a.742.742,0,0,1-.53-.22l-2-2A.75.75,0,0,1,1.278.218l2,2a.754.754,0,0,1,0,1.06A.742.742,0,0,1,2.748,3.5Z" transform="translate(447.253 207.253)" fill="#21558a"/>
+      <path id="Vector-3" data-name="Vector" d="M0,0H24V24H0Z" transform="translate(428 188)" fill="none" opacity="0"/>
+    </g>
+  </g>
+</svg>
