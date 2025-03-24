@@ -171,13 +171,13 @@ namespace :city_scrape do
                            "" # Ensure image_markdown is an empty string if no image is present
                          end
         <<~PERSON
-          * ## **Name:** #{person["name"]}
-            **Position:** #{person["position"]}
-            **Position Misc:** #{person["position_misc"]}
-            **Email:** #{person["email"]}
-            **Phone:** #{person["phone_number"]}
-            **Website:** [Link](#{person["website"]})
-            #{image_markdown}
+          ## **Name:** #{person["name"]}
+          **Position:** #{person["position"]}
+          **Position Misc:** #{person["position_misc"]}
+          **Email:** #{person["email"]}
+          **Phone:** #{person["phone_number"]}
+          **Website:** [Link](#{person["website"]})
+          #{image_markdown}
         PERSON
       end.join("\n")}
     MARKDOWN
