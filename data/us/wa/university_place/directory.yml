@@ -1,0 +1,55 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:university_place
+people:
+- name: Javier H. Figueroa
+  position: mayor
+  position_misc: mayor_2024_to_current
+  phone_number: 253.566.5656
+  image: images/ffa84dba997413658572872aad76d6881be3f0d6b1eb9d7673afd04e92baad6d
+  email: jfigueroa@CityofUP.com
+  website: https://www.cityofup.com/280/Mayor-Javier-Figueroa
+- name: Edward Wood
+  position_misc: mayor_pro_tem
+  phone_number: 253.677.5707
+  image: ''
+  email: ewood@cityofup.com
+  website: https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood
+  position: council_member
+- name: Frank Boykin
+  position_misc: council_member
+  phone_number: 253.566.5656
+  image: ''
+  email: fboykin@cityofup.com
+  website: https://www.cityofup.com/281/Council-Member-Frank-Boykin
+  position: council_member
+- name: Steve Worthington
+  position_misc: council_member
+  phone_number: 253.565.4855
+  image: ''
+  email: Sworthington@cityofup.com
+  website: https://www.cityofup.com/279/Council-Member-Steve-Worthington
+  position: council_member
+- name: Denise McCluskey
+  position_misc: council_member
+  phone_number: 253.566.5656
+  image: ''
+  email: DMcCluskey@CityofUP.com
+  website: https://www.cityofup.com/285/Council-Member-Denise-McCluskey
+  position: council_member
+- name: Stan Flemming
+  position_misc: council_member
+  phone_number: 253.566.5656
+  image: ''
+  email: stanflemming@cityofup.com
+  website: https://www.cityofup.com/284/Council-Member-Stan-Flemming
+  position: council_member
+- name: Melanie Grassi
+  position_misc: council_member
+  phone_number: 253.566.5656
+  image: ''
+  email: mgrassi@cityofup.com
+  website: https://www.cityofup.com/278/Council-Member-Melanie-Grassi
+  position: council_member
+sources:
+- https://www.cityofup.com/280/Mayor-Javier-Figueroa
+- https://www.cityofup.com/252/City-Council
