@@ -191,6 +191,7 @@ places:
   scraper_misc:
     city_id: 251
     population: 36040
+  last_city_scrape_run: '2025-03-24'
 - place: university_place
   website: https://www.cityofup.com/
   scraper_misc:
