@@ -58,13 +58,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   populate_city_directory:
-    timeout-minutes: 5
+    timeout-minutes: 10
     permissions:
       contents: write
       pull-requests: write
     needs: get_cities_from_queue
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 5
       fail-fast: false
       matrix:
         city: ${{ fromJson(needs.get_cities_from_queue.outputs.cities) }}
