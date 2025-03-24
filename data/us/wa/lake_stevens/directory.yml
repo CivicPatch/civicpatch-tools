@@ -1,0 +1,61 @@
+---
+ocd_id: ocd-division/country:us/state:wa/place:lake_stevens
+people:
+- name: Kim Daughtry
+  position: council_member
+  position_misc: council_position
+  phone_number: "(425) 407-3869"
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+  email: ''
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=31
+- name: Gary Petershagen
+  position: council_member
+  position_misc: council_position
+  phone_number: "(425) 407-3327"
+  image: ''
+  email: ''
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=57
+- name: Ryan Donoghue
+  position: council_member
+  position_misc: council_position
+  phone_number: "(425) 903-6771"
+  image: ''
+  email: ''
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=33
+- name: Kymm Shipman
+  position: council_member
+  position_misc: council_position
+  phone_number: "(425) 870-1767"
+  image: ''
+  email: ''
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=34
+- name: Anji Jorstad
+  position: council_member
+  position_misc: council_position
+  phone_number: "(425) 407-3147"
+  image: ''
+  email: ''
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=35
+- name: Steve Ewing
+  position: council_member
+  position_misc: council_position
+  phone_number: "(425) 530-6832"
+  image: ''
+  email: ''
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=32
+- name: Marcus Tageant
+  position: council_member
+  position_misc: council_position
+  phone_number: "(425) 407-3880"
+  image: ''
+  email: ''
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=37
+- name: Brett Gailey
+  position: mayor
+  phone_number: 425-407-3497
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+  email: bgailey@lakestevenswa.gov
+  website: https://www.lakestevenswa.gov/65/Mayor
+sources:
+- https://www.lakestevenswa.gov/Directory.aspx?DID=10
+- https://www.lakestevenswa.gov/65/Mayor

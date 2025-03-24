@@ -171,6 +171,7 @@ places:
   scraper_misc:
     city_id: 116
     population: 41540
+  last_city_scrape_run: '2025-03-24'
 - place: issaquah
   website: https://www.issaquahwa.gov/
   scraper_misc:
