@@ -2,6 +2,7 @@
 
 require "openai"
 require "scrapers/standard"
+require "scrapers/common"
 
 # TODO: track token usage
 module Services
@@ -12,7 +13,11 @@ module Services
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_division_map_data(state, city, division_type, geojson_file_path, url)
+    def extract_city_division_map_data(city_ocd_id, division_type, geojson_file_path, url)
+      parts = Scrapers::Common.get_ocd_parts(city_ocd_id)
+      state = parts["state"]
+      city = parts["place"]
+
       truncated_geojson = extract_simplified_geojson(geojson_file_path)
       truncated_geojson_text = truncated_geojson.to_json
 
@@ -49,10 +54,10 @@ module Services
       response_to_yaml(response)
     end
 
-    def extract_city_info(_state, _city, content_file, city_council_url)
+    def extract_city_info(content_file, city_council_url)
       content = File.read(content_file)
 
-      return { error: "Content for city council members is too long" } if content.split(" ").length > @@MAX_TOKENS
+      return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(content, city_council_url)
 

@@ -77,5 +77,16 @@ module Scrapers
         url_segments.none? { |segment| segments.include?(segment) }
       end
     end
+
+    def self.get_ocd_parts(ocd_id)
+      parts = ocd_id.split("/")
+      hash = {}
+      parts.each do |part|
+        key, value = part.split(":")
+        hash[key] = value if value
+      end
+
+      hash
+    end
   end
 end
