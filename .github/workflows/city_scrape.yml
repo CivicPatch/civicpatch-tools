@@ -25,7 +25,7 @@ jobs:
   get_cities_from_queue:
     runs-on: ubuntu-latest
     outputs:
-      cities: ${{ steps.set-cities.outputs.cities }}
+      gnis_ids: ${{ steps.set-gnis-ids.outputs.gnis_ids }}
     
     steps:
       - name: Checkout code
@@ -46,15 +46,15 @@ jobs:
         run: |
           # Load the cities queue file and take the first N cities
           # and ignore cities that already have PRs open
-          cities_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
+          gnis_ids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
 
-          city_ocd_ids=$(echo $cities_to_ignore | sed -E 's/pipeline-city-scrapes-[^-]+-([^-]+)-[0-9]+/\1/g')
+          gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-city-scrapes-[^-]+-([^-]+)-[0-9]+/\1/g')
 
-          cities=$(bundle exec rake "city_scrape:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $city_names_to_ignore]") 
+          gnis_ids=$(bundle exec rake "city_scrape:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $gnis_ids_to_ignore]") 
 
           # Echo comma-separated list to JSON array for github output
-          cities_json=$(echo "$cities" | jq -R -s -c 'split(",") | map( .| gsub("\\s+"; "") )')
-          echo "cities=$cities_json" >> "$GITHUB_OUTPUT"
+          gnis_ids_json=$(echo "$gnis_ids" | jq -R -s -c 'split(",") | map( .| gsub("\\s+"; "") )')
+          echo "gnis_ids=$gnis_ids_json" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -69,7 +69,7 @@ jobs:
       max-parallel: 5
       fail-fast: false
       matrix:
-        city_ocd_id: ${{ fromJson(needs.get_cities_from_queue.outputs.city_ocd_ids) }}
+        gnis: ${{ fromJson(needs.get_cities_from_queue.outputs.gnis_ids) }}
     
     steps:
       - name: Checkout code
@@ -101,7 +101,7 @@ jobs:
       - name: Get city council member data
         run: |
           echo "Processing city: ${{ matrix.city_ocd_id }}"
-          bundle exec rake 'city_scrape:fetch[${{ matrix.city_ocd_id }}]'
+          bundle exec rake 'city_scrape:fetch[${{ github.event.inputs.state }},${{ matrix.city_ocd_id }}]'
 
       - name: Commit council member changes
         run: |

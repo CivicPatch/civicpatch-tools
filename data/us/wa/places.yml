@@ -1,2271 +1,3125 @@
 ---
 ocd_id: ocd-division/country:us/state:wa
 places:
-- website: https://www.seattle.gov/
-  scraper_misc:
-    city_id: 1
-    population: 797700
+- website: https://seattle.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:seattle
   name: seattle
-  county: king
-  type: first
-- website: https://my.spokanecity.org/
-  scraper_misc:
-    city_id: 217
-    population: 233000
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:seattle
+  - ocd-division/country:us/state:wa/county:king/place:seattle
+  counties:
+  - king
+  fips: 53-63000
+  gnis: '2411856'
+  population: 737015
+- website: https://my.spokanecity.org
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:spokane
   name: spokane
-  county: spokane
-  type: first
-- website: https://www.cityoftacoma.org/
-  scraper_misc:
-    city_id: 229
-    population: 225100
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:spokane
+  - ocd-division/country:us/state:wa/county:spokane/place:spokane
+  counties:
+  - spokane
+  fips: ''
+  gnis: '2411956'
+  population: 228989
+- website: https://cityoftacoma.org
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:tacoma
   name: tacoma
-  county: pierce
-  type: first
-- website: https://www.cityofvancouver.us/
-  scraper_misc:
-    city_id: 242
-    population: 202600
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:tacoma
+  - ocd-division/country:us/state:wa/county:pierce/place:tacoma
+  counties:
+  - pierce
+  fips: 53-70000
+  gnis: '2412025'
+  population: 219346
+- website: https://www.cityofvancouver.us
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:clark/place:vancouver
   name: vancouver
-  county: clark
-  type: first
-- website: https://bellevuewa.gov/
-  scraper_misc:
-    city_id: 12
-    population: 155000
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:vancouver
+  - ocd-division/country:us/state:wa/county:clark/place:vancouver
+  counties:
+  - clark
+  fips: 53-74060
+  gnis: '2412146'
+  population: 190915
+- website: https://bellevuewa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:bellevue
   name: bellevue
-  county: king
-  type: code
-- website: https://www.kentwa.gov/
-  scraper_misc:
-    city_id: 106
-    population: 140400
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bellevue
+  - ocd-division/country:us/state:wa/county:king/place:bellevue
+  counties:
+  - king
+  fips: 53-05210
+  gnis: '2409821'
+  population: 151854
+- website: https://kentwa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:kent
   name: kent
-  county: king
-  type: code
-- website: https://everettwa.gov/
-  scraper_misc:
-    city_id: 72
-    population: 114800
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kent
+  - ocd-division/country:us/state:wa/county:king/place:kent
+  counties:
+  - king
+  fips: 53-35415
+  gnis: '2410185'
+  population: 136588
+- website: https://everettwa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:everett
   name: everett
-  county: snohomish
-  type: first
-- website: https://www.spokanevalleywa.gov/
-  scraper_misc:
-    city_id: 281
-    population: 108800
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:spokane_valley
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:everett
+  - ocd-division/country:us/state:wa/county:snohomish/place:everett
+  counties:
+  - snohomish
+  fips: 53-22640
+  gnis: '1512198'
+  population: 110629
+- website: https://www.spokanevalleywa.gov
   name: spokane_valley
-  county: spokane
-  type: code
-- website: https://www.rentonwa.gov/
-  scraper_misc:
-    city_id: 191
-    population: 108800
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:spokane_valley
+  - ocd-division/country:us/state:wa/county:spokane/place:spokane_valley
+  counties:
+  - spokane
+  fips: 53-67167
+  gnis: '2411957'
+  population: 102976
+- website: https://www.rentonwa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:renton
   name: renton
-  county: king
-  type: code
-- website: https://www.federalwaywa.gov/
-  scraper_misc:
-    city_id: 76
-    population: 102500
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:federal_way
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:renton
+  - ocd-division/country:us/state:wa/county:king/place:renton
+  counties:
+  - king
+  fips: 53-57745
+  gnis: '2410926'
+  population: 106785
+- website: https://www.federalwaywa.gov
   name: federal_way
-  county: king
-  type: code
-- website: https://www.yakimawa.gov/
-  scraper_misc:
-    city_id: 263
-    population: 99370
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:federal_way
+  - ocd-division/country:us/state:wa/county:king/place:federal_way
+  counties:
+  - king
+  fips: 53-23515
+  gnis: '2410494'
+  population: 101030
+- website: https://www.yakimawa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:yakima
   name: yakima
-  county: yakima
-  type: first
-- website: https://cob.org/
-  scraper_misc:
-    city_id: 13
-    population: 97270
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:yakima
+  - ocd-division/country:us/state:wa/county:yakima/place:yakima
+  counties:
+  - yakima
+  fips: 53-80010
+  gnis: '2412314'
+  population: 96968
+- website: https://cob.org
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:whatcom/place:bellingham
   name: bellingham
-  county: whatcom
-  type: first
-- website: https://www.kirklandwa.gov/Home
-  scraper_misc:
-    city_id: 108
-    population: 96710
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:kirkland
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bellingham
+  - ocd-division/country:us/state:wa/county:whatcom/place:bellingham
+  counties:
+  - whatcom
+  fips: 53-05280
+  gnis: '2409823'
+  population: 91482
+- website: http://www.kirklandwa.gov
   name: kirkland
-  county: king
-  type: code
-- website: https://www.auburnwa.gov/
-  scraper_misc:
-    city_id: 8
-    population: 88950
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kirkland
+  - ocd-division/country:us/state:wa/county:king/place:kirkland
+  counties:
+  - king
+  fips: 53-35940
+  gnis: '2411552'
+  population: 92175
+- website: https://www.auburnwa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:king/pierce/place:auburn
   name: auburn
-  county: king/pierce
-  type: code
-- website: https://www.go2kennewick.com/
-  scraper_misc:
-    city_id: 105
-    population: 87120
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:auburn
+  - ocd-division/country:us/state:wa/county:king/place:auburn
+  - ocd-division/country:us/state:wa/county:pierce/place:auburn
+  counties:
+  - king
+  - pierce
+  fips: 53-03180
+  gnis: '2409755'
+  population: 87256
+- website: https://www.go2kennewick.com
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:benton/place:kennewick
   name: kennewick
-  county: benton
-  type: code
-- website: https://www.pasco-wa.gov/
-  scraper_misc:
-    city_id: 174
-    population: 82220
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kennewick
+  - ocd-division/country:us/state:wa/county:benton/place:kennewick
+  counties:
+  - benton
+  fips: 53-35275
+  gnis: '2410184'
+  population: 83921
+- website: https://www.pasco-wa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:franklin/place:pasco
   name: pasco
-  county: franklin
-  type: code
-- website: https://www.redmond.gov/
-  scraper_misc:
-    city_id: 190
-    population: 80040
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:redmond
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:pasco
+  - ocd-division/country:us/state:wa/county:franklin/place:pasco
+  counties:
+  - franklin
+  fips: 53-53545
+  gnis: '2411381'
+  population: 77108
+- website: https://redmond.gov
   name: redmond
-  county: king
-  type: code
-- website: https://marysvillewa.gov/
-  scraper_misc:
-    city_id: 131
-    population: 74390
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:redmond
+  - ocd-division/country:us/state:wa/county:king/place:redmond
+  counties:
+  - king
+  fips: 53-57535
+  gnis: '2411534'
+  population: 73256
+- website: http://www.marysvillewa.gov
   last_city_scrape_run: '2025-03-24'
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:marysville
   name: marysville
-  county: snohomish
-  type: code
-- website: https://www.sammamish.us/
-  scraper_misc:
-    city_id: 279
-    population: 68410
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:sammamish
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:marysville
+  - ocd-division/country:us/state:wa/county:snohomish/place:marysville
+  counties:
+  - snohomish
+  fips: 53-43955
+  gnis: '1512435'
+  population: 70714
+- website: https://www.sammamish.us
   name: sammamish
-  county: king
-  type: code
-- website: https://cityoflakewood.us/
-  scraper_misc:
-    city_id: 275
-    population: 64620
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sammamish
+  - ocd-division/country:us/state:wa/county:king/place:sammamish
+  counties:
+  - king
+  fips: 53-61115
+  gnis: '2411772'
+  population: 67455
+- website: https://www.cityoflakewood.us
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:lakewood
   name: lakewood
-  county: pierce
-  type: code
-- website: https://www.ci.richland.wa.us/
-  scraper_misc:
-    city_id: 193
-    population: 64190
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lakewood
+  - ocd-division/country:us/state:wa/county:pierce/place:lakewood
+  counties:
+  - pierce
+  fips: 53-38038
+  gnis: '2411615'
+  population: 63612
+- website: http://www.ci.richland.wa.us
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:benton/place:richland
   name: richland
-  county: benton
-  type: first
-- website: https://www.shorelinewa.gov/
-  scraper_misc:
-    city_id: 273
-    population: 61910
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:shoreline
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:richland
+  - ocd-division/country:us/state:wa/county:benton/place:richland
+  counties:
+  - benton
+  fips: 53-58235
+  gnis: '2410937'
+  population: 60560
+- website: https://www.shorelinewa.gov
   name: shoreline
-  county: king
-  type: code
-- website: https://cityoflacey.org/
-  scraper_misc:
-    city_id: 113
-    population: 60210
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:shoreline
+  - ocd-division/country:us/state:wa/county:king/place:shoreline
+  counties:
+  - king
+  fips: 53-63960
+  gnis: '2411893'
+  population: 58608
+- website: https://cityoflacey.org
   last_city_scrape_run: '2025-03-24'
-  ocd_id: ocd-division/country:us/state:wa/county:thurston/place:lacey
   name: lacey
-  county: thurston
-  type: code
-- website: https://www.olympiawa.gov/
-  scraper_misc:
-    city_id: 167
-    population: 57450
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lacey
+  - ocd-division/country:us/state:wa/county:thurston/place:lacey
+  counties:
+  - thurston
+  fips: 53-36745
+  gnis: '1512362'
+  population: 53526
+- website: https://olympiawa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:thurston/place:olympia
   name: olympia
-  county: thurston
-  type: code
-- website: https://www.burienwa.gov/
-  scraper_misc:
-    city_id: 267
-    population: 53000
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:burien
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:olympia
+  - ocd-division/country:us/state:wa/county:thurston/place:olympia
+  counties:
+  - thurston
+  fips: 53-51300
+  gnis: '1533353'
+  population: 55605
+- website: https://www.burienwa.gov
   name: burien
-  county: king
-  type: code
-- website: https://www.bothellwa.gov/
-  scraper_misc:
-    city_id: 19
-    population: 50670
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:burien
+  - ocd-division/country:us/state:wa/county:king/place:burien
+  counties:
+  - king
+  fips: 53-08850
+  gnis: '2409940'
+  population: 52066
+- website: https://bothellwa.gov
   last_city_scrape_run: '2025-03-23'
-  ocd_id: ocd-division/country:us/state:wa/county:king/snohomish/place:bothell
   name: bothell
-  county: king/snohomish
-  type: code
-- website: https://www.bremertonwa.gov/
-  scraper_misc:
-    city_id: 20
-    population: 45390
-  ocd_id: ocd-division/country:us/state:wa/county:kitsap/place:bremerton
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bothell
+  - ocd-division/country:us/state:wa/county:king/place:bothell
+  - ocd-division/country:us/state:wa/county:snohomish/place:bothell
+  counties:
+  - king
+  - snohomish
+  fips: 53-07380
+  gnis: '2409882'
+  population: 48161
+- website: https://bremertonwa.gov
   name: bremerton
-  county: kitsap
-  type: first
-- website: https://www.edmondswa.gov/
-  scraper_misc:
-    city_id: 63
-    population: 43420
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:edmonds
+  type: first-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bremerton
+  - ocd-division/country:us/state:wa/county:kitsap/place:bremerton
+  counties:
+  - kitsap
+  fips: ''
+  gnis: '2409899'
+  population: 43505
+- website: http://edmondswa.gov
   name: edmonds
-  county: snohomish
-  type: code
-- website: https://www.cityofpuyallup.org/
-  scraper_misc:
-    city_id: 185
-    population: 43410
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:edmonds
+  - ocd-division/country:us/state:wa/county:snohomish/place:edmonds
+  counties:
+  - snohomish
+  fips: 53-20750
+  gnis: '1512180'
+  population: 42853
+- website: https://www.cityofpuyallup.org
   last_city_scrape_run: '2025-03-24'
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:puyallup
   name: puyallup
-  county: pierce
-  type: code
-- website: https://www.lakestevenswa.gov/
-  scraper_misc:
-    city_id: 116
-    population: 41540
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:lake_stevens
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:puyallup
+  - ocd-division/country:us/state:wa/county:pierce/place:puyallup
+  counties:
+  - pierce
+  fips: 53-56695
+  gnis: '2411504'
+  population: 42973
+- website: http://lakestevenswa.gov
   name: lake_stevens
-  county: snohomish
-  type: code
-- website: https://www.issaquahwa.gov/
-  scraper_misc:
-    city_id: 101
-    population: 41500
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:issaquah
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lake_stevens
+  - ocd-division/country:us/state:wa/county:snohomish/place:lake_stevens
+  counties:
+  - snohomish
+  fips: 53-37900
+  gnis: '1512695'
+  population: 35630
+- website: https://www.issaquahwa.gov
   name: issaquah
-  county: king
-  type: code
-- website: https://www.lynnwoodwa.gov/Home
-  scraper_misc:
-    city_id: 126
-    population: 41500
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:lynnwood
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:issaquah
+  - ocd-division/country:us/state:wa/county:king/place:issaquah
+  counties:
+  - king
+  fips: ''
+  gnis: '2410123'
+  population: 40051
+- website: http://www.lynnwoodwa.gov
   name: lynnwood
-  county: snohomish
-  type: code
-- website: https://www.mylongview.com/
-  scraper_misc:
-    city_id: 123
-    population: 38230
-  ocd_id: ocd-division/country:us/state:wa/county:cowlitz/place:longview
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lynnwood
+  - ocd-division/country:us/state:wa/county:snohomish/place:lynnwood
+  counties:
+  - snohomish
+  fips: 53-40840
+  gnis: '1512414'
+  population: 38568
+- website: http://www.mylongview.com
   name: longview
-  county: cowlitz
-  type: code
-- website: https://www.wenatcheewa.gov/
-  scraper_misc:
-    city_id: 251
-    population: 36040
-  ocd_id: ocd-division/country:us/state:wa/county:chelan/place:wenatchee
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:longview
+  - ocd-division/country:us/state:wa/county:cowlitz/place:longview
+  counties:
+  - cowlitz
+  fips: 53-40245
+  gnis: '2410871'
+  population: 37818
+- website: http://www.wenatcheewa.gov
   name: wenatchee
-  county: chelan
-  type: code
-- website: https://www.cityofup.com/
-  scraper_misc:
-    city_id: 272
-    population: 35970
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:university_place
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:wenatchee
+  - ocd-division/country:us/state:wa/county:chelan/place:wenatchee
+  counties:
+  - chelan
+  fips: 53-77105
+  gnis: '2412212'
+  population: 35308
+- website: https://www.cityofup.com
   name: university_place
-  county: pierce
-  type: code
-- website: https://www.mountvernonwa.gov/
-  scraper_misc:
-    city_id: 148
-    population: 35800
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:mount_vernon
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:university_place
+  - ocd-division/country:us/state:wa/county:pierce/place:university_place
+  counties:
+  - pierce
+  fips: 53-73465
+  gnis: '2412136'
+  population: 34866
+- website: https://mountvernonwa.gov
   name: mount_vernon
-  county: skagit
-  type: code
-- website: https://www.wallawallawa.gov/
-  scraper_misc:
-    city_id: 244
-    population: 34580
-  ocd_id: ocd-division/country:us/state:wa/county:walla_walla/place:walla_walla
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mount_vernon
+  - ocd-division/country:us/state:wa/county:skagit/place:mount_vernon
+  counties:
+  - skagit
+  fips: ''
+  gnis: '2411183'
+  population: 35219
+- website: https://www.wallawallawa.gov
   name: walla_walla
-  county: walla_walla
-  type: code
-- website: https://www.pullman-wa.gov/
-  scraper_misc:
-    city_id: 184
-    population: 33680
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:pullman
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:walla_walla
+  - ocd-division/country:us/state:wa/county:walla_walla/place:walla_walla
+  counties:
+  - walla_walla
+  fips: 53-75775
+  gnis: '2412168'
+  population: 34060
+- website: https://pullman-wa.gov
   name: pullman
-  county: whitman
-  type: code
-- website: https://www.desmoineswa.gov/
-  scraper_misc:
-    city_id: 58
-    population: 33400
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:des_moines
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:pullman
+  - ocd-division/country:us/state:wa/county:whitman/place:pullman
+  counties:
+  - whitman
+  fips: 53-56625
+  gnis: '2411502'
+  population: 32901
+- website: https://www.desmoineswa.gov
   name: des_moines
-  county: king
-  type: code
-- website: https://www.seatacwa.gov/
-  scraper_misc:
-    city_id: 204
-    population: 32710
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:seatac
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:des_moines
+  - ocd-division/country:us/state:wa/county:king/place:des_moines
+  counties:
+  - king
+  fips: 53-17635
+  gnis: '2410327'
+  population: 32888
+- website: https://seatacwa.gov
   name: seatac
-  county: king
-  type: code
-- website: https://www.maplevalleywa.gov/
-  scraper_misc:
-    city_id: 276
-    population: 29320
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:maple_valley
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:seatac
+  - ocd-division/country:us/state:wa/county:king/place:seatac
+  counties:
+  - king
+  fips: 53-62288
+  gnis: '2411855'
+  population: 31454
+- website: https://maplevalleywa.gov
   name: maple_valley
-  county: king
-  type: code
-- website: https://www.cityofcamas.us/
-  scraper_misc:
-    city_id: 27
-    population: 27660
-  ocd_id: ocd-division/country:us/state:wa/county:clark/place:camas
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:maple_valley
+  - ocd-division/country:us/state:wa/county:king/place:maple_valley
+  counties:
+  - king
+  fips: 53-43150
+  gnis: '2411028'
+  population: 28013
+- website: https://www.cityofcamas.us
   name: camas
-  county: clark
-  type: code
-- website: https://www.ci.tumwater.wa.us/
-  scraper_misc:
-    city_id: 237
-    population: 27470
-  ocd_id: ocd-division/country:us/state:wa/county:thurston/place:tumwater
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:camas
+  - ocd-division/country:us/state:wa/county:clark/place:camas
+  counties:
+  - clark
+  fips: 53-09480
+  gnis: '2409967'
+  population: 26065
+- website: http://www.ci.tumwater.wa.us
   name: tumwater
-  county: thurston
-  type: code
-- website: https://www.cityofml.com/
-  scraper_misc:
-    city_id: 146
-    population: 27070
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:moses_lake
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:tumwater
+  - ocd-division/country:us/state:wa/county:thurston/place:tumwater
+  counties:
+  - thurston
+  fips: 53-72905
+  gnis: '1512742'
+  population: 25350
+- website: http://www.cityofml.com
   name: moses_lake
-  county: grant
-  type: code
-- website: https://www.mercerisland.gov/
-  scraper_misc:
-    city_id: 136
-    population: 25830
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:mercer_island
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:moses_lake
+  - ocd-division/country:us/state:wa/county:grant/place:moses_lake
+  counties:
+  - grant
+  fips: 53-47245
+  gnis: '2411173'
+  population: 25146
+- website: https://mercerisland.gov
   name: mercer_island
-  county: king
-  type: code
-- website: https://www.bainbridgewa.gov/
-  scraper_misc:
-    city_id: 9
-    population: 25330
-  ocd_id: ocd-division/country:us/state:wa/county:kitsap/place:bainbridge_island
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mercer_island
+  - ocd-division/country:us/state:wa/county:king/place:mercer_island
+  counties:
+  - king
+  fips: 53-45005
+  gnis: '2411082'
+  population: 25748
+- website: https://bainbridgewa.gov
   name: bainbridge_island
-  county: kitsap
-  type: code
-- website: https://www.oakharbor.gov/
-  scraper_misc:
-    city_id: 161
-    population: 24900
-  ocd_id: ocd-division/country:us/state:wa/county:island/place:oak_harbor
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bainbridge_island
+  - ocd-division/country:us/state:wa/county:kitsap/place:bainbridge_island
+  counties:
+  - kitsap
+  fips: 53-03736
+  gnis: '2409770'
+  population: 24825
+- website: https://oakharbor.gov
   name: oak_harbor
-  county: island
-  type: code
-- website: https://www.kenmorewa.gov/
-  scraper_misc:
-    city_id: 278
-    population: 24350
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:kenmore
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:oak_harbor
+  - ocd-division/country:us/state:wa/county:island/place:oak_harbor
+  counties:
+  - island
+  fips: 53-50360
+  gnis: '2411287'
+  population: 24622
+- website: https://kenmorewa.gov
   name: kenmore
-  county: king
-  type: code
-- website: https://www.cityofmlt.com/
-  scraper_misc:
-    city_id: 149
-    population: 24260
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:mountlake_terrace
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kenmore
+  - ocd-division/country:us/state:wa/county:king/place:kenmore
+  counties:
+  - king
+  fips: 53-35170
+  gnis: '2410181'
+  population: 23914
+- website: http://cityofmlt.com
   name: mountlake_terrace
-  county: snohomish
-  type: code
-- website: https://www.ci.bonney-lake.wa.us/
-  scraper_misc:
-    city_id: 18
-    population: 23320
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:bonney_lake
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mountlake_terrace
+  - ocd-division/country:us/state:wa/county:snohomish/place:mountlake_terrace
+  counties:
+  - snohomish
+  fips: 53-47490
+  gnis: '1512488'
+  population: 21286
+- website: http://www.ci.bonney-lake.wa.us
   name: bonney_lake
-  county: pierce
-  type: code
-- website: https://www.arlingtonwa.gov/
-  scraper_misc:
-    city_id: 6
-    population: 22980
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:arlington
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bonney_lake
+  - ocd-division/country:us/state:wa/county:pierce/place:bonney_lake
+  counties:
+  - pierce
+  fips: 53-07170
+  gnis: '2409880'
+  population: 22487
+- website: http://www.arlingtonwa.gov
   name: arlington
-  county: snohomish
-  type: code
-- website: https://www.tukwilawa.gov/
-  scraper_misc:
-    city_id: 236
-    population: 22930
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:tukwila
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:arlington
+  - ocd-division/country:us/state:wa/county:snohomish/place:arlington
+  counties:
+  - snohomish
+  fips: 53-02585
+  gnis: '1515947'
+  population: 19868
+- website: https://www.tukwilawa.gov
   name: tukwila
-  county: king
-  type: code
-- website: https://www.cityofbg.org/
-  scraper_misc:
-    city_id: 10
-    population: 22470
-  ocd_id: ocd-division/country:us/state:wa/county:clark/place:battle_ground
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:tukwila
+  - ocd-division/country:us/state:wa/county:king/place:tukwila
+  counties:
+  - king
+  fips: 53-72625
+  gnis: '2412106'
+  population: 21798
+- website: https://www.cityofbg.org
   name: battle_ground
-  county: clark
-  type: code
-- website: https://www.covingtonwa.gov/
-  scraper_misc:
-    city_id: 277
-    population: 22000
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:covington
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:battle_ground
+  - ocd-division/country:us/state:wa/county:clark/place:battle_ground
+  counties:
+  - clark
+  fips: 53-04475
+  gnis: '2409796'
+  population: 20743
+- website: https://www.covingtonwa.gov
   name: covington
-  county: king
-  type: code
-- website: https://www.cityofmillcreek.com/
-  scraper_misc:
-    city_id: 140
-    population: 21630
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:mill_creek
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:covington
+  - ocd-division/country:us/state:wa/county:king/place:covington
+  counties:
+  - king
+  fips: 53-15290
+  gnis: '2410253'
+  population: 20777
+- website: https://www.cityofmillcreek.com
   name: mill_creek
-  county: snohomish
-  type: code
-- website: https://mukilteowa.gov/
-  scraper_misc:
-    city_id: 151
-    population: 21590
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:mukilteo
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mill_creek
+  - ocd-division/country:us/state:wa/county:snohomish/place:mill_creek
+  counties:
+  - snohomish
+  fips: 53-45865
+  gnis: '1534566'
+  population: 20926
+- website: http://mukilteowa.gov
   name: mukilteo
-  county: snohomish
-  type: code
-- website: https://ci.ellensburg.wa.us/
-  scraper_misc:
-    city_id: 65
-    population: 20970
-  ocd_id: ocd-division/country:us/state:wa/county:kittitas/place:ellensburg
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mukilteo
+  - ocd-division/country:us/state:wa/county:snohomish/place:mukilteo
+  counties:
+  - snohomish
+  fips: 53-47735
+  gnis: '1512491'
+  population: 21538
+- website: https://ci.ellensburg.wa.us
   name: ellensburg
-  county: kittitas
-  type: code
-- website: https://www.monroewa.gov/
-  scraper_misc:
-    city_id: 143
-    population: 20830
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:monroe
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ellensburg
+  - ocd-division/country:us/state:wa/county:kittitas/place:ellensburg
+  counties:
+  - kittitas
+  fips: 53-21240
+  gnis: '2410430'
+  population: 18666
+- website: http://www.ci.monroe.wa.us
   name: monroe
-  county: snohomish
-  type: code
-- website: https://www.cityofpa.us/
-  scraper_misc:
-    city_id: 178
-    population: 20410
-  ocd_id: ocd-division/country:us/state:wa/county:clallam/place:port_angeles
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:monroe
+  - ocd-division/country:us/state:wa/county:snohomish/place:monroe
+  counties:
+  - snohomish
+  fips: 53-46685
+  gnis: '1523319'
+  population: 19699
+- website: https://www.cityofpa.us
   name: port_angeles
-  county: clallam
-  type: code
-- website: https://www.cityofcentralia.com/
-  scraper_misc:
-    city_id: 33
-    population: 18510
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:centralia
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:port_angeles
+  - ocd-division/country:us/state:wa/county:clallam/place:port_angeles
+  counties:
+  - clallam
+  fips: 53-55365
+  gnis: '2411459'
+  population: 19960
+- website: https://cityofcentralia.com
   name: centralia
-  county: lewis
-  type: code
-- website: https://portorchardwa.gov/
-  scraper_misc:
-    city_id: 179
-    population: 18300
-  ocd_id: ocd-division/country:us/state:wa/county:kitsap/place:port_orchard
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:centralia
+  - ocd-division/country:us/state:wa/county:lewis/place:centralia
+  counties:
+  - lewis
+  fips: 53-11160
+  gnis: '2409429'
+  population: 18183
+- website: https://portorchardwa.gov
   name: port_orchard
-  county: kitsap
-  type: code
-- website: https://www.westrichland.org/
-  scraper_misc:
-    city_id: 252
-    population: 18280
-  ocd_id: ocd-division/country:us/state:wa/county:benton/place:west_richland
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:port_orchard
+  - ocd-division/country:us/state:wa/county:kitsap/place:port_orchard
+  counties:
+  - kitsap
+  fips: 53-55785
+  gnis: '2411466'
+  population: 15587
+- website: http://www.westrichland.org
   name: west_richland
-  county: benton
-  type: code
-- website: https://www.anacorteswa.gov/
-  scraper_misc:
-    city_id: 5
-    population: 18270
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:anacortes
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:west_richland
+  - ocd-division/country:us/state:wa/county:benton/place:west_richland
+  counties:
+  - benton
+  fips: ''
+  gnis: '2412227'
+  population: 16295
+- website: https://cityofanacortes.org
   name: anacortes
-  county: skagit
-  type: code
-- website: https://www.cityofwashougal.us/
-  scraper_misc:
-    city_id: 247
-    population: 18150
-  ocd_id: ocd-division/country:us/state:wa/county:clark/place:washougal
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:anacortes
+  - ocd-division/country:us/state:wa/county:skagit/place:anacortes
+  counties:
+  - skagit
+  fips: 53-01990
+  gnis: '2409702'
+  population: 17637
+- website: http://www.cityofwashougal.us
   name: washougal
-  county: clark
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:washougal
+  - ocd-division/country:us/state:wa/county:clark/place:washougal
+  counties:
+  - clark
+  fips: 53-76405
+  gnis: '2412189'
+  population: 17039
 - website: https://www.aberdeenwa.gov/
-  scraper_misc:
-    city_id: 270
-    population: 17100
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:aberdeen
   name: aberdeen
-  county: grays_harbor
+  counties: grays_harbor
+  fips: 53-00100
+  gnis: '2409655'
   type: first
-- website: https://www.lyndenwa.org/
-  scraper_misc:
-    city_id: 125
-    population: 16710
-  ocd_id: ocd-division/country:us/state:wa/county:whatcom/place:lynden
+- website: https://lyndenwa.org
   name: lynden
-  county: whatcom
-  type: code
-- website: https://www.sunnyside-wa.gov/
-  scraper_misc:
-    city_id: 228
-    population: 16570
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:sunnyside
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lynden
+  - ocd-division/country:us/state:wa/county:whatcom/place:lynden
+  counties:
+  - whatcom
+  fips: 53-40805
+  gnis: '2410899'
+  population: 15749
+- website: http://sunnyside-wa.gov
   name: sunnyside
-  county: yakima
-  type: code
-- website: https://www.cityofferndale.org/
-  scraper_misc:
-    city_id: 77
-    population: 16430
-  ocd_id: ocd-division/country:us/state:wa/county:whatcom/place:ferndale
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sunnyside
+  - ocd-division/country:us/state:wa/county:yakima/place:sunnyside
+  counties:
+  - yakima
+  fips: 53-68750
+  gnis: '2412008'
+  population: 16375
+- website: https://www.cityofferndale.org
   name: ferndale
-  county: whatcom
-  type: code
-- website: https://ridgefieldwa.us/
-  scraper_misc:
-    city_id: 194
-    population: 15790
-  ocd_id: ocd-division/country:us/state:wa/county:clark/place:ridgefield
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ferndale
+  - ocd-division/country:us/state:wa/county:whatcom/place:ferndale
+  counties:
+  - whatcom
+  fips: 53-23620
+  gnis: '2410498'
+  population: 15048
+- website: https://ridgefieldwa.us
   name: ridgefield
-  county: clark
-  type: code
-- website: https://www.snoqualmiewa.gov/
-  scraper_misc:
-    city_id: 211
-    population: 14520
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:snoqualmie
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ridgefield
+  - ocd-division/country:us/state:wa/county:clark/place:ridgefield
+  counties:
+  - clark
+  fips: 53-58410
+  gnis: '2410945'
+  population: 10319
+- website: http://www.snoqualmiewa.gov
   name: snoqualmie
-  county: king
-  type: code
-- website: https://www.eastwenatcheewa.gov/
-  scraper_misc:
-    city_id: 61
-    population: 14240
-  ocd_id: ocd-division/country:us/state:wa/county:douglas/place:east_wenatchee
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:snoqualmie
+  - ocd-division/country:us/state:wa/county:king/place:snoqualmie
+  counties:
+  - king
+  fips: 53-65205
+  gnis: '2411915'
+  population: 14121
+- website: https://www.eastwenatcheewa.gov
   name: east_wenatchee
-  county: douglas
-  type: code
-- website: https://www.cityofedgewood.org/
-  scraper_misc:
-    city_id: 274
-    population: 14080
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:edgewood
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:east_wenatchee
+  - ocd-division/country:us/state:wa/county:douglas/place:east_wenatchee
+  counties:
+  - douglas
+  fips: 53-20155
+  gnis: '2410391'
+  population: 14158
+- website: http://www.cityofedgewood.org
   name: edgewood
-  county: pierce
-  type: code
-- website: https://www.ci.woodinville.wa.us/
-  scraper_misc:
-    city_id: 268
-    population: 13900
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:woodinville
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:edgewood
+  - ocd-division/country:us/state:wa/county:pierce/place:edgewood
+  counties:
+  - pierce
+  fips: 53-20645
+  gnis: '2410400'
+  population: 12327
+- website: https://www.ci.woodinville.wa.us
   name: woodinville
-  county: king
-  type: code
-- website: https://www.libertylakewa.gov/
-  scraper_misc:
-    city_id: 280
-    population: 13870
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:liberty_lake
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:woodinville
+  - ocd-division/country:us/state:wa/county:king/place:woodinville
+  counties:
+  - king
+  fips: 53-79590
+  gnis: '2412298'
+  population: 13069
+- website: https://www.libertylakewa.gov
   name: liberty_lake
-  county: spokane
-  type: code
-- website: https://www.newcastlewa.gov/
-  scraper_misc:
-    city_id: 271
-    population: 13750
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:newcastle
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:liberty_lake
+  - ocd-division/country:us/state:wa/county:spokane/place:liberty_lake
+  counties:
+  - spokane
+  fips: 53-39335
+  gnis: '2410834'
+  population: 12003
+- website: https://www.newcastlewa.gov
   name: newcastle
-  county: king
-  type: code
-- website: https://www.cityoflfp.gov/
-  scraper_misc:
-    city_id: 115
-    population: 13680
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:lake_forest_park
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:newcastle
+  - ocd-division/country:us/state:wa/county:king/place:newcastle
+  counties:
+  - king
+  fips: 53-48645
+  gnis: '2411243'
+  population: 13017
+- website: https://cityoflfp.gov
   name: lake_forest_park
-  county: king
-  type: code
-- website: https://www.cityofenumclaw.net/
-  scraper_misc:
-    city_id: 70
-    population: 13350
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:enumclaw
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lake_forest_park
+  - ocd-division/country:us/state:wa/county:king/place:lake_forest_park
+  counties:
+  - king
+  fips: 53-37270
+  gnis: '2411603'
+  population: 13630
+- website: https://www.cityofenumclaw.net
   name: enumclaw
-  county: king
-  type: code
-- website: https://www.cityofcheney.org/
-  scraper_misc:
-    city_id: 36
-    population: 13150
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:cheney
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:enumclaw
+  - ocd-division/country:us/state:wa/county:king/place:enumclaw
+  - ocd-division/country:us/state:wa/county:pierce/place:enumclaw
+  counties:
+  - king
+  - pierce
+  fips: 53-22045
+  gnis: '2410448'
+  population: 12543
+- website: http://www.cityofcheney.org
   name: cheney
-  county: spokane
-  type: code
-- website: https://www.gigharborwa.gov/
-  scraper_misc:
-    city_id: 84
-    population: 13090
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:gig_harbor
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:cheney
+  - ocd-division/country:us/state:wa/county:spokane/place:cheney
+  counties:
+  - spokane
+  fips: 53-11825
+  gnis: '1531416'
+  population: 13255
+- website: http://www.cityofgigharbor.net
   name: gig_harbor
-  county: pierce
-  type: code
-- website: https://www.sedro-woolley.gov/
-  scraper_misc:
-    city_id: 205
-    population: 13080
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:sedro-woolley
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:gig_harbor
+  - ocd-division/country:us/state:wa/county:pierce/place:gig_harbor
+  counties:
+  - pierce
+  fips: 53-26735
+  gnis: '2410588'
+  population: 12029
+- website: https://www.sedro-woolley.gov
   name: sedro-woolley
-  county: skagit
-  type: code
-- website: https://cityofpoulsbo.com/
-  scraper_misc:
-    city_id: 181
-    population: 13010
-  ocd_id: ocd-division/country:us/state:wa/county:kitsap/place:poulsbo
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sedro-woolley
+  - ocd-division/country:us/state:wa/county:skagit/place:sedro-woolley
+  counties:
+  - skagit
+  fips: 53-63210
+  gnis: '2411859'
+  population: 12421
+- website: https://cityofpoulsbo.com
   name: poulsbo
-  county: kitsap
-  type: code
-- website: https://www.kelso.gov/
-  scraper_misc:
-    city_id: 104
-    population: 12780
-  ocd_id: ocd-division/country:us/state:wa/county:cowlitz/place:kelso
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:poulsbo
+  - ocd-division/country:us/state:wa/county:kitsap/place:poulsbo
+  counties:
+  - kitsap
+  fips: 53-55995
+  gnis: '2411479'
+  population: 11975
+- website: http://www.kelso.gov
   name: kelso
-  county: cowlitz
-  type: code
-- website: https://cawh.org/
-  scraper_misc:
-    city_id: 269
-    population: 12070
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:airway_heights
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kelso
+  - ocd-division/country:us/state:wa/county:cowlitz/place:kelso
+  counties:
+  - cowlitz
+  fips: 53-35065
+  gnis: '2410174'
+  population: 12720
+- website: http://cawh.org
   name: airway_heights
-  county: spokane
-  type: code
-- website: https://www.grandview.wa.us/
-  scraper_misc:
-    city_id: 88
-    population: 11680
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:grandview
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:airway_heights
+  - ocd-division/country:us/state:wa/county:spokane/place:airway_heights
+  counties:
+  - spokane
+  fips: 53-00905
+  gnis: '2409668'
+  population: 10757
+- website: https://grandview.wa.us
   name: grandview
-  county: yakima
-  type: code
-- website: https://www.cityoffife.org/
-  scraper_misc:
-    city_id: 78
-    population: 11320
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:fife
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:grandview
+  - ocd-division/country:us/state:wa/county:yakima/place:grandview
+  counties:
+  - yakima
+  fips: 53-27925
+  gnis: '2410638'
+  population: 10907
+- website: https://www.fifewa.gov
   name: fife
-  county: pierce
-  type: code
-- website: https://sumnerwa.gov/
-  scraper_misc:
-    city_id: 227
-    population: 11040
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:sumner
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:fife
+  - ocd-division/country:us/state:wa/county:pierce/place:fife
+  counties:
+  - pierce
+  fips: 53-23795
+  gnis: '2410502'
+  population: 10999
+- website: https://sumnerwa.gov
   name: sumner
-  county: pierce
-  type: code
-- website: https://www.yelmwa.gov/
-  scraper_misc:
-    city_id: 265
-    population: 10880
-  ocd_id: ocd-division/country:us/state:wa/county:thurston/place:yelm
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sumner
+  - ocd-division/country:us/state:wa/county:pierce/place:sumner
+  counties:
+  - pierce
+  fips: 53-68435
+  gnis: '2412001'
+  population: 10621
+- website: https://ci.yelm.wa.us
   name: yelm
-  county: thurston
-  type: code
-- website: https://cityofpt.us/
-  scraper_misc:
-    city_id: 180
-    population: 10530
-  ocd_id: ocd-division/country:us/state:wa/county:jefferson/place:port_townsend
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:yelm
+  - ocd-division/country:us/state:wa/county:thurston/place:yelm
+  counties:
+  - thurston
+  fips: 53-80220
+  gnis: '1512817'
+  population: 10617
+- website: http://www.cityofpt.us
   name: port_townsend
-  county: jefferson
-  type: code
-- website: https://burlingtonwa.gov/
-  scraper_misc:
-    city_id: 26
-    population: 10410
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:burlington
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:port_townsend
+  - ocd-division/country:us/state:wa/county:jefferson/place:port_townsend
+  counties:
+  - jefferson
+  fips: 53-55855
+  gnis: '2411468'
+  population: 10148
+- website: http://burlingtonwa.gov
   name: burlington
-  county: skagit
-  type: code
-- website: https://www.snohomishwa.gov/
-  scraper_misc:
-    city_id: 210
-    population: 10350
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:snohomish
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:burlington
+  - ocd-division/country:us/state:wa/county:skagit/place:burlington
+  counties:
+  - skagit
+  fips: 53-08920
+  gnis: '1512052'
+  population: 9152
+- website: https://www.snohomishwa.gov
   name: snohomish
-  county: snohomish
-  type: code
-- website: https://www.sheltonwa.gov/
-  scraper_misc:
-    city_id: 208
-    population: 10350
-  ocd_id: ocd-division/country:us/state:wa/county:mason/place:shelton
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:snohomish
+  - ocd-division/country:us/state:wa/county:snohomish/place:snohomish
+  counties:
+  - snohomish
+  fips: 53-65170
+  gnis: '1531910'
+  population: 10126
+- website: https://sheltonwa.gov
   name: shelton
-  county: mason
-  type: code
-- website: https://www.dupontwa.gov/
-  scraper_misc:
-    city_id: 59
-    population: 10180
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:dupont
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:shelton
+  - ocd-division/country:us/state:wa/county:mason/place:shelton
+  counties:
+  - mason
+  fips: 53-63735
+  gnis: '2411882'
+  population: 10371
+- website: http://dupontwa.gov
   name: dupont
-  county: pierce
-  type: code
-- website: https://www.cpwa.us/
-  scraper_misc:
-    city_id: 42
-    population: 9945
-  ocd_id: ocd-division/country:us/state:wa/county:walla_walla/place:college_place
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:dupont
+  - ocd-division/country:us/state:wa/county:pierce/place:dupont
+  counties:
+  - pierce
+  fips: 53-18965
+  gnis: '2410373'
+  population: 10151
+- website: http://www.cpwa.us
   name: college_place
-  county: walla_walla
-  type: code
-- website: https://www.othellowa.gov/
-  scraper_misc:
-    city_id: 171
-    population: 9145
-  ocd_id: ocd-division/country:us/state:wa/county:adams/place:othello
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:college_place
+  - ocd-division/country:us/state:wa/county:walla_walla/place:college_place
+  counties:
+  - walla_walla
+  fips: 53-13855
+  gnis: '2410192'
+  population: 9902
+- website: https://www.othellowa.gov
   name: othello
-  county: adams
-  type: code
-- website: https://www.cityoforting.org/
-  scraper_misc:
-    city_id: 170
-    population: 9125
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:orting
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:othello
+  - ocd-division/country:us/state:wa/county:adams/place:othello
+  counties:
+  - adams
+  fips: 53-52215
+  gnis: '2411341'
+  population: 8549
+- website: https://cityoforting.org
   name: orting
-  county: pierce
-  type: code
-- website: https://www.toppenish.gov/
-  scraper_misc:
-    city_id: 235
-    population: 8915
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:toppenish
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:orting
+  - ocd-division/country:us/state:wa/county:pierce/place:orting
+  counties:
+  - pierce
+  fips: 53-52005
+  gnis: '2411339'
+  population: 9041
+- website: https://www.toppenish.gov
   name: toppenish
-  county: yakima
-  type: code
-- website: https://stanwoodwa.org/
-  scraper_misc:
-    city_id: 221
-    population: 8865
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:stanwood
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:toppenish
+  - ocd-division/country:us/state:wa/county:yakima/place:toppenish
+  counties:
+  - yakima
+  fips: 53-71960
+  gnis: '2412086'
+  population: 8854
+- website: https://stanwoodwa.org
   name: stanwood
-  county: snohomish
-  type: code
-- website: https://www.ephrata.org/
-  scraper_misc:
-    city_id: 71
-    population: 8810
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:ephrata
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:stanwood
+  - ocd-division/country:us/state:wa/county:snohomish/place:stanwood
+  counties:
+  - snohomish
+  fips: 53-67455
+  gnis: '1512690'
+  population: 7705
+- website: http://www.ephrata.org
   name: ephrata
-  county: grant
-  type: code
-- website: https://cityofhoquiam.com/
-  scraper_misc:
-    city_id: 96
-    population: 8800
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:hoquiam
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ephrata
+  - ocd-division/country:us/state:wa/county:grant/place:ephrata
+  counties:
+  - grant
+  fips: 53-22080
+  gnis: '2410450'
+  population: 8477
+- website: https://cityofhoquiam.com
   name: hoquiam
-  county: grays_harbor
-  type: code
-- website: https://www.duvallwa.gov/
-  scraper_misc:
-    city_id: 60
-    population: 8780
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:duvall
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:hoquiam
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:hoquiam
+  counties:
+  - grays_harbor
+  fips: 53-32300
+  gnis: '2410792'
+  population: 8776
+- website: https://www.duvallwa.gov
   name: duvall
-  county: king
-  type: code
-- website: https://www.cityofmilton.net/
-  scraper_misc:
-    city_id: 142
-    population: 8755
-  ocd_id: ocd-division/country:us/state:wa/county:king/pierce/place:milton
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:duvall
+  - ocd-division/country:us/state:wa/county:king/place:duvall
+  counties:
+  - king
+  fips: 53-19035
+  gnis: '2410377'
+  population: 8034
+- website: https://cityofmilton.net
   name: milton
-  county: king/pierce
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:milton
+  - ocd-division/country:us/state:wa/county:pierce/place:milton
+  - ocd-division/country:us/state:wa/county:king/place:milton
+  counties:
+  - pierce
+  - king
+  fips: 53-46020
+  gnis: '2411114'
+  population: 8697
 - website: https://selahwa.gov
-  scraper_misc:
-    city_id: 206
-    population: 8620
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:selah
   name: selah
-  county: yakima
-  type: code
-- website: https://www.sequimwa.gov/
-  scraper_misc:
-    city_id: 207
-    population: 8405
-  ocd_id: ocd-division/country:us/state:wa/county:clallam/place:sequim
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:selah
+  - ocd-division/country:us/state:wa/county:yakima/place:selah
+  counties:
+  - yakima
+  fips: 53-63280
+  gnis: '2411862'
+  population: 8153
+- website: http://www.sequimwa.gov
   name: sequim
-  county: clallam
-  type: code
-- website: https://northbendwa.gov/
-  scraper_misc:
-    city_id: 158
-    population: 8260
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:north_bend
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sequim
+  - ocd-division/country:us/state:wa/county:clallam/place:sequim
+  counties:
+  - clallam
+  fips: 53-63385
+  gnis: '2411868'
+  population: 8024
+- website: https://northbendwa.gov
   name: north_bend
-  county: king
-  type: code
-- website: https://www.quincywashington.us/
-  scraper_misc:
-    city_id: 186
-    population: 8220
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:quincy
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:north_bend
+  - ocd-division/country:us/state:wa/county:king/place:north_bend
+  counties:
+  - king
+  fips: 53-49485
+  gnis: '2411270'
+  population: 7461
+- website: http://quincywashington.us
   name: quincy
-  county: grant
-  type: code
-- website: https://www.osgov.com/
-  scraper_misc:
-    city_id: 164
-    population: 7630
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:ocean_shores
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:quincy
+  - ocd-division/country:us/state:wa/county:grant/place:quincy
+  counties:
+  - grant
+  fips: 53-57115
+  gnis: '2411507'
+  population: 7543
+- website: https://www.osgov.com
   name: ocean_shores
-  county: grays_harbor
-  type: code
-- website: https://www.ci.chehalis.wa.us/
-  scraper_misc:
-    city_id: 34
-    population: 7480
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:chehalis
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ocean_shores
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:ocean_shores
+  counties:
+  - grays_harbor
+  fips: 53-50570
+  gnis: '2411300'
+  population: 6715
+- website: http://ci.chehalis.wa.us
   name: chehalis
-  county: lewis
-  type: code
-- website: https://www.pacificwa.gov/
-  scraper_misc:
-    city_id: 172
-    population: 7270
-  ocd_id: ocd-division/country:us/state:wa/county:king/pierce/place:pacific
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:chehalis
+  - ocd-division/country:us/state:wa/county:lewis/place:chehalis
+  counties:
+  - lewis
+  fips: 53-11475
+  gnis: '2409439'
+  population: 7439
+- website: https://pacificwa.gov
   name: pacific
-  county: king/pierce
-  type: code
-- website: https://clarkston-wa.com/
-  scraper_misc:
-    city_id: 38
-    population: 7240
-  ocd_id: ocd-division/country:us/state:wa/county:asotin/place:clarkston
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:pacific
+  - ocd-division/country:us/state:wa/county:king/place:pacific
+  - ocd-division/country:us/state:wa/county:pierce/place:pacific
+  counties:
+  - king
+  - pierce
+  fips: 53-52495
+  gnis: '2411349'
+  population: 7235
+- website: http://www.clarkston-wa.com
   name: clarkston
-  county: asotin
-  type: code
-- website: https://www.cityoffircrest.net/
-  scraper_misc:
-    city_id: 79
-    population: 7230
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:fircrest
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:clarkston
+  - ocd-division/country:us/state:wa/county:asotin/place:clarkston
+  counties:
+  - asotin
+  fips: 53-12630
+  gnis: '2409469'
+  population: 7161
+- website: http://www.cityoffircrest.net
   name: fircrest
-  county: pierce
-  type: code
-- website: https://www.blackdiamondwa.gov/
-  scraper_misc:
-    city_id: 16
-    population: 7195
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:black_diamond
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:fircrest
+  - ocd-division/country:us/state:wa/county:pierce/place:fircrest
+  counties:
+  - pierce
+  fips: 53-23970
+  gnis: '2410506'
+  population: 7156
+- website: https://www.blackdiamondwa.gov
   name: black_diamond
-  county: king
-  type: code
-- website: https://www.ci.sultan.wa.us/
-  scraper_misc:
-    city_id: 225
-    population: 7160
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:sultan
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:black_diamond
+  - ocd-division/country:us/state:wa/county:king/place:black_diamond
+  counties:
+  - king
+  fips: 53-06330
+  gnis: '2409855'
+  population: 4697
+- website: http://ci.sultan.wa.us
   name: sultan
-  county: snohomish
-  type: code
-- website: https://normandyparkwa.gov/
-  scraper_misc:
-    city_id: 157
-    population: 6855
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:normandy_park
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sultan
+  - ocd-division/country:us/state:wa/county:snohomish/place:sultan
+  counties:
+  - snohomish
+  fips: 53-68260
+  gnis: '1526700'
+  population: 5146
+- website: https://normandyparkwa.gov
   name: normandy_park
-  county: king
-  type: code
-- website: https://townofsteilacoom.org/
-  scraper_misc:
-    city_id: 223
-    population: 6845
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:steilacoom
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:normandy_park
+  - ocd-division/country:us/state:wa/county:king/place:normandy_park
+  counties:
+  - king
+  fips: 53-49415
+  gnis: '2411268'
+  population: 6771
+- website: https://townofsteilacoom.org
   name: steilacoom
-  county: pierce
   type: town
-- website: https://uniongapwa.gov/
-  scraper_misc:
-    city_id: 239
-    population: 6660
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:union_gap
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:steilacoom
+  - ocd-division/country:us/state:wa/county:pierce/place:steilacoom
+  counties:
+  - pierce
+  fips: 53-67770
+  gnis: '2413332'
+  population: 6727
+- website: https://uniongapwa.gov
   name: union_gap
-  county: yakima
-  type: code
-- website: https://cityofprosser.com/
-  scraper_misc:
-    city_id: 183
-    population: 6610
-  ocd_id: ocd-division/country:us/state:wa/county:benton/place:prosser
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:union_gap
+  - ocd-division/country:us/state:wa/county:yakima/place:union_gap
+  counties:
+  - yakima
+  fips: 53-73290
+  gnis: '2412131'
+  population: 6568
+- website: https://cityofprosser.com
   name: prosser
-  county: benton
-  type: code
-- website: http://www.ci.brier.wa.us/
-  scraper_misc:
-    city_id: 23
-    population: 6600
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:brier
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:prosser
+  - ocd-division/country:us/state:wa/county:benton/place:prosser
+  counties:
+  - benton
+  fips: 53-56450
+  gnis: '2411497'
+  population: 6062
+- website: http://www.ci.brier.wa.us
   name: brier
-  county: snohomish
-  type: code
-- website: https://www.ci.woodland.wa.us/
-  scraper_misc:
-    city_id: 260
-    population: 6575
-  ocd_id: ocd-division/country:us/state:wa/county:cowlitz/clark/place:woodland
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:brier
+  - ocd-division/country:us/state:wa/county:snohomish/place:brier
+  counties:
+  - snohomish
+  fips: 53-07940
+  gnis: '1512029'
+  population: 6560
+- website: http://www.ci.woodland.wa.us
   name: woodland
-  county: cowlitz/clark
-  type: code
-- website: https://www.ci.blaine.wa.us/
-  scraper_misc:
-    city_id: 17
-    population: 6480
-  ocd_id: ocd-division/country:us/state:wa/county:whatcom/place:blaine
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:woodland
+  - ocd-division/country:us/state:wa/county:cowlitz/place:woodland
+  - ocd-division/country:us/state:wa/county:clark/place:woodland
+  counties:
+  - cowlitz
+  - clark
+  fips: 53-79625
+  gnis: '2412301'
+  population: 6531
+- website: https://www.ci.blaine.wa.us
   name: blaine
-  county: whatcom
-  type: code
-- website: https://www.cityofbuckley.com/
-  scraper_misc:
-    city_id: 24
-    population: 5740
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:buckley
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:blaine
+  - ocd-division/country:us/state:wa/county:whatcom/place:blaine
+  counties:
+  - whatcom
+  fips: 53-06505
+  gnis: '2409860'
+  population: 5884
+- website: http://www.cityofbuckley.com
   name: buckley
-  county: pierce
-  type: code
-- website: https://www.cityofconnell.com/
-  scraper_misc:
-    city_id: 47
-    population: 5175
-  ocd_id: ocd-division/country:us/state:wa/county:franklin/place:connell
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:buckley
+  - ocd-division/country:us/state:wa/county:pierce/place:buckley
+  counties:
+  - pierce
+  fips: 53-08570
+  gnis: '2409929'
+  population: 5114
+- website: http://www.cityofconnell.com
   name: connell
-  county: franklin
-  type: code
-- website: https://www.cityofdeerparkwa.com/
-  scraper_misc:
-    city_id: 57
-    population: 5100
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:deer_park
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:connell
+  - ocd-division/country:us/state:wa/county:franklin/place:connell
+  counties:
+  - franklin
+  fips: 53-14485
+  gnis: '2410216'
+  population: 5441
+- website: http://www.cityofdeerparkwa.com
   name: deer_park
-  county: spokane
-  type: code
-- website: https://www.omakcity.com/
-  scraper_misc:
-    city_id: 168
-    population: 4980
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:omak
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:deer_park
+  - ocd-division/country:us/state:wa/county:spokane/place:deer_park
+  counties:
+  - spokane
+  fips: 53-17320
+  gnis: '2410312'
+  population: 4383
+- website: http://www.omakcity.com
   name: omak
-  county: okanogan
-  type: code
-- website: https://www.colville.wa.us/
-  scraper_misc:
-    city_id: 44
-    population: 4955
-  ocd_id: ocd-division/country:us/state:wa/county:stevens/place:colville
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:omak
+  - ocd-division/country:us/state:wa/county:okanogan/place:omak
+  counties:
+  - okanogan
+  fips: 53-51340
+  gnis: '2411320'
+  population: 4860
+- website: http://www.colville.wa.us
   name: colville
-  county: stevens
-  type: code
-- website: https://medical-lake.org/
-  scraper_misc:
-    city_id: 134
-    population: 4835
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:medical_lake
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:colville
+  - ocd-division/country:us/state:wa/county:stevens/place:colville
+  counties:
+  - stevens
+  fips: 53-14170
+  gnis: '2410205'
+  population: 4917
+- website: https://medical-lake.org
   name: medical_lake
-  county: spokane
-  type: code
-- website: https://cityofmoxee.us/
-  scraper_misc:
-    city_id: 150
-    population: 4820
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:moxee
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:medical_lake
+  - ocd-division/country:us/state:wa/county:spokane/place:medical_lake
+  counties:
+  - spokane
+  fips: 53-44690
+  gnis: '2411070'
+  population: 4874
+- website: https://cityofmoxee.us
   name: moxee
-  county: yakima
-  type: code
-- website: https://ci.granite-falls.wa.us/
-  scraper_misc:
-    city_id: 90
-    population: 4775
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:granite_falls
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:moxee
+  - ocd-division/country:us/state:wa/county:yakima/place:moxee
+  counties:
+  - yakima
+  fips: 53-47665
+  gnis: '2411188'
+  population: 4326
+- website: http://granitefallswa.gov
   name: granite_falls
-  county: snohomish
-  type: code
-- website: https://wapato-city.org/
-  scraper_misc:
-    city_id: 245
-    population: 4625
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:wapato
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:granite_falls
+  - ocd-division/country:us/state:wa/county:snohomish/place:granite_falls
+  counties:
+  - snohomish
+  fips: 53-27995
+  gnis: '1520218'
+  population: 4450
+- website: https://wapato-city.org
   name: wapato
-  county: yakima
-  type: second
-- website: https://cityofchelan.us/
-  scraper_misc:
-    city_id: 35
-    population: 4580
-  ocd_id: ocd-division/country:us/state:wa/county:chelan/place:chelan
+  type: second-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:wapato
+  - ocd-division/country:us/state:wa/county:yakima/place:wapato
+  counties:
+  - yakima
+  fips: 53-76125
+  gnis: '2412178'
+  population: 4607
+- website: http://www.cityofchelan.com
   name: chelan
-  county: chelan
-  type: code
-- website: https://cityofmontesano.com/
-  scraper_misc:
-    city_id: 144
-    population: 4135
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:montesano
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:chelan
+  - ocd-division/country:us/state:wa/county:chelan/place:chelan
+  counties:
+  - chelan
+  fips: 53-11615
+  gnis: '2409440'
+  population: 4222
+- website: https://www.cityofmontesano.com
   name: montesano
-  county: grays_harbor
-  type: code
-- website: https://ci.lacenter.wa.us/
-  scraper_misc:
-    city_id: 111
-    population: 4045
-  ocd_id: ocd-division/country:us/state:wa/county:clark/place:la_center
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:montesano
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:montesano
+  counties:
+  - grays_harbor
+  fips: 53-46895
+  gnis: '2411147'
+  population: 4138
+- website: https://ci.lacenter.wa.us
   name: la_center
-  county: clark
-  type: code
-- website: https://www.cityofmattawa.com/
-  scraper_misc:
-    city_id: 132
-    population: 3875
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:mattawa
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:la_center
+  - ocd-division/country:us/state:wa/county:clark/place:la_center
+  counties:
+  - clark
+  fips: 53-36710
+  gnis: '2411566'
+  population: 3424
+- website: http://www.cityofmattawa.com
   name: mattawa
-  county: grant
-  type: code
-- website: https://www.ci.benton-city.wa.us/
-  scraper_misc:
-    city_id: 14
-    population: 3845
-  ocd_id: ocd-division/country:us/state:wa/county:benton/place:benton_city
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mattawa
+  - ocd-division/country:us/state:wa/county:grant/place:mattawa
+  counties:
+  - grant
+  fips: 53-44165
+  gnis: '2412963'
+  population: 3335
+- website: http://ci.benton-city.wa.us
   name: benton_city
-  county: benton
-  type: code
-- website: https://www.grangerwashington.org/
-  scraper_misc:
-    city_id: 89
-    population: 3815
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:granger
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:benton_city
+  - ocd-division/country:us/state:wa/county:benton/place:benton_city
+  counties:
+  - benton
+  fips: 53-05560
+  gnis: '2409836'
+  population: 3479
+- website: https://www.grangerwashington.org
   name: granger
-  county: yakima
-  type: code
-- website: https://www.ci.goldendale.wa.us/
-  scraper_misc:
-    city_id: 86
-    population: 3515
-  ocd_id: ocd-division/country:us/state:wa/county:klickitat/place:goldendale
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:granger
+  - ocd-division/country:us/state:wa/county:yakima/place:granger
+  counties:
+  - yakima
+  fips: 53-27960
+  gnis: '2410640'
+  population: 3624
+- website: http://www.cityofgoldendale.com
   name: goldendale
-  county: klickitat
-  type: code
-- website: https://cityofelma.com/
-  scraper_misc:
-    city_id: 66
-    population: 3505
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:elma
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:goldendale
+  - ocd-division/country:us/state:wa/county:klickitat/place:goldendale
+  counties:
+  - klickitat
+  fips: 53-27435
+  gnis: '2410612'
+  population: 3453
+- website: https://www.cityofelma.com
   name: elma
-  county: grays_harbor
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:elma
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:elma
+  counties:
+  - grays_harbor
+  fips: 53-21450
+  gnis: '2410431'
+  population: 3438
 - website: https://forkswashington.org/
-  scraper_misc:
-    city_id: 80
-    population: 3415
-  ocd_id: ocd-division/country:us/state:wa/county:clallam/place:forks
   name: forks
-  county: clallam
-  type: code
-- website: https://www.cityofcashmere.org/
-  scraper_misc:
-    city_id: 30
-    population: 3390
-  ocd_id: ocd-division/country:us/state:wa/county:chelan/place:cashmere
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:forks
+  - ocd-division/country:us/state:wa/county:clallam/place:forks
+  counties:
+  - clallam
+  fips: 53-24810
+  gnis: '2410520'
+  population: 3335
+- website: http://www.cityofcashmere.org
   name: cashmere
-  county: chelan
-  type: code
-- website: https://www.algonawa.gov/
-  scraper_misc:
-    city_id: 3
-    population: 3335
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:algona
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:cashmere
+  - ocd-division/country:us/state:wa/county:chelan/place:cashmere
+  counties:
+  - chelan
+  fips: 53-10495
+  gnis: '2409405'
+  population: 3248
+- website: https://algonawa.gov
   name: algona
-  county: king
-  type: code
-- website: https://www.cityofzillah.us/
-  scraper_misc:
-    city_id: 266
-    population: 3215
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:zillah
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:algona
+  - ocd-division/country:us/state:wa/county:king/place:algona
+  counties:
+  - king
+  fips: 53-01290
+  gnis: '2409680'
+  population: 3290
+- website: https://www.cityofzillah.us
   name: zillah
-  county: yakima
-  type: code
-- website: https://cityofraymond.com/
-  scraper_misc:
-    city_id: 188
-    population: 3160
-  ocd_id: ocd-division/country:us/state:wa/county:pacific/place:raymond
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:zillah
+  - ocd-division/country:us/state:wa/county:yakima/place:zillah
+  counties:
+  - yakima
+  fips: 53-80500
+  gnis: '2412331'
+  population: 3179
+- website: http://cityofraymond.com
   name: raymond
-  county: pacific
-  type: code
-- website: https://www.cityofkalama.com/
-  scraper_misc:
-    city_id: 103
-    population: 3160
-  ocd_id: ocd-division/country:us/state:wa/county:cowlitz/place:kalama
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:raymond
+  - ocd-division/country:us/state:wa/county:pacific/place:raymond
+  counties:
+  - pacific
+  fips: 53-57430
+  gnis: '2411525'
+  population: 3081
+- website: https://www.cityofkalama.com
   name: kalama
-  county: cowlitz
-  type: code
-- website: https://www.ci.everson.wa.us/
-  scraper_misc:
-    city_id: 73
-    population: 3140
-  ocd_id: ocd-division/country:us/state:wa/county:whatcom/place:everson
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kalama
+  - ocd-division/country:us/state:wa/county:cowlitz/place:kalama
+  counties:
+  - cowlitz
+  fips: 53-34645
+  gnis: '2410160'
+  population: 2959
+- website: http://www.ci.everson.wa.us
   name: everson
-  county: whatcom
-  type: code
-- website: https://www.clydehill.org/
-  scraper_misc:
-    city_id: 40
-    population: 3100
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:clyde_hill
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:everson
+  - ocd-division/country:us/state:wa/county:whatcom/place:everson
+  counties:
+  - whatcom
+  fips: 53-22745
+  gnis: '2410471'
+  population: 2888
+- website: http://www.clydehill.org
   name: clyde_hill
-  county: king
-  type: code
-- website: https://www.medina-wa.gov/
-  scraper_misc:
-    city_id: 135
-    population: 2920
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:medina
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:clyde_hill
+  - ocd-division/country:us/state:wa/county:king/place:clyde_hill
+  counties:
+  - king
+  fips: 53-13365
+  gnis: '2409492'
+  population: 3126
+- website: http://www.medina-wa.gov
   name: medina
-  county: king
-  type: code
-- website: https://eatonville-wa.gov/
-  scraper_misc:
-    city_id: 62
-    population: 2905
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:eatonville
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:medina
+  - ocd-division/country:us/state:wa/county:king/place:medina
+  counties:
+  - king
+  fips: 53-44725
+  gnis: '2411071'
+  population: 2915
+- website: https://eatonville-wa.gov
   name: eatonville
-  county: pierce
   type: town
-- website: https://www.colfaxwa.org/
-  scraper_misc:
-    city_id: 41
-    population: 2785
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:colfax
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:eatonville
+  - ocd-division/country:us/state:wa/county:pierce/place:eatonville
+  counties:
+  - pierce
+  fips: 53-20260
+  gnis: '2412463'
+  population: 2845
+- website: https://colfaxwa.org
   name: colfax
-  county: whitman
-  type: code
-- website: https://cityofwarden.org/
-  scraper_misc:
-    city_id: 246
-    population: 2750
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:warden
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:colfax
+  - ocd-division/country:us/state:wa/county:whitman/place:colfax
+  counties:
+  - whitman
+  fips: 53-13785
+  gnis: '2410191'
+  population: 2782
+- website: http://www.cityofwarden.org
   name: warden
-  county: grant
-  type: code
-- website: http://www.fridayharbor.org/
-  scraper_misc:
-    city_id: 81
-    population: 2740
-  ocd_id: ocd-division/country:us/state:wa/county:san_juan/place:friday_harbor
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:warden
+  - ocd-division/country:us/state:wa/county:grant/place:warden
+  counties:
+  - grant
+  fips: 53-76160
+  gnis: '2412179'
+  population: 2449
+- website: http://fridayharbor.org
   name: friday_harbor
-  county: san_juan
   type: town
-- website: https://www.cityofchewelah.org/
-  scraper_misc:
-    city_id: 37
-    population: 2645
-  ocd_id: ocd-division/country:us/state:wa/county:stevens/place:chewelah
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:friday_harbor
+  - ocd-division/country:us/state:wa/county:san_juan/place:friday_harbor
+  counties:
+  - san_juan
+  fips: 53-25615
+  gnis: '2412659'
+  population: 2613
+- website: http://www.cityofchewelah.org
   name: chewelah
-  county: stevens
-  type: code
-- website: https://cityofleavenworth.com/
-  scraper_misc:
-    city_id: 120
-    population: 2595
-  ocd_id: ocd-division/country:us/state:wa/county:chelan/place:leavenworth
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:chewelah
+  - ocd-division/country:us/state:wa/county:stevens/place:chewelah
+  counties:
+  - stevens
+  fips: 53-12140
+  gnis: '2409444'
+  population: 2470
+- website: https://cityofleavenworth.com
   name: leavenworth
-  county: chelan
-  type: code
-- website: https://www.cityofrainierwa.org/
-  scraper_misc:
-    city_id: 187
-    population: 2565
-  ocd_id: ocd-division/country:us/state:wa/county:thurston/place:rainier
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:leavenworth
+  - ocd-division/country:us/state:wa/county:chelan/place:leavenworth
+  counties:
+  - chelan
+  fips: 53-38845
+  gnis: '2410814'
+  population: 2263
+- website: http://cityofrainierwa.org
   name: rainier
-  county: thurston
-  type: code
-- website: https://www.whitesalmonwa.gov/
-  scraper_misc:
-    city_id: 254
-    population: 2550
-  ocd_id: ocd-division/country:us/state:wa/county:klickitat/place:white_salmon
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:rainier
+  - ocd-division/country:us/state:wa/county:thurston/place:rainier
+  counties:
+  - thurston
+  fips: 53-57220
+  gnis: '1507707'
+  population: 2369
+- website: http://white-salmon.net
   name: white_salmon
-  county: klickitat
-  type: code
-- website: https://cityofwinlock.com/
-  scraper_misc:
-    city_id: 258
-    population: 2465
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:winlock
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:white_salmon
+  - ocd-division/country:us/state:wa/county:klickitat/place:white_salmon
+  counties:
+  - klickitat
+  fips: 53-78330
+  gnis: '2412254'
+  population: 2485
+- website: https://cityofwinlock.com
   name: winlock
-  county: lewis
-  type: code
-- website: https://ci.castle-rock.wa.us/
-  scraper_misc:
-    city_id: 31
-    population: 2465
-  ocd_id: ocd-division/country:us/state:wa/county:cowlitz/place:castle_rock
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:winlock
+  - ocd-division/country:us/state:wa/county:lewis/place:winlock
+  counties:
+  - lewis
+  fips: 53-79275
+  gnis: '2412283'
+  population: 1472
+- website: http://ci.castle-rock.wa.us
   name: castle_rock
-  county: cowlitz
-  type: code
-- website: https://www.daytonwa.com/
-  scraper_misc:
-    city_id: 56
-    population: 2445
-  ocd_id: ocd-division/country:us/state:wa/county:columbia/place:dayton
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:castle_rock
+  - ocd-division/country:us/state:wa/county:cowlitz/place:castle_rock
+  counties:
+  - cowlitz
+  fips: 53-10565
+  gnis: '2409409'
+  population: 2446
+- website: http://www.daytonwa.com
   name: dayton
-  county: columbia
-  type: code
-- website: https://www.okanogancity.com/
-  scraper_misc:
-    city_id: 166
-    population: 2420
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:okanogan
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:dayton
+  - ocd-division/country:us/state:wa/county:columbia/place:dayton
+  counties:
+  - columbia
+  fips: 53-16970
+  gnis: '2410301'
+  population: 2448
+- website: http://www.okanogancity.com
   name: okanogan
-  county: okanogan
-  type: code
-- website: https://www.ci.westport.wa.us/
-  scraper_misc:
-    city_id: 253
-    population: 2325
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:westport
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:okanogan
+  - ocd-division/country:us/state:wa/county:okanogan/place:okanogan
+  counties:
+  - okanogan
+  fips: 53-50920
+  gnis: '2411309'
+  population: 2379
+- website: https://www.ci.westport.wa.us
   name: westport
-  county: grays_harbor
-  type: code
-- website: https://cityofgoldbar.us/
-  scraper_misc:
-    city_id: 85
-    population: 2310
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:gold_bar
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:westport
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:westport
+  counties:
+  - grays_harbor
+  fips: 53-77630
+  gnis: '2412243'
+  population: 2213
+- website: https://cityofgoldbar.us
   name: gold_bar
-  county: snohomish
-  type: code
-- website: https://cleelum.gov/
-  scraper_misc:
-    city_id: 39
-    population: 2265
-  ocd_id: ocd-division/country:us/state:wa/county:kittitas/place:cle_elum
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:gold_bar
+  - ocd-division/country:us/state:wa/county:snohomish/place:gold_bar
+  counties:
+  - snohomish
+  fips: 53-27365
+  gnis: '1520077'
+  population: 2403
+- website: http://www.cityofcleelum.com
   name: cle_elum
-  county: kittitas
-  type: code
-- website: https://www.carnationwa.gov/
-  scraper_misc:
-    city_id: 29
-    population: 2250
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:carnation
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:cle_elum
+  - ocd-division/country:us/state:wa/county:kittitas/place:cle_elum
+  counties:
+  - kittitas
+  fips: 53-12945
+  gnis: '2409476'
+  population: 2157
+- website: http://www.carnationwa.gov
   name: carnation
-  county: king
-  type: code
-- website: https://bridgeportwashington.net/
-  scraper_misc:
-    city_id: 22
-    population: 2200
-  ocd_id: ocd-division/country:us/state:wa/county:douglas/place:bridgeport
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:carnation
+  - ocd-division/country:us/state:wa/county:king/place:carnation
+  counties:
+  - king
+  fips: 53-10215
+  gnis: '2409989'
+  population: 2158
+- website: http://www.bridgeportwashington.net
   name: bridgeport
-  county: douglas
-  type: code
-- website: https://newport-wa.org/
-  scraper_misc:
-    city_id: 155
-    population: 2140
-  ocd_id: ocd-division/country:us/state:wa/county:pend_oreille/place:newport
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bridgeport
+  - ocd-division/country:us/state:wa/county:douglas/place:bridgeport
+  counties:
+  - douglas
+  fips: 53-07870
+  gnis: '2409908'
+  population: 2141
+- website: http://www.newport-wa.org
   name: newport
-  county: pend_oreille
-  type: code
-- website: https://www.cityofmccleary.com/
-  scraper_misc:
-    city_id: 133
-    population: 2085
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:mccleary
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:newport
+  - ocd-division/country:us/state:wa/county:pend_oreille/place:newport
+  counties:
+  - pend_oreille
+  fips: 53-48820
+  gnis: '2411249'
+  population: 2114
+- website: https://www.cityofmccleary.com
   name: mccleary
-  county: grays_harbor
-  type: code
-- website: https://www.cityoftenino.us/
-  scraper_misc:
-    city_id: 231
-    population: 2070
-  ocd_id: ocd-division/country:us/state:wa/county:thurston/place:tenino
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mccleary
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:mccleary
+  counties:
+  - grays_harbor
+  fips: 53-41225
+  gnis: '2411061'
+  population: 1997
+- website: https://cityoftenino.us
   name: tenino
-  county: thurston
-  type: code
-- website: https://www.cityofnapavine.com/
-  scraper_misc:
-    city_id: 153
-    population: 2040
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:napavine
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:tenino
+  - ocd-division/country:us/state:wa/county:thurston/place:tenino
+  counties:
+  - thurston
+  fips: 53-70630
+  gnis: '1512718'
+  population: 1870
+- website: http://www.cityofnapavine.com
   name: napavine
-  county: lewis
-  type: code
-- website: https://townofcoupeville.org/
-  scraper_misc:
-    city_id: 51
-    population: 2020
-  ocd_id: ocd-division/country:us/state:wa/county:island/place:coupeville
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:napavine
+  - ocd-division/country:us/state:wa/county:lewis/place:napavine
+  counties:
+  - lewis
+  fips: 53-47980
+  gnis: '2411210'
+  population: 1888
+- website: https://townofcoupeville.org
   name: coupeville
-  county: island
   type: town
-- website: https://www.cityofbrewsterwashington.org/
-  scraper_misc:
-    city_id: 21
-    population: 1995
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:brewster
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:coupeville
+  - ocd-division/country:us/state:wa/county:island/place:coupeville
+  counties:
+  - island
+  fips: 53-15185
+  gnis: '2412377'
+  population: 1942
+- website: http://www.cityofbrewsterwashington.org
   name: brewster
-  county: okanogan
-  type: code
-- website: https://www.cityofmabton.com/
-  scraper_misc:
-    city_id: 127
-    population: 1965
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:mabton
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:brewster
+  - ocd-division/country:us/state:wa/county:okanogan/place:brewster
+  counties:
+  - okanogan
+  fips: 53-07835
+  gnis: '2409903'
+  population: 1983
+- website: https://www.cityofmabton.com
   name: mabton
-  county: yakima
-  type: code
-- website: https://www.royalcitywa.org/
-  scraper_misc:
-    city_id: 202
-    population: 1960
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:royal_city
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mabton
+  - ocd-division/country:us/state:wa/county:yakima/place:mabton
+  counties:
+  - yakima
+  fips: 53-40980
+  gnis: '2410904'
+  population: 1959
+- website: http://www.royalcitywa.org
   name: royal_city
-  county: grant
-  type: code
-- website: https://www.millwoodwa.us/
-  scraper_misc:
-    city_id: 141
-    population: 1925
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:millwood
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:royal_city
+  - ocd-division/country:us/state:wa/county:grant/place:royal_city
+  counties:
+  - grant
+  fips: 53-60230
+  gnis: '2411011'
+  population: 1776
+- website: http://millwoodwa.us
   name: millwood
-  county: spokane
-  type: code
-- website: https://www.cityofsumas.com/
-  scraper_misc:
-    city_id: 226
-    population: 1835
-  ocd_id: ocd-division/country:us/state:wa/county:whatcom/place:sumas
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:millwood
+  - ocd-division/country:us/state:wa/county:spokane/place:millwood
+  counties:
+  - spokane
+  fips: 53-45985
+  gnis: '2413003'
+  population: 1881
+- website: http://cityofsumas.com
   name: sumas
-  county: whatcom
-  type: code
-- website: https://oroville-wa.com/
-  scraper_misc:
-    city_id: 169
-    population: 1815
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:oroville
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sumas
+  - ocd-division/country:us/state:wa/county:whatcom/place:sumas
+  counties:
+  - whatcom
+  fips: 53-68330
+  gnis: '2412000'
+  population: 1583
+- website: http://www.oroville-wa.com
   name: oroville
-  county: okanogan
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:oroville
+  - ocd-division/country:us/state:wa/county:okanogan/place:oroville
+  counties:
+  - okanogan
+  fips: 53-51970
+  gnis: '2411338'
+  population: 1795
 - website: https://www.soaplakewa.gov
-  scraper_misc:
-    city_id: 212
-    population: 1795
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:soap_lake
   name: soap_lake
-  county: grant
-  type: code
-- website: https://www.cityofritzville.com/
-  scraper_misc:
-    city_id: 195
-    population: 1790
-  ocd_id: ocd-division/country:us/state:wa/county:adams/place:ritzville
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:soap_lake
+  - ocd-division/country:us/state:wa/county:grant/place:soap_lake
+  counties:
+  - grant
+  fips: 53-65345
+  gnis: '2411918'
+  population: 1691
+- website: http://www.cityofritzville.com
   name: ritzville
-  county: adams
-  type: second
-- website: https://southbend-wa.gov/
-  scraper_misc:
-    city_id: 213
-    population: 1745
-  ocd_id: ocd-division/country:us/state:wa/county:pacific/place:south_bend
+  type: second-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ritzville
+  - ocd-division/country:us/state:wa/county:adams/place:ritzville
+  counties:
+  - adams
+  fips: 53-58725
+  gnis: '2410959'
+  population: 1767
+- website: http://www.southbend-wa.gov
   name: south_bend
-  county: pacific
-  type: code
-- website: https://www.longbeachwa.gov/
-  scraper_misc:
-    city_id: 122
-    population: 1745
-  ocd_id: ocd-division/country:us/state:wa/county:pacific/place:long_beach
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:south_bend
+  - ocd-division/country:us/state:wa/county:pacific/place:south_bend
+  counties:
+  - pacific
+  fips: 53-65625
+  gnis: '2411933'
+  population: 1746
+- website: http://www.longbeachwa.gov
   name: long_beach
-  county: pacific
-  type: code
-- website: https://www.davenportwa.us/
-  scraper_misc:
-    city_id: 55
-    population: 1730
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:davenport
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:long_beach
+  - ocd-division/country:us/state:wa/county:pacific/place:long_beach
+  counties:
+  - pacific
+  fips: 53-40070
+  gnis: '2410867'
+  population: 1688
+- website: https://davenportwa.us
   name: davenport
-  county: lincoln
-  type: second
-- website: https://www.rockislandwa.gov/
-  scraper_misc:
-    city_id: 197
-    population: 1680
-  ocd_id: ocd-division/country:us/state:wa/county:douglas/place:rock_island
+  type: second-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:davenport
+  - ocd-division/country:us/state:wa/county:lincoln/place:davenport
+  counties:
+  - lincoln
+  fips: 53-16795
+  gnis: '1504329'
+  population: 1703
+- website: http://rockislandwa.org
   name: rock_island
-  county: douglas
-  type: code
-- website: https://www.cosmopoliswa.gov/
-  scraper_misc:
-    city_id: 48
-    population: 1680
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:cosmopolis
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:rock_island
+  - ocd-division/country:us/state:wa/county:douglas/place:rock_island
+  counties:
+  - douglas
+  fips: 53-59180
+  gnis: '2410975'
+  population: 1279
+- website: https://cosmopoliswa.gov
   name: cosmopolis
-  county: grays_harbor
-  type: code
-- website: https://www.townofyacolt.com/
-  scraper_misc:
-    city_id: 262
-    population: 1670
-  ocd_id: ocd-division/country:us/state:wa/county:clark/place:yacolt
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:cosmopolis
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:cosmopolis
+  counties:
+  - grays_harbor
+  fips: 53-14870
+  gnis: '2410238'
+  population: 1638
+- website: http://townofyacolt.com
   name: yacolt
-  county: clark
   type: town
-- website: http://www.cityofnooksack.com/
-  scraper_misc:
-    city_id: 156
-    population: 1670
-  ocd_id: ocd-division/country:us/state:wa/county:whatcom/place:nooksack
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:yacolt
+  - ocd-division/country:us/state:wa/county:clark/place:yacolt
+  counties:
+  - clark
+  fips: 53-79975
+  gnis: '2413517'
+  population: 1668
+- website: http://cityofnooksack.com
   name: nooksack
-  county: whatcom
-  type: code
-- website: https://www.cityofkettlefalls.org/
-  scraper_misc:
-    city_id: 107
-    population: 1640
-  ocd_id: ocd-division/country:us/state:wa/county:stevens/place:kettle_falls
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:nooksack
+  - ocd-division/country:us/state:wa/county:whatcom/place:nooksack
+  counties:
+  - whatcom
+  fips: 53-49275
+  gnis: '2411263'
+  population: 1471
+- website: http://www.kettle-falls.com
   name: kettle_falls
-  county: stevens
-  type: code
-- website: https://cityoftieton.com/
-  scraper_misc:
-    city_id: 232
-    population: 1600
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:tieton
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kettle_falls
+  - ocd-division/country:us/state:wa/county:stevens/place:kettle_falls
+  counties:
+  - stevens
+  fips: 53-35485
+  gnis: '2411540'
+  population: 1636
+- website: http://cityoftieton.com
   name: tieton
-  county: yakima
-  type: code
-- website: https://www.ci.stevenson.wa.us/
-  scraper_misc:
-    city_id: 224
-    population: 1590
-  ocd_id: ocd-division/country:us/state:wa/county:skamania/place:stevenson
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:tieton
+  - ocd-division/country:us/state:wa/county:yakima/place:tieton
+  counties:
+  - yakima
+  fips: 53-71400
+  gnis: '2413390'
+  population: 1389
+- website: http://www.cityofstevenson.com
   name: stevenson
-  county: skamania
-  type: code
-- website: https://townofdarrington.com/
-  scraper_misc:
-    city_id: 54
-    population: 1515
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:darrington
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:stevenson
+  - ocd-division/country:us/state:wa/county:skamania/place:stevenson
+  counties:
+  - skamania
+  fips: 53-67875
+  gnis: '2411980'
+  population: 1491
+- website: http://townofdarrington.com
   name: darrington
-  county: snohomish
   type: town
-- website: http://www.cityofkittitas.com/
-  scraper_misc:
-    city_id: 109
-    population: 1445
-  ocd_id: ocd-division/country:us/state:wa/county:kittitas/place:kittitas
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:darrington
+  - ocd-division/country:us/state:wa/county:snohomish/place:darrington
+  counties:
+  - snohomish
+  fips: 53-16690
+  gnis: '2412405'
+  population: 1462
+- website: http://www.cityofkittitas.com
   name: kittitas
-  county: kittitas
-  type: code
-- website: https://www.cityofpomeroy1.com/
-  scraper_misc:
-    city_id: 177
-    population: 1415
-  ocd_id: ocd-division/country:us/state:wa/county:garfield/place:pomeroy
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kittitas
+  - ocd-division/country:us/state:wa/county:kittitas/place:kittitas
+  counties:
+  - kittitas
+  fips: 53-36045
+  gnis: '2411553'
+  population: 1438
+- website: https://www.cityofpomeroy1.com
   name: pomeroy
-  county: garfield
-  type: code
-- website: https://www.entiatwa.us/
-  scraper_misc:
-    city_id: 69
-    population: 1375
-  ocd_id: ocd-division/country:us/state:wa/county:chelan/place:entiat
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:pomeroy
+  - ocd-division/country:us/state:wa/county:garfield/place:pomeroy
+  counties:
+  - garfield
+  fips: 53-55120
+  gnis: '2411453'
+  population: 1389
+- website: https://www.entiatwa.us
   name: entiat
-  county: chelan
-  type: code
-- website: https://www.townofwoodway.com/
-  scraper_misc:
-    city_id: 261
-    population: 1345
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:woodway
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:entiat
+  - ocd-division/country:us/state:wa/county:chelan/place:entiat
+  counties:
+  - chelan
+  fips: 53-22010
+  gnis: '2410447'
+  population: 1326
+- website: https://www.townofwoodway.com
   name: woodway
-  county: snohomish
-  type: code
-- website: https://cityofasotin.org/
-  scraper_misc:
-    city_id: 7
-    population: 1225
-  ocd_id: ocd-division/country:us/state:wa/county:asotin/place:asotin
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:woodway
+  - ocd-division/country:us/state:wa/county:snohomish/place:woodway
+  counties:
+  - snohomish
+  fips: 53-79835
+  gnis: '1512815'
+  population: 1318
+- website: http://cityofasotin.org
   name: asotin
-  county: asotin
-  type: code
-- website: https://townofcouleedam.org/
-  scraper_misc:
-    city_id: 50
-    population: 1210
-  ocd_id: ocd-division/country:us/state:wa/county:douglas/_grant/_okanogan/place:coulee_dam
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:asotin
+  - ocd-division/country:us/state:wa/county:asotin/place:asotin
+  counties:
+  - asotin
+  fips: 53-03075
+  gnis: '2409742'
+  population: 1204
+- website: https://townofcouleedam.org
   name: coulee_dam
-  county: douglas/_grant/_okanogan
-  type: code
-- website: https://www.langleywa.org/
-  scraper_misc:
-    city_id: 118
-    population: 1190
-  ocd_id: ocd-division/country:us/state:wa/county:island/place:langley
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:coulee_dam
+  - ocd-division/country:us/state:wa/county:okanogan/place:coulee_dam
+  - ocd-division/country:us/state:wa/county:douglas/place:coulee_dam
+  - ocd-division/country:us/state:wa/county:grant/place:coulee_dam
+  counties:
+  - okanogan
+  - douglas
+  - grant
+  fips: 53-15115
+  gnis: '2413249'
+  population: 1211
+- website: http://www.langleywa.org
   name: langley
-  county: island
-  type: code
-- website: https://www.cityofwaitsburg.com/
-  scraper_misc:
-    city_id: 243
-    population: 1185
-  ocd_id: ocd-division/country:us/state:wa/county:walla_walla/place:waitsburg
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:langley
+  - ocd-division/country:us/state:wa/county:island/place:langley
+  counties:
+  - island
+  fips: 53-38355
+  gnis: '2411623'
+  population: 1147
+- website: http://www.cityofwaitsburg.com
   name: waitsburg
-  county: walla_walla
-  type: unclassified
-- website: https://www.watervillewa.com/
-  scraper_misc:
-    city_id: 249
-    population: 1150
-  ocd_id: ocd-division/country:us/state:wa/county:douglas/place:waterville
+  type: unclassified_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:waitsburg
+  - ocd-division/country:us/state:wa/county:walla_walla/place:waitsburg
+  counties:
+  - walla_walla
+  fips: 53-75565
+  gnis: '2412165'
+  population: 1166
+- website: http://www.ci.waterville.wa.us
   name: waterville
-  county: douglas
   type: town
-- website: https://yarrowpointwa.gov/
-  scraper_misc:
-    city_id: 264
-    population: 1135
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:yarrow_point
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:waterville
+  - ocd-division/country:us/state:wa/county:douglas/place:waterville
+  counties:
+  - douglas
+  fips: 53-76510
+  gnis: '2413455'
+  population: 1134
+- website: http://ci.yarrow-point.wa.us
   name: yarrow_point
-  county: king
   type: town
-- website: https://townofnaches.com/
-  scraper_misc:
-    city_id: 152
-    population: 1125
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:naches
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:yarrow_point
+  - ocd-division/country:us/state:wa/county:king/place:yarrow_point
+  counties:
+  - king
+  fips: 53-80150
+  gnis: '2413520'
+  population: 1134
+- website: https://www.townofnaches.com
   name: naches
-  county: yakima
   type: town
-- website: https://ilwaco-wa.gov/
-  scraper_misc:
-    city_id: 98
-    population: 1115
-  ocd_id: ocd-division/country:us/state:wa/county:pacific/place:ilwaco
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:naches
+  - ocd-division/country:us/state:wa/county:yakima/place:naches
+  counties:
+  - yakima
+  fips: 53-47805
+  gnis: '2413032'
+  population: 1084
+- website: http://www.ilwaco-wa.gov
   name: ilwaco
-  county: pacific
-  type: code
-- website: https://www.townoftwisp.com/
-  scraper_misc:
-    city_id: 238
-    population: 1095
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:twisp
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ilwaco
+  - ocd-division/country:us/state:wa/county:pacific/place:ilwaco
+  counties:
+  - pacific
+  fips: 53-33000
+  gnis: '2410095'
+  population: 1087
+- website: http://townoftwisp.com
   name: twisp
-  county: okanogan
   type: town
-- website: https://www.tonasketwa.gov/
-  scraper_misc:
-    city_id: 234
-    population: 1085
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:tonasket
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:twisp
+  - ocd-division/country:us/state:wa/county:okanogan/place:twisp
+  counties:
+  - okanogan
+  fips: 53-73080
+  gnis: '2413408'
+  population: 992
+- website: https://www.tonasketwa.gov
   name: tonasket
-  county: okanogan
-  type: code
-- website: https://www.visitmorton.com/
-  scraper_misc:
-    city_id: 145
-    population: 1085
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:morton
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:tonasket
+  - ocd-division/country:us/state:wa/county:okanogan/place:tonasket
+  counties:
+  - okanogan
+  fips: 53-71890
+  gnis: '2412082'
+  population: 1103
+- website: http://www.visitmorton.com
   name: morton
-  county: lewis
-  type: code
-- website: https://www.rustonwa.org/
-  scraper_misc:
-    city_id: 203
-    population: 1065
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:ruston
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:morton
+  - ocd-division/country:us/state:wa/county:lewis/place:morton
+  counties:
+  - lewis
+  fips: 53-47175
+  gnis: '2411171'
+  population: 1036
+- website: http://www.rustonwa.org
   name: ruston
-  county: pierce
-  type: code
-- website: https://www.palousewa.gov/
-  scraper_misc:
-    city_id: 173
-    population: 1055
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:palouse
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ruston
+  - ocd-division/country:us/state:wa/county:pierce/place:ruston
+  counties:
+  - pierce
+  fips: 53-60510
+  gnis: '2412586'
+  population: 1055
+- website: http://www.visitpalouse.com
   name: palouse
-  county: whitman
-  type: second
-- website: https://www.cityofrepublic.org/
-  scraper_misc:
-    city_id: 192
-    population: 1005
-  ocd_id: ocd-division/country:us/state:wa/county:ferry/place:republic
+  type: second-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:palouse
+  - ocd-division/country:us/state:wa/county:whitman/place:palouse
+  counties:
+  - whitman
+  fips: 53-52950
+  gnis: '2411364'
+  population: 1015
+- website: http://www.republicwa.org
   name: republic
-  county: ferry
-  type: code
-- website: https://www.townoflaconner.org/
-  scraper_misc:
-    city_id: 112
-    population: 995
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:la_conner
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:republic
+  - ocd-division/country:us/state:wa/county:ferry/place:republic
+  counties:
+  - ferry
+  fips: 53-57850
+  gnis: '2410927'
+  population: 992
+- website: https://www.townoflaconner.org
   name: la_conner
-  county: skagit
   type: town
-- website: https://northbonneville.net/
-  scraper_misc:
-    city_id: 159
-    population: 985
-  ocd_id: ocd-division/country:us/state:wa/county:skamania/place:north_bonneville
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:la_conner
+  - ocd-division/country:us/state:wa/county:skagit/place:la_conner
+  counties:
+  - skagit
+  fips: 53-36780
+  gnis: '2412852'
+  population: 965
+- website: http://www.northbonneville.net
   name: north_bonneville
-  county: skamania
-  type: code
-- website: https://www.electriccity.us/
-  scraper_misc:
-    city_id: 64
-    population: 975
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:electric_city
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:north_bonneville
+  - ocd-division/country:us/state:wa/county:skamania/place:north_bonneville
+  counties:
+  - skamania
+  fips: 53-49555
+  gnis: '2411271'
+  population: 1397
+- website: http://www.electriccity.us
   name: electric_city
-  county: grant
-  type: code
-- website: https://www.ci.roslyn.wa.us/
-  scraper_misc:
-    city_id: 200
-    population: 965
-  ocd_id: ocd-division/country:us/state:wa/county:kittitas/place:roslyn
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:electric_city
+  - ocd-division/country:us/state:wa/county:grant/place:electric_city
+  counties:
+  - grant
+  fips: 53-21030
+  gnis: '2412472'
+  population: 956
+- website: http://www.ci.roslyn.wa.us
   name: roslyn
-  county: kittitas
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:roslyn
+  - ocd-division/country:us/state:wa/county:kittitas/place:roslyn
+  counties:
+  - kittitas
+  fips: 53-60055
+  gnis: '2411001'
+  population: 950
 - website: https://gccitywa.org/
-  scraper_misc:
-    city_id: 87
-    population: 955
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:grand_coulee
   name: grand_coulee
-  county: grant
-  type: code
-- website: http://www.wilburwa.com/
-  scraper_misc:
-    city_id: 255
-    population: 900
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:wilbur
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:grand_coulee
+  - ocd-division/country:us/state:wa/county:grant/place:grand_coulee
+  counties:
+  - grant
+  fips: 53-27855
+  gnis: '2410630'
+  population: 972
+- website: http://wilburwa.com
   name: wilbur
-  county: lincoln
   type: town
-- website: http://www.cityofgeorge.org/
-  scraper_misc:
-    city_id: 83
-    population: 900
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:george
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:wilbur
+  - ocd-division/country:us/state:wa/county:lincoln/place:wilbur
+  counties:
+  - lincoln
+  fips: 53-78680
+  gnis: '1509502'
+  population: 895
+- website: http://www.cityofgeorge.org
   name: george
-  county: grant
-  type: code
-- website: https://odessawa.org/
-  scraper_misc:
-    city_id: 165
-    population: 895
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:odessa
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:george
+  - ocd-division/country:us/state:wa/county:grant/place:george
+  counties:
+  - grant
+  fips: 53-26455
+  gnis: '2410581'
+  population: 809
+- website: http://odessawa.org
   name: odessa
-  county: lincoln
   type: town
-- website: https://www.tekoawa.com/
-  scraper_misc:
-    city_id: 230
-    population: 820
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:tekoa
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:odessa
+  - ocd-division/country:us/state:wa/county:lincoln/place:odessa
+  counties:
+  - lincoln
+  fips: 53-50745
+  gnis: '1507143'
+  population: 896
+- website: http://www.tekoawa.com
   name: tekoa
-  county: whitman
-  type: second
-- website: https://cityofroywa.us/
-  scraper_misc:
-    city_id: 201
-    population: 815
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:roy
+  type: second-class_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:tekoa
+  - ocd-division/country:us/state:wa/county:whitman/place:tekoa
+  counties:
+  - whitman
+  fips: 53-70560
+  gnis: '2412043'
+  population: 817
+- website: http://www.cityofroywa.us
   name: roy
-  county: pierce
-  type: code
-- website: https://www.townofconcrete.com/
-  scraper_misc:
-    city_id: 46
-    population: 810
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:concrete
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:roy
+  - ocd-division/country:us/state:wa/county:pierce/place:roy
+  counties:
+  - pierce
+  fips: 53-60160
+  gnis: '2411010'
+  population: 816
+- website: http://townofconcrete.com
   name: concrete
-  county: skagit
   type: town
-- website: https://www.cityofmossyrock.com/
-  scraper_misc:
-    city_id: 147
-    population: 800
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:mossyrock
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:concrete
+  - ocd-division/country:us/state:wa/county:skagit/place:concrete
+  counties:
+  - skagit
+  fips: 53-14380
+  gnis: '2413237'
+  population: 801
+- website: http://cityofmossyrock.com
   name: mossyrock
-  county: lewis
-  type: code
-- website: https://www.bingenwashington.org/
-  scraper_misc:
-    city_id: 15
-    population: 780
-  ocd_id: ocd-division/country:us/state:wa/county:klickitat/place:bingen
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mossyrock
+  - ocd-division/country:us/state:wa/county:lewis/place:mossyrock
+  counties:
+  - lewis
+  fips: 53-47315
+  gnis: '2411175'
+  population: 768
+- website: https://www.bingenwashington.org
   name: bingen
-  county: klickitat
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bingen
+  - ocd-division/country:us/state:wa/county:klickitat/place:bingen
+  counties:
+  - klickitat
+  fips: 53-06085
+  gnis: '2409850'
+  population: 778
 - website: https://www.carbonado.org/
-  scraper_misc:
-    city_id: 28
-    population: 755
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:carbonado
   name: carbonado
-  county: pierce
   type: town
-- website: https://www.oakvillecityhall.com/
-  scraper_misc:
-    city_id: 163
-    population: 720
-  ocd_id: ocd-division/country:us/state:wa/county:grays_harbor/place:oakville
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:carbonado
+  - ocd-division/country:us/state:wa/county:pierce/place:carbonado
+  counties:
+  - pierce
+  fips: 53-09970
+  gnis: '2413165'
+  population: 734
+- website: http://www.oakvillecityhall.com
   name: oakville
-  county: grays_harbor
-  type: code
-- website: https://toledowa.us/
-  scraper_misc:
-    city_id: 233
-    population: 700
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:toledo
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:oakville
+  - ocd-division/country:us/state:wa/county:grays_harbor/place:oakville
+  counties:
+  - grays_harbor
+  fips: 53-50430
+  gnis: '2411298'
+  population: 715
+- website: http://www.toledowa.us
   name: toledo
-  county: lewis
-  type: code
-- website: https://www.vaderwa.org/
-  scraper_misc:
-    city_id: 241
-    population: 665
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:vader
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:toledo
+  - ocd-division/country:us/state:wa/county:lewis/place:toledo
+  counties:
+  - lewis
+  fips: 53-71785
+  gnis: '2412077'
+  population: 631
+- website: http://www.vaderwa.org
   name: vader
-  county: lewis
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:vader
+  - ocd-division/country:us/state:wa/county:lewis/place:vader
+  counties:
+  - lewis
+  fips: 53-73780
+  gnis: '2412140'
+  population: 629
 - website:
-  scraper_misc:
-    city_id: 189
-    population: 655
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:reardan
   name: reardan
-  county: lincoln
   type: town
-- website: https://www.townofpeell.com/
-  scraper_misc:
-    city_id: 176
-    population: 655
-  ocd_id: ocd-division/country:us/state:wa/county:lewis/place:pe_ell
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:reardan
+  - ocd-division/country:us/state:wa/county:lincoln/place:reardan
+  counties:
+  - lincoln
+  fips: 53-57465
+  gnis: '1507746'
+  population: 637
+- website: http://www.townofpeell.com
   name: pe_ell
-  county: lewis
   type: town
-- website: https://www.townofsp.com/
-  scraper_misc:
-    city_id: 215
-    population: 625
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:south_prairie
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:pe_ell
+  - ocd-division/country:us/state:wa/county:lewis/place:pe_ell
+  counties:
+  - lewis
+  fips: 53-53930
+  gnis: '2413122'
+  population: 642
+- website: http://townofsouthprairie.com
   name: south_prairie
-  county: pierce
   type: town
-- website: https://www.bucoda.us/
-  scraper_misc:
-    city_id: 25
-    population: 620
-  ocd_id: ocd-division/country:us/state:wa/county:thurston/place:bucoda
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:south_prairie
+  - ocd-division/country:us/state:wa/county:pierce/place:south_prairie
+  counties:
+  - pierce
+  fips: 53-66045
+  gnis: '2413310'
+  population: 373
+- website: http://bucoda.us
   name: bucoda
-  county: thurston
   type: town
-- website: https://www.stjohnwa.com/
-  scraper_misc:
-    city_id: 220
-    population: 605
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:st._john
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:bucoda
+  - ocd-division/country:us/state:wa/county:thurston/place:bucoda
+  counties:
+  - thurston
+  fips: 53-08605
+  gnis: '2411738'
+  population: 600
+- website: http://www.stjohnwa.com
   name: st._john
-  county: whitman
   type: town
-- website: https://www.rockfordwa.com/
-  scraper_misc:
-    city_id: 198
-    population: 605
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:rockford
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:st._john
+  - ocd-division/country:us/state:wa/county:whitman/place:st._john
+  counties:
+  - whitman
+  fips: 53-60860
+  gnis: '2412595'
+  population: 599
+- website: http://rockfordwa.com
   name: rockford
-  county: spokane
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:rockford
+  - ocd-division/country:us/state:wa/county:spokane/place:rockford
+  counties:
+  - spokane
+  fips: 53-59145
+  gnis: '2412562'
+  population: 522
 - website: https://fairfieldwa.com/
-  scraper_misc:
-    city_id: 74
-    population: 600
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:fairfield
   name: fairfield
-  county: spokane
   type: town
-- website: https://www.pateros.com/
-  scraper_misc:
-    city_id: 175
-    population: 600
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:pateros
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:fairfield
+  - ocd-division/country:us/state:wa/county:spokane/place:fairfield
+  counties:
+  - spokane
+  fips: 53-22990
+  gnis: '2412612'
+  population: 589
+- website: http://www.pateros.com
   name: pateros
-  county: okanogan
-  type: code
-- website: http://www.townofwinthrop.com/
-  scraper_misc:
-    city_id: 259
-    population: 590
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:winthrop
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:pateros
+  - ocd-division/country:us/state:wa/county:okanogan/place:pateros
+  counties:
+  - okanogan
+  fips: 53-53720
+  gnis: '2411382'
+  population: 593
+- website: https://www.townofwinthrop.com
   name: winthrop
-  county: okanogan
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:winthrop
+  - ocd-division/country:us/state:wa/county:okanogan/place:winthrop
+  counties:
+  - okanogan
+  fips: 53-79380
+  gnis: '2413503'
+  population: 504
 - website:
-  scraper_misc:
-    city_id: 92
-    population: 585
-  ocd_id: ocd-division/country:us/state:wa/county:yakima/place:harrah
   name: harrah
-  county: yakima
   type: town
-- website: https://townofrosalia.net/
-  scraper_misc:
-    city_id: 199
-    population: 585
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:rosalia
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:harrah
+  - ocd-division/country:us/state:wa/county:yakima/place:harrah
+  counties:
+  - yakima
+  fips: 53-29710
+  gnis: '2412728'
+  population: 585
+- website: http://www.townofrosalia.org
   name: rosalia
-  county: whitman
   type: town
-- website: https://www.townofcathlamet.com/
-  scraper_misc:
-    city_id: 32
-    population: 580
-  ocd_id: ocd-division/country:us/state:wa/county:wahkiakum/place:cathlamet
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:rosalia
+  - ocd-division/country:us/state:wa/county:whitman/place:rosalia
+  counties:
+  - whitman
+  fips: 53-59775
+  gnis: '2412576'
+  population: 598
+- website: https://www.townofcathlamet.com
   name: cathlamet
-  county: wahkiakum
   type: town
-- website:
-  scraper_misc:
-    city_id: 214
-    population: 570
-  ocd_id: ocd-division/country:us/state:wa/county:kittitas/place:south_cle_elum
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:cathlamet
+  - ocd-division/country:us/state:wa/county:wahkiakum/place:cathlamet
+  counties:
+  - wahkiakum
+  fips: 53-10635
+  gnis: '2413181'
+  population: 560
+- website: https://southcleelum.org
   name: south_cle_elum
-  county: kittitas
   type: town
-- website: https://garfieldwa.com/
-  scraper_misc:
-    city_id: 82
-    population: 565
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:garfield
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:south_cle_elum
+  - ocd-division/country:us/state:wa/county:kittitas/place:south_cle_elum
+  counties:
+  - kittitas
+  fips: 53-65765
+  gnis: '1526142'
+  population: 559
+- website: http://www.garfieldwa.com
   name: garfield
-  county: whitman
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:garfield
+  - ocd-division/country:us/state:wa/county:whitman/place:garfield
+  counties:
+  - whitman
+  fips: 53-26140
+  gnis: '2412669'
+  population: 562
 - website: https://couleecitywa.org/
-  scraper_misc:
-    city_id: 49
-    population: 560
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:coulee_city
   name: coulee_city
-  county: grant
   type: town
-- website:
-  scraper_misc:
-    city_id: 2
-    population: 550
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:albion
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:coulee_city
+  - ocd-division/country:us/state:wa/county:grant/place:coulee_city
+  counties:
+  - grant
+  fips: 53-15080
+  gnis: '2413248'
+  population: 549
+- website: http://www.palouse.org/albion
   name: albion
-  county: whitman
   type: town
-- website:
-  scraper_misc:
-    city_id: 121
-    population: 535
-  ocd_id: ocd-division/country:us/state:wa/county:adams/place:lind
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:albion
+  - ocd-division/country:us/state:wa/county:whitman/place:albion
+  counties:
+  - whitman
+  fips: 53-01010
+  gnis: '2412345'
+  population: 550
+- website: https://www.lindwa.com
   name: lind
-  county: adams
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lind
+  - ocd-division/country:us/state:wa/county:adams/place:lind
+  counties:
+  - adams
+  fips: 53-39510
+  gnis: '2412899'
+  population: 535
 - website: https://www.townofwilkeson.com/
-  scraper_misc:
-    city_id: 256
-    population: 500
-  ocd_id: ocd-division/country:us/state:wa/county:pierce/place:wilkeson
   name: wilkeson
-  county: pierce
   type: town
-- website: https://sprague-wa.us/
-  scraper_misc:
-    city_id: 218
-    population: 500
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:sprague
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:wilkeson
+  - ocd-division/country:us/state:wa/county:pierce/place:wilkeson
+  counties:
+  - pierce
+  fips: 53-78925
+  gnis: '2413489'
+  population: 499
+- website: https://sprague-wa.us
   name: sprague
-  county: lincoln
-  type: code
-- website: https://huntspoint-wa.gov/
-  scraper_misc:
-    city_id: 97
-    population: 460
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:hunts_point
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:sprague
+  - ocd-division/country:us/state:wa/county:lincoln/place:sprague
+  counties:
+  - lincoln
+  fips: 53-67175
+  gnis: '1508614'
+  population: 495
+- website: https://huntspoint-wa.gov
   name: hunts_point
-  county: king
   type: town
-- website:
-  scraper_misc:
-    city_id: 93
-    population: 435
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:harrington
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:hunts_point
+  - ocd-division/country:us/state:wa/county:king/place:hunts_point
+  counties:
+  - king
+  fips: 53-32755
+  gnis: '2412782'
+  population: 457
+- website: http://www.harringtonbiz.com
   name: harrington
-  county: lincoln
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:harrington
+  - ocd-division/country:us/state:wa/county:lincoln/place:harrington
+  counties:
+  - lincoln
+  fips: 53-29745
+  gnis: '1505401'
+  population: 429
 - website:
-  scraper_misc:
-    city_id: 100
-    population: 430
-  ocd_id: ocd-division/country:us/state:wa/county:pend_oreille/place:ione
   name: ione
-  county: pend_oreille
   type: town
-- website: https://townoflyman.com/
-  scraper_misc:
-    city_id: 124
-    population: 430
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:lyman
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:ione
+  - ocd-division/country:us/state:wa/county:pend_oreille/place:ione
+  counties:
+  - pend_oreille
+  fips: 53-33560
+  gnis: '2412795'
+  population: 428
+- website: http://townoflyman.com
   name: lyman
-  county: skagit
   type: town
-- website: https://www.oakesdale.org/
-  scraper_misc:
-    city_id: 162
-    population: 400
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:oakesdale
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lyman
+  - ocd-division/country:us/state:wa/county:skagit/place:lyman
+  counties:
+  - skagit
+  fips: 53-40770
+  gnis: '2412927'
+  population: 423
+- website: http://oakesdale.org
   name: oakesdale
-  county: whitman
   type: town
-- website: https://uniontownwa.org/
-  scraper_misc:
-    city_id: 240
-    population: 400
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:uniontown
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:oakesdale
+  - ocd-division/country:us/state:wa/county:whitman/place:oakesdale
+  counties:
+  - whitman
+  fips: 53-50325
+  gnis: '2413067'
+  population: 395
+- website: https://uniontownwa.org
   name: uniontown
-  county: whitman
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:uniontown
+  - ocd-division/country:us/state:wa/county:whitman/place:uniontown
+  counties:
+  - whitman
+  fips: 53-73360
+  gnis: '2413413'
+  population: 389
 - website: http://www.coltonwashington.us/
-  scraper_misc:
-    city_id: 43
-    population: 400
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:colton
   name: colton
-  county: whitman
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:colton
+  - ocd-division/country:us/state:wa/county:whitman/place:colton
+  counties:
+  - whitman
+  fips: 53-13890
+  gnis: '2413231'
+  population: 401
 - website:
-  scraper_misc:
-    city_id: 137
-    population: 400
-  ocd_id: ocd-division/country:us/state:wa/county:franklin/place:mesa
   name: mesa
-  county: franklin
-  type: code
-- website:
-  scraper_misc:
-    city_id: 182
-    population: 375
-  ocd_id: ocd-division/country:us/state:wa/county:walla_walla/place:prescott
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mesa
+  - ocd-division/country:us/state:wa/county:franklin/place:mesa
+  counties:
+  - franklin
+  fips: 53-45180
+  gnis: '2411088'
+  population: 385
+- website: http://www.prescottwa.com
   name: prescott
-  county: walla_walla
-  type: code
-- website: https://townofmansfield.net/
-  scraper_misc:
-    city_id: 129
-    population: 335
-  ocd_id: ocd-division/country:us/state:wa/county:douglas/place:mansfield
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:prescott
+  - ocd-division/country:us/state:wa/county:walla_walla/place:prescott
+  counties:
+  - walla_walla
+  fips: 53-56240
+  gnis: '2412506'
+  population: 372
+- website: http://www.mansfieldwashington.org
   name: mansfield
-  county: douglas
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:mansfield
+  - ocd-division/country:us/state:wa/county:douglas/place:mansfield
+  counties:
+  - douglas
+  fips: 53-42800
+  gnis: '2412946'
+  population: 326
 - website:
-  scraper_misc:
-    city_id: 196
-    population: 325
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:riverside
   name: riverside
-  county: okanogan
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:riverside
+  - ocd-division/country:us/state:wa/county:okanogan/place:riverside
+  counties:
+  - okanogan
+  fips: 53-58795
+  gnis: '2412556'
+  population: 329
 - website: http://www.almirawashington.com/
-  scraper_misc:
-    city_id: 4
-    population: 320
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:almira
   name: almira
-  county: lincoln
   type: town
-- website: https://www.beauxarts-wa.gov/
-  scraper_misc:
-    city_id: 11
-    population: 315
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:beaux_arts_village
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:almira
+  - ocd-division/country:us/state:wa/county:lincoln/place:almira
+  counties:
+  - lincoln
+  fips: 53-01500
+  gnis: '1503007'
+  population: 318
+- website: https://beauxarts-wa.gov
   name: beaux_arts_village
-  county: king
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:beaux_arts_village
+  - ocd-division/country:us/state:wa/county:king/place:beaux_arts_village
+  counties:
+  - king
+  fips: 53-04895
+  gnis: '2411673'
+  population: 317
 - website: https://endicottwa.wordpress.com/
-  scraper_misc:
-    city_id: 68
-    population: 310
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:endicott
   name: endicott
-  county: whitman
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:endicott
+  - ocd-division/country:us/state:wa/county:whitman/place:endicott
+  counties:
+  - whitman
+  fips: 53-21730
+  gnis: '2412488'
+  population: 312
 - website: https://www.townofhamiltonwa.com/
-  scraper_misc:
-    city_id: 91
-    population: 295
-  ocd_id: ocd-division/country:us/state:wa/county:skagit/place:hamilton
   name: hamilton
-  county: skagit
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:hamilton
+  - ocd-division/country:us/state:wa/county:skagit/place:hamilton
+  counties:
+  - skagit
+  fips: 53-29255
+  gnis: '2412721'
+  population: 299
 - website:
-  scraper_misc:
-    city_id: 219
-    population: 295
-  ocd_id: ocd-division/country:us/state:wa/county:stevens/place:springdale
   name: springdale
-  county: stevens
   type: town
-- website: https://www.lacrossewa.us/
-  scraper_misc:
-    city_id: 114
-    population: 295
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:lacrosse
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:springdale
+  - ocd-division/country:us/state:wa/county:stevens/place:springdale
+  counties:
+  - stevens
+  fips: 53-67210
+  gnis: '2413320'
+  population: 234
+- website: http://www.lacrossewa.us
   name: lacrosse
-  county: whitman
   type: town
-- website:
-  scraper_misc:
-    city_id: 160
-    population: 295
-  ocd_id: ocd-division/country:us/state:wa/county:stevens/place:northport
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lacrosse
+  - ocd-division/country:us/state:wa/county:whitman/place:lacrosse
+  counties:
+  - whitman
+  fips: 53-36850
+  gnis: '2412853'
+  population: 297
+- website: http://northportwa.us
   name: northport
-  county: stevens
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:northport
+  - ocd-division/country:us/state:wa/county:stevens/place:northport
+  counties:
+  - stevens
+  fips: 53-50045
+  gnis: '2413056'
+  population: 297
 - website:
-  scraper_misc:
-    city_id: 216
-    population: 285
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:spangle
   name: spangle
-  county: spokane
-  type: code
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:spangle
+  - ocd-division/country:us/state:wa/county:spokane/place:spangle
+  counties:
+  - spokane
+  fips: 53-66290
+  gnis: '2413311'
+  population: 280
 - website:
-  scraper_misc:
-    city_id: 139
-    population: 275
-  ocd_id: ocd-division/country:us/state:wa/county:pend_oreille/place:metaline_falls
   name: metaline_falls
-  county: pend_oreille
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:metaline_falls
+  - ocd-division/country:us/state:wa/county:pend_oreille/place:metaline_falls
+  counties:
+  - pend_oreille
+  fips: 53-45320
+  gnis: '2412990'
+  population: 272
 - website: https://www.townofelmercity.com/
-  scraper_misc:
-    city_id: 67
-    population: 245
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:elmer_city
   name: elmer_city
-  county: okanogan
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:elmer_city
+  - ocd-division/country:us/state:wa/county:okanogan/place:elmer_city
+  counties:
+  - okanogan
+  fips: 53-21485
+  gnis: '2412478'
+  population: 239
 - website:
-  scraper_misc:
-    city_id: 52
-    population: 225
-  ocd_id: ocd-division/country:us/state:wa/county:lincoln/place:creston
   name: creston
-  county: lincoln
   type: town
-- website:
-  scraper_misc:
-    city_id: 130
-    population: 215
-  ocd_id: ocd-division/country:us/state:wa/county:stevens/place:marcus
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:creston
+  - ocd-division/country:us/state:wa/county:lincoln/place:creston
+  counties:
+  - lincoln
+  fips: 53-15710
+  gnis: '1504274'
+  population: 213
+- website: https://web.archive.org/web/20120903133441/http://www.townofmarcus.com
   name: marcus
-  county: stevens
   type: town
-- website: https://washtucna.org/
-  scraper_misc:
-    city_id: 248
-    population: 210
-  ocd_id: ocd-division/country:us/state:wa/county:adams/place:washtucna
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:marcus
+  - ocd-division/country:us/state:wa/county:stevens/place:marcus
+  counties:
+  - stevens
+  fips: 53-43395
+  gnis: '2412955'
+  population: 216
+- website: http://www.washtucna.com
   name: washtucna
-  county: adams
   type: town
-- website: http://www.wilsoncreekwa.com/
-  scraper_misc:
-    city_id: 257
-    population: 205
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:wilson_creek
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:washtucna
+  - ocd-division/country:us/state:wa/county:adams/place:washtucna
+  counties:
+  - adams
+  fips: 53-76440
+  gnis: '2413453'
+  population: 211
+- website: http://www.wilsoncreekwa.com
   name: wilson_creek
-  county: grant
   type: town
-- website: http://townofconconully.com/
-  scraper_misc:
-    city_id: 45
-    population: 195
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:conconully
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:wilson_creek
+  - ocd-division/country:us/state:wa/county:grant/place:wilson_creek
+  counties:
+  - grant
+  fips: 53-79135
+  gnis: '2413492'
+  population: 204
+- website: http://townofconconully.com
   name: conconully
-  county: okanogan
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:conconully
+  - ocd-division/country:us/state:wa/county:okanogan/place:conconully
+  counties:
+  - okanogan
+  fips: 53-14310
+  gnis: '2413236'
+  population: 193
 - website: https://www.townofnespelem.com/
-  scraper_misc:
-    city_id: 154
-    population: 185
-  ocd_id: ocd-division/country:us/state:wa/county:okanogan/place:nespelem
   name: nespelem
-  county: okanogan
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:nespelem
+  - ocd-division/country:us/state:wa/county:okanogan/place:nespelem
+  counties:
+  - okanogan
+  fips: 53-48540
+  gnis: '2413040'
+  population: 180
 - website:
-  scraper_misc:
-    city_id: 119
-    population: 185
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:latah
   name: latah
-  county: spokane
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:latah
+  - ocd-division/country:us/state:wa/county:spokane/place:latah
+  counties:
+  - spokane
+  fips: 53-38495
+  gnis: '2412879'
+  population: 185
 - website:
-  scraper_misc:
-    city_id: 94
-    population: 180
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:hartline
   name: hartline
-  county: grant
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:hartline
+  - ocd-division/country:us/state:wa/county:grant/place:hartline
+  counties:
+  - grant
+  fips: 53-29920
+  gnis: '2412729'
+  population: 180
 - website:
-  scraper_misc:
-    city_id: 95
-    population: 167
-  ocd_id: ocd-division/country:us/state:wa/county:adams/place:hatton
   name: hatton
-  county: adams
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:hatton
+  - ocd-division/country:us/state:wa/county:adams/place:hatton
+  counties:
+  - adams
+  fips: 53-30060
+  gnis: '2412736'
+  population: 79
 - website: https://www.townofcusick.com/
-  scraper_misc:
-    city_id: 53
-    population: 165
-  ocd_id: ocd-division/country:us/state:wa/county:pend_oreille/place:cusick
   name: cusick
-  county: pend_oreille
   type: town
-- website: https://skykomishwa.gov/
-  scraper_misc:
-    city_id: 209
-    population: 165
-  ocd_id: ocd-division/country:us/state:wa/county:king/place:skykomish
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:cusick
+  - ocd-division/country:us/state:wa/county:pend_oreille/place:cusick
+  counties:
+  - pend_oreille
+  fips: 53-16340
+  gnis: '2412397'
+  population: 153
+- website: https://skykomishwa.gov
   name: skykomish
-  county: king
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:skykomish
+  - ocd-division/country:us/state:wa/county:king/place:skykomish
+  counties:
+  - king
+  fips: 53-64855
+  gnis: '2413295'
+  population: 161
 - website:
-  scraper_misc:
-    city_id: 99
-    population: 160
-  ocd_id: ocd-division/country:us/state:wa/county:snohomish/place:index
   name: index
-  county: snohomish
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:index
+  - ocd-division/country:us/state:wa/county:snohomish/place:index
+  counties:
+  - snohomish
+  fips: 53-33175
+  gnis: '1521157'
+  population: 155
 - website:
-  scraper_misc:
-    city_id: 138
-    population: 160
-  ocd_id: ocd-division/country:us/state:wa/county:pend_oreille/place:metaline
   name: metaline
-  county: pend_oreille
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:metaline
+  - ocd-division/country:us/state:wa/county:pend_oreille/place:metaline
+  counties:
+  - pend_oreille
+  fips: 53-45285
+  gnis: '2412989'
+  population: 162
 - website:
-  scraper_misc:
-    city_id: 102
-    population: 145
-  ocd_id: ocd-division/country:us/state:wa/county:franklin/place:kahlotus
   name: kahlotus
-  county: franklin
-  type: code
-- website: https://farmingtonwa.com/
-  scraper_misc:
-    city_id: 75
-    population: 135
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:farmington
+  type: code_city
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:kahlotus
+  - ocd-division/country:us/state:wa/county:franklin/place:kahlotus
+  counties:
+  - franklin
+  fips: 53-34575
+  gnis: '2410159'
+  population: 147
+- website: https://farmingtonwa.com
   name: farmington
-  county: whitman
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:farmington
+  - ocd-division/country:us/state:wa/county:whitman/place:farmington
+  counties:
+  - whitman
+  fips: 53-23340
+  gnis: '2412622'
+  population: 131
 - website:
-  scraper_misc:
-    city_id: 250
-    population: 125
-  ocd_id: ocd-division/country:us/state:wa/county:spokane/place:waverly
   name: waverly
-  county: spokane
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:waverly
+  - ocd-division/country:us/state:wa/county:spokane/place:waverly
+  counties:
+  - spokane
+  fips: 53-76720
+  gnis: '2413458'
+  population: 121
 - website: https://maldenwaorg.wordpress.com/
-  scraper_misc:
-    city_id: 128
-    population: 125
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:malden
   name: malden
-  county: whitman
   type: town
-- website:
-  scraper_misc:
-    city_id: 222
-    population: 120
-  ocd_id: ocd-division/country:us/state:wa/county:columbia/place:starbuck
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:malden
+  - ocd-division/country:us/state:wa/county:whitman/place:malden
+  counties:
+  - whitman
+  fips: 53-42275
+  gnis: '2412933'
+  population: 216
+- website: http://localtown.us/starbuck-wa
   name: starbuck
-  county: columbia
   type: town
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:starbuck
+  - ocd-division/country:us/state:wa/county:columbia/place:starbuck
+  counties:
+  - columbia
+  fips: 53-67490
+  gnis: '2413330'
+  population: 119
 - website:
-  scraper_misc:
-    city_id: 117
-    population: 85
-  ocd_id: ocd-division/country:us/state:wa/county:whitman/place:lamont
   name: lamont
-  county: whitman
   type: town
-- website:
-  scraper_misc:
-    city_id: 110
-    population: 45
-  ocd_id: ocd-division/country:us/state:wa/county:grant/place:krupp
+  ocd_ids:
+  - ocd-division/country:us/state:wa/place:lamont
+  - ocd-division/country:us/state:wa/county:whitman/place:lamont
+  counties:
+  - whitman
+  fips: 53-38215
+  gnis: '2412875'
+  population: 79
+- ocd_ids:
+  - ocd-division/country:us/state:wa/place:krupp
+  - ocd-division/country:us/state:wa/county:grant/place:krupp
   name: krupp
-  county: grant
+  counties:
+  - grant
+  website: ''
+  fips: 53-43675
+  gnis: '2412849'
   type: town
+  population: 49

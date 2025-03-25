@@ -12,6 +12,10 @@ flowchart TD;
     D --> F[Data coverage improves]
 ```
 
+## Rules
+* Cities can be in two counties (ex: King/Snohomish -> Bothell)
+* A county can have the same name as a city (ex: Spokane/Spokane)
+
 ## Commands
 
 ```bash
