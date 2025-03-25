@@ -10,6 +10,7 @@ require_relative "../scrapers/city"
 require_relative "../services/brave"
 require_relative "../services/openai"
 require_relative "../scrapers/us/wa/places"
+require_relative "../scrapers/us/mi/places"
 require_relative "../scrapers/site_crawler"
 require_relative "../scrapers/data_fetcher"
 require_relative "../scrapers/common"
@@ -48,10 +49,13 @@ namespace :city_scrape do
   desc "Find official cities for a state"
   task :get_places, [:state] do |_t, args|
     state = args[:state]
+    puts "state: #{state}"
 
     scraper = case state
               when "wa"
                 Scrapers::Us::Wa::Directory
+              when "mi"
+                Scrapers::Us::Mi::Directory
               else
                 raise "Unsupported state: #{state}"
               end
@@ -63,8 +67,7 @@ namespace :city_scrape do
       exit 1
     end
 
-    new_places = scraper.get_places
-
+    new_places = scraper.fetch_places
     update_state_places(state, new_places)
   end
 
@@ -292,25 +295,27 @@ namespace :city_scrape do
 
   def update_state_places(state, updated_places)
     state_directory_file = PathHelper.project_path(File.join("data", "us", state, "places.yml"))
-    state_directory = {
+    updated_state_directory = {
       "ocd_id" => "ocd-division/country:us/state:#{state}",
       "places" => []
     }
 
     state_directory = YAML.load(File.read(state_directory_file)) if File.exist?(state_directory_file)
-
     updated_places.each do |place|
+      puts "#{place["place"]} #{place["scraper_misc"]["population"] ||= 0}"
+    end
+
+    updated_state_directory["places"] = updated_places.map do |place|
       existing_place = state_directory["places"].find { |p| p["place"] == place["place"] }
       if existing_place
-        new_place = existing_place.merge(place)
-        state_directory["places"] = state_directory["places"].map { |p| p["place"] == place["place"] ? new_place : p }
+        existing_place.merge(place) { |_key, old_val, new_val| new_val.present? ? new_val.dup : old_val.dup }
       else
-        state_directory["places"] << place
+        place
       end
     end
 
     File.open(state_directory_file, "w") do |file|
-      file.write(state_directory.to_yaml)
+      file.write(updated_state_directory.to_yaml)
     end
   end
 

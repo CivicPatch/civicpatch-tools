@@ -4,7 +4,7 @@ module Scrapers
   module Us
     module Wa
       class Directory
-        def self.get_places
+        def self.fetch_places
           url = "https://mrsc.org/research-tools/washington-city-and-town-profiles"
 
           # Open the URL and parse the HTML
@@ -20,6 +20,7 @@ module Scrapers
           data.each do |city|
             cities << {
               "place" => city["CityName"].downcase.split(" ").join("_"),
+              "county" => city["CountyName"].downcase.split(" ").join("_"),
               "website" => city["Website"],
               "scraper_misc" => {
                 "city_id" => city["CityID"], # specific to only mrsc, subject to change. Used for self.get_representatives

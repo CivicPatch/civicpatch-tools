@@ -12,6 +12,12 @@ flowchart TD;
     D --> F[Data coverage improves]
 ```
 
+## Commands
+
+```bash
+rake 'city_scrape:get_places[mi]'
+```
+
 ## Priorities
 ### Washington
 - [ ] Top 10 cities by population

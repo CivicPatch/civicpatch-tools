@@ -38,7 +38,22 @@ module Scrapers
     end
 
     def self.format_url(url)
+      # get rid of any trailing slashes
+      url = url.gsub(%r{/$}, "")
+      # get rid of any trailing spaces
+      url = url.gsub(/\s+$/, "")
+      # get rid of spaces
       url.gsub(" ", "%20")
+    end
+
+    def self.format_name(name)
+      # convert to key-friendly format
+      name = name.gsub(" ", "_").downcase
+
+      # get weird of wikipedia symbols
+      name = name.gsub("†", "")
+      name = name.gsub("‡", "")
+      name.gsub(" ", "_")
     end
 
     def self.score_text(text, keywords)

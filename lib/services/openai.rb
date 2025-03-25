@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "openai"
+require "scrapers/standard"
+
 # TODO: track token usage
 module Services
   class Openai
@@ -72,6 +74,9 @@ module Services
       end
 
       response["people"].map do |person|
+        person["phone_number"] = Scrapers::Standard.format_phone_number(person["phone_number"])
+
+        # Determine position/position_misc
         next unless person["position_misc"].present?
 
         person["position_misc"] = person["position_misc"].downcase.gsub(/[ .]+/, "_")
