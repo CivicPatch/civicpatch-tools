@@ -40,12 +40,13 @@ module Scrapers
               city_page_title = city_link.split("/").last
               city_population = columns[3].text.gsub(/[^\d]/, "").to_i
 
-              #city_website = fetch_city_website(city_page_title)
+              city_website = fetch_city_page(city_page_title)
 
               places << {
-                "place" => city_name,
+                "ocd_id" => "ocd-division/country:us/state:mi/county:#{county_name}/place:#{city_name}",
+                "name" => city_name,
                 "county" => county_name,
-                #"website" => city_website,
+                "website" => city_website,
                 "type" => city_type,
                 "scraper_misc" => {
                   "population" => city_population,
@@ -56,7 +57,7 @@ module Scrapers
           places
         end
 
-        def self.fetch_city_website(wikipedia_title)
+        def self.fetch_city_page(wikipedia_title)
           response = fetch_with_wikipedia(wikipedia_title)
           nokogiri_doc = Nokogiri::HTML(response)
 
@@ -65,7 +66,8 @@ module Scrapers
           # then find the a tag within that tr that has a href attribute
           website_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("website") }
           website = website_row.present? ? website_row.css("a").find { |a| a.attr("href") } : nil
-          website ? Scrapers::Common.format_url(website.attr("href")) : ""
+          website = website ? Scrapers::Common.format_url(website.attr("href")) : ""
+          website
         end
 
         def self.fetch_with_wikipedia(title)

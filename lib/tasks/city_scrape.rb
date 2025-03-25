@@ -17,7 +17,7 @@ require_relative "../scrapers/common"
 
 namespace :city_scrape do
   desc "Pick cities from queue"
-  task :pick_cities, [:state, :num_cities, :cities_to_ignore] do |_t, args|
+  task :pick_cities, [:state, :num_cities, :cities_to_ignore] do |_t, args| # bug -- this is a list of city names, which is not a unique identifier
     state = args[:state]
     num_cities = args[:num_cities]
     cities_to_ignore = args[:cities_to_ignore].present? ? args[:cities_to_ignore].split(" ") : []
@@ -39,7 +39,7 @@ namespace :city_scrape do
     state_directory = YAML.load(File.read(state_directory_file))
 
     cities = state_directory["places"].select do |c|
-      !cities_to_ignore.include?(c["place"]) &&
+      !cities_to_ignore.include?(c["name"]) &&
         c["last_city_scrape_run"].nil? && c["website"].present?
     end.first(num_cities.to_i)
 
@@ -301,12 +301,9 @@ namespace :city_scrape do
     }
 
     state_directory = YAML.load(File.read(state_directory_file)) if File.exist?(state_directory_file)
-    updated_places.each do |place|
-      puts "#{place["place"]} #{place["scraper_misc"]["population"] ||= 0}"
-    end
 
     updated_state_directory["places"] = updated_places.map do |place|
-      existing_place = state_directory["places"].find { |p| p["place"] == place["place"] }
+      existing_place = state_directory["places"].find { |p| p["ocd_id"] == place["ocd_id"] }
       if existing_place
         existing_place.merge(place) { |_key, old_val, new_val| new_val.present? ? new_val.dup : old_val.dup }
       else
