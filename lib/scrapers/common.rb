@@ -38,6 +38,7 @@ module Scrapers
           "type" => city_type,
           "population" => city_population
         }
+
         places << place
       end
 

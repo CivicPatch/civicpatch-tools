@@ -43,8 +43,14 @@ namespace :city_scrape do
 
   desc "Find official cities for a state"
   task :get_places, [:state] do |_t, args|
+    if args[:state].blank?
+      puts "Error: Missing required parameters"
+      puts "Usage: rake 'city_info:get_places[state]'"
+      puts "Example: rake 'city_info:get_places[wa]'"
+      exit 1
+    end
+
     state = args[:state]
-    puts "state: #{state}"
 
     scraper = case state
               when "wa"
