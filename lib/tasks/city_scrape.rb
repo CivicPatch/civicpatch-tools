@@ -116,11 +116,10 @@ namespace :city_scrape do
 
   desc "Extract city info for a specific city"
   task :fetch, [:state, :gnis] do |_t, args|
-    gnis = args[:gnis]
     state = args[:state]
+    gnis = args[:gnis]
 
     state_city_entry = validate_fetch_inputs(state, gnis)
-    state = state_city_entry["state"]
     city = state_city_entry["name"]
 
     openai_service = Services::Openai.new
@@ -128,7 +127,7 @@ namespace :city_scrape do
 
     puts "Extracting city info for #{city.capitalize}, #{state.upcase}..."
 
-    cache_directory = prepare_directories(state_city_entry)
+    cache_directory = prepare_directories(state, state_city_entry)
     city_directory = {
       "people" => [],
       "sources" => []
@@ -150,7 +149,7 @@ namespace :city_scrape do
       break if success
     end
 
-    finalize_city_directory(state_city_entry, city_directory, source_dirs)
+    finalize_city_directory(state, state_city_entry, city_directory, source_dirs)
   end
 
   desc "Generate PR comment for city directory"
@@ -161,7 +160,7 @@ namespace :city_scrape do
     state_city_entry = validate_fetch_inputs(state, gnis)
     state = state_city_entry["state"]
     city = state_city_entry["name"]
-    city_directory_path = get_city_directory_path(state_city_entry)
+    city_directory_path = get_city_directory_path(state, state_city_entry)
     relative_path = city_directory_path[city_directory_path.index("data")..-1]
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
@@ -370,8 +369,7 @@ namespace :city_scrape do
     state_city_entry
   end
 
-  def get_city_directory_path(city_entry)
-    state = city_entry["state"]
+  def get_city_directory_path(state, city_entry)
     state_directory_file = PathHelper.project_path(File.join("data", "us", state, "places.yml"))
     state_directory = YAML.load(File.read(state_directory_file))
 
@@ -385,13 +383,13 @@ namespace :city_scrape do
     PathHelper.project_path(File.join("data", "us", state, city_name))
   end
 
-  def get_city_directory_file(state_city_entry)
-    city_directory_path = get_city_directory_path(state_city_entry)
+  def get_city_directory_file(state, state_city_entry)
+    city_directory_path = get_city_directory_path(state, state_city_entry)
     File.join(city_directory_path, "directory.yml")
   end
 
-  def prepare_directories(state_city_entry)
-    city_directory = get_city_directory_path(state_city_entry)
+  def prepare_directories(state, state_city_entry)
+    city_directory = get_city_directory_path(state, state_city_entry)
     cache_destination_dir = File.join(city_directory, "cache")
 
     FileUtils.mkdir_p(cache_destination_dir)
@@ -420,13 +418,12 @@ namespace :city_scrape do
   end
 
   def update_city_directory(
-    city_ocd_id,
+    state,
+    city_entry,
     new_city_directory,
     source_dirs
   )
-    parts = Scrapers::Common.get_ocd_parts(city_ocd_id)
-
-    update_state_places(parts["state"], [{"ocd_id" => city_ocd_id, "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d")}])
+    update_state_places(state, [{"gnis" => city_entry["gnis"], "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d")}])
     city_directory_path = PathHelper.project_path(File.join("data", "us", parts["state"], parts["county"], parts["place"]))
     sources_destination_dir = File.join(city_directory_path, "city_scrape_sources")
     FileUtils.mkdir_p(sources_destination_dir)
@@ -547,14 +544,13 @@ namespace :city_scrape do
     city_directory
   end
 
-  def finalize_city_directory(city_ocd_id, new_city_directory, source_dirs)
-    parts = Scrapers::Common.get_ocd_parts(city_ocd_id)
-    city_directory_path = PathHelper.project_path(File.join("data", "us", parts["state"], parts["county"], parts["place"]))
+  def finalize_city_directory(state, state_city_entry, new_city_directory, source_dirs)
+    city_directory_path = get_city_directory_path(state, state_city_entry)
     cache_directory = File.join(city_directory_path, "cache")
 
     if new_city_directory["people"].length > 1
       new_city_directory["people"] = sort_people(new_city_directory["people"])
-      update_city_directory(city_ocd_id, new_city_directory, source_dirs)
+      update_city_directory(state, state_city_entry, new_city_directory, source_dirs)
       FileUtils.rm_rf(cache_directory)
 
       puts "✅ Successfully extracted city info"
