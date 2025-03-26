@@ -115,10 +115,11 @@ namespace :city_scrape do
   #end
 
   desc "Extract city info for a specific city"
-  task :fetch, [:gnis] do |_t, args|
+  task :fetch, [:state, :gnis] do |_t, args|
     gnis = args[:gnis]
+    state = args[:state]
 
-    state_city_entry = validate_fetch_inputs(gnis)
+    state_city_entry = validate_fetch_inputs(state, gnis)
     state = state_city_entry["state"]
     city = state_city_entry["name"]
 
@@ -153,11 +154,11 @@ namespace :city_scrape do
   end
 
   desc "Generate PR comment for city directory"
-  task :get_pr_comment, [:gnis, :branch_name] do |_t, args|
+  task :get_pr_comment, [:state, :gnis, :branch_name] do |_t, args|
     gnis = args[:gnis]
     branch_name = args[:branch_name]
 
-    state_city_entry = validate_fetch_inputs(gnis)
+    state_city_entry = validate_fetch_inputs(state, gnis)
     state = state_city_entry["state"]
     city = state_city_entry["name"]
     city_directory_path = get_city_directory_path(state_city_entry)
@@ -355,7 +356,7 @@ namespace :city_scrape do
 
     city = state_city_entry["name"]
 
-    if state.blank? || county.blank? || city.blank?
+    if state.blank? || city.blank?
       puts "Error: Missing required parameters"
       puts "Usage: rake 'city_info:fetch[wa,gnis]'"
       exit 1
