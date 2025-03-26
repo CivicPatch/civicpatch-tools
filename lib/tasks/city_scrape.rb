@@ -166,7 +166,7 @@ namespace :city_scrape do
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
-    city_data = YAML.load(File.read(get_city_directory_file(state_city_entry)))
+    city_data = YAML.load(File.read(get_city_directory_file(state, state_city_entry)))
 
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
@@ -177,7 +177,7 @@ namespace :city_scrape do
         image_markdown = if person["image"].present?
                            image_url = "#{base_image_url}/#{person["image"]}?raw=true"
                            <<~IMAGE
-                             <img src="#{image_url}" width="150" />)
+                             <img src="#{image_url}" width="150" />
                            IMAGE
                          else
                            "" # Ensure image_markdown is an empty string if no image is present
