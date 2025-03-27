@@ -136,12 +136,11 @@ jobs:
       - name: Generate Markdown for PR Comment
         id: generate_markdown
         run: |
-          markdown_content=$(bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]')
-          cat << 'EOF' >> $GITHUB_ENV
-          markdown_content<<EOF_NESTED
-          $markdown_content
-          EOF_NESTED
-          EOF
+          {
+            echo 'markdown_content<<DELIMITER_EOF'
+            bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]'
+            echo 'DELIMITER_EOF'
+          } >> $GITHUB_ENV
 
       - name: Comment on PR
         run: |

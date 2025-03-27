@@ -76,3 +76,8 @@ rake 'city_scrape:get_places[mi]'
 
 ### Country Directory
 - [ ] Maps of states
+
+### Scratch
+```bash
+gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-wa-" --template '{{range .}}{{.headRefName}} {{end}}'
+```
