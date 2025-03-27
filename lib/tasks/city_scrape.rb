@@ -162,7 +162,7 @@ namespace :city_scrape do
     state_city_entry = validate_fetch_inputs(state, gnis)
     city = state_city_entry["name"]
     city_directory_path = get_city_directory_path(state, state_city_entry)
-    relative_path = city_directory_path[city_directory_path.index("data")..-1]
+    relative_path = city_directory_path[city_directory_path.rindex("data/us")..-1]
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
@@ -177,7 +177,7 @@ namespace :city_scrape do
         image_markdown = if person["image"].present?
                            image_url = "#{base_image_url}/#{person["image"]}?raw=true"
                            <<~IMAGE
-                             <img src="#{image_url}" width="150" />
+                             <img src='#{image_url}' width='150' />
                            IMAGE
                          else
                            "" # Ensure image_markdown is an empty string if no image is present
