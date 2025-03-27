@@ -261,6 +261,7 @@ places:
   fips: 53-63960
   gnis: '2411893'
   population: 58608
+  last_city_scrape_run: '2025-03-27'
 - website: https://cityoflacey.org
   last_city_scrape_run: '2025-03-24'
   name: lacey
