@@ -2,6 +2,10 @@
 
 module Scrapers
   module Common
+    def self.missing_contact_info?(person)
+      person["email"].blank? && person["phone"].blank?
+    end
+
     def self.fetch_places_from_wikipedia(state, title)
       response = fetch_with_wikipedia(title)
       nokogiri_doc = Nokogiri::HTML(response)
