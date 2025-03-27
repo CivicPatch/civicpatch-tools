@@ -1,18 +1,6 @@
 module CityScrape
   class SearchManager
-    def fetch_search_results(engine, state, city_entry, existing_urls)
-      new_results = get_candidate_city_directory_urls(engine, state, city_entry)
-
-      # Get unique results
-      new_results = new_results.reject { |url| existing_urls.include?(url) }
-
-      puts "Search engine #{engine} found #{new_results.count} new urls"
-      puts new_results.join("\n")
-
-      new_results
-    end
-
-    def get_candidate_city_directory_urls(engine, state, city_entry)
+    def self.fetch_search_results(engine, state, city_entry)
       city = city_entry["name"]
       website = city_entry["website"]
 

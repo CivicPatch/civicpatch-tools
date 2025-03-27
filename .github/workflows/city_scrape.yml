@@ -138,7 +138,7 @@ jobs:
         run: |
           {
             echo 'markdown_content<<DELIMITER_EOF'
-            bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]'
+            bundle exec rake 'github_pipeline:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]'
             echo 'DELIMITER_EOF'
           } >> $GITHUB_ENV
 

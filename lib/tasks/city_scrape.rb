@@ -31,6 +31,10 @@ require_relative "../scrapers/us/mi/places"
 require_relative "../scrapers/site_crawler"
 require_relative "../scrapers/data_fetcher"
 require_relative "../scrapers/common"
+require_relative "../tasks/city_scrape/city_manager"
+require_relative "../tasks/city_scrape/search_manager"
+require_relative "../tasks/city_scrape/page_processor"
+require_relative "../tasks/city_scrape/state_manager"
 
 namespace :city_scrape do
   desc "Pick cities from queue"
@@ -75,14 +79,17 @@ namespace :city_scrape do
 
   desc "Extract city info for a specific city"
   task :fetch, [:state, :gnis] do |_t, args|
-    state_city_entry = validate_fetch_inputs(args[:state], args[:gnis])
-    prepare_directories(args[:state], state_city_entry)
+    state = args[:state]
+    gnis = args[:gnis]
+
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    create_prepare_directories(state, city_entry)
 
     openai_service = Services::Openai.new
     data_fetcher = Scrapers::DataFetcher.new
 
-    source_dirs, city_directory = build_city_directory(%w[manual brave], state, state_city_entry, openai_service, data_fetcher)
-    finalize_city_directory(state, state_city_entry, city_directory, source_dirs)
+    source_dirs, city_directory = build_city_directory(%w[manual brave], state, city_entry, openai_service, data_fetcher)
+    finalize_city_directory(state, city_entry, city_directory, source_dirs)
   end
 
   desc "Get member info. Initial council member did not collect enough info,
@@ -94,7 +101,7 @@ namespace :city_scrape do
     data_fetcher = Scrapers::DataFetcher.new
     openai_service = Services::Openai.new
 
-    state_city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
 
     raise "City entry not found for #{gnis} in #{state}" unless state_city_entry.present?
 
@@ -118,10 +125,6 @@ namespace :city_scrape do
                                                    { "gnis" => state_city_entry["gnis"],
                                                      "last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d") }
                                                  ])
-  end 
-
-  def get_state_places_file(state)
-    PathHelper.project_path(File.join("data", "us", state, "places.yml"))
   end
 
   def create_prepare_directories(state, city_entry)
@@ -132,24 +135,6 @@ namespace :city_scrape do
     FileUtils.rm_rf(File.join(city_path, "city_scrape_sources", "*"))
   end
 
-  def fetch_content(data_fetcher, url, candidate_dir)
-    data_fetcher.extract_content(url, candidate_dir)
-  rescue StandardError => e
-    puts "Error fetch_content: #{e.message}"
-    puts "Error backtrace: #{e.backtrace.join("\n")}"
-    nil
-  end
-
-  def extract_city_info(openai_service, content_file, url)
-    updated_city_info = openai_service.extract_city_info(content_file, url)
-
-    if updated_city_info.is_a?(Hash) && updated_city_info.key?("error")
-      nil
-    else
-      updated_city_info["council_url_site"] = url
-      updated_city_info
-    end
-  end
 
   def copy_source_files(
     state,
@@ -184,51 +169,28 @@ namespace :city_scrape do
     FileUtils.rm_rf(cache_directory)
   end
 
-  def build_city_directory(search_engines, state, state_city_entry, openai_service, data_fetcher)
-    search_result_urls = []
+  def build_city_directory(search_engines, state, city_entry, openai_service, data_fetcher)
+    search_results_processed = []
     local_source_dirs = []
     city_directory = { "people" => [], "sources" => [] }
 
     search_engines.each do |engine|
-      search_result_urls = CityScrape::SearchManager.fetch_search_results(engine, state, state_city_entry)
-      success, new_local_source_dirs, city_directory = process_search_results(
-        engine, search_result_urls, openai_service, data_fetcher, city_directory
-      )
+      search_result_urls = CityScrape::SearchManager.fetch_search_results(engine, state, city_entry)
+      search_results_to_process = search_result_urls - search_results_processed
+      puts "Engine #{engine} found #{search_result_urls.count} search results for #{city_entry["name"]}"
+      puts "Search results to process: #{search_results_to_process.count}"
+      puts "#{search_results_to_process.join("\n")}"
+
+      page_processor = CityScrape::PageProcessor.new(state, engine, openai_service, data_fetcher, city_entry, city_directory)
+
+      success, new_local_source_dirs, new_city_directory = page_processor.process_pages(search_results_to_process)
+
+      search_results_processed += search_results_to_process
       local_source_dirs += new_local_source_dirs
 
-      return [local_source_dirs, city_directory] if success
+      return [local_source_dirs, new_city_directory] if success
     end
 
-    [local_source_dirs, city_directory]
-  end
-
-  def process_search_results(engine, search_result_urls, openai_service, data_fetcher, city_directory)
-    found_valid_directory = false
-    source_dirs = []
-
-    search_result_urls.each_with_index.map do |url, index|
-      partial_city_directory, candidate_dir = CityScrape::PageProcessor.new(state, engine, openai_service, data_fetcher, state_city_entry).process_page(url, index)
-      next unless CityScrape::CityManager.includes_people?(partial_city_directory)
-
-      city_directory = CityScrape::CityManager.merge_directory(city_directory, partial_city_directory, url)
-      source_dirs << candidate_dir
-
-      found_valid_directory = CityScrape::CityManager.valid_city_directory?(city_directory)
-      break if found_valid_directory
-    end
-
-    [found_valid_directory, source_dirs, city_directory]
-  end
-
-  def validate_fetch_inputs(state, gnis)
-    state_city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-    raise "City entry not found for #{gnis} in #{state}" unless state_city_entry.present?
-    state_city_entry
-  end
-
-  def prepare_directories(state, state_city_entry)
-    cache_directory = create_prepare_directories(state, state_city_entry)
-    city_directory = { "people" => [], "sources" => [] }
-    [cache_directory, city_directory]
+    [local_source_dirs, new_city_directory]
   end
 end
