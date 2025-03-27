@@ -154,6 +154,7 @@ places:
   fips: 53-35940
   gnis: '2411552'
   population: 92175
+  last_city_scrape_run: '2025-03-27'
 - website: https://www.auburnwa.gov
   last_city_scrape_run: '2025-03-23'
   name: auburn
