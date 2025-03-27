@@ -38,7 +38,7 @@ namespace :city_scrape do
         c["last_city_scrape_run"].nil? && c["website"].present?
     end.first(num_cities.to_i)
 
-    puts cities.map { |c| c["gnis"] }.join(",")
+    puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
   end
 
   desc "Find official cities for a state"
@@ -72,8 +72,8 @@ namespace :city_scrape do
     update_state_places(state, new_places)
   end
 
-  #desc "Find city geojson data"
-  #task :find_division_map, %i[state city] => :environment do |_t, args|
+  # desc "Find city geojson data"
+  # task :find_division_map, %i[state city] => :environment do |_t, args|
   #  state = args[:state]
   #  city = args[:city]
 
@@ -112,7 +112,7 @@ namespace :city_scrape do
   #    c["city"] == city
   #  end["last_city_info_division_map_run"] = Time.now.strftime("%Y-%m-%d")
   #  File.write(Rails.root.join("data", state, "cities.yml"), cities_yaml.to_yaml)
-  #end
+  # end
 
   desc "Extract city info for a specific city"
   task :fetch, [:state, :gnis] do |_t, args|
@@ -197,7 +197,6 @@ namespace :city_scrape do
     puts markdown_content
   end
 
- 
   desc "Count all cities without fips"
   task :count_cities_without_fips do
     state_directory_file = PathHelper.project_path(File.join("data", "us", "wa", "places.yml"))
@@ -327,13 +326,13 @@ namespace :city_scrape do
       if existing_place_index
         existing_place = state_directory["places"][existing_place_index]
 
-        merged = existing_place.merge(updated_place) { |_key, old_val, new_val| new_val.present? ? new_val.dup : old_val.dup }
+        merged = existing_place.merge(updated_place) do |_key, old_val, new_val|
+          new_val.present? ? new_val.dup : old_val.dup
+        end
         state_directory["places"][existing_place_index] = merged
       else
         state_directory["places"] << updated_place
       end
-
-
     end
 
     File.open(state_directory_file, "w") do |file|
@@ -423,7 +422,8 @@ namespace :city_scrape do
     new_city_directory,
     source_dirs
   )
-    update_state_places(state, [{"gnis" => city_entry["gnis"], "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d")}])
+    update_state_places(state,
+                        [{ "gnis" => city_entry["gnis"], "last_city_scrape_run" => Time.now.strftime("%Y-%m-%d") }])
     city_directory_path = get_city_directory_path(state, city_entry)
     sources_destination_dir = File.join(city_directory_path, "city_scrape_sources")
     FileUtils.mkdir_p(sources_destination_dir)
@@ -584,11 +584,11 @@ namespace :city_scrape do
   end
 
   def validate_pick_cities(state, num_cities)
-    if state.blank? || num_cities.blank?
-      puts "Error: Missing required parameters"
-      puts "Usage: rake 'city_info:pick_cities[state,num_cities]'"
-      puts "Example: rake 'city_info:pick_cities[wa,10]'"
-      exit 1
-    end
+    return unless state.blank? || num_cities.blank?
+
+    puts "Error: Missing required parameters"
+    puts "Usage: rake 'city_info:pick_cities[state,num_cities]'"
+    puts "Example: rake 'city_info:pick_cities[wa,10]'"
+    exit 1
   end
 end

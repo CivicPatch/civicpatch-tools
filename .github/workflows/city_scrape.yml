@@ -25,7 +25,7 @@ jobs:
   get_cities_from_queue:
     runs-on: ubuntu-latest
     outputs:
-      gnis_ids: ${{ steps.set-gnis-ids.outputs.gnis_ids }}
+      cities: ${{ steps.set-cities.outputs.cities }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,19 +41,20 @@ jobs:
           bundle install
 
       - name: Read cities from queue
-        id: set-gnis-ids
+        id: set-cities
         run: |
           # Load the cities queue file and take the first N cities
           # and ignore cities that already have PRs open
           gnis_ids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
 
-          gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-city-scrapes-[^-]+-([^-]+)-[0-9]+/\1/g')
+          # Extract GNIS IDs from branch names like pipeline-city-scrapes-wa-king-federal_way-2410494-14096425230
+          gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-city-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
 
-          gnis_ids=$(bundle exec rake "city_scrape:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $gnis_ids_to_ignore]") 
+          # Now the rake task returns JSON array of objects
+          cities_json=$(bundle exec rake "city_scrape:pick_cities[${{ github.event.inputs.state }},${{ github.event.inputs.num_cities }}, $gnis_ids]")
 
-          # Echo comma-separated list to JSON array for github output
-          gnis_ids_json=$(echo "$gnis_ids" | jq -R -s -c 'split(",") | map( .| gsub("\\s+"; "") )')
-          echo "gnis_ids=$gnis_ids_json" >> "$GITHUB_OUTPUT"
+          # Output the JSON directly since it's already in the correct format
+          echo "cities=$cities_json" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -68,7 +69,7 @@ jobs:
       max-parallel: 5
       fail-fast: false
       matrix:
-        gnis_id: ${{ fromJson(needs.get_cities_from_queue.outputs.gnis_ids) }}
+        city_entry: ${{ fromJson(needs.get_cities_from_queue.outputs.cities) }}
     
     steps:
       - name: Checkout code
@@ -89,23 +90,22 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-
       - name: Create a new branch for changes
         run: |
           # Generate a unique branch name for this run
-          BRANCH_NAME="pipeline-city-scrapes-${{ github.event.inputs.state }}-${{ matrix.gnis_id }}-${{ github.run_id }}"
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV  # Store the branch name as an environment variable
+          BRANCH_NAME="pipeline-city-scrapes-${{ github.event.inputs.state }}-${{ matrix.city_entry.county }}-${{ matrix.city_entry.name }}-${{ matrix.city_entry.gnis }}-${{ github.run_id }}"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           git checkout -b $BRANCH_NAME
       
       - name: Get city council member data
         run: |
-          echo "Processing city: ${{ matrix.gnis_id }}"
-          bundle exec rake 'city_scrape:fetch[${{ github.event.inputs.state }},${{ matrix.gnis_id }}]'
+          echo "Processing city: ${{ matrix.city_entry.gnis }}"
+          bundle exec rake 'city_scrape:fetch[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
 
       - name: Commit council member changes
         run: |
           git add .
-          git commit -m "Populate city info -- council members -- for ${{ matrix.gnis_id }}, ${{ github.event.inputs.state }}"
+          git commit -m "Populate city info -- council members -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
@@ -128,7 +128,7 @@ jobs:
           gh pr create \
             --base main \
             --head ${{ env.BRANCH_NAME }} \
-            --title "Populate city info for ${{ matrix.gnis_id }}, ${{ github.event.inputs.state }}" \
+            --title "Populate city info for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}" \
             --body "Populate city info via github actions pipeline."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -136,10 +136,12 @@ jobs:
       - name: Generate Markdown for PR Comment
         id: generate_markdown
         run: |
-          markdown_content=$(bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.gnis_id }},${{ env.BRANCH_NAME }}]')
-          echo "markdown_content<<EOF" >> $GITHUB_ENV
-          echo "$markdown_content" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          markdown_content=$(bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]')
+          cat << 'EOF' >> $GITHUB_ENV
+          markdown_content<<EOF_NESTED
+          $markdown_content
+          EOF_NESTED
+          EOF
 
       - name: Comment on PR
         run: |
