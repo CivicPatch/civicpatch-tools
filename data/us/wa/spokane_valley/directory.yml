@@ -1,0 +1,77 @@
+---
+people:
+- name: John Hohman
+  position: mayor
+  position_misc: ''
+  phone_number: "(509) 720-5300"
+  image: images/a7455eeb8dd5b4b75880479e2422762c4760a1e13cc7c0c33649b7a0f5f645cc
+  email: jhohman@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/363/City-Manager
+- name: Erik Lamb
+  position: council_member
+  position_misc: ''
+  phone_number: "(509) 720-5100"
+  image: images/d7956272c24d702b0d0fe8ffed43f68322c8049c277803ba1b61fa74e2b809e9
+  email: elamb@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/363/City-Manager
+- name: Rod Higgins
+  position: council_member
+  position_misc: position_1
+  phone_number: "(509) 720-5066"
+  image: images/a982a87ee28cf8f47e67496c1fa7c8edf486019e6c0656309e58eefdb5ed1c8d
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=17
+- name: Jessica Yaeger
+  position: council_member
+  position_misc: position_2
+  phone_number: "(509) 720-5064"
+  image: ''
+  email: ''
+  website: https://spokanevalleywa.gov/directory.aspx?EID=18
+- name: Al Merkel
+  position: council_member
+  position_misc: position_3
+  phone_number: "(509) 720-5062"
+  image: ''
+  email: ''
+  website: https://spokanevalleywa.gov/directory.aspx?EID=19
+- name: Ben Wick
+  position: council_member
+  position_misc: position_4
+  phone_number: "(509) 720-5065"
+  image: images/34c36da77d41825134e499a98f9b83c8281ac22d1a4a86833533d6d703099b58
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=20
+- name: Pam Haley
+  position: council_member
+  position_misc: position_5
+  phone_number: "(509) 720-5060"
+  image: images/436069a47664217d79849a210a9704816ba4d2ad56abae746d3e96a352f01437
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=21
+- name: Tim Hattenburg
+  position: council_member
+  position_misc: position_6
+  phone_number: "(509) 720-5063"
+  image: images/647bec1b2ff2d273d57afa56c81228e54e3a7a162ceeef71d69e3f450cc11cc0
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=22
+- name: Laura Padden
+  position: council_member
+  position_misc: position_7
+  phone_number: "(509) 720-5061"
+  image: images/15ba78f48eb722312419f4c518cdcb1b75da3491adf5d3cf91038015f865d28f
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=23
+sources:
+- https://www.spokanevalleywa.gov/193/City-Council
+- https://www.spokanevalleywa.gov/193
+- https://www.spokanevalleywa.gov/Directory.aspx?DID=8
+- https://www.spokanevalleywa.gov/194/Council-Elections
+- https://www.spokanevalleywa.gov/directory.aspx?EID=17
+- https://www.spokanevalleywa.gov/directory.aspx?EID=20
+- https://www.spokanevalleywa.gov/directory.aspx?EID=21
+- https://www.spokanevalleywa.gov/directory.aspx?EID=22
+- https://www.spokanevalleywa.gov/directory.aspx?EID=23
+- https://www.spokanevalleywa.gov/Directory.aspx?did=8
+- https://www.spokanevalleywa.gov/363/City-Manager
