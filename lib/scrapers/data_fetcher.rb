@@ -37,6 +37,7 @@ module Scrapers
       download_images(base_url, parsed_html, PathHelper.project_path(File.join(destination_dir, "images")),
                       using_browser, browser_session)
       update_html_links(base_url, parsed_html)
+      rewrite_script_tags(parsed_html)
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_parsed_html.html")),
                  parsed_html.to_html)
@@ -123,6 +124,13 @@ module Scrapers
           puts "Link: #{link["href"]}"
           link["href"] = nil
         end
+      end
+    end
+
+    def rewrite_script_tags(nokogiri_html)
+      nokogiri_html.css("script").each do |script|
+        script.replace("<pre class='script-content'>#{script.to_html.gsub('<', '&lt;').gsub('>', '&gt;')}</pre>")
+
       end
     end
 
