@@ -31,6 +31,22 @@ namespace :github_pipeline do
       #{city_directory["sources"].join("\n")}
       ## People
       #{city_directory["people"].map do |person|
+        position_markdown = if person["position"].present?
+                              <<~POSITION
+                                **Position:** #{person["position"]}
+                              POSITION
+                            else
+                              "**Position:** N/A"
+                            end
+
+        position_misc_markdown = if person["position_misc"].present?
+                                   <<~POSITION_MISC
+                                     **Position Misc:** #{person["position_misc"]}
+                                   POSITION_MISC
+                                 else
+                                   "**Position Misc:** N/A"
+                                 end
+
         image_markdown = if person["image"].present?
                            image_url = "#{base_image_url}/#{person["image"]}?raw=true"
                            <<~IMAGE
@@ -39,13 +55,37 @@ namespace :github_pipeline do
                          else
                            "" # Ensure image_markdown is an empty string if no image is present
                          end
+
+        email_markdown = if person["email"].present?
+                           <<~EMAIL
+                             **Email:** #{person["email"]}
+                           EMAIL
+                         else
+                           "**Email:** N/A"
+                         end
+
+        phone_markdown = if person["phone_number"].present?
+                           <<~PHONE
+                             **Phone:** #{person["phone_number"]}
+                           PHONE
+                         else
+                           "**Phone:** N/A"
+                         end
+
+        website_markdown = if person["website"].present?
+                             <<~WEBSITE
+                               **Website:** [Link](#{person["website"]})
+                             WEBSITE
+                           else
+                             "**Website:** N/A"
+                           end
         <<~PERSON
           ### **Name:** #{person["name"]}
-          **Position:** #{person["position"]}
-          **Position Misc:** #{person["position_misc"]}
-          **Email:** #{person["email"]}
-          **Phone:** #{person["phone_number"]}
-          **Website:** [Link](#{person["website"]})
+          #{position_markdown}
+          #{position_misc_markdown}
+          #{email_markdown}
+          #{phone_markdown}
+          #{website_markdown}
           #{image_markdown}
         PERSON
       end.join("\n")}
