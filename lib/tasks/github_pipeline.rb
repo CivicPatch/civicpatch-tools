@@ -31,21 +31,13 @@ namespace :github_pipeline do
       #{city_directory["sources"].join("\n")}
       ## People
       #{city_directory["people"].map do |person|
-        position_markdown = if person["position"].present?
-                              <<~POSITION
-                                **Position:** #{person["position"]}
-                              POSITION
-                            else
-                              "**Position:** N/A"
-                            end
+        position_markdown = <<~POSITION
+          **Position:** #{person["position"] || "N/A"}
+        POSITION
 
-        position_misc_markdown = if person["position_misc"].present?
-                                   <<~POSITION_MISC
-                                     **Position Misc:** #{person["position_misc"]}
-                                   POSITION_MISC
-                                 else
-                                   "**Position Misc:** N/A"
-                                 end
+        position_misc_markdown = <<~POSITION_MISC
+          **Position Misc:** #{person["position_misc"] || "N/A"}
+        POSITION_MISC
 
         image_markdown = if person["image"].present?
                            image_url = "#{base_image_url}/#{person["image"]}?raw=true"
