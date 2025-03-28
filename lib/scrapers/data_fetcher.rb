@@ -3,6 +3,8 @@
 require "capybara"
 require "selenium-webdriver"
 
+require_relative "./common"
+
 module Scrapers
   class DataFetcher
     # TODO: -- robots.txt?
@@ -68,18 +70,18 @@ module Scrapers
 
         image_url = format_url(image_url)
 
-        absolute_image_url = URI.join(base_url, image_url).to_s
+        # Use safe join and encoding
+        absolute_image_url = Addressable::URI.parse(base_url).join(image_url).to_s
 
         # hash the image url
         image_hash = Digest::SHA256.hexdigest(absolute_image_url)
-        # determine the extension from the url
-        extension = File.extname(absolute_image_url)
+
+        filename = File.basename(absolute_image_url)
+        # get rid of query params
+        filename = filename.split("?").first
+        extension = File.extname(filename)
 
         filename = "#{image_hash}#{extension}"
-
-        # filename = File.basename(absolute_image_url)
-        ## get rid of query params
-        # filename = filename.split("?").first
 
         destination_path = File.join(destination_dir, filename)
 
@@ -115,7 +117,7 @@ module Scrapers
         link["href"] = format_url(link["href"])
 
         begin
-          link["href"] = URI.join(base_url, link["href"]).to_s
+          link["href"] = Addressable::URI.parse(base_url).join(link["href"]).to_s
         rescue StandardError => e
           puts "Error updating link: #{e.message}"
           puts "Link: #{link["href"]}"
@@ -125,7 +127,8 @@ module Scrapers
     end
 
     def get_image(image_url)
-      HTTParty.get(image_url).body
+      encoded_image_url = Addressable::URI.parse(image_url).normalize.to_s
+      HTTParty.get(encoded_image_url).body
     end
 
     def get_image_with_browser(session, image_url)
@@ -248,8 +251,7 @@ module Scrapers
     end
 
     def format_url(url)
-      # handle spaces
-      url.gsub(" ", "%20")
+      Scrapers::Common.format_url(url)
     end
   end
 end

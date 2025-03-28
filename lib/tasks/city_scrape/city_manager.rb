@@ -33,6 +33,8 @@ module CityScrape
       council_members = directory["people"].count { |person| person["position"] == "council_member" }
       mayors = directory["people"].count { |person| person["position"] == "mayor" }
 
+      puts "Council members: #{council_members}, Mayors: #{mayors}"
+
       council_members > 1 && mayors.positive?
     end
 

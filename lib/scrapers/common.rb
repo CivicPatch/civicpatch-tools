@@ -137,6 +137,7 @@ module Scrapers
       url = url.gsub(/\s+$/, "")
       # get rid of spaces
       url.gsub(" ", "%20")
+      Addressable::URI.parse(url).to_s
     end
 
     def self.format_name(name)

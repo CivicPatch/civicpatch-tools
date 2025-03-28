@@ -149,10 +149,14 @@ namespace :city_scrape do
     FileUtils.mkdir_p(images_dir)
 
     source_dirs.each do |source_dir|
-      # store images in combined images directory
-      puts "Copying images from #{source_dir}/images/* to #{images_dir}"
-      Dir.glob("#{source_dir}/images/*").each do |image|
-        FileUtils.cp(image, images_dir)
+      # Copy all images from source to destination
+      puts "Copying images from #{source_dir}/images to #{images_dir}"
+      source_image_dir = File.join(source_dir, "images")
+      
+      if Dir.exist?(source_image_dir) && !Dir.empty?(source_image_dir)
+        Dir.glob(File.join(source_image_dir, "*")).each do |file|
+          FileUtils.cp_r(file, images_dir, remove_destination: true)
+        end
       end
 
       FileUtils.mv(source_dir, sources_destination_dir)
@@ -183,14 +187,16 @@ namespace :city_scrape do
 
       page_processor = CityScrape::PageProcessor.new(state, engine, openai_service, data_fetcher, city_entry, city_directory)
 
-      success, new_local_source_dirs, new_city_directory = page_processor.process_pages(search_results_to_process)
+      new_local_source_dirs, city_directory = page_processor.process_pages(search_results_to_process)
+
+      puts "#{local_source_dirs}, #{city_directory}, #{new_local_source_dirs}"
 
       search_results_processed += search_results_to_process
       local_source_dirs += new_local_source_dirs
 
-      return [local_source_dirs, new_city_directory] if success
+      return [local_source_dirs, city_directory] if CityScrape::CityManager.valid_city_directory?(city_directory)
     end
 
-    [local_source_dirs, new_city_directory]
+    [local_source_dirs, city_directory]
   end
 end

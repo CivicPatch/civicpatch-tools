@@ -89,7 +89,6 @@ module Scrapers
     end
 
     def self.crawl(url, keywords, visited, base_domain, session, max_links = Float::INFINITY)
-      puts "Crawling #{url}, visited: #{visited}"
       return [] if visited[url] || visited.size >= max_links
 
       visited[url] = true # Mark as visited before recursive call

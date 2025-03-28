@@ -19,6 +19,8 @@ module CityScrape
 
         dirs_with_people << candidate_dir
         @city_directory = CityScrape::CityManager.merge_directory(@city_directory, partial_city_directory, url)
+
+        break if CityScrape::CityManager.valid_city_directory?(@city_directory)
       end
 
       [dirs_with_people, @city_directory]
@@ -30,7 +32,7 @@ module CityScrape
       content_file = @data_fetcher.extract_content(url, candidate_dir)
       return false unless content_file
 
-      partial_city_directory = openai_service.extract_city_info(content_file, url)
+      partial_city_directory = @openai_service.extract_city_info(content_file, url)
 
       [partial_city_directory, candidate_dir]
     end
