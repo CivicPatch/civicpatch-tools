@@ -115,10 +115,9 @@ namespace :city_scrape do
       candidate_dir = File.join(city_path, "city_scrape_sources", "member_info_#{index}")
       FileUtils.mkdir_p(candidate_dir)
       content_file = data_fetcher.extract_content(person["website"], candidate_dir)
-      puts "Content file: #{content_file}"
       person_info = openai_service.extract_person_information(content_file)
 
-      next unless person_info.present? && person_info.is_a?(Hash)
+      next person unless person_info.present? && person_info.is_a?(Hash)
 
       merged_person = person.dup
       person_info.each do |key, value|
@@ -158,7 +157,6 @@ namespace :city_scrape do
   )
     city_path = CityScrape::CityManager.get_city_path(state, city_entry)
     sources_destination_dir = File.join(city_path, "city_scrape_sources")
-    FileUtils.mkdir_p(sources_destination_dir)
 
     images_dir = File.join(city_path, "images")
     FileUtils.mkdir_p(images_dir)
@@ -167,13 +165,14 @@ namespace :city_scrape do
       # Copy all images from source to destination
       puts "Copying images from #{source_dir}/images to #{images_dir}"
       source_image_dir = File.join(source_dir, "images")
-      
+
       if Dir.exist?(source_image_dir) && !Dir.empty?(source_image_dir)
         Dir.glob(File.join(source_image_dir, "*")).each do |file|
           FileUtils.cp_r(file, images_dir, remove_destination: true)
         end
       end
 
+      FileUtils.rm_rf(sources_destination_dir) if Dir.exist?(sources_destination_dir)
       FileUtils.mv(source_dir, sources_destination_dir)
     end
   end

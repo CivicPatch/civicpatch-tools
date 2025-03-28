@@ -13,47 +13,6 @@ module Services
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_division_map_data(city_ocd_id, division_type, geojson_file_path, url)
-      parts = Scrapers::Common.get_ocd_parts(city_ocd_id)
-      state = parts["state"]
-      city = parts["place"]
-
-      truncated_geojson = extract_simplified_geojson(geojson_file_path)
-      truncated_geojson_text = truncated_geojson.to_json
-
-      system_instructions = <<~INSTRUCTIONS
-        You are an expert data extractor. The following is #{truncated_geojson.length} of the features of a geojson file.
-        Determine if the following content contains #{truncated_geojson.length} city council #{division_type}s.
-
-        If available, determine the following properties strictly in YAML format:
-        - has_division_data ("true" or "false" -- true if the data set has the city's #{division_type} info)
-        - has_city_data ("true" or "false" -- true if based off the page url and the data, that the dataset is for #{city}, #{state})
-      INSTRUCTIONS
-
-      user_instructions = <<~USER
-        * This is the data: #{truncated_geojson_text}.
-        * The city is split into #{division_type}s, and are more generically called "wards" or "districts".
-        * The page url is: #{url}
-        * Return the results in YAML format.
-
-      USER
-
-      if system_instructions.split(" ").length + user_instructions.split(" ").length > @@MAX_TOKENS
-        raise "Extract city division map data: system instructions and user instructions are too long"
-      end
-
-      puts "system_instructions: #{system_instructions}"
-      puts "user_instructions: #{user_instructions}"
-
-      messages = [
-        { role: "system", content: system_instructions },
-        { role: "user", content: user_instructions }
-      ]
-
-      response = run_prompt(messages)
-      response_to_yaml(response)
-    end
-
     def extract_city_info(content_file, city_council_url)
       content = File.read(content_file)
 
@@ -79,15 +38,7 @@ module Services
       end
 
       response["people"].map do |person|
-        person["phone_number"] = Scrapers::Standard.format_phone_number(person["phone_number"])
-
-        # Determine position/position_misc
-        next unless person["position_misc"].present?
-
-        person["position_misc"] = person["position_misc"].downcase.gsub(/[ .]+/, "_")
-        person["position_misc"] = "" if %w[member chair].include?(person["position_misc"])
-
-        person["position"] = "council_member" if council_member_position?(person["position"], person["position_misc"])
+        Scrapers::Standard.format_person(person)
       end
 
       response
@@ -99,13 +50,32 @@ module Services
         You are an expert data extractor.
         Extract the following properties from the provided content
         - name
-        - position (Strictly mayor, council_president, or council_member)
-        - position_misc
+        - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
+        - position_misc (An array of strings, if available)
         - phone_number
         - image
         - email
 
-      Note: Return the results in YAML format.
+      Notes: 
+      - Return the results in YAML format.
+      - For "position_misc", convert the following ambiguous position titles into a structured YAML format. 
+        Preserve non-numeric names as they are.
+        For titles like "city attorney" or "city clerk",
+        categorize them under `type: "role"` with the role name as the value.
+        Examples:
+
+        Input: "ward 3" → Output: `{ type: "ward", value: "3" }`
+        Input: "ward #3" → Output: `{ type: "ward", value: "3" }`
+        Input: "position #5" → Output: `{ type: "position", value: "5" }`
+        Input: "5th position" → Output: `{ type: "position", value: "5" }`
+        Input: "district 8" → Output: `{ type: "district", value: "8" }`
+        Input: "district blue" → Output: `{ type: "district", value: "blue" }`
+        Input: "blue district" → Output: `{ type: "district", value: "blue" }`
+        Input: "alumnus ward" → Output: `{ type: "ward", value: "alumnus" }`
+        Input: "city attorney" → Output: `{ type: "role", value: "city attorney" }`
+        Input: "city clerk" → Output: `{ type: "role", value: "city clerk" }`
+        Input: "position 5" → Output: `{ type: "position", value: "5" }`
+        Input: "seat 5" → Output: `{ type: "seat", value: "5" }`
       INSTRUCTIONS
 
       user_instructions = <<~USER
@@ -119,7 +89,16 @@ module Services
       ]
 
       response = run_prompt(messages)
-      response_to_yaml(response)
+      response = response_to_yaml(response)
+
+      # TODO: handle errors
+      return nil if response["people"].blank?
+
+      response["people"].map do |person|
+        Scrapers::Standard.format_person(person)
+      end
+
+      response
     end
 
     def response_to_yaml(response_content)
@@ -143,8 +122,8 @@ module Services
         For each city leader or council member (leave empty if not found):
           - people:
               - name
-              - position (Strictly mayor, council_president, or council_member)
-              - position_misc (Can be loosely interpreted, if available - Examples: position_2, district_3, city_attorney, seat_4, etc.)
+              - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
+              - position_misc (An array of strings, if available)
               - phone_number
               - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL.)
               - email
@@ -160,6 +139,21 @@ module Services
         - If you cannot find any relevant information, return the following YAML:
           - error: "No relevant information found"
         - To make it on the people list, they must be associated with either "position" OR "position_misc)
+        - For "position_misc", convert the following ambiguous position titles into a structured YAML format. 
+          Preserve non-numeric names as they are. 
+          For titles like "city attorney" or "city clerk", 
+          categorize them under `type: "role"` with the role name as the value.
+          Examples:
+          Input: "ward 3" → Output: `{ type: "ward", value: "3" }`
+          Input: "ward #3" → Output: `{ type: "ward", value: "3" }`
+          Input: "position #5" → Output: `{ type: "position", value: "5" }`
+          Input: "5th position" → Output: `{ type: "position", value: "5" }`
+          Input: "district 8" → Output: `{ type: "district", value: "8" }`
+          Input: "district blue" → Output: `{ type: "district", value: "blue" }`
+          Input: "blue district" → Output: `{ type: "district", value: "blue" }`
+          Input: "alumnus ward" → Output: `{ type: "ward", value: "alumnus" }`
+          Input: "city attorney" → Output: `{ type: "role", value: "city attorney" }`
+          Input: "city clerk" → Output: `{ type: "role", value: "city clerk" }`
 
         Example Output (YAML):
         ---
@@ -167,16 +161,16 @@ module Services
           - name: "Jane Smith"
             position: council_member
             position_misc:
-              - seat_1
+              - type: "seat"
+                value: "1"
             phone_number: "555-123-4567"
             image: "images/smith.jpg"
             email: "jsmith@cityofexample.gov"
             website: "https://www.cityofexample.gov/council/smith"
           - name: "John Doe"
             position_misc:
-              - city_attorney
-              - seat_2
-              - district_5
+              - type: "ward"
+                value: "3"
             phone_number: ""
             image: ""
             email: ""
@@ -187,6 +181,9 @@ module Services
             image: "images/mayor.jpg"
             email: "mayor@cityofexample.gov"
             website: "https://www.cityofexample.gov/mayor"
+            position_misc:
+              - type: "role"
+                value: "city_attorney"
 
       INSTRUCTIONS
 
