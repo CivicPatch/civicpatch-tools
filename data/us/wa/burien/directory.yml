@@ -1,0 +1,32 @@
+---
+people:
+- name: Sofia Aragon
+  position: mayor
+  position_misc: []
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
+- name: Alex Andrade
+  position: council_member
+  position_misc: []
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/alex_andrade
+- name: Kevin Schilling
+  position: council_member
+  position_misc: []
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
+- name: Linda Akey
+  position: council_member
+  position_misc: []
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/linda_akey
+sources:
+- https://www.burienwa.gov/city_hall/city_council/council_roundups/council_roundup_december_18_2023
