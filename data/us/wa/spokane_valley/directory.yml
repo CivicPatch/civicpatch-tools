@@ -1,59 +1,53 @@
 ---
 people:
-- name: Haley
-  position: mayor
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
-  website: https://www.spokanevalleywa.gov/193/City-Council
+-
 - name: Rod Higgins
   position: council_member
   position_misc: position_1
   phone_number: "(509) 720-5066"
-  image: ''
+  image: images/a982a87ee28cf8f47e67496c1fa7c8edf486019e6c0656309e58eefdb5ed1c8d
   email: ''
   website: https://www.spokanevalleywa.gov/directory.aspx?EID=17
 - name: Jessica Yaeger
   position: council_member
   position_misc: position_2
   phone_number: "(509) 720-5064"
-  image: ''
+  image: images/499487783c61b7e0ab6b5c9575d9119954ef3410f27fcb48fd0f8f6a73ab7fd9
   email: ''
   website: https://spokanevalleywa.gov/directory.aspx?EID=18
 - name: Al Merkel
   position: council_member
   position_misc: position_3
   phone_number: "(509) 720-5062"
-  image: ''
+  image: images/7c4e595bf8423caba9f439748b5542a2c455e36f917126868a2857bc1117a9f0
   email: ''
   website: https://spokanevalleywa.gov/directory.aspx?EID=19
 - name: Ben Wick
   position: council_member
   position_misc: position_4
   phone_number: "(509) 720-5065"
-  image: ''
+  image: images/34c36da77d41825134e499a98f9b83c8281ac22d1a4a86833533d6d703099b58
   email: ''
   website: https://www.spokanevalleywa.gov/directory.aspx?EID=20
 - name: Pam Haley
   position: council_member
   position_misc: position_5
   phone_number: "(509) 720-5060"
-  image: ''
+  image: images/436069a47664217d79849a210a9704816ba4d2ad56abae746d3e96a352f01437
   email: ''
   website: https://www.spokanevalleywa.gov/directory.aspx?EID=21
 - name: Tim Hattenburg
   position: council_member
   position_misc: position_6
   phone_number: "(509) 720-5063"
-  image: ''
+  image: images/647bec1b2ff2d273d57afa56c81228e54e3a7a162ceeef71d69e3f450cc11cc0
   email: ''
   website: https://www.spokanevalleywa.gov/directory.aspx?EID=22
 - name: Laura Padden
   position: council_member
   position_misc: position_7
   phone_number: "(509) 720-5061"
-  image: ''
+  image: images/15ba78f48eb722312419f4c518cdcb1b75da3491adf5d3cf91038015f865d28f
   email: ''
   website: https://www.spokanevalleywa.gov/directory.aspx?EID=23
 sources:
