@@ -321,6 +321,7 @@ places:
   fips: ''
   gnis: '2409899'
   population: 43505
+  last_member_info_scrape_run: '2025-03-28'
 - website: http://edmondswa.gov
   name: edmonds
   type: code_city
