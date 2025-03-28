@@ -35,6 +35,7 @@ require_relative "../tasks/city_scrape/city_manager"
 require_relative "../tasks/city_scrape/search_manager"
 require_relative "../tasks/city_scrape/page_processor"
 require_relative "../tasks/city_scrape/state_manager"
+require_relative "../tasks/city_scrape/person_manager"
 
 namespace :city_scrape do
   desc "Pick cities from queue"
@@ -98,47 +99,8 @@ namespace :city_scrape do
     state = args[:state]
     gnis = args[:gnis]
 
-    data_fetcher = Scrapers::DataFetcher.new
-    openai_service = Services::Openai.new
-
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-
-    raise "City entry not found for #{gnis} in #{state}" unless city_entry.present?
-
-    city_data = CityScrape::CityManager.get_city_directory(state, city_entry)
-    city_path = CityScrape::CityManager.get_city_path(state, city_entry)
-
-    city_data["people"] = city_data["people"].map.with_index do |person, index|
-      next person unless person["website"].present? && Scrapers::Common.missing_contact_info?(person)
-
-      puts "Processing #{person["name"]}"
-      candidate_dir = File.join(city_path, "city_scrape_sources", "member_info_#{index}")
-      FileUtils.mkdir_p(candidate_dir)
-      content_file = data_fetcher.extract_content(person["website"], candidate_dir)
-      person_info = openai_service.extract_person_information(content_file)
-
-      next person unless person_info.present? && person_info.is_a?(Hash)
-
-      merged_person = person.dup
-      person_info.each do |key, value|
-        # Consider both nil and empty string as blank
-        person_value_blank = merged_person[key].nil? || merged_person[key].to_s.strip.empty?
-        info_value_present = !value.nil? && (!value.is_a?(String) || !value.strip.empty?)
-
-        if person_value_blank && info_value_present
-          merged_person[key] = value
-        end
-      end
-
-      merged_person
-    end
-
-    File.write(CityScrape::CityManager.get_city_directory_file(state, city_entry), city_data.to_yaml)
-
-    CityScrape::StateManager.update_state_places(state, [
-                                                   { "gnis" => city_entry["gnis"],
-                                                     "last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d") }
-                                                 ])
+    # TODO: this is doing too much, too many files moving around in one function too...
+    CityScrape::PersonManager.fetch_people_info(state, gnis)
   end
 
   def create_prepare_directories(state, city_entry)

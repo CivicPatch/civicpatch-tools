@@ -53,11 +53,12 @@ module Services
         - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
         - position_misc (An array of strings, if available)
         - phone_number
-        - image
+        - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with image/)
         - email
 
       Notes: 
       - Return the results in YAML format.
+      - If the content is not a person, YAML with the key "error" and the value "Not a person".
       - For "position_misc", convert the following ambiguous position titles into a structured YAML format. 
         Preserve non-numeric names as they are.
         For titles like "city attorney" or "city clerk",
@@ -92,13 +93,9 @@ module Services
       response = response_to_yaml(response)
 
       # TODO: handle errors
-      return nil if response["people"].blank?
+      return nil if response["error"].present?
 
-      response["people"].map do |person|
-        Scrapers::Standard.format_person(person)
-      end
-
-      response
+      Scrapers::Standard.format_person(response)
     end
 
     def response_to_yaml(response_content)

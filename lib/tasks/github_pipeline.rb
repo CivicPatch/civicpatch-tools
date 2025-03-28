@@ -72,6 +72,7 @@ namespace :github_pipeline do
                              "**Website:** N/A"
                            end
         <<~PERSON
+          ********************************************************
           ### **Name:** #{person["name"]}
           #{position_markdown}
           #{position_misc_markdown}
