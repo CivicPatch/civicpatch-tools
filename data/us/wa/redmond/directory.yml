@@ -3,8 +3,8 @@ people:
 - name: Birney
   position: mayor
   position_misc: []
-  phone_number: ''
-  image: images/0c083207b284619d7771566a41986a995b8d81f7cea1d482bbf7e01ce26734b1
+  phone_number: "(425) 556-2900"
+  image: image/f83b954efe6c9b233933f66ade3086c37da32b2f61359720581d119e4c1adf7a
   email: ''
   website: https://www.redmond.gov/CivicAlerts.aspx?AID=2239
 - name: Jessica Forsythe
@@ -75,3 +75,4 @@ sources:
 - https://redmond.gov/189/City-Council
 - https://redmond.gov/189
 - https://redmond.gov/CivicAlerts.aspx?AID=2239
+- https://www.redmond.gov/CivicAlerts.aspx?AID=2239
