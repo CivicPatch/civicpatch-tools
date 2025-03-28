@@ -1,0 +1,63 @@
+---
+people:
+- name: Haley
+  position: mayor
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.spokanevalleywa.gov/193/City-Council
+- name: Rod Higgins
+  position: council_member
+  position_misc: position_1
+  phone_number: "(509) 720-5066"
+  image: ''
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=17
+- name: Jessica Yaeger
+  position: council_member
+  position_misc: position_2
+  phone_number: "(509) 720-5064"
+  image: ''
+  email: ''
+  website: https://spokanevalleywa.gov/directory.aspx?EID=18
+- name: Al Merkel
+  position: council_member
+  position_misc: position_3
+  phone_number: "(509) 720-5062"
+  image: ''
+  email: ''
+  website: https://spokanevalleywa.gov/directory.aspx?EID=19
+- name: Ben Wick
+  position: council_member
+  position_misc: position_4
+  phone_number: "(509) 720-5065"
+  image: ''
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=20
+- name: Pam Haley
+  position: council_member
+  position_misc: position_5
+  phone_number: "(509) 720-5060"
+  image: ''
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=21
+- name: Tim Hattenburg
+  position: council_member
+  position_misc: position_6
+  phone_number: "(509) 720-5063"
+  image: ''
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=22
+- name: Laura Padden
+  position: council_member
+  position_misc: position_7
+  phone_number: "(509) 720-5061"
+  image: ''
+  email: ''
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=23
+sources:
+- https://www.spokanevalleywa.gov/193/City-Council
+- https://www.spokanevalleywa.gov/193
+- https://www.spokanevalleywa.gov/Directory.aspx?DID=8
+- https://www.spokanevalleywa.gov/696/Just-the-Facts-Council-Meeting-Recaps
