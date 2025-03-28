@@ -1,0 +1,77 @@
+---
+people:
+- name: Birney
+  position: mayor
+  position_misc: []
+  phone_number: ''
+  image: images/0c083207b284619d7771566a41986a995b8d81f7cea1d482bbf7e01ce26734b1
+  email: ''
+  website: https://www.redmond.gov/CivicAlerts.aspx?AID=2239
+- name: Jessica Forsythe
+  position: council_president
+  position_misc:
+  - type: position
+    value: '3'
+  phone_number: "(425) 305-7206"
+  image: images/4ba50efe38009bebeb96ea47bbf2c6b6b45587d960d934b1b74bb760ed9219a0
+  email: jforsythe@redmond.gov
+  website: https://redmond.gov/directory.aspx?EID=859
+- name: Vanessa Kritzer
+  position: council_president
+  position_misc:
+  - type: position
+    value: '5'
+  phone_number: "(425) 305-9892"
+  image: images/cf929a38982781ee08c84c368f16da45014340b435e688137df50657b46bf30d
+  email: vkritzer@redmond.gov
+  website: https://redmond.gov/directory.aspx?EID=886
+- name: Osman Salahuddin
+  position: council_member
+  position_misc:
+  - type: position
+    value: '1'
+  phone_number: "(425) 556-5845"
+  image: images/9d74a1161792be2b001e0eb3193c8bffb8d4eab5661a32217d7a711188176600
+  email: osalahuddin@redmond.gov
+  website: https://redmond.gov/directory.aspx?EID=986
+- name: Steve Fields
+  position: council_member
+  position_misc:
+  - type: position
+    value: '2'
+  phone_number: "(425) 403-9476"
+  image: images/70eb2ca2a5b45d369574f07b4c3b5687b708067a4fe0153a8f40d21a2a65dfed
+  email: sfields@redmond.gov
+  website: https://redmond.gov/directory.aspx?EID=858
+- name: Melissa Stuart
+  position: council_member
+  position_misc:
+  - type: position
+    value: '4'
+  phone_number: "(425) 556-2110"
+  image: images/818e893c67785c30fd4d57b91f2e382a597b3f84111a06b8887fe6016ce80b02
+  email: mstuart@redmond.gov
+  website: https://redmond.gov/directory.aspx?EID=940
+- name: Jeralee Anderson
+  position: council_member
+  position_misc:
+  - type: position
+    value: '6'
+  phone_number: "(425) 588-1619"
+  image: images/19e7ff2d9f775c82df7be36ce7cbcd47725f73d3626f135b0bafc55f8c30d9d0
+  email: janderson@redmond.gov
+  website: https://redmond.gov/directory.aspx?EID=855
+- name: Angie Nuevacamina
+  position: council_member
+  position_misc:
+  - type: position
+    value: '7'
+  phone_number: "(425) 556-5846"
+  image: images/8a0f5f17d422efdd1388c8bf7b60fb36a894c1f07dc4f70400afaa14916919b0
+  email: anuevacamina@redmond.gov
+  website: https://redmond.gov/directory.aspx?EID=985
+sources:
+- https://redmond.gov/Directory.aspx?did=33
+- https://redmond.gov/189/City-Council
+- https://redmond.gov/189
+- https://redmond.gov/CivicAlerts.aspx?AID=2239
