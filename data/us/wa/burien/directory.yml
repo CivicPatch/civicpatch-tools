@@ -1,0 +1,53 @@
+---
+people:
+- name: Sofia Aragon
+  position: mayor
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
+- name: Alex Andrade
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/alex_andrade
+- name: Hugo Garcia
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/hugo_garcia
+- name: Jimmy Matta
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/jimmy_matta
+- name: Kevin Schilling
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
+- name: Linda Akey
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/linda_akey
+- name: Stephanie Mora
+  position: council_member
+  position_misc: ''
+  phone_number: ''
+  image: ''
+  email: ''
+  website: https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora
+sources:
+- https://www.burienwa.gov/city_hall/city_council/council_roundups/council_roundup_december_18_2023
