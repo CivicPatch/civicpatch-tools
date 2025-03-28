@@ -1,0 +1,86 @@
+---
+people:
+- name: John Hohman
+  position: mayor
+  phone_number: "(509) 720-5300"
+  image: images/a7455eeb8dd5b4b75880479e2422762c4760a1e13cc7c0c33649b7a0f5f645cc
+  email: jhohman@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/363/City-Manager
+  position_misc: []
+- name: Rod Higgins
+  position: council_member
+  position_misc:
+  - type: position
+    value: '1'
+  phone_number: "(509) 720-5066"
+  image: ''
+  email: rhiggins@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=17
+- name: Jessica Yaeger
+  position: council_member
+  position_misc:
+  - type: position
+    value: '2'
+  phone_number: "(509) 720-5064"
+  image: ''
+  email: jyaeger@SpokaneValleyWA.gov
+  website: https://spokanevalleywa.gov/directory.aspx?EID=18
+- name: Al Merkel
+  position: council_member
+  position_misc:
+  - type: position
+    value: '3'
+  phone_number: "(509) 720-5062"
+  image: ''
+  email: amerkel@SpokaneValleyWA.gov
+  website: https://spokanevalleywa.gov/directory.aspx?EID=19
+- name: Ben Wick
+  position: council_member
+  position_misc:
+  - type: position
+    value: '4'
+  phone_number: "(509) 720-5065"
+  image: ''
+  email: bwick@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=20
+- name: Pam Haley
+  position: council_member
+  position_misc:
+  - type: position
+    value: '5'
+  phone_number: "(509) 720-5060"
+  image: ''
+  email: phaley@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=21
+- name: Tim Hattenburg
+  position: council_member
+  position_misc:
+  - type: position
+    value: '6'
+  phone_number: "(509) 720-5063"
+  image: ''
+  email: thattenburg@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=22
+- name: Laura Padden
+  position: council_member
+  position_misc:
+  - type: position
+    value: '7'
+  phone_number: "(509) 720-5061"
+  image: ''
+  email: lpadden@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/directory.aspx?EID=23
+- name: Erik Lamb
+  position_misc:
+  - type: role
+    value: deputy_city_manager
+  phone_number: "(509) 720-5100"
+  image: images/d7956272c24d702b0d0fe8ffed43f68322c8049c277803ba1b61fa74e2b809e9
+  email: elamb@SpokaneValleyWA.gov
+  website: https://www.spokanevalleywa.gov/363/City-Manager
+sources:
+- https://www.spokanevalleywa.gov/193/City-Council
+- https://www.spokanevalleywa.gov/193
+- https://www.spokanevalleywa.gov/Directory.aspx?DID=8
+- https://www.spokanevalleywa.gov/Directory.aspx?did=8
+- https://www.spokanevalleywa.gov/363/City-Manager
