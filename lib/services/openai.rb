@@ -93,6 +93,35 @@ module Services
       response
     end
 
+    def extract_person_information(content_file)
+      content = File.read(content_file)
+      system_instructions = <<~INSTRUCTIONS
+        You are an expert data extractor.
+        Extract the following properties from the provided content
+        - name
+        - position (Strictly mayor, council_president, or council_member)
+        - position_misc
+        - phone_number
+        - image
+        - email
+
+      Note: Return the results in YAML format.
+      INSTRUCTIONS
+
+      user_instructions = <<~USER
+        Here is the content:
+        #{content}
+      USER
+
+      messages = [
+        { role: "system", content: system_instructions },
+        { role: "user", content: user_instructions }
+      ]
+
+      response = run_prompt(messages)
+      response_to_yaml(response)
+    end
+
     def response_to_yaml(response_content)
       # Extract YAML content from the response
       # If the response is wrapped in ```yaml ... ``` or similar, extract just the YAML content
@@ -137,18 +166,23 @@ module Services
         people:
           - name: "Jane Smith"
             position: council_member
+            position_misc:
+              - seat_1
             phone_number: "555-123-4567"
             image: "images/smith.jpg"
             email: "jsmith@cityofexample.gov"
             website: "https://www.cityofexample.gov/council/smith"
           - name: "John Doe"
-            position_misc: city_attorney
+            position_misc:
+              - city_attorney
+              - seat_2
+              - district_5
             phone_number: ""
             image: ""
             email: ""
             website: "/council/doe"
           - name: "Robert Johnson"
-            position: "mayor"
+            position: mayor
             phone_number: "555-111-2222"
             image: "images/mayor.jpg"
             email: "mayor@cityofexample.gov"

@@ -103,26 +103,41 @@ namespace :city_scrape do
 
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
 
-    raise "City entry not found for #{gnis} in #{state}" unless state_city_entry.present?
+    raise "City entry not found for #{gnis} in #{state}" unless city_entry.present?
 
-    city_data = CityScrape::StateManager.get_city_directory(state, state_city_entry)
+    city_data = CityScrape::CityManager.get_city_directory(state, city_entry)
+    city_path = CityScrape::CityManager.get_city_path(state, city_entry)
 
-    city_data["people"].each do |person|
-      next if person["website"].present? && Scrapers::Common.missing_contact_info?(person)
+    city_data["people"] = city_data["people"].map.with_index do |person, index|
+      return person unless person["website"].present? && Scrapers::Common.missing_contact_info?(person)
 
       puts "Processing #{person["name"]}"
+      candidate_dir = File.join(city_path, "city_scrape_sources", "member_info_#{index}")
+      FileUtils.mkdir_p(candidate_dir)
       content_file = data_fetcher.extract_content(person["website"], candidate_dir)
-      person_info = extract_city_info(openai_service, content_file, person["website"])
-      File.write("chat.txt", "old person info: #{person.inspect}\nnew person info: #{person_info.inspect}\n\n",
-                 mode: "a")
-      #person.merge!(person_info)
+      puts "Content file: #{content_file}"
+      person_info = openai_service.extract_person_information(content_file)
+
+      next unless person_info.present? && person_info.is_a?(Hash)
+
+      merged_person = person.dup
+      person_info.each do |key, value|
+        # Consider both nil and empty string as blank
+        person_value_blank = merged_person[key].nil? || merged_person[key].to_s.strip.empty?
+        info_value_present = !value.nil? && (!value.is_a?(String) || !value.strip.empty?)
+
+        if person_value_blank && info_value_present
+          merged_person[key] = value
+        end
+      end
+
+      merged_person
     end
 
-    # Write the updated city directory back to the file
-    File.write(get_city_directory_file(state, state_city_entry), city_data.to_yaml)
+    File.write(CityScrape::CityManager.get_city_directory_file(state, city_entry), city_data.to_yaml)
 
     CityScrape::StateManager.update_state_places(state, [
-                                                   { "gnis" => state_city_entry["gnis"],
+                                                   { "gnis" => city_entry["gnis"],
                                                      "last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d") }
                                                  ])
   end
