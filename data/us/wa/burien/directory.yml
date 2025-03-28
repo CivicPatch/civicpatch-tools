@@ -2,52 +2,16 @@
 people:
 - name: Sofia Aragon
   position: mayor
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
+  position_misc: 'Current term: January 1, 2024 to December 31, 2027'
+  phone_number: "(206) 241-4647"
+  image: images/b7b7e7c03136b6b084e54f36d799117942258dd837c4149c151e2609d7dfde07.jpg
+  email: bbd0decdd2d5c8fbd9cec9d2ded5ccda95dcd4cd
   website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
-- name: Alex Andrade
-  position: council_member
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
-  website: https://www.burienwa.gov/city_hall/city_council/alex_andrade
-- name: Hugo Garcia
-  position: council_member
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
-  website: https://www.burienwa.gov/city_hall/city_council/hugo_garcia
-- name: Jimmy Matta
-  position: council_member
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
-  website: https://www.burienwa.gov/city_hall/city_council/jimmy_matta
-- name: Kevin Schilling
-  position: council_member
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
-  website: https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling
-- name: Linda Akey
-  position: council_member
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
-  website: https://www.burienwa.gov/city_hall/city_council/linda_akey
-- name: Stephanie Mora
-  position: council_member
-  position_misc: ''
-  phone_number: ''
-  image: ''
-  email: ''
-  website: https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora
+-
+-
+-
+-
+-
+-
 sources:
 - https://www.burienwa.gov/city_hall/city_council/council_roundups/council_roundup_december_18_2023
