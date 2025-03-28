@@ -4,6 +4,7 @@ require "nokogiri"
 require "httparty"
 require "markitdown"
 require_relative "../scrapers/common"
+require_relative "../tasks/city_scrape/city_manager"
 
 MAX_LINKS = 20
 
@@ -15,7 +16,7 @@ module Scrapers
       # Extract all keywords from the keyword_groups hash
       all_keywords = keyword_groups.values.flatten
 
-      url_text_pairs = crawl(base_url, all_keywords, {}, base_url, session, MAX_LINKS)
+      url_text_pairs = crawl(base_url, all_keywords, {}, session, MAX_LINKS)
       session.quit
 
       Scrapers::Common.sort_url_pairs(url_text_pairs, keyword_groups)
@@ -88,22 +89,89 @@ module Scrapers
       url_text_pairs
     end
 
-    def self.crawl(url, keywords, visited, base_domain, session, max_links = Float::INFINITY)
-      return [] if visited[url] || visited.size >= max_links
+    def self.crawl(base_url, keywords, visited = {}, session = nil, max_links = nil)
+      root_url ||= base_url
+      links_processed = 0
+      grouped_urls = Hash.new { |hash, key| hash[key] = [] }
+      url_text_pairs = []
 
-      visited[url] = true # Mark as visited before recursive call
+      queue = [[base_url, "", {}]]  # [url, text, scores]
 
-      url_text_pairs = process_links(url, keywords, base_domain, session)
+      while !queue.empty? && (max_links.nil? || links_processed < max_links)
+        current_url, current_text, current_scores = queue.shift
+        next if visited[current_url]
 
-      # filter out links that are already visited
-      url_text_pairs = url_text_pairs.reject { |full_url, _| visited[full_url] }
+        visited[current_url] = true
+        links_processed += 1
 
-      # Collect URLs from the current level and recursively from deeper levels
-      url_text_pairs + url_text_pairs.each_with_object([]) do |(full_url, _), all_links|
-        break all_links if all_links.size >= max_links # Stop if max_links is reached
+        begin
+          new_links = process_links(current_url, keywords, base_url, session)
 
-        all_links.concat(crawl(full_url, keywords, visited, base_domain, session, max_links))
+          # Process and rank new links
+          new_links.each do |url, text|
+            next if visited[url]
+
+            scores = calculate_ranking(url, text)
+
+            # Add to queue, maintaining priority based on scores
+            insert_index = queue.bsearch_index do |_, _, other_scores|
+              compare_scores(scores, other_scores).negative?
+            end || queue.length
+            queue.insert(insert_index, [url, text, scores])
+          end
+
+          CityScrape::CityManager::KEYWORD_GROUPS.each_key do |group_name|
+            if current_scores[group_name]
+              grouped_urls[group_name] << [current_url, current_text]
+            end
+          end
+        end
       end
+
+      # Return sorted pairs maintaining the same grouping and sorting as Common.sort_url_pairs
+      grouped_urls.values.flatten(1)
+    end
+
+    # Helper method to calculate ranking score for a URL and text
+    def self.calculate_ranking(url, text)
+      scores = {}
+      CityScrape::CityManager::KEYWORD_GROUPS.each do |group_name, keywords|
+        next unless keywords.any? { |keyword| text.downcase.include?(keyword.downcase) }
+
+        date_penalty = if has_date?(url.downcase) || has_date?(text.downcase)
+          100  # Increase this number to penalize dates more heavily
+        else
+          0
+        end
+
+        scores[group_name] = [
+          -Scrapers::Common.score_text(text, keywords),
+          -Scrapers::Common.keyword_count_in_url(url, keywords),
+          url.length + date_penalty  # Add penalty to length score
+        ]
+      end
+      scores
+    end
+
+    def self.has_date?(text)
+      text.match?(
+        %r{
+          (?:
+            /                    # URL formats (must start with slash)
+            (?:
+              \d{4}[-_/]\d{2}[-_/]\d{2} |  # 2025/20/03, 2025_20_03
+              (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[-_]?\d{1,2}  # december_18, dec-18
+            )
+            / |                  # URL formats must end with slash
+            (?:^|\s)            # Plaintext formats (must start with space or beginning of string)
+            (?:
+              \d{4}[-/]\d{2}[-/]\d{2} |    # 2012-03-02
+              (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2}    # june 15
+            )
+            (?:\s|$)            # Plaintext formats must end with space or end of string
+          )
+        }xi                     # Case insensitive, ignore whitespace
+      )
     end
 
     def self.configure_browser
@@ -118,6 +186,22 @@ module Scrapers
 
         Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
       end
+    end
+
+    def self.compare_scores(scores1, scores2)
+      # Compare scores using the same priority as the original algorithm
+      CityScrape::CityManager::KEYWORD_GROUPS.each do |group_name, _|
+        score1 = scores1[group_name]
+        score2 = scores2[group_name]
+
+        next if score1.nil? && score2.nil?
+        return -1 if score1.nil?
+        return 1 if score2.nil?
+
+        comparison = score1 <=> score2
+        return comparison unless comparison == 0
+      end
+      0
     end
   end
 end
