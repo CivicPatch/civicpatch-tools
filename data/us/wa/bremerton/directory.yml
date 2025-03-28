@@ -1,0 +1,55 @@
+---
+people:
+- name: Jennifer Chamberlin
+  position: council_member
+  position_misc: district_1
+  phone_number: "(360) 473-5280"
+  image: images/068ed5c3bce988d5ccaa72aa6eaab0d43f6dff16b5d0230e03e60cc281a950ae
+  email: ''
+  website: https://bremertonwa.gov/Directory.aspx?EID=193
+- name: Denise Frey
+  position: council_member
+  position_misc: district_2
+  phone_number: "(360) 473-5280"
+  image: images/c1f56de8fbf47927ab91e4624d23e98e6097daaf42f21c145c2a926c1abaa580
+  email: ''
+  website: https://bremertonwa.gov/Directory.aspx?EID=199
+- name: Jeff Coughlin
+  position: council_member
+  position_misc: district_3
+  phone_number: "(360) 473-5280"
+  image: images/50f60059e7471b8f627663585d0bea6347992f4f83b3c94e56b97b9a66c1fbe1
+  email: ''
+  website: https://bremertonwa.gov/Directory.aspx?EID=194
+- name: Jane Rebelowski
+  position: council_member
+  position_misc: district_4,_council_vice_president
+  phone_number: "(360) 473-5280"
+  image: images/985bf21b52567820ded4e5e48c954d5b47714c7681b7750672fd5488a4e9e700
+  email: ''
+  website: https://bremertonwa.gov/Directory.aspx?EID=230
+- name: Michael Goodnow
+  position: council_member
+  position_misc: district_5
+  phone_number: "(360) 473-5280"
+  image: images/bc9cf8c4c2468b0f07e4952ce58d23ab1b1a2820b32a3c355a8aeb0d754353fc
+  email: ''
+  website: https://bremertonwa.gov/Directory.aspx?EID=114
+- name: Anna Mockler
+  position: council_member
+  position_misc: district_6
+  phone_number: "(360) 473-5280"
+  image: images/6c646c1efbbd340b9324f99ba96bf0490eff3e0a288dfb1b002093423ff80980
+  email: ''
+  website: https://bremertonwa.gov/Directory.aspx?EID=197
+- name: Eric Younger
+  position: council_member
+  position_misc: district_7,_council_president
+  phone_number: "(360) 473-5280"
+  image: images/17461c35ed36e8631e99d3e251cbcfe054bc55dd1560d513629ea29da43336b5
+  email: ''
+  website: https://bremertonwa.gov/Directory.aspx?EID=79
+sources:
+- https://bremertonwa.gov/635/Council-Districts
+- https://www.bremertonwa.gov/635/Council-Districts
+- https://bremertonwa.gov/Directory.aspx?DID=38
