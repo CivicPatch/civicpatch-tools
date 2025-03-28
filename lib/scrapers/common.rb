@@ -2,6 +2,10 @@
 
 module Scrapers
   module Common
+    def self.missing_contact_info?(person)
+      person["email"].blank? && person["phone"].blank?
+    end
+
     def self.fetch_places_from_wikipedia(state, title)
       response = fetch_with_wikipedia(title)
       nokogiri_doc = Nokogiri::HTML(response)
@@ -133,6 +137,7 @@ module Scrapers
       url = url.gsub(/\s+$/, "")
       # get rid of spaces
       url.gsub(" ", "%20")
+      Addressable::URI.parse(url).to_s
     end
 
     def self.format_name(name)

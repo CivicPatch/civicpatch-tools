@@ -108,6 +108,18 @@ jobs:
           git commit -m "Populate city info -- council members -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch additional city info (if needed)
+        run: |
+          echo "Processing city: ${{ matrix.city_entry.gnis }}"
+          bundle exec rake 'city_scrape:get_member_info[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
+      
+      - name: Commit additional city info (if needed)
+        run: |
+          git add .
+          git commit -m "Populate city info -- additional info -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       # TODO: only need this if the city is further split into districts
       #- name: Get city division map data
@@ -138,7 +150,7 @@ jobs:
         run: |
           {
             echo 'markdown_content<<DELIMITER_EOF'
-            bundle exec rake 'city_scrape:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]'
+            bundle exec rake 'github_pipeline:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]'
             echo 'DELIMITER_EOF'
           } >> $GITHUB_ENV
 
