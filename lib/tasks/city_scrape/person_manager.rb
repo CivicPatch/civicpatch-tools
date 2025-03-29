@@ -45,6 +45,7 @@ module CityScrape
                                                    { "gnis" => city_entry["gnis"],
                                                      "last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d") }
                                                  ])
+      Scrapers::Common.prune_unused_images(state, city_entry)
     end
   end
 end
