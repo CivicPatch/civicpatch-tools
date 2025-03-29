@@ -11,23 +11,25 @@ module CityScrape
       city_data = CityScrape::CityManager.get_city_directory(state, city_entry)
       city_path = CityScrape::CityManager.get_city_path(state, city_entry)
 
-      city_data["people"] = city_data["people"].map.with_index do |person, index|
-        next person unless person["website"].present? && Scrapers::Common.missing_contact_info?(person)
+      city_data["people"] = city_data["people"].map.with_index do |existing_person, index|
+        next existing_person unless existing_person["website"].present? && Scrapers::Common.missing_contact_info?(existing_person)
 
-        puts "Processing #{person["name"]}"
+        puts "Processing #{existing_person["name"]}"
         candidate_dir = File.join(city_path, "city_scrape_sources", "member_info_#{index}")
         FileUtils.mkdir_p(candidate_dir)
-        content_file = data_fetcher.extract_content(person["website"], candidate_dir)
+        content_file = data_fetcher.extract_content(existing_person["website"], candidate_dir)
         person_info = openai_service.extract_person_information(content_file)
 
-        next person unless person_info.present? && person_info.is_a?(Hash)
+        next existing_person unless person_info.present? && person_info.is_a?(Hash)
 
-        merged_person = person.dup
-        merged_person["phone_number"] = person_info["phone_number"] || person["phone_number"]
-        merged_person["email"] = person_info["email"] || person["email"]
-        merged_person["image"] = person_info["image"] || person["image"]
+        puts "Found new info on #{existing_person["website"]}: #{person_info.to_yaml}"
 
-        city_data["sources"] << person["website"]
+        merged_person = existing_person.dup
+        merged_person["phone_number"] = existing_person["phone_number"] || person_info["phone_number"]
+        merged_person["email"] = existing_person["email"] || person_info["email"]
+        merged_person["image"] = existing_person["image"] || person_info["image"]
+
+        city_data["sources"] << existing_person["website"]
         merged_person
       end
 

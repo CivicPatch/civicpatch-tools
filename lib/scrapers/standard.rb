@@ -4,10 +4,16 @@
 
 module Scrapers
   class Standard
+    def self.valid_name?(name)
+      name.present? && name.split.length > 1
+    end
+
     def self.format_person(person)
       person["phone_number"] = format_phone_number(person["phone_number"]) if person["phone_number"].present?
       person["position_misc"] = format_position_misc(person["position_misc"]) if person["position_misc"].present?
 
+      # Delete any keys that are empty
+      person.delete_if { |_key, value| value.blank? }
       person
     end
 
