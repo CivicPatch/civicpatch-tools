@@ -147,6 +147,8 @@ namespace :city_scrape do
 
     CityScrape::CityManager.update_city_directory(state, city_entry, new_city_directory)
     FileUtils.rm_rf(cache_directory)
+
+    Scrapers::Common.prune_unused_images(state, city_entry)
   end
 
   def build_city_directory(search_engines, state, city_entry, openai_service, data_fetcher)

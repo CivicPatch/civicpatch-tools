@@ -1,9 +1,33 @@
 # frozen_string_literal: true
 
+require_relative "../tasks/city_scrape/city_manager"
+
 module Scrapers
   module Common
     def self.missing_contact_info?(person)
       person["email"].blank? && person["phone"].blank?
+    end
+
+    def self.prune_unused_images(state, city_entry)
+      # Get list of all images in the data/us/<state> directory
+      city_path = CityScrape::CityManager.get_city_path(state, city_entry)
+      all_images = Dir.glob(File.join(city_path, "images", "*"))
+
+      puts "All images: #{all_images.size}"
+      # Get list of all images in the data/us/<state>/<city> directory
+      images_in_use = []
+      city_directory = CityScrape::CityManager.get_city_directory(state, city_entry)
+      city_directory["people"].each do |person|
+        images_in_use << File.join(city_path, person["image"]) if person["image"].present?
+      end
+      puts "Images in use: #{images_in_use.size}"
+      puts "in use: #{images_in_use.join("\n")}"
+      puts "unused: #{all_images - images_in_use}"
+
+      # Delete all images that are not in use
+      all_images.each do |image|
+        File.delete(image) unless images_in_use.include?(image)
+      end
     end
 
     def self.fetch_places_from_wikipedia(state, title)
