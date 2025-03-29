@@ -32,13 +32,14 @@ module Services
 
       # filter out invalid people
       response["people"] = response["people"].select do |person|
-        person["name"].present? &&
+        Scrapers::Standard.valid_name?(person["name"]) &&
           (person["position"].present? || person["position_misc"].present?) &&
           (person["phone_number"].present? || person["email"].present? || person["website"].present?)
       end
 
-      response["people"].map do |person|
-        Scrapers::Standard.format_person(person)
+      response["people"] = response["people"].map do |person|
+        person = Scrapers::Standard.format_person(person)
+        person
       end
 
       response
@@ -53,7 +54,7 @@ module Services
         - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
         - position_misc (An array of strings, if available)
         - phone_number
-        - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with image/)
+        - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
         - email
 
       Notes: 
@@ -77,6 +78,7 @@ module Services
         Input: "city clerk" → Output: `{ type: "role", value: "city clerk" }`
         Input: "position 5" → Output: `{ type: "position", value: "5" }`
         Input: "seat 5" → Output: `{ type: "seat", value: "5" }`
+        Input: "council vice president" → Output: `{ type: "role", value: "council vice president" }`
       INSTRUCTIONS
 
       user_instructions = <<~USER
@@ -122,7 +124,7 @@ module Services
               - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
               - position_misc (An array of strings, if available)
               - phone_number
-              - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL.)
+              - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
               - email
               - website (Provide the absolute URL.)
                 If no specific website is provided, leave this empty — do not default to the general city or council page.)
