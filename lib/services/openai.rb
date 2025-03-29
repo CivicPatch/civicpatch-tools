@@ -25,7 +25,6 @@ module Services
         { role: "user", content: user_instructions }
       ]
       response_yaml = run_prompt(messages)
-
       response = response_to_yaml(response_yaml)
 
       return response if response["error"].present?
@@ -56,14 +55,15 @@ module Services
         - phone_number
         - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
         - email
-        - start_term_date (The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-        - end_term_date (The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+        - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+        - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
       Notes: 
       - Return the results in YAML format.
       - If the content is not a person, YAML with the key "error" and the value "Not a person".
       - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
         can be directly inferred with certainty—do not assume or estimate missing information.
+      - start_term_date and end_term_date should be strings.
       - For "position_misc", convert the following ambiguous position titles into a structured YAML format. 
         Preserve non-numeric names as they are.
         For titles like "city attorney" or "city clerk",
@@ -96,6 +96,7 @@ module Services
       ]
 
       response = run_prompt(messages)
+
       response = response_to_yaml(response)
 
       # TODO: handle errors
@@ -113,7 +114,9 @@ module Services
                        response_content
                      end
 
-      YAML.load(yaml_content)
+      YAML.safe_load(yaml_content,
+                     permitted_classes: [],
+      )
     end
 
     def generate_city_info_prompt(content, city_council_url)
@@ -132,8 +135,8 @@ module Services
               - email
               - website (Provide the absolute URL.)
                 If no specific website is provided, leave this empty — do not default to the general city or council page.)
-              - start_term_date (The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-              - end_term_date (The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+              - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+              - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
         Basic rules:
         - Youth council members are NOT city council members.
@@ -146,6 +149,7 @@ module Services
         - To make it on the people list, they must be associated with either "position" OR "position_misc)
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
+          They should be strings.
         - For "position_misc", convert the following ambiguous position titles into a structured YAML format.
           Preserve non-numeric names as they are. 
           For titles like "city attorney" or "city clerk", 
@@ -188,6 +192,8 @@ module Services
             image: "images/mayor.jpg"
             email: "mayor@cityofexample.gov"
             website: "https://www.cityofexample.gov/mayor"
+            start_term_date: "2020-01-01"
+            end_term_date: "2025-12-31"
             position_misc:
               - type: "role"
                 value: "city_attorney"

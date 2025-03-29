@@ -22,8 +22,6 @@ module CityScrape
 
         next existing_person unless person_info.present? && person_info.is_a?(Hash)
 
-        puts "Found new info on #{existing_person["website"]}: #{person_info.to_yaml}"
-
         merged_person = existing_person.dup
         merged_person["phone_number"] = existing_person["phone_number"] || person_info["phone_number"]
         merged_person["email"] = existing_person["email"] || person_info["email"]
