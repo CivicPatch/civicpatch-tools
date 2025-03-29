@@ -117,7 +117,11 @@ jobs:
       - name: Commit additional city info (if needed)
         run: |
           git add .
-          git commit -m "Populate city info -- additional info -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Populate city info -- additional info -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
