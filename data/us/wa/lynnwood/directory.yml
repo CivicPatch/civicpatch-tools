@@ -1,0 +1,55 @@
+---
+people:
+- name: Christine Frizzell
+  position: mayor
+  image: images/00267d46f286b6b4fb6e69a99d5c670340079ddbbea793ab8e9f2b0eb08e8d63.png
+  website: https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell
+- name: Robert Leutwyler
+  position: council_member
+  image: images/8d102b202602f4db6f7b89c8c77b0c0b72ad5b27f8d8cd280be3c57d7e18c88c.jpg
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Robert-Leutwyler
+- name: Derica Escamilla
+  position: council_member
+  position_misc:
+  - type: position
+    value: '1'
+  image: images/97af0dc9cb3654398f904b8e957ddbc530c5dcd1d18ed4323b1deb8003dbb33f.jpeg
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Council-Member-Escamilla
+- name: Patrick Decker
+  position: council_member
+  position_misc:
+  - type: position
+    value: '2'
+  image: images/2a7b336eac833c30e14fb1ae88f66e59c129af2170b25e85f3707243a8f30bf7.jpg
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Decker-new-format
+- name: Josh Binda
+  position: council_member
+  position_misc:
+  - type: position
+    value: '3'
+  image: images/92f93e92fb9dff72bd65889730961df8be8ea14a41317475fd81f388d7eea765.png
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Binda-new-format
+- name: Nick Coelho
+  position: council_member
+  position_misc:
+  - type: position
+    value: '4'
+  image: images/7d03936dd9414a97dea65a66bec9599a8cedcee2b6bd22cd9ed874efcebb9040.jpg
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Coelho-new-format
+- name: George Hurst
+  position: council_member
+  position_misc:
+  - type: position
+    value: '6'
+  image: images/6be6edea3121bb6a04bbd0db11c24f7ff40ce9b6855eb4f0903c855fd434ae7d.jpg
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format
+- name: David Parshall
+  position: council_member
+  position_misc:
+  - type: position
+    value: '7'
+  image: images/3e32e079e37d9033d58714af7fcf9c79370133825e846a855f8461cc5cb04e2c.jpg
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Parshall-new-format
+sources:
+- https://www.lynnwoodwa.gov/Government/City-Council
+- https://www.lynnwoodwa.gov/Government
