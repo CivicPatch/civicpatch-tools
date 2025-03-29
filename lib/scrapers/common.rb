@@ -13,16 +13,12 @@ module Scrapers
       city_path = CityScrape::CityManager.get_city_path(state, city_entry)
       all_images = Dir.glob(File.join(city_path, "images", "*"))
 
-      puts "All images: #{all_images.size}"
       # Get list of all images in the data/us/<state>/<city> directory
       images_in_use = []
       city_directory = CityScrape::CityManager.get_city_directory(state, city_entry)
       city_directory["people"].each do |person|
         images_in_use << File.join(city_path, person["image"]) if person["image"].present?
       end
-      puts "Images in use: #{images_in_use.size}"
-      puts "in use: #{images_in_use.join("\n")}"
-      puts "unused: #{all_images - images_in_use}"
 
       # Delete all images that are not in use
       all_images.each do |image|

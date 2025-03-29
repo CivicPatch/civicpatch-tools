@@ -28,6 +28,8 @@ module CityScrape
         merged_person["phone_number"] = existing_person["phone_number"] || person_info["phone_number"]
         merged_person["email"] = existing_person["email"] || person_info["email"]
         merged_person["image"] = existing_person["image"] || person_info["image"]
+        merged_person["start_term_date"] = existing_person["start_term_date"] || person_info["start_term_date"]
+        merged_person["end_term_date"] = existing_person["end_term_date"] || person_info["end_term_date"]
 
         city_data["sources"] << existing_person["website"]
         merged_person
