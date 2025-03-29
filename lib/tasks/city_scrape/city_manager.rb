@@ -10,20 +10,19 @@ module CityScrape
     }.freeze
 
     KEYWORD_GROUPS = {
-      "council_members" => ["index",
-                            "mayor and city council",
+      "council_members" => ["mayor and city council",
                             "meet the council",
                             "city council members",
+                            "council districts",
                             "council members",
                             "councilmembers",
                             "city council",
-                            "government",
                             "council"],
-      "city_leaders" => ["index",
-                         "meet the mayor",
+      "city_leaders" => ["meet the mayor",
                          "about the mayor",
                          "mayor",
-                         "council president"]
+                         "council president"],
+      "common" => ["index", "government"]
     }.freeze
 
     # Might want to add more checks here

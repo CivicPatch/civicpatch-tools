@@ -56,10 +56,14 @@ module Services
         - phone_number
         - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
         - email
+        - start_term_date (The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+        - end_term_date (The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
       Notes: 
       - Return the results in YAML format.
       - If the content is not a person, YAML with the key "error" and the value "Not a person".
+      - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
+        can be directly inferred with certainty—do not assume or estimate missing information.
       - For "position_misc", convert the following ambiguous position titles into a structured YAML format. 
         Preserve non-numeric names as they are.
         For titles like "city attorney" or "city clerk",
@@ -128,6 +132,8 @@ module Services
               - email
               - website (Provide the absolute URL.)
                 If no specific website is provided, leave this empty — do not default to the general city or council page.)
+              - start_term_date (The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+              - end_term_date (The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
         Basic rules:
         - Youth council members are NOT city council members.
@@ -138,7 +144,9 @@ module Services
         - If you cannot find any relevant information, return the following YAML:
           - error: "No relevant information found"
         - To make it on the people list, they must be associated with either "position" OR "position_misc)
-        - For "position_misc", convert the following ambiguous position titles into a structured YAML format. 
+        - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
+          can be directly inferred with certainty—do not assume or estimate missing information.
+        - For "position_misc", convert the following ambiguous position titles into a structured YAML format.
           Preserve non-numeric names as they are. 
           For titles like "city attorney" or "city clerk", 
           categorize them under `type: "role"` with the role name as the value.
