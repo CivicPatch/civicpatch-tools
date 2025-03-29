@@ -227,6 +227,7 @@ places:
   fips: 53-61115
   gnis: '2411772'
   population: 67455
+  last_member_info_scrape_run: '2025-03-29'
 - website: https://www.cityoflakewood.us
   last_city_scrape_run: '2025-03-23'
   name: lakewood
