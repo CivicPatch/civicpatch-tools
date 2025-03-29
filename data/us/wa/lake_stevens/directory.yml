@@ -1,0 +1,81 @@
+---
+people:
+- name: Kim Daughtry
+  position: council_member
+  position_misc:
+  - type: position
+    value: '1'
+  phone_number: "(425) 407-3869"
+  image: images/c50d3a6ba76dbca73f0d3f9128f8708e9f9fe759750b292be3713f7cfcaee2bc
+  email: kdaughtry@lakestevenswa.gov
+  website: http://lakestevenswa.gov/directory.aspx?EID=31
+- name: Gary Petershagen
+  position: council_member
+  position_misc:
+  - type: position
+    value: '2'
+  phone_number: "(425) 407-3327"
+  email: gpetershagen@lakestevenswa.gov
+  website: http://lakestevenswa.gov/directory.aspx?EID=57
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+- name: Ryan Donoghue
+  position: council_member
+  position_misc:
+  - type: position
+    value: '3'
+  phone_number: "(425) 903-6771"
+  email: rdonoghue@lakestevenswa.gov
+  website: http://lakestevenswa.gov/directory.aspx?EID=33
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+- name: Kymm Shipman
+  position: council_member
+  position_misc:
+  - type: position
+    value: '4'
+  phone_number: "(425) 870-1767"
+  email: kshipman@lakestevenswa.gov
+  website: http://lakestevenswa.gov/directory.aspx?EID=34
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+- name: Anji Jorstad
+  position: council_member
+  position_misc:
+  - type: position
+    value: '5'
+  phone_number: "(425) 407-3147"
+  email: ajorstad@lakestevenswa.gov
+  website: http://lakestevenswa.gov/directory.aspx?EID=35
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+- name: Steve Ewing
+  position: council_member
+  position_misc:
+  - type: position
+    value: '6'
+  phone_number: "(425) 530-6832"
+  email: sewing@lakestevenswa.gov
+  website: http://lakestevenswa.gov/directory.aspx?EID=32
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+- name: Marcus Tageant
+  position: council_member
+  position_misc:
+  - type: position
+    value: '7'
+  phone_number: "(425) 407-3880"
+  email: mtageant@lakestevenswa.gov
+  website: http://lakestevenswa.gov/directory.aspx?EID=37
+  image: images/c499973acbcd257477070a68ff651b41c9da936f489debcdfa768da9ed966295
+- name: Kelly M. Chelin
+  position: city_clerk
+  image: images/47bb3fad775d58fd69465e7d4813b586385326dfd7097d096e46c7066ff9bcfe
+  email: deputyclerk@lakestevenswa.gov
+- name: Caitlin Weaver
+  position: city_clerk
+  position_misc:
+  - type: role
+    value: executive_assistant
+  image: images/0d00b92bba9f70757feb5641785638268680bcb72754b0e87c5e370331762c8b
+  email: cweaver@lakestevenswa.gov
+sources:
+- http://lakestevenswa.gov/Directory.aspx?DID=10
+- https://www.lakestevenswa.gov/Directory.aspx?did=10
+- https://www.lakestevenswa.gov/67/Municipal-Services-Division-City-Clerk
+- https://www.lakestevenswa.gov/320/Council-Members
