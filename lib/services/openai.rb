@@ -50,15 +50,15 @@ module Services
         You are an expert data extractor.
         Extract the following properties from the provided content
         - name
-        - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
-        - position_misc (An array of strings, if available)
-        - phone_number
         - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+        - phone_number
         - email
+        - position (Strictly mayor, council_president, council_manager, or council_member. Leave blank if not found)
+        - position_misc (An array of strings, if available)
         - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
         - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
-      Notes: 
+      Notes:
       - Return the results in YAML format.
       - If the content is not a person, YAML with the key "error" and the value "Not a person".
       - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
@@ -128,15 +128,15 @@ module Services
         For each city leader or council member (leave empty if not found):
           - people:
               - name
+              - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+              - phone_number
+              - email
               - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
               - position_misc (An array of strings, if available)
-              - phone_number
-              - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-              - email
-              - website (Provide the absolute URL.)
-                If no specific website is provided, leave this empty — do not default to the general city or council page.)
               - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
               - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+              - website (Provide the absolute URL.)
+                If no specific website is provided, leave this empty — do not default to the general city or council page.)
 
         Basic rules:
         - Youth council members are NOT city council members.
@@ -220,7 +220,6 @@ module Services
       response = @client.chat(
         parameters: {
           model: "gpt-4o-mini",
-          # model: "gpt-3.5-turbo",
           messages: messages,
           temperature: 0.0
         }

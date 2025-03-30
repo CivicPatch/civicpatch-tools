@@ -122,7 +122,13 @@ module CityScrape
         name_key = full_name.call(person)
         if people_hash[name_key]
           # Merge properties if the person already exists, prefer properties from the first list unless the first list is empty
-          people_hash[name_key].merge!(person) { |_key, old_val, new_val| old_val.present? ? old_val : new_val }
+          people_hash[name_key].merge!(person) do |_key, old_val, new_val|
+            if old_val.is_a?(Array) && new_val.is_a?(Array)
+              (old_val + new_val).uniq
+            else
+              old_val.present? ? old_val : new_val
+            end
+          end
         else
           people_hash[name_key] = person.dup
         end
