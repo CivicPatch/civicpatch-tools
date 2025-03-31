@@ -1,0 +1,250 @@
+---
+people:
+- name: Angela Birney
+  image: images/8e013bad43ac1cb5c18dff4a47b4d8e306bc2c74bccd5a02288ead13cb1b9e5a
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 556-2900"
+    label: Phone
+  - note:
+    type: email
+    value: https://www.redmond.gov/cdn-cgi/l/email-protection#8be6eaf2e4f9cbf9eeefe6e4e5efa5ece4fd
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/284/Office-of-the-Mayor
+    note:
+- name: Vanessa Kritzer
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 305-9892"
+    label: Phone
+  - note:
+    type: email
+    value: vkritzer@redmond.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.redmond.gov/directory.aspx?EID=886
+  other_names:
+  - note:
+    name: Council President
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 5
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/189/City-Council
+    note:
+  - url: https://www.redmond.gov/Directory.aspx?did=33
+    note:
+- name: Angie Nuevacamina
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 556-5846"
+    label: Phone
+  - note:
+    type: email
+    value: anuevacamina@redmond.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.redmond.gov/directory.aspx?EID=985
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 7
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/189/City-Council
+    note:
+  - url: https://www.redmond.gov/Directory.aspx?did=33
+    note:
+- name: Jeralee Anderson
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 588-1619"
+    label: Phone
+  - note:
+    type: email
+    value: janderson@redmond.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.redmond.gov/directory.aspx?EID=855
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 6
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/189/City-Council
+    note:
+  - url: https://www.redmond.gov/Directory.aspx?did=33
+    note:
+- name: Jessica Forsythe
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 305-7206"
+    label: Phone
+  - note:
+    type: email
+    value: jforsythe@redmond.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.redmond.gov/directory.aspx?EID=859
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Council Vice President
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 3
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/189/City-Council
+    note:
+  - url: https://www.redmond.gov/Directory.aspx?did=33
+    note:
+- name: Melissa Stuart
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 588-6550"
+    label: Phone
+  - note:
+    type: email
+    value: mstewart@redmond.gov
+    label: Email
+  - note:
+    type: phone
+    value: "(425) 556-2110"
+    label: Phone
+  - note:
+    type: email
+    value: mstuart@redmond.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.redmond.gov/directory.aspx?EID=940
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 4
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/189/City-Council
+    note:
+  - url: https://www.redmond.gov/Directory.aspx?did=33
+    note:
+- name: Osman Salahuddin
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 556-5845"
+    label: Phone
+  - note:
+    type: email
+    value: osalahuddin@redmond.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.redmond.gov/directory.aspx?EID=986
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 1
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/189/City-Council
+    note:
+  - url: https://www.redmond.gov/Directory.aspx?did=33
+    note:
+- name: Steve Fields
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 403-9476"
+    label: Phone
+  - note:
+    type: email
+    value: sfields@redmond.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.redmond.gov/directory.aspx?EID=858
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 2
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-03-31'
+  created_at: '2025-03-31'
+  sources:
+  - url: https://www.redmond.gov/189/City-Council
+    note:
+  - url: https://www.redmond.gov/Directory.aspx?did=33
+    note:

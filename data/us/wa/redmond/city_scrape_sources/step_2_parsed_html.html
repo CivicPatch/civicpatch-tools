@@ -1,0 +1,3058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+<!-- Google Tag Manager for GA4 -->
+				<pre class="script-content">&lt;script&gt;(function(w,d,s,l,i){w.GAMeasurementID='G-Z1EP9RSVKD';w[l]=w[l]||[];w[l].push({'gtm.start':
+				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+				j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+				})(window,document,'script','cpDataLayerGA4','GTM-K73C5PS');&lt;/script&gt;</pre>
+				<!-- End Google Tag Manager for GA4 -->
+				<pre class="script-content">&lt;script type="text/javascript"&gt;
+					var enableTelemetry = 'false'
+					var aiConfig = {
+					instrumentationKey: '1cde048e-3185-4906-aa46-c92a7312b60f'						
+					}
+					var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c.queue.push(function () { c[a].apply(c, b) }) } } var c = { config: a }, d = document, e = window; setTimeout(function () { var b = d.createElement('script'); b.src = a.url || 'https://az416426.vo.msecnd.net/scripts/a/ai.0.js', d.getElementsByTagName('script')[0].parentNode.appendChild(b) }); try { c.cookie = d.cookie } catch (a) { } c.queue = []; for (var f = ['Event', 'Exception', 'Metric', 'PageView', 'Trace', 'Dependency']; f.length;)b('track' + f.pop()); if (b('setAuthenticatedUserContext'), b('clearAuthenticatedUserContext'), b('startTrackEvent'), b('stopTrackEvent'), b('startTrackPage'), b('stopTrackPage'), b('flush'), !a.disableExceptionTracking) { f = 'onerror', b('_' + f); var g = e[f]; e[f] = function (a, b, d, e, h) { var i = g &amp;&amp; g(a, b, d, e, h); return !0 !== i &amp;&amp; c['_' + f](a, b, d, e, h), i } } return c }(aiConfig);
+					window.appInsights = appInsights, appInsights.queue &amp;&amp; 0 === appInsights.queue.length;
+					// Add telemetry initializer
+					appInsights.queue.push(function() {
+						appInsights.context.addTelemetryInitializer(function(envelope) {
+							var telemetryItem = envelope.data.baseData;
+							// To check the telemetry item’s type:
+							if (!false)
+							{
+								//If the telemetry is not enabled, we still want to capture Google map custom event, so only allow that
+								if (envelope.name.indexOf('.Event') == -1)
+									return false;
+							}
+						});
+					});						
+					appInsights.trackPageView();
+				&lt;/script&gt;</pre>
+	<pre class="script-content">&lt;script&gt;
+		function populateAntiForgery(token) {
+			var input = document.createElement("input");
+			input.name = "__RequestVerificationToken";
+			input.type = "hidden";
+			input.value = token;
+			var absPat = /^https?:\/\/|^\/\//i;
+			var forms = document.getElementsByTagName("form");
+			for (var i = 0; i &lt; forms.length; i++) {
+				if (forms[i].method == "post" &amp;&amp;
+					!forms[i].querySelector('[name="__RequestVerificationToken"]') &amp;&amp;
+					!absPat.test(forms[i].getAttribute("action"))) {
+					forms[i].appendChild(input.cloneNode());
+				}
+			}
+		}
+
+		function getAntiForgeryToken(callback, error) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/antiforgery");
+			xhr.addEventListener("load", function() {
+				try {
+					if (this.status !== 200) {
+						throw Error("Invalid status. Could not retrieve antiforgery token.");
+		}
+					var obj = JSON.parse(this.responseText);
+					callback(obj.token);
+				} catch (e) {
+					typeof error === "function" &amp;&amp; error(e);
+				}
+			});
+			xhr.send();
+		}
+
+		getAntiForgeryToken(function(token) {
+			if (document.readyState === "complete"
+				|| document.readyState === "loaded" 
+				|| document.readyState === "interactive") {
+				populateAntiForgery(token);
+				return;
+			}
+			document.addEventListener("DOMContentLoaded", function() {
+				populateAntiForgery(token);
+			}, false);
+		}, console.error);
+			&lt;/script&gt;</pre>
+			
+
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		window.departmentHeader = {};
+		window.pageSectionTracker = {};
+		window.isResponsiveEnabled = true;
+		window.isRemoveSetHeights= true;
+		if (window.isRemoveSetHeights) {
+			document.documentElement.className += ' removeSetHeights';
+		}
+		window.mainMenuMediaQuery = 'screen and (max-width: 40em)';
+		window.isMobileBrowserIncludingTablets = false;
+		window.fixedResponsiveMenu = false;
+		window.fullWidthResponsiveMenu = false;
+		window.responsiveMenuHeight = '';
+		window.responsiveMenuFontSize = '';
+		(function () {
+			window.setSizeCookie = function () {
+				document.cookie = "dpi=" + window.devicePixelRatio + "; path=/";
+				document.cookie = "viewportWidth=" + window.innerWidth + "; path=/";
+				document.cookie = "viewportHeight=" + window.innerHeight + "; path=/";
+				if (screen &amp;&amp; screen.width &amp;&amp; screen.height) {
+					document.cookie = "screenWidth=" + screen.width + "; path=/";
+					document.cookie = "screenHeight=" + screen.height + "; path=/";
+				}
+				document.cookie = "responsiveGhost=1; path=/";
+			};
+
+			setSizeCookie();
+		}());
+	&lt;/script&gt;</pre>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Favicon MetaTags -->
+<link rel="icon" type="image/png" sizes="192x192" href="/DocumentCenter/View/175">
+
+<link rel="icon" type="image/png" sizes="384x384" href="/DocumentCenter/View/176">
+<link rel="apple-touch-icon" sizes="120x120" href="/DocumentCenter/View/177">
+<link rel="icon" type="image/png" sizes="16x16" href="/DocumentCenter/View/178">
+<link rel="icon" type="image/png" sizes="32x32" href="/DocumentCenter/View/179">
+<meta rel="msapplication-config" content="/DocumentCenter/View/180">
+<link rel="icon" type="image/png" sizes="150x150" href="/DocumentCenter/View/180">
+<link rel="mask-icon" href="/DocumentCenter/View/182">
+<link rel="shortcut icon" href="/DocumentCenter/View/183">
+<link rel="manifest" href="/DocumentCenter/View/184">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<!-- End Favicon MetaTags -->
+
+<!-- Google Tag Manager -->
+<pre class="script-content">&lt;script&gt;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-W3ZVQQ8');&lt;/script&gt;</pre>
+<!-- End Google Tag Manager -->
+
+<meta name="facebook-domain-verification" content="zykgca4m6u5h2vgghdlb2cc4fx31so">
+	<meta name="category0" content="Home">
+<meta name="category1" content="Government">
+<meta name="category2" content="Office of the Mayor">
+
+	
+	<meta name="theme-color" content="rgb(44, 53, 62)">
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+		<title>Office of the Mayor | Redmond, WA</title>
+
+		<meta name="description" content="The Mayor is the executive leader of the City of Redmond.">
+		<meta name="keywords" content="Mayor,Mayor's office,Executive">
+			<pre class="script-content">&lt;script src="/Assets/Scripts/jQuery/jquery-2.2.4.min.js"&gt;&lt;/script&gt;</pre>
+	<pre class="script-content">&lt;script src="/Assets/Scripts/jQuery/jQuery-migrate-1.4.1.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+	
+
+	<!--[if IE 6]><script language="JavaScript" type="text/javascript"> var isie6 = true; </script><![endif]-->
+	<!--[if IE 7]><script language="JavaScript" type="text/javascript"> var isie7 = true; </script><![endif]-->
+	<!--[if IE 8]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<!--[if IE 9]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<pre class="script-content">&lt;script type="text/javascript"&gt;&lt;!--
+	var intCountryCode = 840;
+	var externalSiteDialogHeight = '390px';
+	var order = '';
+//--&gt;&lt;/script&gt;</pre>
+	
+<link href="/-1112318724.css" rel="stylesheet" type="text/css">	<link href="/-1426951830.css" rel="stylesheet" type="text/css">	<link href="/443268007.css" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" type="text/css" href="/Assets/Styles/Print.css" media="print">
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		window.Pages = window.Pages || {};
+		// FrontEnd RWD initialization
+		window.Pages.rwdReady = $.Deferred();
+		window.Pages.toolBarDeferred = $.Deferred();
+		window.Pages.rwdSetupComplete = $.Deferred();
+		window.Pages.megaMenuLoaded = $.Deferred();
+		window.Pages.angularToolbarComplete = $.Deferred();
+		window.Pages.frontEndToolbarComplete = $.Deferred();
+	&lt;/script&gt;</pre>
+	<!--CPHeadContent-->
+	<pre class="script-content">&lt;script src="/-1817544822.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+	
+	
+	
+	
+
+
+
+
+	<!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="/App_Themes/ie8.css"><![endif]-->
+	<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/App_Themes/ie7.css"><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/App_Themes/ie6.css"><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="/Scripts/html5.js"></script><![endif]-->
+
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		setEditorVariables(false, 840);
+		function getPrintPreviewType() { return 0; } function printPreview() {pPreview(getPrintPreviewType()); }
+	&lt;/script&gt;</pre>
+	<pre class="script-content">&lt;script src="/Assets/Scripts/AlpineJS/3.14.1/alpine.min.js" type="text/javascript" defer&gt;&lt;/script&gt;</pre>
+</head>
+<body class="wide hideContent">
+
+	<pre class="script-content">&lt;script&gt;jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') &amp;&amp; target.parents('.image').length &amp;&amp; target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs &gt; li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('&gt;');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" &amp;&amp; megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length &amp;&amp; megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length &amp;&amp; target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') &amp;&amp; target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});&lt;/script&gt;</pre>
+
+	<div id="fb-root"></div>
+<div id="skipToContentLinks">
+<a href="https://www.redmond.gov/284/Office-of-the-Mayor#ccb03e192a-bfc9-4325-9aeb-d94c6d08bde1" target="_self" class="skipToContentLink">Skip to Main Content</a>
+</div>
+	<form id="frmReferenceFormForTelerikEditorDialogs"></form>
+
+		<input type="hidden" id="GoogleMapsKey" value="AIzaSyDWUuE-ifkbhxblF920N8MjpBdTg1Wt784">
+
+
+
+	<input type="hidden" id="cpcDomain" value="https://cp-civicplusuniversity2.civicplus.com">
+	<input type="hidden" id="hdnStructureID" value="8">
+	<input type="hidden" id="hdnContentCollectionID" value="1b0a5abf-3e75-4b5a-b104-250ce0fb7894">
+	<input type="hidden" id="hdnWorkingCopyID" value="00000000-0000-0000-0000-000000000000">
+	<input type="hidden" id="hdnThemeID" value="54">
+	<input type="hidden" id="pageIsFrontEnd" value="true">
+	<input type="hidden" id="pageModuleID">
+	<input type="hidden" id="pagePageID" value="284">
+
+		<div id="stickyPlaceholder"></div>
+	<div id="outer-wrap" class="outer-wrap">
+		<div id="inner-wrap" class="inner-wrap">
+				<div id="divToolbars" class="cpToolbars newCP mui-fixed" style="">
+					
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700); 
+.alertText .customAlert {
+    color: #EAEAEA;
+    display: inline-block;
+    font-family: 'Open Sans Condensed', sans-serif; 
+    text-transform: uppercase;
+    font-weight: bold;
+    height: 27px;
+    left: 57px;
+    line-height: 27px;
+    overflow: hidden;
+    position: absolute;
+    top: 15px;
+    white-space: nowrap;
+    width: 268px;
+}
+</style>
+  <div id="1_divAlertBar" class="alertToolbar cpToolbar" style="background: #2C353E;">
+    <div id="1_divAlertToolbarInner" class="alertToolbarInner" style="font-size: 16px;">
+        <a href="https://www.redmond.gov/2241" id="1_lnkAlertText" class="alertText" style="border-right: 1px solid #000000;">
+            <img src="images/f4b5d2ae8474c05e5e31a78595368f26c24f59f2fc9a59746d10c354ab3ef3d9" id="1_imgDot" alt="Emergency Alert" class="redDot">
+            <span id="1_customAlert" class="customAlert">Info</span>
+        </a>
+        <span id="1_spnAlertContainer" class="alertContainer"><a href="https://www.redmond.gov/AlertCenter.aspx?AID=Immigration-Resources-78" target="_self" class="alert" style="border-left: 1px solid #635e65; border-right: 1px solid #000000;background: #222; color: #FFFFFF;">
+	Immigration Resources
+	<span style="color: #FFCE62; font-weight: bold;">Click for more information</span>
+</a>
+</span>
+    </div>
+  </div>
+  <div id="1_divAlertBarEmpty" class="alertBarEmpty"></div>
+  
+
+
+
+				</div>
+			<div id="bodyWrapper">
+				<div id="mainNavHolderMobile" class="mainNavHolderMobile"></div>
+				
+<div data-cprole="structuralContainer" id="bodyContainerTS">
+<div id="gbsAnchorTS"></div>
+<!-- <div data-cpRole="banner" id="banner3" class="fixedBannerTS"> --><!-- Header Container --><header data-cprole="structuralContainer" id="headerContainerTS"><div class="inner">
+<div class="siteWrap4"><div data-cprole="structuralContainer" id="flexHeader1TS" class="lyt-header lyt-flex lyt-flex-column lyt-justify-between lyt-align-center">
+<div data-cprole="structuralContainer" id="lyt-logo">
+<div data-cprole="banner" id="lyt-logo-inner" class="bannerLogoTS empty">
+
+
+
+
+				<a id="lyt-logo-inner-705" style="			display: block; text-align: center;
+" class="bannerObject" href="https://www.redmond.gov/284/Office-of-the-Mayor" target="_self"><img alt="Redmond Washington Homepage" class="bannerObject" height="156" src="images/1aeb64d48825ffeb8bafff60e719fe9cae11b424bce2a83cb4a81b81765c4abf" width="404"></a>
+</div>
+</div>
+<div data-cprole="structuralContainer" id="lyt-nav">
+<nav data-cprole="nav" id="mainNav" class="siteNav mainNav" aria-label="Main">
+<ol id="mainNavMenu" data-parent="1" class="rootNavMenu" role="menu">
+<!--
+--><li id="MainItem1678" class="topMenuItem" role="none" data-pageid="1678" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavNews" class="navMainItem mainNavItem mainNavItem1" href="https://www.redmond.gov/284/Office-of-the-Mayor" target="_self">   News </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem9" class="topMenuItem" role="none" data-pageid="9" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavIWantTo" class="navMainItem mainNavItem mainNavItem2" href="https://www.redmond.gov/9/I-Want-To" target="_self">   I Want To... </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem101" class="topMenuItem" role="none" data-pageid="101" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavCommunity" class="navMainItem mainNavItem mainNavItem3" href="https://www.redmond.gov/101/Community" target="_self">   Community </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem35" class="topMenuItem" role="none" data-pageid="35" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavBusiness" class="navMainItem mainNavItem mainNavItem4" href="https://www.redmond.gov/35/Business" target="_self">   Business </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem27" class="topMenuItem" role="none" data-pageid="27" data-displaymegamenu="True">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavGovernment" class="navMainItem mainNavItem mainNavItem5" href="https://www.redmond.gov/27/Government" target="_self">   Government </a>			<!--
+			--><!--
+			-->
+</li>
+<!---->
+</ol>
+
+
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		document.addEventListener('DOMContentLoaded',function () {
+					var menuID = 'mainNavMenu';
+					var menuType = MAIN_MENU;
+
+					//setup menu manager properties for main menu
+					if (!menuManager.mobileMainNav &amp;&amp; true)
+						menuManager.adjustMainItemsWidth('#' + menuID);
+					menuManager.isMainMenuEditable = false;
+					menuManager.mainMenuMaxSubMenuLevels = 4;
+					menuManager.setMOMMode(2, menuType);
+
+					//Init main menu
+					var setupDraggable = menuManager.isMainMenuEditable;
+					var urlToGetHiddenMenus = '/Pages/MenuMain/HiddenMainSubMenus?pageID=1&amp;moduleID=&amp;themeID=54&amp;menuContainerID=mainNav';
+
+					menuManager.setupMenu(menuID, 'mainNav', menuType, setupDraggable, urlToGetHiddenMenus);
+					menuManager.mainMenuInit = true;
+					menuManager.mainMenuTextResizer = true;
+					if (1.00 &gt; 0)
+						menuManager.mainMenuTextResizerRatio = 1.00;
+					if (window.isResponsiveEnabled)
+						menuManager.mainMenuReady.resolve();
+
+		});
+	&lt;/script&gt;</pre>
+
+
+<aside data-cprole="megaMenu" id="megaMenu" class="megaMenu" style="display: none;"><input type="hidden" id="megaMenuPopupDirection" value="0"><input type="hidden" id="megaMenuWidthReference" value="1"><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu1678" class="contentTop mainNavMegaMenu megaMenuContainer pageID_1678 hidden" data-orientation="horizontal">	<div id="cc7764aa07-924e-42ab-81fb-3d0b3e27c3c2" data-containerid="7764aa07-924e-42ab-81fb-3d0b3e27c3c2" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu9" class="contentTop mainNavMegaMenu megaMenuContainer pageID_9 hidden" data-orientation="horizontal">	<div id="cc94688f67-29d8-4e48-be27-c0d376f504c2" data-containerid="94688f67-29d8-4e48-be27-c0d376f504c2" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu101" class="contentTop mainNavMegaMenu megaMenuContainer pageID_101 hidden" data-orientation="horizontal">	<div id="ccee3228b0-a648-4124-9aba-619cb92b73e6" data-containerid="ee3228b0-a648-4124-9aba-619cb92b73e6" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu35" class="contentTop mainNavMegaMenu megaMenuContainer pageID_35 hidden" data-orientation="horizontal">	<div id="ccb442cb9b-bc57-4b31-9501-663cde086977" data-containerid="b442cb9b-bc57-4b31-9501-663cde086977" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu27" class="contentTop mainNavMegaMenu megaMenuContainer pageID_27 hidden" data-orientation="horizontal">	<div id="cc5793a840-8fe8-4d26-b1ef-5bf4bb77dcc1" data-containerid="5793a840-8fe8-4d26-b1ef-5bf4bb77dcc1" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside></aside></nav>
+</div>
+<div data-cprole="structuralContainer" id="lyt-search">
+<div data-cprole="contentContainer" id="lyt-search-inner">	<div id="cc057de2f4-b9a2-4abc-952e-5264b19957ed" data-containerid="057de2f4-b9a2-4abc-952e-5264b19957ed" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="25e2d6fc-5425-481f-97cd-416dc820f6ca">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last id5a06ce50-6dbb-4bb8-a519-ba254076af01" style="" data-widgetcontainerid="5a06ce50-6dbb-4bb8-a519-ba254076af01">	
+ 
+	<div data-widget-id="ad320802-7b02-4f55-a895-2cd190db8563" data-modulename="customHtml" id="widgetCustomHtmlad320802-7b02-4f55-a895-2cd190db8563" class="widget widgetCustomHtml skin80 narrow">
+	<div class="widgetBody pageStyles" id="widgetBodyad320802-7b02-4f55-a895-2cd190db8563">
+		<div id="customHtmlad320802-7b02-4f55-a895-2cd190db8563"><div>
+<style>
+.pageStyles td.gsc-search-button,
+.pageStyles td.gsc-input, 
+.pageStyles td.gsib_a, 
+.pageStyles td.gsib_b, 
+.pageStyles th.gsc-search-button,
+form.gsc-search-box table {
+background-color: transparent;
+}
+
+form.gsc-search-box {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    width: 100%;
+    color: #656565;
+    background-color: rgba(255,255,255,1);
+border: 2px solid #2C353E;
+    font-family: Lato;
+    font-weight: normal;
+    font-size: 1.2em;
+}
+
+td#gs_tti50 {
+    padding-left: 1em;
+}
+
+.gsc-input-box {
+    border: none;
+    background: none;
+}
+
+.gsst_a .gscb_a {
+    color: #656565;
+}
+
+td.gsc-search-button {
+    padding-right: 1em;
+}
+
+td.gsc-input {
+    padding: 0px;
+    height:60px
+}
+
+
+</style>
+
+<pre class="script-content">&lt;script async="" src="https://cse.google.com/cse.js?cx=001121890526140639040:zh3by1d9q84"&gt;&lt;/script&gt;</pre>
+<div class="gcse-searchbox-only"></div>
+</div></div>
+	</div>
+	</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+</div>
+</div></div>
+</div>
+</header><!-- Banner --><div data-cprole="structuralContainer" id="bannerContainerTS" class="noOverflowTS">
+<div data-cprole="banner" id="banner1">
+<div data-cprole="structuralContainer" id="bannerSizingTS">
+<div data-cprole="structuralContainer" id="bannerContentTS">
+<div class="siteWrap4"><div data-cprole="contentContainer" id="contentTS">	<div id="cc2ebc10a7-6e1a-4ca1-8837-d7a72aab601d" data-containerid="2ebc10a7-6e1a-4ca1-8837-d7a72aab601d" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</div></div>
+</div>
+</div>
+
+
+
+
+		<div id="bannerImagesJSON704" class="hidden"></div>
+		<div id="bannerSlideshowControls_banner1" class="bannerSlideshowControlsNew none " style="display:none">
+			<a id="arrowPrev_banner1" tabindex="0" class="arrowNew prev" aria-label="Banner Arrow Previous"><svg style=" " class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowLeft"></use></svg></a>
+			<a id="arrowNext_banner1" tabindex="0" class="arrowNew next" aria-label="Banner Arrow Next"><svg style=" " class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowRight"></use></svg></a>
+		</div>
+			<pre class="script-content">&lt;script type="text/javascript"&gt;
+				$(window).on("load", function () {
+					$.when(window.Pages.rwdSetupComplete)
+						.done(function () {
+							renderExternalBannerSlideshow('banner1',
+								{"BannerOptionID":704,"ThemeID":54,"SlotName":"banner1","Name":"Default","IsDefault":true,"BannerMode":2,"SlideShowSlideTiming":"5","SlideshowTransition":0,"SlideShowTransitionTiming":"1","ImageScale":true,"ImageAlignment":1,"ImageScroll":true,"MuteSound":true,"VideoType":0,"Status":40,"SlideshowControlsPosition":0,"SlideshowControlsAlignment":0,"SlideshowBannerControlsColorScheme":0,"DisplayVideoPauseButton":false,"VideoPauseButtonAlignment":1,"VideoPauseButtonControlsAlignment":0,"VideoPauseButtonStyle":"#FFFFFF","VideoPauseButtonBackgroundStyle":"#000000","VideoPauseButtonAlignmentClass":"alignRight viewport","DisplaySlideshowPauseButton":false,"SlideshowControlsColor":"#FFFFFF","SlideshowControlsBackgroundColor":"#000000","SlideshowPauseButtonClass":"isHidden","BannerImages":[{"BannerImageID":945,"BannerOptionID":704,"FileName":"/ImageRepository/Document?documentID=36208","Height":300,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":1,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":946,"BannerOptionID":704,"FileName":"/ImageRepository/Document?documentID=36209","Height":300,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":2,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":947,"BannerOptionID":704,"FileName":"/ImageRepository/Document?documentID=36210","Height":300,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":3,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":948,"BannerOptionID":704,"FileName":"/ImageRepository/Document?documentID=36211","Height":300,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":4,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""}],"BannerVideos":[{"BannerVideoID":13,"BannerOptionID":704,"VideoFileName":"","ImageFileName":"EmptyBannerBkg202501220741249373.png","IsLink":false,"LinkAddress":null,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","VideoFileID":"00000000-0000-0000-0000-000000000000","ImageFileID":"00000000-0000-0000-0000-000000000000","VideoWidth":0,"VideoHeight":0,"ImageWidth":0,"ImageHeight":0,"LinkedVideoUrl":"","RecordStatus":0,"AltText":null}],"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/"},
+								'/App_Themes/2025 - Interior/Images/',
+								'Rotating');
+						});
+				});
+			&lt;/script&gt;</pre>
+
+</div>
+</div>
+<!-- GBs --><div data-cprole="structuralContainer" id="gbsContainerTS" class="fixedTopTS" data-attach="gbsAnchorTS">
+<div class="siteWrap2"><div data-cprole="contentContainer" id="gbsTS">	<div id="cc72e39fb7-0fa9-4ebe-95f9-b819e256c606" data-containerid="72e39fb7-0fa9-4ebe-95f9-b819e256c606" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="35">
+				                
+
+
+
+	</div>
+</div></div>
+</div>
+<main data-cprole="structuralContainer" id="mainSectionTS">
+<!-- Content container --><div data-cprole="structuralContainer" id="mainContainerTS">
+<div class="siteWrap3"><div data-cprole="structuralContainer" id="mainWrapTS" class="mainWrap lyt-flex lyt-flex-column">
+<div data-cprole="structuralContainer" id="siteSidebarTS" class="siteSidebar left-nav-decoration">
+<aside data-cprole="contentContainer" id="sidebarContainer1TS">	<div id="cc14316844-6038-4bc7-9436-7e7b2c05dc2c" data-containerid="14316844-6038-4bc7-9436-7e7b2c05dc2c" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><nav data-cprole="nav" id="secondaryNav" class="siteNav secondaryNav" aria-label="Secondary">
+
+
+
+
+
+	<ol role="menu" id="secondaryMenusecondaryNav" data-parent="284" class="rootNavMenu accordionNav">
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem1655" data-pageid="1655">
+		<div class="accordionNavItem">
+			<a href="https://www.redmond.gov/284/Office-of-the-Mayor#bio" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Biography</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem2012" data-pageid="2012">
+		<div class="accordionNavItem">
+			<a href="https://www.redmond.gov/2012/Proclamation-Requests" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Proclamation Requests</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem1654" data-pageid="1654">
+		<div class="accordionNavItem">
+			<a href="https://www.youtube.com/playlist?list=PL1T0anc-kzY9I5wnenKtAJ0ANcFJD0g4D" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Videos</a>
+		</div>
+			</li>
+
+	</ol>
+
+
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		window.addEventListener('load', function () {
+			//setup menu manager properties for secondary menu
+			menuManager.isSideMenuEditable = false;
+			menuManager.sideMenuMaxSubMenuLevels = 4;
+			menuManager.sideMenuHasCustomLinks = false;
+		});
+	&lt;/script&gt;</pre>
+
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		window.addEventListener('load', function () {
+			$('*[id^="SideItem"]').each(function () {
+				var ids = $('[id="' + this.id + '"]');
+				if (ids.length &gt; 1)
+					$.each(ids, function (index, value) {
+						value.id = value.id + '_' + index;
+					});
+			});
+
+			$('.hasAccordionChildren .openAccordionNav').click(function (e) {
+				e.preventDefault();
+				showHideAccordionMenuForSecondaryNav($(this));
+			});
+
+			$("#secondaryNav .grippy").each(function () {
+				menuManager.setupDraggableElement($(this), SIDE_MENU, '#secondaryNav');
+			});
+
+			$("#secondaryNav li").each(function () {
+				menuManager.setupDroppableAccordionElement($(this), SIDE_MENU);
+			});
+		});
+	&lt;/script&gt;</pre>
+
+
+
+</nav><aside data-cprole="contentContainer" id="sidebarContainer2TS">	<div id="cc94ef9f31-1014-4481-ad47-e45d84cd8356" data-containerid="94ef9f31-1014-4481-ad47-e45d84cd8356" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div>
+<div data-cprole="structuralContainer" id="outerContentWrapTS" class="outerContentWrap lyt-flex lyt-flex-column">
+<div data-cprole="structuralContainer" id="contentWrapTS" class="contentWrap">
+<div data-cprole="breadCrumbs" id="breadCrumbs" class="breadCrumbContainer">		<ol class="semanticList breadCrumbs">
+			<li><a class="breadCrumb" href="https://www.redmond.gov/284/Office-of-the-Mayor">Home</a></li>
+<li><a class="breadCrumb" href="https://www.redmond.gov/27/Government">Government</a></li>
+<li id="currentBCPage" data-pageid="284">Office of the Mayor</li>
+		</ol>
+
+	   
+    
+</div>
+<div data-cprole="mainContentContainer" id="moduleContent">
+	
+	<div id="page" class="moduleContentNew">
+		
+
+	<input id="hdnPageID" name="hdnPageID" type="hidden" value="284">
+	<input id="hdnParentID" name="hdnParentID" type="hidden" value="27">
+	<input id="hdnVersionID" name="hdnVersionID" type="hidden" value="37049">
+	<input id="pageMenuTitle" name="pageMenuTitle" type="hidden" value="Office of the Mayor">
+	<input id="pageShowFeatureColumn" name="pageShowFeatureColumn" type="hidden" value="True">
+	<input id="hdnIsLayoutPage" name="hdnIsLayoutPage" type="hidden" value="False">
+	<input id="hdnPageStatus" name="hdnPageStatus" type="hidden" value="Published">
+
+				<h1 id="versionHeadLine" class="headline">
+
+Office of the Mayor		</h1>
+	
+		<div id="ccb03e192a-bfc9-4325-9aeb-d94c6d08bde1" data-containerid="b03e192a-bfc9-4325-9aeb-d94c6d08bde1" class="pageContent cpGrid cpGrid24">
+			
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="8ef08a4a-d119-48af-bd47-8742af62c7b9">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last id3fad8d42-afcb-424a-8dc4-67ca8223d58f" style="" data-widgetcontainerid="3fad8d42-afcb-424a-8dc4-67ca8223d58f">	
+
+	<div class="widget slideShow  skin73" role="region" aria-label="Slideshow" id="slideshow4e649618-3854-413b-b5d4-f5ddbf515d12" aria-haspopup="false" data-widgetid="4e649618-3854-413b-b5d4-f5ddbf515d12">
+		<input type="hidden" class="slideTiming" value="5">
+		<input type="hidden" class="transitionTiming" value="1">
+	<input type="hidden" class="hdnSlideshowUniqueID" value="3664">
+		<div id="divSlideshow3664" class="cpSlideshow widgetBody cpSlideshowJS3664 narrow">
+			<link href="/Assets/Styles/PausePlay/PausePlay.css" rel="stylesheet">
+<pre class="script-content">&lt;script src="/-338529955.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+	<div class="cpWindow cpWindowJS3664 ">
+		<ol class="semanticList cpSlider fade cpSliderJS3664">
+					<li class="hidden" id="3664_26187" data-index="0" aria-hidden="true">
+
+
+							<img src="images/712f1897cee8b0bdac302e4ae5831c0e0c42277604f30c99d8c65976b1fccc5b" class="" alt="Mayor Birney at Coffee with Leaders" title="Mayor Birney at Coffee with Leaders" data-delayed-image="" style="height: 1px">
+
+							<div name="captionOverlay_3664" class="overlay  inset bottom itemCaption">
+
+								<div class="overlayInner">
+
+																			<p class="widgetDesc widgetItem">Mayor Birney was invited to participate in the inaugural Coffee with Leaders at Hoffman's Fine Cakes &amp; Pastries</p>
+								</div>
+							</div>
+										</li>
+					<li class="hidden" id="3664_26188" data-index="1" aria-hidden="true">
+
+
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-delay-load="/ImageRepository/Document?documentID=26936" class="" alt="Mayor Birney meets with Governor Inslee" title="Mayor Birney meets with Governor Inslee" data-delayed-image="" style="height: 1px">
+
+							<div name="captionOverlay_3664" class="overlay  inset bottom itemCaption">
+
+								<div class="overlayInner">
+
+																			<p class="widgetDesc widgetItem">Mayor Birney (5th from right) met with Governor Inslee (6th from right) and other Washington state Mayor’s today to discuss housing, homelessness, and public safety.</p>
+								</div>
+							</div>
+										</li>
+					<li class="hidden" id="3664_26189" data-index="2" aria-hidden="true">
+
+
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-delay-load="/ImageRepository/Document?documentID=25895" class="" alt="Mayor - Regional Leadership Award" title="Mayor - Regional Leadership Award" data-delayed-image="" style="height: 1px">
+
+							<div name="captionOverlay_3664" class="overlay  inset bottom itemCaption">
+
+								<div class="overlayInner">
+
+																			<p class="widgetDesc widgetItem">Randy Hodgins, Vice President Office of External Affairs, University of Washington (left) presents Mayor Birney with the Senator Scott White Regional Leadership award.</p>
+								</div>
+							</div>
+										</li>
+					<li class="hidden" id="3664_26190" data-index="3" aria-hidden="true">
+
+
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-delay-load="/ImageRepository/Document?documentID=24350" class="" alt="Mayor and Sound Transit CEO Brooke Belman" title="Mayor and Sound Transit CEO Brooke Belman" data-delayed-image="" style="height: 1px">
+
+							<div name="captionOverlay_3664" class="overlay  inset bottom itemCaption">
+
+								<div class="overlayInner">
+
+																			<p class="widgetDesc widgetItem">Mayor Birney (right) and Sound Transit CEO Brooke Belman.</p>
+								</div>
+							</div>
+										</li>
+					<li class="hidden" id="3664_26191" data-index="4" aria-hidden="true">
+
+
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-delay-load="/ImageRepository/Document?documentID=24324" class="" alt="Mayor at Youth4us 2nd annual Redmond Childrens Business Fair " title="Mayor at Youth4us 2nd annual Redmond Childrens Business Fair " data-delayed-image="" style="height: 1px">
+
+							<div name="captionOverlay_3664" class="overlay  inset bottom itemCaption">
+
+								<div class="overlayInner">
+
+																			<p class="widgetDesc widgetItem">Mayor Birney enjoyed meeting young entrepreneurs at the Youth4us 2nd annual Redmond Children's Business Fair in Downtown Park.</p>
+								</div>
+							</div>
+										</li>
+					<li class="hidden" id="3664_26192" data-index="5" aria-hidden="true">
+
+
+							<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-delay-load="/ImageRepository/Document?documentID=22005" class="" alt="Mayor Birney at the Lifesaving Awards Ceremony" title="Mayor Birney at the Lifesaving Awards Ceremony" data-delayed-image="" style="height: 1px">
+
+							<div name="captionOverlay_3664" class="overlay  inset bottom itemCaption">
+
+								<div class="overlayInner">
+
+																			<p class="widgetDesc widgetItem">Mayor Birney (center) at the life-saving awards ceremony recognizing Officers Scott Overman, Michael Barnes, Natalie D’Amico, and Sergeant Beau Collins for their lifesaving care of community members in 2021.</p>
+								</div>
+							</div>
+										</li>
+		</ol>
+				<div class="contentSlideshowControls">
+					<button class="arrowNew next nextJS3664 alwaysDisplayArrowNew " aria-label="Next Slide" style="" role="button" onclick="return false;">
+						<svg style="color:#fff; background:#000;" class="arrowNextPrevBackground arrowNextPrevBackgroundColor">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowRight"></use>
+						</svg>
+					</button>
+					<button class="arrowNew prev prevJS3664 alwaysDisplayArrowNew " aria-label="Previous Slide" style="" role="button" onclick="return false;">
+						<svg style="color:#fff; background:#000;" class="arrowNextPrevBackground arrowNextPrevBackgroundColor">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowLeft"></use>
+						</svg>
+					</button>
+				</div>
+
+
+	</div>
+	<div aria-live="polite" aria-atomic="true" class="liveRegionJS3664 visuallyhidden"></div>
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		// &lt;!--
+		var $1 = typeof $ == 'undefined' ? window.parent.$ : $;
+		$1(document).ready(function () {
+			new Slideshow().generate('3664','1','5',false,false,0);
+			$('#ssPlay-btn-3664').addClass('isHidden');
+		});
+		var $pages = typeof window.Pages == 'undefined' ? window.parent.Pages : window.Pages;
+		$1.when($pages.rwdReady).done(function () {
+			var divSlideshowID = 'divSlideshow3664';
+			var mediaQuerySize = 25;
+			if (mediaQuerySize == 0)
+				mediaQuerySize = 25; //default for not widget slide show
+			var mediaElementQuery = '#' + divSlideshowID + ':media(this-min-width:' + mediaQuerySize + 'em)';
+			var $cpMedia = typeof window.cpMedia == 'undefined' ? window.parent.cpMedia : window.cpMedia;
+			var $divSlideShow = $('#' + divSlideshowID);
+			var $arrows = $divSlideShow.find('a.arrow');
+			var $arrowsNew = $divSlideShow.find('a.arrowNew');
+			var $divExternalSlideshow = $('.bannerSlideshowControlsNew').last();
+			var $overlays = $(document.getElementsByName('captionOverlay_3664'));
+
+			if(window.isMobileBrowserIncludingTablets){
+				$overlays.each(function (overlay) {
+					$(overlay).removeClass('overlay')
+				});
+			}
+
+			$cpMedia.unregister(mediaElementQuery)
+				.register(mediaElementQuery,
+				{
+				deferSetup: false,
+				setup: function () {
+					cpMedia.diag('$(element).removeClass("wide"), mediaQuery: ' + mediaElementQuery);
+					$divSlideShow.removeClass('wide').addClass('narrow');
+						if ($divExternalSlideshow.length &gt; 0) {
+							$divExternalSlideshow.hide();
+						}
+					if ($arrows.length &gt; 0) {
+						$arrows.hide();
+						if (typeof ($$) !== 'undefined') {
+								$$('#' + divSlideshowID)
+									.on('swipeRight',
+										function (e, a) {
+								$arrows.filter('.prev').click();
+							});
+								$$('#' + divSlideshowID)
+									.on('swipeLeft',
+										function (e) {
+								$arrows.filter('.next').click();
+							});
+						}
+					}
+						if ($arrowsNew.length &gt; 0) {
+
+							if (!(true &amp;&amp; !window.isMobileBrowserIncludingTablets)) {
+							$arrowsNew.hide();
+							}
+							if (typeof ($$) !== 'undefined') {
+								$$('#' + divSlideshowID)
+									.on('swipeRight',
+										function (e, a) {
+											$arrowsNew.filter('.prev').click();
+										});
+								$$('#' + divSlideshowID)
+									.on('swipeLeft',
+										function (e) {
+											$arrowsNew.filter('.next').click();
+										});
+							}
+						}
+						if ($overlays.length &gt; 0 &amp;&amp; window.isMobileBrowserIncludingTablets) {
+							if (2 == 1) {
+								$overlays.hide();
+							} else if (2 == 2) {
+								$overlays.removeClass('overlay');
+							}
+						}
+				},
+				match: function () {
+					cpMedia.diag('$(element).addClass("wide"), mediaQuery: ' + mediaElementQuery);
+					$divSlideShow.addClass('wide').removeClass('narrow');
+					if ($divExternalSlideshow.length &gt; 0 &amp;&amp; !$divExternalSlideshow.hasClass('none')) {
+						$divExternalSlideshow.show();
+					}
+					if ($arrows.length &gt; 0) {
+						$arrows.show();
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).off('swipeRight');
+							$$('#' + divSlideshowID).off('swipeLeft');
+						}
+					}
+					if ($arrowsNew.length &gt; 0) {
+						$arrowsNew.show();
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).off('swipeRight');
+							$$('#' + divSlideshowID).off('swipeLeft');
+						}
+					}
+					if ($overlays.length &gt; 0) {
+						if (2 == 1) {
+							$overlays.show();
+					} else if (2 == 2 &amp;&amp; !window.isMobileBrowserIncludingTablets) {
+							$overlays.addClass('overlay');
+						}
+					}
+				},
+				unmatch: function () {
+					cpMedia.diag('$(element).removeClass("wide"), mediaQuery: ' + mediaElementQuery);
+					$divSlideShow.removeClass('wide').addClass('narrow');
+					if ($divExternalSlideshow.length &gt; 0) {
+						$divExternalSlideshow.hide();
+					}
+					if ($arrows.length &gt; 0) {
+						$arrows.hide();
+
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).on('swipeRight', function (e) {
+								$arrows.filter('.prev').click();
+							});
+							$$('#' + divSlideshowID).on('swipeLeft', function (e) {
+								$arrows.filter('.next').click();
+							});
+						}
+					}
+					if ($arrowsNew.length &gt; 0) {
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).on('swipeRight', function (e) {
+								$arrowsNew.filter('.prev').click();
+							});
+							$$('#' + divSlideshowID).on('swipeLeft', function (e) {
+								$arrowsNew.filter('.next').click();
+							});
+						}
+					}
+					if ($overlays.length &gt; 0 &amp;&amp; window.isMobileBrowserIncludingTablets) {
+						if (2 == 1) {
+							$overlays.hide();
+						} else if (2 == 2) {
+							$overlays.removeClass('overlay');
+						}
+					}
+				}
+			});
+		});
+		// --&gt;
+	&lt;/script&gt;</pre>
+
+
+		</div>	
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	(function () {
+		const widgetHandlers = function (e) {
+			$('.slideshowOptions.nonEmpty').unbind('click').click(function (e) {
+				var $this = $(this);
+				// If the parent is a slider we need to tweak our "this" reference to refer to the options handle. 
+				// This came about, because we needed to use slider images to trigger options. - JE
+				if ($this.parent().hasClass('cpSlider')) {
+					$this = $this.closest('.widget.slideShow').siblings('.handle.options');
+				}
+
+				//Set values for global variables for slideshow.
+				if ($this.attr('data-widgetID').length !== 0) {
+					parentID_Slideshow = 'slideshow' + $this.attr('data-widgetID');
+				}
+				callbackfnSlideshowSave = null;
+				var pageID = ContentCollectionInstance.PageID;
+				var moduleID = ContentCollectionInstance.ModuleID;
+				var qs = '?pageID=' + pageID + '&amp;moduleID=' + moduleID;
+				//Set slideshow widgetID
+				ContentCollectionInstance.SlideshowWidgetID = $this.siblings('.widgetID').val();
+				$popUp_Slideshow = openCpModal({
+					title: 'Slideshow',
+					className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+					isFrontEnd: false,
+					useIframe: false,
+					draggable: true,
+					url: '/Slideshow/SlideshowConfiguration/' + $this.siblings('.slideShow').find('.hdnSlideshowUniqueID').val() + qs
+				});
+			});
+
+			$('.slideshowOptions.empty').unbind('click').click(function (e) {
+				var $this = $(this);
+				parentID_Slideshow = $this.parents('.slideShow').attr('id');
+				var pageID = ContentCollectionInstance.PageID;
+				var moduleID = ContentCollectionInstance.ModuleID;
+				var qs = '?pageID=' + pageID + '&amp;moduleID=' + moduleID;
+				ContentCollectionInstance.SlideshowWidgetID = $(this).parents('.slideShow').attr('data-widgetID');
+				$popUp_Slideshow = openCpModal({
+					title: 'Slideshow',
+					className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+					isFrontEnd: false,
+					useIframe: false,
+					draggable: true,
+					url: '/Slideshow/SlideshowConfiguration/' + $(this).next('.hdnSlideshowUniqueID').val() + qs
+				});
+			});
+		};
+
+		if (document.readyState === "complete"
+			|| document.readyState === "loaded"
+			|| document.readyState === "interactive") {
+			widgetHandlers();
+			return;
+		}
+
+		document.addEventListener("DOMContentLoaded", widgetHandlers);
+	})();
+&lt;/script&gt;</pre>
+	</div>
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	function SlideshowWidgetCallback(widgetID, response) {
+		if (window.ContentCollectionInstance.IsWorkingCopy) {
+			//Remove this field since the partial view adds it back.
+			$('#slideshow' + widgetID).find('.hdnSlideshowUniqueID').remove();
+			if ($('#slideshow' + widgetID).find('.cpSlideshow').length &gt; 0)
+				$('#slideshow' + widgetID).find('.cpSlideshow').replaceWith(response);
+			else
+				$('#slideshow' + widgetID).find('.slideshowOptions.empty.placeholder').replaceWith(response);
+
+			contentUpdated();
+		}
+		else {
+			ContentCollectionInstance.reloadContent();
+		}
+
+		$('.slideshowOptions.nonEmpty').unbind('click').click(function (e) {
+			var $this = $(this);
+			// If the parent is a slider we need to tweak our "this" reference to refer to the options handle. 
+			// This came about, because we needed to use slider images to trigger options. - JE
+			if ($this.parent().hasClass('cpSlider')) {
+				$this = $this.closest('.widget.slideShow').siblings('.handle.options');
+			}
+
+			//Set values for global variables for slideshow.
+			if ($this.attr('data-widgetID').length !== 0) {
+				parentID_Slideshow = 'slideshow' + $this.attr('data-widgetID');
+			}
+			callbackfnSlideshowSave = null;
+			var pageID = ContentCollectionInstance.PageID;
+			var moduleID = ContentCollectionInstance.ModuleID;
+			var qs = '?pageID=' + pageID + '&amp;moduleID=' + moduleID;
+			//Set slideshow widgetID
+			ContentCollectionInstance.SlideshowWidgetID = $this.siblings('.widgetID').val();
+			$popUp_Slideshow = openCpModal({
+				title: 'Slideshow',
+				className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+				isFrontEnd: false,
+				useIframe: false,
+				draggable: true,
+				url: '/Slideshow/SlideshowConfiguration/' + $this.siblings('.slideShow').find('.hdnSlideshowUniqueID').val() + qs
+			});
+		});
+
+		$('.slideshowOptions.empty').unbind('click').click(function (e) {
+			var $this = $(this);
+			parentID_Slideshow = $this.parents('.slideShow').attr('id');
+			var pageID = ContentCollectionInstance.PageID;
+			var moduleID = ContentCollectionInstance.ModuleID;
+			var qs = '?pageID=' + pageID + '&amp;moduleID=' + moduleID;
+			ContentCollectionInstance.SlideshowWidgetID = $(this).parents('.slideShow').attr('data-widgetID');
+			$popUp_Slideshow = openCpModal({
+				title: 'Slideshow',
+				className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+				isFrontEnd: false,
+				useIframe: false,
+				draggable: true,
+				url: '/Slideshow/SlideshowConfiguration/' + $(this).next('.hdnSlideshowUniqueID').val() + qs
+			});
+		});
+	}
+
+	(function (){
+		const widgetHandlers = function () {
+			var hasEditRights = false;
+			if (window.File &amp;&amp; window.FileList &amp;&amp; window.FileReader &amp;&amp; hasEditRights) {
+				var SlideshowWidget = 3;
+				makeWidgetAreaDroppable('4e649618-3854-413b-b5d4-f5ddbf515d12', $('#slideshow' + '4e649618-3854-413b-b5d4-f5ddbf515d12'), SlideshowWidget, true, SlideshowWidgetCallback);
+			}
+
+			if(hasEditRights)
+				browserVersionNotCompatibleWithDragDropTextUpdate($('#slideshowPlaceholder' + '4e649618-3854-413b-b5d4-f5ddbf515d12'), 'Click to start adding images.');
+		};
+
+		if (document.readyState === "complete"
+			|| document.readyState === "loaded"
+			|| document.readyState === "interactive") {
+			widgetHandlers();
+			return;
+		}
+
+		document.addEventListener("DOMContentLoaded", widgetHandlers);		
+	})();
+&lt;/script&gt;</pre>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="a4c2ec19-44b3-4e4c-897c-0e00f62e58fa">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last idfff8e61b-a85b-4aed-bada-05e9172d9b94" style="" data-widgetcontainerid="fff8e61b-a85b-4aed-bada-05e9172d9b94">	
+<div class="widget editor pageStyles narrow" id="divEditor3f105270-7e80-4984-8fc0-659d1ae07c18" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1" id="videos" style="margin-bottom: -15px;">Recent Videos</h2>
+    </div>
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '3f105270-7e80-4984-8fc0-659d1ae07c18'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col8 first" style="" data-widgetcontainerid="0a273f64-d0af-484a-9e85-996fb224b8f6">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id3ee297a1-b3aa-461d-a7f9-a5851bdb4e0d" style="" data-widgetcontainerid="3ee297a1-b3aa-461d-a7f9-a5851bdb4e0d">	
+<div class="widget editor pageStyles narrow" id="divEditorbd87bf95-13e2-4ce8-aa22-450f5570ee90" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><a href="https://youtu.be/Li_Y0KSUHVY?si=EsuUqXYLOKwjoK0J"><img src="images/d4ddf02cccf586d18841e0aeb32588b75e7e3e3351d520573c573dc67eca6c0d" class="fr-fil fr-dib ae-img" alt="Here in Redmond! March 2025"></a></p>
+<p>Here in Redmond - March 2025</p>
+    </div>
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'bd87bf95-13e2-4ce8-aa22-450f5570ee90'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8" style="" data-widgetcontainerid="a39661bc-d964-4232-b57a-f2a56d2938a1">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last id6b2e8731-57c6-4e60-8bfa-235a76c4fcd7" style="" data-widgetcontainerid="6b2e8731-57c6-4e60-8bfa-235a76c4fcd7">	
+<div class="widget editor pageStyles narrow" id="divEditor45abca7a-4f1f-4b67-9197-e55d594949b4" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><a href="https://youtu.be/t2-0ElDgPzc?si=Z-J6eJ_G2sRcco9D"><img src="images/77d765ea2ab04e2850b9dfd0122fc4af2e7b9968b65f87a0bdc844dcb8ef7553" class="fr-fil fr-dib ae-img" alt="Mayor Video - Feb Thumbnail"></a></p>
+<p>Here in Redmond - February 2025</p>
+    </div>
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '45abca7a-4f1f-4b67-9197-e55d594949b4'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8 last" style="" data-widgetcontainerid="0b349cc7-72ed-4eae-a6be-6b8053267869">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col8 first last ide70ccea9-fe91-46fb-ba77-cbbd8e792f30" style="" data-widgetcontainerid="e70ccea9-fe91-46fb-ba77-cbbd8e792f30">	
+<div class="widget editor pageStyles narrow" id="divEditor82029aa7-c17d-4819-873f-84b5f023f555" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><a href="https://youtu.be/24dLNko-c4o?si=Ex2X0XoEV_HIvhw9"><img src="images/5eb563dbcaea8c98ec1a2c2cd0e3ceb90b04284b386b1ac1f18e0dfd65df6317" class="fr-fil fr-dib ae-img" alt="Mayor Video - Jan Thumbnail"></a></p>
+<p>Here in Redmond - January 2025</p>
+    </div>
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '82029aa7-c17d-4819-873f-84b5f023f555'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="8555135a-fd59-4f89-85f0-f1a3c4d89d90">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col24 first last id87549920-9f4f-433a-85ab-180837721be2" style="" data-widgetcontainerid="87549920-9f4f-433a-85ab-180837721be2">	
+<div class="widget editor pageStyles narrow" id="divEditorfa1360ee-0840-4da7-95c1-a9938aec5667" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <div id="bio" style="padding:20px; background-color:#f5f5f5; border-radius: 10px; margin: 0 -5px 0 -5px;">
+<h2 class="subhead1 ">Mayor’s Biography</h2>
+<p>Term: 2024 - 2027</p>
+<p id="isPasted">Redmond Mayor Angela Birney is well-versed in managing growth. As a former middle school science teacher, she has helped expand young students' minds through education. Now in her second term as Mayor, she is leading the progress of a community of more than 80,000 people as it evolves from a suburb to a city. </p>
+<p>Redmond is known for its diverse industries, including aerospace, high tech, video game production, biotech, and thousands of small businesses employing nearly 100,000 people. Since taking office, Mayor Birney has helped accelerate the City’s development to new heights. </p>
+<p>As a member of multiple boards regionally, statewide, and nationally, the Mayor has created a thriving network of partners with whom she has successfully collaborated on projects and funding, resulting in major advances and greater visibility for the City.  </p>
+<p>From light rail stations to housing for all income levels to business development to sustainability and the environment, Mayor Birney’s vision to create a vibrant, complete, green city where people can access most of what they need in their daily lives within a few blocks and without a car, is quickly becoming a reality.     </p>
+<p>And more is coming in the form of new light rail stations, additional housing, increased economic develop from global events like World Cup 2026, and the launch of the Redmond 2050 Comprehensive Plan, the largest community engagement effort ever conducted in Redmond. The strategy is in place to grow the City in a way that will benefit future generations - including the middle school science students the Mayor once taught. </p>
+<p id="isPasted"><strong>Mayor Angela Birney </strong><br>Elected Mayor 2019, first term: 2020 - 2023  <br>Re-elected Mayor 2023, second term: 2024 - 2027 </p>
+<p><em><strong>Prior City Service:</strong></em>  <br>Redmond City Councilmember 2015 <br>Redmond City Council President 2018 - 2019 </p>
+<p><strong><em>Board &amp; Committee Participation: </em></strong></p>
+<ul type="disc">
+<li>Sound Transit, Board Member </li>
+<li>Cascade Water Alliance Board (CWA), Vice Chair </li>
+<li>King County Regional Policy Committee (RPC), Committee Member</li>
+<li>Puget Sound Regional Council (PSRC), Executive Board Member</li>
+<li>King County Regional Homelessness Authority (KCRHA), Governing Board Member</li>
+<li>Sound Cities Association (SCA), Past Board President and Public Issues Committee (alternate) </li>
+<li id="isPasted">National League of Cities (NLC), <ul type="disc" style="list-style-type: circle;">
+<li>American Planning Association Housing Supply Accelerator Steering Committee Member </li>
+<li>America's Housing Comeback Advisory Group Member</li>
+</ul>
+</li>
+<li>Association of Washington Cities (AWC), <ul>
+<li>Large City Advisory Committee Member</li>
+<li>Federal Legislative Committee Member</li>
+<li>Housing Solutions Group   </li>
+<li>Ad Hoc Bylaws Committee Member   </li>
+</ul>
+</li>
+<li>Greater Seattle, Partners Board Member</li>
+<li>OneRedmond, Board Member </li>
+<li>Hopelink, Past Board Member</li>
+<li>King County-Cities Climate Collaboration (K4C) </li>
+<li>I-405/SR 167 Executive Advisory Committee </li>
+</ul>
+<p><strong><em>Education: </em></strong><br>B.A. Biology Education, Eastern Washington University <br>M.Ed. Master of Education, Heritage University  </p>
+<p><strong><em>Personal:  </em></strong><br>Washington native, grew up in Eastern WA <br>Moved to Redmond in 1998 <br>Lives on Education Hill with husband and daughters </p>
+</div>
+    </div>
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'fa1360ee-0840-4da7-95c1-a9938aec5667'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col24 first last id0ca54f78-3c88-475a-a475-bff7397a5dd2" style="" data-widgetcontainerid="0ca54f78-3c88-475a-a475-bff7397a5dd2">	
+<div class="widget editor pageStyles narrow" id="divEditorf1fc5ba1-bc97-452f-a582-65d30b111bba" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <div style="background-color:#2c353e; padding:10px;margin:15px -5px 15px -5px;border-radius:10px;">
+<h2 class="subhead1" style="color:#ffffff;">Vision, Mission, and Values</h2>
+<p style="color:#ffffff;"><br></p>
+<h3 class="subhead2" style="color:#ffffff;">Vision</h3>
+<p style="color:#ffffff;">A connected community that enhances livability, sustains the environment, and leads locally, regionally, and nationally.</p>
+<h3 class="subhead2" style="color:#ffffff;">Mission</h3>
+<p style="color:#ffffff;">Fusing compassion and ethics with innovation to champion a thriving, resilient, and inclusive community.</p>
+<h3 class="subhead2" style="color:#ffffff;">Values</h3>
+<ul>
+<li style="color:#ffffff;">Service </li>
+<li style="color:#ffffff;">Integrity </li>
+<li style="color:#ffffff;">Accountability </li>
+<li style="color:#ffffff;">Belonging </li>
+<li style="color:#ffffff;">Stewardship</li>
+</ul>
+</div>
+    </div>
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'f1fc5ba1-bc97-452f-a582-65d30b111bba'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+		</div>
+
+	</div>
+
+	
+	<div class="newCP">
+
+	</div>
+</div>
+</div>
+<aside data-cprole="contentContainer" id="featureColumn" class="secondaryContent">	<div id="ccdd5bc131-f0fa-41b1-bb95-8d28cf1e5f90" data-containerid="dd5bc131-f0fa-41b1-bb95-8d28cf1e5f90" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="6407dd50-2ae6-482a-bc7d-7765d7d8f423">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col24 first last idbb6ef6bb-d898-4663-9f76-1f409aadceaf" style="" data-widgetcontainerid="bb6ef6bb-d898-4663-9f76-1f409aadceaf">	
+<div class="widget editor pageStyles narrow" id="divEditorbe47a002-f188-4154-b1bb-b0ea98290762" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <style>
+	.iframe-container {
+		position: relative; overflow: hidden; width: 100%;padding-top: 60%;
+	}
+	
+	.responsive-iframe {
+		position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%;
+	}
+
+</style>
+<h2 class="subhead1 ">Contact</h2>
+<p><img src="images/8e013bad43ac1cb5c18dff4a47b4d8e306bc2c74bccd5a02288ead13cb1b9e5a" class="fr-fil fr-dib ae-img" alt="Angela Birney" style="width: 150px;"></p>
+<p>Mayor Angela Birney<br><a href="https://www.redmond.gov/cdn-cgi/l/email-protection#8be6eaf2e4f9cbf9eeefe6e4e5efa5ece4fd">Email Angela Birney</a></p>
+<h2 class="subhead1 ">2024 State of the City</h2>
+<div class="iframe-container"><iframe class="responsive-iframe ae-media ae-youtube" src="https://www.youtube.com/embed/QFtVmxnS1Ls?si=pL4IbeapuJ6OZUeX" title="YouTube video player" frameborder="0" allowfullscreen=""><span class="fr-mk" style="display: none;"> </span></iframe></div>
+<p><br></p>
+<div style="background-color:#2c353e; padding:10px;margin:15px -5px 15px -5px;border-radius:10px;">
+<h2 class="subhead1" style="color:#ffffff;">Mayor's Vision</h2>
+<p style="color:#ffffff;">A connected community that enhances livability, sustains the environment, and leads locally, regionally, and nationally.</p>
+</div>
+<div style="background-color:#f5f5f5;padding:10px;margin:15px -5px 5px -5px;border-radius:10px;">
+<h2 class="subhead1 ">Our Stories. Our Redmond.</h2>
+<p>I am honored to have the opportunity to serve as Redmond’s Mayor. It is a responsibility that I expect to come with many rewards and challenges. I would like to share my vision with you and my commitment to keeping you informed. </p>
+<p><a href="https://www.redmond.gov/DocumentCenter/View/26014/Our-Stories-Our-Redmond-Media-Kit">Our Stories. Our Redmond. full message</a></p>
+<p><a href="https://youtu.be/842D4EE6_GQ" tabindex="-1"><span class="ae-compliance-indent" style="display: none;"> YouTube Video </span></a><a href="https://youtu.be/842D4EE6_GQ">Our Stories. Our Redmond. video</a></p>
+</div>
+    </div>
+
+<pre class="script-content">&lt;script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"&gt;&lt;/script&gt;</pre>
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'be47a002-f188-4154-b1bb-b0ea98290762'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col24 first last id59c70e3b-36e8-4ff2-b0a5-56a0a6d15ea8" style="" data-widgetcontainerid="59c70e3b-36e8-4ff2-b0a5-56a0a6d15ea8">	
+<div class="widget editor pageStyles narrow" id="divEditor2d5c2c16-3060-4465-a67c-fbd86983945b" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <div style="background-color:#f5f5f5;padding:10px;margin:0 -5px;border-radius:10px;">
+<h2>Video Archive</h2>
+<p><a href="https://www.youtube.com/playlist?list=PL1T0anc-kzY9I5wnenKtAJ0ANcFJD0g4D">Mayor's video archives</a></p>
+</div>
+    </div>
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '2d5c2c16-3060-4465-a67c-fbd86983945b'));
+	});
+&lt;/script&gt;</pre>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="a431e64e-131e-414f-89bf-d31335bf75a4">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last id2fbb8ea6-79b6-4b9d-9105-bcce190f0cd8" style="" data-widgetcontainerid="2fbb8ea6-79b6-4b9d-9105-bcce190f0cd8">	
+
+
+
+	<section class="widget widgetRelatedDocuments skin74 narrow" id="widgetRelDocbcf55043-3913-4279-840e-f5293a724b6b" data-widgetid="bcf55043-3913-4279-840e-f5293a724b6b" data-sections='[{"Title":"&lt;br&gt;","DocumentIDs":"21999,","FolderIds":",","SortedDocumentIds":""}]' data-columncount="1" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="headerbcf55043-3913-4279-840e-f5293a724b6b">
+			<div id="divRelatedDocuments_bcf55043-3913-4279-840e-f5293a724b6b" class="relatedDocuments">
+				<header class="widgetHeader" id="headerbcf55043-3913-4279-840e-f5293a724b6b"><div><h3>Latest News</h3></div></header>
+		<div class="widgetBody cpGrid cpGrid1">
+			
+<div class="row narrow sortableWidgetTitle">
+        <div class="relatedDocumentsSection selfClear" data-documentids="21999," data-folderids="," data-sorteddocumentids="">
+                    <h4 class="widgetTitle" style="clear:left;"><br></h4>
+
+	<div class=" first last">
+		<ol class="semanticList bullets" style="min-height:8px;">
+					<li class="widgetItem" data-documentid="21999">
+<a target="_blank" href="https://www.redmond.gov/DocumentCenter/View/21999/Mayor-Birneys-Climate-Resiliency-Op-Ed---Feb-23-2022" class="fileType pdf" aria-label="Mayor Birney's Climate Resiliency Op-Ed - Feb. 23, 2022 pdf file">Mayor Birney's Climate Resiliency Op-Ed - Feb. 23, 2022</a>
+					</li>
+
+		</ol>
+	</div>
+                    </div>
+</div>
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+    $(document).ready(function () {
+        //Remove section heading when it is empty and live edit is off.
+        if ('false' === 'false') {
+            var jqh4Selector = $('#widgetRelDoc' + 'bcf55043-3913-4279-840e-f5293a724b6b').find('div.widgetBody div.row div.relatedDocumentsSection h4.widgetTitle');
+    		if (jqh4Selector.val() == "") {
+    			jqh4Selector
+                    .filter(function () {
+                        return $.trim($(this).text()) === ''
+                    })
+                    .remove();
+            }
+        }
+    });
+&lt;/script&gt;</pre>
+		</div>
+
+</div>
+
+	</section>
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+    var documentsToInsert = [];
+    var foldersToInsert = [];
+
+    $(document).ready(function () {
+        var hasEditRights = false;        
+        if (window.File &amp;&amp; window.FileList &amp;&amp; window.FileReader &amp;&amp; hasEditRights) {
+            var RelatedDocumentsWidget = 5;
+            makeWidgetAreaDroppable('bcf55043-3913-4279-840e-f5293a724b6b', $('#widgetRelDoc' + 'bcf55043-3913-4279-840e-f5293a724b6b'), RelatedDocumentsWidget, true, RelatedDocumentsCallback);
+        }
+
+		if(hasEditRights)
+    		browserVersionNotCompatibleWithDragDropTextUpdate($('#addFile' + 'bcf55043-3913-4279-840e-f5293a724b6b'), 'Add a new file');
+    });
+
+    function RelatedDocumentsCallback(widgetID, response)
+    {
+        if (window.ContentCollectionInstance.IsWorkingCopy) {
+        	$('#widgetRelDoc' + widgetID).replaceWith(response);            
+            contentUpdated();
+            attachRelatedDocumentsHandlers();            
+        }
+        else {
+            ContentCollectionInstance.reloadContent();
+        }      
+    }
+&lt;/script&gt;</pre>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="1a65f310-4b0c-4ee4-b1e8-72b9dd946581">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last ide55a6b66-e062-427b-a5a0-bc01c34e0ffc" style="" data-widgetcontainerid="e55a6b66-e062-427b-a5a0-bc01c34e0ffc">	
+
+
+
+	<section class="widget widgetRelatedDocuments skin74 narrow" id="widgetRelDoc626aa48c-a172-4d9a-b21a-b97a238599a2" data-widgetid="626aa48c-a172-4d9a-b21a-b97a238599a2" data-sections='[{"Title":"","DocumentIDs":"22400,25987,27157,27159,","FolderIds":",","SortedDocumentIds":"27157,27159,25987,22400,"}]' data-columncount="1" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="header626aa48c-a172-4d9a-b21a-b97a238599a2">
+			<div id="divRelatedDocuments_626aa48c-a172-4d9a-b21a-b97a238599a2" class="relatedDocuments">
+				<header class="widgetHeader" id="header626aa48c-a172-4d9a-b21a-b97a238599a2"><div><h3>Executive Orders</h3></div></header>
+		<div class="widgetBody cpGrid cpGrid1">
+			
+<div class="row narrow sortableWidgetTitle">
+        <div class="relatedDocumentsSection selfClear" data-documentids="22400,25987,27157,27159," data-folderids="," data-sorteddocumentids="27157,27159,25987,22400,">
+        
+	<div class=" first last">
+		<ol class="semanticList bullets" style="min-height:8px;">
+					<li class="widgetItem" data-documentid="27157">
+<a target="_blank" href="https://www.redmond.gov/DocumentCenter/View/27157/Termination-of-Executive-Order-Regarding-Mandatory-Vaccination-of-City-Firefighters-and-Paramedics" class="fileType pdf" aria-label="Termination of Executive Order Regarding Mandatory Vaccination of City Firefighters and Paramedics pdf file">Termination of Executive Order Regarding Mandatory Vaccination of City Firefighters and Paramedics</a>
+					</li>
+					<li class="widgetItem" data-documentid="27159">
+<a target="_blank" href="https://www.redmond.gov/DocumentCenter/View/27159/Termination-of-Second-Executive-Order-Regarding-Mandatory-Vaccination-of-City-Firefighters-and-Paramedics" class="fileType pdf" aria-label="Termination of Second Executive Order Regarding Mandatory Vaccination of City Firefighters and Paramedics pdf file">Termination of Second Executive Order Regarding Mandatory Vaccination of City Firefighters and Paramedics</a>
+					</li>
+					<li class="widgetItem" data-documentid="25987">
+<a target="_blank" href="https://www.redmond.gov/DocumentCenter/View/25987/Second-Executive-Order-Regarding-Mandatory-Vaccination-of-City-Firefighters-and-Paramedics" class="fileType pdf" aria-label="Second Executive Order Regarding Mandatory Vaccination of City Firefighters and Paramedics pdf file">Second Executive Order Regarding Mandatory Vaccination of City Firefighters and Paramedics</a>
+					</li>
+					<li class="widgetItem" data-documentid="22400">
+<a target="_blank" href="https://www.redmond.gov/DocumentCenter/View/22400/Executive-Order---Mandatory-Vaccination-of-City-Firefighters-and-Paramedics" class="fileType pdf" aria-label="Executive Order - Mandatory Vaccination of City Firefighters and Paramedics pdf file">Executive Order - Mandatory Vaccination of City Firefighters and Paramedics</a>
+					</li>
+
+		</ol>
+	</div>
+                    </div>
+</div>
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+    $(document).ready(function () {
+        //Remove section heading when it is empty and live edit is off.
+        if ('false' === 'false') {
+            var jqh4Selector = $('#widgetRelDoc' + '626aa48c-a172-4d9a-b21a-b97a238599a2').find('div.widgetBody div.row div.relatedDocumentsSection h4.widgetTitle');
+    		if (jqh4Selector.val() == "") {
+    			jqh4Selector
+                    .filter(function () {
+                        return $.trim($(this).text()) === ''
+                    })
+                    .remove();
+            }
+        }
+    });
+&lt;/script&gt;</pre>
+		</div>
+
+</div>
+
+	</section>
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+    var documentsToInsert = [];
+    var foldersToInsert = [];
+
+    $(document).ready(function () {
+        var hasEditRights = false;        
+        if (window.File &amp;&amp; window.FileList &amp;&amp; window.FileReader &amp;&amp; hasEditRights) {
+            var RelatedDocumentsWidget = 5;
+            makeWidgetAreaDroppable('626aa48c-a172-4d9a-b21a-b97a238599a2', $('#widgetRelDoc' + '626aa48c-a172-4d9a-b21a-b97a238599a2'), RelatedDocumentsWidget, true, RelatedDocumentsCallback);
+        }
+
+		if(hasEditRights)
+    		browserVersionNotCompatibleWithDragDropTextUpdate($('#addFile' + '626aa48c-a172-4d9a-b21a-b97a238599a2'), 'Add a new file');
+    });
+
+    function RelatedDocumentsCallback(widgetID, response)
+    {
+        if (window.ContentCollectionInstance.IsWorkingCopy) {
+        	$('#widgetRelDoc' + widgetID).replaceWith(response);            
+            contentUpdated();
+            attachRelatedDocumentsHandlers();            
+        }
+        else {
+            ContentCollectionInstance.reloadContent();
+        }      
+    }
+&lt;/script&gt;</pre>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</aside>
+</div>
+</div></div>
+</div>
+<!-- Calendar/Carousel --><!-- <div data-cpRole="structuralContainer" id="homeContainer1">
+    <div class="siteWrap2">
+      <div data-cpRole="contentContainer" id="homeContent1a"></div>
+    </div>
+  </div> -->
+</main><!-- Footer --><footer data-cprole="structuralContainer" id="footerContainerTS">
+<div class="siteWrap2">
+<div data-cprole="contentContainer" id="footerTS">	<div id="cce7e70da3-543c-4d03-b89a-c575a51ab6ec" data-containerid="e7e70da3-543c-4d03-b89a-c575a51ab6ec" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="55">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col5 first" style="" data-widgetcontainerid="4b7f92c4-85eb-4494-957c-d207484afaa3">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col5 first last id3ca0db0a-f2dc-4b34-808a-426d91e09f0e" style="" data-widgetcontainerid="3ca0db0a-f2dc-4b34-808a-426d91e09f0e">	
+	<div data-widget-id="03f2db79-eb72-49b2-bd4a-56fff1b12a26" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink03f2db79-eb72-49b2-bd4a-56fff1b12a26" class="widget widgetQuickLinks skin77 widgetOptionSet68 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader03f2db79-eb72-49b2-bd4a-56fff1b12a26">
+			<header class="widgetHeader" id="quickLinksHeader03f2db79-eb72-49b2-bd4a-56fff1b12a26">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=105">Popular</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/284/Office-of-the-Mayor" target="_self">Home</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/294" target="_self">Events</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.governmentjobs.com/careers/redmondwa" target="_self">Jobs</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/184/Activities" target="_self">Recreation Activities</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col5" style="" data-widgetcontainerid="fcff62a0-5a2a-4044-9adb-9b2a150766e8">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col5 first last ida8313d48-451d-45f8-955b-6c0477f0ab5e" style="" data-widgetcontainerid="a8313d48-451d-45f8-955b-6c0477f0ab5e">	
+	<div data-widget-id="cba85f31-35e5-4bf5-9a6d-1579c65cd97e" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinkcba85f31-35e5-4bf5-9a6d-1579c65cd97e" class="widget widgetQuickLinks skin77 widgetOptionSet68 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeadercba85f31-35e5-4bf5-9a6d-1579c65cd97e">
+			<header class="widgetHeader" id="quickLinksHeadercba85f31-35e5-4bf5-9a6d-1579c65cd97e">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=106">Find</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/189" target="_self">City Council</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/186" target="_self">Parks &amp; Trails</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/898" target="_self">Permits</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/221" target="_self">Transportation</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col5" style="" data-widgetcontainerid="bd5a8bda-99d1-4f83-a213-2f88b8572afb">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col5 first last id99bb412d-c04d-418a-817a-22a97f9aec21" style="" data-widgetcontainerid="99bb412d-c04d-418a-817a-22a97f9aec21">	
+	<div data-widget-id="b71e4a30-790c-4dca-8cad-722b5100c2b5" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinkb71e4a30-790c-4dca-8cad-722b5100c2b5" class="widget widgetQuickLinks skin77 widgetOptionSet68 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeaderb71e4a30-790c-4dca-8cad-722b5100c2b5">
+			<header class="widgetHeader" id="quickLinksHeaderb71e4a30-790c-4dca-8cad-722b5100c2b5">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=107">Report / Request</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://redmondwa.qscend.com/311" target="_self">Report an Issue</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://redmondwa.qscend.com/311" target="_self">Request a Service</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/777" target="_self">Public Record</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/698" target="_self">Police Record</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col5" style="" data-widgetcontainerid="921d85c3-5206-4146-8e26-91261afc91ce">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col5 first last id8a6bd72b-1125-4ec3-9760-cb749b78be8e" style="" data-widgetcontainerid="8a6bd72b-1125-4ec3-9760-cb749b78be8e">	
+	<div data-widget-id="16b5d1c5-7cfe-469f-bd51-6c86ab217de3" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink16b5d1c5-7cfe-469f-bd51-6c86ab217de3" class="widget widgetQuickLinks skin77 widgetOptionSet68 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader16b5d1c5-7cfe-469f-bd51-6c86ab217de3">
+			<header class="widgetHeader" id="quickLinksHeader16b5d1c5-7cfe-469f-bd51-6c86ab217de3">
+		<div class="">
+					<h3><a style="" href="https://www.redmond.gov/QuickLinks.aspx?CID=108">Helpful Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/871" target="_self">ADA Program</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/857" target="_self">Title VI</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/873/5722/Web-Accessibility" target="_self">Website Accessibility</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/385" target="_self">Website Policies</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col4 last" style="" data-widgetcontainerid="ad0d0125-876a-4ae2-a23d-5d2767a2b28f">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col4 first last id84f1a4de-205e-463b-a464-270e38487fc6" style="" data-widgetcontainerid="84f1a4de-205e-463b-a464-270e38487fc6">	
+<div data-widget-id="00871c1d-ce8b-43ec-ab1c-1b2cf6572f9f" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget00871c1d-ce8b-43ec-ab1c-1b2cf6572f9f" class="widget widgetGraphicLinks skin77 widgetOptionSet4 wide" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+			<h3>Social Media</h3>
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid1 ">	
+			<div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/facebook" target="_self" class="fancyButton fancyButton722 ">
+		<span>
+			<span><span class="text"><span class="textStyle1">Facebook</span></span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton722.fancyButton:link,.fancyButton722.fancyButton:visited, .fancyButton722div.fancyButton{
+	padding-left: 1.25em;
+	background-image: url('/ImageRepository/Document?documentID=36226');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 1.25em;}
+.fancyButton722.fancyButton:hover,.fancyButton722.fancyButton:focus,.fancyButton722.fancyButton:active,.fancyButton722.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton722.fancyButton:link > span,.fancyButton722.fancyButton:visited > span, .fancyButton722div.fancyButton > span{
+}
+.fancyButton722.fancyButton:hover > span,.fancyButton722.fancyButton:focus > span,.fancyButton722.fancyButton:active > span,.fancyButton722.fancyButton.hover > span{
+}
+.fancyButton722.fancyButton .text{
+	text-align: left;
+	padding-left: .75em;
+	text-decoration: none;
+	padding-left: .75em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton722.fancyButton:hover .text,.fancyButton722.fancyButton:focus .text,.fancyButton722.fancyButton:active .text,.fancyButton722.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+.fancyButton722.fancyButton .textStyle1{
+	color: rgb(65, 64, 66);
+	font-size: 1em;
+	font-family: Lato;
+	font-style: normal;
+	text-decoration: none;
+display: block;}
+.fancyButton722.fancyButton:hover .textStyle1, .fancyButton722.fancyButton.hover .textStyle1{
+	text-decoration: underline;
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/twitter" target="_self" class="fancyButton fancyButton723 ">
+		<span>
+			<span><span class="text"><span class="textStyle1">X</span></span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton723.fancyButton:link,.fancyButton723.fancyButton:visited, .fancyButton723div.fancyButton{
+	padding-left: 1.25em;
+	background-image: url('/ImageRepository/Document?documentID=36237');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 1.25em;}
+.fancyButton723.fancyButton:hover,.fancyButton723.fancyButton:focus,.fancyButton723.fancyButton:active,.fancyButton723.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton723.fancyButton:link > span,.fancyButton723.fancyButton:visited > span, .fancyButton723div.fancyButton > span{
+}
+.fancyButton723.fancyButton:hover > span,.fancyButton723.fancyButton:focus > span,.fancyButton723.fancyButton:active > span,.fancyButton723.fancyButton.hover > span{
+}
+.fancyButton723.fancyButton .text{
+	text-align: left;
+	padding-left: .75em;
+	text-decoration: none;
+	padding-left: .75em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton723.fancyButton:hover .text,.fancyButton723.fancyButton:focus .text,.fancyButton723.fancyButton:active .text,.fancyButton723.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+.fancyButton723.fancyButton .textStyle1{
+	color: rgb(65, 64, 66);
+	font-size: 1em;
+	font-family: Lato;
+	font-style: normal;
+	text-decoration: none;
+display: block;}
+.fancyButton723.fancyButton:hover .textStyle1, .fancyButton723.fancyButton.hover .textStyle1{
+	text-decoration: underline;
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/instagram" target="_self" class="fancyButton fancyButton724 ">
+		<span>
+			<span><span class="text"><span class="textStyle1">Instagram</span></span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton724.fancyButton:link,.fancyButton724.fancyButton:visited, .fancyButton724div.fancyButton{
+	padding-left: 1.25em;
+	background-image: url('/ImageRepository/Document?documentID=36227');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 1.25em;}
+.fancyButton724.fancyButton:hover,.fancyButton724.fancyButton:focus,.fancyButton724.fancyButton:active,.fancyButton724.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton724.fancyButton:link > span,.fancyButton724.fancyButton:visited > span, .fancyButton724div.fancyButton > span{
+}
+.fancyButton724.fancyButton:hover > span,.fancyButton724.fancyButton:focus > span,.fancyButton724.fancyButton:active > span,.fancyButton724.fancyButton.hover > span{
+}
+.fancyButton724.fancyButton .text{
+	text-align: left;
+	padding-left: .75em;
+	text-decoration: none;
+	padding-left: .75em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton724.fancyButton:hover .text,.fancyButton724.fancyButton:focus .text,.fancyButton724.fancyButton:active .text,.fancyButton724.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+.fancyButton724.fancyButton .textStyle1{
+	color: rgb(65, 64, 66);
+	font-size: 1em;
+	font-family: Lato;
+	font-style: normal;
+	text-decoration: none;
+display: block;}
+.fancyButton724.fancyButton:hover .textStyle1, .fancyButton724.fancyButton.hover .textStyle1{
+	text-decoration: underline;
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.redmond.gov/youtube" target="_self" class="fancyButton fancyButton725 ">
+		<span>
+			<span><span class="text"><span class="textStyle1">YouTube</span></span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton725.fancyButton:link,.fancyButton725.fancyButton:visited, .fancyButton725div.fancyButton{
+	padding-left: 1.25em;
+	background-image: url('/ImageRepository/Document?documentID=36236');
+	background-repeat: no-repeat;
+	background-position: left center;
+background-size: 1.25em;}
+.fancyButton725.fancyButton:hover,.fancyButton725.fancyButton:focus,.fancyButton725.fancyButton:active,.fancyButton725.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton725.fancyButton:link > span,.fancyButton725.fancyButton:visited > span, .fancyButton725div.fancyButton > span{
+}
+.fancyButton725.fancyButton:hover > span,.fancyButton725.fancyButton:focus > span,.fancyButton725.fancyButton:active > span,.fancyButton725.fancyButton.hover > span{
+}
+.fancyButton725.fancyButton .text{
+	text-align: left;
+	padding-left: .75em;
+	text-decoration: none;
+	padding-left: .75em;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton725.fancyButton:hover .text,.fancyButton725.fancyButton:focus .text,.fancyButton725.fancyButton:active .text,.fancyButton725.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: center top;
+
+
+}
+.fancyButton725.fancyButton .textStyle1{
+	color: rgb(65, 64, 66);
+	font-size: 1em;
+	font-family: Lato;
+	font-style: normal;
+	text-decoration: none;
+display: block;}
+.fancyButton725.fancyButton:hover .textStyle1, .fancyButton725.fancyButton.hover .textStyle1{
+	text-decoration: underline;
+
+}
+</style>
+
+ </div>
+<!--
+			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+<div data-cprole="contentContainer" id="footer2TS">	<div id="cc6d671bb7-f95b-4f18-8df6-d9a6b1daaf25" data-containerid="6d671bb7-f95b-4f18-8df6-d9a6b1daaf25" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="55">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col11 first" style="" data-widgetcontainerid="533ccc22-ef03-4976-88cb-2ec61f7a1498">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col11 first last id23dd772f-55fd-43ce-8e18-069da697e8f4" style="" data-widgetcontainerid="23dd772f-55fd-43ce-8e18-069da697e8f4">	
+    <div data-widget-id="cb15871e-8704-4090-9e6a-fe21d19ca66e" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdvcb15871e-8704-4090-9e6a-fe21d19ca66e" class="widget widgetInfoAdvanced skin79 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="headercb15871e-8704-4090-9e6a-fe21d19ca66e">
+			<header class="widgetHeader" id="headercb15871e-8704-4090-9e6a-fe21d19ca66e">
+		<div class="">
+					<h3>Sign Up For Our Newsletter</h3>
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row  wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<form id="email-signup GD-snippet-form" action="https://public.govdelivery.com/accounts/WAREDMOND/subscribers/qualify" accept-charset="UTF-8" method="post">
+    <input name="utf8" type="hidden" value="?">
+    <input type="hidden" name="authenticity_token" value="d1XsUGSqIbCzpfoDnY1Bd18w3Jfq5s1TyGsy1pL+pGMLw9UPYHYvi365FkgIY1MJv47vMF7lriO8oOiF2U9GQQ==">
+    <input type="email" name="email" id="email" placeholder="Your Email Address">
+    <input type="submit" name="commit" value="Sign Up!" class="form_button">
+</form>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdvcb15871e-8704-4090-9e6a-fe21d19ca66e .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+&lt;/script&gt;</pre>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col13 last" style="" data-widgetcontainerid="7a44f0a0-cc8b-4a39-a01f-48736cd86688">				
+	<div class="row nest first wide">
+	
+	<div class="inner col col13 first last idaa61a202-d044-47c8-afd3-ad35ca4ec860" style="" data-widgetcontainerid="aa61a202-d044-47c8-afd3-ad35ca4ec860">	
+    <div data-widget-id="82ef871c-828f-4582-b399-38a557b343b6" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+<style type="text/css">.row.outer.wide .widgetOptionSet33 .col1 li:after {
+	content: "•"; float: right; padding: 0 0 0 1em;
+}
+.widgetOptionSet33 .col1.last li:after {
+	display: none;
+}
+
+.row.outer:not(.wide) .widgetOptionSet33 .row {
+justify-content: center;
+}</style>
+
+	<section id="divInfoAdv82ef871c-828f-4582-b399-38a557b343b6" class="widget widgetInfoAdvanced skin79 widgetOptionSet33 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="header82ef871c-828f-4582-b399-38a557b343b6">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row autoWidths right wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<p><img style="max-width: 210px;" src="images/033f075b6331f4a5b7122ab61000f19ec11e27957fcbf85a84a641bfc3d64e68" alt="Redmond Washington Homepage" title="CityofRedond" class="fr-fic fr-dii"></p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv82ef871c-828f-4582-b399-38a557b343b6 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+&lt;/script&gt;</pre>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+	
+	<div class="inner col col13 first last id2674e250-b8f4-44d6-a2a1-ed5ed118fe57" style="" data-widgetcontainerid="2674e250-b8f4-44d6-a2a1-ed5ed118fe57">	
+    <div data-widget-id="5a5c89af-174b-4785-96e4-921a76965b28" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+<style type="text/css">.row.outer.wide .widgetOptionSet33 .col1 li:after {
+	content: "•"; float: right; padding: 0 0 0 1em;
+}
+.widgetOptionSet33 .col1.last li:after {
+	display: none;
+}
+
+.row.outer:not(.wide) .widgetOptionSet33 .row {
+justify-content: center;
+}</style>
+
+	<section id="divInfoAdv5a5c89af-174b-4785-96e4-921a76965b28" class="widget widgetInfoAdvanced skin79 widgetOptionSet33 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="header5a5c89af-174b-4785-96e4-921a76965b28">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid4 ">
+		<div class="row autoWidths right wide">
+					<div class="col col1 first ">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	Phone: <a href="tel:425-556-2900">425-556-2900</a>
+</li>						</ol>
+					</div>
+					<div class="col col1  ">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<a href="https://goo.gl/maps/CJcLDqJFWRpxZxbL6" target="_self" class="Hyperlink">15670 NE 85th Street</a>
+</li>						</ol>
+					</div>
+					<div class="col col1  ">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	P.O. Box 97010
+</li>						</ol>
+					</div>
+					<div class="col col1  last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<a href="https://goo.gl/maps/CJcLDqJFWRpxZxbL6" target="_self" class="Hyperlink">Redmond, WA 98073-9710</a>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv5a5c89af-174b-4785-96e4-921a76965b28 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+&lt;/script&gt;</pre>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+</div>
+</footer><!-- Powered By --><div data-cprole="structuralContainer" id="poweredByContainerTS">
+<div class="siteWrap2"><div data-cprole="contentContainer" id="poweredByTS">	<div id="cc1007ab77-72c3-46a1-98b4-130d1cde1380" data-containerid="1007ab77-72c3-46a1-98b4-130d1cde1380" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="55">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col12 first" style="" data-widgetcontainerid="0b5b3131-d095-43c6-99c8-cce1d519584a">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col12 first last id8fb2d602-0f73-468d-ab1e-2e721af8ef12" style="" data-widgetcontainerid="8fb2d602-0f73-468d-ab1e-2e721af8ef12">	
+
+<div class="widget widgetSpacer" id="29772496-0084-44d0-b479-af55cfc6a56b"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col12 last" style="" data-widgetcontainerid="ee223f10-d982-4ec2-bbfc-c6715bcf5047">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col12 first last id10611dc3-1437-4030-8656-70c01d6adbf9" style="" data-widgetcontainerid="10611dc3-1437-4030-8656-70c01d6adbf9">	
+	<div data-widget-id="b6a28d5d-04a9-439c-a941-bb85cea27d23" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinkb6a28d5d-04a9-439c-a941-bb85cea27d23" class="widget widgetQuickLinks skin81 widgetOptionSet43 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Quick Links">
+			<header class="widgetHeader" id="quickLinksHeaderb6a28d5d-04a9-439c-a941-bb85cea27d23">
+		<div class="">
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid3 ">
+        <div class="row autoWidths right narrow">
+				<div class="col col1 first ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/directory" target="_self">Contact Us</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  ">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/sitemap" target="_self">Site Map</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+				<div class="col col1  last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.redmond.gov/FormCenter/Communications-12/Website-Feedback-87" target="_self">Website Feedback</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="" data-widgetcontainerid="780522b7-c04c-4033-8164-6c9757c1fd89">				
+	<div class="row nest first last wide">
+	
+	<div class="inner col col24 first last idc0506d86-7261-4ac0-9be2-c90f36e69636" style="" data-widgetcontainerid="c0506d86-7261-4ac0-9be2-c90f36e69636">	
+ 
+	<div data-widget-id="b49081a1-ab84-4956-ba73-bb21fce53e4b" data-modulename="customHtml" id="widgetCustomHtmlb49081a1-ab84-4956-ba73-bb21fce53e4b" class="widget widgetCustomHtml skin81 narrow">
+	<div class="widgetBody pageStyles" id="widgetBodyb49081a1-ab84-4956-ba73-bb21fce53e4b">
+		<div id="customHtmlb49081a1-ab84-4956-ba73-bb21fce53e4b"><div></div></div>
+	</div>
+	</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+<!-- </div> -->
+</div>
+
+			</div>
+		</div>
+	</div>
+
+<link href="/745732998.css" rel="stylesheet" type="text/css">
+
+<div tabindex="0"></div>
+<div id="SplashMessageWrapper" class="cp-Splash-wrapper">
+	<div role="dialog" aria-labelledby="cp-Splash-title" aria-describedby="editorContentDesc" aria-modal="true" tabindex="-1" id="SplashMessage" class="hidden cp-Splash cp-Splash--modal is-open">
+		<div class="cp-Splash-header">
+			<span class="cp-Splash-title" id="cp-Splash-title">Loading</span>
+			<button class="cp-Splash-Btn cp-Splash-close" aria-label="Close this modal" title="Close this window">
+				<svg id="iconClose" viewbox="0 0 25 25">
+					<polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon>
+				</svg>
+			</button>
+		</div>
+		<div class="cp-Splash-body">
+			<div class="cp-Splash-Prose editorContent fr-view fr-element" id="editorContentDesc">
+				<!-- Content from the Froala Editor will go here. -->
+				Loading
+			</div>
+		</div>
+		<div class="cp-Splash-footer">
+			<button class="cp-Splash-Btn cp-Splash-Btn--NoShow">Do Not Show Again</button>
+			<button class="cp-Splash-Btn cp-Splash-Btn--Close">Close</button>
+		</div>
+	</div>
+</div>
+<div tabindex="0"></div>
+
+<pre class="script-content">&lt;script src="/Assets/Scripts/APIClient.js"&gt;&lt;/script&gt;</pre>
+<pre class="script-content">&lt;script src="/Assets/Mystique/Shared/Scripts/Moment/Moment.min.js"&gt;&lt;/script&gt;</pre>
+<pre class="script-content">&lt;script src="/Assets/Scripts/SplashModal/SplashModalRender.js"&gt;&lt;/script&gt;</pre>
+<pre class="script-content">&lt;script&gt;
+
+		$(document).ready(function () {
+			var filter = {
+				targetId: '284',
+				targetType: 1
+			}
+
+			new SplashModalRender().triggerRender(filter);
+		});
+&lt;/script&gt;</pre>
+
+	
+	
+	
+	
+	
+
+
+
+	
+
+
+
+
+
+
+	<pre class="script-content">&lt;script src="/427659056.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+	<pre class="script-content">&lt;script&gt;
+document.addEventListener("DOMContentLoaded", () =&gt; {
+    const getValueTS = (elem, attr) =&gt; {
+      const val = window.getComputedStyle(elem)[attr];
+      return val ? parseInt(val, 10) : undefined;
+    };
+
+    const clampTS = (number, min, max) =&gt; Math.min(Math.max(number, min), max);
+
+    const isPageEditingTS = () =&gt; {
+      return document.querySelector("#doneEditing") !== null || typeof DesignCenter !== "undefined";
+    };
+
+    const isTransparentTS = (elem) =&gt; {
+      const bg = window.getComputedStyle(elem)['background-color'];
+      const bgColorRegexTS = /rgba\((\d+), (\d+), (\d+), (\d*\.?\d*)\)/;
+      const matchState = bg.match(bgColorRegexTS);
+      if (!matchState || matchState.length !== 5) return false;
+      const alpha = parseFloat(matchState[4], 10);
+      return alpha &gt;= 0 &amp;&amp; alpha &lt; 1;
+    };
+
+    const iterateLeftPads = (callback) =&gt; {
+      const containersTS = document.querySelectorAll("[class^='siteWrap'],[class*=' siteWrap']");
+      containersTS.forEach(containerTS =&gt; {
+        if (containerTS.id !== "bodyContainerTS" &amp;&amp; containerTS.getAttribute('data-skip-leftpad') === null) {
+          callback(containerTS);
+        }
+      });
+    };
+
+    const iterateRightPads = (callback) =&gt; {
+      const containersTS = document.querySelectorAll("[class^='siteWrap'],[class*=' siteWrap']");
+      containersTS.forEach(containerTS =&gt; {
+        if (containerTS.id !== "bodyContainerTS" &amp;&amp; containerTS.getAttribute('data-skip-rightpad') === null) {
+          callback(containerTS);
+        }
+      });
+    };
+
+    const anchor = document.getElementById("divToolbars");
+    const bodyWrapper = document.getElementById("bodyWrapper");
+    const outerSizingTS = document.getElementById("bannerContainerTS");
+    const innerSizingTS = document.getElementById("bannerSizingTS");
+    const bodyContainerTS = document.getElementById("bodyContainerTS");
+    const headerContainerTS = document.getElementById("headerContainerTS");
+
+    const fixedTopTS = document.querySelector(".fixedTopTS");
+    const fixedBottomTS = document.querySelector(".fixedBottomTS");
+    const fixedLeftTS = document.querySelector(".fixedLeftTS");
+    const fixedRightTS = document.querySelector(".fixedRightTS");
+
+    let initialTopTS;
+    let topAttachTS;
+    if (fixedTopTS) {
+      initialTopTS = getValueTS(fixedTopTS, 'top');
+      const attachment = fixedTopTS.getAttribute('data-attach');
+      if (attachment) topAttachTS = document.getElementById(attachment);
+    }
+
+    const resizeAdjustmentTS = () =&gt; {
+      const editing = isPageEditingTS();
+      const anchorStyle = getComputedStyle(anchor);
+      const anchorPaddingTop = parseInt(anchorStyle.paddingTop, 10);
+      // console.log("Padding Top:", anchorPaddingTop); 
+
+      // Sticky Top Adjustment
+      if (fixedTopTS) {
+        if (editing) {
+          fixedTopTS.classList.add("forceUnfixTS");
+        } else {
+          fixedTopTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedTopTS).position === "sticky") {
+          const anchorHeight = anchor ? anchor.offsetHeight - 1 : 0;
+          fixedTopTS.style.top = `${anchorHeight + initialTopTS}px`;
+          bodyWrapper.style.paddingTop = `${anchorHeight - anchorPaddingTop}px`;
+
+          if (isTransparentTS(fixedTopTS)) {
+            innerSizingTS.style.paddingTop = `${initialTopTS + fixedTopTS.offsetHeight - 1}px`;
+            outerSizingTS.style.paddingTop = "";
+          } else {
+            outerSizingTS.style.paddingTop = "";
+            innerSizingTS.style.paddingTop = "";
+          }
+        } else {
+          const mobileMenu = document.getElementById("nav-open-btn");
+          const mobileMenuHeight = mobileMenu ? mobileMenu.offsetHeight : 0;
+          fixedTopTS.style.top = "";
+          bodyWrapper.style.paddingTop = `${anchor.offsetHeight + mobileMenuHeight - anchorPaddingTop}px`;
+        }
+      }
+
+      // Sticky Bottom Adjustment
+      if (fixedBottomTS) {
+        if (editing || fixedBottomTS.offsetHeight &gt; 200) {
+          fixedBottomTS.classList.add("forceUnfixTS");
+        } else {
+          fixedBottomTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedBottomTS).position === "fixed") {
+          bodyContainerTS.style.paddingBottom = `${fixedBottomTS.offsetHeight}px`;
+          bodyWrapper.style.paddingTop = `${anchor.offsetHeight - anchorPaddingTop}px`;
+        } else {
+          bodyContainerTS.style.paddingBottom = "";
+          bodyWrapper.style.paddingTop = `${anchor.offsetHeight - anchorPaddingTop}px`;
+        }
+      }
+
+      // Fixed Left Adjustment
+      if (fixedLeftTS) {
+        if (editing) {
+          fixedLeftTS.classList.add("forceUnfixTS");
+        } else {
+          fixedLeftTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedLeftTS).position === "fixed") {
+          const anchorHeight = anchor ? anchor.offsetHeight - 1 : 0;
+          const headerHeight = headerContainerTS.offsetHeight - 1;
+          fixedLeftTS.style.top = `${anchorHeight + headerHeight + 100}px`;
+
+          const leftBoundingTS = fixedLeftTS.getBoundingClientRect();
+          iterateLeftPads(containerTS =&gt; {
+            const containerBoundingTS = containerTS.getBoundingClientRect();
+            if (containerBoundingTS.left &lt;= leftBoundingTS.right) {
+              containerTS.style.paddingLeft = `${leftBoundingTS.width + 16}px`;
+            }
+          });
+        }
+      }
+
+      // Fixed Right Adjustment
+      if (fixedRightTS) {
+        if (editing) {
+          fixedRightTS.classList.add("forceUnfixTS");
+        } else {
+          fixedRightTS.classList.remove("forceUnfixTS");
+        }
+
+        if (getComputedStyle(fixedRightTS).position === "fixed") {
+          const anchorHeight = anchor ? anchor.offsetHeight - 1 : 0;
+          const headerHeight = headerContainerTS.offsetHeight - 1;
+          fixedRightTS.style.top = `${anchorHeight + headerHeight + 100}px`;
+
+          const rightBoundingTS = fixedRightTS.getBoundingClientRect();
+          iterateRightPads(containerTS =&gt; {
+            const containerBoundingTS = containerTS.getBoundingClientRect();
+            if (containerBoundingTS.left &lt;= rightBoundingTS.right) {
+              containerTS.style.paddingRight = `${rightBoundingTS.width + 16}px`;
+            }
+          });
+        }
+      }
+    };
+
+    const scrollAdjustmentTS = () =&gt; {
+      if (!fixedTopTS || !topAttachTS) return;
+      const topPosition = getComputedStyle(fixedTopTS).position;
+      if (topPosition === "sticky" || topPosition === "absolute") {
+        const anchorBounding = anchor.getBoundingClientRect();
+        const attachBounding = topAttachTS.getBoundingClientRect();
+        fixedTopTS.style.top = `${Math.max(anchorBounding.bottom - 1, attachBounding.bottom)}px`;
+      } else {
+        fixedTopTS.style.top = `${initialTopTS}px`;
+      }
+    };
+
+    // Event Listeners for Scroll and Resize
+    window.addEventListener("scroll", scrollAdjustmentTS);
+    window.addEventListener("resize", () =&gt; {
+      clearTimeout(this.adjustTimeout);
+      this.adjustTimeout = setTimeout(resizeAdjustmentTS, 350);
+    });
+
+    // Initial adjustment on page load
+    resizeAdjustmentTS();
+  });
+&lt;/script&gt;</pre>
+
+<!-- email signup code -->
+<pre class="script-content">&lt;script&gt;
+if (document.location.pathname == "/list.aspx") {
+	const urlParams = new URLSearchParams(window.location.search);
+	const theEmail = urlParams.get('email');
+    if (theEmail) {
+        $("#emailAddressSignIn").val(theEmail);
+		signIn();
+    }
+}
+&lt;/script&gt;</pre>
+<!-- end Email signup code -->
+
+<!-- preload graphic button hover images -->
+<pre class="script-content">&lt;script&gt;
+$(document).ready(function() {
+    // Preload Images for Graphic Buttons .5 seconds after page loads
+    var waitToPreload = 500;
+
+    // Parse through the styles on the page, finding any image URLs
+    $($("style").text().match(/url\s*\('?\/?(?:[^/]+\/)*?([^/:]+)'?\)/g)).each(function() {
+        var url = this.replace("url(","").replace(")","").replaceAll("'","").replaceAll('"',"");
+        setTimeout(preloadImage, waitToPreload, url);
+    });
+
+    function preloadImage(url) {
+        var image = $("&lt;img /&gt;");
+        $(image).attr('src',url).appendTo('body').hide();
+    }
+});
+&lt;/script&gt;</pre>
+
+<pre class="script-content">&lt;script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"&gt;&lt;/script&gt;</pre>
+
+<!-- Start SiteImprove Script -->
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+/*&lt;![CDATA[*/
+(function() {
+var sz = document.createElement('script'); sz.type = 'text/javascript'; sz.async = true;
+sz.src = '//siteimproveanalytics.com/js/siteanalyze_6745.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sz, s);
+})();
+/*]]&gt;*/
+&lt;/script&gt;</pre>
+<!-- End SiteImprove Script -->
+
+
+<pre class="script-content">&lt;script type="text/javascript"&gt;
+    window._monsido = window._monsido || {
+        token: "gUHJ1NzC3wpOQrmj03jgIg",
+        statistics: {
+            enabled: true,
+            cookieLessTracking: false,
+            documentTracking: {
+                enabled: true,
+                documentCls: "monsido_download",
+                documentIgnoreCls: "monsido_ignore_download",
+                documentExt: [],
+            },
+        },
+        heatmap: {
+            enabled: true,
+        },
+        pageAssistV2: {
+            enabled: true,
+            theme: "light",
+            mainColor: "#783CE2",
+            textColor: "#ffffff",
+            linkColor: "#783CE2",
+            buttonHoverColor: "#783CE2",
+            mainDarkColor: "#052942",
+            textDarkColor: "#ffffff",
+            linkColorDark: "#FFCF4B",
+            buttonHoverDarkColor: "#FFCF4B",
+            greeting: "Discover your personalization options",
+            direction: "leftbottom",
+            coordinates: "undefined undefined undefined undefined",
+            iconShape: "circle",
+            title: "Personalization Options",
+            titleText: "Welcome to PageAssist™ toolbar! Adjust the options below to cater the website to your accessibility needs.",
+            iconPictureUrl: "logo",
+            logoPictureUrl: "",
+            logoPictureBase64: "",
+            languages: [""],
+            defaultLanguage: "",
+            skipTo: false,
+            alwaysOnTop: false,
+hotkeyEnabled: false
+        },
+    };
+&lt;/script&gt;</pre>
+<pre class="script-content">&lt;script type="text/javascript" async src="https://app-script.monsido.com/v2/monsido-script.js"&gt;&lt;/script&gt;</pre>
+
+<!-- THIS SCRIPT WAS ESTABLISHED TO ALLOW FOR RESPONSIVE RESIZING OF THE FACEBOOK IFRAMES SITE-WIDE -->
+
+<style>
+  .facebook-container {
+    text-align: center;
+    width: 100%;
+    max-width: 500px; /* Adjust as needed */
+    margin: 0 auto;
+  }
+</style>
+
+<pre class="script-content">&lt;script&gt;
+  (function () {
+    const minWidth = 220;
+    const maxWidth = 500; // Facebook widget will not expand past 500
+
+    function clamp__TS(num, min, max) {
+      return Math.min(Math.max(num, min), max);
+    }
+
+    function adjustFacebookContainers__TS() {
+      const iframes = document.querySelectorAll('iframe[src*="facebook.com"]');
+      iframes.forEach(iframe =&gt; {
+        if (!iframe.parentElement.classList.contains('facebook-container')) {
+          const container = document.createElement('div');
+          container.classList.add('facebook-container');
+          iframe.parentNode.insertBefore(container, iframe);
+          container.appendChild(iframe);
+        }
+        adjustContainer__TS(iframe.parentElement);
+      });
+    }
+
+    function adjustContainer__TS(container) {
+      const frame = container.querySelector('iframe');
+      if (!frame) {
+        console.warn("No facebook widget found...");
+        return;
+      }
+      const containerWidth = container.clientWidth;
+      const newWidth = clamp__TS(containerWidth, minWidth, maxWidth);
+
+      // Use jQuery to manipulate the iframe's src and dimensions
+      const src = new URL(frame.getAttribute("src"));
+      src.searchParams.set("width", newWidth);
+      frame.setAttribute("src", src);
+      frame.setAttribute("width", newWidth);
+    }
+
+    window.addEventListener('load', adjustFacebookContainers__TS);
+    window.addEventListener('resize', adjustFacebookContainers__TS);
+  })();
+&lt;/script&gt;</pre>
+
+
+<!-- THIS SCRIPT WAS ESTABLISHED TO ALLOW FOR BACKGROUNDS TO RETAIN FIXED POSITIONING ON MOBILE  -->
+
+<!-- Moves the assigned banner to the outer wrap.  Make sure the selector below matches the selector specified in your site's XML files! -->
+
+<pre class="script-content">&lt;script&gt;
+  function moveBannerToOuterWrap() {
+    if ($(".fixedBannerTS #bannerDivbanner2").length) {
+      $(".fixedBannerTS #bannerDivbanner2").appendTo("#outer-wrap");
+    } else {
+      setTimeout(function () {
+        moveBannerToOuterWrap();
+      }, 500);
+    }
+  }
+
+  moveBannerToOuterWrap();
+&lt;/script&gt;</pre>
+
+
+<!----------Google Translate (Mobile Friendly)--------->
+
+<style>
+  #google-translate-container {
+    float: right;
+    padding: 3px 5px 0px 0px;
+    position: fixed; 
+    bottom: 16px; 
+    right: 92px; 
+    z-index: 5;
+  }
+  
+  .goog-te-combo, .goog-te-banner *, .goog-te-ftab *, .goog-te-menu *, .goog-te-menu2 *, .goog-te-balloon * {
+    font-family: arial;
+    font-size: 10pt;
+    background-image: url("https://www.gstatic.com/images/branding/product/2x/translate_24dp.png");
+    background-position: 5px 5px;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    text-indent: 16px;
+    background-color: #fff;
+    color: #000 !important;
+  }
+  
+  .goog-logo-link {
+    display: none !important;
+  }
+  
+  .goog-te-gadget {
+    color: transparent !important;
+  }
+  
+  .goog-te-gadget .goog-te-combo {
+    margin: 2px 0 !important;
+    border-radius: 15px !important;
+    }
+  
+  .goog-te-combo{
+    border: 1px solid !important;
+    border-color: #bcc9d7 #96a3b1 #96a3b1 #bcc9d7 !important;
+    border-radius: 50px !important;
+    height:31px !important;
+    padding: 0 1px 0 .25rem !important;
+                width: 156px;
+  }
+
+  #launcher-wrapper {
+    bottom: 50px !important;
+  }
+
+</style>
+
+<div id="google-translate-container">
+  <div id="google_translate_element">
+  </div>
+</div>
+
+<pre class="script-content">&lt;script&gt;
+
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
+    // begin accessibility compliance
+    $('img.goog-te-gadget-icon').attr('alt','Google Translate');
+    $('div#goog-gt-tt div.logo img').attr('alt','translate');
+    $('div#goog-gt-tt .original-text').css('text-align','left');
+    $('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+    $('.goog-te-combo').attr('aria-label','google translate languages');
+    $('svg.goog-te-spinner').attr('title','Google Translate Spinner');
+    $('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+  }
+
+  $(function() {
+    $.getScript("//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit");
+  });
+
+&lt;/script&gt;</pre>
+
+<!--------------End Google Translate----------------->
+
+
+	<pre class="script-content">&lt;script type="text/javascript"&gt;
+		$(function () {
+			document.cookie = "responsiveGhost=0; path=/";
+		});
+		$(window).on("load", function () {
+			$('body').addClass('doneLoading').removeClass('hideContent');
+
+			if ($('#404Content').length &gt; 0)
+				$('div#bodyWrapper').css('padding', '0px');
+		});
+	&lt;/script&gt;</pre>
+
+	<noscript>
+		<style>
+			body.hideContent {
+				opacity: 1 !important;
+			}
+		</style>
+	</noscript>
+
+		
+<div style="display: none;">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+		<symbol id="iconArrow--left" viewbox="0 0 25 25">
+			<title>Arrow Left</title>
+			<polygon style="fill:currentcolor" points="18.044,25 19.498,23.545 8.409,12.454 19.408,1.455 17.954,0 5.502,12.452"></polygon>
+		</symbol>
+
+		<symbol id="iconArrow--right" viewbox="0 0 25 25">
+			<title>Arrow Right</title>
+			<polygon style="fill:currentcolor" points="6.957,0 5.502,1.455 16.591,12.546 5.592,23.545 7.047,25 19.498,12.548"></polygon>
+		</symbol>
+
+	</svg>
+</div>
+	<pre class="script-content">&lt;script type="text/javascript"&gt;loadCSS('//fonts.googleapis.com/css?family=Lato:300,300italic,700,700italic,900,900italic,italic,regular|Libre+Baskerville:700,italic,regular|Roboto:700,900|Roboto+Condensed:700|Roboto+Slab:700|');&lt;/script&gt;</pre>
+	
+
+	<div class="hidden activeWidgetSkinComponentsOnPageJson">[{"WidgetSkinID":56,"ComponentType":0,"FontFamily":"","FontVariant":"","FontColor":"","FontSize":0.00,"FontStyle":0,"TextAlignment":0,"ShadowColor":"","ShadowBlurRadius":0,"ShadowSpreadRadius":0,"ShadowOffsetX":0,"ShadowOffsetY":0,"ShadowInset":false,"ShadowColor2":"","ShadowBlurRadius2":0,"ShadowSpreadRadius2":0,"ShadowOffsetX2":0,"ShadowOffsetY2":0,"ShadowInset2":false,"ShadowColor3":"","ShadowBlurRadius3":0,"ShadowSpreadRadius3":0,"ShadowOffsetX3":0,"ShadowOffsetY3":0,"ShadowInset3":false,"ShadowColor4":"","ShadowBlurRadius4":0,"ShadowSpreadRadius4":0,"ShadowOffsetX4":0,"ShadowOffsetY4":0,"ShadowInset4":false,"ShadowColor5":"","ShadowBlurRadius5":0,"ShadowSpreadRadius5":0,"ShadowOffsetX5":0,"ShadowOffsetY5":0,"ShadowInset5":false,"Capitalization":0,"HeaderMiscellaneousStyles1":"","HeaderMiscellaneousStyles2":"","HeaderMiscellaneousStyles3":"","BulletStyle":0,"BulletWidth":2.00,"BulletColor":"","LinkNormalColor":"","LinkNormalUnderlined":false,"LinkNormalMiscellaneousStyles":"","LinkVisitedColor":"","LinkVisitedMiscellaneousStyles":"","LinkHoverColor":"","LinkHoverUnderlined":false,"LinkHoverMiscellaneousStyles":"","LinkSelectedUnderlined":false,"ForceReadOnLinkToNewLine":false,"DisplayColumnSeparator":false,"ColumnSeparatorWidth":0.0000,"HoverBackgroundColor":"","HoverBackgroundGradientStartingColor":"","HoverBackgroundGradientEndingColor":"","HoverBackgroundGradientDirection":0,"HoverBackgroundGradientDegrees":0.0000000,"HoverBackgroundImageFileName":"","HoverBackgroundImagePositionXUseKeyword":true,"HoverBackgroundImagePositionXKeyword":0,"HoverBackgroundImagePositionX":{"Value":0.0000,"Unit":0},"HoverBackgroundImagePositionYUseKeyword":true,"HoverBackgroundImagePositionYKeyword":0,"HoverBackgroundImagePositionY":{"Value":0.0000,"Unit":0},"HoverBackgroundImageRepeat":0,"HoverBorderStyle":0,"HoverBorderWidth":0,"HoverBorderColor":"","HoverBorderSides":15,"HoverBorderRadiusTopLeft":{"Value":null,"Unit":1},"HoverBorderRadiusTopRight":{"Value":null,"Unit":1},"HoverBorderRadiusBottomRight":{"Value":null,"Unit":1},"HoverBorderRadiusBottomLeft":{"Value":null,"Unit":1},"SelectedBackgroundColor":"","SelectedBackgroundGradientStartingColor":"","SelectedBackgroundGradientEndingColor":"","SelectedBackgroundGradientDirection":0,"SelectedBackgroundGradientDegrees":0.0000000,"SelectedBackgroundImageFileName":"","SelectedBackgroundImagePositionXUseKeyword":true,"SelectedBackgroundImagePositionXKeyword":0,"SelectedBackgroundImagePositionX":{"Value":0.0000,"Unit":0},"SelectedBackgroundImagePositionYUseKeyword":true,"SelectedBackgroundImagePositionYKeyword":0,"SelectedBackgroundImagePositionY":{"Value":0.0000,"Unit":0},"SelectedBackgroundImageRepeat":0,"SelectedBorderStyle":0,"SelectedBorderWidth":0,"SelectedBorderColor":"","SelectedBorderSides":15,"SelectedBorderRadiusTopLeft":{"Value":null,"Unit":1},"SelectedBorderRadiusTopRight":{"Value":null,"Unit":1},"SelectedBorderRadiusBottomRight":{"Value":null,"Unit":1},"SelectedBorderRadiusBottomLeft":{"Value":null,"Unit":1},"HoverFontFamily":"","HoverFontVariant":"","HoverFontColor":"","HoverFontSize":0.00,"HoverFontStyle":0,"HoverTextAlignment":0,"HoverShadowColor":"","HoverShadowBlurRadius":0,"HoverShadowSpreadRadius":0,"HoverShadowOffsetX":0,"HoverShadowOffsetY":0,"HoverShadowInset":false,"HoverShadowColor2":"","HoverShadowBlurRadius2":0,"HoverShadowSpreadRadius2":0,"HoverShadowOffsetX2":0,"HoverShadowOffsetY2":0,"HoverShadowInset2":false,"HoverShadowColor3":"","HoverShadowBlurRadius3":0,"HoverShadowSpreadRadius3":0,"HoverShadowOffsetX3":0,"HoverShadowOffsetY3":0,"HoverShadowInset3":false,"HoverShadowColor4":"","HoverShadowBlurRadius4":0,"HoverShadowSpreadRadius4":0,"HoverShadowOffsetX4":0,"HoverShadowOffsetY4":0,"HoverShadowInset4":false,"HoverShadowColor5":"","HoverShadowBlurRadius5":0,"HoverShadowSpreadRadius5":0,"HoverShadowOffsetX5":0,"HoverShadowOffsetY5":0,"HoverShadowInset5":false,"HoverCapitalization":0,"SelectedFontFamily":"","SelectedFontVariant":"","SelectedFontColor":"","SelectedFontSize":0.00,"SelectedFontStyle":0,"SelectedShadowColor":"","SelectedShadowBlurRadius":0,"SelectedShadowSpreadRadius":0,"SelectedShadowOffsetX":0,"SelectedShadowOffsetY":0,"SelectedShadowInset":false,"SpaceBetweenTabs":0,"SpaceBetweenTabsUnits":"","Trigger":4,"AnimationId":"00000000-0000-0000-0000-000000000000","AnimationClass":"animation00000000000000000000000000000000","ScrollOffset":80,"TriggerNameLowerCase":"scroll","ParentComponentWithTrigger":null,"BackgroundColor":"rgb(44, 53, 62)","BackgroundGradientStartingColor":"","BackgroundGradientEndingColor":"","BackgroundGradientDirection":0,"BackgroundGradientDegrees":0.0000000,"BackgroundImageFileName":"","BackgroundImagePositionXUseKeyword":true,"BackgroundImagePositionXKeyword":0,"BackgroundImagePositionX":{"Value":0.0,"Unit":0},"BackgroundImagePositionYUseKeyword":true,"BackgroundImagePositionYKeyword":0,"BackgroundImagePositionY":{"Value":0.0,"Unit":0},"BackgroundImageRepeat":0,"BorderStyle":0,"BorderWidth":0,"BorderColor":"","BorderSides":15,"BorderRadiusTopLeft":{"Value":null,"Unit":1},"BorderRadiusTopRight":{"Value":null,"Unit":1},"BorderRadiusBottomRight":{"Value":null,"Unit":1},"BorderRadiusBottomLeft":{"Value":null,"Unit":1},"MarginTop":{"Value":null,"Unit":0},"MarginRight":{"Value":null,"Unit":0},"MarginBottom":{"Value":null,"Unit":0},"MarginLeft":{"Value":null,"Unit":0},"PaddingTop":{"Value":null,"Unit":0},"PaddingRight":{"Value":null,"Unit":0},"PaddingBottom":{"Value":null,"Unit":0},"PaddingLeft":{"Value":null,"Unit":0},"MiscellaneousStyles":"box-shadow: 0px 3px 6px #00000029;","RecordStatus":0}]</div>
+		<div style="display: none;">
+			<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+				<symbol id="iconSlideshowArrowLeft" viewbox="0 0 22.68 40">
+					<title>Slideshow Left Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M20,40a2.67,2.67,0,0,1-1.9-.79L.79,21.9a2.68,2.68,0,0,1,0-3.79L18.1.79a2.68,2.68,0,1,1,3.79,3.79L6.47,20,21.89,35.42A2.68,2.68,0,0,1,20,40Z"></path>
+					</g>
+				</symbol>
+				<symbol id="iconSlideshowArrowRight" viewbox="0 0 22.68 40">
+					<title>Slideshow Right Arrow</title>
+					<g>
+						<path style="fill:currentcolor;" d="M2.68,0a2.67,2.67,0,0,1,1.9.79L21.89,18.1a2.68,2.68,0,0,1,0,3.79L4.58,39.21A2.68,2.68,0,0,1,.79,35.42L16.21,20,.79,4.58A2.68,2.68,0,0,1,2.68,0Z"></path>
+					</g>
+				</symbol>
+			</svg>
+		</div>
+	
+	
+
+	<div id="root-picker-outlet"></div>
+</body>
+</html>
