@@ -18,13 +18,13 @@ module CityScrape
         next unless partial_city_directory.present? && CityScrape::CityManager.includes_people?(partial_city_directory)
 
         dirs_with_people << candidate_dir
-        @city_directory = CityScrape::CityManager.merge_directory(@city_directory, partial_city_directory, url)
+        @city_directory = CityScrape::CityManager.merge_directory(@city_directory, partial_city_directory)
 
         break if CityScrape::CityManager.valid_city_directory?(@city_directory)
       end
 
       [dirs_with_people, @city_directory]
-    end 
+    end
 
     def process_page(url, index)
       puts "Fetching #{url}"

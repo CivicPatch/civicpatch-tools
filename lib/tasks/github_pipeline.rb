@@ -28,16 +28,21 @@ namespace :github_pipeline do
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Sources
-      #{city_directory["sources"].join("\n")}
+      #{city_directory["people"].map { |person| person["sources"].map { |source| source["url"] }.join("\n") }.join("\n")}
       ## People
       #{city_directory["people"].map do |person|
-        position_markdown = <<~POSITION
-          **Position:** #{person["position"] || "N/A"}
-        POSITION
+        email = person["contact_details"].find { |contact| contact["type"] == "email" }&.dig("value")
+        phone = person["contact_details"].find { |contact| contact["type"] == "phone" }&.dig("value")
+        website = person["links"].find { |link| link["url"].present? && link["url"].include?("http") }&.dig("url")
 
-        position_misc_markdown = <<~POSITION_MISC
-          **Position Misc:** #{person["position_misc"] || "N/A"}
-        POSITION_MISC
+        position_markdown = <<~POSITION
+          **Positions:** #{if person["other_names"].present?
+                             person["other_names"].map { |other_name| other_name["name"] }.join(", ")
+                           else
+                             "N/A"
+                           end
+                         }
+        POSITION
 
         image_markdown = if person["image"].present?
                            image_url = "#{base_image_url}/#{person["image"]}?raw=true"
@@ -48,25 +53,25 @@ namespace :github_pipeline do
                            "" # Ensure image_markdown is an empty string if no image is present
                          end
 
-        email_markdown = if person["email"].present?
+        email_markdown = if email.present?
                            <<~EMAIL
-                             **Email:** #{person["email"]}
+                             **Email:** #{email}
                            EMAIL
                          else
                            "**Email:** N/A"
                          end
 
-        phone_markdown = if person["phone_number"].present?
+        phone_markdown = if phone.present?
                            <<~PHONE
-                             **Phone:** #{person["phone_number"]}
+                             **Phone:** #{phone}
                            PHONE
                          else
                            "**Phone:** N/A"
                          end
 
-        website_markdown = if person["website"].present?
+        website_markdown = if website.present?
                              <<~WEBSITE
-                               **Website:** [Link](#{person["website"]})
+                               **Website:** [Link](#{website})
                              WEBSITE
                            else
                              "**Website:** N/A"
@@ -75,7 +80,6 @@ namespace :github_pipeline do
           ********************************************************
           ### **Name:** #{person["name"]}
           #{position_markdown}
-          #{position_misc_markdown}
           #{email_markdown}
           #{phone_markdown}
           #{website_markdown}

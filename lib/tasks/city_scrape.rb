@@ -154,7 +154,7 @@ namespace :city_scrape do
   def build_city_directory(search_engines, state, city_entry, openai_service, data_fetcher)
     search_results_processed = []
     local_source_dirs = []
-    city_directory = { "people" => [], "sources" => [] }
+    city_directory = { "people" => [] }
 
     search_engines.each do |engine|
       search_result_urls = CityScrape::SearchManager.fetch_search_results(engine, state, city_entry)
