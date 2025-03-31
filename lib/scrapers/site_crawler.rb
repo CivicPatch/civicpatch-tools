@@ -48,109 +48,88 @@ module Scrapers
     end
 
     def self.process_links(url, keywords, base_domain, session)
+      puts "Processing links for #{url}"
       url_text_pairs = []
 
       begin
-        puts "Processing links: #{url}"
         response = fetch_html(url, session)
-
         document = Nokogiri::HTML(response)
         page_base_url = document.css("base").first&.attr("href") || url
         link_base_url = URI.parse(page_base_url).absolute? ? page_base_url : URI.join(base_domain, page_base_url)
-      rescue StandardError => e
-        puts "Error processing links: #{e}"
-        puts "Backtrace: #{e.backtrace}"
-        return url_text_pairs
-      end
 
-      document.css("a").each do |link|
-        # ignore if the link is a mailto link
-        href = link["href"]&.strip # Trim whitespace from href
-        next unless href
-        next if href.starts_with?("mailto:")
-        next if href.ends_with?(".xml", ".json", ".csv", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx")
+        document.css("a").each do |link|
+          href = link["href"]&.strip
+          next unless valid_link?(href, base_domain)
 
-        # Skip URLs with non-ASCII characters
-        next unless href.ascii_only? # Skip if href contains non-ASCII characters
+          full_url = get_full_url(href, link_base_url)
+          link_text = link.text.strip
 
-        # Encode the URL to ensure it is ASCII only
-        href = URI::DEFAULT_PARSER.escape(href)
-        href = Scrapers::Common.format_url(href)
-        # Check if the href is an absolute URL
-        full_url = URI.parse(href).absolute? ? URI.parse(href).to_s : URI.join(link_base_url, href).to_s
-        next unless URI(full_url).host == URI(base_domain).host # Ensure the link belongs to the base domain
+          text_match = keywords.any? do |keyword|
+            match = link_text.downcase.include?(keyword.downcase)
+            match
+          end
 
-        link_text = link.text.strip
-        url_text_pairs << [full_url, link_text] if keywords.any? do |keyword|
-          link_text.downcase.include?(keyword.downcase)
+          url_match = keywords.any? do |keyword|
+            match = full_url.downcase.include?(keyword.downcase)
+            match
+          end
+
+          url_text_pairs << [full_url, link_text] if text_match || url_match
         end
+
+      rescue StandardError
+        []
       end
 
       url_text_pairs
     end
 
-    def self.crawl(base_url, keywords, visited = {}, session = nil, max_links = nil)
+    def self.crawl(base_url, keywords, visited = {}, session = nil, max_links = 20)
       root_url ||= base_url
       links_processed = 0
-      grouped_urls = Hash.new { |hash, key| hash[key] = [] }
       url_text_pairs = []
 
-      queue = [[base_url, "", {}]]  # [url, text, scores]
+      # [url, text, depth]
+      queue = [[base_url, "", 0]]
+      current_depth = 0
 
-      while !queue.empty? && (max_links.nil? || links_processed < max_links)
-        current_url, current_text, current_scores = queue.shift
-        next if visited[current_url]
+      begin
+        while !queue.empty? && links_processed < max_links
+          # Process all links at current depth before moving deeper
+          current_level_size = queue.count { |_, _, depth| depth == current_depth }
 
-        visited[current_url] = true
-        links_processed += 1
+          while current_level_size.positive? && links_processed < max_links
+            current_url, _, depth = queue.shift
+            next if visited[current_url]
 
-        begin
-          new_links = process_links(current_url, keywords, base_url, session)
+            visited[current_url] = true
+            links_processed += 1
+            current_level_size -= 1
 
-          # Process and rank new links
-          new_links.each do |url, text|
-            next if visited[url]
+            begin
+              new_links = process_links(current_url, keywords, base_url, session)
+              url_text_pairs.concat(new_links)
 
-            scores = calculate_ranking(url, text)
+              # Add new links with increased depth
+              new_links.each do |url, text|
+                next if visited[url]
 
-            # Add to queue, maintaining priority based on scores
-            insert_index = queue.bsearch_index do |_, _, other_scores|
-              compare_scores(scores, other_scores).negative?
-            end || queue.length
-            queue.insert(insert_index, [url, text, scores])
-          end
+                queue << [url, text, depth + 1]
+              end
 
-          CityScrape::CityManager::KEYWORD_GROUPS.each_key do |group_name|
-            if current_scores[group_name]
-              grouped_urls[group_name] << [current_url, current_text]
+            rescue StandardError
+              []
             end
           end
+
+          # Move to next depth level if we've processed all current level links
+          current_depth += 1 if current_level_size.zero?
         end
+      rescue StandardError
+        []
       end
 
-      # Return sorted pairs maintaining the same grouping and sorting as Common.sort_url_pairs
-      grouped_urls.values.flatten(1)
-    end
-
-    # Helper method to calculate ranking score for a URL and text
-    def self.calculate_ranking(url, text)
-      scores = {}
-      CityScrape::CityManager::KEYWORD_GROUPS.each do |group_name, keywords|
-        next unless keywords.any? { |keyword| text.downcase.include?(keyword.downcase) }
-
-        date_penalty = if has_date?(url.downcase) || has_date?(text.downcase)
-          100  # Increase this number to penalize dates more heavily
-        else
-          0
-        end
-
-        scores[group_name] = [
-          -Scrapers::Common.score_text(text, keywords),
-          -Scrapers::Common.keyword_count_in_url(url, keywords),
-          url.length + date_penalty  # Add penalty to length score
-        ]
-      end
-      scores
+      url_text_pairs
     end
 
     def self.has_date?(text)
@@ -188,20 +167,20 @@ module Scrapers
       end
     end
 
-    def self.compare_scores(scores1, scores2)
-      # Compare scores using the same priority as the original algorithm
-      CityScrape::CityManager::KEYWORD_GROUPS.each do |group_name, _|
-        score1 = scores1[group_name]
-        score2 = scores2[group_name]
+    def self.valid_link?(href, base_domain)
+      return false if href.nil? || href.empty?
+      return false if href.starts_with?("mailto:")
+      return false if href.ends_with?(".xml", ".json", ".csv", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx")
+      return false unless href.ascii_only?
+      return false unless href.start_with?("/") || href.start_with?(base_domain)
+      true
+    end
 
-        next if score1.nil? && score2.nil?
-        return -1 if score1.nil?
-        return 1 if score2.nil?
-
-        comparison = score1 <=> score2
-        return comparison unless comparison == 0
-      end
-      0
+    def self.get_full_url(href, link_base_url)
+      href = URI::DEFAULT_PARSER.escape(href)
+      href = Scrapers::Common.format_url(href)
+      full_url = URI.parse(href).absolute? ? URI.parse(href).to_s : URI.join(link_base_url, href).to_s
+      full_url
     end
   end
 end

@@ -5,7 +5,7 @@ require_relative "../services/openai"
 namespace :scratch do
   desc "Fetch data using Scrapers::DataFetcher"
   task :fetch  do |_t, args|
-    url = "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+    url = "https://seattle.gov/mayor/about"
     destination_dir = PathHelper.project_path("./testing")
 
     begin

@@ -12,7 +12,7 @@ module CityScrape
         urls = Services::Brave.get_search_result_urls(search_query, website, CityScrape::CityManager::KEYWORD_GROUPS)
       end
 
-      urls = Scrapers::Common.urls_without_segments(urls, %w[news events event])
+      Scrapers::Common.urls_without_segments(urls, %w[news events event])
     end
   end
 end

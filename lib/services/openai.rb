@@ -25,64 +25,59 @@ module Services
         { role: "user", content: user_instructions }
       ]
       response_yaml = run_prompt(messages)
-      response = response_to_yaml(response_yaml)
+      response = format_yaml_content(response_yaml)
 
       return response if response["error"].present?
 
       # filter out invalid people
       response["people"] = response["people"].select do |person|
         Scrapers::Standard.valid_name?(person["name"]) &&
-          (person["position"].present? || person["position_misc"].present?) &&
+          person["positions"].present? &&
           (person["phone_number"].present? || person["email"].present? || person["website"].present?)
       end
 
       response["people"] = response["people"].map do |person|
-        person = Scrapers::Standard.format_person(person)
+        person = Scrapers::Standard.format_person(person, city_council_url, person["website"])
         person
       end
 
       response
     end
 
-    def extract_person_information(content_file)
+    def extract_person_information(content_file, url)
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
-        You are an expert data extractor.
-        Extract the following properties from the provided content
-        - name
-        - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
-        - position_misc (An array of strings, if available)
-        - phone_number
-        - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-        - email
-        - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-        - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+          You are an expert data extractor.
+          Extract the following properties from the provided content
+          - name
+          - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+          - phone_number
+          - email
+          - positions (An array of objects, if available)
+          - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+          - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
-      Notes: 
-      - Return the results in YAML format.
-      - If the content is not a person, YAML with the key "error" and the value "Not a person".
-      - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
-        can be directly inferred with certainty—do not assume or estimate missing information.
-      - start_term_date and end_term_date should be strings.
-      - For "position_misc", convert the following ambiguous position titles into a structured YAML format. 
-        Preserve non-numeric names as they are.
-        For titles like "city attorney" or "city clerk",
-        categorize them under `type: "role"` with the role name as the value.
-        Examples:
+        Notes:
+        - Return the results in YAML format.
+        - If the content is not a person, YAML with the key "error" and the value "Not a person".
+        - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
+          can be directly inferred with certainty—do not assume or estimate missing information.
+        - start_term_date and end_term_date should be strings.
+        - For "positions", convert the following ambiguous position titles into a structured YAML format.#{" "}
+          Preserve non-numeric names as they are.
+          For titles like "city attorney" or "city clerk",
+          categorize them under `type: "role"` with the role name as the value.
+          People can have multiple positions and roles.
+          Examples:
 
-        Input: "ward 3" → Output: `{ type: "ward", value: "3" }`
-        Input: "ward #3" → Output: `{ type: "ward", value: "3" }`
-        Input: "position #5" → Output: `{ type: "position", value: "5" }`
-        Input: "5th position" → Output: `{ type: "position", value: "5" }`
-        Input: "district 8" → Output: `{ type: "district", value: "8" }`
-        Input: "district blue" → Output: `{ type: "district", value: "blue" }`
-        Input: "blue district" → Output: `{ type: "district", value: "blue" }`
-        Input: "alumnus ward" → Output: `{ type: "ward", value: "alumnus" }`
-        Input: "city attorney" → Output: `{ type: "role", value: "city attorney" }`
-        Input: "city clerk" → Output: `{ type: "role", value: "city clerk" }`
-        Input: "position 5" → Output: `{ type: "position", value: "5" }`
-        Input: "seat 5" → Output: `{ type: "seat", value: "5" }`
-        Input: "council vice president" → Output: `{ type: "role", value: "council vice president" }`
+          Input: "council member ward 3" → Output: `[{ type: "role", value: "council member" }, { type: "ward", value: "3" }]`
+          Input: "ward #3" → Output: `[{ type: "ward", value: "3" }]`
+          Input: "3rd district" → Output: `[{ type: "ward", value: "3" }]`
+          Input: "seat 5" → Output: `[{ type: "role", value: "council member" }, { type: "seat", value: "5" }]`
+          Input: "council vice president" → Output: `[{ type: "role", value: "council vice president" }]`
+          Input: "mayor" → Output: `[{ type: "role", value: "mayor" }]`
+          Input: "mayor position 7" → Output: `[{ type: "role", value: "mayor" }, { type: "position", value: "7" }]`
+          Input: "council president" → Output: `[{ type: "role", value: "council president" }]`
       INSTRUCTIONS
 
       user_instructions = <<~USER
@@ -97,26 +92,12 @@ module Services
 
       response = run_prompt(messages)
 
-      response = response_to_yaml(response)
+      response = format_yaml_content(response)
 
       # TODO: handle errors
       return nil if response["error"].present?
 
-      Scrapers::Standard.format_person(response)
-    end
-
-    def response_to_yaml(response_content)
-      # Extract YAML content from the response
-      # If the response is wrapped in ```yaml ... ``` or similar, extract just the YAML content
-      yaml_content = if response_content.match?(/```(?:yaml|yml)?\s*(.*?)```/m)
-                       response_content.match(/```(?:yaml|yml)?\s*(.*?)```/m)[1]
-                     else
-                       response_content
-                     end
-
-      YAML.safe_load(yaml_content,
-                     permitted_classes: [],
-      )
+      Scrapers::Standard.format_person(response, url)
     end
 
     def generate_city_info_prompt(content, city_council_url)
@@ -128,15 +109,14 @@ module Services
         For each city leader or council member (leave empty if not found):
           - people:
               - name
-              - position (Strictly mayor, council_president, or council_member. Leave blank if not found)
-              - position_misc (An array of strings, if available)
-              - phone_number
               - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+              - phone_number
               - email
-              - website (Provide the absolute URL.)
-                If no specific website is provided, leave this empty — do not default to the general city or council page.)
+              - positions (an array of objects, if available)
               - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
               - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+              - website (Provide the absolute URL.)
+                If no specific website is provided, leave this empty — do not default to the general city or council page.)
 
         Basic rules:
         - Youth council members are NOT city council members.
@@ -150,36 +130,38 @@ module Services
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
           They should be strings.
-        - For "position_misc", convert the following ambiguous position titles into a structured YAML format.
-          Preserve non-numeric names as they are. 
-          For titles like "city attorney" or "city clerk", 
+        - For "positions", convert the following ambiguous position titles into a structured YAML format.
+          Preserve non-numeric names as they are.#{" "}
+          For titles like "city attorney" or "city clerk",#{" "}
           categorize them under `type: "role"` with the role name as the value.
+          People can have multiple positions and roles.
           Examples:
-          Input: "ward 3" → Output: `{ type: "ward", value: "3" }`
-          Input: "ward #3" → Output: `{ type: "ward", value: "3" }`
-          Input: "position #5" → Output: `{ type: "position", value: "5" }`
-          Input: "5th position" → Output: `{ type: "position", value: "5" }`
-          Input: "district 8" → Output: `{ type: "district", value: "8" }`
-          Input: "district blue" → Output: `{ type: "district", value: "blue" }`
-          Input: "blue district" → Output: `{ type: "district", value: "blue" }`
-          Input: "alumnus ward" → Output: `{ type: "ward", value: "alumnus" }`
-          Input: "city attorney" → Output: `{ type: "role", value: "city attorney" }`
-          Input: "city clerk" → Output: `{ type: "role", value: "city clerk" }`
+          Input: "council member ward 3" → Output: `[{ type: "role", value: "council member" }, { type: "ward", value: "3" }]`
+          Input: "ward #3" → Output: `[{ type: "ward", value: "3" }]`
+          Input: "3rd district" → Output: `[{ type: "ward", value: "3" }]`
+          Input: "seat 5" → Output: `[{ type: "role", value: "council member" }, { type: "seat", value: "5" }]`
+          Input: "council vice president" → Output: `[{ type: "role", value: "council vice president" }]`
+          Input: "mayor" → Output: `[{ type: "role", value: "mayor" }]`
+          Input: "mayor position 7" → Output: `[{ type: "role", value: "mayor" }, { type: "position", value: "7" }]`
+          Input: "council president" → Output: `[{ type: "role", value: "council president" }]
 
         Example Output (YAML):
         ---
         people:
           - name: "Jane Smith"
-            position: council_member
-            position_misc:
-              - type: "seat"
-                value: "1"
+            positions:
+              - type: "role"
+                value: "council member"
+              - type: "position"
+                value: "5"
             phone_number: "555-123-4567"
             image: "images/smith.jpg"
             email: "jsmith@cityofexample.gov"
             website: "https://www.cityofexample.gov/council/smith"
           - name: "John Doe"
-            position_misc:
+            positions:
+              - type: "role"
+                value: "council member"
               - type: "ward"
                 value: "3"
             phone_number: ""
@@ -187,16 +169,19 @@ module Services
             email: ""
             website: "/council/doe"
           - name: "Robert Johnson"
-            position: mayor
+            positions:
+              - type: "role"
+                value: "mayor"
+              - type: "role"
+                value: "council member"
+              - type: "position"
+                value: "1"
             phone_number: "555-111-2222"
             image: "images/mayor.jpg"
             email: "mayor@cityofexample.gov"
             website: "https://www.cityofexample.gov/mayor"
             start_term_date: "2020-01-01"
             end_term_date: "2025-12-31"
-            position_misc:
-              - type: "role"
-                value: "city_attorney"
 
       INSTRUCTIONS
 
@@ -220,7 +205,6 @@ module Services
       response = @client.chat(
         parameters: {
           model: "gpt-4o-mini",
-          # model: "gpt-3.5-turbo",
           messages: messages,
           temperature: 0.0
         }
@@ -251,6 +235,38 @@ module Services
     def keywords_present?(position_misc)
       keywords = %w[position seat district ward]
       keywords.any? { |keyword| position_misc.include?(keyword) }
+    end
+
+    def format_yaml_content(response_content)
+      # Extract YAML content from code blocks if present
+      content = response_content.match(/```(?:yaml|yml)?\s*(.*?)```/m)&.[](1) || response_content
+
+      # Ensure content starts with YAML document marker
+      content = "---\n#{content}" unless content.start_with?("---")
+
+      # Remove any trailing whitespace and ensure ending newline
+      content = "#{content.strip}\n"
+
+      YAML.safe_load(content, permitted_classes: [])
+    end
+
+    def make_openai_request(client, messages, retries: 3, timeout: 60)
+      Timeout.timeout(timeout) do
+        client.chat(
+          parameters: {
+            model: "gpt-4", # or whatever model you're using
+            messages: messages,
+            temperature: 0.7
+          }
+        )
+      end
+    rescue Timeout::Error, Faraday::TimeoutError, Net::ReadTimeout => e
+      raise "OpenAI request failed after multiple retries: #{e.message}" unless retries > 0
+
+      puts "OpenAI request timed out. Retrying... (#{retries} attempts left)"
+      sleep(2) # Wait 2 seconds before retry
+      retries -= 1
+      retry
     end
   end
 end
