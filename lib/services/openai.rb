@@ -45,6 +45,8 @@ module Services
     end
 
     def extract_person_information(content_file, url)
+      positions = ["council member", "council president", "council vice president", "mayor"]
+
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
           You are an expert data extractor.
@@ -65,6 +67,8 @@ module Services
         - start_term_date and end_term_date should be strings.
         - For "positions", convert the following ambiguous position titles into a structured YAML format.#{" "}
           Preserve non-numeric names as they are.
+          The main positions we are interested in are #{positions.join(", ")}.
+          Do not list previous positions if their terms have ended.
           For titles like "city attorney" or "city clerk",
           categorize them under `type: "role"` with the role name as the value.
           People can have multiple positions and roles.
@@ -101,6 +105,7 @@ module Services
     end
 
     def generate_city_info_prompt(content, city_council_url)
+      positions = ["council member", "council president", "council vice president", "mayor"]
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
@@ -132,6 +137,8 @@ module Services
           They should be strings.
         - For "positions", convert the following ambiguous position titles into a structured YAML format.
           Preserve non-numeric names as they are.#{" "}
+          The main positions we are interested in are #{positions.join(", ")}.
+          Do not list previous positions if their terms have ended.
           For titles like "city attorney" or "city clerk",#{" "}
           categorize them under `type: "role"` with the role name as the value.
           People can have multiple positions and roles.

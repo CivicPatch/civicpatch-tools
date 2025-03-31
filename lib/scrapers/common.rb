@@ -5,7 +5,9 @@ require_relative "../tasks/city_scrape/city_manager"
 module Scrapers
   module Common
     def self.missing_contact_info?(person)
-      person["email"].blank? && person["phone"].blank?
+      email = person["contact_details"].find { |detail| detail["type"] == "email" }
+      phone = person["contact_details"].find { |detail| detail["type"] == "phone" }
+      email.blank? && phone.blank?
     end
 
     def self.prune_unused_images(state, city_entry)
@@ -118,20 +120,29 @@ module Scrapers
     def self.sort_url_pairs(url_pairs, keyword_groups)
       grouped_urls = Hash.new { |hash, key| hash[key] = [] }
 
+      # First, populate grouped_urls by checking both URL and text against keywords
       url_pairs.each do |url, text|
+        # Process URL to improve matching
+        url_words = url.downcase.split(%r{[/\-_]}).join(" ")
+
         keyword_groups.each do |group_name, keywords|
-          if keywords.any? { |keyword| text.downcase.include?(keyword.downcase) }
-            grouped_urls[group_name] << [url, text]
+          # Check if either URL or text matches any keyword in this group
+          next unless keywords.any? do |k|
+            url_words.include?(k.downcase) ||
+            url.downcase.include?(k.downcase) ||
+            text.downcase.include?(k.downcase)
           end
+
+          grouped_urls[group_name] << [url, text]
         end
       end
 
-      # Rank each url_pair by text, then by keywords in the url, and finally by url length
-      grouped_urls.each do |group_name, pairs|
-        grouped_urls[group_name] = pairs.sort_by do |url, text|
+      # Now sort each group by relevance
+      keyword_groups.each do |group_name, keywords|
+        grouped_urls[group_name] = grouped_urls[group_name].sort_by do |url, text|
           [
-            -score_text(text, keyword_groups[group_name]), # Rank by text score
-            -keyword_count_in_url(url, keyword_groups[group_name]), # Rank by keyword count in URL
+            -score_text(text, keywords), # Rank by text score
+            -keyword_count_in_url(url, keywords), # Rank by keyword count in URL
             url.length # Rank by URL length (shorter is better)
           ]
         end
@@ -139,15 +150,16 @@ module Scrapers
 
       # Interlace the sorted URLs from each group
       interlaced_results = []
-      max_length = grouped_urls.values.map(&:size).max
+      max_length = grouped_urls.values.map(&:size).max.to_i # Handle nil with to_i
 
       (0...max_length).each do |i|
-        grouped_urls.each_value do |urls|
-          interlaced_results << urls[i] if urls[i]
+        keyword_groups.each_key do |group_name| # Use keyword_groups order for priority
+          interlaced_results << grouped_urls[group_name][i] if grouped_urls[group_name][i]
         end
       end
 
-      interlaced_results.map { |url, _text| format_url(url) }.uniq
+      # Return unique formatted URLs with their text
+      interlaced_results.uniq { |url, _| url }
     end
 
     def self.format_url(url)
@@ -187,8 +199,8 @@ module Scrapers
       keywords.count { |keyword| url.downcase.include?(keyword.downcase.gsub(/[-_]/, "")) }
     end
 
-    def self.urls_without_segments(urls, segments)
-      urls.select do |url|
+    def self.urls_without_segments(url_pairs, segments)
+      url_pairs.select do |url, _text|
         url_segments = url.split("/").map(&:downcase)
         url_segments.none? { |segment| segments.include?(segment) }
       end

@@ -170,8 +170,6 @@ module CityScrape
         rule = MERGE_RULES[key] || { type: "FIRST" }
 
         merged_person[key] = if updated_person[key].is_a?(Array)
-                               puts "updated_person: #{updated_person[key].inspect}"
-                               puts "missing key: #{key}"
                                unique_field = MERGE_RULES[key][:value]
                                # Merge arrays, key only unique values by the indicated field
                                merged_array = (existing_person[key] + updated_person[key]).uniq do |item|

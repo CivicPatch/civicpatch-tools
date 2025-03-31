@@ -72,7 +72,7 @@ namespace :city_scrape do
                 Scrapers::Us::Mi::Directory
               else
                 raise "Unsupported state: #{state}"
-    end
+              end
 
     new_places = scraper.fetch_places
     CityScrape::StateManager.update_state_places(state, new_places)
@@ -89,7 +89,8 @@ namespace :city_scrape do
     openai_service = Services::Openai.new
     data_fetcher = Scrapers::DataFetcher.new
 
-    source_dirs, city_directory = build_city_directory(%w[manual brave], state, city_entry, openai_service, data_fetcher)
+    source_dirs, city_directory = build_city_directory(%w[manual brave], state, city_entry, openai_service,
+                                                       data_fetcher)
     finalize_city_directory(state, city_entry, city_directory, source_dirs)
   end
 
@@ -110,7 +111,6 @@ namespace :city_scrape do
     FileUtils.mkdir_p(cache_destination_dir)
     FileUtils.rm_rf(File.join(city_path, "city_scrape_sources", "*"))
   end
-
 
   def copy_source_files(
     state,
@@ -163,11 +163,10 @@ namespace :city_scrape do
       puts "Search results to process: #{search_results_to_process.count}"
       puts "#{search_results_to_process.join("\n")}"
 
-      page_processor = CityScrape::PageProcessor.new(state, engine, openai_service, data_fetcher, city_entry, city_directory)
+      page_processor = CityScrape::PageProcessor.new(state, engine, openai_service, data_fetcher, city_entry,
+                                                     city_directory)
 
       new_local_source_dirs, city_directory = page_processor.process_pages(search_results_to_process)
-
-      puts "#{local_source_dirs}, #{city_directory}, #{new_local_source_dirs}"
 
       search_results_processed += search_results_to_process
       local_source_dirs += new_local_source_dirs
