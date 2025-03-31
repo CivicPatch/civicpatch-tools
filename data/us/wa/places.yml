@@ -204,6 +204,7 @@ places:
   fips: 53-57535
   gnis: '2411534'
   population: 73256
+  last_member_info_scrape_run: '2025-03-31'
 - website: http://www.marysvillewa.gov
   last_city_scrape_run: '2025-03-24'
   name: marysville
