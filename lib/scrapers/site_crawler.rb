@@ -6,132 +6,231 @@ require "markitdown"
 require_relative "../scrapers/common"
 require_relative "../tasks/city_scrape/city_manager"
 
-MAX_LINKS = 20
-
 module Scrapers
   class SiteCrawler
+    MAX_LINKS = 50
+    TIMEOUT_SECONDS = 300
+    RETRY_ATTEMPTS = 2
+    FETCH_DELAY_SECONDS = 2
+    FILE_EXTENSIONS_TO_SKIP = %w[.xml .json .csv .pdf .doc .docx .xls .xlsx .ppt .pptx]
+
+    # Main entry point
     def self.get_urls(base_url, keyword_groups)
-      session = Capybara::Session.new(:selenium_chrome)
-      configure_browser
-      # Extract all keywords from the keyword_groups hash
       all_keywords = keyword_groups.values.flatten
 
-      url_text_pairs = crawl(base_url, all_keywords, {}, session, MAX_LINKS)
-      session.quit
+      session = initialize_browser_session
+      results = crawl_site(base_url, all_keywords, session)
+      session.quit if session
 
-      Scrapers::Common.sort_url_pairs(url_text_pairs, keyword_groups)
+      url_pairs = results.map { |result| [result[:url], result[:text]] }
+
+      Scrapers::Common.sort_url_pairs(url_pairs, keyword_groups)
     end
 
-    def self.fetch_html(url, session)
-      begin
-        html = fetch_with_client(url)
-      rescue StandardError
-        html = fetch_with_browser(url, session)
-      end
+    # Browser handling
+    def self.initialize_browser_session
+      configure_browser
+      Capybara::Session.new(:selenium_chrome)
+    rescue StandardError => e
+      puts "Browser initialization failed: #{e.message}"
+      nil
+    end
 
-      html
+    def self.configure_browser
+      Capybara.register_driver :selenium_chrome do |app|
+        options = Selenium::WebDriver::Chrome::Options.new
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--headless") unless ENV["SHOW_BROWSER"]
+        options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
+
+        Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+      end
+    end
+
+    # HTML Fetching
+    def self.fetch_html(url, session)
+      fetch_with_client(url)
+    rescue StandardError => e
+      puts "HTTParty fetch failed: #{e.message}. Trying browser..."
+      return fetch_with_browser(url, session) if session
+
+      raise e
     end
 
     def self.fetch_with_client(url)
-      response = HTTParty.get(url)
-
-      raise "403 Forbidden: #{url}" if response.code == 403
+      response = HTTParty.get(url, timeout: 15)
+      raise "HTTP Error: #{response.code}" unless response.code == 200
 
       response.body
     end
 
     def self.fetch_with_browser(url, session)
-      session.visit(url)
+      attempts = RETRY_ATTEMPTS
+      begin
+        puts "Visiting #{url} with browser"
+        session.visit(url)
+        sleep FETCH_DELAY_SECONDS
+        session.html
+      rescue StandardError => e
+        attempts -= 1
+        raise e unless attempts > 0
 
-      sleep 5
-      session.html
+        puts "Retrying browser fetch (#{attempts} attempts left)"
+        sleep 1
+        retry
+      end
     end
 
+    # Link processing
     def self.process_links(url, keywords, base_domain, session)
-      puts "Processing links for #{url}"
-      url_text_pairs = []
+      puts "Finding links on: #{url}"
+      matching_links = []
 
       begin
-        response = fetch_html(url, session)
-        document = Nokogiri::HTML(response)
-        page_base_url = document.css("base").first&.attr("href") || url
-        link_base_url = URI.parse(page_base_url).absolute? ? page_base_url : URI.join(base_domain, page_base_url)
+        html = fetch_html(url, session)
+        document = Nokogiri::HTML(html)
+        base_url = get_base_url(document, url, base_domain)
 
-        document.css("a").each do |link|
-          href = link["href"]&.strip
-          next unless valid_link?(href, base_domain)
-
-          full_url = get_full_url(href, link_base_url)
-          link_text = link.text.strip
-
-          text_match = keywords.any? do |keyword|
-            match = link_text.downcase.include?(keyword.downcase)
-            match
-          end
-
-          url_match = keywords.any? do |keyword|
-            match = full_url.downcase.include?(keyword.downcase)
-            match
-          end
-
-          url_text_pairs << [full_url, link_text] if text_match || url_match
-        end
-
-      rescue StandardError
-        []
+        matching_links = find_and_filter_links(document, keywords, base_url)
+      rescue StandardError => e
+        puts "Error processing links on #{url}: #{e.message}"
+        puts "Error: #{e.backtrace.join("\n")}"
       end
 
-      url_text_pairs
+      puts "Found #{matching_links.size} matching links"
+      matching_links
     end
 
-    def self.crawl(base_url, keywords, visited = {}, session = nil, max_links = 20)
-      root_url ||= base_url
+    def self.get_base_url(document, current_url, base_domain)
+      page_base_url = document.css("base").first&.attr("href") || current_url
+      URI.parse(page_base_url).absolute? ? page_base_url : URI.join(base_domain, page_base_url).to_s
+    end
+
+    def self.find_and_filter_links(document, keywords, base_url)
+      matching_links = []
+      document.css("a").each do |link|
+        href = link["href"]&.strip
+
+        full_url = get_full_url(href, base_url)
+        next unless valid_link?(full_url, base_url)
+
+        link_text = link.text.strip
+
+        matching_links << { url: full_url, text: link_text || "none" } if keyword_match?(full_url, link_text, keywords)
+      end
+
+      matching_links
+    end
+
+    def self.keyword_match?(url, text, keywords)
+      url_words = url.split(%r{[/\-_]}).join(" ")
+      text_matches = text.present? && keywords.any? { |keyword| url_words.include?(keyword) }
+      url_matches = keywords.any? { |keyword| text.include?(keyword) }
+      text_matches || url_matches
+    end
+
+    # URL utilities
+    def self.valid_link?(url, base_domain)
+      return false if url.start_with?("mailto:")
+      return false if FILE_EXTENSIONS_TO_SKIP.any? { |ext| url.end_with?(ext) }
+      return false unless url.ascii_only?
+      return false unless url.start_with?("/") || url.start_with?(base_domain)
+
+      true
+    end
+
+    def self.get_full_url(href, base_url)
+      href = URI::DEFAULT_PARSER.escape(href)
+      href = Scrapers::Common.format_url(href)
+      URI.parse(href).absolute? ? URI.parse(href).to_s : URI.join(base_url, href).to_s
+    end
+
+    # Main crawling logic
+    def self.crawl_site(base_url, keywords, session, max_links = MAX_LINKS)
+      puts "Starting crawl from: #{base_url}"
+      start_time = Time.now
+
+      visited = {}
       links_processed = 0
-      url_text_pairs = []
+      matching_links = []
+      queue = [{ url: base_url, text: "main page" }]
 
-      # [url, text, depth]
-      queue = [[base_url, "", 0]]
-      current_depth = 0
+      while !queue.empty? && links_processed < max_links
+        log_crawl_progress(queue, links_processed, max_links, start_time)
 
-      begin
-        while !queue.empty? && links_processed < max_links
-          # Process all links at current depth before moving deeper
-          current_level_size = queue.count { |_, _, depth| depth == current_depth }
+        current = queue.shift
+        next if skip_url?(current[:url], visited)
 
-          while current_level_size.positive? && links_processed < max_links
-            current_url, _, depth = queue.shift
-            next if visited[current_url]
+        visited[current[:url]] = true
+        puts "Processing: #{current[:url]}"
 
-            visited[current_url] = true
-            links_processed += 1
-            current_level_size -= 1
+        begin
+          new_links = process_links(current[:url], keywords, base_url, session)
+          matching_links.concat(new_links)
+          links_processed += 1
 
-            begin
-              new_links = process_links(current_url, keywords, base_url, session)
-              url_text_pairs.concat(new_links)
-
-              # Add new links with increased depth
-              new_links.each do |url, text|
-                next if visited[url]
-
-                queue << [url, text, depth + 1]
-              end
-
-            rescue StandardError
-              []
-            end
-          end
-
-          # Move to next depth level if we've processed all current level links
-          current_depth += 1 if current_level_size.zero?
+          queue_new_links(queue, new_links, visited)
+        rescue StandardError => e
+          handle_crawl_error(e, current[:url])
+          links_processed += 1
         end
-      rescue StandardError
-        []
+
+        break if timeout_reached?(start_time)
       end
 
-      url_text_pairs
+      log_crawl_results(links_processed, matching_links, start_time)
+      matching_links
     end
 
+    def self.skip_url?(url, visited)
+      if url.nil? || url.empty?
+        puts "Skipping empty URL"
+        return true
+      end
+
+      if visited[url]
+        puts "Skipping already visited URL: #{url}"
+        return true
+      end
+
+      false
+    end
+
+    def self.queue_new_links(queue, new_links, visited)
+      unvisited_links = new_links.reject { |link| visited[link[:url]] }
+      queue.concat(unvisited_links)
+      puts "Added #{unvisited_links.size} links to the queue"
+    end
+
+    def self.handle_crawl_error(error, url)
+      puts "Error processing #{url}: #{error.message}"
+    end
+
+    def self.timeout_reached?(start_time)
+      if Time.now - start_time > TIMEOUT_SECONDS
+        puts "Crawl timed out after #{TIMEOUT_SECONDS} seconds"
+        return true
+      end
+      false
+    end
+
+    def self.log_crawl_progress(queue, links_processed, max_links, start_time)
+      puts "\n--- Crawl Progress ---"
+      puts "Queue size: #{queue.size}"
+      puts "Links processed: #{links_processed}/#{max_links}"
+      puts "Time elapsed: #{Time.now - start_time}s"
+    end
+
+    def self.log_crawl_results(links_processed, matching_links, start_time)
+      puts "\n--- Crawl Complete ---"
+      puts "Total time: #{Time.now - start_time}s"
+      puts "Links processed: #{links_processed}"
+      puts "Matching links found: #{matching_links.size}"
+    end
+
+    # Utility methods
     def self.has_date?(text)
       text.match?(
         %r{
@@ -149,38 +248,8 @@ module Scrapers
             )
             (?:\s|$)            # Plaintext formats must end with space or end of string
           )
-        }xi                     # Case insensitive, ignore whitespace
+        }xi # Case insensitive, ignore whitespace
       )
-    end
-
-    def self.configure_browser
-      Capybara.register_driver :selenium_chrome do |app|
-        options = Selenium::WebDriver::Chrome::Options.new
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--headless") unless ENV["SHOW_BROWSER"]
-        # set user agent to headed chrome
-        options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
-
-        Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-      end
-    end
-
-    def self.valid_link?(href, base_domain)
-      return false if href.nil? || href.empty?
-      return false if href.starts_with?("mailto:")
-      return false if href.ends_with?(".xml", ".json", ".csv", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx")
-      return false unless href.ascii_only?
-      return false unless href.start_with?("/") || href.start_with?(base_domain)
-      true
-    end
-
-    def self.get_full_url(href, link_base_url)
-      href = URI::DEFAULT_PARSER.escape(href)
-      href = Scrapers::Common.format_url(href)
-      full_url = URI.parse(href).absolute? ? URI.parse(href).to_s : URI.join(link_base_url, href).to_s
-      full_url
     end
   end
 end

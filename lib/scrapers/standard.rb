@@ -5,7 +5,7 @@
 module Scrapers
   class Standard
     # See: https://open-civic-data.readthedocs.io/en/latest/data/person.html#basics
-    def self.format_person(person, source_url, website_url)
+    def self.format_person(person, source_url, website_url = nil)
       formatted_person = {}
 
       formatted_person["name"] = person["name"]
@@ -58,8 +58,6 @@ module Scrapers
       formatted_person["updated_at"] = Time.now.strftime("%Y-%m-%d")
       formatted_person["created_at"] = Time.now.strftime("%Y-%m-%d")
       formatted_person["sources"] = [{ "url" => source_url, "note" => nil }]
-
-      puts "Returning person: #{formatted_person.inspect}"
 
       formatted_person
     end
