@@ -199,10 +199,9 @@ module Scrapers
       keywords.count { |keyword| url.downcase.include?(keyword.downcase.gsub(/[-_]/, "")) }
     end
 
-    def self.urls_without_segments(url_pairs, segments)
+    def self.urls_without_keywords(url_pairs, keywords)
       url_pairs.select do |url, _text|
-        url_segments = url.split("/").map(&:downcase)
-        url_segments.none? { |segment| segments.include?(segment) }
+        keywords.none? { |keyword| url.downcase.include?(keyword.downcase) }
       end
     end
 

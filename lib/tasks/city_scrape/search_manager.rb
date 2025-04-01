@@ -18,8 +18,9 @@ module CityScrape
         end
       end
 
-      urls = Scrapers::Common.urls_without_segments(urls, %w[news events event])
-      urls.map { |url, _text| url }
+      filtered_urls = Scrapers::Common.urls_without_keywords(urls, %w[news event calendar])
+      puts "Filtered out #{urls.size - filtered_urls.size} urls"
+      filtered_urls.map { |url, _text| url }
     end
   end
 end
