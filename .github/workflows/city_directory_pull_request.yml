@@ -41,7 +41,8 @@ jobs:
           BRANCH_NAME="${{ github.head_ref }}"
           STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
           GNIS_ID=$(echo "$BRANCH_NAME" | awk -F'-' '{print $(NF-1)}')
-  
+ 
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           echo "STATE=$STATE" >> $GITHUB_ENV
           echo "GNIS_ID=$GNIS_ID" >> $GITHUB_ENV
   
