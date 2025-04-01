@@ -146,6 +146,10 @@ namespace :city_scrape do
     copy_source_files(state, city_entry, source_dirs)
 
     CityScrape::CityManager.update_city_directory(state, city_entry, new_city_directory)
+    CityScrape::StateManager.update_state_places(state, [
+                                                   { "gnis" => city_entry["gnis"],
+                                                     "last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d") }
+                                                 ])
     FileUtils.rm_rf(cache_directory)
 
     Scrapers::Common.prune_unused_images(state, city_entry)

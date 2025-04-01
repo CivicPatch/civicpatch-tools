@@ -10,6 +10,20 @@
 # - github_pipeline:get_pr_comment[state,gnis,branch_name]# Generate markdown for PR
 
 namespace :github_pipeline do
+  desc "Get GitHub City Directory Link"
+  task :get_city_directory_link, [:state, :gnis, :branch_name] do |_t, args|
+    state = args[:state]
+    gnis = args[:gnis]
+    branch_name = args[:branch_name]
+
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_path = CityScrape::CityManager.get_city_path(state, city_entry)
+    relative_path = city_path[city_path.rindex("data/us")..]
+
+    directory_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/directory.yml"
+    puts directory_url
+  end
+
   desc "Generate PR comment for city directory"
   task :get_pr_comment, [:state, :gnis, :branch_name] do |_t, args|
     state = args[:state]
