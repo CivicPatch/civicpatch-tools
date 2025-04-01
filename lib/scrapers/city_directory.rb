@@ -1,8 +1,10 @@
 module Scrapers
   class CityDirectory
     KEY_POSITIONS = ["Council Member",
-                     "Mayor",
+                     "Council Vice President",
                      "Council President",
+                     "Mayor",
+                     "Deputy Mayor",
                      "Council Manager"].freeze
 
     COMMON_KEYWORDS = { name: "elected officials", keywords: [
@@ -30,5 +32,17 @@ module Scrapers
                                 "about the mayor",
                                 "council president"
                               ] }, COMMON_KEYWORDS].freeze
+
+    GOVERNMENT_TYPES = {
+      "MAYOR_COUNCIL" => {
+        "KEY_POSITIONS" => ["Mayor",
+                            "Council President",
+                            "Council Vice President",
+                            "Council Member",
+                            "Deputy Mayor",
+                            "Council Manager"],
+        "SEARCH_KEYWORDS" => MAYOR_COUNCIL_KEYWORDS
+      }
+    }.freeze
   end
 end

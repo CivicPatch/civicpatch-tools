@@ -47,7 +47,7 @@ module Services
     end
 
     def extract_person_information(content_file, url)
-      positions = ["council member", "council president", "council vice president", "mayor"]
+      positions = Scrapers::CityDirectory::GOVERNMENT_TYPES["MAYOR_COUNCIL"]["KEY_POSITIONS"]
 
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
@@ -108,7 +108,7 @@ module Services
     end
 
     def generate_city_info_prompt(content, city_council_url)
-      positions = ["council member", "council president", "council vice president", "mayor"]
+      positions = Scrapers::CityDirectory::GOVERNMENT_TYPES["MAYOR_COUNCIL"]["KEY_POSITIONS"]
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
