@@ -51,18 +51,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          {
-            echo 'markdown_content<<DELIMITER_EOF'
-            bundle exec rake "github_pipeline:get_pr_comment[${{ env.STATE }},${{ env.GNIS_ID }},${{ env.BRANCH_NAME }}]"
-            echo 'DELIMITER_EOF'
-          } >> $GITHUB_ENV
-          gh pr comment ${{ github.event.pull_request.number }} --body "${{ env.markdown_content }}"
+          SCRAPED_DATA_COMMENT=$(bundle exec rake "github_pipeline:get_pr_comment[${{ env.STATE }},${{ env.GNIS_ID }},${{ env.BRANCH_NAME }}]")
+          gh pr comment ${{ github.event.pull_request.number }} --body "$SCRAPED_DATA_COMMENT"
       
       - name: Run City Directory Validation (Trusted Source)
         id: validate
         run: |
           echo "Running validation..."
-          SOURCE_VALIDATION_RESPONSE=$(bundle exec rake validate_city_directory[${{ env.STATE }},${{ env.GNIS_ID }}])
+          SOURCE_VALIDATION_RESPONSE=$(bundle exec rake "github_pipeline:validate_city_directory[${{ env.STATE }},${{ env.GNIS_ID }}]")
           echo "Validation response: $SOURCE_VALIDATION_RESPONSE"
 
           # Parse JSON output from Rake
