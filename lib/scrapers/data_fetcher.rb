@@ -4,28 +4,15 @@ require "capybara"
 require "selenium-webdriver"
 
 require_relative "./common"
+require_relative "../core/browser"
 
 module Scrapers
   class DataFetcher
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
       puts "Extracting content from #{url}"
-      using_browser = false
-      browser_session = nil
 
-      begin
-        html = fetch_with_client(url)
-      rescue StandardError => e
-        puts "Error fetching HTML: #{e.message}"
-
-        puts "Retrying with browser..."
-
-        configure_browser
-        using_browser = true
-        html, browser_session = fetch_with_browser(url)
-
-        puts "Fetched with browser"
-      end
+      html = fetch_html(url)
 
       FileUtils.mkdir_p(destination_dir)
       FileUtils.mkdir_p(PathHelper.project_path(File.join(destination_dir, "images")))
@@ -34,8 +21,7 @@ module Scrapers
 
       base_url, parsed_html = parse_html(url, html)
 
-      download_images(base_url, parsed_html, PathHelper.project_path(File.join(destination_dir, "images")),
-                      using_browser, browser_session)
+      download_images(base_url, parsed_html, PathHelper.project_path(File.join(destination_dir, "images")))
       update_html_links(base_url, parsed_html)
       rewrite_script_tags(parsed_html)
 
@@ -47,11 +33,7 @@ module Scrapers
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md")),
                  markdown_content)
 
-      content_file = PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
-
-      browser_session.quit if using_browser
-
-      content_file
+      PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
     end
 
     private
@@ -63,7 +45,7 @@ module Scrapers
       [base_url, nokogiri_html]
     end
 
-    def download_images(base_url, nokogiri_html, destination_dir, using_browser, browser_session)
+    def download_images(base_url, nokogiri_html, destination_dir)
       nokogiri_html.css("img").each_with_index do |img, _index|
         image_url = img["src"]
 
@@ -87,12 +69,7 @@ module Scrapers
         destination_path = File.join(destination_dir, filename)
 
         File.open(destination_path, "wb") do |file|
-          image_content = if using_browser
-                            get_image_with_browser(browser_session,
-                                                   absolute_image_url)
-                          else
-                            get_image(absolute_image_url)
-                          end
+          image_content = get_image(absolute_image_url)
           file.write(image_content)
         end
 
@@ -129,8 +106,7 @@ module Scrapers
 
     def rewrite_script_tags(nokogiri_html)
       nokogiri_html.css("script").each do |script|
-        script.replace("<pre class='script-content'>#{script.to_html.gsub('<', '&lt;').gsub('>', '&gt;')}</pre>")
-
+        script.replace("<pre class='script-content'>#{script.to_html.gsub("<", "&lt;").gsub(">", "&gt;")}</pre>")
       end
     end
 
@@ -139,106 +115,14 @@ module Scrapers
       HTTParty.get(encoded_image_url).body
     end
 
-    def get_image_with_browser(session, image_url)
-      session.visit(image_url)
-
-      # Ensure the image is loaded before extracting
-      session.assert_selector("img", wait: 5) # Waits up to 5 seconds for an <img> tag
-
-      # Extract image binary data
-      image_data_base64 = session.evaluate_script(%(
-        (function() {
-          var img = document.querySelector("img");
-          if (img) {
-            var canvas = document.createElement("canvas");
-            var ctx = canvas.getContext("2d");
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            ctx.drawImage(img, 0, 0);
-            return canvas.toDataURL("image/png").split(",")[1]; // Get Base64 data
-          }
-          return null;
-        })();
-      ))
-
-      Base64.decode64(image_data_base64)
-    end
-
-    def fetch_with_client(url)
-      puts "Fetching with client: #{url}"
+    def fetch_html(url)
       response = HTTParty.get(url)
 
       raise "fetch_with_client: Access Denied by #{url}" if response.code == 403
 
       response.body
-    end
-
-    def fetch_with_browser(url)
-      session = Capybara::Session.new(:selenium_chrome)
-      session.visit(url)
-
-      sleep 5
-
-      html = session.html
-
-      [html, session]
-    end
-
-    def strip_html_content(nokogiri_html)
-      nokogiri_html.css("script, style, svg, nav, header, head, footer").remove
-
-      # Remove empty paragraphs and divs
-      nokogiri_html.css('.ad, .advertisement, [class*="ad-"], [id*="ad-"]').remove
-      nokogiri_html.css('.cookie-banner, .consent-banner, [class*="cookie"], [class*="consent"]').remove
-      nokogiri_html.css('.modal, .popup, [class*="overlay"], [class*="modal"]').remove
-      nokogiri_html.css('.share-buttons, [class*="social-share"], [class*="share"]').remove
-      nokogiri_html.css('.related-content, .recommended, [class*="related"]').remove
-      nokogiri_html.css('.newsletter, [class*="subscribe"], [class*="signup"]').remove
-
-      nokogiri_html.css('.pagination, .pager, [class*="page-nav"]').remove
-      nokogiri_html.css('.print, .download, [class*="print"], [class*="download"]').remove
-      nokogiri_html.css('.breadcrumb, .breadcrumbs, [class*="breadcrumb"]').remove
-      nokogiri_html.css('.byline, .author-info, [class*="author"], [class*="byline"]').remove
-      nokogiri_html.css('#comments, .comment-section, [class*="comment"]').remove
-      nokogiri_html.css('.sidebar, .sidebar-module, [class*="sidebar"]').remove
-      nokogiri_html.css('.newsletter, [class*="newsletter"], [id*="newsletter"], .archive-links, .drawer, .accordion, .collapsible').remove
-
-      nokogiri_html.css("li a").each do |link|
-        link.parent.remove if link.text.include?("News Update")
-      end
-      nokogiri_html.css('a[href*="News Update"]').remove
-
-      # Remove comments
-      nokogiri_html.xpath("//comment()").remove
-      nokogiri_html.xpath("//text()").each do |node|
-        node.remove if node.text.strip.empty?
-      end
-      nokogiri_html.xpath("//*[@aria-label]").each { |node| node.remove_attribute("aria-label") }
-
-      # Remove empty tags. If there are any image tags, don't remove the node
-      nokogiri_html.css("p, div").each do |node|
-        next unless node.text.strip.empty?
-        next if node.css("img").any?
-
-        node.remove
-      end
-
-      nokogiri_html.css(".b, .b-c, .g").each { |node| node.replace(node.inner_html) }
-      nokogiri_html.css("*").each { |node| node.remove_attribute("class") }
-    end
-
-    def configure_browser
-      Capybara.register_driver :selenium_chrome do |app|
-        options = Selenium::WebDriver::Chrome::Options.new
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--headless") unless ENV["SHOW_BROWSER"]
-        # set user agent to headed chrome
-        options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
-
-        Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-      end
+    rescue StandardError
+      Browser.fetch_html(url)
     end
 
     # base here means the base url as it relates to the html page

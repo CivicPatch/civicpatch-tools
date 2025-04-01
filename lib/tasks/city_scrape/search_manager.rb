@@ -1,15 +1,21 @@
+require_relative "../../scrapers/city_directory"
 module CityScrape
   class SearchManager
     def self.fetch_search_results(engine, state, city_entry)
       city = city_entry["name"]
       website = city_entry["website"]
+      urls = []
+      keyword_groups = Scrapers::CityDirectory::MAYOR_COUNCIL_KEYWORDS
 
       case engine
       when "manual"
-        urls = Scrapers::SiteCrawler.get_urls(website, CityScrape::CityManager::KEYWORD_GROUPS)
+        # TODO: replace with actual keyword groups
+        urls = Crawler.crawl(website, keyword_groups: keyword_groups)
       when "brave"
-        search_query = "#{city} #{state} city council members"
-        urls = Services::Brave.get_search_result_urls(search_query, website, CityScrape::CityManager::KEYWORD_GROUPS)
+        keyword_groups.map do |group|
+          search_query = "#{city} #{state} #{group[:name]}"
+          urls += Services::Brave.get_search_result_urls(search_query, website)
+        end
       end
 
       urls = Scrapers::Common.urls_without_segments(urls, %w[news events event])

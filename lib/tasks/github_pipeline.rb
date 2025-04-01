@@ -23,7 +23,7 @@ namespace :github_pipeline do
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
-    city_directory = CityScrape::CityManager.get_city_directory(state, state_city_entry)
+    city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, state_city_entry)
 
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
@@ -31,21 +31,23 @@ namespace :github_pipeline do
       #{city_directory["people"].map { |person| person["sources"].map { |source| source["url"] }.join("\n") }.join("\n")}
       ## People
       #{city_directory["people"].map do |person|
-        email = person["contact_details"].find { |contact| contact["type"] == "email" }&.dig("value")
-        phone = person["contact_details"].find { |contact| contact["type"] == "phone" }&.dig("value")
-        website = person["links"].find { |link| link["url"].present? && link["url"].include?("http") }&.dig("url")
+        simple_person = Utils.format_simple(person)
+        image = simple_person["image"]
+        email = simple_person["email"]
+        phone = simple_person["phone_number"]
+        website = simple_person["website"]
 
         position_markdown = <<~POSITION
-          **Positions:** #{if person["other_names"].present?
-                             person["other_names"].map { |other_name| other_name["name"] }.join(", ")
+          **Positions:** #{if simple_person["positions"].present?
+                             simple_person["positions"]
                            else
                              "N/A"
                            end
                          }
         POSITION
 
-        image_markdown = if person["image"].present?
-                           image_url = "#{base_image_url}/#{person["image"]}?raw=true"
+        image_markdown = if image.present?
+                           image_url = "#{base_image_url}/#{image}?raw=true"
                            <<~IMAGE
                              <img src='#{image_url}' width='150' />
                            IMAGE
@@ -89,5 +91,37 @@ namespace :github_pipeline do
     MARKDOWN
 
     puts markdown_content
+  end
+
+  task :validate_city_directory, [:state, :gnis] do |_t, args|
+    state = args[:state]
+    gnis = args[:gnis]
+
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, city_entry)
+
+    validation_results = Validators::CityDirectory.validate_directory(state, gnis, city_directory_to_validate["people"])
+    approve = validation_results[:missing].empty? &&
+              validation_results[:extra].empty? &&
+              validation_results[:different].empty?
+    approve_reasons = []
+
+    if validation_results[:missing].count.positive?
+      approve_reasons << "Missing people in city directory: #{validation_results[:missing].count}"
+    end
+    if validation_results[:extra].count.positive?
+      approve_reasons << "Found more people than expected: #{validation_results[:extra].count}"
+    end
+    if validation_results[:different].count.positive?
+      approve_reasons << "Different people found in different roles than expected: #{validation_results[:different].count}"
+    end
+
+    approve_reasons_markdown = Validators::CityDirectory.approve_reasons_to_markdown(approve, approve_reasons)
+    diff_markdown = Validators::CityDirectory.diff_to_markdown(validation_results)
+
+    response = { "approve" => approve,
+                 "comment" => [approve_reasons_markdown, diff_markdown].join("\n***\n") }
+
+    puts response.to_json
   end
 end

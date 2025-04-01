@@ -149,17 +149,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Generate Markdown for PR Comment
-        id: generate_markdown
-        run: |
-          {
-            echo 'markdown_content<<DELIMITER_EOF'
-            bundle exec rake 'github_pipeline:get_pr_comment[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]'
-            echo 'DELIMITER_EOF'
-          } >> $GITHUB_ENV
-
-      - name: Comment on PR
-        run: |
-          gh pr comment ${{ env.BRANCH_NAME }} --body "${{ env.markdown_content }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

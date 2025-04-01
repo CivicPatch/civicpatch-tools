@@ -4,13 +4,9 @@ require_relative "../scrapers/common"
 
 module Services
   class Brave
-    def self.get_search_result_urls(query, with_site = "", _keyword_groups = {}, discard_urls_with_partial = [])
+    def self.get_search_result_urls(query, with_site = "")
       formatted_query = URI.encode_www_form_component(query)
       formatted_query = "#{formatted_query} site:#{with_site}" if with_site.present?
-
-      if discard_urls_with_partial.present?
-        formatted_query = "#{formatted_query} -#{discard_urls_with_partial.join(" -")}"
-      end
 
       results = HTTParty.get(
         "https://api.search.brave.com/res/v1/web/search?q=#{formatted_query}",
