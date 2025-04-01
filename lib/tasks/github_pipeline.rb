@@ -28,7 +28,7 @@ namespace :github_pipeline do
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Sources
-      #{city_directory["people"].map { |person| person["sources"].map { |source| source["url"] }.join("\n") }.join("\n")}
+      #{city_directory["people"].map { |person| person["sources"].map { |source| source["url"] } }.flatten.uniq.join("\n")}
       ## People
       #{city_directory["people"].map do |person|
         simple_person = Utils.format_simple(person)

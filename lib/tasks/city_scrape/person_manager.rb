@@ -14,7 +14,7 @@ module CityScrape
       city_data["people"] = city_data["people"].map.with_index do |existing_person, index|
         website = Scrapers::Standard.get_website(existing_person)
 
-        next existing_person unless website.present? && Scrapers::Common.missing_contact_info?(existing_person)
+        next existing_person unless website.present?
 
         puts "Processing #{existing_person["name"]}"
         candidate_dir = File.join(city_path, "city_scrape_sources", "member_info_#{index}")

@@ -5,6 +5,15 @@ require_relative "wa/city_directory"
 module Validators
   # List of elected officials for the city (municipality/place)
   class CityDirectory
+    def self.get_state_validator(state)
+      case state
+      when "wa"
+        Validators::Wa::CityDirectory
+      else
+        raise "No validator found for state: #{state}"
+      end
+    end
+
     def self.validate_directory(state, gnis, city_directory_to_validate)
       validator = get_state_validator(state)
 
@@ -80,15 +89,6 @@ module Validators
       end
 
       markdown.join("\n")
-    end
-
-    def self.get_state_validator(state)
-      case state
-      when "wa"
-        Validators::Wa::CityDirectory
-      else
-        raise "No validator found for state: #{state}"
-      end
     end
 
     def self.similar_positions(positions_a, positions_b)
