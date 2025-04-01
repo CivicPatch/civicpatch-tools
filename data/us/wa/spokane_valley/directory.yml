@@ -1,7 +1,7 @@
 ---
 people:
 - name: Al Merkel
-  image: ''
+  image: images/7c4e595bf8423caba9f439748b5542a2c455e36f917126868a2857bc1117a9f0
   contact_details:
   - note:
     type: phone
@@ -32,8 +32,10 @@ people:
     note:
   - url: https://www.spokanevalleywa.gov/Directory.aspx?did=8
     note:
+  - url: https://spokanevalleywa.gov/directory.aspx?EID=19
+    note:
 - name: Ben Wick
-  image: ''
+  image: images/34c36da77d41825134e499a98f9b83c8281ac22d1a4a86833533d6d703099b58
   contact_details:
   - note:
     type: phone
@@ -67,7 +69,7 @@ people:
   - url: https://www.spokanevalleywa.gov/Directory.aspx?did=8
     note:
 - name: Jessica Yaeger
-  image: ''
+  image: images/499487783c61b7e0ab6b5c9575d9119954ef3410f27fcb48fd0f8f6a73ab7fd9
   contact_details:
   - note:
     type: phone
@@ -98,8 +100,10 @@ people:
     note:
   - url: https://www.spokanevalleywa.gov/Directory.aspx?did=8
     note:
+  - url: https://spokanevalleywa.gov/directory.aspx?EID=18
+    note:
 - name: Laura Padden
-  image: ''
+  image: images/15ba78f48eb722312419f4c518cdcb1b75da3491adf5d3cf91038015f865d28f
   contact_details:
   - note:
     type: phone
@@ -133,7 +137,7 @@ people:
   - url: https://www.spokanevalleywa.gov/Directory.aspx?did=8
     note:
 - name: Pam Haley
-  image: ''
+  image: images/436069a47664217d79849a210a9704816ba4d2ad56abae746d3e96a352f01437
   contact_details:
   - note:
     type: phone
@@ -167,7 +171,7 @@ people:
   - url: https://www.spokanevalleywa.gov/Directory.aspx?did=8
     note:
 - name: Rod Higgins
-  image: ''
+  image: images/a982a87ee28cf8f47e67496c1fa7c8edf486019e6c0656309e58eefdb5ed1c8d
   contact_details:
   - note:
     type: phone
@@ -201,7 +205,7 @@ people:
   - url: https://www.spokanevalleywa.gov/Directory.aspx?did=8
     note:
 - name: Tim Hattenburg
-  image: ''
+  image: images/647bec1b2ff2d273d57afa56c81228e54e3a7a162ceeef71d69e3f450cc11cc0
   contact_details:
   - note:
     type: phone
@@ -311,6 +315,10 @@ people:
     type: email
     value: mpatterson@spokanevalleywa.gov
     label: Email
+  - note:
+    type: phone
+    value: "(509) 720-5102"
+    label: Phone
   links:
   - note:
     url: https://www.spokanevalleywa.gov/directory.aspx?eid=72
@@ -323,6 +331,8 @@ people:
   created_at: '2025-04-01'
   sources:
   - url: https://www.spokanevalleywa.gov/192/City-Clerk
+    note:
+  - url: https://www.spokanevalleywa.gov/directory.aspx?eid=72
     note:
 - name: Sarah Farr
   image: ''
