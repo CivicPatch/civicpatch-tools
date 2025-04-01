@@ -148,10 +148,17 @@ jobs:
       - name: Open a pull request
         run: |
           git push --set-upstream origin ${{ env.BRANCH_NAME }}
+          CITY_DIRECTORY_LINK=$(bundle exec rake "github_pipeline:get_city_directory_link[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]")
+          COMMENT=$(
+            cat <<EOF
+          PR opened automatically by the City Scrape workflow.
+          You can make any modifications or corrections [here]($CITY_DIRECTORY_LINK) and validation workflows will re-run.
+          EOF
+          )
           gh pr create \
             --base main \
             --head ${{ env.BRANCH_NAME }} \
             --title "Populate city info for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}" \
-            --body "Populate city info via github actions pipeline."
+            --body "$COMMENT"
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
