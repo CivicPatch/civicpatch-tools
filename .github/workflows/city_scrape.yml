@@ -155,17 +155,3 @@ jobs:
             --body "Populate city info via github actions pipeline."
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-
-      - name: Process PR Review
-        run: |
-          # Parse the validation response JSON
-          approve=$(echo '${{ env.validation_content }}' | jq -r '.approve')
-          comment=$(echo '${{ env.validation_content }}' | jq -r '.comment')
-          
-          # Add the review with the full comment content
-          if [ "$approve" = "true" ]; then
-            gh pr review ${{ env.BRANCH_NAME }} --approve --body "$comment"
-          else
-            gh pr review ${{ env.BRANCH_NAME }} --request-changes --body "$comment"
-          fi
-      
