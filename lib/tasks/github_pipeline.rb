@@ -23,7 +23,7 @@ namespace :github_pipeline do
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
-    city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, state_city_entry)
+    city_directory = CityScrape::CityManager.get_city_directory(state, state_city_entry)
 
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
