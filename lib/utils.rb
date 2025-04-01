@@ -20,6 +20,9 @@ module Utils
       "name" => person_object["name"]
     }
 
+    image = person_object["image"]
+    formatted["image"] = image if image.present?
+
     phone_number = person_object["contact_details"]&.find { |contact| contact["type"] == "phone" }&.dig("value")
     formatted["phone_number"] = phone_number if phone_number.present?
 
