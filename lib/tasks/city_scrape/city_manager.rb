@@ -10,22 +10,6 @@ module CityScrape
       "Council Member" => 3
     }.freeze
 
-    KEYWORD_GROUPS = {
-      "council_members" => ["mayor and city council",
-                            "meet the council",
-                            "city council members",
-                            "council districts",
-                            "council members",
-                            "councilmembers",
-                            "city council",
-                            "council"],
-      "city_leaders" => ["meet the mayor",
-                         "about the mayor",
-                         "mayor",
-                         "council president"],
-      "common" => %w[index government]
-    }.freeze
-
     MERGE_RULES = {
       "name" => { type: "FIRST" },
       "image" => { type: "LAST" },

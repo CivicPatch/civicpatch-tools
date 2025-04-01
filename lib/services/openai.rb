@@ -6,6 +6,8 @@ require "scrapers/common"
 
 # TODO: track token usage
 module Services
+  MAX_RETRIES = 5 # Maximum retry attempts for rate limits
+  BASE_SLEEP = 2  # Base sleep time for exponential backoff
   class Openai
     @@MAX_TOKENS = 100_000
 
@@ -60,6 +62,7 @@ module Services
           - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
         Notes:
+        - Extract only the contact information associated with the person. Do not return general info.
         - Return the results in YAML format.
         - If the content is not a person, YAML with the key "error" and the value "Not a person".
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
@@ -124,7 +127,8 @@ module Services
                 If no specific website is provided, leave this empty — do not default to the general city or council page.)
 
         Basic rules:
-        - Youth council members are NOT city council members.
+        - Students are NOT city council members.
+        - Extract only the contact information associated with the person. Do not return general info.
         - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
         - If you find just a list of names, with at least a website or email, they are likely to be council members.
         - If the content is a press release, do not extract any people data from the content.
@@ -209,6 +213,7 @@ module Services
     private
 
     def run_prompt(messages)
+      retry_attempts = 0
       response = @client.chat(
         parameters: {
           model: "gpt-4o-mini",
@@ -218,6 +223,16 @@ module Services
       )
 
       response.dig("choices", 0, "message", "content")
+    rescue Faraday::TooManyRequestsError => e
+      if retry_attempts < MAX_RETRIES
+        sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
+        puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
+        sleep sleep_time
+        retry_attempts += 1
+        retry
+      else
+        puts "[429] Too many requests. Max retries reached for #{url}."
+      end
     end
 
     # Remove coordinates from geojson file

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Helper methods for all scrapers
-
+require_relative "../utils"
 module Scrapers
   class Standard
     # See: https://open-civic-data.readthedocs.io/en/latest/data/person.html#basics
@@ -15,7 +15,7 @@ module Scrapers
         formatted_person["contact_details"] << {
           "note" => nil,
           "type" => "phone",
-          "value" => format_phone_number(person["phone_number"]),
+          "value" => Utils.format_phone_number(person["phone_number"]),
           "label" => "Phone"
         }
       end
@@ -64,14 +64,6 @@ module Scrapers
 
     def self.valid_name?(name)
       name.present? && name.strip.length.positive? && name.split(" ").length > 1
-    end
-
-    def self.format_phone_number(phone_number)
-      # Remove all non-digit characters
-      phone_number = phone_number.gsub(/\D/, "")
-
-      # Format the phone number
-      phone_number.gsub(/(\d{3})(\d{3})(\d{4})/, '(\1) \2-\3')
     end
 
     def self.format_position(position_type, position_value)
