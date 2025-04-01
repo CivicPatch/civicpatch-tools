@@ -5,8 +5,8 @@ on:
     types:
       - opened
       - synchronize
-    branches:
-      - 'pipeline-city-scrapes-*'  # ✅ Only runs on matching branches
+    paths:
+      - '**/directory.yml'
 
 permissions:
   pull-requests: write
