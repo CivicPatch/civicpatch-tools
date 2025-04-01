@@ -81,14 +81,21 @@ jobs:
           ruby-version: '3.4.2'
           bundler-cache: true
 
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+            app-id: ${{ secrets.GH_APP_BOT_APP_ID }}
+            private-key: ${{ secrets.GH_APP_BOT_CLIENT_SECRET }}
+
       - name: Install dependencies
         run: |
           bundle install
 
       - name: Set up git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "Civic Patch Bot"
+          git config --global user.email "civic-patch-bot[bot]@users.noreply.github.com"
 
       - name: Create a new branch for changes
         run: |
@@ -123,7 +130,7 @@ jobs:
             git commit -m "Populate city info -- additional info -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
       
       # TODO: only need this if the city is further split into districts
       #- name: Get city division map data
@@ -147,5 +154,5 @@ jobs:
             --title "Populate city info for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}" \
             --body "Populate city info via github actions pipeline."
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
       
