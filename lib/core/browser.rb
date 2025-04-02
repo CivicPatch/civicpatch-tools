@@ -7,6 +7,8 @@ module Browser
     options.add_argument("--headless") # Run without UI
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
+    options.add_argument("--disable-blink-features=AutomationControlled") # Avoid bot detection
+    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
 
     Selenium::WebDriver.for(:chrome, options: options)
   end
@@ -17,7 +19,7 @@ module Browser
     begin
       browser = start
       browser.navigate.to(url)
-      @browser.page_source
+      browser.page_source
     rescue Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
@@ -38,10 +40,5 @@ module Browser
 
   def self.fetch_image(url)
     raise NotImplementedError
-  end
-
-  def self.stop
-    @browser&.quit
-    @browser = nil
   end
 end
