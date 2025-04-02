@@ -110,6 +110,10 @@ people:
     start_date:
     end_date: '2025-12-31'
   - note:
+    name: Member Of The Arts Commission
+    start_date:
+    end_date: '2025-12-31'
+  - note:
     name: Position 6
     start_date:
     end_date: '2025-12-31'
@@ -196,6 +200,10 @@ people:
     url: https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner
   other_names:
   - note:
+    name: Council President
+    start_date:
+    end_date: '2025-12-31'
+  - note:
     name: Council Member
     start_date:
     end_date:
@@ -250,7 +258,31 @@ people:
     start_date: '2019-11-26'
     end_date: '2027-12-31'
   - note:
+    name: Human Services Council Liaison
+    start_date: '2019-11-26'
+    end_date: '2027-12-31'
+  - note:
     name: King County Regional Law Safety And Justice Committee
+    start_date: '2019-11-26'
+    end_date: '2027-12-31'
+  - note:
+    name: Member Of The Firefighters Relief Pension Board
+    start_date: '2019-11-26'
+    end_date: '2027-12-31'
+  - note:
+    name: Member Of The King County Regional Law Safety And Justice Committee
+    start_date: '2019-11-26'
+    end_date: '2027-12-31'
+  - note:
+    name: Member Of The Washington Community Forestry Council
+    start_date: '2019-11-26'
+    end_date: '2027-12-31'
+  - note:
+    name: Member Of The Washington State Tree Equity Collaborative Steering Committee
+    start_date: '2019-11-26'
+    end_date: '2027-12-31'
+  - note:
+    name: Parks And Human Services Subject Matter Chair
     start_date: '2019-11-26'
     end_date: '2027-12-31'
   - note:
