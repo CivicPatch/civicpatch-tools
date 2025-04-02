@@ -72,10 +72,13 @@ class Crawler
   def self.fetch_page(url)
     uri = URI(url)
     response = HTTParty.get(uri)
+    raise "HTTP request failed: #{response.code}" unless response.success?
+
     Nokogiri::HTML(response.body)
   rescue StandardError
     puts "Failed to fetch #{url}: #{response.code}, retrying in browser"
-    Browser.fetch_page(url)
+    html = Browser.fetch_html(url)
+    Nokogiri::HTML(html)
   end
 
   def self.extract_links(base_url, page)

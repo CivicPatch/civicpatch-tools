@@ -1,12 +1,12 @@
 module CityScrape
   class StateManager
     def self.get_state_path(state)
-      PathHelper.project_path(File.join("data", "us", state))
+      PathHelper.project_path(File.join("data", state))
     end
 
     # each places must have a gnis key
     def self.get_state_places_file(state)
-      PathHelper.project_path(File.join("data", "us", state, "places.yml"))
+      PathHelper.project_path(File.join("data", state, "places.yml"))
     end
 
     def self.get_state_places(state)
