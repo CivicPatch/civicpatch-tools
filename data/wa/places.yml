@@ -85,6 +85,8 @@ places:
   type: Code city
   population: 136588
   government_type: Mayor-Council
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: a57cc5bc7826d588c099b360141c78f7
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:everett
   - ocd-division/country:us/state:wa/county:snohomish/place:everett
