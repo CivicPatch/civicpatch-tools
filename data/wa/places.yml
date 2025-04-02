@@ -163,6 +163,8 @@ places:
   type: First-class city
   population: 91482
   government_type: Mayor-Council
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: f03b66f32538dd127b84756b451c40ff
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:auburn
   - ocd-division/country:us/state:wa/county:king/place:auburn
