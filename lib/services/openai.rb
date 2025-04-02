@@ -57,7 +57,7 @@ module Services
           - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
           - phone_number
           - email
-          - positions (An array of objects, if available)
+          - positions (An array of strings)
           - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
           - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
@@ -68,23 +68,22 @@ module Services
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
         - start_term_date and end_term_date should be strings.
-        - For "positions", convert the following ambiguous position titles into a structured YAML format.#{" "}
+        - For the "positions" field, split the positions into an array of strings.#{" "}
           Preserve non-numeric names as they are.
           The main positions we are interested in are #{positions.join(", ")}.
           Do not list previous positions if their terms have ended.
-          For titles like "city attorney" or "city clerk",
-          categorize them under `type: "role"` with the role name as the value.
           People can have multiple positions and roles.
           Examples:
 
-          Input: "council member ward 3" → Output: `[{ type: "role", value: "council member" }, { type: "ward", value: "3" }]`
-          Input: "ward #3" → Output: `[{ type: "ward", value: "3" }]`
-          Input: "3rd district" → Output: `[{ type: "ward", value: "3" }]`
-          Input: "seat 5" → Output: `[{ type: "role", value: "council member" }, { type: "seat", value: "5" }]`
-          Input: "council vice president" → Output: `[{ type: "role", value: "council vice president" }]`
-          Input: "mayor" → Output: `[{ type: "role", value: "mayor" }]`
-          Input: "mayor position 7" → Output: `[{ type: "role", value: "mayor" }, { type: "position", value: "7" }]`
-          Input: "council president" → Output: `[{ type: "role", value: "council president" }]`
+          Input: "council member ward 3" → Output: `["council member", "ward 3"]`
+          Input: "ward #3" → Output: `["ward 3"]`
+          Input: "mayor, 3rd district" → Output: `["mayor", "ward 3"]`
+          Input: "seat 5" → Output: `["council member", "seat 5"]`
+          Input: "council vice president" → Output: `["council vice president"]`
+          Input: "mayor" → Output: `["mayor"]`
+          Input: "deputy mayor" → Output: `["deputy mayor"]`
+          Input: "mayor position 7" → Output: `["mayor", "position 7"]`
+          Input: "council president" → Output: `["council president"]`
       INSTRUCTIONS
 
       user_instructions = <<~USER
@@ -120,7 +119,7 @@ module Services
               - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
               - phone_number
               - email
-              - positions (an array of objects, if available)
+              - positions (an array of strings)
               - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
               - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
               - website (Provide the absolute URL.)
@@ -139,54 +138,46 @@ module Services
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
           They should be strings.
-        - For "positions", convert the following ambiguous position titles into a structured YAML format.
-          Preserve non-numeric names as they are.#{" "}
+        - For the "positions" field, split the positions into an array of strings.#{" "}
+          Preserve non-numeric names as they are.
           The main positions we are interested in are #{positions.join(", ")}.
           Do not list previous positions if their terms have ended.
-          For titles like "city attorney" or "city clerk",#{" "}
-          categorize them under `type: "role"` with the role name as the value.
           People can have multiple positions and roles.
           Examples:
-          Input: "council member ward 3" → Output: `[{ type: "role", value: "council member" }, { type: "ward", value: "3" }]`
-          Input: "ward #3" → Output: `[{ type: "ward", value: "3" }]`
-          Input: "3rd district" → Output: `[{ type: "ward", value: "3" }]`
-          Input: "seat 5" → Output: `[{ type: "role", value: "council member" }, { type: "seat", value: "5" }]`
-          Input: "council vice president" → Output: `[{ type: "role", value: "council vice president" }]`
-          Input: "mayor" → Output: `[{ type: "role", value: "mayor" }]`
-          Input: "mayor position 7" → Output: `[{ type: "role", value: "mayor" }, { type: "position", value: "7" }]`
-          Input: "council president" → Output: `[{ type: "role", value: "council president" }]
+
+          Input: "council member ward 3" → Output: `["council member", "ward 3"]`
+          Input: "ward #3" → Output: `["ward 3"]`
+          Input: "mayor, 3rd district" → Output: `["mayor", "ward 3"]`
+          Input: "seat 5" → Output: `["council member", "seat 5"]`
+          Input: "council vice president" → Output: `["council vice president"]`
+          Input: "mayor" → Output: `["mayor"]`
+          Input: "deputy mayor" → Output: `["deputy mayor"]`
+          Input: "mayor position 7" → Output: `["mayor", "position 7"]`
+          Input: "council president" → Output: `["council president"]`
 
         Example Output (YAML):
         ---
         people:
           - name: "Jane Smith"
             positions:
-              - type: "role"
-                value: "council member"
-              - type: "position"
-                value: "5"
+              - "council member"
+              - "ward 5"
             phone_number: "555-123-4567"
             image: "images/smith.jpg"
             email: "jsmith@cityofexample.gov"
             website: "https://www.cityofexample.gov/council/smith"
           - name: "John Doe"
             positions:
-              - type: "role"
-                value: "council member"
-              - type: "ward"
-                value: "3"
+              - "council member"
+              - "ward 3"
             phone_number: ""
             image: ""
             email: ""
             website: "/council/doe"
           - name: "Robert Johnson"
             positions:
-              - type: "role"
-                value: "mayor"
-              - type: "role"
-                value: "council member"
-              - type: "position"
-                value: "1"
+              - "mayor"
+              - "1"
             phone_number: "555-111-2222"
             image: "images/mayor.jpg"
             email: "mayor@cityofexample.gov"
