@@ -74,8 +74,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          if [[ "$SOURCE_VALIDATION_APPROVE" == "true" ]]; then
-            gh pr review ${{ github.event.pull_request.number }} --approve --body "$SOURCE_VALIDATION_COMMENT"
-          else
-            gh pr comment ${{ github.event.pull_request.number }} --body "$SOURCE_VALIDATION_COMMENT"
-          fi 
+          gh pr comment ${{ github.event.pull_request.number }} --body "$SOURCE_VALIDATION_COMMENT"

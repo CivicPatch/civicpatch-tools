@@ -18,7 +18,7 @@ namespace :github_pipeline do
 
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
     city_path = CityScrape::CityManager.get_city_path(state, city_entry)
-    relative_path = city_path[city_path.rindex("data/us")..]
+    relative_path = city_path[city_path.rindex("data/#{state}")..]
 
     directory_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/directory.yml"
     puts directory_url
@@ -33,7 +33,7 @@ namespace :github_pipeline do
     state_city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
     city = state_city_entry["name"]
     city_path = CityScrape::CityManager.get_city_path(state, state_city_entry)
-    relative_path = city_path[city_path.rindex("data/us")..]
+    relative_path = city_path[city_path.rindex("data/#{state}")..]
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
