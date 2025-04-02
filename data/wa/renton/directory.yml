@@ -1,0 +1,130 @@
+---
+people:
+- name: Armondo Pavone
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
+- name: Carmen Rivera
+  image: images/a7563edb9e5e6eceffeea430d853eed0ea5b4440241341a751d8cce8891247a4.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/City-Council/rivera
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
+- name: Ed Prince
+  image: images/f3fc48949048716e12c928c57114af13c99ffa89cacfc85ea10f9aa471d35153.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/City-Council/prince
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
+- name: James Alberson, Jr.
+  image: images/b77494aa9a13521c2a68098179fa6a4b5c03a90a4fff6796d6b6470fac0c32ff.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/City-Council/alberson
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
+- name: Kim-Khánh Văn
+  image: images/9bed485e36c4985e9c5403442a4f8e7757bada9dc17e9bda888b9972c1a74c2f.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/City-Council/van
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
+- name: Ruth Pérez
+  image: images/981a2a4929db24e464ed14b791205264afffb708eeb7a79218ba34168bd67e3a.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/City-Council/perez
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
+- name: Ryan McIrvin
+  image: images/999a6d823af197ffeaf8a9a4e9c67e08441dcdfc22e79a62451a923e16467592.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/City-Council/mcirvin
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
+- name: Valerie O'Halloran
+  image: images/aba48dfbc1248a95a8284965a115ff4e1a7e3714c09b14552b15cbcfa78d55e1.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://www.rentonwa.gov/Government/City-Council/ohalloran
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.rentonwa.gov/Government/City-Council
+    note:
