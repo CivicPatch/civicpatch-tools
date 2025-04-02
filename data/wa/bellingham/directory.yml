@@ -1,0 +1,162 @@
+---
+people:
+- name: Kim Lund
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "++13607788000"
+    label: Phone
+  links:
+  - note:
+    url: https://cob.org/gov/mayor/bio
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/mayor
+    note:
+- name: Daniel Hammill
+  image: images/
+  contact_details: []
+  links:
+  - note:
+    url: https://cob.org/gov/council/daniel-hammill
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: 3rd Ward
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/council/contacts-bios
+    note:
+- name: Edwin H. “Skip” Williams
+  image: images/
+  contact_details: []
+  links:
+  - note:
+    url: https://cob.org/gov/council/edwin-williams
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: 4th Ward
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/council/contacts-bios
+    note:
+- name: Hannah Stone
+  image: images/1d39454ed49aa165385ac6c3ad587270ace0563c5129e9d088cd492cea569ab6.webp
+  contact_details: []
+  links:
+  - note:
+    url: https://cob.org/gov/council/hanna-stone
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: 1st Ward
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/council/contacts-bios
+    note:
+- name: Holli​e​ Huthman
+  image: images/
+  contact_details: []
+  links:
+  - note:
+    url: https://cob.org/gov/council/hollie-huthman
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: 2nd Ward
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/council/contacts-bios
+    note:
+- name: Jace Cotton
+  image: images/
+  contact_details: []
+  links:
+  - note:
+    url: https://cob.org/gov/council/council-member-jace-cotton
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Atlarge
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/council/contacts-bios
+    note:
+- name: Lisa Anderson
+  image: images/
+  contact_details: []
+  links:
+  - note:
+    url: https://cob.org/gov/council/lisa-anderson
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: 5th Ward
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/council/contacts-bios
+    note:
+- name: Michael Lilliquist
+  image: images/
+  contact_details: []
+  links:
+  - note:
+    url: https://cob.org/gov/council/michael-lilliquist
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: 6th Ward
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cob.org/gov/council/contacts-bios
+    note:
