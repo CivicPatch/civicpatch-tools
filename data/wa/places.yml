@@ -256,7 +256,8 @@ places:
   population: 70714
   government_type: Mayor-Council
   meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: e372eafd93d5b9c4042293b5f6d346ee
+  meta_hash: 40a48d20712b0b351121f8a4da3b5d81
+  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:sammamish
   - ocd-division/country:us/state:wa/county:king/place:sammamish
