@@ -116,7 +116,8 @@ places:
   population: 102976
   government_type: Council-Manager
   meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 0f782bdc5941a42d1902cf1b1b2ebf6e
+  meta_hash: 97ea3aede7c84ae396d20db4ba6c9a04
+  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:federal_way
   - ocd-division/country:us/state:wa/county:king/place:federal_way
