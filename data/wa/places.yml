@@ -219,6 +219,8 @@ places:
   type: Code city
   population: 77108
   government_type: Council-Manager
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: 8ac75f81bd42099347fcce4028939b85
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:redmond
   - ocd-division/country:us/state:wa/county:king/place:redmond
