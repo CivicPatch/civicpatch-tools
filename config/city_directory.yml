@@ -1,0 +1,19 @@
+---
+government_types:
+  mayor_council:
+    key_positions:
+      - role: mayor
+      - role: council president
+      - role: council vice president
+      - role: council member
+        aliases:
+          - councilmember     
+        implied_by:
+          - ward
+          - district
+          - seat
+          - position
+      - role: deputy mayor
+      - role: council manager
+    search_keywords:
+      - mayor
