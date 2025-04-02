@@ -371,6 +371,8 @@ places:
   type: First-class city
   population: 43505
   government_type: Mayor-Council
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: 19f2f9062ad36c245aff46e68bcd00a8
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:puyallup
   - ocd-division/country:us/state:wa/county:pierce/place:puyallup

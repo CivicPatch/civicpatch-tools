@@ -1,0 +1,198 @@
+---
+people:
+- name: Greg Wheeler
+  image: images/90322cd9be998547ec7feac181f2e2d308ebd038bcbb4a5dbd7d13f95a1158a4
+  contact_details: []
+  links:
+  - note:
+    url: https://bit.ly/3T9vdCI
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/CivicAlerts.aspx?AID=838
+    note:
+- name: Eric Younger
+  image: images/17461c35ed36e8631e99d3e251cbcfe054bc55dd1560d513629ea29da43336b5
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: city.council@ci.bremerton.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://bremertonwa.gov/Directory.aspx?EID=79
+  other_names:
+  - note:
+    name: Council President
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 7
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/693/Council-President
+    note:
+  - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+- name: Anna Mockler
+  image: images/6c646c1efbbd340b9324f99ba96bf0490eff3e0a288dfb1b002093423ff80980
+  contact_details: []
+  links:
+  - note:
+    url: https://bremertonwa.gov/Directory.aspx?EID=197
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 6
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+- name: Denise Frey
+  image: images/c1f56de8fbf47927ab91e4624d23e98e6097daaf42f21c145c2a926c1abaa580
+  contact_details: []
+  links:
+  - note:
+    url: https://bremertonwa.gov/Directory.aspx?EID=199
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 2
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+- name: Jane Rebelowski
+  image: images/985bf21b52567820ded4e5e48c954d5b47714c7681b7750672fd5488a4e9e700
+  contact_details: []
+  links:
+  - note:
+    url: https://bremertonwa.gov/Directory.aspx?EID=230
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 4
+    start_date:
+    end_date:
+  - note:
+    name: Council Vice President
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+- name: Jeff Coughlin
+  image: images/50f60059e7471b8f627663585d0bea6347992f4f83b3c94e56b97b9a66c1fbe1
+  contact_details: []
+  links:
+  - note:
+    url: https://bremertonwa.gov/Directory.aspx?EID=194
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 3
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+- name: Jennifer Chamberlin
+  image: images/068ed5c3bce988d5ccaa72aa6eaab0d43f6dff16b5d0230e03e60cc281a950ae
+  contact_details: []
+  links:
+  - note:
+    url: https://bremertonwa.gov/Directory.aspx?EID=193
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 1
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+- name: Michael Goodnow
+  image: images/bc9cf8c4c2468b0f07e4952ce58d23ab1b1a2820b32a3c355a8aeb0d754353fc
+  contact_details: []
+  links:
+  - note:
+    url: https://bremertonwa.gov/Directory.aspx?EID=114
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 5
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+- name: City of Bremerton City Council Office
+  image: images/73907e7fcd50c5f888aebdffc050727072c60a96cbd2ff8e09e3f2d516d39504
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: city.council@ci.bremerton.wa.us
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: City Council
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://bremertonwa.gov/CouncilAgenda
+    note:
