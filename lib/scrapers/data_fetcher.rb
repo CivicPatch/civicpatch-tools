@@ -3,6 +3,7 @@
 require "capybara"
 require "selenium-webdriver"
 require "markitdown"
+require "sanitize"
 
 require_relative "./common"
 require_relative "../core/browser"
@@ -14,6 +15,7 @@ module Scrapers
       puts "Extracting content from #{url}"
 
       html = fetch_html(url)
+      html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
 
       FileUtils.mkdir_p(destination_dir)
       FileUtils.mkdir_p(PathHelper.project_path(File.join(destination_dir, "images")))
@@ -24,7 +26,7 @@ module Scrapers
 
       download_images(base_url, parsed_html, PathHelper.project_path(File.join(destination_dir, "images")))
       update_html_links(base_url, parsed_html)
-      rewrite_script_tags(parsed_html)
+      # rewrite_script_tags(parsed_html)
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_parsed_html.html")),
                  parsed_html.to_html)
@@ -105,24 +107,16 @@ module Scrapers
       end
     end
 
-    def rewrite_script_tags(nokogiri_html)
-      nokogiri_html.css("script").each do |script|
-        script.replace("<pre class='script-content'>#{script.to_html.gsub("<", "&lt;").gsub(">", "&gt;")}</pre>")
-      end
-    end
-
     def get_image(image_url)
       encoded_image_url = Addressable::URI.parse(image_url).normalize.to_s
       HTTParty.get(encoded_image_url).body
     end
 
     def fetch_html(url)
-      response = HTTParty.get(url)
-
-      raise "fetch_with_client: Access Denied by #{url}" if response.code == 403
-
-      response.body
-    rescue StandardError
+      # response = HTTParty.get(url)
+      # raise "fetch_with_client: Access Denied by #{url}" if response.code == 403
+      # response.body
+      # rescue StandardError
       Browser.fetch_html(url)
     end
 

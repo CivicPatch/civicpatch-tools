@@ -123,7 +123,6 @@ namespace :city_scrape do
         end
       end
 
-      FileUtils.rm_rf(sources_destination_dir) if Dir.exist?(sources_destination_dir)
       new_source_dir = File.join(sources_destination_dir, File.basename(source_dir))
       FileUtils.mkdir_p(new_source_dir)
       FileUtils.mv(source_dir, new_source_dir)
