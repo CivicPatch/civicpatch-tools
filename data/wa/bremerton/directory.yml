@@ -17,7 +17,7 @@ people:
   - url: https://bremertonwa.gov/CivicAlerts.aspx?AID=838
     note:
 - name: Eric Younger
-  image: images/17461c35ed36e8631e99d3e251cbcfe054bc55dd1560d513629ea29da43336b5
+  image: images/00a019c17bb0143ed3903a557a9f815ffe15b4b13f2adc4030e6ff42aa564e34
   contact_details:
   - note:
     type: phone
@@ -50,9 +50,19 @@ people:
     note:
   - url: https://bremertonwa.gov/635/Council-Districts
     note:
+  - url: https://bremertonwa.gov/Directory.aspx?EID=79
+    note:
 - name: Anna Mockler
-  image: images/6c646c1efbbd340b9324f99ba96bf0490eff3e0a288dfb1b002093423ff80980
-  contact_details: []
+  image: images/7bda108daa927340b5134605a8aaccd444de2019810f383e619ebc651d728a07
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: anna.mockler@ci.bremerton.wa.us
+    label: Email
   links:
   - note:
     url: https://bremertonwa.gov/Directory.aspx?EID=197
@@ -62,17 +72,55 @@ people:
     start_date:
     end_date:
   - note:
+    name: Alternate On The West Sound Partners For Ecosystem Recovery Executive Committee
+    start_date: '2023-02-18'
+    end_date:
+  - note:
+    name: Chair For The Audit Committee
+    start_date: '2023-02-18'
+    end_date:
+  - note:
+    name: City Council
+    start_date: '2023-02-18'
+    end_date:
+  - note:
+    name: Council Vice President
+    start_date: '2023-02-18'
+    end_date:
+  - note:
     name: District 6
     start_date:
+    end_date:
+  - note:
+    name: District Number 6
+    start_date: '2023-02-18'
+    end_date:
+  - note:
+    name: Member Of The Kitsap Transit Board Of Commissioners
+    start_date: '2023-02-18'
+    end_date:
+  - note:
+    name: Vice Chair For The Public Safety Committee
+    start_date: '2023-02-18'
     end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://bremertonwa.gov/635/Council-Districts
     note:
+  - url: https://bremertonwa.gov/Directory.aspx?EID=197
+    note:
 - name: Denise Frey
-  image: images/c1f56de8fbf47927ab91e4624d23e98e6097daaf42f21c145c2a926c1abaa580
-  contact_details: []
+  image: images/3c96e6b511a4f28069519cc548d189eb68787e1e01537450082d3422894861f8
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: city.council@ci.bremerton.wa.us
+    label: Email
   links:
   - note:
     url: https://bremertonwa.gov/Directory.aspx?EID=199
@@ -85,14 +133,28 @@ people:
     name: District 2
     start_date:
     end_date:
+  - note:
+    name: District Number 2
+    start_date: '2022-03-23'
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://bremertonwa.gov/635/Council-Districts
     note:
+  - url: https://bremertonwa.gov/Directory.aspx?EID=199
+    note:
 - name: Jane Rebelowski
-  image: images/985bf21b52567820ded4e5e48c954d5b47714c7681b7750672fd5488a4e9e700
-  contact_details: []
+  image: images/0b483bb046bfb7ebecb4d6005ed301e3debadcfbc96849024e0b32d7500aeba1
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: city.council@ci.bremerton.wa.us
+    label: Email
   links:
   - note:
     url: https://bremertonwa.gov/Directory.aspx?EID=230
@@ -102,11 +164,23 @@ people:
     start_date:
     end_date:
   - note:
-    name: District 4
+    name: Chair For The Public Works Committee
     start_date:
     end_date:
   - note:
     name: Council Vice President
+    start_date:
+    end_date:
+  - note:
+    name: District 4
+    start_date:
+    end_date:
+  - note:
+    name: District Number 4
+    start_date:
+    end_date:
+  - note:
+    name: Member Of The Parks Finance Investment Parking Committee
     start_date:
     end_date:
   updated_at: '2025-04-02'
@@ -114,9 +188,19 @@ people:
   sources:
   - url: https://bremertonwa.gov/635/Council-Districts
     note:
+  - url: https://bremertonwa.gov/Directory.aspx?EID=230
+    note:
 - name: Jeff Coughlin
-  image: images/50f60059e7471b8f627663585d0bea6347992f4f83b3c94e56b97b9a66c1fbe1
-  contact_details: []
+  image: images/2d25a7b4c5e7a9ff88cc56e257fe2aad6713b99da867621f15f2a73203280221
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: city.council@ci.bremerton.wa.us
+    label: Email
   links:
   - note:
     url: https://bremertonwa.gov/Directory.aspx?EID=194
@@ -129,20 +213,38 @@ people:
     name: District 3
     start_date:
     end_date:
+  - note:
+    name: District Number 3
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://bremertonwa.gov/635/Council-Districts
     note:
+  - url: https://bremertonwa.gov/Directory.aspx?EID=194
+    note:
 - name: Jennifer Chamberlin
-  image: images/068ed5c3bce988d5ccaa72aa6eaab0d43f6dff16b5d0230e03e60cc281a950ae
-  contact_details: []
+  image: images/83cd8570bc82516f24faab1d5ad82b690cc85364a75c5ffdf121a4d210c26b46
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: city.council@ci.bremerton.wa.us
+    label: Email
   links:
   - note:
     url: https://bremertonwa.gov/Directory.aspx?EID=193
   other_names:
   - note:
     name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: City Council District Number 1
     start_date:
     end_date:
   - note:
@@ -154,9 +256,19 @@ people:
   sources:
   - url: https://bremertonwa.gov/635/Council-Districts
     note:
+  - url: https://bremertonwa.gov/Directory.aspx?EID=193
+    note:
 - name: Michael Goodnow
-  image: images/bc9cf8c4c2468b0f07e4952ce58d23ab1b1a2820b32a3c355a8aeb0d754353fc
-  contact_details: []
+  image: images/0a32de17915534f5b1c2876b06d7f8618170b8f2e82b01f34ff69ebb5f53752b
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 473-5280"
+    label: Phone
+  - note:
+    type: email
+    value: city.council@ci.bremerton.wa.us
+    label: Email
   links:
   - note:
     url: https://bremertonwa.gov/Directory.aspx?EID=114
@@ -166,13 +278,31 @@ people:
     start_date:
     end_date:
   - note:
+    name: Chair For The Public Safety Committee
+    start_date:
+    end_date:
+  - note:
+    name: City Council
+    start_date:
+    end_date:
+  - note:
     name: District 5
+    start_date:
+    end_date:
+  - note:
+    name: District Number 5
+    start_date:
+    end_date:
+  - note:
+    name: Vice Chair For The Parks Finance Investment Parking Committee
     start_date:
     end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://bremertonwa.gov/635/Council-Districts
+    note:
+  - url: https://bremertonwa.gov/Directory.aspx?EID=114
     note:
 - name: City of Bremerton City Council Office
   image: images/73907e7fcd50c5f888aebdffc050727072c60a96cbd2ff8e09e3f2d516d39504
