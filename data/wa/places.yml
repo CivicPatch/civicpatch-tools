@@ -14,7 +14,8 @@ places:
   population: 737015
   government_type: Mayor-Council
   meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 640786e520d2b1ea15cbaccf34cfc9e2
+  meta_hash: 0f7e5ada41a2cd75301186fcfcf35c21
+  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:spokane
   - ocd-division/country:us/state:wa/county:spokane/place:spokane

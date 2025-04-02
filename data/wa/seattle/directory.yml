@@ -19,8 +19,16 @@ people:
   - url: https://seattle.gov/mayor
     note:
 - name: Sara Nelson
-  image: ''
-  contact_details: []
+  image: images/8980e1e2cced3af98b33c3051dc0093baf50f36034b5004edde025b0db690ae4.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8809"
+    label: Phone
+  - note:
+    type: email
+    value: sara.nelson@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/meet-the-council/sara-nelson
@@ -29,14 +37,28 @@ people:
     name: Council President
     start_date:
     end_date:
+  - note:
+    name: Citywide Councilmember
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/meet-the-council/sara-nelson
+    note:
 - name: Alexis Mercedes Rinck
-  image: ''
-  contact_details: []
+  image: images/fcbe93394fac497929e241019f78222226d899b76c434c4873eb046e983a991b.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8808"
+    label: Phone
+  - note:
+    type: email
+    value: alexismercedes.rinck@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/rinck
@@ -45,14 +67,32 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: Citywide Councilmember
+    start_date:
+    end_date:
+  - note:
+    name: Position 8
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/rinck
+    note:
 - name: Cathy Moore
-  image: ''
-  contact_details: []
+  image: images/5a2497a84ca21e840e81ffcd278314e8329b537cc8b7be25937aab09a03d4d9d.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8805"
+    label: Phone
+  - note:
+    type: email
+    value: cathy.moore@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/moore
@@ -61,14 +101,28 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: District 5
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/moore
+    note:
 - name: Dan Strauss
-  image: ''
-  contact_details: []
+  image: images/13a279195aed5b588656fba571556d9114214b0c10d8007fad6ef025371e78c7.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8806"
+    label: Phone
+  - note:
+    type: email
+    value: dan.strauss@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/strauss
@@ -77,14 +131,28 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: District 6
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/strauss
+    note:
 - name: Joy Hollingsworth
-  image: ''
-  contact_details: []
+  image: images/03cd886b4f338cf8520b3b22189e0101c826602317a44ff234e38c405a704aaa.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8803"
+    label: Phone
+  - note:
+    type: email
+    value: joy.hollingsworth@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/hollingsworth
@@ -93,14 +161,28 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: District 3
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/hollingsworth
+    note:
 - name: Maritza Rivera
-  image: ''
-  contact_details: []
+  image: images/36ee549afe7da4667abdcf86d180ff8d9f750766ed04f812abbb7ec18bd8c8d7.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8804"
+    label: Phone
+  - note:
+    type: email
+    value: maritza.rivera@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/rivera
@@ -109,14 +191,28 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: District 4
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/rivera
+    note:
 - name: Mark Solomon
-  image: ''
-  contact_details: []
+  image: images/0c6d8b609300ef0691be8f0dd26f5fc07fa31dc97946bf2b52a9498d3fa5b8a3.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8802"
+    label: Phone
+  - note:
+    type: email
+    value: mark.solomon2@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/solomon
@@ -125,14 +221,28 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: District 2
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/solomon
+    note:
 - name: Rob Saka
-  image: ''
-  contact_details: []
+  image: images/c690131bd6154f33a1bc0ea99b3bf0d94f3727c62246f6f1451098941616d2c5.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8801"
+    label: Phone
+  - note:
+    type: email
+    value: rob.saka@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/saka
@@ -141,14 +251,28 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: District 1
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
     note:
+  - url: https://seattle.gov/council/saka
+    note:
 - name: Robert Kettle
-  image: ''
-  contact_details: []
+  image: images/faea3dfa57d5e786126d30bb44c9cb430ad7d420471ef4729c110f21a6f32ed3.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(206) 684-8807"
+    label: Phone
+  - note:
+    type: email
+    value: robert.kettle@seattle.gov
+    label: Email
   links:
   - note:
     url: https://seattle.gov/council/kettle
@@ -157,8 +281,14 @@ people:
     name: Council Member
     start_date:
     end_date:
+  - note:
+    name: District 7 Councilmember
+    start_date:
+    end_date:
   updated_at: '2025-04-02'
   created_at: '2025-04-02'
   sources:
   - url: https://seattle.gov/council
+    note:
+  - url: https://seattle.gov/council/kettle
     note:
