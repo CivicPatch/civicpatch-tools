@@ -1,0 +1,166 @@
+---
+people:
+- name: Cassie Franklin
+  image: images/9d81859e3bb37cb193e8fda99aa4afd94a586678ab22b3b9176b920aebbd55d9
+  contact_details: []
+  links:
+  - note:
+    url: https://everettwa.gov/1132/About-Mayor-Franklin
+  - note:
+    url: https://everettwa.gov/270/Mayors-Office
+  - note:
+    url: https://www.everettwa.gov/1132/About-Mayor-Franklin
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/CivicAlerts.aspx?AID=4112
+    note:
+  - url: https://everettwa.gov/CivicAlerts.aspx?AID=3975
+    note:
+  - url: https://everettwa.gov/citycouncil
+    note:
+- name: Ben Zarlingo
+  image: images/a63673e84efd04ae58a0ddf1b774e50e56e7a12c1e3adeecb99fcd67467d3df5
+  contact_details: []
+  links:
+  - note:
+    url: https://www.everettwa.gov/3059/Ben-Zarlingo---District-5
+  other_names:
+  - note:
+    name: Vice President
+    start_date:
+    end_date:
+  - note:
+    name: District 5
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/citycouncil
+    note:
+- name: Don Schwab
+  image: images/eecb7cfefdf1e77b337bd3570cd7079613453684a53683811f17668d840d9a4e
+  contact_details: []
+  links:
+  - note:
+    url: https://www.everettwa.gov/3057/Don-Schwab---District-3
+  other_names:
+  - note:
+    name: President
+    start_date:
+    end_date:
+  - note:
+    name: District 3
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/citycouncil
+    note:
+- name: Judy Tuohy
+  image: images/da294d6db8472722698e8194f8ea15fc9db3b60c13a46fc1fe848800a3f8316a
+  contact_details: []
+  links:
+  - note:
+    url: https://www.everettwa.gov/3020/Judy-Tuohy---At-Large
+  other_names:
+  - note:
+    name: At Large
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/citycouncil
+    note:
+- name: Liz Vogeli
+  image: images/0fcb03ba4182c033fba8af3bfc303db626d93f03483ca973b05efc760146c617
+  contact_details: []
+  links:
+  - note:
+    url: https://www.everettwa.gov/3058/Liz-Vogeli---District-4
+  other_names:
+  - note:
+    name: District 4
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/citycouncil
+    note:
+- name: Mary Fosse
+  image: images/8ea189778cec92a2b2819fc4d836f17028fa4694cc4ae01c13c35dd146bdcd7c
+  contact_details: []
+  links:
+  - note:
+    url: https://www.everettwa.gov/3053/Mary-Fosse---District-1
+  other_names:
+  - note:
+    name: District 1
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/citycouncil
+    note:
+- name: Paula Rhyne
+  image: images/5c4fedeed701a984739f78a3bb2a6d328238c5236f7c9ad4c9830d1212da71e7
+  contact_details: []
+  links:
+  - note:
+    url: https://www.everettwa.gov/2944/Paula-Rhyne---District-2
+  other_names:
+  - note:
+    name: District 2
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/citycouncil
+    note:
+- name: Scott Bader
+  image: images/6f41939e242b334e6534fab5854d10fc07eca7ac6098137dc935a9f55e6cb410
+  contact_details: []
+  links:
+  - note:
+    url: https://www.everettwa.gov/3060/Scott-Bader---At-Large
+  other_names:
+  - note:
+    name: At Large
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://everettwa.gov/citycouncil
+    note:
