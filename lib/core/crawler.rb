@@ -14,13 +14,15 @@ class Crawler
 
     results = process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth)
 
-    results.values
-           .map(&:shuffle)  # Shuffle within groups to avoid bias
-           .inject(&:zip)   # Interleave to distribute fairly
-           &.flatten        # Flatten into a single list
-           &.compact        # Remove nil values
-           &.uniq           # Remove duplicates
-           &.sort_by { |url| visited.to_a.index(url) || Float::INFINITY } # Keep early crawled URLs first
+    results = results.values
+                     .map(&:shuffle)  # Shuffle within groups to avoid bias
+                     .inject(&:zip)   # Interleave to distribute fairly
+                     &.flatten        # Flatten into a single list
+                     &.compact        # Remove nil values
+                     &.uniq           # Remove duplicates
+                     &.sort_by { |url| visited.to_a.index(url) || Float::INFINITY } # Keep early crawled URLs first
+
+    results || []
   end
 
   def self.process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth)
@@ -82,7 +84,6 @@ class Crawler
 
     Nokogiri::HTML(response.body)
   rescue StandardError
-    puts "Failed to fetch #{url}: #{response.code}, retrying in browser"
     html = Browser.fetch_html(url)
     Nokogiri::HTML(html)
   end
@@ -136,7 +137,10 @@ class Crawler
   def self.same_domain?(base_url, href)
     base_domain = Addressable::URI.parse(base_url).host
     link_domain = Addressable::URI.parse(href).host
-    base_domain == link_domain
+
+    return nil unless base_domain.present? && link_domain.present?
+
+    base_domain.include?(link_domain) || link_domain.include?(base_domain)
   end
 
   def self.text_match?(text, keywords)

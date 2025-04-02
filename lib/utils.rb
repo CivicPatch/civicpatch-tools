@@ -39,7 +39,11 @@ module Utils
   end
 
   def self.format_phone_number(phone) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
-    return nil if phone.nil? || phone.strip.empty?
+    return nil if phone.nil?
+
+    # TODO: Only support one phone # for now
+    phone = phone.first if phone.is_a?(Array)
+    phone.strip.empty?
 
     # Extract digits and plus sign for international numbers
     digits = phone.gsub(/[^\d+]/, "")
