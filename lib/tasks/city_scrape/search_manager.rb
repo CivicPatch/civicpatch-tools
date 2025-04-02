@@ -10,7 +10,7 @@ module CityScrape
       case engine
       when "manual"
         # TODO: replace with actual keyword groups
-        urls = Crawler.crawl(website, keyword_groups: keyword_groups)
+        urls += Crawler.crawl(website, keyword_groups: keyword_groups)
       when "brave"
         keyword_groups.map do |group|
           search_query = "#{city} #{state} #{group[:name]}"
