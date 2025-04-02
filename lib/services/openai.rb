@@ -262,7 +262,10 @@ module Services
       # Remove any trailing whitespace and ensure ending newline
       content = "#{content.strip}\n"
 
-      YAML.safe_load(content, permitted_classes: [])
+      parsed_data = YAML.safe_load(content, permitted_classes: [Date])
+
+      # Convert Date objects to strings
+      parsed_data.transform_values! { |v| v.is_a?(Date) ? v.to_s : v }
     end
   end
 end
