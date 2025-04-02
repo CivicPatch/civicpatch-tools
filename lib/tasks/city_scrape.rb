@@ -45,7 +45,7 @@ namespace :city_scrape do
 
     cities = state_places["places"].select do |c|
       !gnis_to_ignore.include?(c["gnis"]) &&
-        c["last_city_scrape_run"].nil? && c["website"].present?
+        c["meta_last_city_scrape_run"].nil? && c["website"].present?
     end.first(num_cities.to_i)
 
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
@@ -105,6 +105,7 @@ namespace :city_scrape do
     city_entry,
     source_dirs
   )
+    puts "the source dirs are--#{source_dirs}"
     city_path = CityScrape::CityManager.get_city_path(state, city_entry)
     sources_destination_dir = File.join(city_path, "city_scrape_sources")
 
@@ -123,7 +124,9 @@ namespace :city_scrape do
       end
 
       FileUtils.rm_rf(sources_destination_dir) if Dir.exist?(sources_destination_dir)
-      FileUtils.mv(source_dir, sources_destination_dir)
+      new_source_dir = File.join(sources_destination_dir, File.basename(source_dir))
+      FileUtils.mkdir_p(new_source_dir)
+      FileUtils.mv(source_dir, new_source_dir)
     end
   end
 
@@ -134,9 +137,12 @@ namespace :city_scrape do
     copy_source_files(state, city_entry, source_dirs)
 
     CityScrape::CityManager.update_city_directory(state, city_entry, new_city_directory)
+
+    city_directory_hash = Digest::MD5.hexdigest(new_city_directory.to_yaml)
     CityScrape::StateManager.update_state_places(state, [
                                                    { "gnis" => city_entry["gnis"],
-                                                     "last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d") }
+                                                     "meta_last_city_scrape_run" => Time.now.strftime("%Y-%m-%d"),
+                                                     "meta_hash" => city_directory_hash }
                                                  ])
     FileUtils.rm_rf(cache_directory)
 

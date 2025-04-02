@@ -31,9 +31,6 @@ module CityScrape
           existing_place = state_places["places"][existing_place_index]
 
           merged = existing_place.merge(updated_place) do |_key, old_val, new_val|
-            puts "updated_place #{updated_place}"
-            puts "existing_place #{existing_place}"
-            puts "update_place gnis #{updated_place["gnis"]} old vs new #{old_val} vs #{new_val}"
             new_val.present? ? new_val.dup : old_val.dup
           end
           state_places["places"][existing_place_index] = merged

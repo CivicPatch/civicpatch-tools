@@ -70,7 +70,6 @@ module Services
         - start_term_date and end_term_date should be strings.
         - For the "positions" field, split the positions into an array of strings.#{" "}
           Preserve non-numeric names as they are.
-          The main positions we are interested in are #{positions.join(", ")}.
           Do not list previous positions if their terms have ended.
           People can have multiple positions and roles.
           Examples:
@@ -84,6 +83,7 @@ module Services
           Input: "deputy mayor" → Output: `["deputy mayor"]`
           Input: "mayor position 7" → Output: `["mayor", "position 7"]`
           Input: "council president" → Output: `["council president"]`
+          Input: "position 8 at-large" → Output: `["position 8 at-large"]`
       INSTRUCTIONS
 
       user_instructions = <<~USER
@@ -140,7 +140,6 @@ module Services
           They should be strings.
         - For the "positions" field, split the positions into an array of strings.#{" "}
           Preserve non-numeric names as they are.
-          The main positions we are interested in are #{positions.join(", ")}.
           Do not list previous positions if their terms have ended.
           People can have multiple positions and roles.
           Examples:
@@ -154,6 +153,7 @@ module Services
           Input: "deputy mayor" → Output: `["deputy mayor"]`
           Input: "mayor position 7" → Output: `["mayor", "position 7"]`
           Input: "council president" → Output: `["council president"]`
+          Input: "position 8 at-large" → Output: `["position 8 at-large"]`
 
         Example Output (YAML):
         ---
