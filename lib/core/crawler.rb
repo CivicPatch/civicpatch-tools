@@ -14,7 +14,13 @@ class Crawler
 
     results = process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth)
 
-    results.transform_values(&:flatten).values.flatten.uniq # Ensure no duplicates
+    results.values
+           .map(&:shuffle)  # Shuffle within groups to avoid bias
+           .inject(&:zip)   # Interleave to distribute fairly
+           &.flatten        # Flatten into a single list
+           &.compact        # Remove nil values
+           &.uniq           # Remove duplicates
+           &.sort_by { |url| visited.to_a.index(url) || Float::INFINITY } # Keep early crawled URLs first
   end
 
   def self.process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth)

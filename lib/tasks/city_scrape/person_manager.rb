@@ -35,9 +35,11 @@ module CityScrape
         FileUtils.cp_r(file, images_dir, remove_destination: true)
       end
 
+      city_directory_hash = Digest::MD5.hexdigest(city_data.to_yaml)
       CityScrape::StateManager.update_state_places(state, [
                                                      { "gnis" => city_entry["gnis"],
-                                                       "last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d") }
+                                                       "meta_last_member_info_scrape_run" => Time.now.strftime("%Y-%m-%d"),
+                                                       "meta_hash" => city_directory_hash }
                                                    ])
       Scrapers::Common.prune_unused_images(state, city_entry)
     end
