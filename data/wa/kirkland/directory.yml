@@ -1,0 +1,188 @@
+---
+people:
+- name: Kelli Curtis
+  image: images/0ef00e6debb931607ba39d60789c96bca3d6266adb5dbb8aa1f996a4c60ff82d.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 587-3532"
+    label: Phone
+  - note:
+    type: email
+    value: kcurtis@kirklandwa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 2
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.kirklandwa.gov/Government/City-Council
+    note:
+- name: Amy Falcone
+  image: images/b648575018a486a35331b5334ac46e15e4a3f0e84f8439d8047db2d41656b083.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 587-3526"
+    label: Phone
+  - note:
+    type: email
+    value: afalcone@kirklandwa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 6
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.kirklandwa.gov/Government/City-Council
+    note:
+- name: John Tymczyszyn
+  image: images/1c4bbf09acdac719a9a68d819f168004bbe205bfdd68eb8b18db3d18891ac4c6.jpg
+  contact_details:
+  - note:
+    type: email
+    value: johnt@kirklandwa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 4
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.kirklandwa.gov/Government/City-Council
+    note:
+- name: Jon Pascal
+  image: images/698779dce29834e3a63522e3b130878ccd6e0bd4486a8f3b69cc57694eb71624.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 587-3530"
+    label: Phone
+  - note:
+    type: email
+    value: jpascal@kirklandwa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 7
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.kirklandwa.gov/Government/City-Council
+    note:
+- name: Neal Black
+  image: images/f6375a653230a8cfdc9946f7e5715e12785a98060afed5fc7d578953d80c2f16.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 587-3544"
+    label: Phone
+  - note:
+    type: email
+    value: nblack@kirklandwa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 5
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.kirklandwa.gov/Government/City-Council
+    note:
+- name: Penny Sweet
+  image: images/ff55d5785f6c9cbfe94627bae2598dbb882f78db1c6936980b8e06bc3ef87299.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 587-3534"
+    label: Phone
+  - note:
+    type: email
+    value: psweet@kirklandwa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 3
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.kirklandwa.gov/Government/City-Council
+    note:
+- name: Jay Arnold
+  image: images/4769ce0b159985abc6a188e272ca78631d86f58cfda643e60a8088a97ec360b4.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 587-3535"
+    label: Phone
+  - note:
+    type: email
+    value: jarnold@kirklandwa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Deputy Mayor
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 1
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.kirklandwa.gov/Government/City-Council
+    note:

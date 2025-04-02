@@ -157,6 +157,8 @@ places:
   type: Code city
   population: 92175
   government_type: Council-Manager
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: da3d6ca3db43ec9d38dbab064844bac5
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:bellingham
   - ocd-division/country:us/state:wa/county:whatcom/place:bellingham
