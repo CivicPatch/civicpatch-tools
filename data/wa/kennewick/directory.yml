@@ -1,0 +1,234 @@
+---
+people:
+- name: Gretl Crawford
+  image: images/c35e4c66a5a4dccb8710f80e90ed6e52468654dee990feb09f36150ad396db46
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 531-0454"
+    label: Phone
+  - note:
+    type: email
+    value: gretl.crawford@ci.kennewick.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Ward 1
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 1
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.go2kennewick.com/531/City-Council
+    note:
+- name: Brad Beauchamp
+  image: images/68f9a39621a28e2e689a44df42a3474c2a68c28b2af4b4c28a12b523f84b9f0f
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 308-6556"
+    label: Phone
+  - note:
+    type: email
+    value: brad.beauchamp@ci.kennewick.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: At Large
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 6
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.go2kennewick.com/531/City-Council
+    note:
+- name: Jason McShane
+  image: images/e805c596f31ad9a4d5e9360531197bfb4055132e32ea8e463e8996ae06910294
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 537-5903"
+    label: Phone
+  - note:
+    type: email
+    value: jason.mcshane@ci.kennewick.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://www.go2kennewick.com/873/John-Trumbo-Bio-Page
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: At Large
+    start_date:
+    end_date:
+  - note:
+    name: Position 4
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.go2kennewick.com/531/City-Council
+    note:
+- name: Jim Millbauer
+  image: images/13fe0c51a622799adefec01dd1096228f71025d6e94c0285064dbde68a59b47e
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 531-4134"
+    label: Phone
+  - note:
+    type: email
+    value: jim.millbauer@ci.kennewick.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: At Large
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 7
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.go2kennewick.com/531/City-Council
+    note:
+- name: John Trumbo
+  image: images/8125685dff22afd357bec7c726c176701bf03371a102b592726b4ce7c0c5789b
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 366-2241"
+    label: Phone
+  - note:
+    type: email
+    value: john.trumbo@ci.kennewick.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://www.go2kennewick.com/873/John-Trumbo-Bio-Page
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Ward 3
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 3
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.go2kennewick.com/531/City-Council
+    note:
+- name: Loren Anderson
+  image: images/b6c45fc41cf4efedde4d911aa4faae570df48f1c5e85ce166ecf73575b0fc412
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 586-5532"
+    label: Phone
+  - note:
+    type: email
+    value: loren.anderson@ci.kennewick.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Ward 2
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 2
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.go2kennewick.com/531/City-Council
+    note:
+- name: Charles Torelli
+  image: images/d30baef0dff6147ba16128a861431e956187f29722a75f3859f6c97d47921541
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 405-2156"
+    label: Phone
+  - note:
+    type: email
+    value: chuck.torelli@ci.kennewick.wa.us
+    label: Email
+  links:
+  - note:
+    url: https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page
+  other_names:
+  - note:
+    name: Mayor Pro Tem
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: At Large
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 5
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://www.go2kennewick.com/531/City-Council
+    note:

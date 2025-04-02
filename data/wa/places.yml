@@ -207,6 +207,8 @@ places:
   type: Code city
   population: 83921
   government_type: Council-Manager
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: d831d4b4677d20a2c43a4cdd2e2a0731
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:pasco
   - ocd-division/country:us/state:wa/county:franklin/place:pasco
