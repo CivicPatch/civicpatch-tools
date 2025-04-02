@@ -21,12 +21,16 @@ people:
   - url: https://my.spokanecity.org/mayor/ceremonial-documents/
     note:
 - name: Jonathan Bingle
-  image: images/61df2a866a3cdf6914837ace26d3e6d6b2909638d06b8db6ec1e0954df20cb38.jpg
+  image: images/c3f6af36302e447775c4fd452ac1c12d1c8f3bcd11a78285592a3b3ce65586e9.jpg
   contact_details:
   - note:
     type: email
     value: jbingle@spokanecity.org
     label: Email
+  - note:
+    type: phone
+    value: "(509) 625-6719"
+    label: Phone
   links:
   - note:
     url: https://my.spokanecity.org/citycouncil/members/jonathan-bingle
@@ -50,13 +54,19 @@ people:
     note:
   - url: https://my.spokanecity.org/citycouncil/items-of-interest/
     note:
+  - url: https://my.spokanecity.org/citycouncil/members/jonathan-bingle
+    note:
 - name: Kitty Klitzke
-  image: images/a637a361e02cef00a905c559a9fb46094788ea87d1053054619a638a37c9306d.jpg
+  image: images/bfdb7c611d41bc28b705b37467ce21ee3c2eabbc241fa8a8580cbb91d01e1426.jpg
   contact_details:
   - note:
     type: email
     value: kklitzke@spokanecity.org
     label: Email
+  - note:
+    type: phone
+    value: "(509) 625-6255"
+    label: Phone
   links:
   - note:
     url: https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke
@@ -82,13 +92,19 @@ people:
     note:
   - url: https://my.spokanecity.org/citycouncil/items-of-interest/
     note:
+  - url: https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke
+    note:
 - name: Lili Navarrete
-  image: images/3ee9214a899dc1c3e52be703f606f51025af512e022d8f364192a33e610200b2.jpg
+  image: images/73a03e06f1b93232976ee703655ebbfc266e89f8515fce939f959ecda9d28592.jpg
   contact_details:
   - note:
     type: email
     value: lnavarrete@spokanecity.org
     label: Email
+  - note:
+    type: phone
+    value: "(509) 625-6255"
+    label: Phone
   links:
   - note:
     url: https://my.spokanecity.org/citycouncil/members/lili-navarrete
@@ -112,8 +128,10 @@ people:
     note:
   - url: https://my.spokanecity.org/citycouncil/items-of-interest/
     note:
+  - url: https://my.spokanecity.org/citycouncil/members/lili-navarrete
+    note:
 - name: Michael Cathcart
-  image: images/989c6e617c545bc10387d99aadf29af1a9d66d4e7e767b55c9dc4762264598cd.jpg
+  image: images/a7ab49b0fd0bc13d58eaa0bd9fe35a48c9e012d9be7fce750e2321444842bfa6.jpg
   contact_details:
   - note:
     type: email
@@ -142,13 +160,19 @@ people:
     note:
   - url: https://my.spokanecity.org/citycouncil/items-of-interest/
     note:
+  - url: https://my.spokanecity.org/citycouncil/members/michael-cathcart
+    note:
 - name: Paul Dillon
-  image: images/2c38636450571603531448173fddd0edd4cb35261c0188d13b5c2dab7cbe55b9.jpg
+  image: images/fc51c21b7a2b526d0a35e7956c110915656f16ac58a4b923bd25f1ce6306f781.jpg
   contact_details:
   - note:
     type: email
     value: pdillon@spokanecity.org
     label: Email
+  - note:
+    type: phone
+    value: "(509) 564-4569"
+    label: Phone
   links:
   - note:
     url: https://my.spokanecity.org/citycouncil/members/paul-dillon
@@ -162,7 +186,27 @@ people:
     start_date:
     end_date:
   - note:
+    name: Council President Protempore
+    start_date:
+    end_date:
+  - note:
     name: District 2
+    start_date:
+    end_date:
+  - note:
+    name: Finance And Administration Committee Chair
+    start_date:
+    end_date:
+  - note:
+    name: Public Infrastructure Environment And Sustainability Committee Member
+    start_date:
+    end_date:
+  - note:
+    name: Public Safety Community Health Committee Member
+    start_date:
+    end_date:
+  - note:
+    name: Urban Experience Committee Member
     start_date:
     end_date:
   updated_at: '2025-04-02'
@@ -172,13 +216,19 @@ people:
     note:
   - url: https://my.spokanecity.org/citycouncil/items-of-interest/
     note:
+  - url: https://my.spokanecity.org/citycouncil/members/paul-dillon
+    note:
 - name: Zack Zappone
-  image: images/eed055a64f5bbad66ac5f104ad68b7329293c82190bdeb8bc8a0cec97d55a674.jpg
+  image: images/c7acb754a7c981d3b76fe1e0b65ff9beb219a418b352d07bfe0e8f2746b154f1.jpg
   contact_details:
   - note:
     type: email
     value: zzappone@spokanecity.org
     label: Email
+  - note:
+    type: phone
+    value: "(509) 625-6255"
+    label: Phone
   links:
   - note:
     url: https://my.spokanecity.org/citycouncil/members/zack-zappone
@@ -202,17 +252,27 @@ people:
     note:
   - url: https://my.spokanecity.org/citycouncil/items-of-interest/
     note:
+  - url: https://my.spokanecity.org/citycouncil/members/zack-zappone
+    note:
 - name: Betsy Wilkerson
-  image: images/47882c074a3746a23b839d1c58637d366b3849ef8857459eef218827e5356de3.jpg
+  image: images/96267627447dcce8ca33fee048320cad132790724184951fadc852d36f5161ad.jpg
   contact_details:
   - note:
     type: email
     value: bwilkerson@spokanecity.org
     label: Email
+  - note:
+    type: phone
+    value: "(509) 625-6265"
+    label: Phone
   links:
   - note:
     url: https://my.spokanecity.org/citycouncil/members/betsy-wilkerson
   other_names:
+  - note:
+    name: Council President
+    start_date:
+    end_date:
   - note:
     name: City Council President
     start_date:
@@ -223,4 +283,6 @@ people:
   - url: https://my.spokanecity.org/citycouncil/members/
     note:
   - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/members/betsy-wilkerson
     note:
