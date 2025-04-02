@@ -263,6 +263,7 @@ places:
   government_type: Council-Manager
   meta_last_city_scrape_run: '2025-04-02'
   meta_hash: d7730cc3ac11b2d27d8ed586ab004d70
+  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:lakewood
   - ocd-division/country:us/state:wa/county:pierce/place:lakewood
