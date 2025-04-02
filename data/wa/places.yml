@@ -139,6 +139,8 @@ places:
   type: First-class city
   population: 96968
   government_type: Council-Manager
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: 725233e68661b30d9cecec4960f91331
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:kirkland
   - ocd-division/country:us/state:wa/county:king/place:kirkland
