@@ -1,0 +1,226 @@
+---
+people:
+- name: Lisa Brown
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(509) 625-6250"
+    label: Phone
+  links:
+  - note:
+    url: https://my.spokanecity.org/mayor
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/mayor/ceremonial-documents/
+    note:
+- name: Jonathan Bingle
+  image: images/61df2a866a3cdf6914837ace26d3e6d6b2909638d06b8db6ec1e0954df20cb38.jpg
+  contact_details:
+  - note:
+    type: email
+    value: jbingle@spokanecity.org
+    label: Email
+  links:
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/jonathan-bingle
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: City Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 1
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/citycouncil/members/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
+- name: Kitty Klitzke
+  image: images/a637a361e02cef00a905c559a9fb46094788ea87d1053054619a638a37c9306d.jpg
+  contact_details:
+  - note:
+    type: email
+    value: kklitzke@spokanecity.org
+    label: Email
+  links:
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/kitty-klitzke
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: City Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 3
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/citycouncil/members/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
+- name: Lili Navarrete
+  image: images/3ee9214a899dc1c3e52be703f606f51025af512e022d8f364192a33e610200b2.jpg
+  contact_details:
+  - note:
+    type: email
+    value: lnavarrete@spokanecity.org
+    label: Email
+  links:
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/lili-navarrete
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: City Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 2
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/citycouncil/members/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
+- name: Michael Cathcart
+  image: images/989c6e617c545bc10387d99aadf29af1a9d66d4e7e767b55c9dc4762264598cd.jpg
+  contact_details:
+  - note:
+    type: email
+    value: mcathcart@spokanecity.org
+    label: Email
+  links:
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/michael-cathcart
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: City Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 1
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/citycouncil/members/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
+- name: Paul Dillon
+  image: images/2c38636450571603531448173fddd0edd4cb35261c0188d13b5c2dab7cbe55b9.jpg
+  contact_details:
+  - note:
+    type: email
+    value: pdillon@spokanecity.org
+    label: Email
+  links:
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/paul-dillon
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: City Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 2
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/citycouncil/members/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
+- name: Zack Zappone
+  image: images/eed055a64f5bbad66ac5f104ad68b7329293c82190bdeb8bc8a0cec97d55a674.jpg
+  contact_details:
+  - note:
+    type: email
+    value: zzappone@spokanecity.org
+    label: Email
+  links:
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/zack-zappone
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: City Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 3
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/citycouncil/members/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
+- name: Betsy Wilkerson
+  image: images/47882c074a3746a23b839d1c58637d366b3849ef8857459eef218827e5356de3.jpg
+  contact_details:
+  - note:
+    type: email
+    value: bwilkerson@spokanecity.org
+    label: Email
+  links:
+  - note:
+    url: https://my.spokanecity.org/citycouncil/members/betsy-wilkerson
+  other_names:
+  - note:
+    name: City Council President
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://my.spokanecity.org/citycouncil/members/
+    note:
+  - url: https://my.spokanecity.org/citycouncil/items-of-interest/
+    note:
