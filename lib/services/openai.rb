@@ -7,7 +7,7 @@ require "scrapers/common"
 # TODO: track token usage
 module Services
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
-  BASE_SLEEP = 2  # Base sleep time for exponential backoff
+  BASE_SLEEP = 5  # Base sleep time for exponential backoff
   class Openai
     @@MAX_TOKENS = 100_000
 
@@ -68,7 +68,8 @@ module Services
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
         - start_term_date and end_term_date should be strings.
-        - For the "positions" field, split the positions into an array of strings.#{" "}
+        - For the "positions" field, split the positions into an array of strings.
+          Some typical positions are #{positions.join(", ")}
           Preserve non-numeric names as they are.
           Do not list previous positions if their terms have ended.
           People can have multiple positions and roles.
@@ -139,6 +140,7 @@ module Services
           can be directly inferred with certainty—do not assume or estimate missing information.
           They should be strings.
         - For the "positions" field, split the positions into an array of strings.#{" "}
+          Some typical positions are #{positions.join(", ")}
           Preserve non-numeric names as they are.
           Do not list previous positions if their terms have ended.
           People can have multiple positions and roles.
@@ -261,25 +263,6 @@ module Services
       content = "#{content.strip}\n"
 
       YAML.safe_load(content, permitted_classes: [])
-    end
-
-    def make_openai_request(client, messages, retries: 3, timeout: 60)
-      Timeout.timeout(timeout) do
-        client.chat(
-          parameters: {
-            model: "gpt-4", # or whatever model you're using
-            messages: messages,
-            temperature: 0.7
-          }
-        )
-      end
-    rescue Timeout::Error, Faraday::TimeoutError, Net::ReadTimeout => e
-      raise "OpenAI request failed after multiple retries: #{e.message}" unless retries > 0
-
-      puts "OpenAI request timed out. Retrying... (#{retries} attempts left)"
-      sleep(2) # Wait 2 seconds before retry
-      retries -= 1
-      retry
     end
   end
 end
