@@ -29,7 +29,8 @@ places:
   population: 228989
   government_type: Mayor-Council
   meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: c04d079d0f9e207e8bb6482cb5579321
+  meta_hash: fca4940c8ade3bb465c87a77edd11dea
+  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:tacoma
   - ocd-division/country:us/state:wa/county:pierce/place:tacoma
