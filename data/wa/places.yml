@@ -140,7 +140,8 @@ places:
   population: 96968
   government_type: Council-Manager
   meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 725233e68661b30d9cecec4960f91331
+  meta_hash: 6e2c9fff9e446054696fa1a0eca9af16
+  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:kirkland
   - ocd-division/country:us/state:wa/county:king/place:kirkland
