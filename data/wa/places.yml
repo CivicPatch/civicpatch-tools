@@ -345,6 +345,8 @@ places:
   type: Code city
   population: 52066
   government_type: Council-Manager
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: 6ec256c3bc9cfa3f2c786abdaf845aaf
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:bothell
   - ocd-division/country:us/state:wa/county:king/place:bothell
