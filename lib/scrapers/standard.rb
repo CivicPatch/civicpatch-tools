@@ -139,7 +139,7 @@ module Scrapers
     def self.format_date(date)
       date = Date.parse(date)
       date.strftime("%Y-%m-%d")
-    rescue Date::Error
+    rescue StandardError
       nil
     end
   end
