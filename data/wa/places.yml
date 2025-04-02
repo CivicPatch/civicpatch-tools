@@ -195,6 +195,8 @@ places:
   type: Code city
   population: 87256
   government_type: Mayor-Council
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: 422111f6e6706187ffe169308b1a5e36
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:kennewick
   - ocd-division/country:us/state:wa/county:benton/place:kennewick
