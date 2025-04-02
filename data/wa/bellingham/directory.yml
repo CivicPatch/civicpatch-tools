@@ -5,10 +5,6 @@ people:
   contact_details:
   - note:
     type: phone
-    value: "++13607788000"
-    label: Phone
-  - note:
-    type: phone
     value: "(360) 778-8100"
     label: Phone
   - note:
