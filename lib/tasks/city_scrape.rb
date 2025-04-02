@@ -23,12 +23,9 @@
 # rake 'city_info:get_meta[wa,seattle]'
 # rake 'city_info:find_geojson[nm,albuquerque,district]'
 
-require_relative "../scrapers/city"
 require_relative "../services/brave"
 require_relative "../services/openai"
-require_relative "../scrapers/us/wa/places"
-require_relative "../scrapers/us/mi/places"
-require_relative "../scrapers/site_crawler"
+require_relative "../scrapers/places"
 require_relative "../scrapers/data_fetcher"
 require_relative "../scrapers/common"
 require_relative "../tasks/city_scrape/city_manager"
@@ -65,16 +62,7 @@ namespace :city_scrape do
 
     state = args[:state]
 
-    scraper = case state
-              when "wa"
-                Scrapers::Us::Wa::Directory
-              when "mi"
-                Scrapers::Us::Mi::Directory
-              else
-                raise "Unsupported state: #{state}"
-              end
-
-    new_places = scraper.fetch_places
+    new_places = Scrapers::Places.fetch_places(state)
     CityScrape::StateManager.update_state_places(state, new_places)
   end
 
