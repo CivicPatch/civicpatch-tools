@@ -1,0 +1,182 @@
+---
+people:
+- name: Victoria Woodards
+  image: images/0cc82085121686f6d99a05954d818de3212e35d1d806a63b7bbf60bc9ae04ea2.jpg
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: Jamika Scott
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 3
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: Joe Bushnell
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 5
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: John Hines
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 1
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: Kristina Walker
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Atlarge Position 8
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: Olgy Diaz
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 7
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: Sandesh Sadalge
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 4
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: Sarah Rumbaugh
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: District 2
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
+- name: Kiara Daniels
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230
+  other_names:
+  - note:
+    name: Deputy Mayor
+    start_date:
+    end_date:
+  - note:
+    name: Atlarge Position 6
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: https://cityoftacoma.org/neighborhoodcouncils
+    note:
