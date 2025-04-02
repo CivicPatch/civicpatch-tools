@@ -383,6 +383,8 @@ places:
   type: Code city
   population: 42973
   government_type: Council-Manager
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: 8b1e9964d1294b7e8176b674657afae8
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:edmonds
   - ocd-division/country:us/state:wa/county:snohomish/place:edmonds
