@@ -24,11 +24,16 @@ module CityScrape
       state_places = YAML.load(File.read(state_places_file)) if File.exist?(state_places_file)
 
       updated_places.each do |updated_place|
+        next unless updated_place["gnis"].present?
+
         existing_place_index = state_places["places"].find_index { |p| p["gnis"] == updated_place["gnis"] }
         if existing_place_index
           existing_place = state_places["places"][existing_place_index]
 
           merged = existing_place.merge(updated_place) do |_key, old_val, new_val|
+            puts "updated_place #{updated_place}"
+            puts "existing_place #{existing_place}"
+            puts "update_place gnis #{updated_place["gnis"]} old vs new #{old_val} vs #{new_val}"
             new_val.present? ? new_val.dup : old_val.dup
           end
           state_places["places"][existing_place_index] = merged

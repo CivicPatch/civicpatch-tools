@@ -2,6 +2,7 @@
 
 require "capybara"
 require "selenium-webdriver"
+require "markitdown"
 
 require_relative "./common"
 require_relative "../core/browser"
