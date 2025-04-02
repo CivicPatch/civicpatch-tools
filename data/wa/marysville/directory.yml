@@ -1,0 +1,248 @@
+---
+people:
+- name: Jon Nehring
+  image: images/06ea0b9837dac31eafade29425c1db67343bf6b4bf511d89d175c4e7bfe3133f
+  contact_details: []
+  links:
+  - note:
+    url: http://www.marysvillewa.gov
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/CivicAlerts.aspx?AID=1180
+    note:
+- name: Michael A. Stevens
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 618-1526"
+    label: Phone
+  - note:
+    type: email
+    value: mstevens@marysvillewa.gov
+    label: Email
+  links:
+  - note:
+    url: http://www.marysvillewa.gov/953/Michael-A-Stevens---Council-President-Po
+  other_names:
+  - note:
+    name: Council President
+    start_date:
+    end_date:
+  - note:
+    name: Pos 4
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/27/Government
+    note:
+  - url: http://www.marysvillewa.gov/CityCouncil
+    note:
+- name: Kamille Norton
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 926-3399"
+    label: Phone
+  - note:
+    type: email
+    value: knorton@marysvillewa.gov
+    label: Email
+  links:
+  - note:
+    url: http://www.marysvillewa.gov/957/Kamille-Norton---Pos-7
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Pos 7
+    start_date:
+    end_date:
+  - note:
+    name: Position 7
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/27/Government
+    note:
+  - url: http://www.marysvillewa.gov/CityCouncil
+    note:
+- name: Kelly Richards
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 363-8795"
+    label: Phone
+  - note:
+    type: email
+    value: krichards@marysvillewa.gov
+    label: Email
+  links:
+  - note:
+    url: http://www.marysvillewa.gov/955/Kelly-Richards---Pos-5
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Pos 5
+    start_date:
+    end_date:
+  - note:
+    name: Position 5
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/27/Government
+    note:
+  - url: http://www.marysvillewa.gov/CityCouncil
+    note:
+- name: Mark A. James
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 971-0030"
+    label: Phone
+  - note:
+    type: email
+    value: mjames@marysvillewa.gov
+    label: Email
+  links:
+  - note:
+    url: http://www.marysvillewa.gov/951/Mark-A-James---Pos-2
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Pos 2
+    start_date:
+    end_date:
+  - note:
+    name: Position 2
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/27/Government
+    note:
+  - url: http://www.marysvillewa.gov/CityCouncil
+    note:
+- name: Peter Condyles
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 501-6578"
+    label: Phone
+  - note:
+    type: email
+    value: pcondyles@marysvillewa.gov
+    label: Email
+  links:
+  - note:
+    url: http://www.marysvillewa.gov/954/Peter-Condyles---Pos-1
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Pos 1
+    start_date:
+    end_date:
+  - note:
+    name: Position 1
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/27/Government
+    note:
+  - url: http://www.marysvillewa.gov/CityCouncil
+    note:
+- name: Stephen C. Muller
+  image: ''
+  contact_details:
+  - note:
+    type: email
+    value: smuller@marysvillewa.gov
+    label: Email
+  links:
+  - note:
+    url: http://www.marysvillewa.gov/956/Stephen-C-Muller---Pos-6
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Pos 6
+    start_date:
+    end_date:
+  - note:
+    name: Position 6
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/27/Government
+    note:
+  - url: http://www.marysvillewa.gov/CityCouncil
+    note:
+- name: Tom King
+  image: ''
+  contact_details:
+  - note:
+    type: phone
+    value: "(360) 363-8793"
+    label: Phone
+  - note:
+    type: email
+    value: tomking@marysvillewa.gov
+    label: Email
+  links:
+  - note:
+    url: http://www.marysvillewa.gov/952/Tom-King---Pos-3
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Pos 3
+    start_date:
+    end_date:
+  - note:
+    name: Position 3
+    start_date:
+    end_date:
+  updated_at: '2025-04-02'
+  created_at: '2025-04-02'
+  sources:
+  - url: http://www.marysvillewa.gov/27/Government
+    note:
+  - url: http://www.marysvillewa.gov/CityCouncil
+    note:
