@@ -104,7 +104,8 @@ places:
   population: 106785
   government_type: Mayor-Council
   meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 7ee827233ecffd631e85b5c6e8390174
+  meta_hash: 8fbcd4c13ea7fe5218cf248a8bd5d72e
+  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:spokane_valley
   - ocd-division/country:us/state:wa/county:spokane/place:spokane_valley
