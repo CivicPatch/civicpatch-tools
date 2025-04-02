@@ -91,6 +91,8 @@ places:
   type: First-class city
   population: 110629
   government_type: Mayor-Council
+  meta_last_city_scrape_run: '2025-04-02'
+  meta_hash: 5ec2c3c8ba5505bbda75239484fb086c
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:renton
   - ocd-division/country:us/state:wa/county:king/place:renton
