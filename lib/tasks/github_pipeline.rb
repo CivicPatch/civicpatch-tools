@@ -118,10 +118,11 @@ namespace :github_pipeline do
     score = validation_results[:agreement_score]
     contested_people_markdown = Validators::CityDirectory.to_markdown_table(contested_people)
 
-    { "approve" => false,
-      "score" => score,
-      "comment" => [contested_people_markdown,
-                    "---",
-                    "## Agreement Score: #{score}"].join("\n\n") }.to_json
+    json = { "approve" => false,
+             "score" => score,
+             "comment" => [contested_people_markdown,
+                           "---",
+                           "## Agreement Score: #{score}"].join("\n\n") }.to_json
+    puts json
   end
 end
