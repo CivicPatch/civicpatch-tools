@@ -7,10 +7,12 @@ module CityScrape
       urls = []
       keyword_groups = Scrapers::CityDirectory::MAYOR_COUNCIL_KEYWORDS
 
+      avoid_keywords = %w[alerts news event calendar]
+
       case engine
       when "manual"
         # TODO: replace with actual keyword groups
-        urls += Crawler.crawl(website, keyword_groups: keyword_groups)
+        urls += Crawler.crawl(website, keyword_groups: keyword_groups, avoid_keywords: avoid_keywords)
       when "brave"
         keyword_groups.map do |group|
           search_query = "#{city} #{state} #{group[:name]}"
@@ -18,7 +20,7 @@ module CityScrape
         end
       end
 
-      filtered_urls = Scrapers::Common.urls_without_keywords(urls, %w[news event calendar])
+      filtered_urls = Scrapers::Common.urls_without_keywords(urls, %w[alerts news event calendar])
       puts "Filtered out #{urls.size - filtered_urls.size} urls"
       filtered_urls.map { |url, _text| url }
     end
