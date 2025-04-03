@@ -120,9 +120,11 @@ namespace :github_pipeline do
 
     json = { "approve" => false,
              "score" => score,
-             "comment" => [contested_people_markdown,
-                           "---",
-                           "## Agreement Score: #{score}"].join("\n\n") }.to_json
+             "comment" => [
+               "## Agreement Score: #{score}",
+               "---",
+               contested_people_markdown
+             ].join("\n\n") }.to_json
     puts json
   end
 end
