@@ -61,9 +61,18 @@ jobs:
           SOURCE_VALIDATION_RESPONSE=$(bundle exec rake "github_pipeline:validate_city_directory[${{ env.STATE }},${{ env.GNIS_ID }}]")
           echo "Validation response: $SOURCE_VALIDATION_RESPONSE"
 
+          # Extract JSON from the response (find JSON starting with '{')
+          CLEANED_RESPONSE=$(echo "$SOURCE_VALIDATION_RESPONSE" | sed 's/^.*{/{/')
+
+          # Remove control characters (ASCII 0-31) which are invalid for JSON
+          CLEANED_RESPONSE=$(echo "$CLEANED_RESPONSE" | tr -d '\000-\031')
+
+          # Debug: Print the cleaned response
+          echo "Cleaned response: $CLEANED_RESPONSE"
+
           # Parse JSON output
-          SOURCE_VALIDATION_APPROVE=$(echo "$SOURCE_VALIDATION_RESPONSE" | jq -r '.approve')
-          SOURCE_VALIDATION_COMMENT=$(echo "$SOURCE_VALIDATION_RESPONSE" | jq -r '.comment')
+          SOURCE_VALIDATION_APPROVE=$(echo "$CLEANED_RESPONSE" | jq -r '.approve')
+          SOURCE_VALIDATION_COMMENT=$(echo "$CLEANED_RESPONSE" | jq -r '.comment')
 
           echo "SOURCE_VALIDATION_APPROVE=$SOURCE_VALIDATION_APPROVE" >> "$GITHUB_ENV"
           echo "SOURCE_VALIDATION_COMMENT<<EOF" >> "$GITHUB_ENV"

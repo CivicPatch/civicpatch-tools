@@ -26,7 +26,6 @@ module Validators
     end
 
     def self.validate_directory(state, gnis)
-      puts "Validating directory for state: #{state}, gnis: #{gnis}"
       city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
       city = city_entry["name"]
       url = city_entry["website"]
