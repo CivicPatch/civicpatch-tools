@@ -395,6 +395,8 @@ places:
   type: Code city
   population: 42853
   government_type: Mayor-Council
+  meta_last_city_scrape_run: '2025-04-03'
+  meta_hash: beee2365bd2865b635a9c909d6062242
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:issaquah
   - ocd-division/country:us/state:wa/county:king/place:issaquah

@@ -1,0 +1,224 @@
+---
+people:
+- name: Mike Rosen
+  image: images/9f87d4b0a28616f3cee7bb920c6d365eb28ab7633813ec51da6b5a0dc611ca0d.jpg
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 771-0246"
+    label: Phone
+  - note:
+    type: email
+    value: mike.rosen@edmondswa.gov
+    label: Email
+  links: []
+  other_names:
+  - note:
+    name: Mayor
+    start_date: '2024-01-01'
+    end_date: '2027-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/mayor
+    note:
+- name: Neil Tibbott
+  image: images/4a4c49877cd882a6765573a62f476a5d011896d60bf12e195f680a1f2cee34c2.jpg
+  contact_details:
+  - note:
+    type: email
+    value: neil.tibbott@edmondswa.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.edmondswa.gov/cms/One.aspx?portalId=16495016&pageId=17263732
+  other_names:
+  - note:
+    name: Council President
+    start_date:
+    end_date:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Position 3
+    start_date:
+    end_date:
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/city_council
+    note:
+  - url: http://edmondswa.gov/government/city_council/contact_city_council_members
+    note:
+  - url: http://edmondswa.gov/services/public_involvement/city_council_information
+    note:
+- name: Chris Eck
+  image: ''
+  contact_details:
+  - note:
+    type: email
+    value: chris.eck@edmondswa.gov
+    label: Email
+  links:
+  - note:
+    url: http://edmondswa.gov/cms/One.aspx?portalId=16495016&pageId=17260795
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Position 1
+    start_date:
+    end_date:
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/city_council
+    note:
+  - url: http://edmondswa.gov/government/city_council/contact_city_council_members
+    note:
+  - url: http://edmondswa.gov/services/public_involvement/city_council_information
+    note:
+- name: Jenna Nand
+  image: ''
+  contact_details:
+  - note:
+    type: email
+    value: jenna.nand@edmondswa.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.edmondswa.gov/cms/One.aspx?portalId=16495016&pageId=17266593
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Position 7
+    start_date:
+    end_date:
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/city_council
+    note:
+  - url: http://edmondswa.gov/government/city_council/contact_city_council_members
+    note:
+  - url: http://edmondswa.gov/services/public_involvement/city_council_information
+    note:
+- name: Michelle Dotsch
+  image: ''
+  contact_details:
+  - note:
+    type: email
+    value: michelle.dotsch@edmondswa.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.edmondswa.gov/cms/One.aspx?portalId=16495016&pageId=17266511
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Position 4
+    start_date:
+    end_date:
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/city_council
+    note:
+  - url: http://edmondswa.gov/government/city_council/contact_city_council_members
+    note:
+  - url: http://edmondswa.gov/services/public_involvement/city_council_information
+    note:
+- name: Susan Paine
+  image: ''
+  contact_details:
+  - note:
+    type: email
+    value: susan.paine@edmondswa.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.edmondswa.gov/cms/One.aspx?portalId=16495016&pageId=17266571
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Position 6
+    start_date:
+    end_date:
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/city_council
+    note:
+  - url: http://edmondswa.gov/government/city_council/contact_city_council_members
+    note:
+  - url: http://edmondswa.gov/services/public_involvement/city_council_information
+    note:
+- name: Vivian Olson
+  image: ''
+  contact_details:
+  - note:
+    type: email
+    value: vivian.olson@edmondswa.gov
+    label: Email
+  links:
+  - note:
+    url: https://www.edmondswa.gov/cms/One.aspx?portalId=16495016&pageId=17266522
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Position 5
+    start_date:
+    end_date:
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/city_council
+    note:
+  - url: http://edmondswa.gov/government/city_council/contact_city_council_members
+    note:
+  - url: http://edmondswa.gov/services/public_involvement/city_council_information
+    note:
+- name: Will Chen
+  image: ''
+  contact_details:
+  - note:
+    type: email
+    value: will.chen@edmondswa.gov
+    label: Email
+  links:
+  - note:
+    url: http://edmondswa.gov/cms/One.aspx?portalId=16495016&pageId=17263464
+  other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date:
+  - note:
+    name: Position 2
+    start_date:
+    end_date:
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: http://edmondswa.gov/government/city_council
+    note:
+  - url: http://edmondswa.gov/government/city_council/contact_city_council_members
+    note:
+  - url: http://edmondswa.gov/services/public_involvement/city_council_information
+    note:
