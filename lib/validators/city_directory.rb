@@ -12,6 +12,10 @@ module Validators
       @config ||= YAML.load_file(CONFIG_PATH)
     end
 
+    def self.google_gemini
+      @google_gemini ||= Services::GoogleGemini.new
+    end
+
     def self.get_state_validator(state)
       case state
       when "wa"
@@ -21,52 +25,106 @@ module Validators
       end
     end
 
-    def self.validate_directory(state, gnis, city_directory_to_validate, type)
-      response = {}
-      case type
-      when "source"
-        response = validate_directory_with_source(state, gnis, city_directory_to_validate)
-      when "gemini"
-        response = {}
-      end
+    def self.validate_directory(state, gnis)
+      puts "Validating directory for state: #{state}, gnis: #{gnis}"
+      city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+      city = city_entry["name"]
+      url = city_entry["website"]
 
-      response
+      # Gather all sources
+
+      # Source Validator, the most trusted source
+      source_validator = get_state_validator(state)
+      city_directory_source = source_validator.get_source_city_directory(gnis)
+
+      # Gemini Validator, an LLM that searches a URL for a city directory
+      # city_directory_gemini = google_gemini.get_city_directory(city, url)
+
+      # Save the directories to a file
+      city_path = CityScrape::CityManager.get_city_path(state, city_entry)
+      directories_folder = PathHelper.project_path(File.join(city_path, "directories"))
+      FileUtils.mkdir_p(directories_folder)
+      File.write(File.join(directories_folder, "city_directory_source.yml"), city_directory_source)
+      # File.write(File.join(directories_folder, "city_directory_gemini.yml"), city_directory_gemini)
+
+      # Compare the two
+      # Validators::Utils.compare_people_across_sources(
+      #  [city_directory_source, city_directory_gemini],
+      #  [1.0, 0.5]
+      # )
+
+      contested_people = {
+        "Alice Smith" => {
+          positions: {
+            disagreement_score: 0.0,
+            values: [["Mayor"], ["Mayor"]]
+          },
+          email: {
+            disagreement_score: 0.0,
+            values: ["alice.smith@example.com", "alice.smith@example.com"]
+          },
+          phone: {
+            disagreement_score: 0.2,
+            values: %w[1234567890 123-456-7890]
+          },
+          website: {
+            disagreement_score: 0.5,
+            values: ["alice.com", "alice.org"]
+          }
+        },
+        "Bob Jones" => {
+          positions: {
+            disagreement_score: 0.5,
+            values: [["Council Member"], ["Councilman"]]
+          },
+          email: {
+            disagreement_score: 0.0,
+            values: ["bob.jones@example.com", "bob.jones@example.com"]
+          },
+          phone: {
+            disagreement_score: 0.0,
+            values: %w[555-123-4567 555-123-4567]
+          },
+          website: {
+            disagreement_score: 0.4,
+            values: ["bob.com", "bob-jones.com"]
+          }
+        }
+      }
+
+      {
+        contested_people: contested_people,
+        agreement_score: 0.75
+      }
     end
 
-    def self.validate_directory_with_source(state, gnis, city_directory_to_validate)
-      validator = get_state_validator(state)
+    def self.to_markdown_table(contested_people)
+      # Initialize the header for the table
+      headers = ["Name", "Field", "Disagreement Score", "Values"]
+      table = []
 
-      valid_simple_city_directory = validator.get_valid_city_directory(gnis)
-      simple_city_directory_to_validate = city_directory_to_validate.map do |person|
-        Utils.format_simple(person)
-      end
-      compare_key_positions(valid_simple_city_directory, simple_city_directory_to_validate)
-    end
-
-    def self.compare_key_positions(expected_partial, actual_partial)
-      expected = expected_partial.select do |p|
-        Scrapers::CityDirectory::KEY_POSITIONS.any? do |pos|
-          p["positions"].include?(pos)
+      # Loop through each person in the contested_people data
+      contested_people.each do |name, fields|
+        # For each contested field, add a row to the table
+        fields.each do |field, field_data|
+          row = [
+            name,
+            field.to_s.capitalize, # Capitalize the field name for readability
+            field_data[:disagreement_score].round(2), # Round the disagreement score for cleaner output
+            field_data[:values].map(&:to_s).join(", ") # Convert the values array to a string
+          ]
+          table << row
         end
       end
 
-      actual = actual_partial.select do |p|
-        Scrapers::CityDirectory::KEY_POSITIONS.any? do |pos|
-          p["positions"].include?(pos)
-        end
+      # Now build the markdown table string
+      markdown = "| #{headers.join(" | ")} |" # Add the headers
+      markdown += "\n| #{"-" * (headers.join(" | ").length - 2)} |" # Add a separator line
+      table.each do |row|
+        markdown += "\n| #{row.join(" | ")} |" # Add the data rows
       end
 
-      missing = expected.reject { |e| actual.any? { |a| Utils.same_person?(e, a) } }
-      extra = actual.reject { |a| expected.any? { |e| Utils.same_person?(a, e) } }
-
-      different = expected.map do |e|
-        actual_match = actual.find { |a| Utils.same_person?(e, a) }
-        next unless actual_match && !similar_positions(e["positions"], actual_match["positions"])
-
-        { "name" => e["name"], "expected" => e["positions"], "actual" => actual_match["positions"] }
-      end.compact
-
-      { missing:, extra:, different: }
+      markdown
     end
 
     def self.approve_reasons_to_markdown(approve, approve_reasons)

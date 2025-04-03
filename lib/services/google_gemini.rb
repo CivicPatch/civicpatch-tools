@@ -8,7 +8,7 @@ module Services
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
     end
 
-    def get_city_officials(city, url)
+    def get_city_directory(city, url)
       prompt = %(
         Give me city officials contact info for
         #{city} using #{url} Do this in YAML.
@@ -52,14 +52,32 @@ module Services
         timeout: 60
       }
 
-      response = HTTParty.post(url, options)
+      response = nil
+      progress_thread = Thread.new do
+        loop do
+          print "."
+          sleep 2
+        end
+      end
 
-      File.write("chat.txt", response.inspect)
-      # TODO: needs more robustness
-      response_candidate = response["candidates"].first
-      yaml_string = response_candidate["content"]["parts"].first["text"]
+      begin
+        response = HTTParty.post(url, options)
+      ensure
+        progress_thread.kill
+        puts "\n" # Add a newline after the dots
+      end
 
-      Utils.yaml_string_to_hash(yaml_string)
+      if response.success?
+        File.write("chat.txt", response.inspect)
+        # TODO: needs more robustness
+        response_candidate = response["candidates"].first
+        yaml_string = response_candidate["content"]["parts"].first["text"]
+
+        Utils.yaml_string_to_hash(yaml_string)
+      else
+        puts "Request failed. HTTP Status: #{response.code}"
+        nil
+      end
     rescue StandardError
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)

@@ -110,42 +110,18 @@ namespace :github_pipeline do
   task :validate_city_directory, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
+    # city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    # city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, city_entry)
 
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-    city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, city_entry)
+    validation_results = Validators::CityDirectory.validate_directory(state, gnis)
+    contested_people = validation_results[:contested_people]
+    score = validation_results[:agreement_score]
+    contested_people_markdown = Validators::CityDirectory.to_markdown_table(contested_people)
 
-    validation_results = Validators::CityDirectory.validate_directory(state, gnis, city_directory_to_validate["people"])
-    approve = validation_results[:missing].empty? &&
-              validation_results[:extra].empty? &&
-              validation_results[:different].empty?
-    approve_reasons = []
-
-    if validation_results[:missing].count.positive?
-      approve_reasons << "Missing people in city directory: #{validation_results[:missing].count}"
-    end
-    if validation_results[:extra].count.positive?
-      approve_reasons << "Found more people than expected: #{validation_results[:extra].count}"
-    end
-    if validation_results[:different].count.positive?
-      approve_reasons << "Different people found in different roles than expected: #{validation_results[:different].count}"
-    end
-
-    approve_reasons_markdown = Validators::CityDirectory.approve_reasons_to_markdown(approve, approve_reasons)
-    diff_markdown = Validators::CityDirectory.diff_to_markdown(validation_results)
-
-    response = { "approve" => approve,
-                 "comment" => [approve_reasons_markdown, diff_markdown].join("\n***\n") }
-
-    puts response.to_json
-  end
-
-  task :validate_city_directory, [:state, :gnis] do |_t, args|
-    state = args[:state]
-    gnis = args[:gnis]
-
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-    city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, city_entry)
-
-    validation_results
+    { "approve" => false,
+      "score" => score,
+      "comment" => [contested_people_markdown,
+                    "---",
+                    "## Agreement Score: #{score}"].join("\n\n") }.to_json
   end
 end
