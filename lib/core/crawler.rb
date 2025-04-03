@@ -8,11 +8,11 @@ class Crawler
   MAX_PAGES = 20
   IGNORE_SUFFIXES = %w[xml pdf].freeze
 
-  def self.crawl(base_url, max_pages: MAX_PAGES, keyword_groups: [], max_depth: 2)
+  def self.crawl(base_url, max_pages: MAX_PAGES, keyword_groups: [], max_depth: 2, avoid_keywords: [])
     visited = Set.new
     queue = [{ url: base_url, depth: 0 }]
 
-    results = process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth)
+    results = process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth, avoid_keywords)
 
     results = results.values
                      .map(&:shuffle)  # Shuffle within groups to avoid bias
@@ -25,7 +25,7 @@ class Crawler
     results || []
   end
 
-  def self.process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth)
+  def self.process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth, avoid_keywords)
     results = Hash.new { |hash, key| hash[key] = [] } # Default to an empty array for each keyword group
 
     while queue.any? && visited.size < max_pages
@@ -42,7 +42,8 @@ class Crawler
           current[:url],
           keyword_group[:keywords],
           max_depth,
-          current[:depth] + 1
+          current[:depth] + 1,
+          avoid_keywords
         )
 
         # Stop adding links if max_pages is reached
@@ -59,7 +60,7 @@ class Crawler
     results # Return URLs grouped by keyword group name
   end
 
-  def self.follow_links(base_url, visited, url, keywords, max_depth, depth)
+  def self.follow_links(base_url, visited, url, keywords, max_depth, depth, avoid_keywords)
     return [] if depth > max_depth
 
     page = fetch_page(url)
@@ -69,6 +70,8 @@ class Crawler
 
     valid_links = links.select do |link|
       next false if IGNORE_SUFFIXES.any? { |suffix| link[:href].end_with?(suffix) }
+      next false if text_match?(link[:text], avoid_keywords) ||
+                    url_match?(link[:href], avoid_keywords)
 
       text_match?(link[:text], keywords) ||
         url_match?(link[:href], keywords)
