@@ -1,8 +1,16 @@
 ---
 people:
 - name: Mason Thompson
-  image: ''
-  contact_details: []
+  image: images/cc7693a481d21d47336ae12de43cd4ecd51b9b87e53352fa2c485a87291e7e92
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 471-8723"
+    label: Phone
+  - note:
+    type: email
+    value: mason.thompson@bothellwa.gov
+    label: Email
   links:
   - note:
     url: http://www.bothellwa.gov/directory.aspx?EID=302
@@ -12,11 +20,11 @@ people:
     start_date:
     end_date: '2027-12-31'
   - note:
-    name: Position 2
+    name: Council Member
     start_date:
     end_date: '2027-12-31'
   - note:
-    name: Council Member
+    name: Position 2
     start_date:
     end_date: '2027-12-31'
   updated_at: '2025-04-03'
@@ -24,19 +32,29 @@ people:
   sources:
   - url: https://www.bothellwa.gov/261/City-Council
     note:
+  - url: http://www.bothellwa.gov/directory.aspx?EID=302
+    note:
 - name: Amanda Dodd
-  image: ''
-  contact_details: []
+  image: images/a22557129ade52c27bde5d8f150d142f7370807cf0e26c1d7016fc6f74cc57a0
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 806-6100"
+    label: Phone
+  - note:
+    type: email
+    value: amanda.dodd@bothellwa.gov
+    label: Email
   links:
   - note:
     url: https://www.bothellwa.gov/Directory.aspx?EID=350
   other_names:
   - note:
-    name: Position 6
+    name: Council Member
     start_date:
     end_date: '2027-12-31'
   - note:
-    name: Council Member
+    name: Position 6
     start_date:
     end_date: '2027-12-31'
   updated_at: '2025-04-03'
@@ -44,19 +62,29 @@ people:
   sources:
   - url: https://www.bothellwa.gov/261/City-Council
     note:
+  - url: https://www.bothellwa.gov/Directory.aspx?EID=350
+    note:
 - name: Benjamin Mahnkey
-  image: ''
-  contact_details: []
+  image: images/5bba335fa2a33490d63c400a6f2b0756805b28431d5d75af9cfea2c356e43816
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 471-8417"
+    label: Phone
+  - note:
+    type: email
+    value: benjamin.mahnkey@bothellwa.gov
+    label: Email
   links:
   - note:
     url: https://www.bothellwa.gov/Directory.aspx?EID=328
   other_names:
   - note:
-    name: Position 5
+    name: Council Member
     start_date:
     end_date: '2025-12-31'
   - note:
-    name: Council Member
+    name: Position 5
     start_date:
     end_date: '2025-12-31'
   updated_at: '2025-04-03'
@@ -64,19 +92,29 @@ people:
   sources:
   - url: https://www.bothellwa.gov/261/City-Council
     note:
+  - url: https://www.bothellwa.gov/Directory.aspx?EID=328
+    note:
 - name: Carston Curd
-  image: ''
-  contact_details: []
+  image: images/8b5c2af5695218c3768e879439749b6b2aa8d42b30496a08d6247cb68219a823
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 476-5711"
+    label: Phone
+  - note:
+    type: email
+    value: carston.curd@bothellwa.gov
+    label: Email
   links:
   - note:
     url: https://www.bothellwa.gov/Directory.aspx?EID=379
   other_names:
   - note:
-    name: Position 4
+    name: Council Member
     start_date:
     end_date: '2027-12-31'
   - note:
-    name: Council Member
+    name: Position 4
     start_date:
     end_date: '2027-12-31'
   updated_at: '2025-04-03'
@@ -84,19 +122,29 @@ people:
   sources:
   - url: https://www.bothellwa.gov/261/City-Council
     note:
+  - url: https://www.bothellwa.gov/Directory.aspx?EID=379
+    note:
 - name: Jeanne Zornes
-  image: ''
-  contact_details: []
+  image: images/7ba9b111525515b99c72d61246226d4ae9de3926add49e63b5037c217c176890
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 471-8376"
+    label: Phone
+  - note:
+    type: email
+    value: jeanne.zornes@bothellwa.gov
+    label: Email
   links:
   - note:
     url: http://www.bothellwa.gov/directory.aspx?EID=250
   other_names:
   - note:
-    name: Position 1
+    name: Council Member
     start_date:
     end_date: '2025-12-31'
   - note:
-    name: Council Member
+    name: Position 1
     start_date:
     end_date: '2025-12-31'
   updated_at: '2025-04-03'
@@ -104,19 +152,29 @@ people:
   sources:
   - url: https://www.bothellwa.gov/261/City-Council
     note:
+  - url: http://www.bothellwa.gov/directory.aspx?EID=250
+    note:
 - name: Jenne Alderks
-  image: ''
-  contact_details: []
+  image: images/ced2dca1cb436da83528d6582b3e2bed7fe046730d5b12ecbbc30372c2891f26
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 471-8034"
+    label: Phone
+  - note:
+    type: email
+    value: jenne.alderks@bothellwa.gov
+    label: Email
   links:
   - note:
     url: https://www.bothellwa.gov/Directory.aspx?EID=326
   other_names:
   - note:
-    name: Position 3
+    name: Council Member
     start_date:
     end_date: '2025-12-31'
   - note:
-    name: Council Member
+    name: Position 3
     start_date:
     end_date: '2025-12-31'
   updated_at: '2025-04-03'
@@ -124,13 +182,27 @@ people:
   sources:
   - url: https://www.bothellwa.gov/261/City-Council
     note:
+  - url: https://www.bothellwa.gov/Directory.aspx?EID=326
+    note:
 - name: Rami Al-Kabra
-  image: ''
-  contact_details: []
+  image: images/f9bfae47162b0ca2c8179165a13ddba99021d53d5b4f5c65351bf5c75b45b409
+  contact_details:
+  - note:
+    type: phone
+    value: "(425) 471-8513"
+    label: Phone
+  - note:
+    type: email
+    value: rami.al-kabra@bothellwa.gov
+    label: Email
   links:
   - note:
     url: https://www.bothellwa.gov/Directory.aspx?EID=327
   other_names:
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
   - note:
     name: Deputy Mayor
     start_date:
@@ -139,12 +211,10 @@ people:
     name: Position 7
     start_date:
     end_date: '2025-12-31'
-  - note:
-    name: Council Member
-    start_date:
-    end_date: '2025-12-31'
   updated_at: '2025-04-03'
   created_at: '2025-04-03'
   sources:
   - url: https://www.bothellwa.gov/261/City-Council
+    note:
+  - url: https://www.bothellwa.gov/Directory.aspx?EID=327
     note:
