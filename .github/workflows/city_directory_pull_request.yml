@@ -55,13 +55,13 @@ jobs:
           gh pr comment ${{ github.event.pull_request.number }} --body "$SCRAPED_DATA_COMMENT"
       
       - name: Run City Directory Validation (Trusted Source)
-        id: validate
+        id: validate_trusted_source
         run: |
           echo "Running validation..."
           SOURCE_VALIDATION_RESPONSE=$(bundle exec rake "github_pipeline:validate_city_directory[${{ env.STATE }},${{ env.GNIS_ID }}]")
           echo "Validation response: $SOURCE_VALIDATION_RESPONSE"
 
-          # Parse JSON output from Rake
+          # Parse JSON output
           SOURCE_VALIDATION_APPROVE=$(echo "$SOURCE_VALIDATION_RESPONSE" | jq -r '.approve')
           SOURCE_VALIDATION_COMMENT=$(echo "$SOURCE_VALIDATION_RESPONSE" | jq -r '.comment')
 
@@ -75,3 +75,25 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           gh pr comment ${{ github.event.pull_request.number }} --body "$SOURCE_VALIDATION_COMMENT"
+      
+      - name: Run City Directory Validation (Google Gemini)
+        id: validate_google_gemini
+        run: |
+          echo "Running validation with Google Gemini..."
+          GEMINI_VALIDATION_RESPONSE=$(bundle exec rake "github_pipeline:validate_city_directory_with_gemini[${{ env.STATE }},${{ env.GNIS_ID }}]")
+          echo "Validation response: $GEMINI_VALIDATION_RESPONSE"
+
+          # Parse JSON output
+          GEMINI_VALIDATION_APPROVE=$(echo "$GEMINI_VALIDATION_RESPONSE" | jq -r '.approve')
+          GEMINI_VALIDATION_COMMENT=$(echo "$SOURCE_VALIDATION_RESPONSE" | jq -r '.comment')
+
+          echo "GEMINI_VALIDATION_APPROVE=$GEMINI_VALIDATION_APPROVE" >> "$GITHUB_ENV"
+          echo "GEMINI_VALIDATION_COMMENT<<EOF" >> "$GITHUB_ENV"
+          echo "GEMINI_VALIDATION_COMMENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+        
+      - name: Comment on PR - Validation Step (Google Gemini)
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "$GEMINI_VALIDATION_COMMENT"

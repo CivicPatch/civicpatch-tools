@@ -80,4 +80,12 @@ module Utils
     person_a_names.first == person_b_names.first &&
       person_a_names.last == person_b_names.last
   end
+
+  def self.yaml_string_to_hash(yaml_string)
+    yaml_string = yaml_string.gsub(/\A```yaml\n/, "").gsub(/\n```\z/, "") # Remove YAML code block markers if present
+    parsed_data = YAML.safe_load(yaml_string, permitted_classes: [Date])
+
+    # Convert Date objects to strings
+    parsed_data.transform_values! { |v| v.is_a?(Date) ? v.to_s : v }
+  end
 end

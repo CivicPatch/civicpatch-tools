@@ -1,6 +1,7 @@
 require_relative "../scrapers/data_fetcher"
 require_relative "../path_helper"
 require_relative "../services/openai"
+require_relative "../services/google_gemini"
 require_relative "../validators/city_directory"
 require_relative "../core/crawler"
 
@@ -66,5 +67,26 @@ namespace :scratch do
     # urls = Services::Brave.get_search_result_urls(search_query, "https://www.seattle.gov/")
 
     puts urls
+  end
+
+  desc "test google gemini"
+  task :gemini do |_t, args|
+    google_gemini = Services::GoogleGemini.new
+    city = "seattle"
+    url = "https://www.seattle.gov/"
+    gemini_thinks = google_gemini.get_city_officials(city, url)
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis("wa", "2411856")
+    city_directory = CityScrape::CityManager.get_city_directory("wa", city_entry)
+    city_path = CityScrape::CityManager.get_city_path("wa", city_entry)
+
+    simple_city_directory = city_directory["people"].map do |person|
+      formatted = Utils.format_simple(person)
+      formatted.reject { |k, _v| k == "image" }
+    end
+
+    directories_file_path = File.join(city_path, "directories")
+
+    FileUtils.mkdir_p(directories_file_path)
+    File.write(File.join(directories_file_path, "directory.gemini.yml"), simple_city_directory.to_yaml)
   end
 end

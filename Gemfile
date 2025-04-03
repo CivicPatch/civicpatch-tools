@@ -30,3 +30,5 @@ gem "selenium-webdriver", "~> 4.30"
 gem "awesome_print", "~> 1.9"
 
 gem "sanitize", "~> 7.0"
+
+gem "text", "~> 1.3"

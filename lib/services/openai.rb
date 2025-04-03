@@ -27,7 +27,7 @@ module Services
         { role: "user", content: user_instructions }
       ]
       response_yaml = run_prompt(messages)
-      response = format_yaml_content(response_yaml)
+      response = Utils.yaml_string_to_hash(response_yaml)
 
       return response if response["error"].present?
 
@@ -99,7 +99,7 @@ module Services
 
       response = run_prompt(messages)
 
-      response = format_yaml_content(response)
+      response = Utils.yaml_string_to_hash(response)
 
       # TODO: handle errors
       return nil if response["error"].present?
@@ -250,22 +250,6 @@ module Services
     def keywords_present?(position_misc)
       keywords = %w[position seat district ward]
       keywords.any? { |keyword| position_misc.include?(keyword) }
-    end
-
-    def format_yaml_content(response_content)
-      # Extract YAML content from code blocks if present
-      content = response_content.match(/```(?:yaml|yml)?\s*(.*?)```/m)&.[](1) || response_content
-
-      # Ensure content starts with YAML document marker
-      content = "---\n#{content}" unless content.start_with?("---")
-
-      # Remove any trailing whitespace and ensure ending newline
-      content = "#{content.strip}\n"
-
-      parsed_data = YAML.safe_load(content, permitted_classes: [Date])
-
-      # Convert Date objects to strings
-      parsed_data.transform_values! { |v| v.is_a?(Date) ? v.to_s : v }
     end
   end
 end
