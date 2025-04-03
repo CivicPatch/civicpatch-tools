@@ -1,0 +1,150 @@
+---
+people:
+- name: Mason Thompson
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: http://www.bothellwa.gov/directory.aspx?EID=302
+  other_names:
+  - note:
+    name: Mayor
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Position 2
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: https://www.bothellwa.gov/261/City-Council
+    note:
+- name: Amanda Dodd
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://www.bothellwa.gov/Directory.aspx?EID=350
+  other_names:
+  - note:
+    name: Position 6
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: https://www.bothellwa.gov/261/City-Council
+    note:
+- name: Benjamin Mahnkey
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://www.bothellwa.gov/Directory.aspx?EID=328
+  other_names:
+  - note:
+    name: Position 5
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: https://www.bothellwa.gov/261/City-Council
+    note:
+- name: Carston Curd
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://www.bothellwa.gov/Directory.aspx?EID=379
+  other_names:
+  - note:
+    name: Position 4
+    start_date:
+    end_date: '2027-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2027-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: https://www.bothellwa.gov/261/City-Council
+    note:
+- name: Jeanne Zornes
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: http://www.bothellwa.gov/directory.aspx?EID=250
+  other_names:
+  - note:
+    name: Position 1
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: https://www.bothellwa.gov/261/City-Council
+    note:
+- name: Jenne Alderks
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://www.bothellwa.gov/Directory.aspx?EID=326
+  other_names:
+  - note:
+    name: Position 3
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: https://www.bothellwa.gov/261/City-Council
+    note:
+- name: Rami Al-Kabra
+  image: ''
+  contact_details: []
+  links:
+  - note:
+    url: https://www.bothellwa.gov/Directory.aspx?EID=327
+  other_names:
+  - note:
+    name: Deputy Mayor
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Position 7
+    start_date:
+    end_date: '2025-12-31'
+  - note:
+    name: Council Member
+    start_date:
+    end_date: '2025-12-31'
+  updated_at: '2025-04-03'
+  created_at: '2025-04-03'
+  sources:
+  - url: https://www.bothellwa.gov/261/City-Council
+    note:
