@@ -360,7 +360,8 @@ places:
   population: 48161
   government_type: Council-Manager
   meta_last_city_scrape_run: '2025-04-03'
-  meta_hash: 68edc8f871d87ed2c57087ea51773279
+  meta_hash: 351da61acf12e5b201c2f1d2dbfc1987
+  meta_last_member_info_scrape_run: '2025-04-03'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:bremerton
   - ocd-division/country:us/state:wa/county:kitsap/place:bremerton
