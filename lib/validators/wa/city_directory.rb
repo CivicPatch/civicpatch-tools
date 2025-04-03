@@ -9,7 +9,7 @@ module Validators
       STATE_SOURCE_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles"
       STATE_SOURCE_CITY_PAGE_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles/city-officials"
 
-      def self.get_valid_city_directory(gnis)
+      def self.get_source_city_directory(gnis)
         city_entry = CityScrape::StateManager.get_city_entry_by_gnis(STATE, gnis)
 
         city_website = city_entry["website"]
