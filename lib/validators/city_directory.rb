@@ -117,8 +117,9 @@ module Validators
       end
 
       # Now build the markdown table string
-      markdown = "| #{headers.join(" | ")} |" # Add the headers
-      markdown += "\n| #{"-" * (headers.join(" | ").length - 2)} |" # Add a separator line
+      markdown = "| #{headers.join(" | ")} |"
+      separator_line = "| #{headers.map { |header| "-" * header.length }.join(" | ")} |"
+      markdown += "\n#{separator_line}"
       table.each do |row|
         markdown += "\n| #{row.join(" | ")} |" # Add the data rows
       end
