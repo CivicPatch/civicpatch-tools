@@ -138,4 +138,14 @@ namespace :github_pipeline do
 
     puts response.to_json
   end
+
+  task :validate_city_directory, [:state, :gnis] do |_t, args|
+    state = args[:state]
+    gnis = args[:gnis]
+
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, city_entry)
+
+    validation_results
+  end
 end

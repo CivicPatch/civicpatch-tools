@@ -48,40 +48,6 @@ people:
     note:
   - url: https://seattle.gov/council/meet-the-council/sara-nelson
     note:
-- name: Alexis Mercedes Rinck
-  image: images/fcbe93394fac497929e241019f78222226d899b76c434c4873eb046e983a991b.jpg
-  contact_details:
-  - note:
-    type: phone
-    value: "(206) 684-8808"
-    label: Phone
-  - note:
-    type: email
-    value: alexismercedes.rinck@seattle.gov
-    label: Email
-  links:
-  - note:
-    url: https://seattle.gov/council/rinck
-  other_names:
-  - note:
-    name: Council Member
-    start_date:
-    end_date:
-  - note:
-    name: Citywide Councilmember
-    start_date:
-    end_date:
-  - note:
-    name: Position 8
-    start_date:
-    end_date:
-  updated_at: '2025-04-02'
-  created_at: '2025-04-02'
-  sources:
-  - url: https://seattle.gov/council
-    note:
-  - url: https://seattle.gov/council/rinck
-    note:
 - name: Cathy Moore
   image: images/5a2497a84ca21e840e81ffcd278314e8329b537cc8b7be25937aab09a03d4d9d.jpg
   contact_details:

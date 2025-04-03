@@ -5,6 +5,13 @@ require_relative "wa/city_directory"
 module Validators
   # List of elected officials for the city (municipality/place)
   class CityDirectory
+    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_directory.yml"))
+    VALIDATORS = [SOURCE = "source", GEMINI = "gemini"].freeze
+
+    def self.config
+      @config ||= YAML.load_file(CONFIG_PATH)
+    end
+
     def self.get_state_validator(state)
       case state
       when "wa"
@@ -14,11 +21,25 @@ module Validators
       end
     end
 
-    def self.validate_directory(state, gnis, city_directory_to_validate)
+    def self.validate_directory(state, gnis, city_directory_to_validate, type)
+      response = {}
+      case type
+      when "source"
+        response = validate_directory_with_source(state, gnis, city_directory_to_validate)
+      when "gemini"
+        response = {}
+      end
+
+      response
+    end
+
+    def self.validate_directory_with_source(state, gnis, city_directory_to_validate)
       validator = get_state_validator(state)
 
       valid_simple_city_directory = validator.get_valid_city_directory(gnis)
-      simple_city_directory_to_validate = city_directory_to_validate.map { |person| Utils.format_simple(person) }
+      simple_city_directory_to_validate = city_directory_to_validate.map do |person|
+        Utils.format_simple(person)
+      end
       compare_key_positions(valid_simple_city_directory, simple_city_directory_to_validate)
     end
 
@@ -51,15 +72,15 @@ module Validators
     def self.approve_reasons_to_markdown(approve, approve_reasons)
       approve_text = approve ? "✅ Looks good to me!" : "❌ Found some differences in actual vs expected"
       markdown = []
+      markdown << "**#{approve_text}:**"
       markdown << "## Reasons"
-      markdown << "- **#{approve_text}:**"
       approve_reasons.each do |reason|
         markdown << "- #{reason}"
       end
       markdown.join("\n")
     end
 
-    def self.diff_to_markdown(comparison_results)
+    def self.diff_to_markdown(comparison_results) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       markdown = []
 
       unless comparison_results[:missing].empty?
