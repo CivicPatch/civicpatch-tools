@@ -85,9 +85,9 @@ namespace :city_scrape do
     finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
     ## Gemini Source
-    # google_gemini = Services::GoogleGemini.new
-    # gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
-    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini")
+    google_gemini = Services::GoogleGemini.new
+    gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
+    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini")
   end
 
   def create_prepare_directories(state, city_entry)
@@ -141,7 +141,7 @@ namespace :city_scrape do
     #                                                 "meta_last_city_scrape_run" => Time.now.strftime("%Y-%m-%d"),
     #                                                 "meta_hash" => city_directory_hash }
     #                                             ])
-    # FileUtils.rm_rf(cache_directory)
+    FileUtils.rm_rf(cache_directory)
 
     Scrapers::Utils.prune_unused_images(state, city_entry["gnis"])
   end
