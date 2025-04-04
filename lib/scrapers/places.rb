@@ -1,11 +1,11 @@
-require_relative "wa/places"
+require_relative "states/wa/places"
 
 module Scrapers
   class Places
     def self.get_places_scraper(state)
       case state
       when "wa"
-        Scrapers::Wa::Places
+        Scrapers::States::Wa::Places
       else
         raise NotImplementedError
       end

@@ -16,4 +16,27 @@ government_types:
           - seat
           - position
     search_keywords:
-      - mayor
+      council members:
+        - meet the council
+        - city council members
+        - mayor and city council
+        - council bios
+        - council districts
+        - council members
+        - councilmembers
+        - city council
+        - city hall
+        - council
+      city leaders:
+        - mayor
+        - meet the mayor
+        - about the mayor
+        - council president
+        - council manager
+      common:
+        - elected officials
+        - index
+        - government
+        - bios
+        - meet
+        - about

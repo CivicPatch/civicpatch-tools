@@ -42,7 +42,7 @@ module Services
       #  person
       # end
       response.map do |person|
-        person["website"] = city_council_url
+        person["sources"] = [city_council_url]
         Scrapers::Standard.normalize_source_person(person)
       end
     end
