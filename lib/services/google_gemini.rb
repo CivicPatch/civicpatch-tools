@@ -18,18 +18,21 @@ module Services
         * Don't return anything that isn't in YAML.
         * Don't list council members whose terms have ended.
 
-        The JSON should be in this format:
-        {
-          name: <string>
+        The YAML should be in this format, in an array:
+        - name: <string>
           phone_number: <string> Format: (123) 456-7890
           email: <string>
           positions: [<an array of strings>]
+          website:
           start_term_date: <string> Format: YYYY, YYYY-MM, or YYYY-MM-DD
           end_term_date: <string> Format: YYYY, YYYY-MM, or YYYY-MM-DD
-        }
       )
 
-      run_prompt(prompt)
+      response = run_prompt(prompt)
+      response.map do |person|
+        person["sources"] = [url]
+        Scrapers::Standard.normalize_source_person(person)
+      end
     end
 
     def run_prompt(prompt)
@@ -68,17 +71,17 @@ module Services
       end
 
       if response.success?
-        File.write("chat.txt", response.inspect)
         # TODO: needs more robustness
         response_candidate = response["candidates"].first
         yaml_string = response_candidate["content"]["parts"].first["text"]
 
-        Utils.yaml_string_to_hash(yaml_string)
+        Utils::YamlHelper.yaml_string_to_hash(yaml_string)
       else
         puts "Request failed. HTTP Status: #{response.code}"
         nil
       end
-    rescue StandardError
+    rescue StandardError => e
+      puts e.message
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
         puts "Might be running into rate limits. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"

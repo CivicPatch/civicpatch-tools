@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # Helper methods for all scrapers
-require_relative "../utils"
 require_relative "../path_helper"
 
 module Scrapers
@@ -10,6 +9,18 @@ module Scrapers
 
     def self.config
       @config ||= YAML.load_file(CONFIG_PATH)
+    end
+
+    def self.normalize_source_person(person)
+      {
+        "name" => person["name"],
+        "image" => person["image"],
+        "positions" => normalize_positions(person["positions"]),
+        "email" => person["email"],
+        "phone_number" => person["phone_number"],
+        "website" => person["website"],
+        "sources" => person["sources"]
+      }
     end
 
     # See: https://open-civic-data.readthedocs.io/en/latest/data/person.html#basics
@@ -23,7 +34,7 @@ module Scrapers
         formatted_person["contact_details"] << {
           "note" => nil,
           "type" => "phone",
-          "value" => Utils.format_phone_number(person["phone_number"]),
+          "value" => format_phone_number(person["phone_number"]),
           "label" => "Phone"
         }
       end
@@ -60,7 +71,12 @@ module Scrapers
       end_term_date = person["end_term_date"].present? ? format_date(person["end_term_date"]) : nil
 
       if person["positions"].present? && person["positions"].is_a?(Array)
-        formatted_person["other_names"] = determine_positions(person["positions"], start_term_date, end_term_date)
+        formatted_person["other_names"] = person["positions"].map do |position|
+          { "note" => nil,
+            "name" => position,
+            "start_date" => start_term_date,
+            "end_date" => end_term_date }
+        end
       end
 
       formatted_person["updated_at"] = Time.now.strftime("%Y-%m-%d")
@@ -105,7 +121,7 @@ module Scrapers
       formatted.gsub(/[^a-zA-Z0-9 ]/, "").squeeze(" ").strip
     end
 
-    def self.determine_positions(positions, start_term_date, end_term_date)
+    def self.normalize_positions(positions)
       alias_map = self.alias_map
       implied_by_map = self.implied_by_map
 
@@ -124,12 +140,7 @@ module Scrapers
         expanded_positions << implied_by_map[match] if match
       end
 
-      expanded_positions.uniq.map do |position|
-        { "note" => nil,
-          "name" => format_position(position),
-          "start_date" => start_term_date,
-          "end_date" => end_term_date }
-      end
+      expanded_positions.uniq.sort_by { |position| position.downcase }.map { |position| format_position(position) }
     end
 
     def self.get_website(person)
@@ -141,6 +152,40 @@ module Scrapers
       date.strftime("%Y-%m-%d")
     rescue StandardError
       nil
+    end
+
+    def self.format_phone_number(phone) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
+      return nil if phone.nil?
+
+      # TODO: Only support one phone # for now
+      phone = phone.first if phone.is_a?(Array)
+      phone.strip.empty?
+
+      # Extract digits and plus sign for international numbers
+      digits = phone.gsub(/[^\d+]/, "")
+
+      # Handle extensions (e.g., "123-456-7890 ext. 123")
+      base_number, extension = digits.split(/ext|x/i, 2).map(&:strip)
+
+      # Reject numbers that are too short (e.g., 7-digit numbers)
+      return nil if base_number.length < 10
+
+      # U.S. Number Formatting
+      formatted = case base_number.length
+                  when 10
+                    "(#{base_number[0..2]}) #{base_number[3..5]}-#{base_number[6..9]}"
+                  when 11
+                    if base_number.start_with?("1") # U.S. country code
+                      "(#{base_number[1..3]}) #{base_number[4..6]}-#{base_number[7..10]}"
+                    else
+                      "+#{base_number}" # Assume international
+                    end
+                  else
+                    "+#{base_number}" # Default to international
+                  end
+
+      # Append extension if present
+      extension ? "#{formatted} ext. #{extension}" : formatted
     end
   end
 end

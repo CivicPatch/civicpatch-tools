@@ -7,20 +7,35 @@ module PathHelper
     File.expand_path(relative_path, Dir.pwd)
   end
 
-  # Example data/wa/seattle
-  def self.city_path_to_city_entry(city_path)
-    puts city_path
-    city_directory = if File.directory?(city_path)
-                       city_path
-                     else
-                       Pathname(city_path).parent.to_s
-                     end
+  def self.get_state_path(state)
+    PathHelper.project_path("data/#{state}")
+  end
 
-    path_segments = city_directory.split(File::SEPARATOR)
-    state = path_segments[-2]
-    city = path_segments.last
+  def self.get_city_path(state, gnis)
+    state_path = get_state_path(state)
 
-    city_entries = CityScrape::StateManager.get_state_places(state)
-    city_entries["places"].find { |city_entry| city_entry["name"] == city }
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    state_places = CityScrape::StateManager.get_state_places(state)
+
+    path_name = city_entry["name"]
+
+    # Some cities within the same state have the same name
+    if state_places["places"].count { |place| place["name"] == city_entry["name"] } > 1
+      path_name = "#{city_entry["name"]}_#{city_entry["gnis"]}"
+    end
+
+    File.join(state_path, path_name)
+  end
+
+  def self.get_city_directory_sources_path(state, gnis)
+    city_path = get_city_path(state, gnis)
+    File.join(city_path, "directories")
+  end
+
+  def self.get_city_directory_candidates_file_path(state, gnis, directory_type) # source, gemini, scrape
+    city_path = get_city_path(state, gnis)
+    directories_folder_path = PathHelper.project_path(File.join(city_path, "directories"))
+    FileUtils.mkdir_p(directories_folder_path)
+    File.join(directories_folder_path, "directory_#{directory_type}.yml")
   end
 end

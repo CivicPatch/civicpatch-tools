@@ -79,8 +79,8 @@ namespace :scratch do
     city_directory = CityScrape::CityManager.get_city_directory("wa", city_entry)
     city_path = CityScrape::CityManager.get_city_path("wa", city_entry)
 
-    simple_city_directory = city_directory["people"].map do |person|
-      formatted = Utils.format_simple(person)
+    simple_city_directory = city_directory.map do |person|
+      formatted = Utils::DirectoryHelper.format_simple(person)
       formatted.reject { |k, _v| k == "image" }
     end
 

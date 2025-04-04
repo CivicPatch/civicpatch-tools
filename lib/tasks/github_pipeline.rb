@@ -9,6 +9,9 @@
 # Main tasks:
 # - github_pipeline:get_pr_comment[state,gnis,branch_name]# Generate markdown for PR
 
+require_relative "../validators/city_directory"
+require_relative "../github/city_directory"
+
 namespace :github_pipeline do
   desc "Get GitHub City Directory Link"
   task :get_city_directory_link, [:state, :gnis, :branch_name] do |_t, args|
@@ -42,10 +45,10 @@ namespace :github_pipeline do
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Sources
-      #{city_directory["people"].map { |person| person["sources"].map { |source| source["url"] } }.flatten.uniq.join("\n")}
+      #{city_directory.map { |person| person["sources"].map { |source| source["url"] } }.flatten.uniq.join("\n")}
       ## People
-      #{city_directory["people"].map do |person|
-        simple_person = Utils.format_simple(person)
+      #{city_directory.map do |person|
+        simple_person = Utils::DirectoryHelper.format_simple(person)
         image = simple_person["image"]
         email = simple_person["email"]
         phone = simple_person["phone_number"]
@@ -110,13 +113,11 @@ namespace :github_pipeline do
   task :validate_city_directory, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
-    # city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-    # city_directory_to_validate = CityScrape::CityManager.get_city_directory(state, city_entry)
-
-    validation_results = Validators::CityDirectory.validate_directory(state, gnis)
+    validation_results = Validators::CityDirectory.validate_sources(state, gnis)
+    puts "validation_results: #{validation_results.inspect}"
     contested_people = validation_results[:contested_people]
     score = validation_results[:agreement_score]
-    contested_people_markdown = Validators::CityDirectory.to_markdown_table(contested_people)
+    contested_people_markdown = GitHub::CityDirectory.to_markdown_table(contested_people)
 
     json = { "approve" => false,
              "score" => score,

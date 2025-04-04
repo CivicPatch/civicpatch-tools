@@ -3,6 +3,7 @@
 require "openai"
 require "scrapers/standard"
 require "scrapers/common"
+require "utils/yaml_helper"
 
 # TODO: track token usage
 module Services
@@ -27,23 +28,23 @@ module Services
         { role: "user", content: user_instructions }
       ]
       response_yaml = run_prompt(messages)
-      response = Utils.yaml_string_to_hash(response_yaml)
-
-      return response if response["error"].present?
+      response = Utils::YamlHelper.yaml_string_to_hash(response_yaml)
 
       # filter out invalid people
-      response["people"] = response["people"].select do |person|
+      response.select do |person|
         Scrapers::Standard.valid_name?(person["name"]) &&
           person["positions"].present? &&
           (person["phone_number"].present? || person["email"].present? || person["website"].present?)
       end
 
-      response["people"] = response["people"].map do |person|
-        person = Scrapers::Standard.format_person(person, city_council_url, person["website"])
-        person
+      # response.map do |person|
+      #  person = Scrapers::Standard.format_person(person, city_council_url, person["website"])
+      #  person
+      # end
+      response.map do |person|
+        person["website"] = city_council_url
+        Scrapers::Standard.normalize_source_person(person)
       end
-
-      response
     end
 
     def extract_person_information(content_file, url)
@@ -52,19 +53,20 @@ module Services
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
           You are an expert data extractor.
-          Extract the following properties from the provided content
+          Extract the following properties from the provided content.
+          You should be returning a YAML object with the following properties:
           - name
-          - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-          - phone_number
-          - email
-          - positions (An array of strings)
-          - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-          - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+            image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+            phone_number
+            email
+            positions (An array of strings)
+            start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+            end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
 
         Notes:
         - Extract only the contact information associated with the person. Do not return general info.
         - Return the results in YAML format.
-        - If the content is not a person, YAML with the key "error" and the value "Not a person".
+        - If the content is not a person, return an empty array.
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
         - start_term_date and end_term_date should be strings.
@@ -99,12 +101,10 @@ module Services
 
       response = run_prompt(messages)
 
-      response = Utils.yaml_string_to_hash(response)
+      response = Utils::YamlHelper.yaml_string_to_hash(response)
+      response["website"] = url
 
-      # TODO: handle errors
-      return nil if response["error"].present?
-
-      Scrapers::Standard.format_person(response, url)
+      Scrapers::Standard.normalize_source_person(response)
     end
 
     def generate_city_info_prompt(content, city_council_url)
@@ -115,15 +115,15 @@ module Services
         Extract the following properties from the provided content:
 
         For each city leader or council member (leave empty if not found):
-          - people:
-              - name
-              - image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-              - phone_number
-              - email
-              - positions (an array of strings)
-              - start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-              - end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-              - website (Provide the absolute URL.)
+        there should be an array of the following properties.
+        - name
+          image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+          phone_number
+          email
+          positions (an array of strings)
+          start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+          end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+          website (Provide the absolute URL.)
                 If no specific website is provided, leave this empty — do not default to the general city or council page.)
 
         Basic rules:
@@ -133,8 +133,8 @@ module Services
         - If you find just a list of names, with at least a website or email, they are likely to be council members.
         - If the content is a press release, do not extract any people data from the content.
         - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
-        - If you cannot find any relevant information, return the following YAML:
-          - error: "No relevant information found"
+        - If you cannot find any relevant information, return YAML as empty array.
+
         - To make it on the people list, they must be associated with either "position" OR "position_misc)
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
@@ -159,33 +159,32 @@ module Services
 
         Example Output (YAML):
         ---
-        people:
-          - name: "Jane Smith"
-            positions:
-              - "council member"
-              - "ward 5"
-            phone_number: "555-123-4567"
-            image: "images/smith.jpg"
-            email: "jsmith@cityofexample.gov"
-            website: "https://www.cityofexample.gov/council/smith"
-          - name: "John Doe"
-            positions:
-              - "council member"
-              - "ward 3"
-            phone_number: ""
-            image: ""
-            email: ""
-            website: "/council/doe"
-          - name: "Robert Johnson"
-            positions:
-              - "mayor"
-              - "1"
-            phone_number: "555-111-2222"
-            image: "images/mayor.jpg"
-            email: "mayor@cityofexample.gov"
-            website: "https://www.cityofexample.gov/mayor"
-            start_term_date: "2020-01-01"
-            end_term_date: "2025-12-31"
+        - name: "Jane Smith"
+          positions:
+            - "council member"
+            - "ward 5"
+          phone_number: "555-123-4567"
+          image: "images/smith.jpg"
+          email: "jsmith@cityofexample.gov"
+          website: "https://www.cityofexample.gov/council/smith"
+        - name: "John Doe"
+          positions:
+            - "council member"
+            - "ward 3"
+          phone_number: ""
+          image: ""
+          email: ""
+          website: "/council/doe"
+        - name: "Robert Johnson"
+          positions:
+            - "mayor"
+            - "1"
+          phone_number: "555-111-2222"
+          image: "images/mayor.jpg"
+          email: "mayor@cityofexample.gov"
+          website: "https://www.cityofexample.gov/mayor"
+          start_term_date: "2020-01-01"
+          end_term_date: "2025-12-31"
 
       INSTRUCTIONS
 
