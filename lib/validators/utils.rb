@@ -7,12 +7,11 @@ module Validators
       name: 0.5,
       position: 0.4,
       email: 0.3,
-      phone: 0.3,
+      phone_number: 0.3,
       website: 0.1
     }
     # Sources like MRSC or Secretary of State sites
     # might get outdated throughout the year.
-    SOURCE_CONFIDENCES = [0.9, 0.7, 0.7]
     DISAGREEMENT_THRESHOLD = 0.9
 
     # Normalize text (downcase, strip whitespace)
@@ -20,8 +19,8 @@ module Validators
       text.to_s.strip.downcase
     end
 
-    def self.normalize_phone(phone)
-      phone.to_s.gsub(/\D/, "") # Keep only digits
+    def self.normalize_phone_number(phone_number)
+      phone_number.to_s.gsub(/\D/, "") # Keep only digits
     end
 
     # Normalize emails (ignore case)
@@ -40,27 +39,28 @@ module Validators
     def self.similarity_score(field, value1, value2, confidence_a = 1.0, confidence_b = 1.0)
       return 1.0 if value1 == value2 # Exact match for any field
       return 0.0 if value1.nil? || value2.nil? # Missing data = no match
+      return 1.0 if %w[sources].include?(field)
 
       case field
-      when :phone
-        normalize_phone(value1) == normalize_phone(value2) ? 1.0 : 0.0
-      when :email
+      when "phone_number"
+        normalize_phone_number(value1) == normalize_phone_number(value2) ? 1.0 : 0.0
+      when "email"
         normalize_email(value1) == normalize_email(value2) ? 1.0 : 0.0
-      when :positions
+      when "positions"
         return 0.0 unless value1.is_a?(Array) && value2.is_a?(Array)
 
-        # If both positions are arrays, normalize and sort them before comparison
+        normalized1 = value1.map { |v| normalize_text(v) }
+        normalized2 = value2.map { |v| normalize_text(v) }
 
-        sorted_value1 = value1.map { |v| normalize_text(v) }.sort
-        sorted_value2 = value2.map { |v| normalize_text(v) }.sort
-
-        # Compare the sorted arrays directly
-        return 1.0 if sorted_value1 == sorted_value2
-
-        similarities = sorted_value1.zip(sorted_value2).map do |pos_a, pos_b|
-          similarity_score(:position, pos_a, pos_b)
+        # Compare each role in value1 to the best match in value2
+        total_similarity = 0.0
+        normalized1.each do |pos1|
+          best_match_score = normalized2.map { |pos2| similarity_score(:position, pos1, pos2) }.max || 0.0
+          total_similarity += best_match_score
         end
-        similarities.sum / similarities.size.to_f
+
+        average_similarity = total_similarity / normalized1.size.to_f
+        average_similarity * Math.sqrt(confidence_a * confidence_b)
       else
         # Use Levenshtein for fuzzy matching on names, positions, and websites
         max_length = [value1.length, value2.length].max
@@ -68,10 +68,13 @@ module Validators
 
         distance = Text::Levenshtein.distance(value1, value2)
         similarity = 1.0 - (distance.to_f / max_length)
-        if field == :position
-          similarity = 1.0 - (distance.to_f / (max_length + 2.0)) # Slightly increase the divisor to reduce penalty
-        end
-        similarity
+
+        # Slight adjustment for position similarity
+        similarity = 1.0 - (distance.to_f / (max_length + 2.0)) if [:position, "position"].include?(field)
+
+        # 🔥 Apply confidence weighting
+        similarity * Math.sqrt(confidence_a * confidence_b)
+
       end
     end
 
@@ -94,18 +97,18 @@ module Validators
       contested_people = {}
 
       # Gather all unique names across sources
-      unique_names = sources.flatten(1).map { |p| p[:name] }.uniq
+      unique_names = sources.flatten(1).map { |p| p["name"] }.uniq
       total_people = unique_names.count
-      fields = %i[positions email phone website]  # Updated 'position' to 'positions'
+      fields = %w[positions email phone_number website]
       total_fields = fields.count
 
       unique_names.each do |name|
-        person_records = sources.map { |source| source.find { |p| p[:name] == name } }
+        person_records = sources.map { |source| source.find { |p| p["name"] == name } }
         existing_records = person_records.compact # Remove nil entries (missing persons)
 
         contested_fields = {}
 
-        fields.each_with_index do |field, index|
+        fields.each_with_index do |field, _index|
           # Only consider the field if there are at least two non-nil records
           next if existing_records.count { |r| r[field].present? } < 2
 
@@ -131,7 +134,6 @@ module Validators
           end.flatten
 
           worst_similarity = pairwise_similarities.min || 1.0
-
           next unless worst_similarity < DISAGREEMENT_THRESHOLD
 
           contested_fields[field] = {

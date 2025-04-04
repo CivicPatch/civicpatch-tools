@@ -11,7 +11,7 @@ module CityScrape
       city_data = CityScrape::CityManager.get_city_directory(state, city_entry)
       city_path = CityScrape::CityManager.get_city_path(state, city_entry)
 
-      city_data["people"] = city_data["people"].map.with_index do |existing_person, index|
+      city_data = city_data.map.with_index do |existing_person, index|
         website = Scrapers::Standard.get_website(existing_person)
 
         next existing_person unless website.present?

@@ -1,3 +1,5 @@
+require "fuzzy_match"
+
 module CityScrape
   class CityManager
     # sort by position - mayor first, then council_president, then council_member
@@ -10,20 +12,43 @@ module CityScrape
       "Council Member" => 3
     }.freeze
 
-    MERGE_RULES = {
-      "name" => { type: "FIRST" },
-      "image" => { type: "LAST" },
-      "contact_details" => { type: "MERGE", value: "value" },
-      "links" => { type: "MERGE", value: "url" },
-      "other_names" => {
-        type: "MERGE",
-        value: "name",
-        sort_by: ->(other_names) { sort_by_positions(other_names) }
-      },
-      "updated_at" => { type: "LAST" },
-      "created_at" => { type: "LAST" },
-      "sources" => { type: "MERGE", value: "url" }
-    }.freeze
+    def custom_merge(person1, person2)
+      merged_person = {}
+
+      # Define merging rules for each field
+      person1.each do |field, value|
+        case field
+        when "name"
+          # Keep name from the first person (person1)
+          merged_person["name"] = value
+        when "image"
+          # Average the age if different
+          merged_person["image"] = person2["image"]
+        when "positions"
+          # Combine the address fields
+          merged_person["positions"] = [value, person2["positions"]].compact.join(", ")
+        when "email"
+          # Default merging behavior: prefer the last person's value
+          merged_person["email"] = person2["email"]
+        when "phone_number"
+          # Default merging behavior: prefer the last person's value
+          merged_person["phone_number"] = person2["phone_number"]
+        when "website"
+          # Default merging behavior: prefer the last person's value
+          merged_person["website"] = person2["website"]
+        when "sources"
+          # Default merging behavior: prefer the last person's value
+          merged_person["sources"] = person2["sources"]
+        end
+      end
+
+      # Handle fields that are in person2 but not in person1
+      person2.each do |field, value|
+        merged_person[field] ||= value
+      end
+
+      merged_person
+    end
 
     def self.sort_by_positions(other_names)
       other_names.sort_by do |other_name|
@@ -35,22 +60,26 @@ module CityScrape
 
     # Might want to add more checks here
     def self.includes_people?(directory)
-      directory["people"].present? && directory["people"].any?
+      directory.present? && directory.any?
     end
 
     def self.valid_city_directory?(directory)
-      person_other_names = directory["people"].map do |person|
-        (person["other_names"] || []).map do |other_name|
-          other_name["name"]
-        end
-      end.flatten
-
-      council_members = person_other_names.select { |other_name| other_name.include?("Council Member") }.count
-      mayors = person_other_names.select { |other_name| other_name.include?("Mayor") }.count
-
-      puts "Council members: #{council_members}, Mayors: #{mayors}"
+      council_members = get_council_members_count(directory)
+      mayors = get_mayors_count(directory)
 
       council_members > 1 && mayors.positive?
+    end
+
+    def self.get_council_members_count(directory)
+      directory.select do |person|
+        person["positions"].include?("Council Member")
+      end.count
+    end
+
+    def self.get_mayors_count(directory)
+      directory.select do |person|
+        person["positions"].include?("Mayor")
+      end.count
     end
 
     def self.people_with_names(people)
@@ -61,13 +90,19 @@ module CityScrape
       (position_title || "").to_s.downcase.gsub(/[ .]+/, "_")
     end
 
-    def self.update_city_directory(
+    def self.update_directory(
       state,
       city_entry,
-      new_city_directory
+      new_city_directory,
+      directory_type = nil
     )
-      city_directory_path = get_city_directory_file(state, city_entry)
-      raise "Invalid city directory path: #{city_directory_path}" unless city_directory_path.present?
+      if directory_type.present?
+        city_directory_path = PathHelper.get_city_directory_candidates_file_path(state, city_entry["gnis"],
+                                                                                 directory_type)
+      else
+        city_directory_path = get_city_directory_file(state, city_entry)
+        raise "Invalid city directory path: #{city_directory_path}" unless city_directory_path.present?
+      end
 
       File.write(city_directory_path, new_city_directory.to_yaml)
     end
@@ -110,42 +145,41 @@ module CityScrape
     end
 
     def self.merge_directory(city_directory, partial_city_directory)
-      new_people = CityScrape::CityManager.people_with_names(partial_city_directory["people"])
+      new_people = CityScrape::CityManager.people_with_names(partial_city_directory)
       return city_directory unless new_people.present?
 
-      {
-        "people" => sort_people(merge_people_lists(city_directory["people"], new_people))
-      }
+      sort_people(merge_people_lists(city_directory, new_people))
     end
 
     def self.merge_people_lists(list1, list2)
-      # Create a hash to store merged people by full name
-      people_hash = {}
+      # Combine by exact name match
 
-      # Helper method to generate full name
-      full_name = ->(person) { "#{person["name"].split.first} #{person["name"].split.last}" }
+      # Initialize fuzzy matcher
+      fuzzy_matcher = FuzzyMatch.new(list2.map { |p| p[:name] })
 
-      # Add people from the first list
-      list1.each do |person|
-        name_key = full_name.call(person)
-        people_hash[name_key] ||= person.dup # Use dup to avoid modifying the original object
-      end
+      # Combine lists using fuzzy matching
+      combined_list = []
 
-      # Merge people from the second list
-      list2.each do |updated_person|
-        name_key = full_name.call(updated_person)
-        # Use MERGE_RULES to determine how to merge the properties
-        existing_person = people_hash[name_key]
-        if existing_person.nil?
-          people_hash[name_key] = updated_person
-          next
+      list1.each do |person1|
+        match_name = fuzzy_matcher.find(person1[:name])
+
+        if match_name
+          # Find the matched person from list2
+          match_person = list2.find { |p| p[:name] == match_name }
+
+          # Merge the matched person (you can customize this logic)
+          combined_person = custom_merge(person1, match_person)
+          combined_list << combined_person
+
+          # Remove the matched person from list2 to avoid duplicates
+          list2.delete(match_person)
+        else
+          combined_list << person1
         end
-
-        people_hash[name_key] = merge_person(existing_person, updated_person)
       end
 
-      # Convert the hash back to an array
-      people_hash.values
+      # Add remaining unmatched people from list2
+      combined_list.concat(list2)
     end
 
     def self.merge_person(existing_person, updated_person)
