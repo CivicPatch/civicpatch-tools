@@ -2,7 +2,7 @@ require_relative "../scrapers/data_fetcher"
 require_relative "../path_helper"
 require_relative "../services/openai"
 require_relative "../services/google_gemini"
-require_relative "../validators/city_directory"
+require_relative "../validators/city_people"
 require_relative "../core/crawler"
 
 namespace :scratch do

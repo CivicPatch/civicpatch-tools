@@ -5,12 +5,12 @@
 module Scrapers
   module States
     module Wa
-      class CityDirectory
+      class CityPeople
         STATE = "wa"
         STATE_SOURCE_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles"
         STATE_SOURCE_CITY_PAGE_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles/city-officials"
 
-        def self.get_city_directory(gnis)
+        def self.get_city_people(gnis)
           city_entry = CityScrape::StateManager.get_city_entry_by_gnis(STATE, gnis)
 
           city_website = city_entry["website"]
@@ -44,12 +44,12 @@ module Scrapers
           document = Nokogiri::HTML(response.body)
           data = document.css("table")[1].attr("data-data")
           city_officials_data = JSON.parse(data)
-          city_officials = city_officials_data.map { |person| extract_person_info(person) }
-          city_officials.reject do |city_official|
-            Scrapers::CityDirectory::KEY_POSITIONS.none? do |key_position|
-              city_official["positions"].include?(key_position)
-            end
-          end
+          city_officials_data.map { |person| extract_person_info(person) }
+          # city_officials.reject do |city_official|
+          #  Scrapers::CityDirectory::GOVERNMENT_TYPES["MAYOR_COUNCIL"]["KEY_POSITIONS"].none? do |key_position|
+          #    city_official["positions"].include?(key_position)
+          #  end
+          # end
         end
 
         def self.without_prefix(website)

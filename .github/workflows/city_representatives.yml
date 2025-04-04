@@ -1,4 +1,4 @@
-name: City Scrape
+name: Fetch City Representatives
 
 # Number of cities to process in each workflow run
 env:
