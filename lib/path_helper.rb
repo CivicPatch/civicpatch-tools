@@ -27,15 +27,14 @@ module PathHelper
     File.join(state_path, path_name)
   end
 
-  def self.get_city_directory_sources_path(state, gnis)
+  def self.get_city_people_sources_path(state, gnis)
     city_path = get_city_path(state, gnis)
-    File.join(city_path, "directories")
+    File.join(city_path, "people")
   end
 
-  def self.get_city_directory_candidates_file_path(state, gnis, directory_type) # source, gemini, scrape
-    city_path = get_city_path(state, gnis)
-    directories_folder_path = PathHelper.project_path(File.join(city_path, "directories"))
-    FileUtils.mkdir_p(directories_folder_path)
-    File.join(directories_folder_path, "directory_#{directory_type}.yml")
+  def self.get_city_people_candidates_file_path(state, gnis, directory_type) # source, gemini, scrape
+    people_folder_path = get_city_people_sources_path(state, gnis)
+    FileUtils.mkdir_p(people_folder_path)
+    File.join(people_folder_path, "people_#{directory_type}.yml")
   end
 end

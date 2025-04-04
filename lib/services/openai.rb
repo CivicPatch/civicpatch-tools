@@ -47,7 +47,7 @@ module Services
       end
     end
 
-    def extract_person_information(content_file, url)
+    def extract_person_information(person, content_file, url)
       positions = Scrapers::CityDirectory::GOVERNMENT_TYPES["MAYOR_COUNCIL"]["KEY_POSITIONS"]
 
       content = File.read(content_file)
@@ -55,6 +55,7 @@ module Services
           You are an expert data extractor.
           Extract the following properties from the provided content.
           You should be returning a YAML object with the following properties:
+          You are looking for content related to #{person["name"]}
           - name
             image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
             phone_number
@@ -66,7 +67,6 @@ module Services
         Notes:
         - Extract only the contact information associated with the person. Do not return general info.
         - Return the results in YAML format.
-        - If the content is not a person, return an empty array.
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
         - start_term_date and end_term_date should be strings.
@@ -86,7 +86,8 @@ module Services
           Input: "deputy mayor" → Output: `["deputy mayor"]`
           Input: "mayor position 7" → Output: `["mayor", "position 7"]`
           Input: "council president" → Output: `["council president"]`
-          Input: "position 8 at-large" → Output: `["position 8 at-large"]`
+          Input: "position 8 at-large" → Output: `["position 8", "at-large"]`
+          Input: "position no 8" → Output: `["position 8"]`
       INSTRUCTIONS
 
       user_instructions = <<~USER
@@ -101,10 +102,10 @@ module Services
 
       response = run_prompt(messages)
 
-      response = Utils::YamlHelper.yaml_string_to_hash(response)
-      response["website"] = url
+      person = Utils::YamlHelper.yaml_string_to_hash(response)
+      person["website"] = url
 
-      Scrapers::Standard.normalize_source_person(response)
+      Scrapers::Standard.normalize_source_person(person)
     end
 
     def generate_city_info_prompt(content, city_council_url)
@@ -118,7 +119,7 @@ module Services
         there should be an array of the following properties.
         - name
           image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-          phone_number
+          phone_number: <string> Format: (123) 456-7890
           email
           positions (an array of strings)
           start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
@@ -155,7 +156,8 @@ module Services
           Input: "deputy mayor" → Output: `["deputy mayor"]`
           Input: "mayor position 7" → Output: `["mayor", "position 7"]`
           Input: "council president" → Output: `["council president"]`
-          Input: "position 8 at-large" → Output: `["position 8 at-large"]`
+          Input: "position 8 at-large" → Output: `["position 8", "at-large"]`
+          Input: "position no 8" → Output: `["position 8"]`
 
         Example Output (YAML):
         ---

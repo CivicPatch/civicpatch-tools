@@ -12,8 +12,6 @@ module Scrapers
   class DataFetcher
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
-      puts "Extracting content from #{url}"
-
       html = fetch_html(url)
       html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
 

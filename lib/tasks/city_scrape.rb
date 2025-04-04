@@ -29,13 +29,12 @@ require_relative "../scrapers/places"
 require_relative "../scrapers/data_fetcher"
 require_relative "../scrapers/common"
 require_relative "../scrapers/utils"
-require_relative "../core/city_scraper/directory_extractor"
+require_relative "../core/city_scraper/people_scraper"
 require_relative "../tasks/city_scrape/city_manager"
-require_relative "../tasks/city_scrape/search_manager"
-require_relative "../tasks/city_scrape/page_processor"
 require_relative "../tasks/city_scrape/state_manager"
-require_relative "../tasks/city_scrape/person_manager"
-require_relative "../sources/state_source/city_directory"
+require_relative "../core/search_router"
+require_relative "../sources/state_source/city_people"
+require_relative "../core/people_manager"
 
 namespace :city_scrape do
   desc "Pick cities from queue"
@@ -78,27 +77,17 @@ namespace :city_scrape do
     create_prepare_directories(state, city_entry)
 
     # Official Source
-    source_city_directory = Sources::StateSource::CityDirectory.get_city_directory(state, gnis)
-    CityScrape::CityManager.update_directory(state, city_entry, source_city_directory, "source")
+    source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
+    Core::PeopleManager.update_people(state, city_entry, source_city_people, "source")
 
     # Web Scrape Source
-    source_dirs, city_directory = build_city_directory(state, city_entry)
+    source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis)
     finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
-    # Gemini Source
-    google_gemini = Services::GoogleGemini.new
-    gemini_city_directory = google_gemini.get_city_directory(city_entry["name"], city_entry["website"])
-    CityScrape::CityManager.update_directory(state, city_entry, gemini_city_directory, "google_gemini")
-  end
-
-  desc "Get member info. Initial council member did not collect enough info,
-   but if members have a website, we can probably get more info"
-  task :get_member_info, [:state, :gnis] do |_t, args|
-    state = args[:state]
-    gnis = args[:gnis]
-
-    # TODO: this is doing too much, too many files moving around in one function too...
-    CityScrape::PersonManager.fetch_people_info(state, gnis)
+    ## Gemini Source
+    # google_gemini = Services::GoogleGemini.new
+    # gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
+    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini")
   end
 
   def create_prepare_directories(state, city_entry)
@@ -116,6 +105,8 @@ namespace :city_scrape do
   )
     city_path = CityScrape::CityManager.get_city_path(state, city_entry)
     sources_destination_dir = File.join(city_path, "city_scrape_sources")
+    FileUtils.rm_rf(sources_destination_dir)
+    FileUtils.mkdir_p(sources_destination_dir)
 
     images_dir = File.join(city_path, "images")
     FileUtils.mkdir_p(images_dir)
@@ -131,11 +122,8 @@ namespace :city_scrape do
         end
       end
 
-      new_source_dir = File.join(sources_destination_dir, File.basename(source_dir))
-      puts "Moving #{source_dir} to #{new_source_dir}"
-      FileUtils.rm_rf(new_source_dir)
-      FileUtils.mkdir_p(new_source_dir)
-      FileUtils.mv(source_dir, new_source_dir)
+      puts "Moving #{source_dir} to #{sources_destination_dir}"
+      FileUtils.mv(source_dir, sources_destination_dir)
     end
   end
 
@@ -145,7 +133,7 @@ namespace :city_scrape do
 
     copy_source_files(state, city_entry, source_dirs)
 
-    CityScrape::CityManager.update_directory(state, city_entry, new_city_directory, "scrape")
+    Core::PeopleManager.update_people(state, city_entry, new_city_directory, "scrape")
 
     # city_directory_hash = Digest::MD5.hexdigest(new_city_directory.to_yaml)
     # CityScrape::StateManager.update_state_places(state, [
@@ -153,38 +141,8 @@ namespace :city_scrape do
     #                                                 "meta_last_city_scrape_run" => Time.now.strftime("%Y-%m-%d"),
     #                                                 "meta_hash" => city_directory_hash }
     #                                             ])
-    FileUtils.rm_rf(cache_directory)
+    # FileUtils.rm_rf(cache_directory)
 
     Scrapers::Utils.prune_unused_images(state, city_entry["gnis"])
-  end
-
-  def build_city_directory(state, city_entry)
-    openai_service = Services::Openai.new
-    data_fetcher = Scrapers::DataFetcher.new
-
-    search_results_processed = []
-    local_source_dirs = []
-    city_directory = []
-    search_engines = %w[manual brave]
-
-    search_engines.each do |engine|
-      search_result_urls = Core::SearchRouter.fetch_search_results(engine, state, city_entry)
-      search_results_to_process = search_result_urls - search_results_processed
-      puts "Engine #{engine} found #{search_result_urls.count} search results for #{city_entry["name"]}"
-      puts "Search results to process: #{search_results_to_process.count}"
-      puts "#{search_results_to_process.join("\n")}"
-
-      directory_extractor = CityScraper::DirectoryExtractor.new(state, engine, openai_service, data_fetcher,
-                                                                city_entry, city_directory)
-
-      new_local_source_dirs, city_directory = directory_extractor.process_city_pages(search_results_to_process)
-
-      search_results_processed += search_results_to_process
-      local_source_dirs += new_local_source_dirs
-
-      return [local_source_dirs, city_directory] if CityScrape::CityManager.valid_city_directory?(city_directory)
-    end
-
-    [local_source_dirs, city_directory]
   end
 end

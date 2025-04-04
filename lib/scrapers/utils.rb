@@ -10,7 +10,7 @@ module Scrapers
       # Get list of all images in the data/<state>/<city>/directories/directory_scrape.yml directory
       # That is the only directory that should have images
       images_in_use = []
-      directory = PathHelper.get_city_directory_candidates_file_path(state, gnis, "scrape")
+      directory = PathHelper.get_city_people_candidates_file_path(state, gnis, "scrape")
 
       return unless File.exist?(directory)
 

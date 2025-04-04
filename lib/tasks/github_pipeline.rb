@@ -9,8 +9,8 @@
 # Main tasks:
 # - github_pipeline:get_pr_comment[state,gnis,branch_name]# Generate markdown for PR
 
-require_relative "../validators/city_directory"
-require_relative "../github/city_directory"
+require_relative "../validators/city_people"
+require_relative "../github/city_people"
 
 namespace :github_pipeline do
   desc "Get GitHub City Directory Link"
@@ -27,7 +27,7 @@ namespace :github_pipeline do
     puts directory_url
   end
 
-  desc "Generate PR comment for city directory"
+  desc "Generate PR comment for city people"
   task :get_pr_comment, [:state, :gnis, :branch_name] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
@@ -110,14 +110,14 @@ namespace :github_pipeline do
     puts markdown_content
   end
 
-  task :validate_city_directory, [:state, :gnis] do |_t, args|
+  task :validate_city_people, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
-    validation_results = Validators::CityDirectory.validate_sources(state, gnis)
+    validation_results = Validators::CityPeople.validate_sources(state, gnis)
     puts "validation_results: #{validation_results.inspect}"
     contested_people = validation_results[:contested_people]
     score = validation_results[:agreement_score]
-    contested_people_markdown = GitHub::CityDirectory.to_markdown_table(contested_people)
+    contested_people_markdown = GitHub::CityPeople.to_markdown_table(contested_people)
 
     json = { "approve" => false,
              "score" => score,

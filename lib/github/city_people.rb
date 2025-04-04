@@ -1,5 +1,5 @@
 module GitHub
-  class CityDirectory
+  class CityPeople
     def self.to_markdown_table(contested_people)
       # Initialize the header for the table
       headers = ["Name", "Field", "Disagreement Score", "Values"]

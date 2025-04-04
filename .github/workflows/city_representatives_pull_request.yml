@@ -1,4 +1,4 @@
-name: Validate City Directory
+name: Validate City People
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - opened
       - synchronize
     paths:
-      - '**/directory.yml'
+      - '**/people.yml'
 permissions:
   contents: read
   pull-requests: write
@@ -54,11 +54,11 @@ jobs:
           SCRAPED_DATA_COMMENT=$(bundle exec rake "github_pipeline:get_pr_comment[${{ env.STATE }},${{ env.GNIS_ID }},${{ env.BRANCH_NAME }}]")
           gh pr comment ${{ github.event.pull_request.number }} --body "$SCRAPED_DATA_COMMENT"
       
-      - name: Run City Directory Validation (Trusted Source)
+      - name: Run City People Validation (Trusted Source)
         id: validate_trusted_source
         run: |
           echo "Running validation..."
-          SOURCE_VALIDATION_RESPONSE=$(bundle exec rake "github_pipeline:validate_city_directory[${{ env.STATE }},${{ env.GNIS_ID }}]")
+          SOURCE_VALIDATION_RESPONSE=$(bundle exec rake "github_pipeline:validate_city_people[${{ env.STATE }},${{ env.GNIS_ID }}]")
           echo "Validation response: $SOURCE_VALIDATION_RESPONSE"
 
           # Extract JSON from the response (find JSON starting with '{')

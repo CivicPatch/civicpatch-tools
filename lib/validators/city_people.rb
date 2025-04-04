@@ -4,7 +4,7 @@ require_relative "./utils"
 
 module Validators
   # List of elected officials for the city (municipality/place)
-  class CityDirectory
+  class CityPeople
     CONFIG_PATH = PathHelper.project_path(File.join("config", "city_directory.yml"))
     VALIDATORS = [SOURCE = "source", GEMINI = "gemini"].freeze
 
@@ -13,7 +13,7 @@ module Validators
     end
 
     def self.validate_sources(state, gnis)
-      sources_folder_path = PathHelper.get_city_directory_sources_path(state, gnis)
+      sources_folder_path = PathHelper.get_city_people_sources_path(state, gnis)
       source_files = Dir.glob(File.join(sources_folder_path, "*.yml"))
 
       sources = []

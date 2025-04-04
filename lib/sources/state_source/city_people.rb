@@ -1,12 +1,12 @@
-require_relative "../../scrapers/states/wa/city_directory"
+require_relative "../../scrapers/states/wa/city_people"
 
 module Sources
   module StateSource
-    class CityDirectory
-      def self.get_city_directory(state, gnis)
+    class CityPeople
+      def self.get_city_people(state, gnis)
         state_source = get_state_source(state)
-        directory = state_source.get_city_directory(gnis)
-        directory.map do |person|
+        people = state_source.get_city_people(gnis)
+        people.map do |person|
           Scrapers::Standard.normalize_source_person(person)
         end
       end
@@ -14,7 +14,7 @@ module Sources
       def self.get_state_source(state)
         case state
         when "wa"
-          Scrapers::States::Wa::CityDirectory
+          Scrapers::States::Wa::CityPeople
         else
           raise "No state source found for state: #{state}"
         end
