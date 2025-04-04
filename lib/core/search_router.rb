@@ -1,6 +1,5 @@
-require_relative "../../scrapers/city_directory"
-module CityScrape
-  class SearchManager
+module Core
+  class SearchRouter
     def self.fetch_search_results(engine, state, city_entry)
       city = city_entry["name"]
       website = city_entry["website"]

@@ -11,14 +11,6 @@ flowchart TD;
     D.special[/You, the volunteer/] --> D
     D --> F[Data coverage improves]
 ```
-# Agreement Score: 0.9668485215127683
----
-| Name               | Field     | Disagreement Score | Values                                                                                                                |
-| ------------------ | --------- | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
-| Valerie O'Halloran | Positions | 0.35               | ["Council Member", "Council President"], ["Council Member"],                                                          |
-| Valerie O'Halloran | Website   | 0.59               | https://www.rentonwa.gov/city_hall/city_council/valerie_o_halloran, https://www.rentonwa.gov/Government/City-Council, |
-| Ed Prince          | Website   | 0.52               | https://www.rentonwa.gov/city_hall/city_council/ed_prince, https://www.rentonwa.gov/Government/City-Council,          |
-| Ruth Pérez         | Website   | 0.53               | https://www.rentonwa.gov/city_hall/city_council/ruth_perez, https://www.rentonwa.gov/Government/City-Council,         |
 
 ## Rules
 * Cities can be in two counties (ex: King/Snohomish -> Bothell)

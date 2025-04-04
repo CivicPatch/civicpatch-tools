@@ -2,8 +2,8 @@
 
 # Washington-specific validator
 
-module Sources
-  module StateSource
+module Scrapers
+  module States
     module Wa
       class CityDirectory
         STATE = "wa"

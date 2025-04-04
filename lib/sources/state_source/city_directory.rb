@@ -1,4 +1,4 @@
-require_relative "wa/city_directory"
+require_relative "../../scrapers/states/wa/city_directory"
 
 module Sources
   module StateSource
@@ -14,10 +14,9 @@ module Sources
       def self.get_state_source(state)
         case state
         when "wa"
-          Sources::StateSource::Wa::CityDirectory
+          Scrapers::States::Wa::CityDirectory
         else
-          puts "No state source found for state: #{state}"
-          nil
+          raise "No state source found for state: #{state}"
         end
       end
     end

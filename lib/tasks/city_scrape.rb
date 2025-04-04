@@ -70,7 +70,7 @@ namespace :city_scrape do
   end
 
   desc "Scrape city info for a specific city"
-  task :scrape, [:state, :gnis] do |_t, args|
+  task :fetch, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
 
@@ -168,7 +168,7 @@ namespace :city_scrape do
     search_engines = %w[manual brave]
 
     search_engines.each do |engine|
-      search_result_urls = CityScrape::SearchManager.fetch_search_results(engine, state, city_entry)
+      search_result_urls = Core::SearchRouter.fetch_search_results(engine, state, city_entry)
       search_results_to_process = search_result_urls - search_results_processed
       puts "Engine #{engine} found #{search_result_urls.count} search results for #{city_entry["name"]}"
       puts "Search results to process: #{search_results_to_process.count}"
