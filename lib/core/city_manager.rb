@@ -1,11 +1,16 @@
-class Core::CityManager
-  CONFIG_PATH = PathHelper.project_path(File.join("config", "city_directory.yml"))
+require_relative "../path_helper"
 
-  def self.config
-    @config ||= YAML.load_file(CONFIG_PATH)
-  end
+module Core
+  class CityManager
+    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_directory.yml"))
+    GOVERNMENT_TYPES = [MAYOR_COUNCIL = "mayor_council"].freeze
 
-  def self.get_key_positions(government_type)
-    config.dig("government_types", government_type, "key_positions")
+    def self.config
+      @config ||= YAML.load_file(CONFIG_PATH)
+    end
+
+    def self.get_key_positions(government_type)
+      config.dig("government_types", government_type, "key_positions", "role")
+    end
   end
 end

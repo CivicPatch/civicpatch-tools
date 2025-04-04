@@ -1,3 +1,5 @@
+require_relative "../core/city_manager"
+
 module Services
   class GoogleGemini
     MODEL = "gemini-2.5-pro-exp-03-25".freeze
@@ -9,6 +11,8 @@ module Services
     end
 
     def get_city_people(city, url)
+      positions = Core::CityManager.get_key_positions("mayor_council")
+      puts "gemini: #{positions}"
       prompt = %(
         Give me city officials contact info for
         #{city} using #{url} Do this in YAML.
