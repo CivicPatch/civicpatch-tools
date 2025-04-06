@@ -176,9 +176,7 @@ module Services
         }
       )
 
-      response = response.dig("choices", 0, "message", "content")
-      File.write("chat.txt", response, mode: "a")
-      response
+      response.dig("choices", 0, "message", "content")
     rescue Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter

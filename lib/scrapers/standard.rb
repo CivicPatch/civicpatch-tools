@@ -15,7 +15,7 @@ module Scrapers
       {
         "name" => person["name"],
         "image" => person["image"],
-        "positions" => normalize_positions(person["positions"]),
+        "positions" => person["positions"],
         "email" => person["email"],
         "phone_number" => person["phone_number"],
         "website" => person["website"],
@@ -53,19 +53,6 @@ module Scrapers
         formatted_person["links"] << { "note" => nil, "url" => website_url }
       end
 
-      # NOT IMPLEMENTING - standard says these are required
-      # but can be null.
-      # formatted_person["links"] = []
-      # formatted_person["sort_name"] = nil
-      # formatted_person["family_name"] = nil
-      # formatted_person["given_name"] = nil
-      # formatted_person["gender"] = nil
-      # formatted_person["summary"] = nil
-      # formatted_person["national_identity"] = nil
-      # formatted_person["biography"] = nil
-      # formatted_person["birth_date"] = nil
-      # formatted_person["death_date"] = nil
-      # formatted_person["identifiers"] = []
       formatted_person["other_names"] = []
       start_term_date = person["start_term_date"].present? ? format_date(person["start_term_date"]) : nil
       end_term_date = person["end_term_date"].present? ? format_date(person["end_term_date"]) : nil
@@ -109,28 +96,6 @@ module Scrapers
     def self.format_position(position)
       formatted = position.split(" ").map(&:capitalize).join(" ")
       formatted.gsub(/[^a-zA-Z0-9 ]/, "").squeeze(" ").strip
-    end
-
-    def self.normalize_positions(positions)
-      alias_map = self.alias_map
-      implied_by_map = self.implied_by_map
-
-      # Normalize positions by replacing aliases with standard names
-      normalized_positions = positions.map { |pos| alias_map[pos.downcase] || pos }.uniq
-
-      # Expand implied positions **only when relevant**
-      expanded_positions = normalized_positions.dup
-
-      # If any implied keyword (ward, district, seat, position) exists, add "council member"
-      positions.each do |p|
-        match = implied_by_map.keys.find do |implied_key|
-          p.downcase.include?(implied_key.downcase)
-        end
-
-        expanded_positions << implied_by_map[match] if match
-      end
-
-      expanded_positions.uniq.sort_by { |position| position.downcase }.map { |position| format_position(position) }
     end
 
     def self.get_website(person)

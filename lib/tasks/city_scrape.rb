@@ -76,18 +76,24 @@ namespace :city_scrape do
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
     create_prepare_directories(state, city_entry)
 
-    # Official Source
-    source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
-    Core::PeopleManager.update_people(state, city_entry, source_city_people, "source")
+    config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
 
-    # Web Scrape Source
-    source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis)
+    # Official Source
+    # source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
+    # Core::PeopleManager.update_people(state, city_entry, source_city_people, "state_source.before")
+    # formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, config)
+    # Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
+
+    ## Web Scrape Source
+    # source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis)
     # finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
     ## Gemini Source
-    # google_gemini = Services::GoogleGemini.new
-    # gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
-    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini")
+    google_gemini = Services::GoogleGemini.new
+    gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
+    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
+    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
+    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
   end
 
   def create_prepare_directories(state, city_entry)
@@ -127,13 +133,17 @@ namespace :city_scrape do
     end
   end
 
-  def finalize_city_directory(state, city_entry, new_city_directory, source_dirs)
+  def finalize_city_directory(state, city_entry, new_city_people, source_dirs)
     city_path = CityScrape::CityManager.get_city_path(state, city_entry)
     cache_directory = File.join(city_path, "cache")
 
     copy_source_files(state, city_entry, source_dirs)
 
-    Core::PeopleManager.update_people(state, city_entry, new_city_directory, "scrape")
+    # Keep before & after state
+    config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
+    Core::PeopleManager.update_people(state, city_entry, new_city_people, "scrape.before")
+    normalized_people = Core::PeopleManager.format_people(new_city_people, config)
+    Core::PeopleManager.update_people(state, city_entry, normalized_people, "scrape.after")
 
     # city_directory_hash = Digest::MD5.hexdigest(new_city_directory.to_yaml)
     # CityScrape::StateManager.update_state_places(state, [

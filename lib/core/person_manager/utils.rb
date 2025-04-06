@@ -56,12 +56,18 @@ module Core
 
           next [alias_map[matching_alias]] if matching_alias.present?
 
-          [normalized_position]
+          # TODO: let's toss anything we don't recognize
+          # [normalized_position]
+          []
         end.uniq
       end
 
+      def self.format_position(position)
+        position.split(" ").map(&:capitalize).join(" ")
+      end
+
       def self.normalize_division_string(position_string)
-        unwanted_prefixes = ["no", "no.", "#"]
+        unwanted_prefixes = ["no.", "no", "#"]
 
         division, rest = position_string.split(" ", 2)
         return position_string unless rest
@@ -70,7 +76,7 @@ module Core
           rest = rest.delete_prefix(prefix)
         end
 
-        [division, rest].join(" ").strip
+        [division, rest].join(" ").split.join(" ")
       end
 
       def self.sort_positions(positions, positions_config)
@@ -88,10 +94,75 @@ module Core
           # Sort by role order, division order, and position alphabetically
           [
             role_order[position] || Float::INFINITY,
-            division_match ? 0 : 1 || Float::INFINITY,
+            division_match ? 0 : 1,
             position
           ]
         end
+      end
+
+      def self.find_divisions(positions, positions_config)
+        division_matches = {}
+
+        positions.each do |position|
+          normalized_position = position.downcase.strip
+          positions_config.each do |role_config|
+            division_match = role_config["divisions"]&.find do |division|
+              normalized_position.include?(division.downcase)
+            end
+            division_matches[division_match] = normalized_position if division_match.present?
+          end
+        end
+
+        division_matches
+      end
+
+      def self.find_roles(positions, positions_config)
+        role_matches = []
+        positions.each do |position|
+          normalized_position = position.downcase.strip
+          role_match = positions_config.find do |role_config|
+            normalized_position == role_config["role"].downcase
+          end
+          role_matches << role_match["role"] if role_match.present?
+        end
+
+        role_matches
+      end
+
+      def self.sort_people(people, positions_config)
+        # Map role names to their order based on the provided config
+        role_order = positions_config.each_with_index.to_h do |role_config, index|
+          [role_config["role"].downcase, index]
+        end
+
+        # Get the list of all divisions (assuming it's a flat list of strings)
+
+        sort_map = {} # {"roles", "divisions", "names"}
+        people.each_with_index do |person, index|
+          roles = find_roles(person["positions"], positions_config)
+          divisions = find_divisions(person["positions"], positions_config)
+
+          sort_map[index] = {
+            person: person,
+            roles: roles,
+            divisions: divisions,
+            names: person["name"],
+            name: person["name"]
+          }
+        end
+
+        sort_map.values.sort_by do |data|
+          primary_role = data[:roles].find { |r| role_order.key?(r.downcase) } || "zzz"
+          role_index = role_order[primary_role.downcase] || Float::INFINITY
+
+          division_key = data[:divisions].keys.first || ""
+          division_val = data[:divisions].values.first || ""
+          division_combo = "#{division_key} #{division_val}".downcase
+
+          name = data[:name] || ""
+
+          [role_index, division_combo, name]
+        end.map { |data| data[:person] }
       end
     end
   end

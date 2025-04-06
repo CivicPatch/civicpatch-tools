@@ -55,7 +55,7 @@ module Validators
         # Compare each role in value1 to the best match in value2
         total_similarity = 0.0
         normalized1.each do |pos1|
-          best_match_score = normalized2.map { |pos2| similarity_score(:position, pos1, pos2) }.max || 0.0
+          best_match_score = normalized2.map { |pos2| similarity_score("positions", pos1, pos2) }.max || 0.0
           total_similarity += best_match_score
         end
 
@@ -72,7 +72,7 @@ module Validators
         # Slight adjustment for position similarity
         similarity = 1.0 - (distance.to_f / (max_length + 2.0)) if [:position, "position"].include?(field)
 
-        # 🔥 Apply confidence weighting
+        # Apply confidence weighting
         similarity * Math.sqrt(confidence_a * confidence_b)
 
       end
@@ -149,6 +149,70 @@ module Validators
       agreement_score = overall_agreement_score(contested_people, total_people, total_fields)
 
       { contested_people: contested_people, agreement_score: agreement_score }
+    end
+
+    def self.merge_people_across_sources(sources, source_confidences, contested_people)
+      merged = []
+
+      # Collect unique names across all sources, using fuzzy matching to handle similar names
+      unique_names = sources.flatten(1).map { |p| p["name"] }.uniq
+
+      unique_names.each do |name|
+        # Find person records for the current name across sources
+        person_records = sources.map { |source| source.find { |p| p["name"] == name } }.compact
+        next if person_records.empty?
+
+        merged_person = { "name" => name }
+
+        %w[positions email phone_number website image].each do |field|
+          contested = contested_people[name]&.[](field)
+
+          # Handle contested fields based on disagreement score
+          if contested.nil? || contested[:disagreement_score] < DISAGREEMENT_THRESHOLD
+            merged_person[field] = merge_field(field, person_records.map { |p| p[field] })
+          elsif field == "name"
+            # Fuzzy match name if contested and disagreement score is high
+            best_match = person_records.max_by do |p|
+              similarity_score("name", name, p["name"], source_confidences)
+            end
+
+            if best_match && similarity_score("name", name, best_match["name"], source_confidences) >= 0.8
+              merged_person["name"] = best_match["name"]
+            end
+          elsif field == "positions"
+            # Merge positions based on similarity (using the existing similarity_score method)
+            merged_person["positions"] = merge_field("positions", person_records.map { |p| p["positions"] })
+          else
+            # For other fields (email, phone, etc.), merge directly
+            merged_person[field] = merge_field(field, person_records.map { |p| p[field] })
+          end
+        end
+
+        # Merge sources (using merge_field method for deduplication)
+        merged_person["sources"] = merge_field("sources", person_records.map { |p| p["sources"] })
+
+        merged << merged_person
+      end
+
+      merged
+    end
+
+    # Helper function to merge fields (returns the first non-nil value)
+    def self.merge_field(field, values)
+      non_nil = values.compact.uniq
+
+      case field
+      when "positions"
+        non_nil.flatten.uniq
+      when "email", "website", "image"
+        non_nil.first
+      when "phone_number"
+        non_nil.max_by { |v| v.is_a?(Hash) ? v.values.join.length : v.to_s.length }
+      when "sources"
+        non_nil.flatten.uniq # Merge sources similarly to how we handle positions
+      else
+        non_nil.first
+      end
     end
   end
 end

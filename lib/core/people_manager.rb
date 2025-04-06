@@ -1,18 +1,27 @@
 require "zaru"
+require_relative "./person_manager/utils"
 
 module Core
   class PeopleManager
-    POSITION_ORDER = {
-      "Mayor" => 0,
-      "Council President" => 1,
-      "Council Manager" => 2,
-      "Council Member" => 3
-    }.freeze
+    def self.get_people(state, gnis, type)
+      people_file_path = PathHelper.get_city_people_candidates_file_path(state, gnis, type)
+      YAML.load(File.read(people_file_path))
+    end
 
-    def self.get_position_order(government_type)
-      # sort by list of positions
-      # then by divisions
-      # then alphabetically
+    def self.format_people(people, positions_config)
+      people.map do |person|
+        person["positions"] = Core::PersonManager::Utils
+                              .sort_positions(person["positions"], positions_config)
+                              .map do |position|
+                                Core::PersonManager::Utils
+                                  .format_position(position)
+                              end
+        person
+      end
+
+      filtered_people = people.reject { |person| person["positions"].count.zero? }
+
+      Core::PersonManager::Utils.sort_people(filtered_people, positions_config)
     end
 
     def self.merge_person(person1, person2)
@@ -52,7 +61,7 @@ module Core
       new_people = people_with_names(partial_city_directory)
       return city_directory unless new_people.present?
 
-      sort_people(merge_people_lists(city_directory, new_people))
+      merge_people_lists(city_directory, new_people)
     end
 
     def self.merge_people_lists(list1, list2)
@@ -94,13 +103,13 @@ module Core
     # TODO: needs config-driven
     def self.get_council_members_count(people)
       people.select do |person|
-        person["positions"].include?("Council Member")
+        person["positions"].map(&:downcase).include?("council member")
       end.count
     end
 
     def self.get_mayors_count(people)
       people.select do |person|
-        person["positions"].include?("Mayor")
+        person["positions"].map(&:downcase).include?("mayor")
       end.count
     end
 
@@ -119,17 +128,6 @@ module Core
       end
 
       File.write(city_people_path, new_city_people.to_yaml)
-    end
-
-    def self.sort_people(people)
-      people.sort_by do |person|
-        position = person["other_names"]&.first&.dig("name")
-
-        [
-          POSITION_ORDER[position] || Float::INFINITY,
-          person["name"].to_s # fallback to name for ties
-        ]
-      end
     end
 
     def self.people_with_names(people)
