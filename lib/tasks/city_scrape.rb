@@ -82,12 +82,12 @@ namespace :city_scrape do
 
     # Web Scrape Source
     source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis)
-    finalize_city_directory(state, city_entry, city_directory, source_dirs)
+    # finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
     ## Gemini Source
-    google_gemini = Services::GoogleGemini.new
-    gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
-    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini")
+    # google_gemini = Services::GoogleGemini.new
+    # gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
+    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini")
   end
 
   def create_prepare_directories(state, city_entry)

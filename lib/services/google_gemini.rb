@@ -1,4 +1,4 @@
-require_relative "../core/city_manager"
+require "core/city_manager"
 
 module Services
   class GoogleGemini
@@ -11,11 +11,14 @@ module Services
     end
 
     def get_city_people(city, url)
-      positions = Core::CityManager.get_key_positions("mayor_council")
+      positions = Core::CityManager.get_position_roles("mayor_council")
+      divisions = Core::CityManager.get_position_divisions("mayor_council")
+      position_examples = Core::CityManager.get_position_examples("mayor_council")
       puts "gemini: #{positions}"
       prompt = %(
-        Give me city officials contact info for
+        Identify all people who are part of the city's mayor-council government.
         #{city} using #{url} Do this in YAML.
+        Positions we are interested in are #{positions.join(", ")}
 
         Notes:
         * Return the values in YAML.
@@ -33,7 +36,7 @@ module Services
 
         Basic rules:
         - Extract only the contact information associated with the person. Do not return general info.
-        - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
+        - People should all be human beings with a name and at least one piece of contact field.
         - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
         - If you cannot find any relevant information, return YAML as empty array.
 
@@ -42,23 +45,13 @@ module Services
           can be directly inferred with certainty—do not assume or estimate missing information.
           They should be strings.
         - For the "positions" field, split the positions into an array of strings.
-          Some typical positions are #{positions.join(", ")}
           Preserve non-numeric names as they are.
           Do not list previous positions if their terms have ended.
           People can have multiple positions and roles.
+          They might have other associated positions that look like these:
+          #{divisions.join(", ")}
           Examples:
-
-          Input: "council member ward 3" → Output: `["council member", "ward 3"]`
-          Input: "ward #3" → Output: `["ward 3"]`
-          Input: "mayor, 3rd district" → Output: `["mayor", "ward 3"]`
-          Input: "seat 5" → Output: `["council member", "seat 5"]`
-          Input: "council vice president" → Output: `["council vice president"]`
-          Input: "mayor" → Output: `["mayor"]`
-          Input: "deputy mayor" → Output: `["deputy mayor"]`
-          Input: "mayor position 7" → Output: `["mayor", "position 7"]`
-          Input: "council president" → Output: `["council president"]`
-          Input: "position 8 at-large" → Output: `["position 8", "at-large"]`
-          Input: "position no 8" → Output: `["position 8"]`
+          #{position_examples}
       )
 
       response = run_prompt(prompt)

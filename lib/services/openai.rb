@@ -4,6 +4,7 @@ require "openai"
 require "scrapers/standard"
 require "scrapers/common"
 require "utils/yaml_helper"
+require "core/city_manager"
 
 # TODO: track token usage
 module Services
@@ -48,7 +49,9 @@ module Services
     end
 
     def extract_person_information(person, content_file, url)
-      positions = Scrapers::CityDirectory::GOVERNMENT_TYPES["MAYOR_COUNCIL"]["KEY_POSITIONS"]
+      positions = Core::CityManager.get_position_roles("mayor_council")
+      divisions = Core::CityManager.get_position_divisions("mayor_council")
+      position_examples = Core::CityManager.get_position_examples("mayor_council")
 
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
@@ -71,23 +74,13 @@ module Services
           can be directly inferred with certainty—do not assume or estimate missing information.
         - start_term_date and end_term_date should be strings.
         - For the "positions" field, split the positions into an array of strings.
-          Some typical positions are #{positions.join(", ")}
+          The main positions we are interested in are #{positions.join(", ")}
+          Positions may also be associated with titles like #{divisions.join(", ")}
+          where the positions are attached with vairous numbers or words.
           Preserve non-numeric names as they are.
           Do not list previous positions if their terms have ended.
-          People can have multiple positions and roles.
           Examples:
-
-          Input: "council member ward 3" → Output: `["council member", "ward 3"]`
-          Input: "ward #3" → Output: `["ward 3"]`
-          Input: "mayor, 3rd district" → Output: `["mayor", "ward 3"]`
-          Input: "seat 5" → Output: `["council member", "seat 5"]`
-          Input: "council vice president" → Output: `["council vice president"]`
-          Input: "mayor" → Output: `["mayor"]`
-          Input: "deputy mayor" → Output: `["deputy mayor"]`
-          Input: "mayor position 7" → Output: `["mayor", "position 7"]`
-          Input: "council president" → Output: `["council president"]`
-          Input: "position 8 at-large" → Output: `["position 8", "at-large"]`
-          Input: "position no 8" → Output: `["position 8"]`
+          #{position_examples}
       INSTRUCTIONS
 
       user_instructions = <<~USER
@@ -109,23 +102,32 @@ module Services
     end
 
     def generate_city_info_prompt(content, city_council_url)
-      positions = Scrapers::CityDirectory::GOVERNMENT_TYPES["MAYOR_COUNCIL"]["KEY_POSITIONS"]
+      positions = Core::CityManager.get_position_roles("mayor_council")
+      divisions = Core::CityManager.get_position_divisions("mayor_council")
+      position_examples = Core::CityManager.get_position_examples("mayor_council")
+
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
-        Extract the following properties from the provided content:
+        Extract the following properties from the provided content.
+        Identify all people who are part of the city's mayor-council government.
+        The main positions we are interested in are: #{positions.join(", ")}
 
-        For each city leader or council member (leave empty if not found):
-        there should be an array of the following properties.
+        They might have other associated positions that look like these:
+        #{divisions.join(",")}
+
+        There should be an array of the following properties.
         - name
-          image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+          image (Extract the image URL from the <img> tag's src attribute.#{" "}
+                This will always be a relative URL starting with images/)
           phone_number: <string> Format: (123) 456-7890
           email
           positions (an array of strings)
           start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
           end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
           website (Provide the absolute URL.)
-                If no specific website is provided, leave this empty — do not default to the general city or council page.)
+                If no specific website is provided, leave this empty —#{" "}
+                do not default to the general city or council page.
 
         Basic rules:
         - Students are NOT city council members.
@@ -141,53 +143,11 @@ module Services
           can be directly inferred with certainty—do not assume or estimate missing information.
           They should be strings.
         - For the "positions" field, split the positions into an array of strings.#{" "}
-          Some typical positions are #{positions.join(", ")}
           Preserve non-numeric names as they are.
           Do not list previous positions if their terms have ended.
           People can have multiple positions and roles.
           Examples:
-
-          Input: "council member ward 3" → Output: `["council member", "ward 3"]`
-          Input: "ward #3" → Output: `["ward 3"]`
-          Input: "mayor, 3rd district" → Output: `["mayor", "ward 3"]`
-          Input: "seat 5" → Output: `["council member", "seat 5"]`
-          Input: "council vice president" → Output: `["council vice president"]`
-          Input: "mayor" → Output: `["mayor"]`
-          Input: "deputy mayor" → Output: `["deputy mayor"]`
-          Input: "mayor position 7" → Output: `["mayor", "position 7"]`
-          Input: "council president" → Output: `["council president"]`
-          Input: "position 8 at-large" → Output: `["position 8", "at-large"]`
-          Input: "position no 8" → Output: `["position 8"]`
-
-        Example Output (YAML):
-        ---
-        - name: "Jane Smith"
-          positions:
-            - "council member"
-            - "ward 5"
-          phone_number: "555-123-4567"
-          image: "images/smith.jpg"
-          email: "jsmith@cityofexample.gov"
-          website: "https://www.cityofexample.gov/council/smith"
-        - name: "John Doe"
-          positions:
-            - "council member"
-            - "ward 3"
-          phone_number: ""
-          image: ""
-          email: ""
-          website: "/council/doe"
-        - name: "Robert Johnson"
-          positions:
-            - "mayor"
-            - "1"
-          phone_number: "555-111-2222"
-          image: "images/mayor.jpg"
-          email: "mayor@cityofexample.gov"
-          website: "https://www.cityofexample.gov/mayor"
-          start_term_date: "2020-01-01"
-          end_term_date: "2025-12-31"
-
+          #{position_examples}
       INSTRUCTIONS
 
       content = <<~CONTENT
@@ -216,7 +176,9 @@ module Services
         }
       )
 
-      response.dig("choices", 0, "message", "content")
+      response = response.dig("choices", 0, "message", "content")
+      File.write("chat.txt", response, mode: "a")
+      response
     rescue Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
