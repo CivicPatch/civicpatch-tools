@@ -44,13 +44,12 @@ module Core
 
           ## Try to find a matching role
           matching_position = positions_config.find do |role_config|
-            normalized_position.include?(role_config["role"].downcase)
+            normalized_position == role_config["role"].downcase
           end
 
           next [matching_position["role"]] if matching_position.present?
 
           ## Try to find aliases
-          puts "alias is #{alias_map}"
           matching_alias = alias_map.keys.find do |k|
             normalized_position.include?(k)
           end
@@ -58,7 +57,7 @@ module Core
           next [alias_map[matching_alias]] if matching_alias.present?
 
           [normalized_position]
-        end
+        end.uniq
       end
 
       def self.normalize_division_string(position_string)
@@ -74,27 +73,24 @@ module Core
         [division, rest].join(" ").strip
       end
 
-      # This method sorts positions by role, division, and then alphabetically
       def self.sort_positions(positions, positions_config)
-        role_order = positions_config["roles"].each_with_index.to_h do |role_config, index|
+        # Create a hash that maps roles to their index
+        role_order = positions_config.each_with_index.to_h do |role_config, index|
           [role_config["role"].downcase, index]
         end
+        divisions_list = positions_config.flat_map { |role_config| role_config["divisions"] }.compact
 
-        positions.sort_by do |position|
-          role = positions_config["roles"].find do |role_config|
-            position.downcase.include?(role_config["role"].downcase)
-          end
-          division = nil
+        normalized_positions = normalize_positions(positions, positions_config)
+        normalized_positions.sort_by do |position|
+          # Normalize the position using your existing method
+          division_match = divisions_list.find { |division| position.include?(division) }
 
-          role&.dig("divisions")&.each do |division_name|
-            if position.downcase.include?(division_name.downcase)
-              division = division_name
-              break
-            end
-          end
-
-          [role_order[role["role"].downcase] || Float::INFINITY, role["divisions"]&.index(division) || Float::INFINITY,
-           position.downcase]
+          # Sort by role order, division order, and position alphabetically
+          [
+            role_order[position] || Float::INFINITY,
+            division_match ? 0 : 1 || Float::INFINITY,
+            position
+          ]
         end
       end
     end
