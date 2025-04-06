@@ -28,9 +28,6 @@ module CityScraper
         puts "Search results to process: #{search_results_to_process.count}"
         puts "#{search_results_to_process.join("\n")}"
 
-        # directory_extractor = CityScraper::PeopleScraper.new(state, engine, openai_service, data_fetcher,
-        #                                                     city_entry, city_directory)
-
         new_source_dirs, found_people = fetch_people(openai_service, data_fetcher, engine,
                                                      cache_path, search_results_to_process)
         city_people = Core::PeopleManager.merge_people(city_people, found_people)

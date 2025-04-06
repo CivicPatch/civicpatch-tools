@@ -9,6 +9,12 @@ module Core
       "Council Member" => 3
     }.freeze
 
+    def self.get_position_order(government_type)
+      # sort by list of positions
+      # then by divisions
+      # then alphabetically
+    end
+
     def self.merge_person(person1, person2)
       merged_person = {}
 

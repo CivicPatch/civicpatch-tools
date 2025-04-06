@@ -5,7 +5,7 @@ require_relative "../path_helper"
 
 module Scrapers
   class Standard
-    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_directory.yml"))
+    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_people.yml"))
 
     def self.config
       @config ||= YAML.load_file(CONFIG_PATH)
@@ -93,16 +93,6 @@ module Scrapers
     # Determine positions via config.yml
     def self.key_positions
       config.dig("government_types", "mayor_council", "key_positions") || []
-    end
-
-    def self.alias_map
-      key_positions.each_with_object({}) do |position, map|
-        next unless position.is_a?(Hash)
-
-        position_name = position["role"]
-        aliases = position["aliases"]
-        aliases.each { |alias_name| map[alias_name.downcase] = position_name } if aliases.present?
-      end
     end
 
     def self.implied_by_map
