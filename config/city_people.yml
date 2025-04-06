@@ -1,7 +1,7 @@
 ---
 government_types:
   mayor_council:
-    key_positions:
+    positions:
       - role: mayor
       - role: deputy mayor
       - role: council president
@@ -10,11 +10,21 @@ government_types:
       - role: council member
         aliases:
           - councilmember     
-        implied_by:
+        divisions:
+          - at-large
           - ward
           - district
           - seat
           - position
+    position_examples: | # Useful for LLM prompts
+      * council member ward 3 -> ["council member", "ward 3"]
+      * ward #3 -> ["ward 3"]
+      * mayor, 3rd district -> ["mayor", "district 3"]
+      * seat 5 -> ["council member", "seat 5"]
+      * mayor -> ["mayor"]
+      * mayor position 7 -> ["mayor", "position 7"]
+      * position 8 at-large -> ["position 8", "at-large"]
+      * position no 8 -> ["position 8"]
     search_keywords:
       council members:
         - meet the council

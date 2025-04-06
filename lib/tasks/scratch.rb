@@ -89,4 +89,23 @@ namespace :scratch do
     FileUtils.mkdir_p(directories_file_path)
     File.write(File.join(directories_file_path, "directory.gemini.yml"), simple_city_directory.to_yaml)
   end
+
+  desc "test people manager"
+  task :peep do |_t, args|
+    # people = Core::PeopleManager.get_people("wa", "2410926", "scrape.before")
+    # config = Core::CityManager.get_positions("mayor_council")
+    # formatted = Core::PeopleManager.format_people(people, config)
+
+    source_1 = Core::PeopleManager.get_people("wa", "2411957", "state_source.after")
+    source_2 = Core::PeopleManager.get_people("wa", "2411957", "scrape.after")
+    source_3 = Core::PeopleManager.get_people("wa", "2411957", "google_gemini.after")
+
+    source_confidences = [0.9, 0.7, 0.8]
+
+    compare_result = Validators::Utils.compare_people_across_sources([source_1, source_2, source_3], source_confidences)
+    combined_people = Validators::Utils.merge_people_across_sources([source_1, source_2, source_3], source_confidences,
+                                                                    compare_result[:contested_people])
+
+    puts combined_people
+  end
 end

@@ -2,7 +2,8 @@ require "core/city_manager"
 
 module Services
   class GoogleGemini
-    MODEL = "gemini-2.5-pro-exp-03-25".freeze
+    MODEL = "gemini-2.5-pro-exp-03-25".freeze # FREE TIER
+    # MODEL = "gemini-2.5-pro".freeze
     BASE_URI = "https://generativelanguage.googleapis.com".freeze
     BASE_SLEEP = 5
 
@@ -14,7 +15,6 @@ module Services
       positions = Core::CityManager.get_position_roles("mayor_council")
       divisions = Core::CityManager.get_position_divisions("mayor_council")
       position_examples = Core::CityManager.get_position_examples("mayor_council")
-      puts "gemini: #{positions}"
       prompt = %(
         Identify all people who are part of the city's mayor-council government.
         #{city} using #{url} Do this in YAML.
@@ -55,6 +55,11 @@ module Services
       )
 
       response = run_prompt(prompt)
+
+      File.write("chat.txt", "PROMPT", mode: "a")
+      File.write("chat.txt", prompt, mode: "a")
+      File.write("chat.txt", "RESPONSE", mode: "a")
+      File.write("chat.txt", response, mode: "a")
       response.map do |person|
         person["sources"] = [url]
         Scrapers::Standard.normalize_source_person(person)
@@ -70,6 +75,12 @@ module Services
           parts: [{
             text: prompt
           }]
+        }],
+        generationConfig: {
+          temperature: 0
+        },
+        tools: [{
+          "googleSearch": {}
         }]
       }.to_json
 
@@ -95,6 +106,8 @@ module Services
         progress_thread.kill
         puts "\n" # Add a newline after the dots
       end
+
+      puts "my response is.... #{response}"
 
       if response.success?
         # TODO: needs more robustness

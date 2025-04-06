@@ -40,7 +40,6 @@ module CityScraper
 
       people = city_people.map do |person|
         person_dir, updated_person = scrape_person_website(openai_service, data_fetcher, cache_path, person)
-        puts "Person info: #{updated_person.inspect}"
         updated_person = Core::PeopleManager.merge_person(person, updated_person)
         next person unless updated_person.present?
 
@@ -74,7 +73,13 @@ module CityScraper
       [person_dir, updated_person]
     end
 
-    def self.fetch_people(openai_service, data_fetcher, engine, cache_path, search_results)
+    def self.fetch_people(
+      openai_service,
+      data_fetcher,
+      engine,
+      cache_path,
+      search_results
+    )
       directories_with_people = []
       found_people = []
 

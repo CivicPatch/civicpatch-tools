@@ -6,7 +6,6 @@ module Validators
   # List of elected officials for the city (municipality/place)
   class CityPeople
     CONFIG_PATH = PathHelper.project_path(File.join("config", "city_directory.yml"))
-    VALIDATORS = [SOURCE = "source", GEMINI = "gemini"].freeze
 
     def self.config
       @config ||= YAML.load_file(CONFIG_PATH)
@@ -19,9 +18,11 @@ module Validators
       sources = []
       confidence_scores = []
       source_files.each do |source_file|
+        next if source_file.include?("before") # Discard unprocessed results
+
         source_directory = YAML.load_file(source_file)
         sources << source_directory
-        confidence_scores << if source_file.include?("source")
+        confidence_scores << if source_file.include?("state_source")
                                0.9
                              elsif source_file.include?("scrape")
                                0.8

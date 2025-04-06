@@ -1,0 +1,6 @@
+---
+confidence_scores:
+  state_source: 0.9
+  scrape: 0.8
+  gemini: 0.8
+  default: 0.5
