@@ -18,6 +18,8 @@ module Services
       prompt = %(
         Identify all people who are part of the city's mayor-council government.
         #{city} using #{url} Do this in YAML.
+        First, identify the specific URLs for the council members' contact page/roster.
+        Then, get the detailed contact information for each elected official on those pages.
         Positions we are interested in are #{positions.join(", ")}
 
         Notes:
