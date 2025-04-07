@@ -47,7 +47,7 @@ namespace :city_scrape do
 
     cities = state_places["places"].select do |c|
       !gnis_to_ignore.include?(c["gnis"]) &&
-        c["meta_last_city_scrape_run"].nil? && c["website"].present?
+        c["meta_last_updated_at"].nil? && c["website"].present?
     end.first(num_cities.to_i)
 
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json

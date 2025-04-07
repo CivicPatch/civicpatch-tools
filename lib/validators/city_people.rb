@@ -5,7 +5,7 @@ require_relative "./utils"
 module Validators
   # List of elected officials for the city (municipality/place)
   class CityPeople
-    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_directory.yml"))
+    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_people.yml"))
 
     def self.config
       @config ||= YAML.load_file(CONFIG_PATH)

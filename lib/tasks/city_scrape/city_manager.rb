@@ -22,7 +22,7 @@ module CityScrape
     end
 
     def self.get_city_directory_file(state, city_entry)
-      File.join(get_city_path(state, city_entry), "directory.yml")
+      File.join(get_city_path(state, city_entry), "people.yml")
     end
 
     def self.get_city_directory(state, city_entry)

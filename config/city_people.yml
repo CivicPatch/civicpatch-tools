@@ -3,7 +3,6 @@ government_types:
   mayor_council:
     positions:
       - role: mayor
-      - role: deputy mayor
       - role: council president
       - role: council vice president
       - role: council manager

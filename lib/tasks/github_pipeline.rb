@@ -23,7 +23,7 @@ namespace :github_pipeline do
     city_path = CityScrape::CityManager.get_city_path(state, city_entry)
     relative_path = city_path[city_path.rindex("data/#{state}")..]
 
-    directory_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/directory.yml"
+    directory_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/people.yml"
     puts directory_url
   end
 
@@ -48,15 +48,14 @@ namespace :github_pipeline do
       #{city_directory.map { |person| person["sources"].map { |source| source["url"] } }.flatten.uniq.join("\n")}
       ## People
       #{city_directory.map do |person|
-        simple_person = Utils::DirectoryHelper.format_simple(person)
-        image = simple_person["image"]
-        email = simple_person["email"]
-        phone = simple_person["phone_number"]
-        website = simple_person["website"]
+        image = person["image"]
+        email = person["email"]
+        phone = person["phone_number"]
+        website = person["website"]
 
         position_markdown = <<~POSITION
-          **Positions:** #{if simple_person["positions"].present?
-                             simple_person["positions"]
+          **Positions:** #{if person["positions"].present?
+                             person["positions"]
                            else
                              "N/A"
                            end
