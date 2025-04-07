@@ -95,20 +95,17 @@ namespace :city_scrape do
     formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
 
-    source_confidences = [0.9, 0.7, 0.8]
+    validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
-    sources = [formatted_source_city_people, formatted_scrape_people, formatted_gemini_city_people]
-
-    compare_result = Validators::Utils.compare_people_across_sources(sources, source_confidences)
-    combined_people = Validators::Utils.merge_people_across_sources(sources, source_confidences,
-                                                                    compare_result[:contested_people])
+    combined_people = validated_result[:merged_sources]
 
     Core::PeopleManager.update_people(state, city_entry, combined_people)
-    city_directory_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
+
+    city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
     CityScrape::StateManager.update_state_places(state, [
                                                    { "gnis" => city_entry["gnis"],
                                                      "meta_updated_at" => Time.now.strftime("%Y-%m-%d"),
-                                                     "meta_hash" => city_directory_hash }
+                                                     "meta_hash" => city_people_hash }
                                                  ])
   end
 

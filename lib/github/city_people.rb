@@ -1,22 +1,33 @@
 module GitHub
   class CityPeople
-    def self.to_markdown_table(contested_people)
+    def self.to_markdown_table(contested_fields)
       # Initialize the header for the table
-      headers = ["Name", "Field", "Disagreement Score", "Values"]
+      source_names = contested_fields.map { |_, field_data| field_data[:values].keys }.flatten.uniq
+
+      headers = ["Field", "Disagreement Score"] + source_names
       table = []
 
-      # Loop through each person in the contested_people data
-      contested_people.each do |name, fields|
-        # For each contested field, add a row to the table
-        fields.each do |field, field_data|
-          row = [
-            name,
-            field.to_s.capitalize, # Capitalize the field name for readability
-            field_data[:disagreement_score].round(2), # Round the disagreement score for cleaner output
-            field_data[:values].map(&:to_s).join(", ") # Convert the values array to a string
-          ]
-          table << row
+      contested_fields.each do |field, field_data|
+        row = [
+          field.to_s.capitalize, # Capitalize the field name
+          field_data[:disagreement_score].round(2) # Disagreement score
+        ]
+
+        # For each field, display all of the contested values or an empty cell in each column
+        contested_values = source_names.map do |source_name|
+          field_data[:values][source_name]
         end
+
+        contested_values.each do |value|
+          row << if value.is_a?(Array)
+                   value.join(", ")
+                 else
+                   value
+                 end
+        end
+
+        # Add the row to the table
+        table << row
       end
 
       # Now build the markdown table string

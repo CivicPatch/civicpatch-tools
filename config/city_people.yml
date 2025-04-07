@@ -8,7 +8,11 @@ government_types:
       - role: council manager
       - role: council member
         aliases:
-          - councilmember     
+          - councilmember
+          - councilwoman
+          - councilman
+          - councilor
+          - councillor
         divisions:
           - citywide
           - at-large

@@ -112,19 +112,30 @@ namespace :github_pipeline do
   task :validate_city_people, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
-    validation_results = Validators::CityPeople.validate_sources(state, gnis)
-    puts "validation_results: #{validation_results.inspect}"
-    contested_people = validation_results[:contested_people]
-    score = validation_results[:agreement_score]
-    contested_people_markdown = GitHub::CityPeople.to_markdown_table(contested_people)
 
-    json = { "approve" => false,
+    # Get the validation results
+    validation_results = Validators::CityPeople.validate_sources(state, gnis)
+    contested_people = validation_results[:compare_results][:contested_people]
+    score = validation_results[:compare_results][:agreement_score]
+    pretty_score = (score * 100).round(2)
+
+    # Initialize the comment with the agreement score
+    comment = "## Agreement Score: #{pretty_score}%\n\n---\n\n"
+
+    # Iterate through each contested person and their contested fields
+    contested_people.each do |name, fields|
+      # Generate the markdown table for the contested person
+      contested_people_markdown = GitHub::CityPeople.to_markdown_table(fields)
+
+      # Add a header for each contested person and append the table
+      comment += "### #{name}\n\n"
+      comment += contested_people_markdown
+      comment += "\n\n---\n\n" # Add a separator between each person's table
+    end
+
+    json = { "approve" => score >= 0.8,
              "score" => score,
-             "comment" => [
-               "## Agreement Score: #{score}",
-               "---",
-               contested_people_markdown
-             ].join("\n\n") }.to_json
+             "comment" => comment }.to_json
     puts json
   end
 end
