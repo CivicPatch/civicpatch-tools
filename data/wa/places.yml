@@ -13,6 +13,8 @@ places:
   type: First-class city
   population: 737015
   government_type: Mayor-Council
+  meta_updated_at: '2025-04-07'
+  meta_hash: f1e2e94e58c821166438793d58611a97
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:spokane
   - ocd-division/country:us/state:wa/county:spokane/place:spokane
