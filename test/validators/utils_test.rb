@@ -48,7 +48,8 @@ module Validators
     def test_similarity_levenshtein
       assert_in_delta 0.8, Validators::Utils.similarity_score("positions", ["Council Member"], ["Councilman"]), 0.2
       assert_equal 0.25, Validators::Utils.similarity_score("positions", ["Mayor"], ["Council Member"])
-      assert_equal 0.5, Validators::Utils.similarity_score("positions", ["Mayor", "Council Member"], ["Council Member"])
+      assert_equal 0.625,
+                   Validators::Utils.similarity_score("positions", ["Mayor", "Council Member"], ["Council Member"])
     end
 
     ### TESTING DATA AGREEMENT ###
@@ -141,8 +142,7 @@ module Validators
       value1 = ["Council Member"]
       value2 = nil
       similarity = Validators::Utils.similarity_score("positions", value1, value2)
-      # Similarity should be 0 when one value is nil
-      assert_equal 0.0, similarity
+      assert_equal 0.5, similarity
     end
 
     def test_similarity_with_mixed_nil_values

@@ -38,6 +38,8 @@ module Validators
     # Compute similarity score based on field type
     def self.similarity_score(field, value1, value2, confidence_a = 1.0, confidence_b = 1.0)
       return 1.0 if value1 == value2 # Exact match for any field
+      return 0.5 if value1.nil? || value2.nil? # one is nil, treat as 50% similarity
+      return 0.5 if value1.empty? || value2.empty? # one is empty, treat as 50% similarity
       return 1.0 if %w[sources].include?(field)
 
       case field
@@ -97,76 +99,153 @@ module Validators
 
     def self.compare_people_across_sources(sources, source_confidences)
       contested_people = {}
-
-      # Gather all unique names across sources
-      unique_names = sources.flatten(1).map { |p| p["name"] }.uniq
-      total_people = unique_names.count
+      contested_names = Array.new(sources.size) # One hash per source
       fields = %w[positions email phone_number website]
+
+      # Normalize names across sources
+      contested_names = normalize_names(sources)
+
+      # Normalize person records based on contested names
+      normalized_sources = apply_name_normalization(sources, contested_names)
+
+      unique_names = get_unique_names(normalized_sources)
+      total_people = unique_names.count
       total_fields = fields.count
 
       unique_names.each do |name|
-        person_records = sources.map { |source| source.find { |p| p["name"] == name } }
-        existing_records = person_records.compact # Remove nil entries (missing persons)
+        person_records = get_person_records(normalized_sources, name)
+        existing_records = person_records.compact
 
         contested_fields = {}
 
-        fields.each_with_index do |field, _index|
-          # Only consider the field if there are at least two non-nil records
+        fields.each do |field|
           next if existing_records.count { |r| r[field].present? } < 2
 
-          pairwise_similarities = existing_records.combination(2).map do |record_a, record_b|
-            value_a = record_a[field]
-            value_b = record_b[field]
-
-            # Find the index of the sources, handling the case when the record is not found
-            source_index_a = sources.index { |source| source.include?(record_a) }
-            source_index_b = sources.index { |source| source.include?(record_b) }
-
-            # If either source is not found, we treat their confidence as 1 (neutral)
-            confidence_a = source_index_a.nil? ? 1.0 : source_confidences[source_index_a]
-            confidence_b = source_index_b.nil? ? 1.0 : source_confidences[source_index_b]
-
-            # If the value is nil in any record, treat it as neutral (don't penalize)
-            similarity = if value_a.nil? || value_b.nil?
-                           1.0 # No penalty for missing values
-                         else
-                           similarity_score(field, value_a, value_b, confidence_a, confidence_b)
-                         end
-            similarity
-          end.flatten
-
-          worst_similarity = pairwise_similarities.min || 1.0
-          next unless worst_similarity < DISAGREEMENT_THRESHOLD
-
-          contested_fields[field] = {
-            disagreement_score: 1 - worst_similarity,
-            values: person_records.map { |r| r&.dig(field) }
-          }
-        end
-
-        # Only add contested fields that are not nil
-        contested_fields.each do |field, value|
-          contested_fields.delete(field) if value.nil?
+          contested_field_result = compare_field_values(existing_records, field, sources, source_confidences)
+          contested_fields[field] = contested_field_result if contested_field_result
         end
 
         contested_people[name] = contested_fields unless contested_fields.empty?
       end
 
-      # Compute overall agreement score
       agreement_score = overall_agreement_score(contested_people, total_people, total_fields)
 
-      { contested_people: contested_people, agreement_score: agreement_score }
+      {
+        contested_people: contested_people,
+        agreement_score: agreement_score,
+        contested_names: contested_names
+      }
     end
 
-    def self.merge_people_across_sources(sources, source_confidences, contested_people)
+    def self.compare_field_values(existing_records, field, sources, source_confidences)
+      pairwise_similarities = existing_records.combination(2).map do |a, b|
+        value_a = a[field]
+        value_b = b[field]
+
+        # If both values are nil, skip the comparison for this field
+        next if value_a.nil? && value_b.nil?
+
+        index_a = sources.index { |s| s.include?(a) }
+        index_b = sources.index { |s| s.include?(b) }
+
+        conf_a = index_a.nil? ? 1.0 : source_confidences[index_a]
+        conf_b = index_b.nil? ? 1.0 : source_confidences[index_b]
+
+        similarity_score(field, value_a, value_b, conf_a, conf_b)
+      end.compact # Remove nil similarities
+
+      worst_similarity = pairwise_similarities.min || 1.0
+      return nil if worst_similarity == 1.0 # If no disagreement, we can return nil for this field
+
+      { disagreement_score: 1 - worst_similarity, values: existing_records.map { |r| r&.dig(field) }.compact }
+    end
+
+    def self.normalize_names(sources)
+      canonical_names = sources[0].map { |p| p["name"] }
+      contested_names = Array.new(sources.size)
+
+      sources.each_with_index do |source, i|
+        next if i == 0
+
+        contested_names[i] = {}
+
+        source.each do |person|
+          best_match = canonical_names.max_by do |canonical_name|
+            similarity_score("name", person["name"], canonical_name, 1.0, 1.0)
+          end
+
+          similarity = similarity_score("name", person["name"], best_match, 1.0, 1.0)
+          contested_names[i][person["name"]] = best_match if similarity >= 0.8 && person["name"] != best_match
+        end
+      end
+
+      contested_names
+    end
+
+    def self.apply_name_normalization(sources, contested_names)
+      sources.each_with_index.map do |source, i|
+        name_map = contested_names[i] || {}
+        source.map do |person|
+          canonical_name = name_map[person["name"]]
+          person.merge("name" => canonical_name || person["name"])
+        end
+      end
+    end
+
+    def self.get_unique_names(normalized_sources)
+      normalized_sources.flatten(1).map { |p| p["name"] }.uniq
+    end
+
+    def self.get_person_records(normalized_sources, name)
+      normalized_sources.map { |source| source.find { |p| p["name"] == name } }
+    end
+
+    def self.compare_field_values(existing_records, field, sources, source_confidences)
+      pairwise_similarities = existing_records.combination(2).map do |a, b|
+        value_a = a[field]
+        value_b = b[field]
+
+        index_a = sources.index { |s| s.include?(a) }
+        index_b = sources.index { |s| s.include?(b) }
+
+        conf_a = index_a.nil? ? 1.0 : source_confidences[index_a]
+        conf_b = index_b.nil? ? 1.0 : source_confidences[index_b]
+
+        if value_a.nil? || value_b.nil?
+          1.0
+        else
+          similarity_score(field, value_a, value_b, conf_a, conf_b)
+        end
+      end
+
+      worst_similarity = pairwise_similarities.min || 1.0
+      return nil unless worst_similarity < DISAGREEMENT_THRESHOLD
+
+      {
+        disagreement_score: 1 - worst_similarity,
+        values: existing_records.map { |r| r&.dig(field) }
+      }
+    end
+
+    def self.merge_people_across_sources(sources, source_confidences, contested_people, contested_names = [])
       merged = []
 
-      # Collect unique names across all sources, using fuzzy matching to handle similar names
-      unique_names = sources.flatten(1).map { |p| p["name"] }.uniq
+      # Apply contested name mappings to normalize names across sources
+      normalized_sources = sources.each_with_index.map do |source, i|
+        name_map = contested_names[i] || {}
+
+        source.map do |person|
+          canonical_name = name_map[person["name"]]
+          person.merge("name" => canonical_name || person["name"])
+        end
+      end
+
+      # Collect unique canonical names
+      unique_names = normalized_sources.flatten(1).map { |p| p["name"] }.uniq
 
       unique_names.each do |name|
-        # Find person records for the current name across sources
-        person_records = sources.map { |source| source.find { |p| p["name"] == name } }.compact
+        # Gather person records across sources for this name
+        person_records = normalized_sources.map { |source| source.find { |p| p["name"] == name } }.compact
         next if person_records.empty?
 
         merged_person = { "name" => name }
@@ -174,28 +253,15 @@ module Validators
         %w[positions email phone_number website image].each do |field|
           contested = contested_people[name]&.[](field)
 
-          # Handle contested fields based on disagreement score
-          if contested.nil? || contested[:disagreement_score] < DISAGREEMENT_THRESHOLD
-            merged_person[field] = merge_field(field, person_records.map { |p| p[field] })
-          elsif field == "name"
-            # Fuzzy match name if contested and disagreement score is high
-            best_match = person_records.max_by do |p|
-              similarity_score("name", name, p["name"], source_confidences)
-            end
-
-            if best_match && similarity_score("name", name, best_match["name"], source_confidences) >= 0.8
-              merged_person["name"] = best_match["name"]
-            end
-          elsif field == "positions"
-            # Merge positions based on similarity (using the existing similarity_score method)
-            merged_person["positions"] = merge_field("positions", person_records.map { |p| p["positions"] })
-          else
-            # For other fields (email, phone, etc.), merge directly
-            merged_person[field] = merge_field(field, person_records.map { |p| p[field] })
-          end
+          merged_person[field] = if contested.nil? || contested[:disagreement_score] < DISAGREEMENT_THRESHOLD
+                                   merge_field(field, person_records.map { |p| p[field] })
+                                 elsif field == "positions"
+                                   merge_field("positions", person_records.map { |p| p["positions"] })
+                                 else
+                                   merge_field(field, person_records.map { |p| p[field] })
+                                 end
         end
 
-        # Merge sources (using merge_field method for deduplication)
         merged_person["sources"] = merge_field("sources", person_records.map { |p| p["sources"] })
 
         merged << merged_person
