@@ -4,6 +4,7 @@ require "capybara"
 require "selenium-webdriver"
 require "markitdown"
 require "sanitize"
+require "mini_magick"
 
 require_relative "./common"
 require_relative "../core/browser"
@@ -21,6 +22,8 @@ module Scrapers
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_1_original_html.html")), html)
 
       base_url, parsed_html = parse_html(url, html)
+
+      puts "BASE URL: #{base_url}"
 
       download_images(base_url, parsed_html, PathHelper.project_path(File.join(destination_dir, "images")))
       update_html_links(base_url, parsed_html)
@@ -48,39 +51,62 @@ module Scrapers
 
     def download_images(base_url, nokogiri_html, destination_dir)
       nokogiri_html.css("img").each_with_index do |img, _index|
-        image_url = img["src"]
+        original_src = img["src"]
+        next if original_src.blank? || original_src.start_with?("data:image")
 
-        next if image_url.blank? || image_url.start_with?("data:image")
+        formatted_src = format_url(original_src)
+        absolute_url = Addressable::URI.parse(base_url).join(formatted_src).to_s
 
-        image_url = format_url(image_url)
+        image_content = safe_download(absolute_url)
 
-        # Use safe join and encoding
-        absolute_image_url = Addressable::URI.parse(base_url).join(image_url).to_s
+        # Retry logic if the first image download failed (incorrect format)
+        if image_content.nil? && !original_src.start_with?("/") && !original_src.start_with?("http")
+          corrected_src = "/#{original_src}"
 
-        # hash the image url
-        image_hash = Digest::SHA256.hexdigest(absolute_image_url)
+          fallback_url = Addressable::URI.parse(base_url).join(corrected_src).to_s
+          puts "⚠️  Retrying with corrected path: #{fallback_url}"
+          image_content = safe_download(fallback_url)
 
-        filename = File.basename(absolute_image_url)
-        # get rid of query params
-        filename = filename.split("?").first
+          # If the fallback works, update absolute_url
+          absolute_url = fallback_url # if valid_image?(image_content)
+        end
+
+        return nil if image_content.nil?
+
+        # raise "Image download failed or invalid format" unless valid_image?(image_content)
+
+        # Process the image as normal
+        image_hash = Digest::SHA256.hexdigest(absolute_url)
+        filename = File.basename(absolute_url).split("?").first
         extension = File.extname(filename)
-
         filename = "#{image_hash}#{extension}"
 
         destination_path = File.join(destination_dir, filename)
 
-        File.open(destination_path, "wb") do |file|
-          image_content = get_image(absolute_image_url)
-          file.write(image_content)
-        end
+        File.open(destination_path, "wb") { |file| file.write(image_content) }
 
-        # update the img tag to point to the local file
         img["src"] = "images/#{filename}"
+        img["data-od-resolved-src"] = absolute_url
       rescue StandardError => e
         puts "Error downloading image: #{e.message}"
-        puts "Image URL: #{absolute_image_url}"
-        puts "Destination path: #{destination_path}"
+        puts "Original image src: #{original_src}"
       end
+    end
+
+    def safe_download(url)
+      uri = URI.parse(url)
+      response = Net::HTTP.get_response(uri)
+
+      # Check for successful response and image content type
+      if response.is_a?(Net::HTTPSuccess) && response["Content-Type"] =~ /image/
+        response.body # Return image content if valid
+      else
+        puts "❌ Invalid image content or failed request for #{url}: #{response.code}"
+        nil
+      end
+    rescue StandardError => e
+      puts "❌ Failed to download from #{url}: #{e.message}"
+      nil
     end
 
     def update_html_links(base_url, nokogiri_html)
