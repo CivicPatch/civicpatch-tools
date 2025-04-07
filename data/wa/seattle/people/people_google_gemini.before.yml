@@ -1,0 +1,102 @@
+---
+- name: Bruce Harrell
+  image:
+  positions:
+  - mayor
+  email: ''
+  phone_number: "(206) 684-4000"
+  website: https://www.seattle.gov/mayor
+  sources:
+  - https://seattle.gov
+- name: Sara Nelson
+  image:
+  positions:
+  - council president
+  - position 9
+  - citywide
+  email: sara.nelson@seattle.gov
+  phone_number: "(206) 684-8809"
+  website: https://www.seattle.gov/council/nelson
+  sources:
+  - https://seattle.gov
+- name: Rob Saka
+  image:
+  positions:
+  - council member
+  - district 1
+  email: rob.saka@seattle.gov
+  phone_number: "(206) 684-8801"
+  website: https://www.seattle.gov/council/saka
+  sources:
+  - https://seattle.gov
+- name: Mark Solomon
+  image:
+  positions:
+  - council member
+  - district 2
+  email: mark.solomon2@seattle.gov
+  phone_number: "(206) 684-8802"
+  website: https://www.seattle.gov/council/solomon
+  sources:
+  - https://seattle.gov
+- name: Joy Hollingsworth
+  image:
+  positions:
+  - council member
+  - district 3
+  email: joy.hollingsworth@seattle.gov
+  phone_number: "(206) 684-8803"
+  website: https://www.seattle.gov/council/hollingsworth
+  sources:
+  - https://seattle.gov
+- name: Maritza Rivera
+  image:
+  positions:
+  - council member
+  - district 4
+  email: maritza.rivera@seattle.gov
+  phone_number: "(206) 684-8804"
+  website: https://www.seattle.gov/council/rivera
+  sources:
+  - https://seattle.gov
+- name: Cathy Moore
+  image:
+  positions:
+  - council member
+  - district 5
+  email: cathy.moore@seattle.gov
+  phone_number: "(206) 684-8805"
+  website: https://www.seattle.gov/council/moore
+  sources:
+  - https://seattle.gov
+- name: Dan Strauss
+  image:
+  positions:
+  - council member
+  - district 6
+  email: dan.strauss@seattle.gov
+  phone_number: "(206) 684-8806"
+  website: https://www.seattle.gov/council/strauss
+  sources:
+  - https://seattle.gov
+- name: Robert Kettle
+  image:
+  positions:
+  - council member
+  - district 7
+  email: robert.kettle@seattle.gov
+  phone_number: "(206) 684-8807"
+  website: https://www.seattle.gov/council/kettle
+  sources:
+  - https://seattle.gov
+- name: Alexis Mercedes Rinck
+  image:
+  positions:
+  - council member
+  - position 8
+  - citywide
+  email: AlexisMercedes.Rinck@seattle.gov
+  phone_number: "(206) 684-8808"
+  website: https://www.seattle.gov/council/rinck
+  sources:
+  - https://seattle.gov
