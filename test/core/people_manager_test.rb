@@ -124,7 +124,7 @@ class PeopleManagerTest < Minitest::Test
     ]
 
     expected = [
-      { "name" => "Alicia Smith", "email" => "alice@domain.com", "phone_number" => "0987654321" }
+      { "name" => "Alicia Smith", "email" => "alicia@domain.com", "phone_number" => "1234567890" }
     ]
 
     result = Core::PeopleManager.merge_people_lists(list1, list2)

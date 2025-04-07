@@ -77,17 +77,27 @@ module Core
     def self.merge_people_lists(list1, list2, threshold = 0.8)
       matcher = FuzzyMatch.new(list1.map { |person| person["name"] })
 
-      list2.reduce(list1.dup) do |merged, person2|
-        matched_person = find_match(person2["name"], merged, matcher, threshold)
+      # Make a copy of list1 to avoid modifying the original list
+      merged = list1.dup
 
-        if matched_person
-          merged.map do |person|
-            person["name"] == matched_person["name"] ? merge_person(person, person2) : person
+      list2.each do |person2|
+        matched_name = find_match(person2["name"], list1, matcher, threshold)
+
+        if matched_name
+          # Find the matched person from list1
+          matched_person = list1.find { |person| person["name"] == matched_name }
+
+          # If the matched person is found in list1, merge them
+          if matched_person
+            index = merged.index { |person| person["name"] == matched_person["name"] }
+            merged[index] = merge_person(merged[index], person2)
           end
         else
-          merged + [person2]
+          merged << person2
         end
       end
+
+      merged
     end
 
     def self.find_match(name, list, matcher, threshold)
