@@ -79,14 +79,14 @@ namespace :city_scrape do
     config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
 
     # Official Source
-    # source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
-    # Core::PeopleManager.update_people(state, city_entry, source_city_people, "state_source.before")
-    # formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, config)
-    # Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
+    source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
+    Core::PeopleManager.update_people(state, city_entry, source_city_people, "state_source.before")
+    formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, config)
+    Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
 
     ## Web Scrape Source
-    # source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis)
-    # finalize_city_directory(state, city_entry, city_directory, source_dirs)
+    source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
+    formatted_scrape_people = finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
     ## Gemini Source
     google_gemini = Services::GoogleGemini.new
@@ -94,6 +94,22 @@ namespace :city_scrape do
     Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
     formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
+
+    source_confidences = [0.9, 0.7, 0.8]
+
+    sources = [formatted_source_city_people, formatted_scrape_people, formatted_gemini_city_people]
+
+    compare_result = Validators::Utils.compare_people_across_sources(sources, source_confidences)
+    combined_people = Validators::Utils.merge_people_across_sources(sources, source_confidences,
+                                                                    compare_result[:contested_people])
+
+    Core::PeopleManager.update_people(state, city_entry, combined_people)
+    city_directory_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
+    CityScrape::StateManager.update_state_places(state, [
+                                                   { "gnis" => city_entry["gnis"],
+                                                     "meta_updated_at" => Time.now.strftime("%Y-%m-%d"),
+                                                     "meta_hash" => city_directory_hash }
+                                                 ])
   end
 
   def create_prepare_directories(state, city_entry)
@@ -128,6 +144,15 @@ namespace :city_scrape do
         end
       end
 
+      dest_path = File.join(sources_destination_dir, File.basename(source_dir))
+
+      if Dir.exist?(dest_path)
+        puts "Deleting existing destination: #{dest_path}"
+        FileUtils.rm_rf(dest_path)
+      end
+
+      next unless Dir.exist?(source_dir)
+
       puts "Moving #{source_dir} to #{sources_destination_dir}"
       FileUtils.mv(source_dir, sources_destination_dir)
     end
@@ -142,17 +167,12 @@ namespace :city_scrape do
     # Keep before & after state
     config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
     Core::PeopleManager.update_people(state, city_entry, new_city_people, "scrape.before")
-    normalized_people = Core::PeopleManager.format_people(new_city_people, config)
-    Core::PeopleManager.update_people(state, city_entry, normalized_people, "scrape.after")
+    formatted_people = Core::PeopleManager.format_people(new_city_people, config)
+    Core::PeopleManager.update_people(state, city_entry, formatted_people, "scrape.after")
 
-    # city_directory_hash = Digest::MD5.hexdigest(new_city_directory.to_yaml)
-    # CityScrape::StateManager.update_state_places(state, [
-    #                                               { "gnis" => city_entry["gnis"],
-    #                                                 "meta_last_city_scrape_run" => Time.now.strftime("%Y-%m-%d"),
-    #                                                 "meta_hash" => city_directory_hash }
-    #                                             ])
     FileUtils.rm_rf(cache_directory)
 
     Scrapers::Utils.prune_unused_images(state, city_entry["gnis"])
+    formatted_people
   end
 end

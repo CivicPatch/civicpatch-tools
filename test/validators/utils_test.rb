@@ -149,8 +149,8 @@ module Validators
       value1 = ["Council Member"]
       value2 = []
       similarity = Validators::Utils.similarity_score("positions", value1, value2)
-      # Similarity should be 0 when one value is nil
-      assert_equal 0.0, similarity
+      # Similarity should not be penalized when one value is nil
+      assert_equal 0.5, similarity
     end
   end
 end

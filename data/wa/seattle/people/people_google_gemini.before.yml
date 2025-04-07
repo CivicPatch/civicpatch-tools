@@ -1,0 +1,122 @@
+---
+- name: Bruce Harrell
+  image:
+  positions:
+  - mayor
+  email: bruce.harrell@seattle.gov
+  phone_number: "(206) 684-4000"
+  website: https://www.seattle.gov/mayor
+  sources:
+  - https://seattle.gov
+- name: Tiffany Washington
+  image:
+  positions:
+  - deputy mayor
+  email: ''
+  phone_number: ''
+  website: https://www.seattle.gov/mayor/meet-the-mayor/deputy-mayors
+  sources:
+  - https://seattle.gov
+- name: Tim Burgess
+  image:
+  positions:
+  - deputy mayor
+  email: ''
+  phone_number: ''
+  website: https://www.seattle.gov/mayor/meet-the-mayor/deputy-mayors
+  sources:
+  - https://seattle.gov
+- name: Sara Nelson
+  image:
+  positions:
+  - council president
+  - council member
+  - position 9
+  - at-large
+  email: sara.nelson@seattle.gov
+  phone_number: "(206) 684-8809"
+  website: https://www.seattle.gov/council/nelson
+  sources:
+  - https://seattle.gov
+- name: Bob Kettle
+  image:
+  positions:
+  - council vice president
+  - council member
+  - district 7
+  email: bob.kettle@seattle.gov
+  phone_number: "(206) 684-8807"
+  website: https://www.seattle.gov/council/kettle
+  sources:
+  - https://seattle.gov
+- name: Rob Saka
+  image:
+  positions:
+  - council member
+  - district 1
+  email: rob.saka@seattle.gov
+  phone_number: "(206) 684-8801"
+  website: https://www.seattle.gov/council/saka
+  sources:
+  - https://seattle.gov
+- name: Tammy Morales
+  image:
+  positions:
+  - council member
+  - district 2
+  email: tammy.morales@seattle.gov
+  phone_number: "(206) 684-8802"
+  website: https://www.seattle.gov/council/morales
+  sources:
+  - https://seattle.gov
+- name: Joy Hollingsworth
+  image:
+  positions:
+  - council member
+  - district 3
+  email: joy.hollingsworth@seattle.gov
+  phone_number: "(206) 684-8803"
+  website: https://www.seattle.gov/council/hollingsworth
+  sources:
+  - https://seattle.gov
+- name: Maritza Rivera
+  image:
+  positions:
+  - council member
+  - district 4
+  email: maritza.rivera@seattle.gov
+  phone_number: "(206) 684-8804"
+  website: https://www.seattle.gov/council/rivera
+  sources:
+  - https://seattle.gov
+- name: Cathy Moore
+  image:
+  positions:
+  - council member
+  - district 5
+  email: cathy.moore@seattle.gov
+  phone_number: "(206) 684-8805"
+  website: https://www.seattle.gov/council/moore
+  sources:
+  - https://seattle.gov
+- name: Dan Strauss
+  image:
+  positions:
+  - council member
+  - district 6
+  email: dan.strauss@seattle.gov
+  phone_number: "(206) 684-8806"
+  website: https://www.seattle.gov/council/strauss
+  sources:
+  - https://seattle.gov
+- name: Tanya Woo
+  image:
+  positions:
+  - council member
+  - position 8
+  - at-large
+  email: tanya.woo@seattle.gov
+  phone_number: "(206) 684-8808"
+  website: https://www.seattle.gov/council/woo
+  sources:
+  - https://seattle.gov

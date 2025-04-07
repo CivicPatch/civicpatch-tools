@@ -89,6 +89,19 @@ class CorePersonManagerUtilsTest < Minitest::Test
     assert_equal ["mayor", "deputy mayor", "council member", "district"], sorted
   end
 
+  def test_sort_positions_multiple_roles
+    positions = [
+      "council member",
+      "council president"
+    ]
+    sorted = Core::PersonManager::Utils.sort_positions(positions, @positions_config)
+
+    assert_equal [
+      "council president",
+      "council member"
+    ], sorted
+  end
+
   def test_sorts_positions_by_role_then_division_order
     positions = [
       "councilmember district",

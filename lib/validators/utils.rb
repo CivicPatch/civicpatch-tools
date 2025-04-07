@@ -38,7 +38,6 @@ module Validators
     # Compute similarity score based on field type
     def self.similarity_score(field, value1, value2, confidence_a = 1.0, confidence_b = 1.0)
       return 1.0 if value1 == value2 # Exact match for any field
-      return 0.0 if value1.nil? || value2.nil? # Missing data = no match
       return 1.0 if %w[sources].include?(field)
 
       case field
@@ -55,7 +54,7 @@ module Validators
         # Compare each role in value1 to the best match in value2
         total_similarity = 0.0
         normalized1.each do |pos1|
-          best_match_score = normalized2.map { |pos2| similarity_score("positions", pos1, pos2) }.max || 0.0
+          best_match_score = normalized2.map { |pos2| similarity_score("position", pos1, pos2) }.max || 0.0
           total_similarity += best_match_score
         end
 
@@ -83,7 +82,10 @@ module Validators
 
       # Extract disagreement scores from all contested fields
       all_disagreement_scores = contested_people.values.flat_map do |fields|
-        fields.values.map { |field| field[:disagreement_score] }
+        fields.values.map do |field|
+          # Handle the case where field might be nil or not have a disagreement_score
+          field.is_a?(Hash) && field[:disagreement_score].is_a?(Numeric) ? field[:disagreement_score] : 0.0
+        end
       end
 
       # Calculate total agreement score
@@ -140,6 +142,11 @@ module Validators
             disagreement_score: 1 - worst_similarity,
             values: person_records.map { |r| r&.dig(field) }
           }
+        end
+
+        # Only add contested fields that are not nil
+        contested_fields.each do |field, value|
+          contested_fields.delete(field) if value.nil?
         end
 
         contested_people[name] = contested_fields unless contested_fields.empty?

@@ -84,6 +84,7 @@ module Core
         role_order = positions_config.each_with_index.to_h do |role_config, index|
           [role_config["role"].downcase, index]
         end
+
         divisions_list = positions_config.flat_map { |role_config| role_config["divisions"] }.compact
 
         normalized_positions = normalize_positions(positions, positions_config)
