@@ -90,7 +90,11 @@ module CityScraper
 
         partial_people = fetch_and_process_page(openai_service, data_fetcher, page_cache_path, url)
 
+        puts "Found partial set of people: #{partial_people.count}"
+
         next unless valid_partial_directory?(partial_people)
+
+        puts "Found valid partial set of people: #{partial_people.count}"
 
         directories_with_people << page_cache_path
         found_people = Core::PeopleManager.merge_people(found_people, partial_people)

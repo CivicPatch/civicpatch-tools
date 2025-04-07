@@ -7,24 +7,55 @@ module Validators
 
     def setup
       @source_confidences = [0.9, 0.7, 0.7]
-      @source1 = [
-        { "name" => "Alice Smith", "positions" => ["Mayor"] },
-        { "name" => "Bob Jones", "positions" => ["Council Member"], "email" => "bob.jones@example.com",
-          "phone_number" => "555-123-4567", "website" => "bob.com" }
-      ]
+      @source1 = {
+        confidence_score: 0.9,
+        source_name: "source1",
+        people: [
+          { "name" => "Alice Smith", "positions" => ["Mayor"] },
+          { "name" => "Bob Jones", "positions" => ["Council Member"], "email" => "bob.jones@example.com",
+            "phone_number" => "555-123-4567", "website" => "bob.com" }
+        ]
+      }
 
-      @source2 = [
-        { "name" => "Alice Smith", "positions" => ["Mayor"], "email" => "alice.smith@example.com",
-          "phone_number" => "1234567890", "website" => "alice.com" },
-        { "name" => "Bob Jones", "positions" => ["Councilman"], "email" => "bob.jones@example.com",
-          "phone_number" => "555-123-4567", "website" => "bob-jones.com" }
-      ]
+      @source2 = {
+        confidence_score: 0.8,
+        source_name: "source2",
+        people: [
+          { "name" => "Alice Smith", "positions" => ["Mayor"], "email" => "alice.smith@example.com",
+            "phone_number" => "1234567890", "website" => "alice.com" },
+          { "name" => "Bob Jones", "positions" => ["Councilman"], "email" => "bob.jones@example.com",
+            "phone_number" => "555-123-4567", "website" => "bob-jones.com" }
+        ]
+      }
 
-      @source3 = [
-        { "name" => "Alice Smith", "positions" => ["Mayor"], "email" => "alice.smith@example.com",
-          "phone_number" => "123-456-7890", "website" => "alice.org" },
-        { "name" => "Bob Jones", "positions" => ["Council Member"], "email" => "bob.jones@example.com",
-          "phone_number" => "555-123-4567", "website" => "bob.com" }
+      @source3 = {
+        confidence_score: 0.8,
+        source_name: "source3",
+        people: [
+          { "name" => "Alice Smith", "positions" => ["Mayor"], "email" => "alice.smith@example.com",
+            "phone_number" => "123-456-7890", "website" => "alice.org" },
+          { "name" => "Bob Jones", "positions" => ["Council Member"], "email" => "bob.jones@example.com",
+            "phone_number" => "555-123-4567", "website" => "bob.com" }
+        ]
+      }
+
+      @sources = [@source1, @source2, @source3]
+
+      @contested_people = {
+        "Bob Jones" => {
+          "positions" => { disagreement_score: 0.7 },
+          "website" => { disagreement_score: 0.6 }
+        },
+        "Alice Smith" => {
+          "email" => { disagreement_score: 0.1 },
+          "website" => { disagreement_score: 0.8 }
+        }
+      }
+
+      @contested_names = [
+        { "Alice Smith" => "Alice Smith", "Bob Jones" => "Bob Jones" },
+        { "Alice Smith" => "Alice Smith", "Bob Jones" => "Bob Jones" },
+        { "Alice Smith" => "Alice Smith", "Bob Jones" => "Bob Jones" }
       ]
     end
 
@@ -54,25 +85,35 @@ module Validators
 
     ### TESTING DATA AGREEMENT ###
     def test_compare_people_across_sources
-      result = Validators::Utils.compare_people_across_sources(
-        [@source1, @source2, @source3], @source_confidences
-      )
+      result = Validators::Utils.compare_people_across_sources(@sources)
 
       expected_contested_people = {
         "Alice Smith" => {
           "website" => {
-            disagreement_score: 0.5333333333333333,
-            values: [nil, "alice.com", "alice.org"]
+            disagreement_score: 0.46666666666666656,
+            values: {
+              "source1" => nil,
+              "source2" => "alice.com",
+              "source3" => "alice.org"
+            }
           }
         },
         "Bob Jones" => {
           "positions" => {
-            disagreement_score: 0.5039216291753892,
-            values: [["Council Member"], ["Councilman"], ["Council Member"]]
+            disagreement_score: 0.5,
+            values: {
+              "source1" => ["Council Member"],
+              "source2" => ["Councilman"],
+              "source3" => ["Council Member"]
+            }
           },
           "website" => {
-            disagreement_score: 0.5726094035972584,
-            values: ["bob.com", "bob-jones.com", "bob.com"]
+            disagreement_score: 0.5692307692307692,
+            values: {
+              "source1" => "bob.com",
+              "source2" => "bob-jones.com",
+              "source3" => "bob.com"
+            }
           }
         }
       }
@@ -81,25 +122,35 @@ module Validators
     end
 
     def test_compare_people_across_sources_with_positions
-      result = Validators::Utils.compare_people_across_sources(
-        [@source1, @source2, @source3], @source_confidences
-      )
+      result = Validators::Utils.compare_people_across_sources(@sources)
 
       expected_contested_people = {
         "Alice Smith" => {
           "website" => {
-            disagreement_score: 0.5333333333333333,
-            values: [nil, "alice.com", "alice.org"]
+            disagreement_score: 0.46666666666666656,
+            values: {
+              "source1" => nil,
+              "source2" => "alice.com",
+              "source3" => "alice.org"
+            }
           }
         },
         "Bob Jones" => {
           "positions" => {
-            disagreement_score: 0.5039216291753892,
-            values: [["Council Member"], ["Councilman"], ["Council Member"]]
+            disagreement_score: 0.5,
+            values: {
+              "source1" => ["Council Member"],
+              "source2" => ["Councilman"],
+              "source3" => ["Council Member"]
+            }
           },
           "website" => {
-            disagreement_score: 0.5726094035972584,
-            values: ["bob.com", "bob-jones.com", "bob.com"]
+            disagreement_score: 0.5692307692307692,
+            values: {
+              "source1" => "bob.com",
+              "source2" => "bob-jones.com",
+              "source3" => "bob.com"
+            }
           }
         }
       }
@@ -142,7 +193,7 @@ module Validators
       value1 = ["Council Member"]
       value2 = nil
       similarity = Validators::Utils.similarity_score("positions", value1, value2)
-      assert_equal 0.5, similarity
+      assert_equal 0.9, similarity
     end
 
     def test_similarity_with_mixed_nil_values
@@ -150,7 +201,72 @@ module Validators
       value2 = []
       similarity = Validators::Utils.similarity_score("positions", value1, value2)
       # Similarity should not be penalized when one value is nil
-      assert_equal 0.5, similarity
+      assert_equal 0.9, similarity
+    end
+
+    def test_merge_people_returns_array
+      result = Validators::Utils.merge_people_across_sources(@sources, @contested_people, @contested_names)
+
+      assert_instance_of Array, result
+      assert_equal 2, result.size
+      assert_includes result.map { |p| p["name"] }, "Alice Smith"
+      assert_includes result.map { |p| p["name"] }, "Bob Jones"
+    end
+
+    def test_merge_includes_expected_fields_for_bob
+      result = Validators::Utils.merge_people_across_sources(@sources, @contested_people, @contested_names)
+      bob = result.find { |p| p["name"] == "Bob Jones" }
+
+      refute_nil bob
+      assert bob["positions"].is_a?(Array)
+      assert_equal "bob.jones@example.com", bob["email"]
+      assert_equal "555-123-4567", bob["phone_number"]
+      assert bob["website"].is_a?(String)
+    end
+
+    def test_merge_includes_expected_fields_for_alice
+      result = Validators::Utils.merge_people_across_sources(@sources, @contested_people, @contested_names)
+      alice = result.find { |p| p["name"] == "Alice Smith" }
+
+      refute_nil alice
+      assert_equal ["mayor"], alice["positions"]
+      assert_equal "alice.smith@example.com", alice["email"]
+      assert alice["website"].is_a?(String)
+    end
+
+    def test_alex_and_alexa_robinson_are_merged
+      source_a = {
+        confidence_score: 0.9,
+        source_name: "source1",
+        people: [
+          { "name" => "Alex Robinson", "positions" => ["Council Member"], "email" => "alex@example.com" }
+        ]
+      }
+
+      source_b = {
+        confidence_score: 0.8,
+        source_name: "source2",
+        people: [
+          { "name" => "Alexa Robinson", "positions" => ["Councilwoman"], "email" => "alex@example.com" }
+        ]
+      }
+
+      sources = [source_a, source_b]
+
+      comparison_result = Validators::Utils.compare_people_across_sources(sources)
+      contested_people = comparison_result[:contested_people]
+      contested_names = comparison_result[:contested_names]
+
+      merged = Validators::Utils.merge_people_across_sources(sources, contested_people, contested_names)
+
+      assert_equal 1, merged.length
+
+      person = merged.first
+      assert_equal "Alex Robinson", person["name"] # should resolve to canonical from source1
+      assert_includes person["positions"].map(&:downcase), "council member"
+      assert_includes person["positions"].map(&:downcase), "councilwoman"
+      assert_equal "alex@example.com", person["email"]
+      assert_equal %w[source1 source2], person["sources"].sort
     end
   end
 end

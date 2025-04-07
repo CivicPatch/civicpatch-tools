@@ -23,8 +23,6 @@ module Scrapers
 
       base_url, parsed_html = parse_html(url, html)
 
-      puts "BASE URL: #{base_url}"
-
       download_images(base_url, parsed_html, PathHelper.project_path(File.join(destination_dir, "images")))
       update_html_links(base_url, parsed_html)
       # rewrite_script_tags(parsed_html)

@@ -28,6 +28,18 @@ module Core
                                 Core::PersonManager::Utils
                                   .format_position(position)
                               end
+
+        person["website"] = Scrapers::Common.format_url(person["website"]) if person["website"].present?
+        if person["phone_number"].present?
+          person["phone_number"] =
+            Scrapers::Standard.format_phone_number(person["phone_number"])
+        end
+
+        next unless person["sources"].present?
+
+        person["sources"] = person["sources"].map do |source|
+          Scrapers::Common.format_url(source)
+        end
       end
 
       filtered_people = people.reject { |person| person["positions"].count.zero? }
@@ -35,6 +47,8 @@ module Core
     end
 
     def self.merge_person(person1, person2)
+      return person1 || person2 if person1.nil? || person2.nil?
+
       merged_person = {}
 
       # Define merging rules for each field
@@ -118,14 +132,18 @@ module Core
     # TODO: needs config-driven
     def self.get_council_members_count(people)
       people.select do |person|
-        person["positions"].map(&:downcase).include?("council member")
+        person["positions"].map(&:downcase).include?("council member") && has_contact_info?(person)
       end.count
     end
 
     def self.get_mayors_count(people)
       people.select do |person|
-        person["positions"].map(&:downcase).include?("mayor")
+        person["positions"].map(&:downcase).include?("mayor") && has_contact_info?(person)
       end.count
+    end
+
+    def self.has_contact_info?(person)
+      person["email"].present? || person["phone_number"].present? || person["website"].present?
     end
 
     def self.update_people(
