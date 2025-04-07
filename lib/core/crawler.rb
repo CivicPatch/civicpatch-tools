@@ -6,7 +6,7 @@ require_relative "browser"
 
 class Crawler
   MAX_PAGES = 20
-  IGNORE_SUFFIXES = %w[xml pdf].freeze
+  IGNORE_SUFFIXES = %w[xml pdf doc docx].freeze
 
   def self.crawl(base_url, max_pages: MAX_PAGES, keyword_groups: [], max_depth: 2, avoid_keywords: [])
     visited = Set.new
