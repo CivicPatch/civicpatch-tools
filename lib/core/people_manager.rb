@@ -8,19 +8,28 @@ module Core
       YAML.load(File.read(people_file_path))
     end
 
+    def self.normalize_people(people, positions_config)
+      people.each do |person|
+        person["positions"] = Core::PersonManager::Utils
+                              .sort_positions(person["positions"], positions_config)
+      end
+
+      people
+    end
+
+    # Without extra positions
     def self.format_people(people, positions_config)
-      people.map do |person|
+      people.each do |person|
+        person["name"] = person["name"].squeeze(" ")
         person["positions"] = Core::PersonManager::Utils
                               .sort_positions(person["positions"], positions_config)
                               .map do |position|
                                 Core::PersonManager::Utils
                                   .format_position(position)
                               end
-        person
       end
 
       filtered_people = people.reject { |person| person["positions"].count.zero? }
-
       Core::PersonManager::Utils.sort_people(filtered_people, positions_config)
     end
 
@@ -123,7 +132,7 @@ module Core
         city_people_path = PathHelper.get_city_people_candidates_file_path(state, city_entry["gnis"],
                                                                            directory_type)
       else
-        city_people_path = get_city_directory_file(state, city_entry)
+        city_people_path = File.join(PathHelper.get_city_path(state, city_entry["gnis"]), "people.yml")
         raise "Invalid city people path: #{city_people_path}" unless city_people_path.present?
       end
 

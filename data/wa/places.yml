@@ -13,9 +13,8 @@ places:
   type: First-class city
   population: 737015
   government_type: Mayor-Council
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 0f7e5ada41a2cd75301186fcfcf35c21
-  meta_last_member_info_scrape_run: '2025-04-02'
+  meta_updated_at: '2025-04-06'
+  meta_hash: 6662ba6eeeda7fb92b2e6357ad519a3d
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:spokane
   - ocd-division/country:us/state:wa/county:spokane/place:spokane
@@ -28,9 +27,6 @@ places:
   type: First-class city
   population: 228989
   government_type: Mayor-Council
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: fca4940c8ade3bb465c87a77edd11dea
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:tacoma
   - ocd-division/country:us/state:wa/county:pierce/place:tacoma
@@ -43,9 +39,6 @@ places:
   type: First-class city
   population: 219346
   government_type: Council-Manager
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 8f9f4b76b8fff38c3260eb3ef9374e52
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:vancouver
   - ocd-division/country:us/state:wa/county:clark/place:vancouver
@@ -70,9 +63,6 @@ places:
   type: Code city
   population: 151854
   government_type: Council-Manager
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: f00a013da8d459830d842cedb326dd3b
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:kent
   - ocd-division/country:us/state:wa/county:king/place:kent
@@ -97,9 +87,6 @@ places:
   type: First-class city
   population: 110629
   government_type: Mayor-Council
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: e55ccb79afa2b5067424e4925bbcf979
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:renton
   - ocd-division/country:us/state:wa/county:king/place:renton
@@ -112,9 +99,6 @@ places:
   type: Code city
   population: 106785
   government_type: Mayor-Council
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 8fbcd4c13ea7fe5218cf248a8bd5d72e
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:spokane_valley
   - ocd-division/country:us/state:wa/county:spokane/place:spokane_valley
@@ -127,9 +111,6 @@ places:
   type: Code city
   population: 102976
   government_type: Council-Manager
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 97ea3aede7c84ae396d20db4ba6c9a04
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:federal_way
   - ocd-division/country:us/state:wa/county:king/place:federal_way
@@ -154,9 +135,6 @@ places:
   type: First-class city
   population: 96968
   government_type: Council-Manager
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 6e2c9fff9e446054696fa1a0eca9af16
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:kirkland
   - ocd-division/country:us/state:wa/county:king/place:kirkland
@@ -169,9 +147,6 @@ places:
   type: Code city
   population: 92175
   government_type: Council-Manager
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: da3d6ca3db43ec9d38dbab064844bac5
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:bellingham
   - ocd-division/country:us/state:wa/county:whatcom/place:bellingham
@@ -184,9 +159,6 @@ places:
   type: First-class city
   population: 91482
   government_type: Mayor-Council
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: c891f1627eaf22e1008ec644ac33f6fb
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:auburn
   - ocd-division/country:us/state:wa/county:king/place:auburn
@@ -201,9 +173,6 @@ places:
   type: Code city
   population: 87256
   government_type: Mayor-Council
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 56cbdaef9b9e4e1b23a400f8bbeafbef
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:kennewick
   - ocd-division/country:us/state:wa/county:benton/place:kennewick
@@ -228,9 +197,6 @@ places:
   type: Code city
   population: 77108
   government_type: Council-Manager
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 8ac75f81bd42099347fcce4028939b85
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:redmond
   - ocd-division/country:us/state:wa/county:king/place:redmond
@@ -255,9 +221,6 @@ places:
   type: Code city
   population: 70714
   government_type: Mayor-Council
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: 40a48d20712b0b351121f8a4da3b5d81
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:sammamish
   - ocd-division/country:us/state:wa/county:king/place:sammamish
@@ -270,9 +233,6 @@ places:
   type: Code city
   population: 67455
   government_type: Council-Manager
-  meta_last_city_scrape_run: '2025-04-02'
-  meta_hash: d7730cc3ac11b2d27d8ed586ab004d70
-  meta_last_member_info_scrape_run: '2025-04-02'
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:lakewood
   - ocd-division/country:us/state:wa/county:pierce/place:lakewood

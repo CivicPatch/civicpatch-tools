@@ -82,5 +82,14 @@ rake 'city_scrape:get_places[mi]'
 gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-wa-" --template '{{range .}}{{.headRefName}} {{end}}'
 ```
 
+### Services
+* Google Gemini 2.5 (with google search) - Paid Tier 1
+  * Pricing Page - https://ai.google.dev/gemini-api/docs/pricing
+  * Google Search - 1,500 RPD (free), then $35 / 1,000 requests
+  * Input: $1.25 Per Million (<= 200k tokens); $2.50 Per Million (> 200k tokens)
+  * Output: $10.00 Per Million (<= 200k tokens); $15.00 Per Million (> 200k)
+* OpenAI API - GPT 4o Mini (used only with scraping)
+  * https://openai.com/api/pricing/
+
 ### Links
 * https://editor.dicebear.com/

@@ -9,7 +9,7 @@ module CityScraper
     #  @city_directory = city_directory
     # end
 
-    def self.fetch(state, gnis)
+    def self.fetch(state, gnis, config)
       openai_service = Services::Openai.new
       data_fetcher = Scrapers::DataFetcher.new
       city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
@@ -29,7 +29,7 @@ module CityScraper
         puts "#{search_results_to_process.join("\n")}"
 
         new_source_dirs, found_people = fetch_people(openai_service, data_fetcher, engine,
-                                                     cache_path, search_results_to_process)
+                                                     cache_path, search_results_to_process, config)
         city_people = Core::PeopleManager.merge_people(city_people, found_people)
 
         search_results_processed += search_results_to_process
@@ -78,7 +78,8 @@ module CityScraper
       data_fetcher,
       engine,
       cache_path,
-      search_results
+      search_results,
+      config
     )
       directories_with_people = []
       found_people = []
@@ -93,6 +94,7 @@ module CityScraper
 
         directories_with_people << page_cache_path
         found_people = Core::PeopleManager.merge_people(found_people, partial_people)
+        found_people = Core::PeopleManager.normalize_people(found_people, config)
 
         council_members = Core::PeopleManager.get_council_members_count(found_people)
         mayors = Core::PeopleManager.get_mayors_count(found_people)
