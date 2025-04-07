@@ -58,12 +58,6 @@ module Services
 
       response = run_prompt(prompt)
 
-      File.write("chat.txt", "GOOGLE GEMINI", mode: "a")
-      File.write("chat.txt", "PROMPT", mode: "a")
-      File.write("chat.txt", prompt, mode: "a")
-      File.write("chat.txt", "RESPONSE", mode: "a")
-      File.write("chat.txt", response, mode: "a")
-
       response.map do |person|
         person["sources"] = [url]
         Scrapers::Standard.normalize_source_person(person)
