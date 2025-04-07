@@ -65,6 +65,9 @@ GEM
     markitdown (0.3.3)
       nokogiri
     matrix (0.4.2)
+    mini_magick (5.2.0)
+      benchmark
+      logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.5)
@@ -152,6 +155,7 @@ DEPENDENCIES
   httparty
   json
   markitdown
+  mini_magick (~> 5.2)
   minitest (~> 5.16)
   nokogiri
   open_data!

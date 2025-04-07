@@ -38,3 +38,5 @@ gem "fuzzy_match", "~> 2.1"
 gem "zaru", "~> 1.0"
 
 gem "amatch", "~> 0.4.1"
+
+gem "mini_magick", "~> 5.2"
