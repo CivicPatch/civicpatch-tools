@@ -1,5 +1,6 @@
 require "test_helper"
 require "core/people_manager"
+require "fuzzy_match"
 
 class PeopleManagerTest < Minitest::Test
   def setup
@@ -90,5 +91,44 @@ class PeopleManagerTest < Minitest::Test
     # Assert that Sara Nelson's position is correctly formatted
     assert_includes formatted[1]["positions"], "Council President"
     assert_includes formatted[1]["positions"], "Council Member"
+  end
+
+  # Test for handling multiple people in list2 that don't match any people in list1
+  def test_merge_people_with_multiple_non_matching_names
+    list1 = [
+      { "name" => "Alice Smith", "email" => "alice@domain.com", "phone_number" => "1234567890" }
+    ]
+    list2 = [
+      { "name" => "Bob Jones", "email" => "bob@domain.com", "phone_number" => "9876543210" },
+      { "name" => "Charlie Brown", "email" => "charlie@domain.com", "phone_number" => "5555555555" }
+    ]
+
+    expected = [
+      { "name" => "Alice Smith", "email" => "alice@domain.com", "phone_number" => "1234567890" },
+      { "name" => "Bob Jones", "email" => "bob@domain.com", "phone_number" => "9876543210" },
+      { "name" => "Charlie Brown", "email" => "charlie@domain.com", "phone_number" => "5555555555" }
+    ]
+
+    result = Core::PeopleManager.merge_people_lists(list1, list2)
+
+    assert_equal expected, result
+  end
+
+  # Test for handling fuzzy matching between names
+  def test_merge_people_with_fuzzy_matching
+    list1 = [
+      { "name" => "Alicia Smith", "email" => "alicia@domain.com", "phone_number" => "1234567890" }
+    ]
+    list2 = [
+      { "name" => "Alice Smith", "email" => "alice@domain.com", "phone_number" => "0987654321" }
+    ]
+
+    expected = [
+      { "name" => "Alicia Smith", "email" => "alice@domain.com", "phone_number" => "0987654321" }
+    ]
+
+    result = Core::PeopleManager.merge_people_lists(list1, list2)
+
+    assert_equal expected, result
   end
 end

@@ -1,4 +1,5 @@
 require "zaru"
+require "amatch"
 require_relative "./person_manager/utils"
 
 module Core
@@ -73,33 +74,28 @@ module Core
       merge_people_lists(city_directory, new_people)
     end
 
-    def self.merge_people_lists(list1, list2)
-      # Initialize fuzzy matcher
-      fuzzy_matcher = FuzzyMatch.new(list2.map { |p| p[:name] })
+    def self.merge_people_lists(list1, list2, threshold = 0.8)
+      matcher = FuzzyMatch.new(list1.map { |person| person["name"] })
 
-      # Combine lists using fuzzy matching
-      combined_list = []
+      list2.reduce(list1.dup) do |merged, person2|
+        matched_person = find_match(person2["name"], merged, matcher, threshold)
 
-      list1.each do |person1|
-        match_name = fuzzy_matcher.find(person1[:name])
-
-        if match_name
-          # Find the matched person from list2
-          match_person = list2.find { |p| p[:name] == match_name }
-
-          # Merge the matched person (you can customize this logic)
-          combined_person = merge_person(person1, match_person)
-          combined_list << combined_person
-
-          # Remove the matched person from list2 to avoid duplicates
-          list2.delete(match_person)
+        if matched_person
+          merged.map do |person|
+            person["name"] == matched_person["name"] ? merge_person(person, person2) : person
+          end
         else
-          combined_list << person1
+          merged + [person2]
         end
       end
+    end
 
-      # Add remaining unmatched people from list2
-      combined_list.concat(list2)
+    def self.find_match(name, list, matcher, threshold)
+      best_match = matcher.find(name)
+      return nil unless best_match
+
+      similarity = best_match.pair_distance_similar(name)
+      similarity >= threshold ? list.find { |p| p["name"] == best_match } : nil
     end
 
     def self.valid_city_people?(people)

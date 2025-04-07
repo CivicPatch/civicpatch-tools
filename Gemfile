@@ -36,3 +36,5 @@ gem "text", "~> 1.3"
 gem "fuzzy_match", "~> 2.1"
 
 gem "zaru", "~> 1.0"
+
+gem "amatch", "~> 0.4.1"
