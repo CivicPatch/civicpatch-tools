@@ -104,7 +104,7 @@ jobs:
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           git checkout -b $BRANCH_NAME
       
-      - name: Get city council member data
+      - name: Get city representatives data
         run: |
           echo "Processing city: ${{ matrix.city_entry.gnis }}"
           bundle exec rake 'city_scrape:fetch[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
@@ -112,38 +112,9 @@ jobs:
       - name: Commit council member changes
         run: |
           git add .
-          git commit -m "Populate city info -- council members -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
+          git commit -m "Populate city representatives -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Fetch additional city info (if needed)
-        run: |
-          echo "Processing city: ${{ matrix.city_entry.gnis }}"
-          bundle exec rake 'city_scrape:get_member_info[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
-      
-      - name: Commit additional city info (if needed)
-        run: |
-          git add .
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Populate city info -- additional info -- for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-      
-      # TODO: only need this if the city is further split into districts
-      #- name: Get city division map data
-      #  run: |
-      #    echo "Processing city: ${{ matrix.city }}, State: ${{ github.event.inputs.state }}"
-      #    bundle exec rake 'city_info:find_division_map[${{ github.event.inputs.state }},${{ matrix.city }}]'
-
-      #- name: Commit division map changes
-      #  run: |
-      #    git add .
-      #    git commit -m "Populate city info -- division map -- for ${{ matrix.city }}, ${{ github.event.inputs.state }}"
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Open a pull request
         run: |
