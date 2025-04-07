@@ -1,0 +1,79 @@
+---
+- name: Lisa Brown
+  image:
+  positions:
+  - Mayor
+  email: mayor@spokanecity.org
+  phone_number: "(509) 625-6250"
+  website: https://my.spokanecity.org/mayor
+  sources:
+  - https://my.spokanecity.org
+- name: Betsy Wilkerson
+  image:
+  positions:
+  - Council President
+  email: bwilkerson@spokanecity.org
+  phone_number: "(509) 625-6258"
+  website: https://my.spokanecity.org/citycouncil/members/betsy-wilkerson
+  sources:
+  - https://my.spokanecity.org
+- name: Jonathan Bingle
+  image:
+  positions:
+  - Council Member
+  - District 1
+  email: jbingle@spokanecity.org
+  phone_number: "(509) 625-6275"
+  website: https://my.spokanecity.org/citycouncil/members/jonathan-bingle
+  sources:
+  - https://my.spokanecity.org
+- name: Michael Cathcart
+  image:
+  positions:
+  - Council Member
+  - District 1
+  email: mcathcart@spokanecity.org
+  phone_number: "(509) 625-6257"
+  website: https://my.spokanecity.org/citycouncil/members/michael-cathcart
+  sources:
+  - https://my.spokanecity.org
+- name: Lili Navarrete
+  image:
+  positions:
+  - Council Member
+  - District 2
+  email: lnavarrete@spokanecity.org
+  phone_number: "(509) 768-6738"
+  website: https://my.spokanecity.org/citycouncil/members/lili-navarrete
+  sources:
+  - https://my.spokanecity.org
+- name: Paul Dillon
+  image:
+  positions:
+  - Council Member
+  - District 2
+  email: pdillon@spokanecity.org
+  phone_number: "(509) 625-6254"
+  website: https://my.spokanecity.org/citycouncil/members/paul-dillon
+  sources:
+  - https://my.spokanecity.org
+- name: Kitty Klitzke
+  image:
+  positions:
+  - Council Member
+  - District 3
+  email: kklitzke@spokanecity.org
+  phone_number: "(509) 625-6291"
+  website: https://my.spokanecity.org/citycouncil/members/kitty-klitzke
+  sources:
+  - https://my.spokanecity.org
+- name: Zack Zappone
+  image:
+  positions:
+  - Council Member
+  - District 3
+  email: zzappone@spokanecity.org
+  phone_number: "(509) 625-6256"
+  website: https://my.spokanecity.org/citycouncil/members/zack-zappone
+  sources:
+  - https://my.spokanecity.org

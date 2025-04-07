@@ -1,0 +1,76 @@
+---
+- name: Lisa Brown
+  image: images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg
+  positions:
+  - Mayor
+  email: ''
+  phone_number: "(509) 755-2489"
+  website: https://my.spokanecity.org/mayor
+  sources:
+  - https://my.spokanecity.org/cityhall
+- name: Betsy Wilkerson
+  image: images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg
+  positions:
+  - Council President
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://my.spokanecity.org/citycouncil/videos
+- name: Kitty Klitzke
+  image: images/262b6036905aa734c892056237b8cd345e2b93e6f82812a1017ae3abf35b1936.jpg
+  positions:
+  - Council Member
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://my.spokanecity.org/citycouncil/videos
+- name: Paul Dillon
+  image: images/fd97658b53e7a410150a84363ac0deba0ccb399ab8b1ecd988d6f545f9f97282.jpg
+  positions:
+  - Council Member
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://my.spokanecity.org/citycouncil/videos
+- name: Zack Zappone
+  image: images/262b6036905aa734c892056237b8cd345e2b93e6f82812a1017ae3abf35b1936.jpg
+  positions:
+  - Council Member
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://my.spokanecity.org/citycouncil/videos
+- name: Jonathan Bingle
+  image: images/c3f6af36302e447775c4fd452ac1c12d1c8f3bcd11a78285592a3b3ce65586e9.jpg
+  positions:
+  - Council Member
+  - District 1
+  email: jbingle@spokanecity.org
+  phone_number: "(509) 625-6719"
+  website: https://my.spokanecity.org/citycouncil/members/jonathan-bingle
+  sources:
+  - https://my.spokanecity.org/citycouncil/members
+- name: Michael Cathcart
+  image: images/a7ab49b0fd0bc13d58eaa0bd9fe35a48c9e012d9be7fce750e2321444842bfa6.jpg
+  positions:
+  - Council Member
+  - District 1
+  email: mcathcart@spokanecity.org
+  phone_number: "(509) 625-6224"
+  website: https://my.spokanecity.org/citycouncil/members/michael-cathcart
+  sources:
+  - https://my.spokanecity.org/citycouncil/members
+- name: Lili Navarrete
+  image: images/73a03e06f1b93232976ee703655ebbfc266e89f8515fce939f959ecda9d28592.jpg
+  positions:
+  - Council Member
+  - District 2
+  email: lnavarrete@spokanecity.org
+  phone_number: "(509) 625-6255"
+  website: https://my.spokanecity.org/citycouncil/members/lili-navarrete
+  sources:
+  - https://my.spokanecity.org/citycouncil/members

@@ -1,0 +1,65 @@
+---
+- name: Lisa Brown
+  image:
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Betsy Wilkerson
+  image:
+  positions:
+  - Council President
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Jonathan Bingle
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Kitty Klitzke
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Lili Navarrete
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Michael Cathcart
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Paul Dillon
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Zack Zappone
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
