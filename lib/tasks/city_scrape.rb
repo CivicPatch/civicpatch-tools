@@ -98,8 +98,9 @@ namespace :city_scrape do
     validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
     combined_people = validated_result[:merged_sources]
+    formatted_people = Core::PeopleManager.format_people(combined_people, config)
 
-    Core::PeopleManager.update_people(state, city_entry, combined_people)
+    Core::PeopleManager.update_people(state, city_entry, formatted_people, "validated.after")
 
     city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
     CityScrape::StateManager.update_state_places(state, [

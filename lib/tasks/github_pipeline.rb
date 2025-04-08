@@ -102,14 +102,17 @@ namespace :github_pipeline do
     contested_people = validation_results[:compare_results][:contested_people]
     score = validation_results[:compare_results][:agreement_score]
     pretty_score = (score * 100).round(2)
+    config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
 
     # Initialize the comment with the agreement score
-    comment = "## Agreement Score: #{pretty_score}%\n\n---\n\n"
+    comment = "# Agreement Score: #{pretty_score}%\n\n---\n\n"
 
     # Iterate through each contested person and their contested fields
     contested_people.each do |name, fields|
       # Generate the markdown table for the contested person
-      contested_people_markdown = GitHub::CityPeople.to_markdown_table(fields)
+      merged_person = validation_results[:merged_sources].find { |person| person["name"] == name }
+      formatted_merged_person = Core::PeopleManager.format_people([merged_person], config).first
+      contested_people_markdown = GitHub::CityPeople.to_markdown_table(fields, formatted_merged_person)
 
       # Add a header for each contested person and append the table
       comment += "### #{name}\n\n"
