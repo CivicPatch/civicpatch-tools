@@ -35,9 +35,9 @@ module Validators
                             when "state_source"
                               0.9
                             when "scrape"
-                              0.8
+                              0.7
                             when "gemini"
-                              0.8
+                              0.6 # TODO: you hallucinate a lot!
                             else
                               0.0
                             end
