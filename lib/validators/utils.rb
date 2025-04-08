@@ -35,6 +35,13 @@ module Validators
       "#{normalized_local}@#{domain}"
     end
 
+    def self.normalize_url(url)
+      return nil if url.nil?
+
+      url = normalize_text(url)
+      url.gsub("www.", "")
+    end
+
     # Compute similarity score based on field type
     def self.similarity_score(field, value1, value2, confidence_a = 1.0, confidence_b = 1.0)
       return 1.0 if value1 == value2 # Exact match for any field
@@ -220,7 +227,7 @@ module Validators
       end
     end
 
-    def self.merge_people_across_sources(sources, contested_people, contested_names = [])
+    def self.merge_people_across_sources(sources, contested_names = [])
       merged = []
 
       # Apply contested name mappings to normalize names across sources
@@ -250,7 +257,6 @@ module Validators
         merged_person = { "name" => name }
 
         %w[positions email phone_number website image].each do |field|
-          contested = contested_people[name]&.[](field)
           values = person_records.map { |p| { value: p[field], confidence_score: p["confidence_score"] } }
 
           if field == "positions"
@@ -261,8 +267,6 @@ module Validators
           end
         end
 
-        merged_person["sources"] = person_records.map { |p| p["source_name"] }.uniq
-
         merged << merged_person
       end
 
@@ -271,27 +275,32 @@ module Validators
 
     def self.select_best_value(field, values)
       non_nil_values = values.reject { |v| v[:value].nil? || v[:value] == "" }
-
       return nil if non_nil_values.empty?
 
-      # Group by normalized value
+      # Group by normalized value (e.g., phone number, email, or text)
       grouped = non_nil_values.group_by do |v|
         if field == "phone_number"
           normalize_phone_number(v[:value])
         elsif field == "email"
           normalize_email(v[:value])
+        elsif field == "website"
+          normalize_url(v[:value])
+        elsif field == "sources"
+          v[:value]&.map { |url| normalize_url(url) }
         else
           normalize_text(v[:value])
         end
       end
 
-      # Rank groups by number of appearances * confidence
-      best_group = grouped.max_by do |_val, group|
-        group.sum { |v| v[:confidence_score] || 1.0 }
-      end
+      # Rank groups by their total confidence score
+      best_group = grouped.max_by { |_val, group| group.sum { |v| v[:confidence_score] || 1.0 } }
 
-      # Return the most confident version of the best value
-      best_group.last.max_by { |v| v[:confidence_score] }[:value]
+      if field == "sources"
+        # Combine the sources into a single array
+        best_group.last.map { |v| v[:value] }.flatten.uniq
+      else
+        best_group.last.max_by { |v| v[:confidence_score] || 1.0 }[:value]
+      end
     end
   end
 end
