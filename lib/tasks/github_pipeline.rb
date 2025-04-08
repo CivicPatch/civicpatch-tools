@@ -42,66 +42,54 @@ namespace :github_pipeline do
 
     city_directory = CityScrape::CityManager.get_city_directory(state, state_city_entry)
 
+    puts city_directory.inspect
+
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Sources
-      #{city_directory.map { |person| person["sources"].join("\n") }.join("\n")}
+      #{city_directory.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")}
       ## People
+      | **Name**             | **Positions**                          | **Email**                   | **Phone**         | **Website**                                           | **Image**                                                                                     |
+      |----------------------|----------------------------------------|-----------------------------|-------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------|
       #{city_directory.map do |person|
         image = person["image"]
         email = person["email"]
         phone = person["phone_number"]
         website = person["website"]
 
-        position_markdown = <<~POSITION
-          **Positions:** #{if person["positions"].present?
-                             person["positions"]
-                           else
-                             "N/A"
-                           end
-                         }
-        POSITION
+        position_markdown = if person["positions"].present?
+                              person["positions"].join(", ")
+                            else
+                              "N/A"
+                            end
 
         image_markdown = if image.present?
                            image_url = "#{base_image_url}/#{image}?raw=true"
-                           <<~IMAGE
-                             <img src='#{image_url}' width='150' />
-                           IMAGE
+                           "![](#{image_url})"
                          else
-                           "" # Ensure image_markdown is an empty string if no image is present
+                           "N/A"
                          end
 
         email_markdown = if email.present?
-                           <<~EMAIL
-                             **Email:** #{email}
-                           EMAIL
+                           email
                          else
-                           "**Email:** N/A"
+                           "N/A"
                          end
 
         phone_markdown = if phone.present?
-                           <<~PHONE
-                             **Phone:** #{phone}
-                           PHONE
+                           phone
                          else
-                           "**Phone:** N/A"
+                           "N/A"
                          end
 
         website_markdown = if website.present?
-                             <<~WEBSITE
-                               **Website:** [Link](#{website})
-                             WEBSITE
+                             "[Link](#{website})"
                            else
-                             "**Website:** N/A"
+                             "N/A"
                            end
+
         <<~PERSON
-          ********************************************************
-          ### **Name:** #{person["name"]}
-          #{position_markdown}
-          #{email_markdown}
-          #{phone_markdown}
-          #{website_markdown}
-          #{image_markdown}
+          | **#{person["name"]}**        | #{position_markdown}                        | #{email_markdown}               | #{phone_markdown}   | #{website_markdown}                                          | #{image_markdown}                                                                 |
         PERSON
       end.join("\n")}
     MARKDOWN

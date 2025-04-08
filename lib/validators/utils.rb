@@ -267,6 +267,8 @@ module Validators
           end
         end
 
+        merged_person["sources"] = person_records.map { |p| p["sources"] }.flatten.compact.uniq
+
         merged << merged_person
       end
 
@@ -285,8 +287,6 @@ module Validators
           normalize_email(v[:value])
         elsif field == "website"
           normalize_url(v[:value])
-        elsif field == "sources"
-          v[:value]&.map { |url| normalize_url(url) }
         else
           normalize_text(v[:value])
         end
@@ -295,12 +295,7 @@ module Validators
       # Rank groups by their total confidence score
       best_group = grouped.max_by { |_val, group| group.sum { |v| v[:confidence_score] || 1.0 } }
 
-      if field == "sources"
-        # Combine the sources into a single array
-        best_group.last.map { |v| v[:value] }.flatten.uniq
-      else
-        best_group.last.max_by { |v| v[:confidence_score] || 1.0 }[:value]
-      end
+      best_group.last.max_by { |v| v[:confidence_score] || 1.0 }[:value]
     end
   end
 end
