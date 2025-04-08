@@ -1,7 +1,6 @@
 module GitHub
   class CityPeople
     def self.to_markdown_table(contested_fields, merged_person)
-      puts "merged_person: #{merged_person.inspect}"
       # Prepare source headers
       source_names = contested_fields.map { |_, field_data| field_data[:values].keys }.flatten.uniq
       headers = ["Field", "Disagreement Score"] + source_names
