@@ -1,0 +1,73 @@
+---
+- name: Victoria Woodards
+  image:
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Jamika Scott
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Joe Bushnell
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: John Hines
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Kiara Daniels
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Kristina Walker
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Olgy Diaz
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Sandesh Sadalge
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+- name: Sarah Rumbaugh
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
