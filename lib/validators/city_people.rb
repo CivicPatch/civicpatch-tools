@@ -46,12 +46,11 @@ module Validators
       end
 
       compare_results = Validators::Utils.compare_people_across_sources(sources)
-      contested_people = compare_results[:contested_people]
       contested_names = compare_results[:contested_names]
 
       {
         compare_results: compare_results,
-        merged_sources: Validators::Utils.merge_people_across_sources(sources, contested_people, contested_names)
+        merged_sources: Validators::Utils.merge_people_across_sources(sources, contested_names)
       }
     end
   end

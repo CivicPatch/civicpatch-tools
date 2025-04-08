@@ -45,7 +45,7 @@ namespace :github_pipeline do
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Sources
-      #{city_directory.map { |person| person["sources"].map { |source| source["url"] } }.flatten.uniq.join("\n")}
+      #{city_directory.map { |person| person["sources"].join("\n") }.join("\n")}
       ## People
       #{city_directory.map do |person|
         image = person["image"]

@@ -205,7 +205,7 @@ module Validators
     end
 
     def test_merge_people_returns_array
-      result = Validators::Utils.merge_people_across_sources(@sources, @contested_people, @contested_names)
+      result = Validators::Utils.merge_people_across_sources(@sources, @contested_names)
 
       assert_instance_of Array, result
       assert_equal 2, result.size
@@ -214,7 +214,7 @@ module Validators
     end
 
     def test_merge_includes_expected_fields_for_bob
-      result = Validators::Utils.merge_people_across_sources(@sources, @contested_people, @contested_names)
+      result = Validators::Utils.merge_people_across_sources(@sources, @contested_names)
       bob = result.find { |p| p["name"] == "Bob Jones" }
 
       refute_nil bob
@@ -225,7 +225,7 @@ module Validators
     end
 
     def test_merge_includes_expected_fields_for_alice
-      result = Validators::Utils.merge_people_across_sources(@sources, @contested_people, @contested_names)
+      result = Validators::Utils.merge_people_across_sources(@sources, @contested_names)
       alice = result.find { |p| p["name"] == "Alice Smith" }
 
       refute_nil alice
@@ -257,7 +257,7 @@ module Validators
       contested_people = comparison_result[:contested_people]
       contested_names = comparison_result[:contested_names]
 
-      merged = Validators::Utils.merge_people_across_sources(sources, contested_people, contested_names)
+      merged = Validators::Utils.merge_people_across_sources(sources, contested_names)
 
       assert_equal 1, merged.length
 
@@ -267,6 +267,65 @@ module Validators
       assert_includes person["positions"].map(&:downcase), "councilwoman"
       assert_equal "alex@example.com", person["email"]
       assert_equal %w[source1 source2], person["sources"].sort
+    end
+
+    def test_select_best_phone_number
+      values = [
+        { value: "123-456-7890", confidence_score: 0.8 },
+        { value: "123-456-7890", confidence_score: 0.9 },
+        { value: "987-654-3210", confidence_score: 0.7 }
+      ]
+      result = Validators::Utils.select_best_value("phone_number", values)
+      assert_equal "123-456-7890", result # The most confident phone number
+    end
+
+    def test_select_best_phone_number_with_nil_values
+      values = [
+        { value: nil, confidence_score: 0.8 },
+        { value: nil, confidence_score: 0.2 }
+      ]
+      result = Validators::Utils.select_best_value("phone_number", values)
+      assert_nil result # No valid phone numbers
+    end
+
+    def test_select_best_email
+      values = [
+        { value: "test@example.com", confidence_score: 0.7 },
+        { value: "test@example.com", confidence_score: 0.9 },
+        { value: "other@example.com", confidence_score: 0.6 }
+      ]
+      result = Validators::Utils.select_best_value("email", values)
+      assert_equal "test@example.com", result # The most confident email
+    end
+
+    def test_select_best_positions
+      values = [
+        { value: ["Manager"], confidence_score: 0.8 },
+        { value: %w[Manager Developer], confidence_score: 0.9 },
+        { value: ["Developer"], confidence_score: 0.7 }
+      ]
+      result = Validators::Utils.select_best_value("positions", values)
+      assert_equal %w[Manager Developer], result # The most confident and comprehensive position list
+    end
+
+    def test_select_best_name
+      values = [
+        { value: "Alice Smith", confidence_score: 0.6 },
+        { value: "Alice Smith", confidence_score: 0.8 },
+        { value: "A. Smith", confidence_score: 0.5 }
+      ]
+      result = Validators::Utils.select_best_value("name", values)
+      assert_equal "Alice Smith", result # The most confident version of the name
+    end
+
+    def test_select_best_email_with_all_equal_values
+      values = [
+        { value: "test@example.com", confidence_score: 0.8 },
+        { value: "test@example.com", confidence_score: 0.9 },
+        { value: "test@example.com", confidence_score: 1.0 }
+      ]
+      result = Validators::Utils.select_best_value("email", values)
+      assert_equal "test@example.com", result # Return the most confident version
     end
   end
 end
