@@ -42,8 +42,6 @@ namespace :github_pipeline do
 
     city_directory = CityScrape::CityManager.get_city_directory(state, state_city_entry)
 
-    puts city_directory.inspect
-
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Sources
@@ -88,9 +86,7 @@ namespace :github_pipeline do
                              "N/A"
                            end
 
-        <<~PERSON
-          | **#{person["name"]}**        | #{position_markdown}                        | #{email_markdown}               | #{phone_markdown}   | #{website_markdown}                                          | #{image_markdown}                                                                 |
-        PERSON
+        "**#{person["name"]}**| #{position_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{image_markdown}"
       end.join("\n")}
     MARKDOWN
 
