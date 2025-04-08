@@ -95,12 +95,15 @@ namespace :scratch do
     state = "wa"
     gnis = "2412025"
 
+    config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
+
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
     validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
     combined_people = validated_result[:merged_sources]
+    formatted_people = Core::PeopleManager.format_people(combined_people, config)
 
-    Core::PeopleManager.update_people(state, city_entry, combined_people)
+    Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
     # source_1 = Core::PeopleManager.get_people("wa", "2411957", "state_source.after")
     # source_2 = Core::PeopleManager.get_people("wa", "2411957", "scrape.after")
