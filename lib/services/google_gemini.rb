@@ -1,4 +1,6 @@
 require "core/city_manager"
+require "utils/yaml_helper"
+require "utils/costs_helper"
 
 module Services
   class GoogleGemini
@@ -11,7 +13,10 @@ module Services
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
     end
 
-    def get_city_people(city, url)
+    def get_city_people(state, city_entry)
+      city = city_entry["name"]
+      url = city_entry["website"]
+
       positions = Core::CityManager.get_position_roles("mayor_council")
       divisions = Core::CityManager.get_position_divisions("mayor_council")
       position_examples = Core::CityManager.get_position_examples("mayor_council")
@@ -56,7 +61,8 @@ module Services
           #{position_examples}
       )
 
-      response = run_prompt(prompt)
+      request_origin = "#{state}_#{city}_gemini"
+      response = run_prompt(prompt, request_origin)
 
       response.map do |person|
         person["sources"] = [url]
@@ -64,7 +70,7 @@ module Services
       end
     end
 
-    def run_prompt(prompt)
+    def run_prompt(prompt, request_origin)
       retry_attempts = 0
       url = "#{BASE_URI}/v1beta/models/#{MODEL}:generateContent?key=#{@api_key}"
 
@@ -106,6 +112,20 @@ module Services
       end
 
       if response.success?
+        usage = response["usageMetadata"]
+        input_tokens_num = usage["promptTokenCount"]
+        candidates_token_num = usage["candidatesTokenCount"]
+        thoughts_token_num = usage["thoughtsTokenCount"]
+
+        Utils::CostsHelper.log_llm_cost(
+          request_origin,
+          "google_gemini",
+          input_tokens_num,
+          candidates_token_num + thoughts_token_num,
+          MODEL,
+          "with_search"
+        )
+
         # TODO: needs more robustness
         response_candidate = response["candidates"].first
         yaml_string = response_candidate["content"]["parts"].first["text"]

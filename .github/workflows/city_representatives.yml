@@ -109,6 +109,15 @@ jobs:
         run: |
           echo "Processing city: ${{ matrix.city_entry.gnis }}"
           bundle exec rake 'city_scrape:fetch[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
+      
+      - name: Send costs to Google Sheets
+        run: |
+          bundle exec rake 'sheets:send_costs'
+        env:
+          GOOGLE_SHEETS_SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
+          GOOGLE_SHEETS_CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
+          GOOGLE_SHEETS_CLIENT_SECRET: ${{ secrets.GOOGLE_SHEETS_CLIENT_SECRET }}
+          GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
 
       - name: Commit council member changes
         run: |
