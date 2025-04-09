@@ -115,4 +115,15 @@ namespace :scratch do
     # combined_people = Validators::Utils.merge_people_across_sources([source_1, source_2, source_3], source_confidences,
     # compare_result[:contested_people])
   end
+
+  desc "test person prompt"
+  task :person_prompt do |_t, args|
+    openai_service = Services::Openai.new
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis("wa", "2409821")
+    person = { "name" => "Conrad Lee" }
+    content_file = PathHelper.project_path("data/wa/bellevue/city_scrape_sources/Conrad_Lee/step_3_markdown_content.md")
+    puts "my content file is #{content_file}"
+    result = openai_service.extract_person_information("wa", city_entry, person, content_file, "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee")
+    puts result
+  end
 end

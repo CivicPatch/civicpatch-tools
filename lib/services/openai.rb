@@ -56,6 +56,7 @@ module Services
       positions = Core::CityManager.get_position_roles("mayor_council")
       divisions = Core::CityManager.get_position_divisions("mayor_council")
       position_examples = Core::CityManager.get_position_examples("mayor_council")
+      current_date = Date.today.strftime("%Y-%m-%d")
 
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
@@ -68,8 +69,8 @@ module Services
             phone_number
             email
             positions (An array of strings)
-            start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-            end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
+            start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
+            end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
 
         Notes:
         - Extract only the contact information associated with the person. Do not return general info.
@@ -81,9 +82,9 @@ module Services
           The main positions we are interested in are #{positions.join(", ")}
           Positions may also be associated with titles like #{divisions.join(", ")}
           where the positions are attached with vairous numbers or words.
-          Preserve non-numeric names as they are.
-          Do not list previous positions if their terms have ended.
-          Examples:
+        - Today is #{current_date}. Ensure that only active positions are included, and#{" "}
+          exclude any positions that are not currently held or are no longer active.
+        Position Examples:
           #{position_examples}
       INSTRUCTIONS
 
@@ -100,6 +101,13 @@ module Services
       request_origin = "#{state}_#{city_entry["name"]}_person_scrape"
       response = run_prompt(messages, request_origin)
 
+      File.write("chat.txt", "-------------SYSTEM INSTRUCTIONS-------------------", mode: "a")
+      File.write("chat.txt", system_instructions, mode: "a")
+      File.write("chat.txt", "-------------USER INSTRUCTIONS-------------------", mode: "a")
+      File.write("chat.txt", user_instructions, mode: "a")
+      File.write("chat.txt", "-------------RESPONSE-------------------", mode: "a")
+      File.write("chat.txt", response, mode: "a")
+
       person = Utils::YamlHelper.yaml_string_to_hash(response)
       person["website"] = url
 
@@ -110,49 +118,47 @@ module Services
       positions = Core::CityManager.get_position_roles("mayor_council")
       divisions = Core::CityManager.get_position_divisions("mayor_council")
       position_examples = Core::CityManager.get_position_examples("mayor_council")
+      current_date = Date.today.strftime("%Y-%m-%d")
 
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
-        You are an expert data extractor.
-        Extract the following properties from the provided content.
-        Identify all people who are part of the city's mayor-council government.
-        The main positions we are interested in are: #{positions.join(", ")}
+          You are an expert data extractor.
+          Extract the following properties from the provided content.
+          Identify all people who are part of the city's mayor-council government.
+          The main positions we are interested in are: #{positions.join(", ")}
 
-        They might have other associated positions that look like these:
-        #{divisions.join(",")}
+          They might have other associated positions that look like these:
+          #{divisions.join(",")}
 
-        There should be an array of the following properties.
-        - name
-          image (Extract the image URL from the <img> tag's src attribute.#{" "}
-                This will always be a relative URL starting with images/)
-          phone_number: <string> Format: (123) 456-7890
-          email
-          positions (an array of strings)
-          start_term_date (string. The date the person started their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-          end_term_date (string. The date the person ended their term. Format: YYYY, YYYY-MM, or YYYY-MM-DD)
-          website (Provide the absolute URL.)
-                If no specific website is provided, leave this empty —#{" "}
-                do not default to the general city or council page.
+          There should be an array of the following properties.
+          - name
+            image (Extract the image URL from the <img> tag's src attribute.#{" "}
+                  This will always be a relative URL starting with images/)
+            phone_number: <string> Format: (123) 456-7890
+            email
+            positions (an array of strings)
+            start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
+            end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
+            website (Provide the absolute URL.)
+                  If no specific website is provided, leave this empty —#{" "}
+                  do not default to the general city or council page.
 
-        Basic rules:
-        - Students are NOT city council members.
-        - Extract only the contact information associated with the person. Do not return general info.
-        - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
-        - If you find just a list of names, with at least a website or email, they are likely to be council members.
-        - If the content is a press release, do not extract any people data from the content.
-        - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
-        - If you cannot find any relevant information, return YAML as empty array.
-
-        - To make it on the people list, they must be associated with either "position" OR "position_misc)
-        - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
-          can be directly inferred with certainty—do not assume or estimate missing information.
-          They should be strings.
-        - For the "positions" field, split the positions into an array of strings.#{" "}
-          Preserve non-numeric names as they are.
-          Do not list previous positions if their terms have ended.
-          People can have multiple positions and roles.
-          Examples:
-          #{position_examples}
+          Basic rules:
+          - Students are NOT city council members.
+          - Extract only the contact information associated with the person. Do not return general info.
+          - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
+          - If you find just a list of names, with at least a website or email, they are likely to be council members.
+          - If the content is a press release, do not extract any people data from the content.
+          - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
+          - If you cannot find any relevant information, return YAML as empty array.
+          - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
+            can be directly inferred with certainty—do not assume or estimate missing information.
+            They should be strings.
+          - For the "positions" field, split the positions into an array of strings.
+          - Today is #{current_date}. Ensure that only active positions are included, and#{" "}
+            exclude any positions that are not currently held or are no longer active.
+        Position Examples:
+            #{position_examples}
       INSTRUCTIONS
 
       content = <<~CONTENT

@@ -19,7 +19,9 @@ module Scrapers
         "email" => person["email"],
         "phone_number" => person["phone_number"],
         "website" => person["website"],
-        "sources" => person["sources"]
+        "sources" => person["sources"],
+        "start_term_date" => person["start_term_date"],
+        "end_term_date" => person["end_term_date"]
       }
     end
 

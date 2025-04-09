@@ -88,7 +88,7 @@ namespace :city_scrape do
     source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
     finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
-    ## Gemini Source
+    ### Gemini Source
     google_gemini = Services::GoogleGemini.new
     gemini_city_people = google_gemini.get_city_people(state, city_entry)
     Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
