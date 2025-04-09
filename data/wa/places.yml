@@ -63,6 +63,8 @@ places:
   type: Code city
   population: 151854
   government_type: Council-Manager
+  meta_updated_at: '2025-04-09'
+  meta_hash: eeaea56889fc49cc429ad78e62b1a79d
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:kent
   - ocd-division/country:us/state:wa/county:king/place:kent

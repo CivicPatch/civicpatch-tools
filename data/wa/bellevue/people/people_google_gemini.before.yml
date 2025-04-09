@@ -1,0 +1,73 @@
+---
+- name: Lynne Robinson
+  image:
+  positions:
+  - mayor
+  email: lrobinson@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson
+  sources:
+  - https://bellevuewa.gov
+- name: Mo Malakoutian
+  image:
+  positions:
+  - deputy mayor
+  email: mmalakoutian@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian
+  sources:
+  - https://bellevuewa.gov
+- name: Dave Hamilton
+  image:
+  positions:
+  - council member
+  email: dhamilton@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton
+  sources:
+  - https://bellevuewa.gov
+- name: Conrad Lee
+  image:
+  positions:
+  - council member
+  email: clee@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee
+  sources:
+  - https://bellevuewa.gov
+- name: Jared Nieuwenhuis
+  image:
+  positions:
+  - council member
+  email: jnieuwenhuis@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis
+  sources:
+  - https://bellevuewa.gov
+- name: John Stokes
+  image:
+  positions:
+  - council member
+  email: jstokes@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes
+  sources:
+  - https://bellevuewa.gov
+- name: Janice Zahn
+  image:
+  positions:
+  - council member
+  email: jzahn@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/janice-zahn
+  sources:
+  - https://bellevuewa.gov
+- name: Diane Carlson
+  image:
+  positions:
+  - city manager
+  email: dcarlson@bellevuewa.gov
+  phone_number: "(425) 452-4616"
+  website: https://bellevuewa.gov/city-government/departments/city-managers-office/city-managers-office-staff
+  sources:
+  - https://bellevuewa.gov

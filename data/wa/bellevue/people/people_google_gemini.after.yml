@@ -1,0 +1,55 @@
+---
+- name: Lynne Robinson
+  image:
+  positions:
+  - Mayor
+  email: lrobinson@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson
+  sources:
+  - https://bellevuewa.gov
+- name: Conrad Lee
+  image:
+  positions:
+  - Council Member
+  email: clee@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee
+  sources:
+  - https://bellevuewa.gov
+- name: Dave Hamilton
+  image:
+  positions:
+  - Council Member
+  email: dhamilton@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton
+  sources:
+  - https://bellevuewa.gov
+- name: Janice Zahn
+  image:
+  positions:
+  - Council Member
+  email: jzahn@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/janice-zahn
+  sources:
+  - https://bellevuewa.gov
+- name: Jared Nieuwenhuis
+  image:
+  positions:
+  - Council Member
+  email: jnieuwenhuis@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis
+  sources:
+  - https://bellevuewa.gov
+- name: John Stokes
+  image:
+  positions:
+  - Council Member
+  email: jstokes@bellevuewa.gov
+  phone_number: "(425) 452-7810"
+  website: https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes
+  sources:
+  - https://bellevuewa.gov
