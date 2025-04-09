@@ -47,7 +47,7 @@ namespace :city_scrape do
 
     cities = state_places["places"].select do |c|
       !gnis_to_ignore.include?(c["gnis"]) &&
-        c["meta_last_updated_at"].nil? && c["website"].present?
+        c["meta_updated_at"].nil? && c["website"].present?
     end.first(num_cities.to_i)
 
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
@@ -84,23 +84,23 @@ namespace :city_scrape do
     formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
 
-    ### Web Scrape Source
-    source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
-    finalize_city_directory(state, city_entry, city_directory, source_dirs)
+    #### Web Scrape Source
+    # source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
+    # finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
-    ## Gemini Source
-    google_gemini = Services::GoogleGemini.new
-    gemini_city_people = google_gemini.get_city_people(state, city_entry)
-    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
-    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
+    ### Gemini Source
+    # google_gemini = Services::GoogleGemini.new
+    # gemini_city_people = google_gemini.get_city_people(state, city_entry)
+    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
+    # formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
+    # Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
 
-    validated_result = Validators::CityPeople.validate_sources(state, gnis)
+    # validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
-    combined_people = validated_result[:merged_sources]
-    formatted_people = Core::PeopleManager.format_people(combined_people, config)
+    # combined_people = validated_result[:merged_sources]
+    # formatted_people = Core::PeopleManager.format_people(combined_people, config)
 
-    Core::PeopleManager.update_people(state, city_entry, formatted_people, "validated.after")
+    Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
     city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
     CityScrape::StateManager.update_state_places(state, [
