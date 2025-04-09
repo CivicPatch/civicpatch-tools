@@ -1,0 +1,95 @@
+---
+- name: Lisa Brown
+  image:
+  positions:
+  - Mayor
+  email: mayor@spokanecity.org
+  phone_number: "(509) 625-6250"
+  website: https://my.spokanecity.org/mayor
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: '2024-01-02'
+  end_term_date: ''
+- name: Betsy Wilkerson
+  image:
+  positions:
+  - Council President
+  email: bwilkerson@spokanecity.org
+  phone_number: "(509) 625-6258"
+  website: https://my.spokanecity.org/citycouncil/members
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: ''
+  end_term_date: ''
+- name: Jonathan Bingle
+  image:
+  positions:
+  - Council Member
+  - District 1
+  email: jbingle@spokanecity.org
+  phone_number: "(509) 625-6275"
+  website: https://my.spokanecity.org/citycouncil/members
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: '2022'
+  end_term_date: '2025'
+- name: Michael Cathcart
+  image:
+  positions:
+  - Council Member
+  - District 1
+  email: mcathcart@spokanecity.org
+  phone_number: "(509) 625-6257"
+  website: https://my.spokanecity.org/citycouncil/members
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: '2024'
+  end_term_date: '2027'
+- name: Lili Navarrete
+  image:
+  positions:
+  - Council Member
+  - District 2
+  email: lnavarrete@spokanecity.org
+  phone_number: ''
+  website: https://my.spokanecity.org/citycouncil/members
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: '2024'
+  end_term_date: '2025'
+- name: Paul Dillon
+  image:
+  positions:
+  - Council Member
+  - District 2
+  email: pdillon@spokanecity.org
+  phone_number: ''
+  website: https://my.spokanecity.org/citycouncil/members
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: '2024'
+  end_term_date: '2027'
+- name: Kitty Klitzke
+  image:
+  positions:
+  - Council Member
+  - District 3
+  email: kklitzke@spokanecity.org
+  phone_number: ''
+  website: https://my.spokanecity.org/citycouncil/members
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: '2024'
+  end_term_date: '2027'
+- name: Zack Zappone
+  image:
+  positions:
+  - Council Member
+  - District 3
+  email: zzappone@spokanecity.org
+  phone_number: ''
+  website: https://my.spokanecity.org/citycouncil/members
+  sources:
+  - https://my.spokanecity.org
+  start_term_date: '2022'
+  end_term_date: '2025'

@@ -1,0 +1,87 @@
+---
+- name: Lisa Brown
+  positions:
+  - Mayor
+  email: mayor@spokanecity.org
+  phone_number: "(509) 755-2489"
+  website: https://my.spokanecity.org/mayor
+  image: images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/cityhall
+- name: Betsy Wilkerson
+  positions:
+  - Council President
+  email: bwilkerson@spokanecity.org
+  phone_number: "(509) 625-6258"
+  website: https://my.spokanecity.org/citycouncil/members/betsy-wilkerson
+  image: images/96267627447dcce8ca33fee048320cad132790724184951fadc852d36f5161ad.jpg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/citycouncil/members
+- name: Jonathan Bingle
+  positions:
+  - Council Member
+  - District 1
+  email: jbingle@spokanecity.org
+  phone_number: "(509) 625-6255"
+  website: https://my.spokanecity.org/citycouncil/members/jonathan-bingle
+  image: images/c3f6af36302e447775c4fd452ac1c12d1c8f3bcd11a78285592a3b3ce65586e9.jpg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/citycouncil/members
+- name: Michael Cathcart
+  positions:
+  - Council Member
+  - District 1
+  email: mcathcart@spokanecity.org
+  phone_number: "(509) 625-6224"
+  website: https://my.spokanecity.org/citycouncil/members/michael-cathcart
+  image: images/a7ab49b0fd0bc13d58eaa0bd9fe35a48c9e012d9be7fce750e2321444842bfa6.jpg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/citycouncil/members
+- name: Lili Navarrete
+  positions:
+  - Council Member
+  - District 2
+  email: lnavarrete@spokanecity.org
+  phone_number: "(509) 625-6255"
+  website: https://my.spokanecity.org/citycouncil/members/lili-navarrete
+  image: images/73a03e06f1b93232976ee703655ebbfc266e89f8515fce939f959ecda9d28592.jpg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/citycouncil/members
+- name: Paul Dillon
+  positions:
+  - Council Member
+  - District 2
+  email: pdillon@spokanecity.org
+  phone_number: "(509) 564-4569"
+  website: https://my.spokanecity.org/citycouncil/members/paul-dillon
+  image: images/fc51c21b7a2b526d0a35e7956c110915656f16ac58a4b923bd25f1ce6306f781.jpg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/citycouncil/members
+- name: Kitty Klitzke
+  positions:
+  - Council Member
+  - District 3
+  email: kklitzke@spokanecity.org
+  phone_number:
+  website: https://my.spokanecity.org/citycouncil/members/Kitty%25252520Klitzke
+  image: images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/citycouncil/members
+- name: Zack Zappone
+  positions:
+  - Council Member
+  - District 3
+  email: zzappone@spokanecity.org
+  phone_number:
+  website: https://my.spokanecity.org/citycouncil/members/zack-zappone
+  image: images/c7acb754a7c981d3b76fe1e0b65ff9beb219a418b352d07bfe0e8f2746b154f1.jpg
+  sources:
+  - https://my.spokanecity.org
+  - https://my.spokanecity.org/citycouncil/members

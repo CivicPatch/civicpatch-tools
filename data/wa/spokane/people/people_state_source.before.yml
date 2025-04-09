@@ -1,0 +1,281 @@
+---
+- name: Matthew Boston
+  image:
+  positions:
+  - Chief Financial Officer
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Alex Scott
+  image:
+  positions:
+  - City Administrator
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Mike Piccolo
+  image:
+  positions:
+  - City Attorney
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Terri L. Pfister
+  image:
+  positions:
+  - City Clerk
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Erin Hut
+  image:
+  positions:
+  - Communications/marketing Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Steven  MacDonald
+  image:
+  positions:
+  - Community/economic Development Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Betsy Wilkerson
+  image:
+  positions:
+  - Council President
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Jonathan Bingle
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Michael Cathcart
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Paul Dillon
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Kitty  Klitzke
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Lili Navarrete
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Zack  Zappone
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Howard Delaney
+  image:
+  positions:
+  - Court Administrator
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Tami Palmquist
+  image:
+  positions:
+  - Development Services Center Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Dan Buller
+  image:
+  positions:
+  - Engineering Services Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Julie O’Berg
+  image:
+  positions:
+  - Fire Chief
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Allison Adam
+  image:
+  positions:
+  - Human Resources Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: 'Laz Martinez '
+  image:
+  positions:
+  - Information Technology Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Andrew Chanse
+  image:
+  positions:
+  - Library Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Lisa  Brown
+  image:
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Garrett Jones
+  image:
+  positions:
+  - Parks/recreation Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Spencer Gardner
+  image:
+  positions:
+  - Planning Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: 'Kevin Hall '
+  image:
+  positions:
+  - Police Chief
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Marlene  Feist
+  image:
+  positions:
+  - Public Works Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Chris Averyt
+  image:
+  positions:
+  - Solid Waste Collection Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Raylene Gennett
+  image:
+  positions:
+  - Wastewater Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Loren Searl
+  image:
+  positions:
+  - Water Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
