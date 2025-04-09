@@ -229,7 +229,7 @@ module Validators
       alice = result.find { |p| p["name"] == "Alice Smith" }
 
       refute_nil alice
-      assert_equal ["mayor"], alice["positions"]
+      assert_equal ["Mayor"], alice["positions"]
       assert_equal "alice.smith@example.com", alice["email"]
       assert alice["website"].is_a?(String)
     end
@@ -239,7 +239,8 @@ module Validators
         confidence_score: 0.9,
         source_name: "source1",
         people: [
-          { "name" => "Alex Robinson", "positions" => ["Council Member"], "email" => "alex@example.com" }
+          { "name" => "Alex Robinson", "positions" => ["Council Member"], "email" => "alex@example.com",
+            "sources" => ["https://apple.com"] }
         ]
       }
 
@@ -247,14 +248,13 @@ module Validators
         confidence_score: 0.8,
         source_name: "source2",
         people: [
-          { "name" => "Alexa Robinson", "positions" => ["Councilwoman"], "email" => "alex@example.com" }
+          { "name" => "Alexa Robinson", "positions" => ["Councilwoman"], "email" => "alex@example.com", "sources" => ["https://peach.com"] }
         ]
       }
 
       sources = [source_a, source_b]
 
       comparison_result = Validators::Utils.compare_people_across_sources(sources)
-      contested_people = comparison_result[:contested_people]
       contested_names = comparison_result[:contested_names]
 
       merged = Validators::Utils.merge_people_across_sources(sources, contested_names)
@@ -263,10 +263,8 @@ module Validators
 
       person = merged.first
       assert_equal "Alex Robinson", person["name"] # should resolve to canonical from source1
-      assert_includes person["positions"].map(&:downcase), "council member"
-      assert_includes person["positions"].map(&:downcase), "councilwoman"
       assert_equal "alex@example.com", person["email"]
-      assert_equal %w[source1 source2], person["sources"].sort
+      assert_equal %w[https://apple.com https://peach.com], person["sources"].sort
     end
 
     def test_select_best_phone_number

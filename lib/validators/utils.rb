@@ -259,12 +259,7 @@ module Validators
         %w[positions email phone_number website image].each do |field|
           values = person_records.map { |p| { value: p[field], confidence_score: p["confidence_score"] } }
 
-          if field == "positions"
-            all_positions = values.flat_map { |v| v[:value] || [] }
-            merged_person[field] = all_positions.map { |pos| normalize_text(pos) }.uniq
-          else
-            merged_person[field] = select_best_value(field, values)
-          end
+          merged_person[field] = select_best_value(field, values)
         end
 
         merged_person["sources"] = person_records.map { |p| p["sources"] }.flatten.compact.uniq
@@ -276,16 +271,21 @@ module Validators
     end
 
     def self.select_best_value(field, values)
-      non_nil_values = values.reject { |v| v[:value].nil? || v[:value] == "" }
+      non_nil_values = values.reject { |v| v[:value].nil? || v[:value] == "" || v[:value] == [] }
       return nil if non_nil_values.empty?
 
       # Group by normalized value (e.g., phone number, email, or text)
       grouped = non_nil_values.group_by do |v|
-        if field == "phone_number"
-          normalize_phone_number(v[:value])
-        elsif field == "email"
+        case field
+        when "positions"
+          # NOTE: don't want to pick by confidence score here,
+          # just by the common values between each source
+          return merge_common_values(values.map { |val| val[:value] })
+        when "email"
           normalize_email(v[:value])
-        elsif field == "website"
+        when "phone_number"
+          normalize_phone_number(v[:value])
+        when "website"
           normalize_url(v[:value])
         else
           normalize_text(v[:value])
@@ -296,6 +296,16 @@ module Validators
       best_group = grouped.max_by { |_val, group| group.sum { |v| v[:confidence_score] || 1.0 } }
 
       best_group.last.max_by { |v| v[:confidence_score] || 1.0 }[:value]
+    end
+
+    def self.merge_common_values(arrays)
+      hash_counts = arrays.each_with_object(Hash.new(0)) do |array, aggregated_counts|
+        array.uniq.each do |item|
+          aggregated_counts[item] += 1
+        end
+      end
+
+      hash_counts.keys.select { |key| hash_counts[key] > 1 }
     end
   end
 end
