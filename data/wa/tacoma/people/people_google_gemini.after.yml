@@ -13,7 +13,7 @@
   positions:
   - Council Member
   - Position 1
-  email: ''
+  email: jhines1@cityoftacoma.org
   phone_number: "(253) 591-5100"
   website: https://www.cityoftacoma.org/government/city_council/council_member_john_hines
   sources:
@@ -23,9 +23,9 @@
   positions:
   - Council Member
   - Position 2
-  email: ''
+  email: srumbaugh@cityoftacoma.org
   phone_number: "(253) 591-5100"
-  website: https://www.cityoftacoma.org/government/city_council/council_member_sarah_rumbaugh
+  website: https://www.cityoftacoma.org/government/city_council
   sources:
   - https://cityoftacoma.org
 - name: Jamika Scott
@@ -33,9 +33,9 @@
   positions:
   - Council Member
   - Position 3
-  email: ''
+  email: jscott8@cityoftacoma.org
   phone_number: "(253) 591-5100"
-  website: https://www.cityoftacoma.org/government/city_council/council_member_jamika_scott
+  website: https://www.cityoftacoma.org/government/city_council
   sources:
   - https://cityoftacoma.org
 - name: Sandesh Sadalge
@@ -45,7 +45,7 @@
   - Position 4
   email: ''
   phone_number: "(253) 591-5100"
-  website: https://www.cityoftacoma.org/government/city_council/council_member_sandesh_sadalge
+  website: https://www.cityoftacoma.org/government/city_council
   sources:
   - https://cityoftacoma.org
 - name: Joe Bushnell
@@ -53,9 +53,9 @@
   positions:
   - Council Member
   - Position 5
-  email: ''
+  email: jbushnell2@cityoftacoma.org
   phone_number: "(253) 591-5100"
-  website: https://www.cityoftacoma.org/government/city_council/council_member_joe_bushnell
+  website: https://www.cityoftacoma.org/government/city_council
   sources:
   - https://cityoftacoma.org
 - name: Kiara Daniels
@@ -63,9 +63,9 @@
   positions:
   - Council Member
   - Position 6
-  email: ''
+  email: kdaniels@cityoftacoma.org
   phone_number: "(253) 591-5100"
-  website: https://www.cityoftacoma.org/government/city_council/deputy_mayor_kiara_daniels
+  website: https://www.cityoftacoma.org/government/city_council
   sources:
   - https://cityoftacoma.org
 - name: Olgy Diaz
@@ -73,9 +73,9 @@
   positions:
   - Council Member
   - Position 7
-  email: ''
+  email: odiaz@cityoftacoma.org
   phone_number: "(253) 591-5100"
-  website: https://www.cityoftacoma.org/government/city_council/council_member_olgy_diaz
+  website: https://www.cityoftacoma.org/government/city_council
   sources:
   - https://cityoftacoma.org
 - name: Kristina Walker
@@ -83,8 +83,8 @@
   positions:
   - Council Member
   - Position 8
-  email: ''
+  email: kwalker@cityoftacoma.org
   phone_number: "(253) 591-5100"
-  website: https://www.cityoftacoma.org/government/city_council/council_member_kristina_walker
+  website: https://www.cityoftacoma.org/government/city_council
   sources:
   - https://cityoftacoma.org

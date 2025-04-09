@@ -1298,7 +1298,7 @@ Watch this CityLine segment with Council Member Walker (September 1, 2022):
 
 ### Latest News
 
-  [Tacoma City Council Statement on National Actions to Strip Federal Employees of Their Collective Bargaining Rights](https://cityoftacoma.org/government/city_council/city_council_news_releases/tacoma_city_council_statement_on_national_actions_to_strip_federal_employees_of_their_collective_bargaining_rights)  April 1, 2025 I – along with my colleagues on the Tacoma City Council – stand in strong solidarity with the Pierce County Central Labor Council, AFL-CIO, and all workers affected by the March 27 executive order that strips federal employees of their collective bar...  [View more City Council news](https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=37661) 
+  [New E-Bike Rebate Programs Launch for Tacoma and Washington State](https://cityoftacoma.org/government/city_council/city_council_news_releases/new_e-_bike_rebate_programs_launch_for_tacoma_and_washington_state)  April 8, 2025 The City has secured grant funding from the Washington State Department of Ecology to provide 450 e-bike rebates specifically for Tacoma residents living in overburdened communities highly impacted by air quality....  [View more City Council news](https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=37661) 
 
 ### At-Large District Map
 

@@ -37,8 +37,8 @@ places:
   type: First-class city
   population: 219346
   government_type: Council-Manager
-  meta_updated_at: '2025-04-08'
-  meta_hash: 0f504318a94b19ee19b959f7f189d8a0
+  meta_updated_at: '2025-04-09'
+  meta_hash: 5683c75604fc2a5f1356b2e94e789b81
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:vancouver
   - ocd-division/country:us/state:wa/county:clark/place:vancouver
