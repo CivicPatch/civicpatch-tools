@@ -1,0 +1,242 @@
+---
+- name: Anne McEnerny-Ogle
+  image: images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg
+  positions:
+  - mayor
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2022-01-01'
+  end_term_date: '2025-12-31'
+- name: Kim D. Harless
+  image: ''
+  positions:
+  - council member
+  - seat 1
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2022-12-29'
+  end_term_date: '2025-12-31'
+- name: Erik Paulsen
+  image: ''
+  positions:
+  - council member
+  - seat 2
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2021-11-02'
+  end_term_date: '2025-12-31'
+- name: Diana H. Perez
+  image: ''
+  positions:
+  - council member
+  - seat 3
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2021-12-29'
+  end_term_date: '2025-12-31'
+- name: Bart Hansen
+  image: ''
+  positions:
+  - council member
+  - seat 4
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2024-01-01'
+  end_term_date: '2027-12-31'
+- name: Ty Stober
+  image: ''
+  positions:
+  - council member
+  - seat 5
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2024-01-01'
+  end_term_date: '2027-12-31'
+- name: Sarah J. Fox
+  image: ''
+  positions:
+  - council member
+  - seat 6
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2024-01-01'
+  end_term_date: '2027-12-31'
+- name: Royce Pollard
+  image: images/a2b531df575e1bfdeaf9adda37f4493fa1d0a86bc9e7886052c156b1bf6cbf2f.jpg
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/remembering-mayor-royce-pollard/
+  start_term_date: '1996-01-01'
+  end_term_date: '2010-12-31'
+- name: Marc Fazio
+  image: images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/government/city-center-redevelopment-authority/
+  start_term_date: ''
+  end_term_date: ''
+- name: Dick Krippaehne
+  image: images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/government/city-center-redevelopment-authority/
+  start_term_date: ''
+  end_term_date: ''
+- name: Michi Slick
+  image: images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/government/city-center-redevelopment-authority/
+  start_term_date: ''
+  end_term_date: ''
+- name: David Copenhaver
+  image: images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/government/city-center-redevelopment-authority/
+  start_term_date: ''
+  end_term_date: ''
+- name: Alisa Pyszka
+  image: images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/government/city-center-redevelopment-authority/
+  start_term_date: ''
+  end_term_date: ''
+- name: Allison Reynolds
+  image: images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/government/city-center-redevelopment-authority/
+  start_term_date: ''
+  end_term_date: ''
+- name: Ken Anderton
+  image: images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png
+  positions: []
+  email: ''
+  phone_number: ''
+  website: ''
+  sources:
+  - https://www.cityofvancouver.us/government/city-center-redevelopment-authority/
+  start_term_date: ''
+  end_term_date: ''
+- name: Jan Robertson
+  image: images/000f997bc3482d50870905000940bb13c82a9ccf2a54503feaf6796688484f75.png
+  positions:
+  - board president
+  email: ''
+  phone_number: ''
+  website: https://www.cityofvancouver.us/government/downtown-redevelopment-authority/#section1Jan%2520Robertson
+  sources:
+  - https://www.cityofvancouver.us/government/downtown-redevelopment-authority/
+  start_term_date:
+  end_term_date:
+- name: Kathleen Kee
+  image: images/000f997bc3482d50870905000940bb13c82a9ccf2a54503feaf6796688484f75.png
+  positions:
+  - Secretary/Treasurer
+  email: ''
+  phone_number: ''
+  website: https://www.cityofvancouver.us/government/downtown-redevelopment-authority/#section2Kathleen%2520Kee
+  sources:
+  - https://www.cityofvancouver.us/government/downtown-redevelopment-authority/
+  start_term_date:
+  end_term_date:
+- name: Dyann Bernatz
+  image: images/000f997bc3482d50870905000940bb13c82a9ccf2a54503feaf6796688484f75.png
+  positions:
+  - board member
+  email: ''
+  phone_number: ''
+  website: https://www.cityofvancouver.us/government/downtown-redevelopment-authority/#section3Dyann%2520Bernatz
+  sources:
+  - https://www.cityofvancouver.us/government/downtown-redevelopment-authority/
+  start_term_date:
+  end_term_date:
+- name: Tom Donovan
+  image: images/000f997bc3482d50870905000940bb13c82a9ccf2a54503feaf6796688484f75.png
+  positions:
+  - board member
+  email: ''
+  phone_number: ''
+  website: https://www.cityofvancouver.us/government/downtown-redevelopment-authority/#section4Tom%2520Donovan
+  sources:
+  - https://www.cityofvancouver.us/government/downtown-redevelopment-authority/
+  start_term_date:
+  end_term_date:
+- name: Brad Hutton
+  image: images/000f997bc3482d50870905000940bb13c82a9ccf2a54503feaf6796688484f75.png
+  positions:
+  - board member
+  email: ''
+  phone_number: ''
+  website: https://www.cityofvancouver.us/government/downtown-redevelopment-authority/#section2Brad%2520Hutton
+  sources:
+  - https://www.cityofvancouver.us/government/downtown-redevelopment-authority/
+  start_term_date:
+  end_term_date:
+- name: Lon Pluckhahn
+  image: images/0ef95cb5776db11c7e68dc9c8cd21e8ede6f1504771693aef283832d56bb34cc.jpg
+  positions:
+  - city manager
+  email: lon.pluckhahn@cityofvancouver.us
+  phone_number: 360-487-8600
+  website: https://www.cityofvancouver.us/departments/city-managers-office/#section1
+  sources:
+  - https://www.cityofvancouver.us/departments/city-managers-office/
+  start_term_date:
+  end_term_date:
+- name: Lisa Brandl
+  image: images/0ef95cb5776db11c7e68dc9c8cd21e8ede6f1504771693aef283832d56bb34cc.jpg
+  positions:
+  - deputy city manager
+  - enterprise services
+  email: lisa.brandl@cityofvancouver.us
+  phone_number: 360-487-8600
+  website: https://www.cityofvancouver.us/departments/city-managers-office/#section2
+  sources:
+  - https://www.cityofvancouver.us/departments/city-managers-office/
+  start_term_date:
+  end_term_date:

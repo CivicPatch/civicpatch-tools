@@ -1,0 +1,71 @@
+---
+- name: Anne McEnerny-Ogle
+  image:
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Bart Hansen
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Diana Perez
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Erik Paulsen
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Kim Harless
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Sarah J. Fox
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Ty Stober
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
