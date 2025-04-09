@@ -4,7 +4,7 @@ require "capybara"
 require "selenium-webdriver"
 require "markitdown"
 require "sanitize"
-require "mini_magick"
+require "marcel"
 
 require_relative "./common"
 require_relative "../core/browser"
@@ -92,11 +92,11 @@ module Scrapers
     end
 
     def safe_download(url)
-      uri = URI.parse(url)
-      response = Net::HTTP.get_response(uri)
+      uri = format_url(url)
+      response = HTTParty.get(uri)
 
       # Check for successful response and image content type
-      if response.is_a?(Net::HTTPSuccess) && response["Content-Type"] =~ /image/
+      if response.success? && valid_image?(response.body)
         response.body # Return image content if valid
       else
         puts "❌ Invalid image content or failed request for #{url}: #{response.code}"
@@ -105,6 +105,11 @@ module Scrapers
     rescue StandardError => e
       puts "❌ Failed to download from #{url}: #{e.message}"
       nil
+    end
+
+    def valid_image?(content)
+      mime_type = Marcel::MimeType.for(content)
+      mime_type.start_with?("image")
     end
 
     def update_html_links(base_url, nokogiri_html)

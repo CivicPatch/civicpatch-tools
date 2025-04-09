@@ -39,10 +39,10 @@ gem "zaru", "~> 1.0"
 
 gem "amatch", "~> 0.4.1"
 
-gem "mini_magick", "~> 5.2"
-
 gem "googleauth", "~> 1.14"
 
 gem "google-apis-sheets_v4", "~> 0.39.0"
 
 gem "csv", "~> 3.3"
+
+gem "marcel", "~> 1.0"

@@ -17,6 +17,7 @@ module Scrapers
       url = url.gsub(/\s+$/, "")
       # get rid of spaces
       url.gsub(" ", "%20")
+      url = Addressable::URI.encode_component(url).to_s
       Addressable::URI.parse(url).to_s
     end
 
