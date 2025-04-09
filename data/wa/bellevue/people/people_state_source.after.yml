@@ -1,0 +1,61 @@
+---
+- name: Lynne Robinson
+  image:
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Claire Sumadiwirya
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Conrad Lee
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Dave Hamilton
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Jared Nieuwenhuis
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: John Stokes
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
