@@ -1,4 +1,4 @@
-name: Validate City People
+name: Validate City Representatives
 
 on:
   pull_request:
