@@ -83,6 +83,18 @@ module Validators
                    Validators::Utils.similarity_score("positions", ["Mayor", "Council Member"], ["Council Member"])
     end
 
+    def test_positions_similarity
+      value1 = ["Council Member, District 6", "Council Member, District 7"]
+      value2 = ["Council Member, District 6", "Council Member"]
+      assert_equal 0.75, Validators::Utils.similarity_score("positions", value1, value2)
+    end
+
+    def test_positions_no_similarity
+      value1 = ["Council Member, District 6"]
+      value2 = ["Mayor, District 1"]
+      assert_equal 0.0, Validators::Utils.similarity_score("positions", value1, value2)
+    end
+
     ### TESTING DATA AGREEMENT ###
     def test_compare_people_across_sources
       result = Validators::Utils.compare_people_across_sources(@sources)
@@ -90,7 +102,7 @@ module Validators
       expected_contested_people = {
         "Alice Smith" => {
           "website" => {
-            disagreement_score: 0.46666666666666656,
+            disagreement_score: 1.0,
             values: {
               "source1" => nil,
               "source2" => "alice.com",
@@ -108,7 +120,7 @@ module Validators
             }
           },
           "website" => {
-            disagreement_score: 0.5692307692307692,
+            disagreement_score: 0.3,
             values: {
               "source1" => "bob.com",
               "source2" => "bob-jones.com",
@@ -127,7 +139,7 @@ module Validators
       expected_contested_people = {
         "Alice Smith" => {
           "website" => {
-            disagreement_score: 0.46666666666666656,
+            disagreement_score: 1.0,
             values: {
               "source1" => nil,
               "source2" => "alice.com",
@@ -137,7 +149,7 @@ module Validators
         },
         "Bob Jones" => {
           "positions" => {
-            disagreement_score: 0.5,
+            disagreement_score: 0.7,
             values: {
               "source1" => ["Council Member"],
               "source2" => ["Councilman"],
@@ -145,11 +157,42 @@ module Validators
             }
           },
           "website" => {
-            disagreement_score: 0.5692307692307692,
+            disagreement_score: 1.0,
             values: {
               "source1" => "bob.com",
               "source2" => "bob-jones.com",
               "source3" => "bob.com"
+            }
+          }
+        }
+      }
+
+      assert_equal expected_contested_people, result[:contested_people]
+    end
+
+    def test_compare_people_across_sources_with_different_positions
+      sources = [
+        {
+          confidence_score: 0.9,
+          source_name: "source1",
+          people: [{ "name" => "Alice Smith", "positions" => ["Mayor"] }]
+        },
+        {
+          confidence_score: 0.8,
+          source_name: "source2",
+          people: [{ "name" => "Alice Smith", "positions" => ["Councilman"] }]
+        }
+      ]
+
+      result = Validators::Utils.compare_people_across_sources(sources)
+
+      expected_contested_people = {
+        "Alice Smith" => {
+          "positions" => {
+            disagreement_score: 1.0,
+            values: {
+              "source1" => ["Mayor"],
+              "source2" => ["Councilman"]
             }
           }
         }

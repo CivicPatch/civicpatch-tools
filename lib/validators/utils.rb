@@ -57,18 +57,9 @@ module Validators
       when "positions"
         return 0.0 unless value1.is_a?(Array) && value2.is_a?(Array)
 
-        normalized1 = value1.map { |v| normalize_text(v) }
-        normalized2 = value2.map { |v| normalize_text(v) }
-
-        # Compare each role in value1 to the best match in value2
-        total_similarity = 0.0
-        normalized1.each do |pos1|
-          best_match_score = normalized2.map { |pos2| similarity_score("position", pos1, pos2) }.max || 0.0
-          total_similarity += best_match_score
-        end
-
-        average_similarity = total_similarity / normalized1.size.to_f
-        average_similarity * Math.sqrt(confidence_a * confidence_b)
+        get_array_similarity(value1, value2)
+      when "website"
+        normalize_url(value1) == normalize_url(value2) ? 1.0 : 0.0
       else
         # Use Levenshtein for fuzzy matching on names, positions, and websites
         max_length = [value1.length, value2.length].max
@@ -84,6 +75,22 @@ module Validators
         similarity * Math.sqrt(confidence_a * confidence_b)
 
       end
+    end
+
+    def self.get_array_similarity(array1, array2)
+      total_similarity = 0.0
+
+      array1.map do |item|
+        if array2.include?(item)
+          total_similarity += 1.0
+        elsif array2.any? { |item2| Text::Levenshtein.distance(item, item2) <= 6 }
+          total_similarity += 0.6
+        else
+          0.0
+        end
+      end
+
+      total_similarity / (array1.size + array2.size).to_f
     end
 
     def self.overall_agreement_score(contested_people, total_people, total_fields)
