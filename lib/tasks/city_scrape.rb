@@ -84,13 +84,13 @@ namespace :city_scrape do
     formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
 
-    ## Web Scrape Source
+    ### Web Scrape Source
     source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
-    formatted_scrape_people = finalize_city_directory(state, city_entry, city_directory, source_dirs)
+    finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
     ## Gemini Source
     google_gemini = Services::GoogleGemini.new
-    gemini_city_people = google_gemini.get_city_people(city_entry["name"], city_entry["website"])
+    gemini_city_people = google_gemini.get_city_people(state, city_entry)
     Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
     formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
@@ -105,7 +105,9 @@ namespace :city_scrape do
     city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
     CityScrape::StateManager.update_state_places(state, [
                                                    { "gnis" => city_entry["gnis"],
-                                                     "meta_updated_at" => Time.now.strftime("%Y-%m-%d"),
+                                                     "meta_updated_at" => Time.now
+                                                      .in_time_zone("America/Los_Angeles")
+                                                      .strftime("%Y-%m-%d"),
                                                      "meta_hash" => city_people_hash }
                                                  ])
   end

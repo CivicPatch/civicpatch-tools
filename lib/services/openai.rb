@@ -4,6 +4,7 @@ require "openai"
 require "scrapers/standard"
 require "scrapers/common"
 require "utils/yaml_helper"
+require "utils/costs_helper"
 require "core/city_manager"
 
 # TODO: track token usage
@@ -12,12 +13,13 @@ module Services
   BASE_SLEEP = 5  # Base sleep time for exponential backoff
   class Openai
     @@MAX_TOKENS = 100_000
+    MODEL = "gpt-4o-mini"
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_info(content_file, city_council_url)
+    def extract_city_info(state, city_entry, content_file, city_council_url)
       content = File.read(content_file)
 
       return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
@@ -28,7 +30,9 @@ module Services
         { role: "system", content: system_instructions },
         { role: "user", content: user_instructions }
       ]
-      response_yaml = run_prompt(messages)
+      request_origin = "#{state}_#{city_entry["name"]}_city_scrape"
+      response_yaml = run_prompt(messages, request_origin)
+
       response = Utils::YamlHelper.yaml_string_to_hash(response_yaml)
 
       # filter out invalid people
@@ -48,7 +52,7 @@ module Services
       end
     end
 
-    def extract_person_information(person, content_file, url)
+    def extract_person_information(state, city_entry, person, content_file, url)
       positions = Core::CityManager.get_position_roles("mayor_council")
       divisions = Core::CityManager.get_position_divisions("mayor_council")
       position_examples = Core::CityManager.get_position_examples("mayor_council")
@@ -93,7 +97,8 @@ module Services
         { role: "user", content: user_instructions }
       ]
 
-      response = run_prompt(messages)
+      request_origin = "#{state}_#{city_entry["name"]}_person_scrape"
+      response = run_prompt(messages, request_origin)
 
       person = Utils::YamlHelper.yaml_string_to_hash(response)
       person["website"] = url
@@ -166,15 +171,19 @@ module Services
 
     private
 
-    def run_prompt(messages)
+    def run_prompt(messages, request_origin)
       retry_attempts = 0
       response = @client.chat(
         parameters: {
-          model: "gpt-4o-mini",
+          model: MODEL,
           messages: messages,
           temperature: 0.0
         }
       )
+
+      input_tokens_num = response.dig("usage", "prompt_tokens")
+      output_tokens_num = response.dig("usage", "completion_tokens")
+      Utils::CostsHelper.log_llm_cost(request_origin, "openai", input_tokens_num, output_tokens_num, MODEL)
 
       response.dig("choices", 0, "message", "content")
     rescue Faraday::TooManyRequestsError => e

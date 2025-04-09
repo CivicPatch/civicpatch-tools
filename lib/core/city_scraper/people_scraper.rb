@@ -26,9 +26,9 @@ module CityScraper
         search_results_to_process = search_result_urls - search_results_processed
         puts "Engine #{engine} found #{search_result_urls.count} search results for #{city_entry["name"]}"
         puts "Search results to process: #{search_results_to_process.count}"
-        puts "#{search_results_to_process.join("\n")}"
+        puts search_results_to_process.join("\n")
 
-        new_source_dirs, found_people = fetch_people(openai_service, data_fetcher, engine,
+        new_source_dirs, found_people = fetch_people(state, city_entry, openai_service, data_fetcher, engine,
                                                      cache_path, search_results_to_process, config)
         city_people = Core::PeopleManager.merge_people(city_people, found_people)
 
@@ -39,7 +39,8 @@ module CityScraper
       end
 
       people = city_people.map do |person|
-        person_dir, updated_person = scrape_person_website(openai_service, data_fetcher, cache_path, person)
+        person_dir, updated_person = scrape_person_website(state, city_entry, openai_service, data_fetcher, cache_path,
+                                                           person)
         updated_person = Core::PeopleManager.merge_person(person, updated_person)
         next person unless updated_person.present?
 
@@ -51,7 +52,7 @@ module CityScraper
       [local_source_dirs, people]
     end
 
-    def self.scrape_person_website(openai_service, data_fetcher, cache_path, person)
+    def self.scrape_person_website(state, city_entry, openai_service, data_fetcher, cache_path, person)
       website = person["website"]
       return nil if website.blank?
       return nil if person["sources"].any? { |source| source == website }
@@ -64,7 +65,7 @@ module CityScraper
       FileUtils.mkdir_p(person_dir)
 
       content_file = data_fetcher.extract_content(website, person_dir)
-      person_info = openai_service.extract_person_information(person, content_file, website)
+      person_info = openai_service.extract_person_information(state, city_entry, person, content_file, website)
 
       return nil unless person_info.present? && person_info.is_a?(Hash)
 
@@ -74,6 +75,8 @@ module CityScraper
     end
 
     def self.fetch_people(
+      state,
+      city_entry,
       openai_service,
       data_fetcher,
       engine,
@@ -88,7 +91,7 @@ module CityScraper
         page_cache_path = File.join(cache_path, "#{engine}_#{index}")
         FileUtils.mkdir_p(page_cache_path)
 
-        partial_people = fetch_and_process_page(openai_service, data_fetcher, page_cache_path, url)
+        partial_people = fetch_and_process_page(state, city_entry, openai_service, data_fetcher, page_cache_path, url)
 
         puts "Found partial set of people: #{partial_people.count}"
 
@@ -110,10 +113,10 @@ module CityScraper
       [directories_with_people, found_people]
     end
 
-    def self.fetch_and_process_page(openai_service, data_fetcher, page_cache_path, url)
+    def self.fetch_and_process_page(state, city_entry, openai_service, data_fetcher, page_cache_path, url)
       puts "Fetching #{url}"
       content_file = data_fetcher.extract_content(url, page_cache_path)
-      openai_service.extract_city_info(content_file, url)
+      openai_service.extract_city_info(state, city_entry, content_file, url)
     end
 
     def self.valid_partial_directory?(partial_directory)
