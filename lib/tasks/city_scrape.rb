@@ -84,21 +84,21 @@ namespace :city_scrape do
     formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
 
-    #### Web Scrape Source
-    # source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
-    # finalize_city_directory(state, city_entry, city_directory, source_dirs)
+    ### Web Scrape Source
+    source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
+    finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
-    ### Gemini Source
-    # google_gemini = Services::GoogleGemini.new
-    # gemini_city_people = google_gemini.get_city_people(state, city_entry)
-    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
-    # formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
-    # Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
+    ## Gemini Source
+    google_gemini = Services::GoogleGemini.new
+    gemini_city_people = google_gemini.get_city_people(state, city_entry)
+    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
+    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
+    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
 
-    # validated_result = Validators::CityPeople.validate_sources(state, gnis)
+    validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
-    # combined_people = validated_result[:merged_sources]
-    # formatted_people = Core::PeopleManager.format_people(combined_people, config)
+    combined_people = validated_result[:merged_sources]
+    formatted_people = Core::PeopleManager.format_people(combined_people, config)
 
     Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
