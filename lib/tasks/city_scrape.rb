@@ -88,28 +88,28 @@ namespace :city_scrape do
     source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
     finalize_city_directory(state, city_entry, city_directory, source_dirs)
 
-    #### Gemini Source
-    # google_gemini = Services::GoogleGemini.new
-    # gemini_city_people = google_gemini.get_city_people(state, city_entry)
-    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
-    # formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
-    # Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
+    ### Gemini Source
+    google_gemini = Services::GoogleGemini.new
+    gemini_city_people = google_gemini.get_city_people(state, city_entry)
+    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
+    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
+    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
 
-    # validated_result = Validators::CityPeople.validate_sources(state, gnis)
+    validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
-    # combined_people = validated_result[:merged_sources]
-    # formatted_people = Core::PeopleManager.format_people(combined_people, config)
+    combined_people = validated_result[:merged_sources]
+    formatted_people = Core::PeopleManager.format_people(combined_people, config)
 
-    # Core::PeopleManager.update_people(state, city_entry, formatted_people)
+    Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
-    # city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
-    # CityScrape::StateManager.update_state_places(state, [
-    #                                               { "gnis" => city_entry["gnis"],
-    #                                                 "meta_updated_at" => Time.now
-    #                                                  .in_time_zone("America/Los_Angeles")
-    #                                                  .strftime("%Y-%m-%d"),
-    #                                                 "meta_hash" => city_people_hash }
-    #                                             ])
+    city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
+    CityScrape::StateManager.update_state_places(state, [
+                                                   { "gnis" => city_entry["gnis"],
+                                                     "meta_updated_at" => Time.now
+                                                      .in_time_zone("America/Los_Angeles")
+                                                      .strftime("%Y-%m-%d"),
+                                                     "meta_hash" => city_people_hash }
+                                                 ])
   end
 
   def create_prepare_directories(state, city_entry)
