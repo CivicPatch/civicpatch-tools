@@ -77,22 +77,29 @@ module Validators
     end
 
     def test_similarity_levenshtein
-      assert_in_delta 0.8, Validators::Utils.similarity_score("positions", ["Council Member"], ["Councilman"]), 0.2
-      assert_equal 0.25, Validators::Utils.similarity_score("positions", ["Mayor"], ["Council Member"])
-      assert_equal 0.625,
-                   Validators::Utils.similarity_score("positions", ["Mayor", "Council Member"], ["Council Member"])
+      assert_in_delta 0.5, Validators::Utils.similarity_score("positions", ["Council Member"], ["Councilman"]), 0.1
+      assert_in_delta 0.07, Validators::Utils.similarity_score("positions", ["Mayor"], ["Council Member"]), 0.1
+      assert_in_delta 0.38,
+                      Validators::Utils.similarity_score("positions", ["Mayor", "Council Member"], ["Council Member"]),
+                      0.05
     end
 
     def test_positions_similarity
       value1 = ["Council Member, District 6", "Council Member, District 7"]
       value2 = ["Council Member, District 6", "Council Member"]
-      assert_equal 0.75, Validators::Utils.similarity_score("positions", value1, value2)
+      assert_in_delta 0.6, Validators::Utils.similarity_score("positions", value1, value2), 0.1
     end
 
     def test_positions_no_similarity
       value1 = ["Council Member, District 6"]
       value2 = ["Mayor, District 1"]
-      assert_equal 0.0, Validators::Utils.similarity_score("positions", value1, value2)
+      assert_equal 0.25, Validators::Utils.similarity_score("positions", value1, value2)
+    end
+
+    def test_websites_ignore_www
+      value1 = "www.example.com"
+      value2 = "example.com"
+      assert_equal 1.0, Validators::Utils.similarity_score("website", value1, value2)
     end
 
     ### TESTING DATA AGREEMENT ###
@@ -102,7 +109,7 @@ module Validators
       expected_contested_people = {
         "Alice Smith" => {
           "website" => {
-            disagreement_score: 1.0,
+            disagreement_score: 0.33333333333333326,
             values: {
               "source1" => nil,
               "source2" => "alice.com",
@@ -112,7 +119,7 @@ module Validators
         },
         "Bob Jones" => {
           "positions" => {
-            disagreement_score: 0.5,
+            disagreement_score: 0.5714285714285714,
             values: {
               "source1" => ["Council Member"],
               "source2" => ["Councilman"],
@@ -120,7 +127,7 @@ module Validators
             }
           },
           "website" => {
-            disagreement_score: 0.3,
+            disagreement_score: 0.46153846153846156,
             values: {
               "source1" => "bob.com",
               "source2" => "bob-jones.com",
@@ -139,7 +146,7 @@ module Validators
       expected_contested_people = {
         "Alice Smith" => {
           "website" => {
-            disagreement_score: 1.0,
+            disagreement_score: 0.33333333333333326,
             values: {
               "source1" => nil,
               "source2" => "alice.com",
@@ -149,7 +156,7 @@ module Validators
         },
         "Bob Jones" => {
           "positions" => {
-            disagreement_score: 0.7,
+            disagreement_score: 0.5714285714285714,
             values: {
               "source1" => ["Council Member"],
               "source2" => ["Councilman"],
@@ -157,7 +164,7 @@ module Validators
             }
           },
           "website" => {
-            disagreement_score: 1.0,
+            disagreement_score: 0.46153846153846156,
             values: {
               "source1" => "bob.com",
               "source2" => "bob-jones.com",
@@ -213,7 +220,7 @@ module Validators
       value2 = ["Councilman"]
       similarity = Validators::Utils.similarity_score("positions", value1, value2)
       # Assuming some acceptable range for slight differences
-      assert_in_delta 0.8, similarity, 0.2
+      assert_equal 0.5357142857142857, similarity
     end
 
     def test_similarity_larger_difference_in_positions
@@ -221,7 +228,7 @@ module Validators
       value2 = ["Council Member"]
       similarity = Validators::Utils.similarity_score("positions", value1, value2)
       # The larger the difference, the lower the similarity
-      assert_in_delta 0.25, similarity, 0.2
+      assert_in_delta 0.07, similarity, 0.02
     end
 
     def test_similarity_multiple_positions_comparison
@@ -229,7 +236,7 @@ module Validators
       value2 = ["Councilman", "Council Member"]
       similarity = Validators::Utils.similarity_score("positions", value1, value2)
       # Check that average similarity is calculated for multiple positions
-      assert_in_delta 0.8, similarity, 0.2
+      assert_equal 1.0, similarity
     end
 
     def test_similarity_with_nil_value

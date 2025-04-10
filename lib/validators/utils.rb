@@ -57,40 +57,65 @@ module Validators
       when "positions"
         return 0.0 unless value1.is_a?(Array) && value2.is_a?(Array)
 
-        get_array_similarity(value1, value2)
-      when "website"
-        normalize_url(value1) == normalize_url(value2) ? 1.0 : 0.0
-      else
-        # Use Levenshtein for fuzzy matching on names, positions, and websites
-        max_length = [value1.length, value2.length].max
-        return 0.0 if max_length.zero?
-
-        distance = Text::Levenshtein.distance(value1, value2)
-        similarity = 1.0 - (distance.to_f / max_length)
-
-        # Slight adjustment for position similarity
-        similarity = 1.0 - (distance.to_f / (max_length + 2.0)) if [:position, "position"].include?(field)
+        similarity = get_array_similarity(value1, value2)
 
         # Apply confidence weighting
         similarity * Math.sqrt(confidence_a * confidence_b)
+      when "website"
+        normalized_value1 = normalize_url(value1)
+        normalized_value2 = normalize_url(value2)
 
+        return 1.0 if normalized_value1 == normalized_value2
+
+        get_text_similarity(normalized_value1, normalized_value2)
+      else
+        similarity = get_text_similarity(value1, value2)
+        # Apply confidence weighting
+        similarity * Math.sqrt(confidence_a * confidence_b)
       end
     end
 
-    def self.get_array_similarity(array1, array2)
-      total_similarity = 0.0
+    def self.get_text_similarity(value1, value2)
+      return 1.0 if value1 == value2
 
-      array1.map do |item|
-        if array2.include?(item)
+      max_length = [value1.length, value2.length].max
+      return 0.0 if max_length.zero?
+
+      distance = Text::Levenshtein.distance(value1, value2)
+      1.0 - (distance.to_f / max_length)
+    end
+
+    def self.get_array_similarity(array1, array2)
+      return 1.0 if array1.sort == array2.sort
+
+      total_similarity = 0.0
+      total_items = array1.size + array2.size
+
+      array1.each do |item1|
+        # Check for exact match first
+        if array2.include?(item1)
           total_similarity += 1.0
-        elsif array2.any? { |item2| Text::Levenshtein.distance(item, item2) <= 6 }
-          total_similarity += 0.6
         else
-          0.0
+          # Calculate Levenshtein similarity, but apply a higher weight for close matches
+          best_match_score = array2.map do |item2|
+            distance = Text::Levenshtein.distance(item1, item2)
+            max_len = [item1.length, item2.length].max
+            similarity = 1.0 - (distance.to_f / max_len)
+
+            # Boost if the distance is low but the match is close (e.g., Council Member vs. Councilman)
+            if distance <= 6
+              similarity += 0.5 # Increase similarity for slight differences
+            end
+
+            similarity
+          end.max || 0.0
+
+          total_similarity += best_match_score
         end
       end
 
-      total_similarity / (array1.size + array2.size).to_f
+      # Normalize similarity based on the size of both arrays
+      total_similarity / total_items.to_f
     end
 
     def self.overall_agreement_score(contested_people, total_people, total_fields)
