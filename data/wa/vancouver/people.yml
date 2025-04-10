@@ -1,0 +1,70 @@
+---
+- name: Anne McEnerny-Ogle
+  positions:
+  - Mayor
+  email: anne.mcenerny-ogle@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://cityofvancouver.us/departments/mayor-city-council
+  image: images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg
+  sources:
+  - https://www.cityofvancouver.us
+  - https://cityofvancouver.us/departments/mayor-city-council
+- name: Bart Hansen
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://cityofvancouver.us/departments/mayor-city-council
+  image:
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council
+- name: Diana H. Perez
+  positions:
+  - Council Member
+  email: diana.perez@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://cityofvancouver.us/departments/mayor-city-council
+  image:
+  sources:
+  - https://www.cityofvancouver.us
+  - https://cityofvancouver.us/departments/mayor-city-council
+- name: Erik Paulsen
+  positions:
+  - Council Member
+  email: erik.paulsen@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://cityofvancouver.us/departments/mayor-city-council
+  image:
+  sources:
+  - https://www.cityofvancouver.us
+  - https://cityofvancouver.us/departments/mayor-city-council
+- name: Kim D. Harless
+  positions:
+  - Council Member
+  email: kim.harless@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://cityofvancouver.us/departments/mayor-city-council
+  image:
+  sources:
+  - https://www.cityofvancouver.us
+  - https://cityofvancouver.us/departments/mayor-city-council
+- name: Sarah J. Fox
+  positions:
+  - Council Member
+  email: sarah.fox@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://cityofvancouver.us/departments/mayor-city-council
+  image:
+  sources:
+  - https://www.cityofvancouver.us
+  - https://cityofvancouver.us/departments/mayor-city-council
+- name: Ty Stober
+  positions:
+  - Council Member
+  email: ty.stober@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://cityofvancouver.us/departments/mayor-city-council
+  image:
+  sources:
+  - https://www.cityofvancouver.us
+  - https://cityofvancouver.us/departments/mayor-city-council

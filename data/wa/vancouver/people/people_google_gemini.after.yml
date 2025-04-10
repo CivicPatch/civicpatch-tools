@@ -1,0 +1,84 @@
+---
+- name: Anne McEnerny-Ogle
+  image:
+  positions:
+  - Mayor
+  email: anne.mcenerny-ogle@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://www.cityofvancouver.us/citycouncil/page/anne-mcenerny-ogle-mayor
+  sources:
+  - https://www.cityofvancouver.us
+  start_term_date: '2022'
+  end_term_date: '2025'
+- name: Kim D. Harless
+  image:
+  positions:
+  - Council Member
+  - Position 1
+  email: kim.harless@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://www.cityofvancouver.us/citycouncil/page/kim-harless-councilmember
+  sources:
+  - https://www.cityofvancouver.us
+  start_term_date: '2022'
+  end_term_date: '2025'
+- name: Erik Paulsen
+  image:
+  positions:
+  - Council Member
+  - Position 2
+  email: erik.paulsen@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://www.cityofvancouver.us/citycouncil/page/erik-paulsen-councilmember
+  sources:
+  - https://www.cityofvancouver.us
+  start_term_date: '2021'
+  end_term_date: '2025'
+- name: Diana H. Perez
+  image:
+  positions:
+  - Council Member
+  - Position 3
+  email: diana.perez@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://www.cityofvancouver.us/citycouncil/page/diana-perez-councilmember
+  sources:
+  - https://www.cityofvancouver.us
+  start_term_date: '2022'
+  end_term_date: '2025'
+- name: Ty Stober
+  image:
+  positions:
+  - Council Member
+  - Position 4
+  email: ty.stober@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://www.cityofvancouver.us/citycouncil/page/ty-stober-councilmember
+  sources:
+  - https://www.cityofvancouver.us
+  start_term_date: '2024'
+  end_term_date: '2027'
+- name: Tina M. Schrager
+  image:
+  positions:
+  - Council Member
+  - Position 5
+  email: tina.schrager@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://www.cityofvancouver.us/citycouncil/page/tina-schrager-councilmember
+  sources:
+  - https://www.cityofvancouver.us
+  start_term_date: '2024'
+  end_term_date: '2027'
+- name: Sarah J. Fox
+  image:
+  positions:
+  - Council Member
+  - Position 6
+  email: sarah.fox@cityofvancouver.us
+  phone_number: "(360) 487-8629"
+  website: https://www.cityofvancouver.us/citycouncil/page/sarah-fox-councilmember
+  sources:
+  - https://www.cityofvancouver.us
+  start_term_date: '2024'
+  end_term_date: '2027'

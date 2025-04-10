@@ -1,0 +1,261 @@
+---
+- name: Sarah Dollar
+  image:
+  positions:
+  - Assistant To City Council
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Sree Thirunagari
+  image:
+  positions:
+  - Building Official
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Natasha Ramras
+  image:
+  positions:
+  - Chief Financial Officer
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Jonathan  Young
+  image:
+  positions:
+  - City Attorney
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Lon Pluckhahn
+  image:
+  positions:
+  - City Manager
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Laura Shepard
+  image:
+  positions:
+  - Communications Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Chad Eiken
+  image:
+  positions:
+  - Community Development Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Sarah J. Fox
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Bart Hansen
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Kim Harless
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Erik Paulsen
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Diana Perez
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Ty Stober
+  image:
+  positions:
+  - Councilmember (mpt)
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Lisa Brandl
+  image:
+  positions:
+  - Deputy City Manager
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Teresa Brum
+  image:
+  positions:
+  - Deputy Economic Development Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Alicia  Sojourner
+  image:
+  positions:
+  - Diversity/equity/inclusion Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Patrick Quinton
+  image:
+  positions:
+  - Economic Development/economic Prosperity/housing Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Amanda Delapena
+  image:
+  positions:
+  - Executive Assistant To City Manager/mayor
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Brennan Blue
+  image:
+  positions:
+  - Fire Chief
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Geraldene Moyle
+  image:
+  positions:
+  - General Services Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Patrick Gilbride
+  image:
+  positions:
+  - Information Services Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: David Perlick
+  image:
+  positions:
+  - Interim Parks/recreation/cultural Services Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Anne McEnerny-Ogle
+  image:
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Tim Buck
+  image:
+  positions:
+  - Operations/maintenance Manager
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Troy Price
+  image:
+  positions:
+  - Police Chief
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Aaron Lande
+  image:
+  positions:
+  - Program/policy Development Manager
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:

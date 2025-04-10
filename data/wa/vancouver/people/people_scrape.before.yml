@@ -1,0 +1,84 @@
+---
+- name: Anne McEnerny-Ogle
+  image: images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg
+  positions:
+  - mayor
+  email: ''
+  phone_number: ''
+  website: https://cityofvancouver.us/departments/mayor-city-council/
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2022-01-01'
+  end_term_date: '2025-12-31'
+- name: Kim D. Harless
+  image: ''
+  positions:
+  - council member
+  - seat 1
+  email: ''
+  phone_number: ''
+  website: https://cityofvancouver.us/departments/mayor-city-council/
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2022-12-29'
+  end_term_date: '2025-12-31'
+- name: Erik Paulsen
+  image: ''
+  positions:
+  - council member
+  - seat 2
+  email: ''
+  phone_number: ''
+  website: https://cityofvancouver.us/departments/mayor-city-council/
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2021-11-05'
+  end_term_date: '2025-12-31'
+- name: Diana H. Perez
+  image: ''
+  positions:
+  - council member
+  - seat 3
+  email: ''
+  phone_number: ''
+  website: https://cityofvancouver.us/departments/mayor-city-council/
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2022-12-29'
+  end_term_date: '2025-12-31'
+- name: Bart Hansen
+  image: ''
+  positions:
+  - council member
+  - seat 4
+  email: ''
+  phone_number: ''
+  website: https://cityofvancouver.us/departments/mayor-city-council/
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2024-01-01'
+  end_term_date: '2027-12-31'
+- name: Ty Stober
+  image: ''
+  positions:
+  - council member
+  - seat 5
+  email: ''
+  phone_number: ''
+  website: https://cityofvancouver.us/departments/mayor-city-council/
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2024-01-01'
+  end_term_date: '2027-12-31'
+- name: Sarah J. Fox
+  image: ''
+  positions:
+  - council member
+  - seat 6
+  email: ''
+  phone_number: ''
+  website: https://cityofvancouver.us/departments/mayor-city-council/
+  sources:
+  - https://cityofvancouver.us/departments/mayor-city-council/
+  start_term_date: '2024-01-01'
+  end_term_date: '2027-12-31'

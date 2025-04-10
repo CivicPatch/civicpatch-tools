@@ -53,6 +53,8 @@ places:
   type: First-class city
   population: 190915
   government_type: Council-Manager
+  meta_updated_at: '2025-04-09'
+  meta_hash: 41fc6d2d7e75aaf28667a738cb77827e
 - ocd_ids:
   - ocd-division/country:us/state:wa/place:bellevue
   - ocd-division/country:us/state:wa/county:king/place:bellevue
