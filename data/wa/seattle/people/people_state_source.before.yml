@@ -1,0 +1,241 @@
+---
+- name: Saad Bashir
+  image:
+  positions:
+  - Chief Technology Officer
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Ann  Davison
+  image:
+  positions:
+  - City Attorney
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: David Jones
+  image:
+  positions:
+  - City Auditor
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Scheereen Dedman
+  image:
+  positions:
+  - City Clerk
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Nathan Torgelson
+  image:
+  positions:
+  - Construction/inspections Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Sara Nelson
+  image:
+  positions:
+  - Council President
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Joy  Hollingsworth
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Robert  Kettle
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Alexis Mercedes Rinck
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Cathy Moore
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Maritza  Rivera
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Rob Saka
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Mark Solomon
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Dan Strauss
+  image:
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Elizabeth Baldwin
+  image:
+  positions:
+  - Court Administrator
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: " Harold Scoggins"
+  image:
+  positions:
+  - Fire Chief
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Ryan  Vancil
+  image:
+  positions:
+  - Hearing Examiner
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Kimberly  Loving
+  image:
+  positions:
+  - Human Resources Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Gael D. Tarleton
+  image:
+  positions:
+  - Intergovernmental Relations Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Jamie  Carnell
+  image:
+  positions:
+  - Interim Finance Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Bruce Harrell
+  image:
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Rico Quirindongo
+  image:
+  positions:
+  - Planning/community Development Director
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Adrian  Diaz
+  image:
+  positions:
+  - Police Chief
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
+- name: Jesús Aguirre
+  image:
+  positions:
+  - Superintendent
+  email:
+  phone_number:
+  website:
+  sources:
+  start_term_date:
+  end_term_date:
