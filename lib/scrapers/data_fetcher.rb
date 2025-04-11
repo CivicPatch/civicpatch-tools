@@ -13,6 +13,13 @@ module Scrapers
   class DataFetcher
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
+      cached_file = PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
+
+      if File.exist?(cached_file)
+        puts "Skipping #{url} because cache file already exists"
+        return cached_file
+      end
+
       html = fetch_html(url)
       html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
 
