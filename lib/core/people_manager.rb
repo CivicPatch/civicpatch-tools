@@ -66,9 +66,10 @@ module Core
         when "phone_number"
           merged_person["phone_number"] = person2["phone_number"] || value
         when "website"
-          merged_person["website"] = person2["website"] || value
+          url = person2["website"] || value
+          merged_person["website"] = url
         when "sources"
-          sources = (Array(value) + Array(person2["sources"])).uniq
+          sources = (Array(value) + Array(person2["sources"])).compact.uniq
           merged_person["sources"] = sources
         end
       end

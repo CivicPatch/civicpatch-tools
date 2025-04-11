@@ -19,7 +19,7 @@ module Services
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_info(state, city_entry, content_file, city_council_url)
+    def extract_city_people(state, city_entry, content_file, city_council_url)
       content = File.read(content_file)
 
       return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
@@ -100,13 +100,6 @@ module Services
 
       request_origin = "#{state}_#{city_entry["name"]}_person_scrape"
       response = run_prompt(messages, request_origin)
-
-      File.write("chat.txt", "-------------SYSTEM INSTRUCTIONS-------------------", mode: "a")
-      File.write("chat.txt", system_instructions, mode: "a")
-      File.write("chat.txt", "-------------USER INSTRUCTIONS-------------------", mode: "a")
-      File.write("chat.txt", user_instructions, mode: "a")
-      File.write("chat.txt", "-------------RESPONSE-------------------", mode: "a")
-      File.write("chat.txt", response, mode: "a")
 
       person = Utils::YamlHelper.yaml_string_to_hash(response)
       person["website"] = url

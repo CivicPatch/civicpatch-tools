@@ -85,15 +85,28 @@ namespace :city_scrape do
     Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
 
     ### Web Scrape Source
-    source_dirs, city_directory = CityScraper::PeopleScraper.fetch(state, gnis, config)
-    finalize_city_directory(state, city_entry, city_directory, source_dirs)
+    openai_service = Services::Openai.new
+    openai_source_dirs, openai_people = CityScraper::PeopleScraper.fetch(openai_service, state, gnis, config)
+    Core::PeopleManager.update_people(state, city_entry, openai_people, "scrape.before")
+    formatted_openai_people = Core::PeopleManager.format_people(openai_people, config)
+    Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
 
-    ### Gemini Source
+    # TODO: Would like to use a SERP API to get the URLs for city directories instead
+    seeded_urls = formatted_openai_people.map do |person|
+      person["sources"]
+    end.uniq.flatten
+
+    ## Gemini Source
     google_gemini = Services::GoogleGemini.new
-    gemini_city_people = google_gemini.get_city_people(state, city_entry)
+    gemini_source_dirs, gemini_city_people = CityScraper::PeopleScraper.fetch(google_gemini, state, gnis, config,
+                                                                              %w[seeded brave manual], seeded_urls)
+
     Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
     formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
+
+    source_dirs = openai_source_dirs + gemini_source_dirs
+    cleanup_city_folder(state, city_entry, source_dirs)
 
     validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
@@ -158,21 +171,12 @@ namespace :city_scrape do
     end
   end
 
-  def finalize_city_directory(state, city_entry, new_city_people, source_dirs)
+  def cleanup_city_folder(state, city_entry, source_dirs)
+    copy_source_files(state, city_entry, source_dirs)
+    Scrapers::Utils.prune_unused_images(state, city_entry["gnis"])
+
     city_path = CityScrape::CityManager.get_city_path(state, city_entry)
     cache_directory = File.join(city_path, "cache")
-
-    copy_source_files(state, city_entry, source_dirs)
-
-    # Keep before & after state
-    config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
-    Core::PeopleManager.update_people(state, city_entry, new_city_people, "scrape.before")
-    formatted_people = Core::PeopleManager.format_people(new_city_people, config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_people, "scrape.after")
-
     FileUtils.rm_rf(cache_directory)
-
-    Scrapers::Utils.prune_unused_images(state, city_entry["gnis"])
-    formatted_people
   end
 end

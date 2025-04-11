@@ -126,4 +126,12 @@ namespace :scratch do
     result = openai_service.extract_person_information("wa", city_entry, person, content_file, "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee")
     puts result
   end
+
+  desc "get urls"
+  task :get_urls do |_t, args|
+    google_gemini = Services::GoogleGemini.new
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis("wa", "2411856")
+    response = google_gemini.get_urls_for_city_people("wa", city_entry)
+    puts response.inspect
+  end
 end
