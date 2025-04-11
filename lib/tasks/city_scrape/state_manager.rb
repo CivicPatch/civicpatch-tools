@@ -6,12 +6,12 @@ module CityScrape
 
     # each places must have a gnis key
     def self.get_state_places_file(state)
-      PathHelper.project_path(File.join("data", state, "places.yml"))
+      PathHelper.project_path(File.join("data_source", state, "places.json"))
     end
 
     def self.get_state_places(state)
       state_places_file = get_state_places_file(state)
-      YAML.load(File.read(state_places_file)) if File.exist?(state_places_file)
+      JSON.parse(File.read(state_places_file)) if File.exist?(state_places_file)
     end
 
     def self.update_state_places(state, updated_places)
@@ -21,7 +21,7 @@ module CityScrape
       }
 
       state_places_file = get_state_places_file(state)
-      state_places = YAML.load(File.read(state_places_file)) if File.exist?(state_places_file)
+      state_places = JSON.parse(File.read(state_places_file)) if File.exist?(state_places_file)
 
       updated_places.each do |updated_place|
         next unless updated_place["gnis"].present?
@@ -39,7 +39,7 @@ module CityScrape
         end
       end
 
-      File.write(state_places_file, state_places.to_yaml)
+      File.write(state_places_file, JSON.pretty_generate(state_places))
     end
 
     def self.get_city_entry_by_gnis(state, gnis)

@@ -114,6 +114,9 @@ GEM
     parser (3.3.7.4)
       ast (~> 2.4.1)
       racc
+    pp (0.6.2)
+      prettyprint
+    prettyprint (0.2.0)
     prism (1.4.0)
     public_suffix (6.0.1)
     racc (1.8.1)
@@ -202,6 +205,7 @@ DEPENDENCIES
   minitest (~> 5.16)
   nokogiri
   open_data!
+  pp (~> 0.6.2)
   rake (~> 13.0)
   rubocop (~> 1.75)
   ruby-openai

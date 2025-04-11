@@ -10,6 +10,8 @@ module Core
 
       avoid_keywords = %w[alerts news event calendar]
 
+      puts "SearchRouter: #{engine}"
+
       case engine
       when "manual"
         # TODO: replace with actual keyword groups
@@ -20,7 +22,6 @@ module Core
           urls += Services::Brave.get_search_result_urls(search_query, website)
         end
       when "seeded"
-        puts "SEEDED URLS: #{seeded_urls}"
         urls += seeded_urls
       end
 

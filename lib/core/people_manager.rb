@@ -5,8 +5,8 @@ require_relative "./person_manager/utils"
 module Core
   class PeopleManager
     def self.get_people(state, gnis, type)
-      people_file_path = PathHelper.get_city_people_candidates_file_path(state, gnis, type)
-      YAML.load(File.read(people_file_path))
+      people_file_path = PathHelper.get_people_candidates_file_path(state, gnis, type)
+      JSON.parse(File.read(people_file_path))
     end
 
     def self.normalize_people(people, positions_config)
@@ -154,14 +154,14 @@ module Core
       directory_type = nil
     )
       if directory_type.present?
-        city_people_path = PathHelper.get_city_people_candidates_file_path(state, city_entry["gnis"],
-                                                                           directory_type)
+        city_people_path = PathHelper.get_people_candidates_file_path(state, city_entry["gnis"],
+                                                                      directory_type)
       else
-        city_people_path = File.join(PathHelper.get_city_path(state, city_entry["gnis"]), "people.yml")
+        city_people_path = File.join(PathHelper.get_data_city_path(state, city_entry["gnis"]), "people.json")
         raise "Invalid city people path: #{city_people_path}" unless city_people_path.present?
       end
 
-      File.write(city_people_path, new_city_people.to_yaml)
+      File.write(city_people_path, JSON.pretty_generate(new_city_people))
     end
 
     def self.people_with_names(people)

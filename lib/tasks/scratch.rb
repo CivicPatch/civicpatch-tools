@@ -87,7 +87,7 @@ namespace :scratch do
     directories_file_path = File.join(city_path, "directories")
 
     FileUtils.mkdir_p(directories_file_path)
-    File.write(File.join(directories_file_path, "directory.gemini.yml"), simple_city_directory.to_yaml)
+    File.write(File.join(directories_file_path, "directory.gemini.json"), simple_city_directory.to_json)
   end
 
   desc "test people manager"

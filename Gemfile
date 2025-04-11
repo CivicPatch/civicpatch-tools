@@ -46,3 +46,5 @@ gem "google-apis-sheets_v4", "~> 0.39.0"
 gem "csv", "~> 3.3"
 
 gem "marcel", "~> 1.0"
+
+gem "pp", "~> 0.6.2"

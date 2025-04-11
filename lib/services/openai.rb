@@ -3,7 +3,7 @@
 require "openai"
 require "scrapers/standard"
 require "scrapers/common"
-require "utils/yaml_helper"
+require "services/shared/response_schemas"
 require "utils/costs_helper"
 require "core/city_manager"
 
@@ -31,22 +31,17 @@ module Services
         { role: "user", content: user_instructions }
       ]
       request_origin = "#{state}_#{city_entry["name"]}_city_scrape"
-      response_yaml = run_prompt(messages, request_origin)
+      response = run_prompt(messages, request_origin)
 
-      response = Utils::YamlHelper.yaml_string_to_hash(response_yaml)
+      return nil if response.blank?
 
       # filter out invalid people
-      response.select do |person|
+      people = response["people"].select do |person|
         Scrapers::Standard.valid_name?(person["name"]) &&
-          person["positions"].present? &&
-          (person["phone_number"].present? || person["email"].present? || person["website"].present?)
+          person["positions"].present?
       end
 
-      # response.map do |person|
-      #  person = Scrapers::Standard.format_person(person, city_council_url, person["website"])
-      #  person
-      # end
-      response.map do |person|
+      people.map do |person|
         person["sources"] = [city_council_url]
         Scrapers::Standard.normalize_source_person(person)
       end
@@ -60,21 +55,22 @@ module Services
 
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
-          You are an expert data extractor.
-          Extract the following properties from the provided content.
-          You should be returning a YAML object with the following properties:
-          You are looking for content related to #{person["name"]}
-          - name
-            image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-            phone_number
-            email
-            positions (An array of strings)
-            start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
-            end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
+        You are an expert data extractor.
+        Extract the following properties from the provided content.
+        You should be returning a JSON object with the following properties:
+        You are looking for content related to #{person["name"]}
+
+        Return a JSON object with the following properties:
+        name
+        image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
+        phone_number
+        email
+        positions (An array of strings)
+        start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
+        end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
 
         Notes:
         - Extract only the contact information associated with the person. Do not return general info.
-        - Return the results in YAML format.
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
         - start_term_date and end_term_date should be strings.
@@ -101,7 +97,7 @@ module Services
       request_origin = "#{state}_#{city_entry["name"]}_person_scrape"
       response = run_prompt(messages, request_origin)
 
-      person = Utils::YamlHelper.yaml_string_to_hash(response)
+      person = response
       person["website"] = url
 
       Scrapers::Standard.normalize_source_person(person)
@@ -123,7 +119,7 @@ module Services
           They might have other associated positions that look like these:
           #{divisions.join(",")}
 
-          There should be an array of the following properties.
+          Return a JSON object where each person has the following properties:
           - name
             image (Extract the image URL from the <img> tag's src attribute.#{" "}
                   This will always be a relative URL starting with images/)
@@ -136,14 +132,30 @@ module Services
                   If no specific website is provided, leave this empty —#{" "}
                   do not default to the general city or council page.
 
+          Return the JSON object in this format:
+          {
+            "people": [
+              {
+                "name": "John Doe",
+                "image": "images/12341324132.jpg",
+                "phone_number": "123-456-7890",
+                "email": "john.doe@example.com",
+                "positions": ["Mayor", "Council Member"],
+                "start_term_date": "2022-01-01",
+                "end_term_date": "2022-12-31",
+                "website": "https://example.com/john-doe"
+              }
+            ]
+          }
+
           Basic rules:
           - Students are NOT city council members.
           - Extract only the contact information associated with the person. Do not return general info.
           - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
           - If you find just a list of names, with at least a website or email, they are likely to be council members.
           - If the content is a press release, do not extract any people data from the content.
-          - Output the results in YAML format. For any fields not provided in the content, return an empty string, except for 'name' which is required.
-          - If you cannot find any relevant information, return YAML as empty array.
+          - For any fields not provided in the content, omit the field, except for 'name' which is required.
+          - If you cannot find any relevant information, return an empty array.
           - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
             can be directly inferred with certainty—do not assume or estimate missing information.
             They should be strings.
@@ -176,7 +188,8 @@ module Services
         parameters: {
           model: MODEL,
           messages: messages,
-          temperature: 0.0
+          temperature: 0.0,
+          response_format: { type: "json_object" }
         }
       )
 
@@ -184,7 +197,13 @@ module Services
       output_tokens_num = response.dig("usage", "completion_tokens")
       Utils::CostsHelper.log_llm_cost(request_origin, "openai", input_tokens_num, output_tokens_num, MODEL)
 
-      response.dig("choices", 0, "message", "content")
+      json_output = response.dig("choices", 0, "message", "content")
+
+      begin
+        JSON.parse(json_output)
+      rescue StandardError
+        nil
+      end
     rescue Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
@@ -195,6 +214,8 @@ module Services
       else
         puts "[429] Too many requests. Max retries reached for #{url}."
       end
+      # rescue Faraday::BadRequestError => e
+      #  puts "[400] Bad request. #{e.message} #{e.backtrace}"
     end
 
     # Remove coordinates from geojson file
