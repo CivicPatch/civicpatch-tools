@@ -50,7 +50,7 @@ module Services
         Act as a precise data extraction script.
         Your sole function is to extract information about elected officials
         listed on the following specific web page(s) based *only* on the content
-        found there and format it strictly as YAML.
+        found there and format it strictly as JSON.
 
         **Target City:** #{city}
 
@@ -69,15 +69,19 @@ module Services
         - Only include an individual in the output array if their `name` can be successfully extracted from the content. If no name is found for a potential entry, omit that entry entirely.
         - If the content does not contain any information about elected officials, return an empty array.
 
-        YAML Output Format (an array of objects):
-        ```yaml
-        - name: <string> (Required)
-        - phone_number: <string>
-        - email: <string>
-        - positions: <array of strings>
-        - start_term_date: <string>
-        - end_term_date: <string>
-        - website: <string>
+        JSON Output Format (an array of objects):
+        ```json
+        [
+          {
+            "name": <string> (Required),
+            "phone_number": <string>,
+            "email": <string>,
+            "positions": <array of strings>,
+            "start_term_date": <string> Format: YYYY-MM, or YYYY-MM-DD,
+            "end_term_date": <string> Format: YYYY-MM, or YYYY-MM-DD,
+            "website": <string>
+          }
+        ]
         ```
 
         Here is the content:
@@ -103,7 +107,7 @@ module Services
       prompt = %(
         Act as a precise data extraction script.
         Your sole function is to extract information about a specific person
-        based *only* on the content found there and format it strictly as YAML.
+        based *only* on the content found there and format it strictly as JSON.
 
         **Target City:** #{city}
         **Person:** #{person["name"]}
@@ -120,6 +124,14 @@ module Services
         - Only include an individual in the output if their `name` can be successfully extracted from the content. If no name is found for a potential entry, omit that entry entirely.
         - If the content does not contain any information about elected officials, return an empty object {}.
 
+        Return object in JSON:
+        name: <string> (Required)
+        phone_number: <string>
+        email: <string>
+        positions: <array of strings>
+        start_term_date: <string> Format: YYYY-MM, or YYYY-MM-DD
+        end_term_date: <string> Format: YYYY-MM, or YYYY-MM-DD
+
         **Content:** #{content}
       )
 
@@ -131,66 +143,10 @@ module Services
       request_origin = "#{state}_#{city}_gemini_#{MODEL}_get_person"
       extracted_person = run_prompt(prompt, request_origin, schema_for_api)
 
-      puts "EXTRACTED PERSON: #{extracted_person.inspect}"
-
       extracted_person["website"] = url
       extracted_person["sources"] = [url]
       Scrapers::Standard.normalize_source_person(extracted_person)
     end
-
-    # def get_city_people(state, city_entry, roster_urls)
-    #  puts "roster urls: #{roster_urls}"
-    #  city = city_entry["name"]
-
-    #  positions = Core::CityManager.get_position_roles("mayor_council")
-    #  divisions = Core::CityManager.get_position_divisions("mayor_council")
-    #  position_examples = Core::CityManager.get_position_examples("mayor_council")
-    #  prompt = %(
-    #    Act as a precise data extraction script.
-    #    Your sole function is to extract information about elected officials
-    #    listed on the following specific web page(s) based *only* on the content
-    #    found there and format it strictly as YAML.
-
-    #    **Target City:** #{city}
-    #    **Source URL(s):** #{roster_urls}
-
-    #    Goal: Identify all people listed on the provided page(s) who currently hold relevant positions in the city's government.
-
-    #    **Roles of Interest:** #{positions.join(", ")}
-    #    (Also consider associated roles like: #{divisions.join(", ")})
-    #    (Examples of role names: #{position_examples})
-
-    #    Instructions:
-    #    1. Access and carefully parse the content only from the provided Source URL(s).
-    #    2. Crucially: Do NOT use any external knowledge, web searches, prior training data,
-    #        or information from sources other than the exact URL(s) provided.
-    #        Your knowledge is limited strictly to the content on the page(s).
-    #    3. Identify any GENERAL contact information (office phone, office email,
-    #        main department/city website) listed on the page for the Mayor/Council office.
-    #        Store this general information temporarily.
-    #    4. Identify individuals currently holding one or more Positions of Interest.
-    #       Exclude former officials or those whose terms are clearly marked as ended on the page.
-    #    5. For each such qualified individual:
-    #        * Extract their `name` exactly as listed.
-    #        * Extract their DIRECT `phone_number` only if a specific phone number is
-    #          explicitly listed for that individual on the page. Use `""` if not found.
-    #        * Extract their DIRECT `email` only if a specific email address is explicitly listed
-    #          for that individual on the page. Use `""` if not found.
-    #        * Extract their exact *current* `role` or `title` as listed on the page (e.g., "Mayor", "Seat 1", "Council Member", "Ward 3").
-    #        Store these as an array of strings under the 'positions' key.
-    #        * Extract `start_term_date` and `end_term_date` only if explicitly stated on the page
-    #          for that person. Do not calculate or infer dates. Use `""` if not found.
-    #        * Extract an individual DIRECT `website`/profile link *ONLY* if a unique URL for that specific person is clearly
-    #          and unambiguously listed immediately next to or grouped with their name/details on the page.
-    #          Do NOT infer, guess, or construct URLs.
-    #          Do NOT use URLs found elsewhere on the page unless directly tied to the individual.
-    #          Use the full absolute URL. Use `""` if not found.
-    #    6. Fallback for General Contact Info: After processing an individual according to step 5,
-    #       check if their `phone_number`, `email`, AND `website` fields are ALL `""`. If they are, then populate the
-    #       `office_phone_number`, `office_email`, and `office_website` fields for that individual using the
-    #       GENERAL contact information identified in step 3 (if any was found).
-    #       If no general contact info was found in step 3, these office fields should also be `""`.
-    #       If any of the direct `
 
     def run_prompt(prompt, request_origin, schema_for_api)
       retry_attempts = 0

@@ -125,6 +125,7 @@ module Scrapers
       base_number, extension = digits.split(/ext|x/i, 2).map(&:strip)
 
       # Reject numbers that are too short (e.g., 7-digit numbers)
+      return nil if base_number.nil?
       return nil if base_number.length < 10
 
       # U.S. Number Formatting
