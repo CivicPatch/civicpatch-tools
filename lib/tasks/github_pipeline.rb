@@ -120,7 +120,7 @@ namespace :github_pipeline do
       comment += "\n\n---\n\n" # Add a separator between each person's table
     end
 
-    json = { "approve" => score >= 0.8,
+    json = { "approve" => score >= 0.7,
              "score" => score,
              "comment" => comment }.to_json
     puts json

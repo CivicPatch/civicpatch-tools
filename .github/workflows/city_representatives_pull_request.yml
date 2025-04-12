@@ -29,8 +29,15 @@ jobs:
         id: generate-token
         uses: actions/create-github-app-token@v2
         with:
-            app-id: ${{ secrets.GH_APP_BOT_APP_ID }}
-            private-key: ${{ secrets.GH_APP_BOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.GH_APP_BOT_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_PRIVATE_KEY }}
+
+      - name: Generate GitHub App Approve Token
+        id: generate-approve-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }} 
 
       - name: Install dependencies
         run: |
@@ -84,4 +91,13 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           gh pr comment ${{ github.event.pull_request.number }} --body "$SOURCE_VALIDATION_COMMENT"
-      
+
+      - name: Approve PR if Validated
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
+        run: |
+          echo "Checking if PR should be approved..."
+          echo "SOURCE_VALIDATION_APPROVE=$SOURCE_VALIDATION_APPROVE"
+          if [ "$SOURCE_VALIDATION_APPROVE" = "true" ]; then
+            gh pr approve ${{ github.event.pull_request.number }}
+          fi
