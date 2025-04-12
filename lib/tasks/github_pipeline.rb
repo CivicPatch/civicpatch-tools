@@ -40,7 +40,7 @@ namespace :github_pipeline do
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
-    city_directory = CityScrape::CityManager.get_city_directory(state, state_city_entry)
+    city_directory = Core::PeopleManager.get_people(state, state_city_entry["gnis"])
 
     markdown_content = <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}

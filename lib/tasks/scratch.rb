@@ -76,13 +76,13 @@ namespace :scratch do
     url = "https://www.seattle.gov/"
     gemini_thinks = google_gemini.get_city_officials(city, url)
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis("wa", "2411856")
-    city_directory = CityScrape::CityManager.get_city_directory("wa", city_entry)
-    city_path = CityScrape::CityManager.get_city_path("wa", city_entry)
+    simple_city_directory = CityScrape::CityManager.get_city_directory("wa", city_entry)
+    city_path = CityScrape::CityManager.get_data_city_path("wa", city_entry)
 
-    simple_city_directory = city_directory.map do |person|
-      formatted = Utils::DirectoryHelper.format_simple(person)
-      formatted.reject { |k, _v| k == "image" }
-    end
+    # simple_city_directory = city_directory.map do |person|
+    #  formatted = Utils::DirectoryHelper.format_simple(person)
+    #  formatted.reject { |k, _v| k == "image" }
+    # end
 
     directories_file_path = File.join(city_path, "directories")
 

@@ -4,8 +4,14 @@ require_relative "./person_manager/utils"
 
 module Core
   class PeopleManager
-    def self.get_people(state, gnis, type)
-      people_file_path = PathHelper.get_people_candidates_file_path(state, gnis, type)
+    def self.get_people(state, gnis, type = nil)
+      people_file_path = if type.present?
+                           PathHelper.get_people_candidates_file_path(state, gnis, type)
+                         else
+                           File.join(PathHelper.get_data_city_path(state, gnis), "people.json")
+                         end
+      raise "Invalid city people path: #{people_file_path}" unless people_file_path.present?
+
       JSON.parse(File.read(people_file_path))
     end
 
@@ -126,21 +132,20 @@ module Core
     def self.valid_city_people?(people)
       council_members = get_council_members_count(people)
       mayors = get_mayors_count(people)
+      File.write("chat.txt", "council_members = #{council_members}, mayors = #{mayors}", mode: "a")
 
       council_members > 1 && mayors.positive?
     end
 
     # TODO: needs config-driven
     def self.get_council_members_count(people)
-      people.select do |person|
-        person["positions"].map(&:downcase).include?("council member") && has_contact_info?(person)
-      end.count
+      positions = people.map { |p| p["positions"] }.flatten.map(&:downcase)
+      positions.count { |position| position.include?("council member") }
     end
 
     def self.get_mayors_count(people)
-      people.select do |person|
-        person["positions"].map(&:downcase).include?("mayor") && has_contact_info?(person)
-      end.count
+      positions = people.map { |p| p["positions"] }.flatten.map(&:downcase)
+      positions.count { |position| position.include?("mayor") }
     end
 
     def self.has_contact_info?(person)
