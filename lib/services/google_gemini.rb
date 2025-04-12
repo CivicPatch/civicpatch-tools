@@ -24,6 +24,10 @@ module Services
 
       prompt = %(
         Act as a precise data extraction script.
+
+        First, determine whether the content contains a directory or about page of elected official(s).
+        If so, continue with the following instructions. If not, return an empty array.
+
         Your sole function is to extract information about elected officials
         listed on the following specific web page(s) based *only* on the content
         found there and format it strictly as JSON.
