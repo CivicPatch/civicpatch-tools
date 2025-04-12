@@ -14,7 +14,6 @@ module Scrapers
           cities = Services::Wikipedia.fetch_places_from_wikipedia("wa", title)
 
           sorted_cities = cities.sort_by { |city| city["population"] }.reverse
-
           source_cities = get_places_list
           with_government_types(source_cities, sorted_cities)
         end

@@ -16,7 +16,7 @@ module Scrapers
       cached_file = PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
 
       if File.exist?(cached_file)
-        puts "Skipping #{url} because cache file already exists"
+        puts "Skipping data fetch #{url} because cache file already exists"
         return cached_file
       end
 
@@ -69,10 +69,10 @@ module Scrapers
           corrected_src = "/#{original_src}"
 
           fallback_url = Addressable::URI.parse(base_url).join(corrected_src).to_s
-          puts "⚠️  Retrying with corrected path: #{fallback_url}"
           image_content = safe_download(fallback_url)
 
           # If the fallback works, update absolute_url
+          puts "✅ Successfully downloaded image from fallback url: #{fallback_url}"
           absolute_url = fallback_url # if valid_image?(image_content)
         end
 

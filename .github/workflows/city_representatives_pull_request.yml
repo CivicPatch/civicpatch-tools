@@ -6,7 +6,7 @@ on:
       - opened
       - synchronize
     paths:
-      - '**/people.yml'
+      - '**/people.json'
 permissions:
   contents: read
   pull-requests: write

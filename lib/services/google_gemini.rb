@@ -1,39 +1,15 @@
 require "core/city_manager"
-require "utils/yaml_helper"
 require "utils/costs_helper"
+require "pp"
 
 module Services
   class GoogleGemini
     # MODEL = "gemini-2.5-pro-exp-03-25".freeze # FREE TIER
-    MODEL = "gemini-1.5-flash".freeze # FREE TIER
+    MODEL = "gemini-2.0-flash".freeze # FREE TIER
     # MODEL = "gemini-1.5-pro".freeze
     # MODEL = "gemini-2.0-flash"
     BASE_URI = "https://generativelanguage.googleapis.com".freeze
     BASE_SLEEP = 5
-
-    # Define the desired JSON output schema (OpenAPI format) as a constant
-    PERSON_SCHEMA = {
-      type: :object,
-      properties: {
-        name: { type: :string },
-        phone_number: { type: :string },
-        email: { type: :string },
-        website: { type: :string },
-        positions: {
-          type: :array,
-          items: { type: :string }
-        },
-        start_term_date: { type: :string },
-        end_term_date: { type: :string }
-      },
-      required: ["name"] # Enforce that name is required
-    }.freeze # Freeze the constant for immutability
-
-    # Define the schema for an ARRAY of person objects
-    PEOPLE_ARRAY_SCHEMA = {
-      type: :array,
-      items: PERSON_SCHEMA # Each item in the array should follow PERSON_SCHEMA
-    }.freeze
 
     def initialize
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
@@ -89,9 +65,16 @@ module Services
       )
 
       request_origin = "#{state}_#{city}_gemini_#{MODEL}_extract_people"
-      response = run_prompt(prompt, request_origin, PEOPLE_ARRAY_SCHEMA)
+      response = run_prompt(prompt, request_origin, city_council_url,
+                            Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
 
-      response.map do |person|
+      # Filter out invalid people
+      people = response.select do |person|
+        Scrapers::Standard.valid_name?(person["name"]) &&
+          person["positions"].present? && person["positions"].count.positive?
+      end
+
+      people.map do |person|
         person["sources"] = [city_council_url]
         Scrapers::Standard.normalize_source_person(person)
       end
@@ -136,19 +119,21 @@ module Services
       )
 
       # Create a mutable copy of the schema to modify it for the API call
-      schema_for_api = PERSON_SCHEMA.dup
+      schema_for_api = Shared::ResponseSchemas::GEMINI_PERSON_SCHEMA.dup
       schema_for_api[:properties] = schema_for_api[:properties].dup # Duplicate nested properties hash
       schema_for_api[:properties].delete(:website) # Remove website property for this specific call
 
       request_origin = "#{state}_#{city}_gemini_#{MODEL}_get_person"
-      extracted_person = run_prompt(prompt, request_origin, schema_for_api)
+      extracted_person = run_prompt(prompt, request_origin, url, schema_for_api)
+
+      return nil if extracted_person.nil?
 
       extracted_person["website"] = url
       extracted_person["sources"] = [url]
       Scrapers::Standard.normalize_source_person(extracted_person)
     end
 
-    def run_prompt(prompt, request_origin, schema_for_api)
+    def run_prompt(prompt, request_origin, request_url, schema_for_api)
       retry_attempts = 0
       url = "#{BASE_URI}/v1beta/models/#{MODEL}:generateContent?key=#{@api_key}"
 
@@ -220,15 +205,13 @@ module Services
         end
 
         # Log request/response
-        File.write("chat.txt", "REQUEST", mode: "a")
-        File.write("chat.txt", prompt, mode: "a")
+        File.write("chat.txt", "REQUEST - #{request_origin} - #{request_url}", mode: "a")
         File.write("chat.txt", "PARSED RESPONSE", mode: "a")
-        File.write("chat.txt", parsed_response.inspect, mode: "a")
+        File.write("chat.txt", PP.pp(parsed_response, String.new) + "\n", mode: "a")
+
         parsed_response
       else
         puts "Request failed. HTTP Status: #{response.code}"
-        File.write("chat.txt", "REQUEST FAILED: #{response.code}", mode: "a")
-        File.write("chat.txt", response.inspect, mode: "a")
         nil
       end
     rescue StandardError => e

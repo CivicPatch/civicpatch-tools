@@ -55,12 +55,7 @@ namespace :city_scrape do
 
   desc "Find official cities for a state"
   task :get_places, [:state] do |_t, args|
-    if args[:state].blank?
-      puts "Error: Missing required parameters"
-      puts "Usage: rake 'city_info:get_places[state]'"
-      puts "Example: rake 'city_info:get_places[wa]'"
-      exit 1
-    end
+    raise "Missing required parameter: state" if args[:state].blank?
 
     state = args[:state]
 
@@ -85,8 +80,7 @@ namespace :city_scrape do
     Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
 
     ### Web Scrape Source
-    openai_service = Services::Openai.new
-    openai_source_dirs, openai_people = CityScraper::PeopleScraper.fetch(openai_service, state, gnis, config)
+    openai_source_dirs, openai_people = CityScraper::PeopleScraper.fetch("gpt", state, gnis, config)
     Core::PeopleManager.update_people(state, city_entry, openai_people, "scrape.before")
     formatted_openai_people = Core::PeopleManager.format_people(openai_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
@@ -97,16 +91,12 @@ namespace :city_scrape do
     end.uniq.flatten
 
     ## Gemini Source
-    google_gemini = Services::GoogleGemini.new
-    gemini_source_dirs, gemini_city_people = CityScraper::PeopleScraper.fetch(google_gemini, state, gnis, config,
+    gemini_source_dirs, gemini_city_people = CityScraper::PeopleScraper.fetch("google_gemini", state, gnis, config,
                                                                               %w[seeded brave manual], seeded_urls)
 
     Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
     formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
-
-    source_dirs = openai_source_dirs + gemini_source_dirs
-    cleanup_city_folder(state, city_entry, source_dirs)
 
     validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
@@ -115,7 +105,11 @@ namespace :city_scrape do
 
     Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
-    city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
+    # Move images into the right places
+    source_dirs = openai_source_dirs + gemini_source_dirs
+    copy_source_files(state, city_entry, source_dirs, formatted_people)
+
+    city_people_hash = Digest::MD5.hexdigest(combined_people.to_json)
     CityScrape::StateManager.update_state_places(state, [
                                                    { "gnis" => city_entry["gnis"],
                                                      "meta_updated_at" => Time.now
@@ -126,57 +120,42 @@ namespace :city_scrape do
   end
 
   def create_prepare_directories(state, city_entry)
-    city_path = CityScrape::CityManager.get_city_path(state, city_entry)
-    cache_destination_dir = File.join(city_path, "cache")
+    cache_destination_dir = PathHelper.get_city_cache_path(state, city_entry["gnis"])
 
     FileUtils.mkdir_p(cache_destination_dir)
-    FileUtils.rm_rf(File.join(city_path, "city_scrape_sources", "*"))
   end
 
   def copy_source_files(
     state,
     city_entry,
-    source_dirs
+    source_dirs,
+    people
   )
-    city_path = CityScrape::CityManager.get_city_path(state, city_entry)
-    sources_destination_dir = File.join(city_path, "city_scrape_sources")
-    FileUtils.rm_rf(sources_destination_dir)
-    FileUtils.mkdir_p(sources_destination_dir)
+    puts "Copying source files for #{city_entry["name"]}"
+    puts "Source dirs: #{source_dirs.inspect}"
 
-    images_dir = File.join(city_path, "images")
+    final_city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
+
+    images_dir = File.join(final_city_path, "images")
+    FileUtils.rm_rf Dir.glob("#{images_dir}/*") if Dir.exist?(images_dir)
+
     FileUtils.mkdir_p(images_dir)
+    images_in_use = people.map { |person| person["image"] }
+    puts "imagse in use: #{images_in_use}"
 
     source_dirs.each do |source_dir|
-      # Copy all images from source to destination
-      puts "Copying images from #{source_dir}/images to #{images_dir}"
-      source_image_dir = File.join(source_dir, "images")
+      # Get list of images in dir
+      source_images_dir = File.join(source_dir, "images")
+      source_dir_images = Dir.entries(source_images_dir)
 
-      if Dir.exist?(source_image_dir) && !Dir.empty?(source_image_dir)
-        Dir.glob(File.join(source_image_dir, "*")).each do |file|
-          FileUtils.cp_r(file, images_dir, remove_destination: true)
-        end
+      filtered_images = source_dir_images.select do |image_filename|
+        images_in_use.any? { |image_path| File.basename(image_path) == File.basename(image_filename) }
       end
 
-      dest_path = File.join(sources_destination_dir, File.basename(source_dir))
-
-      if Dir.exist?(dest_path)
-        puts "Deleting existing destination: #{dest_path}"
-        FileUtils.rm_rf(dest_path)
+      filtered_images.each do |filtered_image|
+        puts "Copying #{filtered_image} to #{images_dir}"
+        FileUtils.cp(File.join(source_images_dir, filtered_image), images_dir)
       end
-
-      next unless Dir.exist?(source_dir)
-
-      puts "Moving #{source_dir} to #{sources_destination_dir}"
-      FileUtils.mv(source_dir, sources_destination_dir)
     end
-  end
-
-  def cleanup_city_folder(state, city_entry, source_dirs)
-    copy_source_files(state, city_entry, source_dirs)
-    Scrapers::Utils.prune_unused_images(state, city_entry["gnis"])
-
-    city_path = CityScrape::CityManager.get_city_path(state, city_entry)
-    cache_directory = File.join(city_path, "cache")
-    FileUtils.rm_rf(cache_directory)
   end
 end

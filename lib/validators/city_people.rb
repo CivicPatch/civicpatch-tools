@@ -12,14 +12,14 @@ module Validators
     end
 
     def self.validate_sources(state, gnis)
-      sources_folder_path = PathHelper.get_city_people_sources_path(state, gnis)
-      source_files = Dir.glob(File.join(sources_folder_path, "*.yml"))
+      sources_folder_path = PathHelper.get_people_sources_path(state, gnis)
+      source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
 
       sources = []
       source_files.each do |source_file|
         next if source_file.include?("before") # Discard unprocessed results
 
-        source_people = YAML.load_file(source_file)
+        source_people = JSON.parse(File.read(source_file))
         source_name = if source_file.include?("state_source")
                         "state_source"
                       elsif source_file.include?("scrape")
