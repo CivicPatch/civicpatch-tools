@@ -65,7 +65,8 @@ module Services
       )
 
       request_origin = "#{state}_#{city}_gemini_#{MODEL}_extract_people"
-      response = run_prompt(prompt, request_origin, Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
+      response = run_prompt(prompt, request_origin, city_council_url,
+                            Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
 
       # Filter out invalid people
       people = response.select do |person|
@@ -123,7 +124,7 @@ module Services
       schema_for_api[:properties].delete(:website) # Remove website property for this specific call
 
       request_origin = "#{state}_#{city}_gemini_#{MODEL}_get_person"
-      extracted_person = run_prompt(prompt, request_origin, schema_for_api)
+      extracted_person = run_prompt(prompt, request_origin, url, schema_for_api)
 
       return nil if extracted_person.nil?
 
@@ -132,7 +133,7 @@ module Services
       Scrapers::Standard.normalize_source_person(extracted_person)
     end
 
-    def run_prompt(prompt, request_origin, schema_for_api)
+    def run_prompt(prompt, request_origin, request_url, schema_for_api)
       retry_attempts = 0
       url = "#{BASE_URI}/v1beta/models/#{MODEL}:generateContent?key=#{@api_key}"
 
@@ -204,7 +205,7 @@ module Services
         end
 
         # Log request/response
-        File.write("chat.txt", "REQUEST - #{request_origin}", mode: "a")
+        File.write("chat.txt", "REQUEST - #{request_origin} - #{request_url}", mode: "a")
         File.write("chat.txt", "PARSED RESPONSE", mode: "a")
         File.write("chat.txt", PP.pp(parsed_response, String.new) + "\n", mode: "a")
 

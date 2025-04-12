@@ -161,6 +161,7 @@ module Core
         raise "Invalid city people path: #{city_people_path}" unless city_people_path.present?
       end
 
+      FileUtils.mkdir_p(File.dirname(city_people_path))
       File.write(city_people_path, JSON.pretty_generate(new_city_people))
     end
 

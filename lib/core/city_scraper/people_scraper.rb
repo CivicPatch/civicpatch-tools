@@ -39,7 +39,11 @@ module CityScraper
         processed_search_urls += urls_to_scrape
         page_content_cache_dirs += new_page_content_cache_dirs
 
-        break if Core::PeopleManager.valid_city_people?(officials_from_search)
+        is_valid_city_people = Core::PeopleManager.valid_city_people?(officials_from_search)
+        puts "#{llm_service_string}: #{is_valid_city_people}"
+        puts "#{llm_service_string}: BEFORE MERGE: #{people_from_engine_results}"
+        puts "#{llm_service_string}: AFTER MERGE: #{officials_from_search}"
+        break if is_valid_city_people
       end
 
       officials_with_profile_data = officials_from_search.map do |person|
@@ -120,7 +124,7 @@ module CityScraper
         council_members = Core::PeopleManager.get_council_members_count(accumulated_officials)
         mayors = Core::PeopleManager.get_mayors_count(accumulated_officials)
 
-        puts "Accumulated totals -> Council members: #{council_members}, Mayors: #{mayors}"
+        puts "#{llm_service_string}: Accumulated totals -> Council members: #{council_members}, Mayors: #{mayors}"
         break if Core::PeopleManager.valid_city_people?(accumulated_officials)
       end
 

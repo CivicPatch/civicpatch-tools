@@ -137,7 +137,7 @@ namespace :city_scrape do
     final_city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
 
     images_dir = File.join(final_city_path, "images")
-    Dir.rmdir(images_dir) if Dir.exist?(images_dir)
+    FileUtils.rm_rf Dir.glob("#{images_dir}/*") if Dir.exist?(images_dir)
 
     FileUtils.mkdir_p(images_dir)
     images_in_use = people.map { |person| person["image"] }
@@ -149,11 +149,12 @@ namespace :city_scrape do
       source_dir_images = Dir.entries(source_images_dir)
 
       filtered_images = source_dir_images.select do |image_filename|
-        images_in_use.any? { |image_path| image_path.include?(image_filename) }
+        images_in_use.any? { |image_path| File.basename(image_path) == File.basename(image_filename) }
       end
 
       filtered_images.each do |filtered_image|
-        FileUtils.cp(filtered_image, images_dir)
+        puts "Copying #{filtered_image} to #{images_dir}"
+        FileUtils.cp(File.join(source_images_dir, filtered_image), images_dir)
       end
     end
   end
