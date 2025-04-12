@@ -40,9 +40,6 @@ module CityScraper
         page_content_cache_dirs += new_page_content_cache_dirs
 
         is_valid_city_people = Core::PeopleManager.valid_city_people?(officials_from_search)
-        puts "#{llm_service_string}: #{is_valid_city_people}"
-        puts "#{llm_service_string}: BEFORE MERGE: #{people_from_engine_results}"
-        puts "#{llm_service_string}: AFTER MERGE: #{officials_from_search}"
         break if is_valid_city_people
       end
 
