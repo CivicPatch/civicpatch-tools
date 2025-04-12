@@ -29,6 +29,8 @@ module Scrapers
           response = HTTParty.get(STATE_SOURCE_URL)
           document = Nokogiri::HTML(response.body)
 
+          puts "Document: #{document}"
+
           data = document.css("#tableCityProfiles").attr("data-data")
           cities = JSON.parse(data)
           found_city = cities.find do |city|

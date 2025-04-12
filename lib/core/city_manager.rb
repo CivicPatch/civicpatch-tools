@@ -30,5 +30,14 @@ module Core
     def self.get_search_keywords(government_type)
       config.dig("government_types", government_type, "search_keywords")
     end
+
+    def self.get_search_keywords_as_array(government_type)
+      keywords_hash = get_search_keywords(government_type)
+      return [] unless keywords_hash
+
+      keywords_hash.map do |name, keywords|
+        { name: name, keywords: keywords }
+      end
+    end
   end
 end
