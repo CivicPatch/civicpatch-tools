@@ -140,7 +140,7 @@ namespace :city_scrape do
     FileUtils.rm_rf Dir.glob("#{images_dir}/*") if Dir.exist?(images_dir)
 
     FileUtils.mkdir_p(images_dir)
-    images_in_use = people.map { |person| person["image"] }
+    images_in_use = people.map { |person| person["image"] }.compact
     puts "imagse in use: #{images_in_use}"
 
     source_dirs.each do |source_dir|
