@@ -107,7 +107,7 @@ namespace :city_scrape do
 
     # Move images into the right places
     source_dirs = openai_source_dirs + gemini_source_dirs
-    copy_source_files(state, city_entry, source_dirs, formatted_people)
+    process_source_files(state, city_entry, source_dirs, formatted_people)
 
     city_people_hash = Digest::MD5.hexdigest(combined_people.to_json)
     CityScrape::StateManager.update_state_places(state, [
@@ -125,7 +125,7 @@ namespace :city_scrape do
     FileUtils.mkdir_p(cache_destination_dir)
   end
 
-  def copy_source_files(
+  def process_source_files(
     state,
     city_entry,
     source_dirs,
@@ -155,6 +155,26 @@ namespace :city_scrape do
       filtered_images.each do |filtered_image|
         puts "Copying #{filtered_image} to #{images_dir}"
         FileUtils.cp(File.join(source_images_dir, filtered_image), images_dir)
+      end
+    end
+
+    # Get list of folders in the cache
+    cache_dir = PathHelper.get_city_cache_path(state, city_entry["gnis"])
+    cache_folders = Pathname.new(cache_dir).children.select { |c| c.directory? }.collect { |p| p.to_s }
+    puts "Cache folders: #{cache_folders}"
+
+    # Get list of src files in use
+    source_urls = people.flat_map do |person|
+      person["sources"]
+        .map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
+    end.uniq
+
+    puts "Source urls: #{source_urls}"
+
+    cache_folders.each do |cache_folder|
+      unless source_urls.include?(cache_folder)
+        puts "Removing #{cache_folder} from cache"
+        FileUtils.rm_rf(File.join(cache_dir, cache_folder))
       end
     end
   end

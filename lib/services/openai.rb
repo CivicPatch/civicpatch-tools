@@ -56,7 +56,7 @@ module Services
       content = File.read(content_file)
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
-        Extract the following properties from the provided content.
+
         You should be returning a JSON object with the following properties:
         You are looking for content related to #{person["name"]}
 
@@ -111,59 +111,61 @@ module Services
 
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
-          You are an expert data extractor.
-          Extract the following properties from the provided content.
-          Identify all people who are part of the city's mayor-council government.
-          The main positions we are interested in are: #{positions.join(", ")}
+        You are an expert data extractor.
+        First, determine whether the content contains a directory or about page of elected official(s).
+        If so, continue with the following instructions. If not, return an empty array.
 
-          They might have other associated positions that look like these:
-          #{divisions.join(",")}
+        The main roles we are interested in are: #{positions.join(", ")}
 
-          Return a JSON object where each person has the following properties:
-          - name
-            image (Extract the image URL from the <img> tag's src attribute.#{" "}
-                  This will always be a relative URL starting with images/)
-            phone_number: <string> Format: (123) 456-7890
-            email
-            positions (an array of strings)
-            start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
-            end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
-            website (Provide the absolute URL.)
-                  If no specific website is provided, leave this empty —#{" "}
-                  do not default to the general city or council page.
+        They might have other associated roles that look like these:
+        #{divisions.join(",")}
 
-          Return the JSON object in this format:
-          {
-            "people": [
-              {
-                "name": "John Doe",
-                "image": "images/12341324132.jpg",
-                "phone_number": "123-456-7890",
-                "email": "john.doe@example.com",
-                "positions": ["Mayor", "Council Member"],
-                "start_term_date": "2022-01-01",
-                "end_term_date": "2022-12-31",
-                "website": "https://example.com/john-doe"
-              }
-            ]
-          }
+        Some examples of roles:
+        #{position_examples}
 
-          Basic rules:
-          - Students are NOT city council members.
-          - Extract only the contact information associated with the person. Do not return general info.
-          - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
-          - If you find just a list of names, with at least a website or email, they are likely to be council members.
-          - If the content is a press release, do not extract any people data from the content.
-          - For any fields not provided in the content, omit the field, except for 'name' which is required.
-          - If you cannot find any relevant information, return an empty array.
-          - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
-            can be directly inferred with certainty—do not assume or estimate missing information.
-            They should be strings.
-          - For the "positions" field, split the positions into an array of strings.
-          - Today is #{current_date}. Ensure that only active positions are included, and#{" "}
-            exclude any positions that are not currently held or are no longer active.
-        Position Examples:
-            #{position_examples}
+        Return a JSON object where each person has the following properties:
+        - name
+          image (Extract the image URL from the <img> tag's src attribute.#{" "}
+                This will always be a relative URL starting with images/)
+          phone_number: <string> Format: (123) 456-7890
+          email
+          positions (an array of strings)
+          start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
+          end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
+          website (Provide the absolute URL.)
+                If no specific website is provided, leave this empty —#{" "}
+                do not default to the general city or council page.
+
+        Return the JSON object in this format:
+        {
+          "people": [
+            {
+              "name": "John Doe",
+              "image": "images/12341324132.jpg",
+              "phone_number": "123-456-7890",
+              "email": "john.doe@example.com",
+              "positions": ["Mayor", "Council Member"],
+              "start_term_date": "2022-01-01",
+              "end_term_date": "2022-12-31",
+              "website": "https://example.com/john-doe"
+            }
+          ]
+        }
+
+        Basic rules:
+        - Students are NOT city council members.
+        - Extract only the contact information associated with the person. Do not return general info.
+        - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
+        - If you find just a list of names, with at least a website or email, they are likely to be council members.
+        - If the content is a press release, do not extract any people data from the content.
+        - For any fields not provided in the content, omit the field, except for 'name' which is required.
+        - If you cannot find any relevant information, return an empty array.
+        - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
+          can be directly inferred with certainty—do not assume or estimate missing information.
+          They should be strings.
+        - For the "positions" field, split the positions into an array of strings.
+        - Today is #{current_date}. Ensure that only active positions are included, and#{" "}
+          exclude any positions that are not currently held or are no longer active.
       INSTRUCTIONS
 
       content = <<~CONTENT
