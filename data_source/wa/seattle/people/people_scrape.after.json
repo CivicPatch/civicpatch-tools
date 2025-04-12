@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Bruce Harrell",
+    "image": "images/ae297f8bf7650b66f3e5267ccc06abf23234a9c4acb178cb3abad7f800c199ce.jpg",
+    "positions": [
+      "Mayor"
+    ],
+    "email": null,
+    "phone_number": "(206) 684-4000",
+    "website": "https://seattle.gov/mayor",
+    "sources": [
+      "https://harrell.seattle.gov/"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Sara Nelson",
+    "image": "images/8980e1e2cced3af98b33c3051dc0093baf50f36034b5004edde025b0db690ae4.jpg",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Citywide"
+    ],
+    "email": "Sara.Nelson@seattle.gov",
+    "phone_number": "(206) 684-8809",
+    "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Rob Saka",
+    "image": "images/c690131bd6154f33a1bc0ea99b3bf0d94f3727c62246f6f1451098941616d2c5.jpg",
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "email": "Rob.Saka@seattle.gov",
+    "phone_number": "(206) 684-8801",
+    "website": "https://seattle.gov/council/saka",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Mark Solomon",
+    "image": "images/0c6d8b609300ef0691be8f0dd26f5fc07fa31dc97946bf2b52a9498d3fa5b8a3.jpg",
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "email": "Mark.Solomon2@seattle.gov",
+    "phone_number": "(206) 684-8802",
+    "website": "https://seattle.gov/council/solomon",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "image": "images/03cd886b4f338cf8520b3b22189e0101c826602317a44ff234e38c405a704aaa.jpg",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "email": "Joy.Hollingsworth@seattle.gov",
+    "phone_number": "(206) 684-8803",
+    "website": "https://seattle.gov/council/hollingsworth",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Maritza Rivera",
+    "image": "images/36ee549afe7da4667abdcf86d180ff8d9f750766ed04f812abbb7ec18bd8c8d7.jpg",
+    "positions": [
+      "Council Member",
+      "District 4"
+    ],
+    "email": "Maritza.Rivera@seattle.gov",
+    "phone_number": "(206) 684-8804",
+    "website": "https://seattle.gov/council/rivera",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Cathy Moore",
+    "image": "images/Council/Members/SquareHeadshots/moore_300.jpg",
+    "positions": [
+      "Council Member",
+      "District 5"
+    ],
+    "email": "Cathy.Moore@seattle.gov",
+    "phone_number": "(206) 684-8805",
+    "website": "https://seattle.gov/council/moore",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Dan Strauss",
+    "image": "images/13a279195aed5b588656fba571556d9114214b0c10d8007fad6ef025371e78c7.jpg",
+    "positions": [
+      "Council Member",
+      "District 6"
+    ],
+    "email": "Dan.Strauss@seattle.gov",
+    "phone_number": "(206) 684-8806",
+    "website": "https://seattle.gov/council/strauss",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Robert Kettle",
+    "image": "images/faea3dfa57d5e786126d30bb44c9cb430ad7d420471ef4729c110f21a6f32ed3.jpg",
+    "positions": [
+      "Council Member",
+      "District 7"
+    ],
+    "email": "Robert.Kettle@seattle.gov",
+    "phone_number": "(206) 684-8807",
+    "website": "https://seattle.gov/council/kettle",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "image": "images/fcbe93394fac497929e241019f78222226d899b76c434c4873eb046e983a991b.jpg",
+    "positions": [
+      "Council Member",
+      "Position 8"
+    ],
+    "email": "AlexisMercedes.Rinck@seattle.gov",
+    "phone_number": "(206) 684-8808",
+    "website": "https://seattle.gov/council/rinck",
+    "sources": [
+      "https://seattle.gov/council"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  }
+]

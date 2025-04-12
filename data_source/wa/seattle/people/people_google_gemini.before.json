@@ -1,0 +1,177 @@
+[
+  {
+    "name": "Bruce Harrell",
+    "image": null,
+    "positions": [
+      "mayor"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": null,
+    "sources": [
+      "https://harrell.seattle.gov/"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "image": null,
+    "positions": [
+      "council member",
+      "district 3",
+      "chair",
+      "select committee on the comprehensive plan"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://hollingsworth.seattle.gov",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://hollingsworth.seattle.gov"
+    ],
+    "start_term_date": "2024-01-02",
+    "end_term_date": null
+  },
+  {
+    "name": "Bob Kettle",
+    "image": null,
+    "positions": [
+      "council member",
+      "district 7",
+      "chair of the public safety committee"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://kettle.seattle.gov",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://kettle.seattle.gov"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Cathy Moore",
+    "image": null,
+    "positions": [
+      "council member",
+      "district 5"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://moore.seattle.gov",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://moore.seattle.gov"
+    ],
+    "start_term_date": "2024-11",
+    "end_term_date": null
+  },
+  {
+    "name": "Sara Nelson",
+    "image": null,
+    "positions": [
+      "council member",
+      "Council President",
+      "Position 9"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://nelson.seattle.gov",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://nelson.seattle.gov"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "image": null,
+    "positions": [
+      "council member",
+      "position 8"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://council.seattle.gov/rinck",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://council.seattle.gov/rinck"
+    ],
+    "start_term_date": "2024-12-03",
+    "end_term_date": null
+  },
+  {
+    "name": "Maritza Rivera",
+    "image": null,
+    "positions": [
+      "council member",
+      "district 4"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://rivera.seattle.gov",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://rivera.seattle.gov"
+    ],
+    "start_term_date": "2024-09-09",
+    "end_term_date": null
+  },
+  {
+    "name": "Rob Saka",
+    "image": null,
+    "positions": [
+      "council member",
+      "district 1",
+      "chair of the transportation committee",
+      "vice chair of the public safety committee"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://saka.seattle.gov",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://saka.seattle.gov"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Mark Solomon",
+    "image": null,
+    "positions": [
+      "council member",
+      "district 2"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://council.seattle.gov/solomon",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://council.seattle.gov/solomon"
+    ],
+    "start_term_date": "2025-01-27",
+    "end_term_date": null
+  },
+  {
+    "name": "Dan Strauss",
+    "image": null,
+    "positions": [
+      "council member",
+      "district 6",
+      "chair of the select budget committee"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://strauss.seattle.gov",
+    "sources": [
+      "https://harrell.seattle.gov/",
+      "https://strauss.seattle.gov"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  }
+]
