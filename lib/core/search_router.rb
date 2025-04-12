@@ -2,11 +2,11 @@ require_relative "../scrapers/city_directory"
 
 module Core
   class SearchRouter
-    def self.fetch_search_results(engine, state, city_entry, seeded_urls = [])
+    def self.fetch_search_results(engine, state, city_entry, government_type, seeded_urls = [])
       city = city_entry["name"]
       website = city_entry["website"]
       urls = []
-      keyword_groups = Scrapers::CityDirectory::MAYOR_COUNCIL_KEYWORDS
+      keyword_groups = Core::CityManager.get_search_keywords_as_array(government_type)
 
       avoid_keywords = %w[alerts news event calendar]
 

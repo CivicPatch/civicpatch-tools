@@ -6,7 +6,7 @@ module CityScraper
       llm_service_string,
       state,
       gnis,
-      config,
+      government_type,
       search_engines = %w[manual brave],
       seeded_urls = []
     )
@@ -20,7 +20,8 @@ module CityScraper
       officials_from_search = []
 
       search_engines.each do |engine|
-        search_result_urls = Core::SearchRouter.fetch_search_results(engine, state, city_entry, seeded_urls)
+        search_result_urls = Core::SearchRouter.fetch_search_results(engine, state, city_entry, government_type,
+                                                                     seeded_urls)
         urls_to_scrape = search_result_urls - processed_search_urls
         puts "#{llm_service_string} Engine #{engine} found #{search_result_urls.count} search results for #{city_entry["name"]}"
         puts "#{llm_service_string} URLs to scrape: #{urls_to_scrape.count}"
@@ -32,7 +33,7 @@ module CityScraper
           data_fetcher,
           city_cache_path,
           urls_to_scrape,
-          config
+          government_type
         )
         officials_from_search = Core::PeopleManager.merge_people(officials_from_search, people_from_engine_results)
 
@@ -95,7 +96,7 @@ module CityScraper
       data_fetcher,
       search_results_base_cache_path,
       urls_from_search,
-      config
+      government_type
     )
       cache_dirs_with_results = []
       accumulated_officials = []
@@ -116,7 +117,8 @@ module CityScraper
 
         cache_dirs_with_results << url_content_cache_path
         accumulated_officials = Core::PeopleManager.merge_people(accumulated_officials, officials_from_page)
-        accumulated_officials = Core::PeopleManager.normalize_people(accumulated_officials, config)
+        positions_config = Core::CityManager.get_positions(government_type)
+        accumulated_officials = Core::PeopleManager.normalize_people(accumulated_officials, positions_config)
 
         council_members = Core::PeopleManager.get_council_members_count(accumulated_officials)
         mayors = Core::PeopleManager.get_mayors_count(accumulated_officials)

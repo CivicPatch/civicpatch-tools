@@ -42,12 +42,13 @@ government_types:
         - city hall
         - council
       city leaders:
-        - mayor
+        - about mayor
         - meet the mayor
         - about the mayor
+        - mayor
         - council president
         - council manager
-      common:
+      elected officials:
         - elected officials
         - index
         - government

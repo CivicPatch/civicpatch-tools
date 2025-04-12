@@ -71,18 +71,25 @@ namespace :city_scrape do
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
     create_prepare_directories(state, city_entry)
 
-    config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
+    government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
+    positions_config = Core::CityManager.get_positions(government_type)
 
     # Official Source
-    source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
-    Core::PeopleManager.update_people(state, city_entry, source_city_people, "state_source.before")
-    formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
+    # This call can fail if the state source is down (e.g. MRSC.org for WA)
+    begin
+      source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
+      Core::PeopleManager.update_people(state, city_entry, source_city_people, "state_source.before")
+      formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, positions_config)
+      Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
+    rescue StandardError => e
+      puts "Error pulling from state source: #{e}"
+      puts "Backtrace: #{e.backtrace}"
+    end
 
     ### Web Scrape Source
-    openai_source_dirs, openai_people = CityScraper::PeopleScraper.fetch("gpt", state, gnis, config)
+    openai_source_dirs, openai_people = CityScraper::PeopleScraper.fetch("gpt", state, gnis, government_type)
     Core::PeopleManager.update_people(state, city_entry, openai_people, "scrape.before")
-    formatted_openai_people = Core::PeopleManager.format_people(openai_people, config)
+    formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
     Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
 
     # TODO: Would like to use a SERP API to get the URLs for city directories instead
@@ -91,17 +98,19 @@ namespace :city_scrape do
     end.uniq.flatten
 
     ## Gemini Source
-    gemini_source_dirs, gemini_city_people = CityScraper::PeopleScraper.fetch("google_gemini", state, gnis, config,
-                                                                              %w[seeded brave manual], seeded_urls)
+    gemini_source_dirs,
+    gemini_city_people = CityScraper::PeopleScraper
+                         .fetch("gpt", state, gnis, government_type,
+                                %w[seeded brave manual], seeded_urls)
 
     Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
-    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, config)
+    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, positions_config)
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
 
     validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
     combined_people = validated_result[:merged_sources]
-    formatted_people = Core::PeopleManager.format_people(combined_people, config)
+    formatted_people = Core::PeopleManager.format_people(combined_people, positions_config)
 
     Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
@@ -160,8 +169,7 @@ namespace :city_scrape do
 
     # Get list of folders in the cache
     cache_dir = PathHelper.get_city_cache_path(state, city_entry["gnis"])
-    cache_folders = Pathname.new(cache_dir).children.select { |c| c.directory? }.collect { |p| p.to_s }
-    puts "Cache folders: #{cache_folders}"
+    cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
     # Get list of src files in use
     source_urls = people.flat_map do |person|
@@ -169,12 +177,10 @@ namespace :city_scrape do
         .map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
     end.uniq
 
-    puts "Source urls: #{source_urls}"
-
     cache_folders.each do |cache_folder|
-      unless source_urls.include?(cache_folder)
+      unless source_urls.any? { |source_url| cache_folder.include?(source_url) }
         puts "Removing #{cache_folder} from cache"
-        FileUtils.rm_rf(File.join(cache_dir, cache_folder))
+        FileUtils.rm_rf(cache_folder)
       end
     end
   end
