@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Lisa Brown",
+    "image": null,
+    "positions": [
+      "Mayor"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": "https://my.spokanecity.org/mayor/default.aspx",
+    "sources": [
+      "https://my.spokanecity.org/mayor/default.aspx"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Betsy Wilkerson",
+    "image": null,
+    "positions": [
+      "Council President"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Kitty Klitzke",
+    "image": null,
+    "positions": [
+      "Council Member"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Paul Dillon",
+    "image": null,
+    "positions": [
+      "Council Member"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  },
+  {
+    "name": "Zack Zappone",
+    "image": null,
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "email": null,
+    "phone_number": null,
+    "website": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ],
+    "start_term_date": null,
+    "end_term_date": null
+  }
+]

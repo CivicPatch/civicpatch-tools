@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Lisa Brown",
+    "positions": [
+      "Mayor"
+    ],
+    "email": null,
+    "phone_number": "(509) 625-6250",
+    "website": "https://my.spokanecity.org/mayor/about",
+    "image": "images/e8f047e08895e88b2f9cb7ed424252de72719507e7df217cb6e332d8594acefa.jpg",
+    "sources": [
+      "https://my.spokanecity.org/mayor/default.aspx"
+    ]
+  },
+  {
+    "name": "Betsy Wilkerson",
+    "positions": [
+      "Council President"
+    ],
+    "email": "bwilkerson@spokanecity.org",
+    "phone_number": null,
+    "website": "https://my.spokanecity.org/citycouncil/members",
+    "image": "images/6f0933b9f26be657383f966390d6063be3ce93dfdb3e1574c59f95a59f516185.jpg",
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ]
+  },
+  {
+    "name": "Jonathan Bingle",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jbingle@spokanecity.org",
+    "phone_number": null,
+    "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
+    "image": "images/c3f6af36302e447775c4fd452ac1c12d1c8f3bcd11a78285592a3b3ce65586e9.jpg",
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members"
+    ]
+  },
+  {
+    "name": "Kitty Klitzke",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "kklitzke@spokanecity.org",
+    "phone_number": null,
+    "website": "https://my.spokanecity.org/citycouncil/members",
+    "image": "images/4f75167345ab1b33444a6c9734fc025552cc0fc77dffd4183f28ca8f94e70613.jpg",
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ]
+  },
+  {
+    "name": "Lili Navarrete",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "lnavarrete@spokanecity.org",
+    "phone_number": "(509) 625-6255",
+    "website": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
+    "image": "images/73a03e06f1b93232976ee703655ebbfc266e89f8515fce939f959ecda9d28592.jpg",
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members"
+    ]
+  },
+  {
+    "name": "Michael Cathcart",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "mcathcart@spokanecity.org",
+    "phone_number": "(509) 625-6224",
+    "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+    "image": "images/a7ab49b0fd0bc13d58eaa0bd9fe35a48c9e012d9be7fce750e2321444842bfa6.jpg",
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members"
+    ]
+  },
+  {
+    "name": "Paul Dillon",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "pdillon@spokanecity.org",
+    "phone_number": null,
+    "website": "https://my.spokanecity.org/citycouncil/members",
+    "image": "images/bc230ca41f8fd5d43d1afe889237c336c0427592a9565f2f6cb0f70759b9a8ff.jpg",
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ]
+  },
+  {
+    "name": "Zack Zappone",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "email": "zzappone@spokanecity.org",
+    "phone_number": null,
+    "website": "https://my.spokanecity.org/citycouncil/members",
+    "image": "images/be087944d1b03a17f7c29df0632dac7c74d9b6f03e9de97f5d78141c7dae4caa.jpg",
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/videos"
+    ]
+  }
+]
