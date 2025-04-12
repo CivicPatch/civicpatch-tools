@@ -122,6 +122,7 @@ module CityScraper
         mayors = Core::PeopleManager.get_mayors_count(accumulated_officials)
 
         puts "#{llm_service_string}: Accumulated totals -> Council members: #{council_members}, Mayors: #{mayors}"
+
         break if Core::PeopleManager.valid_city_people?(accumulated_officials)
       end
 

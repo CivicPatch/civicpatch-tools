@@ -20,7 +20,7 @@ module Browser
       browser = start
       browser.navigate.to(url)
       browser.page_source
-    rescue Faraday::TooManyRequestsError => e
+    rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
         puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"

@@ -199,15 +199,7 @@ module Services
           nil
         end # Use JSON.parse
 
-        if parsed_response.nil?
-          puts "Failed to parse JSON response from Gemini: #{json_output}"
-          File.write("chat.txt", "RAW NON-JSON RESPONSE: #{json_output}", mode: "a")
-        end
-
-        # Log request/response
-        File.write("chat.txt", "REQUEST - #{request_origin} - #{request_url}", mode: "a")
-        File.write("chat.txt", "PARSED RESPONSE", mode: "a")
-        File.write("chat.txt", PP.pp(parsed_response, String.new) + "\n", mode: "a")
+        puts "Failed to parse JSON response from Gemini: #{json_output}" if parsed_response.nil?
 
         parsed_response
       else
