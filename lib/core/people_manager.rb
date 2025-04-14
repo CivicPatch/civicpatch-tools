@@ -35,7 +35,7 @@ module Core
                                   .format_position(position)
                               end
 
-        person["website"] = Scrapers::Common.format_url(person["website"]) if person["website"].present?
+        person["website"] = Utils::UrlHelper.format_url(person["website"]) if person["website"].present?
         if person["phone_number"].present?
           person["phone_number"] =
             Scrapers::Standard.format_phone_number(person["phone_number"])
@@ -44,7 +44,7 @@ module Core
         next unless person["sources"].present?
 
         person["sources"] = person["sources"].map do |source|
-          Scrapers::Common.format_url(source)
+          Utils::UrlHelper.format_url(source)
         end
       end
 
@@ -132,7 +132,6 @@ module Core
     def self.valid_city_people?(people)
       council_members = get_council_members_count(people)
       mayors = get_mayors_count(people)
-      File.write("chat.txt", "council_members = #{council_members}, mayors = #{mayors}", mode: "a")
 
       council_members > 1 && mayors.positive?
     end

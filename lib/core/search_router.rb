@@ -25,9 +25,9 @@ module Core
         urls += seeded_urls
       end
 
-      filtered_urls = Scrapers::Common.urls_without_keywords(urls, %w[alerts news event calendar])
+      filtered_urls = Scrapers::Common.urls_without_keywords(urls, %w[alerts news event calendar video])
       filtered_urls = Scrapers::Common.urls_without_dates(filtered_urls)
-      puts "Filtered out #{urls.size - filtered_urls.size} urls"
+      puts "Urls fetched: urls: #{urls}"
       filtered_urls.map { |url, _text| url }
     end
   end

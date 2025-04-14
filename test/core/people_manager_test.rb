@@ -80,8 +80,6 @@ class PeopleManagerTest < Minitest::Test
     # Assert that the formatted list has only the relevant entries
     assert_equal 3, formatted.size
 
-    File.write("chat.txt", formatted, mode: "a")
-
     # Assert that Bruce Harrell's position is "Mayor"
     assert_equal formatted[0]["positions"], ["Mayor"]
 

@@ -89,43 +89,44 @@ namespace :city_scrape do
     ### Web Scrape Source
     openai_source_dirs, openai_people = CityScraper::PeopleScraper.fetch("gpt", state, gnis, government_type)
     Core::PeopleManager.update_people(state, city_entry, openai_people, "scrape.before")
-    formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
+    # formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
+    # Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
 
     # TODO: Would like to use a SERP API to get the URLs for city directories instead
-    seeded_urls = formatted_openai_people.map do |person|
-      person["sources"]
-    end.uniq.flatten
+    # seeded_urls = openai_people.map do |person|
+    #  person["sources"]
+    # end.uniq.flatten
+    seeded_urls = []
 
     ## Gemini Source
-    gemini_source_dirs,
-    gemini_city_people = CityScraper::PeopleScraper
-                         .fetch("gpt", state, gnis, government_type,
-                                %w[seeded brave manual], seeded_urls)
+    # gemini_source_dirs,
+    # gemini_city_people = CityScraper::PeopleScraper
+    #                     .fetch("gpt", state, gnis, government_type,
+    #                            %w[seeded brave manual], seeded_urls)
 
-    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
-    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, positions_config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
+    # Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
+    # formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, positions_config)
+    # Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
 
-    validated_result = Validators::CityPeople.validate_sources(state, gnis)
+    # validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
-    combined_people = validated_result[:merged_sources]
-    formatted_people = Core::PeopleManager.format_people(combined_people, positions_config)
+    # combined_people = validated_result[:merged_sources]
+    # formatted_people = Core::PeopleManager.format_people(combined_people, positions_config)
 
-    Core::PeopleManager.update_people(state, city_entry, formatted_people)
+    # Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
-    # Move images into the right places
-    source_dirs = openai_source_dirs + gemini_source_dirs
-    process_source_files(state, city_entry, source_dirs, formatted_people)
+    ## Move images into the right places
+    # source_dirs = openai_source_dirs + gemini_source_dirs
+    # process_source_files(state, city_entry, source_dirs, formatted_people)
 
-    city_people_hash = Digest::MD5.hexdigest(combined_people.to_json)
-    CityScrape::StateManager.update_state_places(state, [
-                                                   { "gnis" => city_entry["gnis"],
-                                                     "meta_updated_at" => Time.now
-                                                      .in_time_zone("America/Los_Angeles")
-                                                      .strftime("%Y-%m-%d"),
-                                                     "meta_hash" => city_people_hash }
-                                                 ])
+    # city_people_hash = Digest::MD5.hexdigest(combined_people.to_json)
+    # CityScrape::StateManager.update_state_places(state, [
+    #                                               { "gnis" => city_entry["gnis"],
+    #                                                 "meta_updated_at" => Time.now
+    #                                                  .in_time_zone("America/Los_Angeles")
+    #                                                  .strftime("%Y-%m-%d"),
+    #                                                 "meta_hash" => city_people_hash }
+    #                                             ])
   end
 
   def create_prepare_directories(state, city_entry)
@@ -150,7 +151,6 @@ namespace :city_scrape do
 
     FileUtils.mkdir_p(images_dir)
     images_in_use = people.map { |person| person["image"] }.compact
-    puts "imagse in use: #{images_in_use}"
 
     source_dirs.each do |source_dir|
       # Get list of images in dir

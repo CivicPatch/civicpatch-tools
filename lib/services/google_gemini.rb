@@ -42,6 +42,12 @@ module Services
         (Examples of role names: #{position_examples})
 
         Instructions:
+        - For "llm_confidence", and "llm_confidence_reason",
+          provide a number between 0 and 1, and an associated reason.
+          How confident are you that the contact information
+          is associated with #{person["name"]}? Provide the reason for your confidence.
+        - For "proximity_to_name", provide a number of the distance
+          between the contact information and the person's name in terms of word count.
         - Extract the name, phone number, email, website, and positions of the people listed in the content.
         - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
@@ -49,20 +55,38 @@ module Services
         - Only include an individual in the output array if their `name` can be successfully extracted from the content. If no name is found for a potential entry, omit that entry entirely.
         - If the content does not contain any information about elected officials, return an empty array.
 
-        JSON Output Format (an array of objects):
-        ```json
-        [
-          {
-            "name": <string> (Required),
-            "phone_number": <string>,
-            "email": <string>,
-            "positions": <array of strings>,
-            "start_term_date": <string> Format: YYYY-MM, or YYYY-MM-DD,
-            "end_term_date": <string> Format: YYYY-MM, or YYYY-MM-DD,
-            "website": <string>
-          }
-        ]
-        ```
+        Return a JSON object where each person has the following properties:
+        - name
+          image (Extract the image URL from the <img> tag's src attribute.
+                This will always be a relative URL starting with images/)
+          phone_number: <an object with the following properties:
+            data: <string>
+            llm_confidence: <number>
+            llm_confidence_reason: <string>
+            proximity_to_name: <number>
+            markdown_formatting: {
+              in_list: <boolean> # Whether the contact information is in a list
+            }
+          email: <an object with the following properties:
+            data: <string>
+            llm_confidence: <number>
+            llm_confidence_reason: <string>
+            proximity_to_name: <number>
+            markdown_formatting: {
+              in_list: <boolean> # Whether the contact information is in a list
+            }
+          website: <an object with the following properties:
+            data: <string>
+            llm_confidence: <number>
+            llm_confidence_reason: <string>
+            proximity_to_name: <number>
+            markdown_formatting: {
+              in_list: <boolean> # Whether the contact information is in a list
+            }
+          positions (an array of strings)
+          start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
+          end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
+
 
         Here is the content:
         #{content}
@@ -79,8 +103,8 @@ module Services
       end
 
       people.map do |person|
-        person["sources"] = [city_council_url]
-        Scrapers::Standard.normalize_source_person(person)
+        Services::Shared::People.data_points_with_source(person, city_council_url)
+        # Scrapers::Standard.normalize_source_person(person)
       end
     end
 
@@ -103,21 +127,35 @@ module Services
         (Also consider associated roles like: #{divisions.join(", ")})
         (Examples of role names: #{position_examples})
 
-        Instructions:
-        - Extract the name, phone number, email, website, and positions of the people listed in the content.
-        - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
-          can be directly inferred with certainty—do not assume or estimate missing information.
-        - start_term_date and end_term_date should be strings.
-        - Only include an individual in the output if their `name` can be successfully extracted from the content. If no name is found for a potential entry, omit that entry entirely.
-        - If the content does not contain any information about elected officials, return an empty object {}.
-
         Return object in JSON:
         name: <string> (Required)
-        phone_number: <string>
-        email: <string>
+        phone_numbers: <an array of objects with the following properties:
+          data: <string>
+          llm_confidence: <number>
+          llm_confidence_reason: <string>
+          proximity_to_name: <number>
+          markdown_formatting: {
+            in_list: <boolean> # Whether the contact information is in a list
+          }
+        emails: <an array of objects with the following properties:
+          data: <string>
+          llm_confidence: <number>
+          llm_confidence_reason: <string>
+          proximity_to_name: <number>
+          markdown_formatting: {
+            in_list: <boolean> # Whether the contact information is in a list
+          }
         positions: <array of strings>
         start_term_date: <string> Format: YYYY-MM, or YYYY-MM-DD
         end_term_date: <string> Format: YYYY-MM, or YYYY-MM-DD
+
+        **Instructions**
+        - For "llm_confidence", and "llm_confidence_reason",
+          provide a number between 0 and 1, and an associated reason.
+          How confident are you that the contact information
+          is associated with #{person["name"]}? Provide the reason for your confidence.
+        - For "proximity_to_name", provide a number of the distance
+          between the contact information and the person's name in terms of word count.
 
         **Content:** #{content}
       )
@@ -132,9 +170,8 @@ module Services
 
       return nil if extracted_person.nil?
 
-      extracted_person["website"] = url
-      extracted_person["sources"] = [url]
-      Scrapers::Standard.normalize_source_person(extracted_person)
+      extracted_person = Services::Shared::People.data_points_with_source(extracted_person, url)
+      # Scrapers::Standard.normalize_source_person(extracted_person)
     end
 
     def run_prompt(prompt, request_origin, request_url, schema_for_api)

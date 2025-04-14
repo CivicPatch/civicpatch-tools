@@ -1,19 +1,40 @@
 module Services
   module Shared
     class ResponseSchemas
+      LLM_CONTACT_DATA_POINT = {
+        type: :object,
+        properties: {
+          data: { type: :string },
+          llm_confidence: { type: :number },
+          llm_confidence_reason: { type: :number },
+          proximity_to_name: { type: :number },
+          markdown_formatting: {
+            type: :object,
+            properties: {
+              in_list: { type: :boolean }
+            }
+          }
+        }
+      }.freeze
+
       GEMINI_PERSON_SCHEMA = {
         type: :object,
         properties: {
           name: { type: :string },
-          phone_number: { type: :string },
-          email: { type: :string },
-          website: { type: :string },
-          positions: {
-            type: :array,
-            items: { type: :string }
+          phone_number: {
+            type: :object,
+            properties: LLM_CONTACT_DATA_POINT
           },
-          start_term_date: { type: :string },
-          end_term_date: { type: :string }
+          emails: { type: :object, properties: LLM_CONTACT_DATA_POINT },
+          websites: { type: :object, properties: LLM_CONTACT_DATA_POINT },
+          positions: {
+            type: :object,
+            properties: LLM_CONTACT_DATA_POINT
+          },
+          term_dates: {
+            type: :object,
+            properties: LLM_CONTACT_DATA_POINT
+          }
         },
         required: ["name"] # Enforce that name is required
       }.freeze
