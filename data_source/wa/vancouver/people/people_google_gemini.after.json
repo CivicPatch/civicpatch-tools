@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Anne McEnerny-Ogle",
+    "positions": [
+      "Mayor"
+    ],
+    "phone_number": "(360) 487-8627",
+    "email": "anne.mcenerny-ogle@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/citycouncil/page/mayor-anne-mcenerny-ogle",
+    "term_date": "2022 through 2025"
+  },
+  {
+    "name": "Erik Paulsen",
+    "positions": [
+      "Council Member",
+      "Position 1"
+    ],
+    "phone_number": "(360) 487-8629",
+    "email": "erik.paulsen@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/citycouncil/page/councilmember-erik-paulsen",
+    "term_date": "2024 through 2027"
+  },
+  {
+    "name": "Ty Stober",
+    "positions": [
+      "Council Member",
+      "Position 2"
+    ],
+    "phone_number": "(360) 487-8629",
+    "email": "ty.stober@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/citycouncil/page/councilmember-ty-stober",
+    "term_date": "2024 through 2027"
+  },
+  {
+    "name": "Sarah J. Fox",
+    "positions": [
+      "Council Member",
+      "Position 3"
+    ],
+    "phone_number": "(360) 487-8629",
+    "email": "sarah.fox@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/citycouncil/page/councilmember-sarah-j-fox",
+    "term_date": "2024 through 2027"
+  },
+  {
+    "name": "Kim D. Harless",
+    "positions": [
+      "Council Member",
+      "Position 4"
+    ],
+    "phone_number": "(360) 487-8629",
+    "email": "kim.harless@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/citycouncil/page/councilmember-kim-d-harless",
+    "term_date": "2022 through 2025"
+  },
+  {
+    "name": "Diana H. Perez",
+    "positions": [
+      "Council Member",
+      "Position 5"
+    ],
+    "phone_number": "(360) 487-8629",
+    "email": "diana.perez@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/citycouncil/page/councilmember-diana-h-perez",
+    "term_date": "2022 through 2025"
+  },
+  {
+    "name": "Bart Hansen",
+    "positions": [
+      "Council Member",
+      "Position 6"
+    ],
+    "phone_number": "(360) 487-8629",
+    "email": "bart.hansen@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/citycouncil/page/councilmember-bart-hansen",
+    "term_date": "2022 through 2025"
+  }
+]

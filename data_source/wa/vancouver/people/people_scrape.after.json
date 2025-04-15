@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Anne McEnerny-Ogle",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/#advgb-tabs-tab1",
+    "term_date": "2022 through 2025",
+    "sources": [
+      "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony",
+      "https://cityofvancouver.us/departments/mayor-city-council"
+    ]
+  },
+  {
+    "name": "Bart Hansen",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "2024 through 2027",
+    "sources": [
+      "https://cityofvancouver.us/departments/mayor-city-council"
+    ]
+  },
+  {
+    "name": "Diana H. Perez",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "2022 through 2025",
+    "sources": [
+      "https://cityofvancouver.us/departments/mayor-city-council"
+    ]
+  },
+  {
+    "name": "Diana Perez",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "2024-02-14 to 2025-02-14",
+    "sources": [
+      "https://www.cityofvancouver.us/city-councilmember-ty-stober-appointed-to-lead-national-league-of-cities-real-council-councilmember-diana-perez-reappointed-as-real-member"
+    ]
+  },
+  {
+    "name": "Erik Paulsen",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "2021 through 2025",
+    "sources": [
+      "https://cityofvancouver.us/departments/mayor-city-council"
+    ]
+  },
+  {
+    "name": "Kim D. Harless",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "2022 through 2025",
+    "sources": [
+      "https://cityofvancouver.us/departments/mayor-city-council"
+    ]
+  },
+  {
+    "name": "Sarah J. Fox",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "2024 through 2027",
+    "sources": [
+      "https://cityofvancouver.us/departments/mayor-city-council"
+    ]
+  },
+  {
+    "name": "Ty Stober",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "2024 through 2027",
+    "sources": [
+      "https://cityofvancouver.us/departments/mayor-city-council"
+    ]
+  }
+]

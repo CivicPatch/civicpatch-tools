@@ -1,0 +1,902 @@
+[
+  {
+    "name": "Anne McEnerny-Ogle",
+    "image": "images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council/#advgb-tabs-tab1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided under 'Meet your Mayor and City Council'.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council/#advgb-tabs-tab1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided under 'Meet your Mayor and City Council'.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 to 2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term dates were explicitly stated in the content.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#advgb-tabs-tab1"
+      }
+    ],
+    "positions": [
+      "Mayor",
+      "mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kim D. Harless",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Erik Paulsen",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Mayor Pro Tem"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Diana H. Perez",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Bart Hansen",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Ty Stober",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024-02-14 to 2025-02-14",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term mentioned in the context of the appointment.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/city-councilmember-ty-stober-appointed-to-lead-national-league-of-cities-real-council-councilmember-diana-perez-reappointed-as-real-member"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Councilmember",
+      "Co-Chair of NLC REAL Council"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Sarah J. Fox",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term mentioned in the text.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council/#testimony"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityofvancouver.us/departments/mayor-city-council/#form"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates mentioned in the text.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Marc Fazio",
+    "image": "images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "4 years",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Length of term mentioned in rules.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/government/city-center-redevelopment-authority"
+      },
+      {
+        "data": "4 years",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Length of term mentioned in rules.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/government/city-center-redevelopment-authority"
+      }
+    ],
+    "positions": [
+      "President"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Dick Krippaehne",
+    "image": "images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "4 years",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Length of term mentioned in rules.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/government/city-center-redevelopment-authority"
+      },
+      {
+        "data": "4 years",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Length of term mentioned in rules.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofvancouver.us/government/city-center-redevelopment-authority"
+      }
+    ],
+    "positions": [
+      "Secretary",
+      "Treasurer"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Abbie Layne",
+    "image": "images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Board President"
+    ]
+  },
+  {
+    "name": "Azsha Preble",
+    "image": "images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Board Secretary/Treasurer"
+    ]
+  },
+  {
+    "name": "Hunter Byrnes",
+    "image": "images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Board Member"
+    ]
+  },
+  {
+    "name": "Ken O’Hollaren",
+    "image": "images/44978dd71d72849e25e2d990fed6de137a4d475c98fdd908e9c2da30e0219486.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Board Member"
+    ]
+  },
+  {
+    "name": "Diana Perez",
+    "image": "",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "2024-02-14 to 2025-02-14",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term mentioned in the context of the reappointment.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.cityofvancouver.us/city-councilmember-ty-stober-appointed-to-lead-national-league-of-cities-real-council-councilmember-diana-perez-reappointed-as-real-member"
+      }
+    ],
+    "positions": [
+      "Councilmember",
+      "Member of NLC REAL Council"
+    ]
+  }
+]
