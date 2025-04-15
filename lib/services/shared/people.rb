@@ -23,6 +23,7 @@ module Services
 
       def self.merge_person(person, partial_person)
         merged = person.dup
+        merged["image"] = partial_person["image"] || person["image"]
         merged["phone_numbers"] += partial_person["phone_numbers"]
         merged["emails"] += partial_person["emails"]
         merged["websites"] += partial_person["websites"]

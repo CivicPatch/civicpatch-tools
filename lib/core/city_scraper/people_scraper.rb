@@ -81,7 +81,7 @@ module CityScraper
       Core::PeopleManager.update_people(state, city_entry, officials_with_profile_data,
                                         "scrape-collected.before")
 
-      formatted_officials = officials_from_search.map do |official|
+      formatted_officials = officials_with_profile_data.map do |official|
         Services::Shared::People.format_person(official)
       end
 
