@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "positions": [
+      "Mayor"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": null,
+    "website": "https://www.cityoftacoma.org/government/city_council/mayor_victoria_woodards",
+    "term_date": null
+  },
+  {
+    "name": "John Hines",
+    "positions": [
+      "Council Member",
+      "Position 1"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": "John.Hines@cityoftacoma.org",
+    "website": "https://www.cityoftacoma.org/government/city_council/john_hines",
+    "term_date": "2024-01-01 to 2025-12-31"
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "positions": [
+      "Council Member",
+      "Position 2"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": null,
+    "website": "https://www.cityoftacoma.org/government/city_council/sarah_rumbaugh",
+    "term_date": null
+  },
+  {
+    "name": "Jamika Scott",
+    "positions": [
+      "Council Member",
+      "Position 3"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": "jscott8@cityoftacoma.org",
+    "website": "https://www.cityoftacoma.org/government/city_council/jamika_scott",
+    "term_date": "2023-12-29 to 2025-12-31"
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "positions": [
+      "Council Member",
+      "Position 4"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": null,
+    "website": "https://www.cityoftacoma.org/government/city_council/sandesh_sadalge",
+    "term_date": null
+  },
+  {
+    "name": "Joe Bushnell",
+    "positions": [
+      "Council Member",
+      "Position 5"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": "jbushnell2@cityoftacoma.org",
+    "website": "https://www.cityoftacoma.org/government/city_council/joe_bushnell",
+    "term_date": "2022-01-01 to 2025-12-31"
+  },
+  {
+    "name": "Kiara Daniels",
+    "positions": [
+      "Council Member",
+      "Position 6"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": null,
+    "website": "https://www.cityoftacoma.org/government/city_council/kiara_daniels",
+    "term_date": "2022-01-01 to 2025-12-31"
+  },
+  {
+    "name": "Olgy Diaz",
+    "positions": [
+      "Council Member",
+      "Position 7"
+    ],
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null
+  },
+  {
+    "name": "Kristina Walker",
+    "positions": [
+      "Council Member",
+      "Position 8"
+    ],
+    "phone_number": "(253) 591-5100",
+    "email": null,
+    "website": "https://www.cityoftacoma.org/government/city_council/kristina_walker",
+    "term_date": null
+  }
+]

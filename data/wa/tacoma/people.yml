@@ -1,0 +1,81 @@
+---
+- name: Victoria Woodards
+  positions:
+  - Mayor
+  email:
+  phone_number: "(253) 591-5100"
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289
+  image: images/0cc82085121686f6d99a05954d818de3212e35d1d806a63b7bbf60bc9ae04ea2.jpg
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils
+- name: Jamika Scott
+  positions:
+  - Council Member
+  email: jscott8@cityoftacoma.org
+  phone_number: "(253) 591-5100"
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019
+  image:
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils
+- name: Joe Bushnell
+  positions:
+  - Council Member
+  email: jbushnell2@cityoftacoma.org
+  phone_number: "(253) 591-5100"
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933
+  image:
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils
+- name: John Hines
+  positions:
+  - Council Member
+  email: John.Hines@cityoftacoma.org
+  phone_number: "(253) 591-5100"
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913
+  image:
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils
+- name: Kiara Daniels
+  positions:
+  - Council Member
+  email:
+  phone_number: "(253) 591-5100"
+  website: https://www.cityoftacoma.org/government/city_council/kiara_daniels
+  image:
+  sources: []
+- name: Kristina Walker
+  positions:
+  - Council Member
+  email:
+  phone_number: "(253) 591-5100"
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937
+  image:
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils
+- name: Olgy Diaz
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002
+  image:
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils
+- name: Sandesh Sadalge
+  positions:
+  - Council Member
+  email:
+  phone_number: "(253) 591-5100"
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929
+  image:
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils
+- name: Sarah Rumbaugh
+  positions:
+  - Council Member
+  email:
+  phone_number: "(253) 591-5100"
+  website: https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010
+  image:
+  sources:
+  - https://cityoftacoma.org/neighborhoodcouncils

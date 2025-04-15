@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "images/0cc82085121686f6d99a05954d818de3212e35d1d806a63b7bbf60bc9ae04ea2.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Jamika Scott",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Joe Bushnell",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "John Hines",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Kristina Walker",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Olgy Diaz",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "",
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  }
+]
