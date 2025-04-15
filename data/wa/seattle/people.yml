@@ -1,0 +1,91 @@
+---
+- name: Bruce Harrell
+  positions:
+  - Mayor
+  email:
+  phone_number: "(206) 684-4000"
+  website: https://seattle.gov/mayor
+  image: images/2937d3a3326cc98c19ddc63ec1e1e3887f3f01ca7a4a2e18ce6009629154c29f.jpg
+  sources:
+  - https://harrell.seattle.gov
+- name: Sara Nelson
+  positions:
+  - Council President
+  email: sara.nelson@seattle.gov
+  phone_number: "(206) 684-8809"
+  website: https://seattle.gov/council/meet-the-council/sara-nelson
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Alexis Mercedes Rinck
+  positions:
+  - Council Member
+  email: alexis.rinck@seattle.gov
+  phone_number: "(206) 684-8808"
+  website: https://seattle.gov/council/rinck
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Cathy Moore
+  positions:
+  - Council Member
+  email: cathy.moore@seattle.gov
+  phone_number: "(206) 684-8805"
+  website: https://seattle.gov/council/moore
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Dan Strauss
+  positions:
+  - Council Member
+  email: dan.strauss@seattle.gov
+  phone_number: "(206) 684-8806"
+  website: https://seattle.gov/council/strauss
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Joy Hollingsworth
+  positions:
+  - Council Member
+  email: joy.hollingsworth@seattle.gov
+  phone_number: "(206) 684-8803"
+  website: https://seattle.gov/council/hollingsworth
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Maritza Rivera
+  positions:
+  - Council Member
+  email: maritza.rivera@seattle.gov
+  phone_number: "(206) 684-8804"
+  website: https://seattle.gov/council/rivera
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Mark Solomon
+  positions:
+  - Council Member
+  email: mark.solomon@seattle.gov
+  phone_number: "(206) 684-8802"
+  website: https://seattle.gov/council/solomon
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Rob Saka
+  positions:
+  - Council Member
+  email: rob.saka@seattle.gov
+  phone_number: "(206) 684-8801"
+  website: https://seattle.gov/council/saka
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
+- name: Robert Kettle
+  positions:
+  - Council Member
+  email: robert.kettle@seattle.gov
+  phone_number: "(206) 684-8807"
+  website: https://seattle.gov/council/kettle
+  image: images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg
+  sources:
+  - https://seattle.gov/council
