@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Sara Nelson",
+    "positions": [
+      "Council President"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/hollingsworth",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Robert Kettle",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/kettle",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Cathy Moore",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/moore",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/rinck",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Maritza Rivera",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/rivera",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Rob Saka",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/saka",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Mark Solomon",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/solomon",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Dan Strauss",
+    "positions": [
+      "Councilmember"
+    ],
+    "image": "images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/strauss",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Bruce Harrell",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "images/2937d3a3326cc98c19ddc63ec1e1e3887f3f01ca7a4a2e18ce6009629154c29f.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/mayor",
+    "term_date": null,
+    "sources": [
+      "https://harrell.seattle.gov"
+    ]
+  }
+]
