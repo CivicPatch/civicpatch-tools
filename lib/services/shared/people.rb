@@ -6,7 +6,7 @@ module Services
       def self.format_raw_data(person, source)
         formatted_person = {
           "name" => person["name"],
-          "image" => person["image"],
+          "image" => person["image"]
         }
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []

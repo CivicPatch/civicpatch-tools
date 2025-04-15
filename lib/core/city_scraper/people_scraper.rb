@@ -47,8 +47,6 @@ module CityScraper
         page_content_cache_dirs += new_page_content_cache_dirs
       end
 
-      Core::PeopleManager.update_people(state, city_entry, officials_from_search, "scrape-collected-city.before")
-
       officials_with_profile_data = officials_from_search.map do |person|
         next person if Services::Shared::People.all_contact_data_points_present?(person)
         next person if person["websites"].blank?
@@ -59,27 +57,29 @@ module CityScraper
           cache_key = Utils::UrlHelper.url_to_safe_folder_name(website["data"])
           next if page_content_cache_dirs.include?(File.join(city_cache_path, cache_key))
 
-          site_cache_dir, person_data = scrape_person_website(
+          site_cache_dir = File.join(city_cache_path, cache_key)
+
+          person_data = scrape_person_website(
             llm_service_string,
             state,
             city_entry,
             data_fetcher,
-            File.join(city_cache_path, cache_key),
+            site_cache_dir,
             person,
             website["data"]
           )
 
-          next if site_cache_dir.blank? || person_data.blank?
+          next if person_data.blank?
 
           page_content_cache_dirs << site_cache_dir
-
           person = Services::Shared::People.merge_person(person, person_data)
         end
 
         person
       end
 
-      Core::PeopleManager.update_people(state, city_entry, officials_with_profile_data, "scrape-collected-city-profiles.before")
+      Core::PeopleManager.update_people(state, city_entry, officials_with_profile_data,
+                                        "scrape-collected.before")
 
       formatted_officials = officials_from_search.map do |official|
         Services::Shared::People.format_person(official)
@@ -89,10 +89,10 @@ module CityScraper
     end
 
     def self.scrape_person_website(
-      llm_service_string, 
-      state, 
-      city_entry, 
-      data_fetcher, 
+      llm_service_string,
+      state,
+      city_entry,
+      data_fetcher,
       cache_path,
       person,
       website
@@ -108,9 +108,9 @@ module CityScraper
         city_entry, person, content_file,
                                                                           website)
 
-      return [nil, person] unless llm_extracted_profile_data.present? && llm_extracted_profile_data.is_a?(Hash)
+      return person unless llm_extracted_profile_data.present? && llm_extracted_profile_data.is_a?(Hash)
 
-      Services::Shared::People.merge_person(person, llm_extracted_profile_data)
+      llm_extracted_profile_data
     end
 
     def self.fetch_people(
@@ -142,13 +142,10 @@ module CityScraper
         end.inspect}"
 
         cache_dirs_with_results << url_content_cache_path
-        # accumulated_officials = Core::PeopleManager.merge_people(accumulated_officials, officials_from_page)
         collect_people_start = Time.now
         accumulated_officials = Services::Shared::People.collect_people(accumulated_officials, officials_from_page)
         collect_people_end = Time.now
         puts "Collect people took #{collect_people_end - collect_people_start} seconds"
-        # positions_config = Core::CityManager.get_positions(government_type)
-        # accumulated_officials = Core::PeopleManager.normalize_people(accumulated_officials, positions_config)
 
         break unless should_continue_scraping?(accumulated_officials, cache_dirs_with_results.count)
       end

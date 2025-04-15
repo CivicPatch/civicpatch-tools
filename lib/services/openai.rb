@@ -122,9 +122,7 @@ module Services
       response = run_prompt(messages, request_origin)
 
       person = response
-      File.write("chat-before.txt", JSON.pretty_generate(person), mode: "a")
       person = Services::Shared::People.format_raw_data(person, url)
-      File.write("chat.txt", JSON.pretty_generate(person), mode: "a")
       person
     end
 

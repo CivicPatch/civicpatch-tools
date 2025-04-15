@@ -1,3 +1,6 @@
+require 'addressable/uri'
+require 'uri'
+
 module Utils
   class UrlHelper
     def self.url_to_safe_folder_name(url)
@@ -9,14 +12,16 @@ module Utils
     def self.format_url(url)
       return nil if url.nil?
 
-      # Parse and normalize the URL
       begin
-        normalized_url = Addressable::URI.parse(url).normalize.to_s
-        # Remove any trailing slashes
-        normalized_url.gsub(%r{/$}, "")
+        uri = Addressable::URI.parse(url)
+
+        uri.path = Addressable::URI.unencode_component(uri.path) if uri.path
+        normalized = uri.normalize.to_s
+        # Remove any trailing slashes for consistency
+        normalized.gsub(%r{/$}, "")
       rescue StandardError => e
         puts "Error normalizing URL: #{url} - #{e.message}"
-        url # Return original URL if parsing fails
+        url
       end
     end
   end
