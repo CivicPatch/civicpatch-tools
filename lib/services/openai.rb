@@ -42,8 +42,7 @@ module Services
       end
 
       people.map do |person|
-        person["sources"] = [city_council_url]
-        Scrapers::Standard.normalize_source_person(person)
+        Services::Shared::People.format_raw_data(person, city_council_url)
       end
     end
 
@@ -63,17 +62,42 @@ module Services
         Return a JSON object with the following properties:
         name
         image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-        phone_number
-        email
+        phone_number: <an object with the following properties:
+          data: <string>
+          llm_confidence: <number>
+          llm_confidence_reason: <string>
+          proximity_to_name: <number>
+          markdown_formatting: {
+            in_list: <boolean> # Whether the contact information is in a list
+          }
+        email: <an object with the following properties:
+          data: <string>
+          llm_confidence: <number>
+          llm_confidence_reason: <string>
+          proximity_to_name: <number>
+          markdown_formatting: {
+            in_list: <boolean> # Whether the contact information is in a list
+          }
+        term_date: <an object with the following properties>
+          data: <string> # The date the person has an active term for. Format: YYYY to YYYY, YYYY-MM to YYYY-MM, or YYYY-MM-DD to YYYY-MM-DD
+          llm_confidence: <number>
+          llm_confidence_reason: <string>
+          proximity_to_name: <number>
+          markdown_formatting: {
+            in_list: <boolean> # Whether the contact information is in a list
+          }
         positions (An array of strings)
-        start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
-        end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
 
         Notes:
+        - For "llm_confidence", and "llm_confidence_reason",#{" "}
+          provide a number between 0 and 1, and an associated reason.#{" "}
+          How confident are you that the contact information#{" "}
+          is associated with #{person["name"]}? Provide the reason for your confidence.
+        - For "proximity_to_name", provide a number of the distance
+          between the contact information and the person's name in terms of word count.
         - Extract only the contact information associated with the person. Do not return general info.
-        - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
+        - For term_date, only provide dates if they are explicitly stated or
           can be directly inferred with certainty—do not assume or estimate missing information.
-        - start_term_date and end_term_date should be strings.
         - For the "positions" field, split the positions into an array of strings.
           The main positions we are interested in are #{positions.join(", ")}
           Positions may also be associated with titles like #{divisions.join(", ")}
@@ -98,9 +122,8 @@ module Services
       response = run_prompt(messages, request_origin)
 
       person = response
-      person["website"] = url
-
-      Scrapers::Standard.normalize_source_person(person)
+      person = Services::Shared::People.format_raw_data(person, url)
+      person
     end
 
     def generate_city_info_prompt(content, city_council_url)
@@ -112,67 +135,56 @@ module Services
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
-        First, determine whether the content contains a directory or about page of elected official(s).
-        If so, continue with the following instructions. If not, return an empty array.
 
-        The main roles we are interested in are: #{positions.join(", ")}
+        First, determine if the content contains elected officials' information. If not, return an empty array.
 
-        They might have other associated roles that look like these:
-        #{divisions.join(",")}
+        Key roles: #{positions.join(", ")}
+        Associated divisions: #{divisions.join(",")}
+        Examples: #{position_examples}
 
-        Some examples of roles:
-        #{position_examples}
+        Return a JSON object with people, each having:
+        - name: Full name only (not titles)
+        - image: URL from <img> tag (starting with "images/")
+        - phone_number: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
+        - email: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
+        - website: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
+        - term_date: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
+        - positions: [array of strings]
 
-        Return a JSON object where each person has the following properties:
-        - name
-          image (Extract the image URL from the <img> tag's src attribute.#{" "}
-                This will always be a relative URL starting with images/)
-          phone_number: <string> Format: (123) 456-7890
-          email
-          positions (an array of strings)
-          start_term_date (string. The date the person has an active term for. Format: YYYY-MM, or YYYY-MM-DD)
-          end_term_date (string. The date the person's term ends for their current position. Format: YYYY-MM, or YYYY-MM-DD)
-          website (Provide the absolute URL.)
-                If no specific website is provided, leave this empty —#{" "}
-                do not default to the general city or council page.
-
-        Return the JSON object in this format:
+        Format example:
         {
           "people": [
             {
               "name": "John Doe",
               "image": "images/12341324132.jpg",
-              "phone_number": "123-456-7890",
-              "email": "john.doe@example.com",
+              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact.", "proximity_to_name": 50, "markdown_formatting": {"in_list": true}},
+              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name.", "proximity_to_name": 10, "markdown_formatting": {"in_list": false}},
+              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header", "markdown_formatting": {"in_list": true}},
               "positions": ["Mayor", "Council Member"],
-              "start_term_date": "2022-01-01",
-              "end_term_date": "2022-12-31",
-              "website": "https://example.com/john-doe"
+              "term_date": {"data": "2022-01-01 to 2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
             }
           ]
         }
 
-        Basic rules:
-        - Students are NOT city council members.
-        - Extract only the contact information associated with the person. Do not return general info.
-        - City council members and city leaders should all be human beings with a name and at least one piece of contact field.
-        - If you find just a list of names, with at least a website or email, they are likely to be council members.
-        - If the content is a press release, do not extract any people data from the content.
-        - For any fields not provided in the content, omit the field, except for 'name' which is required.
-        - If you cannot find any relevant information, return an empty array.
-        - For start_term_date and end_term_date, only provide dates if they are explicitly stated or
-          can be directly inferred with certainty—do not assume or estimate missing information.
-          They should be strings.
-        - For the "positions" field, split the positions into an array of strings.
-        - Today is #{current_date}. Ensure that only active positions are included, and#{" "}
-          exclude any positions that are not currently held or are no longer active.
+        Guidelines:
+        - For "llm_confidence": Use 0-1 scale with reason for your confidence
+        - For "proximity_to_name": Word count distance between info and person's name
+        - Extract only person-specific information, not general contact info
+        - Omit missing fields except for "name"
+        - For positions: Include only active roles (today is #{current_date})
+        - Name extraction: Extract full names ONLY, not titles
+          - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
+          - Titles belong in positions array, not in names
+        - Website extraction:
+          - Prioritize person-specific pages over landing pages
+          - Consider links associated with names/photos
+          - Prefer deeper paths and "/about" pages when available
       INSTRUCTIONS
 
       content = <<~CONTENT
         #{content}
       CONTENT
 
-      # User instructions: approximately 40 tokens (excluding the HTML content)
       user_instructions = <<~USER
         The page URL is: #{city_council_url}
         Here is the content:

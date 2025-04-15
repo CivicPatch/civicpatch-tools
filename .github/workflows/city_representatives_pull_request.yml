@@ -99,5 +99,5 @@ jobs:
           echo "Checking if PR should be approved..."
           echo "SOURCE_VALIDATION_APPROVE=$SOURCE_VALIDATION_APPROVE"
           if [ "$SOURCE_VALIDATION_APPROVE" = "true" ]; then
-            gh pr approve ${{ github.event.pull_request.number }}
+            gh pr review ${{ github.event.pull_request.number }} --approve --body "Approved by Bot - agreement score looks good"
           fi

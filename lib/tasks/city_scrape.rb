@@ -92,17 +92,9 @@ namespace :city_scrape do
     formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
     Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
 
-    # TODO: Would like to use a SERP API to get the URLs for city directories instead
-    seeded_urls = formatted_openai_people.map do |person|
-      person["sources"]
-    end.uniq.flatten
-
     ## Gemini Source
-    gemini_source_dirs,
-    gemini_city_people = CityScraper::PeopleScraper
-                         .fetch("gpt", state, gnis, government_type,
-                                %w[seeded brave manual], seeded_urls)
-
+    google_gemini = Services::GoogleGemini.new
+    gemini_city_people = google_gemini.fetch(state, city_entry, government_type)
     Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
     formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, positions_config)
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
@@ -115,10 +107,10 @@ namespace :city_scrape do
     Core::PeopleManager.update_people(state, city_entry, formatted_people)
 
     # Move images into the right places
-    source_dirs = openai_source_dirs + gemini_source_dirs
+    source_dirs = openai_source_dirs
     process_source_files(state, city_entry, source_dirs, formatted_people)
 
-    city_people_hash = Digest::MD5.hexdigest(combined_people.to_json)
+    city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
     CityScrape::StateManager.update_state_places(state, [
                                                    { "gnis" => city_entry["gnis"],
                                                      "meta_updated_at" => Time.now
@@ -150,7 +142,6 @@ namespace :city_scrape do
 
     FileUtils.mkdir_p(images_dir)
     images_in_use = people.map { |person| person["image"] }.compact
-    puts "imagse in use: #{images_in_use}"
 
     source_dirs.each do |source_dir|
       # Get list of images in dir

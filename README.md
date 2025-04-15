@@ -31,30 +31,10 @@ rake 'city_scrape:get_places[mi]'
 
 ### City Directory
 - [ ] Grab council members & city leaders for:
-  - [x] Washington
-    - [x] Top 20 cities by population
-      - [x] seattle
-      - [x] spokane
-      - [x] tacoma
-      - [x] vancouver
-      - [x] bellevue
-      - [x] kent
-      - [x] everett
-      - [x] spokane_valley
-      - [x] renton
-      - [ ] federal_way
-      - [x] yakima
-      - [ ] bellingham
-      - [ ] kirkland
-      - [ ] auburn
-      - [ ] kennewick
-      - [ ] pasco
-      - [ ] redmond
-      - [ ] marysville
-      - [ ] sammamish
-      - [ ] lakewood
-  - [ ] Michigan
-    - [ ] Top 10 cities by population
+  - [ ] Washington
+    - [ ] Top 20 cities by population
+  - [ ] Alabama
+    - [ ] Top 20 cities by population
 
 ### State Directory
 - [ ] Grab info for:
@@ -83,7 +63,7 @@ gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-
 ```
 
 ### Services
-* Google Gemini 2.5 (with google search) - Paid Tier 1
+* Google Gemini 2.5 Pro (with grounding - google search) - Paid Tier 1
   * Pricing Page - https://ai.google.dev/gemini-api/docs/pricing
   * Google Search - 1,500 RPD (free), then $35 / 1,000 requests
   * Input: $1.25 Per Million (<= 200k tokens); $2.50 Per Million (> 200k tokens)

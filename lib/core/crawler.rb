@@ -3,9 +3,10 @@
 # Given a base url and keyword groups, crawl the domain
 require "selenium-webdriver"
 require_relative "browser"
+require_relative "../utils/url_helper"
 
 class Crawler
-  MAX_PAGES = 10
+  MAX_PAGES = 15
   IGNORE_SUFFIXES = %w[xml pdf doc docx].freeze
 
   def self.crawl(base_url, max_pages: MAX_PAGES, keyword_groups: [], max_depth: 2, avoid_keywords: [])
@@ -101,7 +102,7 @@ class Crawler
       full_url = get_full_url(page_base_url, href)
       next nil unless full_url
 
-      { text: link.text.strip, href: full_url }
+      { text: link.text.strip, href: Utils::UrlHelper.format_url(full_url) }
     end.compact
 
     raw_links.select do |raw_link|

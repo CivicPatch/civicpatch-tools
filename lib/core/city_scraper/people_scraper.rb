@@ -1,7 +1,10 @@
 require "utils/url_helper"
+require "services/shared/people"
 
 module CityScraper
   class PeopleScraper
+    @@MAX_URLS_TO_SCRAPE = 20
+
     def self.fetch(
       llm_service_string,
       state,
@@ -20,6 +23,8 @@ module CityScraper
       officials_from_search = []
 
       search_engines.each do |engine|
+        break unless should_continue_scraping?(officials_from_search, page_content_cache_dirs.count)
+
         search_result_urls = Core::SearchRouter.fetch_search_results(engine, state, city_entry, government_type,
                                                                      seeded_urls)
         urls_to_scrape = search_result_urls - processed_search_urls
@@ -33,60 +38,79 @@ module CityScraper
           data_fetcher,
           city_cache_path,
           urls_to_scrape,
-          government_type
+          officials_from_search
         )
-        officials_from_search = Core::PeopleManager.merge_people(officials_from_search, people_from_engine_results)
+        officials_from_search = Services::Shared::People.collect_people(officials_from_search,
+                                                                        people_from_engine_results)
 
         processed_search_urls += urls_to_scrape
         page_content_cache_dirs += new_page_content_cache_dirs
-
-        is_valid_city_people = Core::PeopleManager.valid_city_people?(officials_from_search)
-        break if is_valid_city_people
       end
 
       officials_with_profile_data = officials_from_search.map do |person|
-        website = person["website"]
-        next person if website.blank?
-        next person if person["sources"].any? { |source| source == website }
+        next person if Services::Shared::People.all_contact_data_points_present?(person)
+        next person if person["websites"].blank?
 
-        profile_scrape_cache_path = File.join(city_cache_path, Utils::UrlHelper.url_to_safe_folder_name(website))
-        profile_content_cache_dir, merged_person_data = scrape_person_website(
-          llm_service_string,
-          state,
-          city_entry,
-          data_fetcher,
-          profile_scrape_cache_path,
-          person
-        )
-        page_content_cache_dirs << profile_content_cache_dir if profile_content_cache_dir.present?
+        person["websites"].each do |website|
+          next if website["data"].blank?
 
-        merged_person_data
+          cache_key = Utils::UrlHelper.url_to_safe_folder_name(website["data"])
+          next if page_content_cache_dirs.include?(File.join(city_cache_path, cache_key))
+
+          site_cache_dir = File.join(city_cache_path, cache_key)
+
+          person_data = scrape_person_website(
+            llm_service_string,
+            state,
+            city_entry,
+            data_fetcher,
+            site_cache_dir,
+            person,
+            website["data"]
+          )
+
+          next if person_data.blank?
+
+          page_content_cache_dirs << site_cache_dir
+          person = Services::Shared::People.merge_person(person, person_data)
+        end
+
+        person
       end
 
-      [page_content_cache_dirs.uniq, officials_with_profile_data]
+      Core::PeopleManager.update_people(state, city_entry, officials_with_profile_data,
+                                        "scrape-collected.before")
+
+      formatted_officials = officials_from_search.map do |official|
+        Services::Shared::People.format_person(official)
+      end
+
+      [page_content_cache_dirs.uniq, formatted_officials]
     end
 
-    def self.scrape_person_website(llm_service_string, state, city_entry, data_fetcher, person_profile_cache_path,
-                                   person)
-      website = person["website"]
-      return [nil, person] if website.blank?
+    def self.scrape_person_website(
+      llm_service_string,
+      state,
+      city_entry,
+      data_fetcher,
+      cache_path,
+      person,
+      website
+    )
+      puts "Scraping for #{person["name"]} from #{website}"
+      FileUtils.mkdir_p(cache_path)
 
-      FileUtils.mkdir_p(person_profile_cache_path)
-
-      content_file = data_fetcher.extract_content(website, person_profile_cache_path)
+      content_file = data_fetcher.extract_content(website, cache_path)
       return [nil, person] unless content_file
 
       llm_service = get_llm_service(llm_service_string)
-      llm_extracted_profile_data = llm_service.extract_person_information(state, city_entry, person, content_file,
+      llm_extracted_profile_data = llm_service.extract_person_information(state, 
+        city_entry, person, content_file,
                                                                           website)
 
-      unless llm_extracted_profile_data.present? && llm_extracted_profile_data.is_a?(Hash)
-        return [person_profile_cache_path, person]
-      end
+      return person unless llm_extracted_profile_data.present? && llm_extracted_profile_data.is_a?(Hash)
 
-      merged_data_from_profile = Core::PeopleManager.merge_person(person, llm_extracted_profile_data)
-
-      [person_profile_cache_path, merged_data_from_profile]
+      llm_extracted_profile_data
     end
 
     def self.fetch_people(
@@ -96,18 +120,20 @@ module CityScraper
       data_fetcher,
       search_results_base_cache_path,
       urls_from_search,
-      government_type
+      accumulated_officials
     )
       cache_dirs_with_results = []
-      accumulated_officials = []
 
       urls_from_search.each do |url|
         cache_name = Utils::UrlHelper.url_to_safe_folder_name(url)
         url_content_cache_path = File.join(search_results_base_cache_path, cache_name)
         FileUtils.mkdir_p(url_content_cache_path)
 
+        process_page_start = Time.now
         officials_from_page = fetch_and_process_page(llm_service_string, state, city_entry, data_fetcher,
                                                      url_content_cache_path, url)
+        process_page_end = Time.now
+        puts "Process page took #{process_page_end - process_page_start} seconds"
 
         next unless valid_potential_officials_list?(officials_from_page)
 
@@ -116,22 +142,24 @@ module CityScraper
         end.inspect}"
 
         cache_dirs_with_results << url_content_cache_path
-        accumulated_officials = Core::PeopleManager.merge_people(accumulated_officials, officials_from_page)
-        positions_config = Core::CityManager.get_positions(government_type)
-        accumulated_officials = Core::PeopleManager.normalize_people(accumulated_officials, positions_config)
+        collect_people_start = Time.now
+        accumulated_officials = Services::Shared::People.collect_people(accumulated_officials, officials_from_page)
+        collect_people_end = Time.now
+        puts "Collect people took #{collect_people_end - collect_people_start} seconds"
 
-        council_members = Core::PeopleManager.get_council_members_count(accumulated_officials)
-        mayors = Core::PeopleManager.get_mayors_count(accumulated_officials)
-
-        puts "#{llm_service_string}: Accumulated totals -> Council members: #{council_members}, Mayors: #{mayors}"
-
-        break if Core::PeopleManager.valid_city_people?(accumulated_officials)
+        break unless should_continue_scraping?(accumulated_officials, cache_dirs_with_results.count)
       end
 
       [cache_dirs_with_results, accumulated_officials]
     end
 
-    def self.fetch_and_process_page(llm_service_string, state, city_entry, data_fetcher, url_content_cache_path, url)
+    def self.fetch_and_process_page(
+      llm_service_string,
+      state,
+      city_entry,
+      data_fetcher,
+      url_content_cache_path,
+      url)
       puts "Fetching #{url} for city people extraction"
       content_file = data_fetcher.extract_content(url, url_content_cache_path)
       return [] unless content_file
@@ -153,6 +181,26 @@ module CityScraper
       when "google_gemini"
         Services::GoogleGemini.new
       end
+    end
+
+    def self.should_continue_scraping?(accumulated_officials, num_urls_scraped)
+      return false if num_urls_scraped >= @@MAX_URLS_TO_SCRAPE
+
+      member_count = accumulated_officials.count do |person|
+        person["positions"].present? &&
+          person["positions"].any? { |position| position.downcase.include?("member") } &&
+          Services::Shared::People.profile_data_points_present?(person)
+      end
+
+      leader_count = accumulated_officials.count do |person|
+        person["positions"].present? &&
+          person["positions"].any? { |position| position.downcase.include?("mayor") } &&
+          Services::Shared::People.profile_data_points_present?(person)
+      end
+
+      return false if leader_count >= 1 && member_count >= 4
+
+      true
     end
   end
 end

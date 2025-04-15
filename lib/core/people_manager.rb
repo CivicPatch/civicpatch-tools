@@ -5,14 +5,16 @@ require_relative "./person_manager/utils"
 module Core
   class PeopleManager
     def self.get_people(state, gnis, type = nil)
-      people_file_path = if type.present?
-                           PathHelper.get_people_candidates_file_path(state, gnis, type)
-                         else
-                           File.join(PathHelper.get_data_city_path(state, gnis), "people.json")
-                         end
-      raise "Invalid city people path: #{people_file_path}" unless people_file_path.present?
 
-      JSON.parse(File.read(people_file_path))
+      if type.present?
+        people_file_path = PathHelper.get_people_candidates_file_path(state, gnis, type)
+        content = JSON.parse(File.read(people_file_path))
+      else
+        people_file_path = File.join(PathHelper.get_data_city_path(state, gnis), "people.yml")
+        content = YAML.safe_load(File.read(people_file_path))
+      end
+
+      content
     end
 
     def self.normalize_people(people, positions_config)
@@ -35,7 +37,7 @@ module Core
                                   .format_position(position)
                               end
 
-        person["website"] = Scrapers::Common.format_url(person["website"]) if person["website"].present?
+        person["website"] = Utils::UrlHelper.format_url(person["website"]) if person["website"].present?
         if person["phone_number"].present?
           person["phone_number"] =
             Scrapers::Standard.format_phone_number(person["phone_number"])
@@ -44,7 +46,7 @@ module Core
         next unless person["sources"].present?
 
         person["sources"] = person["sources"].map do |source|
-          Scrapers::Common.format_url(source)
+          Utils::UrlHelper.format_url(source)
         end
       end
 
@@ -132,7 +134,6 @@ module Core
     def self.valid_city_people?(people)
       council_members = get_council_members_count(people)
       mayors = get_mayors_count(people)
-      File.write("chat.txt", "council_members = #{council_members}, mayors = #{mayors}", mode: "a")
 
       council_members > 1 && mayors.positive?
     end
@@ -161,13 +162,14 @@ module Core
       if directory_type.present?
         city_people_path = PathHelper.get_people_candidates_file_path(state, city_entry["gnis"],
                                                                       directory_type)
+        content = JSON.pretty_generate(new_city_people)
       else
-        city_people_path = File.join(PathHelper.get_data_city_path(state, city_entry["gnis"]), "people.json")
-        raise "Invalid city people path: #{city_people_path}" unless city_people_path.present?
+        city_people_path = File.join(PathHelper.get_data_city_path(state, city_entry["gnis"]), "people.yml")
+        content = new_city_people.to_yaml
       end
 
       FileUtils.mkdir_p(File.dirname(city_people_path))
-      File.write(city_people_path, JSON.pretty_generate(new_city_people))
+      File.write(city_people_path, content)
     end
 
     def self.people_with_names(people)
