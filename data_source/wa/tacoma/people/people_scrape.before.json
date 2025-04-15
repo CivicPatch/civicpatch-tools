@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "positions": [
+      "Mayor",
+      "mayor"
+    ],
+    "image": "images/3da5af2dd78ddb489914ee101e5fd45fecb12363832abddd3cad78579e3dfea2.jpg",
+    "phone_number": "(253) 591-5100",
+    "email": null,
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289",
+    "term_date": "2025-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "John Hines",
+    "positions": [
+      "Council Member",
+      "council member",
+      "position 1"
+    ],
+    "image": "images/ac0da69cb8c8b9992bb477e8e3632d9af9e158f0fffc8a8d71ecdca8fc232909.jpg",
+    "phone_number": "(253) 591-5100",
+    "email": "Jhines1@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913",
+    "term_date": "2023-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "positions": [
+      "Council Member",
+      "council member",
+      "position 2"
+    ],
+    "image": "images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif",
+    "phone_number": "(253) 591-5100",
+    "email": "SRumbaugh@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010",
+    "term_date": "2021-11-01 to 2025-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Jamika Scott",
+    "positions": [
+      "Council Member",
+      "council member",
+      "position 3"
+    ],
+    "image": "images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif",
+    "phone_number": "(253) 591-5100",
+    "email": "HCampbell2@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019",
+    "term_date": "2023-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "positions": [
+      "Council Member",
+      "council member",
+      "district 4"
+    ],
+    "image": "images/1c6e7b9f65b5cf501bafb3fc790300d8cc9a3ec0216c125d6c42c37f1132c913.jpg",
+    "phone_number": "(253) 591-5100",
+    "email": "catherine.ushka@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929",
+    "term_date": "2024-07-01 to 2025-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Joe Bushnell",
+    "positions": [
+      "Council Member",
+      "council member",
+      "district 5",
+      "vice chair",
+      "government performance and finance committee",
+      "economic development committee",
+      "chair",
+      "puget sound clean air agency",
+      "tacoma-pierce county health department board of health",
+      "member",
+      "south sound 911 board of directors"
+    ],
+    "image": "images/79aebf8a5b39638f2cda749b905d2d691118208aa25bb2aed2191e9a75271105.jpg",
+    "phone_number": "(253) 591-5100",
+    "email": "JBushnell2@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933",
+    "term_date": "2021-11-01 to 2025-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Kiara Daniels",
+    "positions": [
+      "Deputy Mayor",
+      "deputy mayor",
+      "at-large position 6"
+    ],
+    "image": "images/8d7a468511e77491b4904ab6ef63d895603760f47a4110c4f59e14acc00ee510.jpg",
+    "phone_number": "(253) 591-5100",
+    "email": "KDaniels@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230",
+    "term_date": "2021-11-01 to 2025-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Olgy Diaz",
+    "positions": [
+      "Council Member",
+      "council member",
+      "at-large position 7"
+    ],
+    "image": "images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif",
+    "phone_number": "(253) 533-0980",
+    "email": "odiaz@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002",
+    "term_date": "2023-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  },
+  {
+    "name": "Kristina Walker",
+    "positions": [
+      "Council Member",
+      "council member",
+      "at-large position 8"
+    ],
+    "image": "images/917944915396e5df35059307167b4911dc8f2f74d3cd2e2c8bf4af4e7f90435e.jpg",
+    "phone_number": "(253) 312-7734",
+    "email": "Kristina.walker@cityoftacoma.org",
+    "website": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937",
+    "term_date": "2023-12-31",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937",
+      "https://cityoftacoma.org/neighborhoodcouncils"
+    ]
+  }
+]

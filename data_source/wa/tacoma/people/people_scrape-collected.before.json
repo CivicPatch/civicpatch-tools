@@ -1,0 +1,520 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "image": "images/3da5af2dd78ddb489914ee101e5fd45fecb12363832abddd3cad78579e3dfea2.jpg",
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is explicitly stated in the context of the Mayor's Office, which is directly associated with Victoria Woodards.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Mayor's office.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated in the content.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289"
+      }
+    ],
+    "positions": [
+      "Mayor",
+      "mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "John Hines",
+    "image": "images/ac0da69cb8c8b9992bb477e8e3632d9af9e158f0fffc8a8d71ecdca8fc232909.jpg",
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The phone number is explicitly stated in the context of John Hines' contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Jhines1@cityoftacoma.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The email address is directly associated with John Hines in the contact section.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Council Member's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2023-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date is explicitly stated in the context of John Hines' position.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "council member",
+      "position 1"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "image": "images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif",
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The phone number is explicitly stated in the context of Council Member Sarah Rumbaugh.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010"
+      }
+    ],
+    "emails": [
+      {
+        "data": "SRumbaugh@cityoftacoma.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The email address is directly associated with Council Member Sarah Rumbaugh.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Council Member's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2021-11-01 to 2025-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The term expiration date is explicitly mentioned in the context of her position.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "council member",
+      "position 2"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Jamika Scott",
+    "image": "images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif",
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is explicitly stated in the context of Council Member Jamika Scott.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019"
+      }
+    ],
+    "emails": [
+      {
+        "data": "HCampbell2@cityoftacoma.org",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "The email is provided in the context of contacting Council Member Scott directly.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Council Member's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2023-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date is explicitly stated in the content.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95019"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "council member",
+      "position 3"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "image": "images/1c6e7b9f65b5cf501bafb3fc790300d8cc9a3ec0216c125d6c42c37f1132c913.jpg",
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The phone number is explicitly stated in the context of Council Member Sandesh Sadalge.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929"
+      }
+    ],
+    "emails": [
+      {
+        "data": "catherine.ushka@cityoftacoma.org",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The email is mentioned in the context of contacting Council Member Sadalge, but it appears to be associated with a former council member.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Council Member's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2024-07-01 to 2025-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The term expiration date is explicitly stated in the context of Council Member Sadalge's appointment.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "council member",
+      "district 4"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Joe Bushnell",
+    "image": "images/79aebf8a5b39638f2cda749b905d2d691118208aa25bb2aed2191e9a75271105.jpg",
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The phone number is explicitly stated in the context of Joe Bushnell's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933"
+      }
+    ],
+    "emails": [
+      {
+        "data": "JBushnell2@cityoftacoma.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The email address is directly associated with Joe Bushnell and is presented in the context of his contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Council Member's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2021-11-01 to 2025-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The term expiration date is explicitly stated, and the start date can be inferred from the election date.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92933"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "council member",
+      "district 5",
+      "vice chair",
+      "government performance and finance committee",
+      "economic development committee",
+      "chair",
+      "puget sound clean air agency",
+      "tacoma-pierce county health department board of health",
+      "member",
+      "south sound 911 board of directors"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kiara Daniels",
+    "image": "images/8d7a468511e77491b4904ab6ef63d895603760f47a4110c4f59e14acc00ee510.jpg",
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is explicitly listed under Kiara Daniels' contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230"
+      }
+    ],
+    "emails": [
+      {
+        "data": "KDaniels@cityoftacoma.org",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The email address is explicitly listed under Kiara Daniels' contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Deputy Mayor's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2021-11-01 to 2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date is explicitly stated in the content.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=70230"
+      }
+    ],
+    "positions": [
+      "Deputy Mayor",
+      "deputy mayor",
+      "at-large position 6"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Olgy Diaz",
+    "image": "images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif",
+    "phone_numbers": [
+      {
+        "data": "(253) 533-0980",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The phone number is explicitly mentioned in the context of Olgy Diaz's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002"
+      }
+    ],
+    "emails": [
+      {
+        "data": "odiaz@cityoftacoma.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The email address is explicitly mentioned in the context of Olgy Diaz's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Council Member's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2023-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term end date is explicitly stated in the content.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=95002"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "council member",
+      "at-large position 7"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kristina Walker",
+    "image": "images/917944915396e5df35059307167b4911dc8f2f74d3cd2e2c8bf4af4e7f90435e.jpg",
+    "phone_numbers": [
+      {
+        "data": "(253) 312-7734",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The phone number is explicitly stated in the context of Council Member Kristina Walker.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Kristina.walker@cityoftacoma.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The email address is directly associated with Council Member Kristina Walker.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the Council Member's page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/neighborhoodcouncils"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2023-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date is explicitly stated in the content.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "council member",
+      "at-large position 8"
+    ],
+    "sources": []
+  }
+]
