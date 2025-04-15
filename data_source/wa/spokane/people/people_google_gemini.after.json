@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Lisa Brown",
+    "positions": [
+      "Mayor"
+    ],
+    "phone_number": "(509) 625-6250",
+    "email": "mayor@spokanecity.org",
+    "website": "https://my.spokanecity.org/mayor",
+    "term_date": null
+  },
+  {
+    "name": "Jonathan Bingle",
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "phone_number": "(509) 625-6275",
+    "email": "jbingle@spokanecity.org",
+    "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
+    "term_date": "2022-2025"
+  },
+  {
+    "name": "Michael Cathcart",
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "phone_number": "(509) 625-6257",
+    "email": "mcathcart@spokanecity.org",
+    "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+    "term_date": "2024-2027"
+  },
+  {
+    "name": "Lili Navarrete",
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "phone_number": "(509) 768-6738",
+    "email": "lnavarrete@spokanecity.org",
+    "website": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
+    "term_date": "2024-2025"
+  },
+  {
+    "name": "Paul Dillon",
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "phone_number": "(509) 625-6254",
+    "email": "pdillon@spokanecity.org",
+    "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+    "term_date": "2024-2027"
+  },
+  {
+    "name": "Kitty Klitzke",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "phone_number": "(509) 625-6291",
+    "email": "kklitzke@spokanecity.org",
+    "website": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke",
+    "term_date": "2024-2027"
+  },
+  {
+    "name": "Zack Zappone",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "phone_number": "(509) 625-6256",
+    "email": "zzappone@spokanecity.org",
+    "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
+    "term_date": "2022-2025"
+  }
+]
