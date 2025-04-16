@@ -8,7 +8,8 @@ module Services
           "phone_number" => person["phone_number"],
           "email" => person["email"],
           "website" => person["website"].present? ? Utils::UrlHelper.format_url(person["website"]) : nil,
-          "term_date" => person["term_date"]
+          "term_date" => person["term_date"],
+          "sources" => person["sources"]
         }
       end
     end

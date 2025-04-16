@@ -24,5 +24,19 @@ module Utils
         url
       end
     end
+
+    def self.normalize_for_comparison(url)
+      return nil if url.nil?
+
+      begin
+        uri = Addressable::URI.parse(url)
+        # Remove www. from the beginning of the host
+        uri.host = uri.host.gsub(/^www\./, '') if uri.host
+        uri.normalize.to_s.gsub(%r{/$}, "") # Keep existing normalization and trailing slash removal
+      rescue StandardError => e
+        puts "Error normalizing URL for comparison: #{url} - #{e.message}"
+        url # Return original on error
+      end
+    end
   end
 end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../tasks/city_scrape/city_manager"
-
 module Scrapers
   module Common
     def self.missing_contact_info?(person)

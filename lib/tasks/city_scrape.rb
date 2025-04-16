@@ -1,36 +1,11 @@
 # frozen_string_literal: true
 
-# This file contains rake tasks and supporting code for scraping city council information.
-# It handles:
-# - Finding and selecting cities to process
-# - Scraping council member data from city websites
-# - Managing the storage and organization of city data
-# - Generating PR comments with results
-#
-# Main tasks:
-# - city_scrape:pick_cities[state,num_cities]    # Select next batch of cities to process
-# - city_scrape:get_places[state]                # Find official cities for a state
-# - city_scrape:fetch[state,gnis]                # Extract city council info
-# - city_scrape:get_member_info[state,gnis]      # Get additional member details
-# - city_scrape:get_pr_comment[state,gnis,branch]# Generate markdown for PR
-#
-# Example usage:
-# rake 'city_scrape:fetch[wa,2410494]'          # Fetch info for Federal Way, WA
-
-# rake 'city_info:extract[wa,seattle,https://www.seattle.gov/council/meet-the-council]'
-# rake 'city_info:extract[tx,austin,https://www.austintexas.gov/austin-city-council]'
-# rake 'city_info:extract[nm,albuquerque,https://www.cabq.gov/council/find-your-councilor]'
-# rake 'city_info:get_meta[wa,seattle]'
-# rake 'city_info:find_geojson[nm,albuquerque,district]'
-
 require_relative "../services/brave"
 require_relative "../services/openai"
 require_relative "../scrapers/places"
 require_relative "../scrapers/data_fetcher"
 require_relative "../scrapers/common"
-require_relative "../scrapers/utils"
-require_relative "../core/city_scraper/people_scraper"
-require_relative "../tasks/city_scrape/city_manager"
+require_relative "../core/city_scraper"
 require_relative "../tasks/city_scrape/state_manager"
 require_relative "../core/search_router"
 require_relative "../sources/state_source/city_people"
@@ -72,9 +47,23 @@ namespace :city_scrape do
     create_prepare_directories(state, city_entry)
 
     government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
+
+    fetch_with_source(state, city_entry, government_type) # State source
+    source_urls = fetch_with_scrape(state, gnis, government_type) # Web scrape
+    fetch_with_gemini(state, city_entry, government_type, source_urls) # Gemini
+
+    aggregate_sources(state, city_entry, government_type)
+    # Create config.yml for the city
+    create_config_yml(state, city_entry)
+
+    people = Core::PeopleManager.get_people(state, gnis)
+    remove_cache_folders(state, city_entry, people)
+  end
+
+  def fetch_with_source(state, city_entry, government_type)
+    gnis = city_entry["gnis"]
     positions_config = Core::CityManager.get_positions(government_type)
 
-    # Official Source
     # This call can fail if the state source is down (e.g. MRSC.org for WA)
     begin
       source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
@@ -85,30 +74,61 @@ namespace :city_scrape do
       puts "Error pulling from state source: #{e}"
       puts "Backtrace: #{e.backtrace}"
     end
+  end
 
-    ### Web Scrape Source
-    openai_source_dirs, openai_people = CityScraper::PeopleScraper.fetch("gpt", state, gnis, government_type)
+  def fetch_with_scrape(state, gnis, government_type)
+    positions_config = Core::CityManager.get_positions(government_type)
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    create_prepare_directories(state, city_entry)
+
+    config_file = File.join(PathHelper.get_data_source_city_path(state, city_entry["gnis"]), "config.yml")
+    config_content = { "scrape_sources" => [] }
+
+    config_content = YAML.load_file(config_file) if File.exist?(config_file)
+
+    source_dirs, openai_people = Core::CityScraper.fetch(
+      "gpt",
+      state,
+      gnis,
+      government_type,
+      cached_urls: config_content["scrape_sources"]
+    )
     Core::PeopleManager.update_people(state, city_entry, openai_people, "scrape.before")
     formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
     Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
 
-    ## Gemini Source
-    google_gemini = Services::GoogleGemini.new
-    gemini_city_people = google_gemini.fetch(state, city_entry, government_type)
-    Core::PeopleManager.update_people(state, city_entry, gemini_city_people, "google_gemini.before")
-    formatted_gemini_city_people = Core::PeopleManager.format_people(gemini_city_people, positions_config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_city_people, "google_gemini.after")
+    # Move images into the right places
+    process_images(state, city_entry, source_dirs, formatted_openai_people)
 
+    formatted_openai_people.map { |person| person["sources"] }.flatten.uniq
+  end
+
+  def fetch_with_gemini(state, city_entry, government_type, seeded_urls)
+    gnis = city_entry["gnis"]
+    positions_config = Core::CityManager.get_positions(government_type)
+    create_prepare_directories(state, city_entry)
+
+    _, gemini_people = Core::CityScraper.fetch(
+      "gemini",
+      state,
+      gnis,
+      government_type,
+      cached_urls: seeded_urls
+    )
+    Core::PeopleManager.update_people(state, city_entry, gemini_people, "gemini.before")
+    formatted_gemini_people = Core::PeopleManager.format_people(gemini_people, positions_config)
+    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_people, "gemini.after")
+  end
+
+  def aggregate_sources(state, city_entry, government_type)
+    gnis = city_entry["gnis"]
+    positions_config = Core::CityManager.get_positions(government_type)
     validated_result = Validators::CityPeople.validate_sources(state, gnis)
 
     combined_people = validated_result[:merged_sources]
     formatted_people = Core::PeopleManager.format_people(combined_people, positions_config)
 
     Core::PeopleManager.update_people(state, city_entry, formatted_people)
-
-    # Move images into the right places
-    source_dirs = openai_source_dirs
-    process_source_files(state, city_entry, source_dirs, formatted_people)
 
     city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
     CityScrape::StateManager.update_state_places(state, [
@@ -120,13 +140,24 @@ namespace :city_scrape do
                                                  ])
   end
 
+  def create_config_yml(state, city_entry)
+    gnis = city_entry["gnis"]
+    people = Core::PeopleManager.get_people(state, gnis)
+    config_yml = {
+      "scrape_sources" => people.map { |person| person["sources"] }.flatten.uniq
+    }
+
+    config_path = File.join(PathHelper.get_data_source_city_path(state, city_entry["gnis"]), "config.yml")
+    File.write(config_path, config_yml.to_yaml)
+  end
+
   def create_prepare_directories(state, city_entry)
     cache_destination_dir = PathHelper.get_city_cache_path(state, city_entry["gnis"])
 
     FileUtils.mkdir_p(cache_destination_dir)
   end
 
-  def process_source_files(
+  def process_images(
     state,
     city_entry,
     source_dirs,
@@ -157,9 +188,11 @@ namespace :city_scrape do
         FileUtils.cp(File.join(source_images_dir, filtered_image), images_dir)
       end
     end
+  end
 
-    # Get list of folders in the cache
-    cache_dir = PathHelper.get_city_cache_path(state, city_entry["gnis"])
+  def self.remove_cache_folders(state, city_entry, people)
+    gnis = city_entry["gnis"]
+    cache_dir = PathHelper.get_city_cache_path(state, gnis)
     cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
     # Get list of src files in use

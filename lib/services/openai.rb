@@ -19,12 +19,12 @@ module Services
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_people(state, city_entry, content_file, city_council_url)
+    def extract_city_people(state, city_entry, government_type, content_file, page_url)
       content = File.read(content_file)
 
       return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
-      system_instructions, user_instructions = generate_city_info_prompt(content, city_council_url)
+      system_instructions, user_instructions = generate_city_info_prompt(government_type, content, page_url)
 
       messages = [
         { role: "system", content: system_instructions },
@@ -42,14 +42,14 @@ module Services
       end
 
       people.map do |person|
-        Services::Shared::People.format_raw_data(person, city_council_url)
+        Services::Shared::People.format_raw_data(person, page_url)
       end
     end
 
-    def extract_person_information(state, city_entry, person, content_file, url)
-      positions = Core::CityManager.get_position_roles("mayor_council")
-      divisions = Core::CityManager.get_position_divisions("mayor_council")
-      position_examples = Core::CityManager.get_position_examples("mayor_council")
+    def extract_city_profile(state, city_entry, government_type, person, content_file, url)
+      positions = Core::CityManager.get_position_roles(government_type)
+      divisions = Core::CityManager.get_position_divisions(government_type)
+      position_examples = Core::CityManager.get_position_examples(government_type)
       current_date = Date.today.strftime("%Y-%m-%d")
 
       content = File.read(content_file)
@@ -61,6 +61,7 @@ module Services
 
         Return a JSON object with the following properties:
         name
+        positions (An array of strings)
         image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
         phone_number: <an object with the following properties:
           data: <string>
@@ -86,7 +87,6 @@ module Services
           markdown_formatting: {
             in_list: <boolean> # Whether the contact information is in a list
           }
-        positions (An array of strings)
 
         Notes:
         - For "llm_confidence", and "llm_confidence_reason",#{" "}
@@ -122,14 +122,13 @@ module Services
       response = run_prompt(messages, request_origin)
 
       person = response
-      person = Services::Shared::People.format_raw_data(person, url)
-      person
+      Services::Shared::People.format_raw_data(person, url)
     end
 
-    def generate_city_info_prompt(content, city_council_url)
-      positions = Core::CityManager.get_position_roles("mayor_council")
-      divisions = Core::CityManager.get_position_divisions("mayor_council")
-      position_examples = Core::CityManager.get_position_examples("mayor_council")
+    def generate_city_info_prompt(government_type, content, page_url)
+      positions = Core::CityManager.get_position_roles(government_type)
+      divisions = Core::CityManager.get_position_divisions(government_type)
+      position_examples = Core::CityManager.get_position_examples(government_type)
       current_date = Date.today.strftime("%Y-%m-%d")
 
       # System instructions: approximately 340
@@ -186,7 +185,7 @@ module Services
       CONTENT
 
       user_instructions = <<~USER
-        The page URL is: #{city_council_url}
+        The page URL is: #{page_url}
         Here is the content:
         #{content}
       USER

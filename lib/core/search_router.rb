@@ -2,7 +2,7 @@ require_relative "../scrapers/city_directory"
 
 module Core
   class SearchRouter
-    def self.fetch_search_results(engine, state, city_entry, government_type, seeded_urls = [])
+    def self.fetch_search_results(engine, state, city_entry, government_type)
       city = city_entry["name"]
       website = city_entry["website"]
       urls = []
@@ -21,8 +21,6 @@ module Core
           search_query = "#{city} #{state} #{group[:name]}"
           urls += Services::Brave.get_search_result_urls(search_query, website)
         end
-      when "seeded"
-        urls += seeded_urls
       end
 
       filtered_urls = Scrapers::Common.urls_without_keywords(urls, %w[alerts news event calendar video])

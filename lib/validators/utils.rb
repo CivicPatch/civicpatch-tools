@@ -42,6 +42,21 @@ module Validators
       url.gsub("www.", "")
     end
 
+    def self.find_by_name(people, name)
+      target_parsed = parse_name(name)
+      # Ensure we have both first and last name from the target
+      return nil if target_parsed[:first].to_s.empty? || target_parsed[:last].to_s.empty?
+
+      people.find do |person|
+        next unless person && person["name"] # Skip nil person or person without a name
+
+        person_parsed = parse_name(person["name"])
+
+        # Compare parsed first and last names
+        target_parsed[:first] == person_parsed[:first] && target_parsed[:last] == person_parsed[:last]
+      end
+    end
+
     # Compute similarity score based on field type
     def self.similarity_score(field, value1, value2, confidence_a = 1.0, confidence_b = 1.0)
       return 1.0 if value1 == value2 # Exact match for any field
@@ -140,18 +155,18 @@ module Validators
       contested_people = {}
       fields = %w[positions email phone_number website]
 
-      # Normalize names across sources
-      contested_names = normalize_names(sources)
-
-      # Normalize person records based on contested names
-      normalized_sources = apply_name_normalization(sources, contested_names)
-
-      unique_names = get_unique_names(normalized_sources)
+      unique_names = get_unique_names(sources)
       total_people = unique_names.count
       total_fields = fields.count
 
       unique_names.each do |name|
-        person_records = get_person_records(normalized_sources, name)
+        person_records = sources.map do |source|
+          {
+            people: find_by_name(source[:people], name),
+            source_name: source[:source_name],
+            confidence_score: source[:confidence_score]
+          }
+        end
 
         existing_records = (person_records || []).select do |r|
           r[:people].present?
@@ -180,8 +195,7 @@ module Validators
 
       {
         contested_people: contested_people,
-        agreement_score: agreement_score,
-        contested_names: contested_names
+        agreement_score: agreement_score
       }
     end
 
@@ -211,74 +225,14 @@ module Validators
       }
     end
 
-    def self.normalize_names(sources)
-      canonical_names = sources[0][:people].map { |p| p["name"] }
-      contested_names = Array.new(sources.size)
-
-      sources.each_with_index do |source, i|
-        next if i.zero?
-
-        contested_names[i] = {}
-
-        source[:people].each do |person|
-          best_match = canonical_names.max_by do |canonical_name|
-            similarity_score("name", person["name"], canonical_name, 1.0, 1.0)
-          end
-
-          similarity = similarity_score("name", person["name"], best_match, 1.0, 1.0)
-          contested_names[i][person["name"]] = best_match if similarity >= 0.8 && person["name"] != best_match
-        end
-      end
-
-      contested_names
-    end
-
-    def self.apply_name_normalization(sources, contested_names)
-      sources.each_with_index.map do |source, i|
-        name_map = contested_names[i] || {}
-        source[:people] = source[:people].map do |person|
-          canonical_name = name_map[person["name"]]
-          person.merge("name" => canonical_name || person["name"])
-        end
-      end
-
-      sources
-    end
-
-    def self.get_unique_names(normalized_sources)
-      normalized_sources.flat_map { |s| s[:people].map { |p| p["name"] } }.uniq
-    end
-
-    def self.get_person_records(normalized_sources, name)
-      normalized_sources.map do |source|
-        {
-          people: source[:people].find { |p| p["name"] == name },
-          source_name: source[:source_name], # Keep extra fields so that each field has proximity to the source
-          confidence_score: source[:confidence_score]
-        }
-      end
-    end
-
-    def self.merge_people_across_sources(sources, contested_names = [])
+    def self.merge_people_across_sources(sources)
       merged = []
 
-      # Apply contested name mappings to normalize names across sources
-      normalized_sources = sources.each_with_index.map do |source, i|
-        name_map = contested_names[i] || {}
-
-        people = source[:people].map do |person|
-          canonical_name = name_map[person["name"]]
-          person.merge("name" => canonical_name || person["name"])
-        end
-
-        source.merge(people: people)
-      end
-
-      unique_names = normalized_sources.flat_map { |s| s[:people].map { |p| p["name"] } }.uniq
+      unique_names = get_unique_names(sources)
 
       unique_names.each do |name|
-        person_records = normalized_sources.map do |source|
-          person = source[:people].find { |p| p["name"] == name }
+        person_records = sources.map do |source|
+          person = find_by_name(source[:people], name)
           next unless person
 
           person.merge("confidence_score" => source[:confidence_score], "source_name" => source[:source_name])
@@ -338,6 +292,43 @@ module Validators
       end
 
       hash_counts.keys.select { |key| hash_counts[key] > 1 }
+    end
+
+    # Helper to parse first and last name, ignoring middle parts and case
+    def self.parse_name(full_name)
+      return { first: nil, last: nil } if full_name.nil? || full_name.strip.empty?
+
+      parts = full_name.strip.split(/\s+/)
+      last_name = parts.pop || ""
+      first_name = parts.shift || ""
+      # Return downcased names
+      { first: first_name.downcase, last: last_name.downcase }
+    end
+
+    def self.get_unique_names(sources)
+      unique_names_map = {}
+
+      sources.each do |source|
+        next unless source && source[:people]
+
+        source[:people].each do |person|
+          next unless person && person["name"]
+          full_name = person["name"].to_s.strip
+          next if full_name.empty?
+
+          parsed_name = parse_name(full_name)
+
+          # Skip if we couldn't parse a first or last name
+          next if parsed_name[:first].to_s.empty? || parsed_name[:last].to_s.empty?
+
+          # Create a unique key based on parsed first and last name
+          parsed_key = "#{parsed_name[:first]}|#{parsed_name[:last]}"
+
+          unique_names_map[parsed_key] ||= full_name
+        end
+      end
+
+      unique_names_map.values
     end
   end
 end
