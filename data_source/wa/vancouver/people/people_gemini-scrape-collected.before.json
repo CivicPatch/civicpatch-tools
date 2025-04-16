@@ -1,0 +1,345 @@
+[
+  {
+    "name": "Anne McEnerny-Ogle",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Points to the city council page.",
+        "proximity_to_name": 5,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "http://www.clark.wa.gov/elections",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Associated with running for City Council.",
+        "proximity_to_name": 100,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link to the mayor and city council page.",
+        "proximity_to_name": 5,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under the Mayor's title.",
+        "proximity_to_name": 50,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Mayor Anne McEnerny-Ogle.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Mayor Anne McEnerny-Ogle.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kim D. Harless",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Points to the city council page.",
+        "proximity_to_name": 5,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link to the mayor and city council page.",
+        "proximity_to_name": 5,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under the Council Member's title.",
+        "proximity_to_name": 50,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Kim D. Harless.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Kim D. Harless.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Council Seat 1"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Erik Paulsen",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Points to the city council page.",
+        "proximity_to_name": 5,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link to the mayor and city council page.",
+        "proximity_to_name": 5,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under the Council Member's title.",
+        "proximity_to_name": 50,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Mayor Pro Tem Erik Paulsen.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2021 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Mayor Pro Tem Erik Paulsen.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Mayor Pro Tem",
+      "Council Seat 2",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Diana H. Perez",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Points to the city council page.",
+        "proximity_to_name": 5,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link to the mayor and city council page.",
+        "proximity_to_name": 5,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under the Council Member's title.",
+        "proximity_to_name": 50,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Diana H. Perez.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2022 through 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Diana H. Perez.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Council Seat 3"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Bart Hansen",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Points to the city council page.",
+        "proximity_to_name": 5,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link to the mayor and city council page.",
+        "proximity_to_name": 5,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under the Council Member's title.",
+        "proximity_to_name": 50,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Bart Hansen.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Bart Hansen.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Council Seat 4"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Ty Stober",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Points to the city council page.",
+        "proximity_to_name": 5,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under the Council Member's title.",
+        "proximity_to_name": 50,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Ty Stober.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Ty Stober.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Council Seat 5"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Sarah J. Fox",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofvancouver.us/departments/mayor-city-council",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Points to the city council page.",
+        "proximity_to_name": 5,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under the Council Member's title.",
+        "proximity_to_name": 50,
+        "source": "https://cityofvancouver.us/departments/mayor-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Sarah J. Fox.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/government/mayor-and-city-council"
+      },
+      {
+        "data": "2024 through 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Councilmember Sarah J. Fox.",
+        "proximity_to_name": 50,
+        "source": "https://www.cityofvancouver.us/departments/mayor-city-council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Council Seat 6"
+    ],
+    "sources": []
+  }
+]
