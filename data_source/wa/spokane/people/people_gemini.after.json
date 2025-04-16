@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Lisa Brown",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Jonathan Bingle",
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Michael Cathcart",
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Lili Navarrete",
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Paul Dillon",
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Kitty Klitzke",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Zack Zappone",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  }
+]
