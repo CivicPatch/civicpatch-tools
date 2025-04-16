@@ -1,0 +1,197 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under Term Expiration.",
+        "proximity_to_name": 50000000.0,
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289"
+      }
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "John Hines",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://public.govdelivery.com/accounts/WATACOMA/subscriber/new?topic_id=WATACOMA_198",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Subscription link to District 1 Community Newsletter.",
+        "proximity_to_name": 150,
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member",
+      "Deputy Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kristina Walker",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://public.govdelivery.com/accounts/WATACOMA/subscriber/new?topic_id=WATACOMA_204",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Direct link to newsletter subscription related to Kristina Walker",
+        "proximity_to_name": 150,
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member",
+      "At-Large Position 8",
+      "Deputy Mayor",
+      "Chair of Pierce Transit Commission",
+      "member of the Sound Transit Board of Directors"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=218353",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Points to newsletter archive, which is a person-specific page.",
+        "proximity_to_name": 1000000000.0,
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010"
+      },
+      {
+        "data": "http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 50000000.0,
+        "source": "http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=218353"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "proximity_to_name": 1000000000.0,
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Chair of the Community Vitality and Safety Committee",
+      "Member of the Government Performance and Finance Committee",
+      "Chair of the Crystal Judson Family Justice Center Board",
+      "District 2"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Jamika Scott",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cityoftacoma.org/government/city_council/council_member_sandesh_sadalge",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL provided for council member.",
+        "proximity_to_name": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929"
+      },
+      {
+        "data": "https://cityoftacoma.org/government/city_council/council_member_sandesh_sadalge",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to council member's page.",
+        "proximity_to_name": 1000000000.0,
+        "source": "https://cityoftacoma.org/government/city_council/council_member_sandesh_sadalge"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "proximity_to_name": 500000000.0,
+        "source": "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929"
+      },
+      {
+        "data": "December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "proximity_to_name": 2000000000.0,
+        "source": "https://cityoftacoma.org/government/city_council/council_member_sandesh_sadalge"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Position 4"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Joe Bushnell",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kiara Daniels",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Olgy Diaz",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  }
+]

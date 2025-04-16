@@ -1,0 +1,131 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": "December 31, 2025",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=10289"
+    ]
+  },
+  {
+    "name": "John Hines",
+    "positions": [
+      "Council Member",
+      "Deputy Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://public.govdelivery.com/accounts/WATACOMA/subscriber/new?topic_id=WATACOMA_198",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92913"
+    ]
+  },
+  {
+    "name": "Kristina Walker",
+    "positions": [
+      "Council Member",
+      "At-Large Position 8",
+      "Deputy Mayor",
+      "Chair of Pierce Transit Commission",
+      "member of the Sound Transit Board of Directors"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://public.govdelivery.com/accounts/WATACOMA/subscriber/new?topic_id=WATACOMA_204",
+    "term_date": null,
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92937"
+    ]
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "positions": [
+      "Council Member",
+      "Chair of the Community Vitality and Safety Committee",
+      "Member of the Government Performance and Finance Committee",
+      "Chair of the Crystal Judson Family Justice Center Board",
+      "District 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010",
+    "term_date": "December 31, 2025",
+    "sources": [
+      "http://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=218353",
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=154010"
+    ]
+  },
+  {
+    "name": "Jamika Scott",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "positions": [
+      "Council Member",
+      "Position 4"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://cityoftacoma.org/government/city_council/council_member_sandesh_sadalge",
+    "term_date": "December 31, 2025",
+    "sources": [
+      "https://cityoftacoma.org/cms/One.aspx?portalId=169&pageId=92929"
+    ]
+  },
+  {
+    "name": "Joe Bushnell",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Kiara Daniels",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Olgy Diaz",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  }
+]
