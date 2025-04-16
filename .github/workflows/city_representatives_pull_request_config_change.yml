@@ -41,7 +41,7 @@ jobs:
 
       - name: Scrape City
         run: |
-          bundle exec rake city_scrape:fetch_scrape[${{ env.STATE }}, ${{ env.GNIS }}]
+          bundle exec rake city_scrape:fetch[${{ env.STATE }}, ${{ env.GNIS }}]
       
       - name: Commit Changes to current branch
         env:
