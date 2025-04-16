@@ -3,7 +3,6 @@ name: Pull Request - City Config Change
 on:
   pull_request:
     types:
-      - opened
       - synchronize
     paths:
       - '**/config.yml'
@@ -38,6 +37,10 @@ jobs:
           BRANCH_NAME="${{ github.head_ref }}"
           STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
           GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $5}')
+
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "STATE=$STATE" >> $GITHUB_ENV
+          echo "GNIS=$GNIS" >> $GITHUB_ENV
 
       - name: Scrape City
         run: |
