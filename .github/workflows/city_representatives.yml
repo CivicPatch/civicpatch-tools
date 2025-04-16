@@ -113,6 +113,7 @@ jobs:
       - name: Send costs to Google Sheets
         run: |
           bundle exec rake 'sheets:send_costs'
+        continue-on-error: true
         env:
           GOOGLE_SHEETS_SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
           GOOGLE_SHEETS_CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
