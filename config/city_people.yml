@@ -3,9 +3,12 @@ government_types:
   mayor_council:
     positions:
       - role: mayor
+      - role: mayor pro tem
+      - role: deputy mayor
       - role: council president
       - role: council vice president
       - role: council manager
+      - role: deputy council manager
       - role: council member
         aliases:
           - councilmember

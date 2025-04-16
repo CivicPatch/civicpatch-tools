@@ -15,8 +15,11 @@ module Services
       }.freeze
 
       GEMINI_PEOPLE_ARRAY_SCHEMA = {
-        type: :array,
-        items: GEMINI_PERSON_SCHEMA # Each item in the array should follow PERSON_SCHEMA
+        type: :object,
+        properties: {
+          people: { type: :array, items: GEMINI_PERSON_SCHEMA }
+        },
+        required: ["people"]
       }.freeze
     end
   end

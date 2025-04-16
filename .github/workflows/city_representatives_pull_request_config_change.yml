@@ -1,0 +1,53 @@
+name: Pull Request - City Config Change
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - '**/config.yml'
+
+jobs:
+  scrape_city:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.2'
+          bundler-cache: true
+      
+      - name: Generate GitHub App Token
+        id: generate-civicpatch-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_PRIVATE_KEY }}
+
+      - name: Install dependencies
+        run: |
+          bundle install
+
+      - name: Extract State and GNIS ID from Branch Name
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
+          GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $5}')
+
+      - name: Scrape City
+        run: |
+          bundle exec rake city_scrape:fetch_scrape[${{ env.STATE }}, ${{ env.GNIS }}]
+      
+      - name: Commit Changes to current branch
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-civicpatch-token.outputs.token }}
+        run: |
+          git add .
+          git commit -m "Config changes for ${{ env.BRANCH_NAME }}"
+          git push
+          

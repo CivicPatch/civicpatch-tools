@@ -42,12 +42,14 @@ module Services
 
         partial_people.each do |partial_person|
           name = partial_person["name"]
+          existing_person = Validators::Utils.find_by_name(people, name)
 
-          people_by_name[name] = if people_by_name[name].present?
-                                   merge_person(people_by_name[name], partial_person)
-                                 else
-                                   partial_person
-                                 end
+          if existing_person.present?
+            existing_name = existing_person["name"]
+            people_by_name[existing_name] = merge_person(existing_person, partial_person)
+          else
+            people_by_name[name] = partial_person
+          end
         end
 
         people_by_name.values

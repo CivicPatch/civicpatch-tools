@@ -6,6 +6,7 @@ require "markitdown"
 require "sanitize"
 require "marcel"
 
+require "utils/url_helper"
 require_relative "./common"
 require_relative "../core/browser"
 
@@ -172,7 +173,7 @@ module Scrapers
     end
 
     def format_url(url)
-      Scrapers::Common.format_url(url)
+      Utils::UrlHelper.format_url(url)
     end
   end
 end
