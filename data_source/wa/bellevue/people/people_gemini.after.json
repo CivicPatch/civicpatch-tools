@@ -1,0 +1,108 @@
+[
+  {
+    "name": "John Stokes",
+    "positions": [
+      "Mayor",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes",
+    "term_date": "1/1/12-12/31/27",
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes"
+    ]
+  },
+  {
+    "name": "Lynne Robinson",
+    "positions": [
+      "Mayor",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "(425) 452-7810",
+    "email": "lrobinson@bellevuewa.gov",
+    "website": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson",
+    "term_date": "1/6/20-12/31/25",
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+    ]
+  },
+  {
+    "name": "Mo Malakoutian",
+    "positions": [
+      "Deputy Mayor",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "(425) 452-7810",
+    "email": "mmalakoutian@bellevuewa.gov",
+    "website": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian",
+    "term_date": "1/1/24-12/31/27",
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+    ]
+  },
+  {
+    "name": "Claire Sumadiwirya",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya",
+    "term_date": "through the certification of the November 2025 general election. If elected, she will serve through Zahn’s original term date of Dec. 31, 2027.",
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
+    ]
+  },
+  {
+    "name": "Conrad Lee",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee",
+    "term_date": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+    ]
+  },
+  {
+    "name": "Dave Hamilton",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "(425) 452-7810",
+    "email": "dhamilton@bellevuewa.gov",
+    "website": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton",
+    "term_date": "1/2/24-12/31/27",
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+    ]
+  },
+  {
+    "name": "Jared Nieuwenhuis",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "(425) 452-7810",
+    "email": "jnieuwenhuis@bellevuewa.gov",
+    "website": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis",
+    "term_date": "1/1/18-12/31/25",
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+    ]
+  }
+]
