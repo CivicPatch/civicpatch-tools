@@ -63,13 +63,14 @@ gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-
 ```
 
 ### Services
-* Google Gemini 2.5 Pro (with grounding - google search) - Paid Tier 1
+* Google Gemini 2.0 Flash (used with scraping) - Paid Tier 1
   * Pricing Page - https://ai.google.dev/gemini-api/docs/pricing
-  * Google Search - 1,500 RPD (free), then $35 / 1,000 requests
-  * Input: $1.25 Per Million (<= 200k tokens); $2.50 Per Million (> 200k tokens)
-  * Output: $10.00 Per Million (<= 200k tokens); $15.00 Per Million (> 200k)
-* OpenAI API - GPT 4o Mini (used only with scraping)
-  * https://openai.com/api/pricing/
+  * Input: $0.10 Per Million
+  * Output: $0.40 Per Million
+* OpenAI API - GPT 4.1 Mini (used only with scraping)
+  * Input: $0.40 Per Million
+  * Output: $1.60 Per Million
+  * https://platform.openai.com/docs/pricing 
 
 ### Links
 * https://editor.dicebear.com/
