@@ -30,18 +30,10 @@ namespace :sheets do
       refresh_token: refresh_token
     )
 
-    if credentials.refresh_token.nil?
-      url = credentials.authorization_uri(base_url: OOB_URI)
-      puts "Open the following URL in the browser and enter the " \
-           "resulting code after authorization:\n" + url
-      code = gets.chomp
-      credentials.get_credentials_from_code(user_code: code, base_url: OOB_URI)
-      puts "Set GOOGLE_SHEETS_REFRESH_TOKEN to : #{credentials.refresh_token}"
-    else
-      credentials.refresh!
-    end
+    credentials.refresh!
+
     credentials
-  rescue Google::Auth::CredentialsError => e
+  rescue StandardError => e
     puts "Error getting credentials: #{e}"
     nil
   end
