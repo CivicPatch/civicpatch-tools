@@ -1,0 +1,564 @@
+[
+  {
+    "name": "Sara Nelson",
+    "image": "images/8980e1e2cced3af98b33c3051dc0093baf50f36034b5004edde025b0db690ae4.jpg",
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8809",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under 'Contact Us' section associated with Sara Nelson.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Sara.Nelson@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is listed directly under 'Contact Us' section associated with Sara Nelson.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Sara Nelson's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://nelson.seattle.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Personal blog URL is linked under Sara's Blog, clearly associated with Sara Nelson.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council President",
+      "council member",
+      "citywide"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "image": "images/03cd886b4f338cf8520b3b22189e0101c826602317a44ff234e38c405a704aaa.jpg",
+    "phone_numbers": [
+      {
+        "data": "206-684-8803",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the contact section for Joy Hollingsworth.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Joy.Hollingsworth@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with Joy Hollingsworth's contact information.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Joy Hollingsworth's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and links are specifically for Joy Hollingsworth's council member page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member district 3"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Robert Kettle",
+    "image": "images/faea3dfa57d5e786126d30bb44c9cb430ad7d420471ef4729c110f21a6f32ed3.jpg",
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8807",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Contact Us section for Robert Kettle.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/kettle"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Robert.Kettle@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is listed directly under Contact Us section for Robert Kettle.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/kettle"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Robert Kettle's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main page for Robert Kettle's council member profile.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/kettle"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member district 7"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Cathy Moore",
+    "image": "images/5a2497a84ca21e840e81ffcd278314e8329b537cc8b7be25937aab09a03d4d9d.jpg",
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8805",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Contact Us section associated with Cathy Moore.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/moore"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Cathy.Moore@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email is directly associated with Cathy Moore's contact information and mentioned near her name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/moore"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Cathy Moore's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://moore.seattle.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website is linked as 'Cathy's Blog' directly associated with Cathy Moore.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/moore"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member district 5"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "image": "images/fcbe93394fac497929e241019f78222226d899b76c434c4873eb046e983a991b.jpg",
+    "phone_numbers": [
+      {
+        "data": "206-684-8808",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number is directly associated with Alexis Mercedes Rinck's contact information and within 10 words of her name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
+    "emails": [
+      {
+        "data": "AlexisMercedes.Rinck@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email is directly associated with Alexis Mercedes Rinck's contact information and within 10 words of her name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Alexis Mercedes Rinck's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the official personal councilmember page linked with her name and image.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member",
+      "position 8",
+      "at-large"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Maritza Rivera",
+    "image": "images/36ee549afe7da4667abdcf86d180ff8d9f750766ed04f812abbb7ec18bd8c8d7.jpg",
+    "phone_numbers": [
+      {
+        "data": "206-684-8804",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number is directly listed under Contact Us section associated with Maritza Rivera.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/rivera"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Maritza.Rivera@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email is directly associated with Maritza Rivera and appears near her name and contact info.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/rivera"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Maritza Rivera's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://rivera.seattle.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Personal blog URL linked under Maritza Rivera's section, indicating a personal website.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/rivera"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member district 4"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Rob Saka",
+    "image": "images/c690131bd6154f33a1bc0ea99b3bf0d94f3727c62246f6f1451098941616d2c5.jpg",
+    "phone_numbers": [
+      {
+        "data": "206-684-8801",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the contact section for Rob Saka.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Rob.Saka@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with Rob Saka's contact information.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Rob Saka's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the personal councilmember page linked with the name and image.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member district 1"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Mark Solomon",
+    "image": "images/0c6d8b609300ef0691be8f0dd26f5fc07fa31dc97946bf2b52a9498d3fa5b8a3.jpg",
+    "phone_numbers": [
+      {
+        "data": "206-684-8802",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number is listed directly under the Contact Us section associated with Mark Solomon.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Mark.Solomon2@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email is explicitly stated as contact for Mark Solomon and appears very close to the name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Mark Solomon's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the official councilmember page for Mark Solomon, directly associated with his name and image.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member district 2"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Dan Strauss",
+    "image": "images/13a279195aed5b588656fba571556d9114214b0c10d8007fad6ef025371e78c7.jpg",
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8806",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Contact Us section associated with Dan Strauss.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Dan.Strauss@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is listed directly under Contact Us section associated with Dan Strauss.",
+        "proximity_to_name": 17,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Dan Strauss's council profile.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and multiple links associated with Dan Strauss' councilmember page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member",
+      "district 6"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Bruce Harrell",
+    "image": "images/ae297f8bf7650b66f3e5267ccc06abf23234a9c4acb178cb3abad7f800c199ce.jpg",
+    "phone_numbers": [
+      {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the Mayor Bruce Harrell section and repeated multiple times in close proximity to the name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link directly associated with the name 'Mayor Bruce Harrell' at the top of the page.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://harrell.seattle.gov"
+      },
+      {
+        "data": "https://seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is the official Office of the Mayor page and is directly associated with Bruce Harrell.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/mayor"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "active as of 2025-04-16",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The page is the official Office of the Mayor page and the content is current as of April 2025, indicating Bruce Harrell is the current mayor.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/mayor"
+      }
+    ],
+    "positions": [
+      "mayor"
+    ],
+    "sources": []
+  }
+]

@@ -1,0 +1,377 @@
+[
+  {
+    "name": "Bruce Harrell",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://harrell.seattle.gov",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/mayor"
+    ]
+  },
+  {
+    "name": "Dan Strauss",
+    "positions": [
+      "Budget Chair",
+      "Councilmember",
+      "Council Member",
+      "District 6",
+      "Chair of the Select Budget Committee"
+    ],
+    "image": null,
+    "phone_number": "206-684-8806",
+    "email": "Dan.Strauss@seattle.gov",
+    "website": "http://strauss.seattle.gov",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council/strauss"
+    ]
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [
+      "Council Member",
+      "Councilmember"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "AlexisMercedes.Rinck@seattle.gov",
+    "website": "https://council.seattle.gov/rinck",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council/rinck"
+    ]
+  },
+  {
+    "name": "Tim Lennon",
+    "positions": [
+      "Chief of Staff"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Rachel Alger",
+    "positions": [
+      "Policy Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Kaiden Cook",
+    "positions": [
+      "Operations Manager",
+      "Policy Aide"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Kenney Tran",
+    "positions": [
+      "External Affairs",
+      "Policy Analyst"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Sara Nelson",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Councilmember"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8809",
+    "email": "Sara.Nelson@seattle.gov",
+    "website": "https://nelson.seattle.gov",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council/meet-the-council/sara-nelson"
+    ]
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "positions": [
+      "Councilmember",
+      "Council Member",
+      "District 3"
+    ],
+    "image": null,
+    "phone_number": "206-684-8803",
+    "email": "Joy.Hollingsworth@seattle.gov",
+    "website": "https://hollingsworth.seattle.gov",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council/hollingsworth"
+    ]
+  },
+  {
+    "name": "Robert Kettle",
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/kettle",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Cathy Moore",
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/moore",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Maritza Rivera",
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://seattle.gov/council/rivera",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council"
+    ]
+  },
+  {
+    "name": "Rob Saka",
+    "positions": [
+      "Councilmember",
+      "council member",
+      "District 1",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "206-684-8801",
+    "email": "Rob.Saka@seattle.gov",
+    "website": "https://saka.seattle.gov",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council/saka"
+    ]
+  },
+  {
+    "name": "Mark Solomon",
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "206-684-8802",
+    "email": "Mark.Solomon2@seattle.gov",
+    "website": "https://council.seattle.gov/solomon",
+    "term_date": null,
+    "sources": [
+      "https://seattle.gov/council/solomon"
+    ]
+  },
+  {
+    "name": "Elaine Ikoma Ko",
+    "positions": [
+      "Chief of Staff"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Ian Griswold",
+    "positions": [
+      "Legislative Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Erik Schmidt",
+    "positions": [
+      "District 1 Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Logan Duling",
+    "positions": [
+      "Legislative Assistant"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Sarah Mayes",
+    "positions": [
+      "Chief of Staff"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Murphy Bush",
+    "positions": [
+      "Director of Outreach and Operations"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Thaddaeus Gregory",
+    "positions": [
+      "Policy Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Christine Hendrickson",
+    "positions": [
+      "Communications Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Anthony Derrick",
+    "positions": [
+      "Chief of Staff"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Alex Altshuler",
+    "positions": [
+      "District Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Nina Park",
+    "positions": [
+      "Policy Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Steve Smith",
+    "positions": [
+      "Chief of Staff"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Brent Lo",
+    "positions": [
+      "Policy Director"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Rebecca Duran",
+    "positions": [
+      "Executive Aide",
+      "District Director of Constituent Affairs"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  }
+]

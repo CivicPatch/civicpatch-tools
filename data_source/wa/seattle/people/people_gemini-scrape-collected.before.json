@@ -1,0 +1,594 @@
+[
+  {
+    "name": "Bruce Harrell",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://harrell.seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to Mayor's blog found under 'Latest News - Mayor's Blog'",
+        "proximity_to_name": 100000000.0,
+        "source": "https://seattle.gov/mayor"
+      },
+      {
+        "data": "https://seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to mayor's page.",
+        "proximity_to_name": 5,
+        "source": "https://harrell.seattle.gov"
+      },
+      {
+        "data": "https://seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to mayor's page.",
+        "proximity_to_name": 5,
+        "source": "https://harrell.seattle.gov"
+      },
+      {
+        "data": "https://harrell.seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to Mayor's blog found under 'Latest News - Mayor's Blog'",
+        "proximity_to_name": 10000000000.0,
+        "source": "https://seattle.gov/mayor"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Dan Strauss",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "206-684-8806",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Dan.Strauss@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 500000000.0,
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "Dan.Strauss@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://strauss.seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Appears under elected officials.",
+        "proximity_to_name": 5,
+        "source": "https://harrell.seattle.gov"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly linked under 'Learn more about Councilmember Strauss'",
+        "proximity_to_name": 50,
+        "source": "https://strauss.seattle.gov"
+      },
+      {
+        "data": "http://strauss.seattle.gov",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under Dan's Blog.",
+        "proximity_to_name": 10,
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Budget Chair",
+      "Councilmember",
+      "Council Member",
+      "District 6",
+      "Chair of the Select Budget Committee"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "AlexisMercedes.Rinck@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed under contact information.",
+        "proximity_to_name": 500000000.0,
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Appears to be the council member's blog.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://seattle.gov/council/rinck"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member",
+      "Councilmember"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Tim Lennon",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Chief of Staff"
+    ]
+  },
+  {
+    "name": "Rachel Alger",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Policy Director"
+    ]
+  },
+  {
+    "name": "Kaiden Cook",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Operations Manager",
+      "Policy Aide"
+    ]
+  },
+  {
+    "name": "Kenney Tran",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "External Affairs",
+      "Policy Analyst"
+    ]
+  },
+  {
+    "name": "Sara Nelson",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8809",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 10,
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Sara.Nelson@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 10,
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://nelson.seattle.gov",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to Sara's Blog found under Sara Nelson's navigation options.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Councilmember"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "206-684-8803",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed directly under her name and title.",
+        "proximity_to_name": 15,
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Joy.Hollingsworth@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed directly under her name and title.",
+        "proximity_to_name": 15,
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://hollingsworth.seattle.gov",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Appears to be her blog, linked under her profile.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "Council Member",
+      "District 3"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Robert Kettle",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Cathy Moore",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Maritza Rivera",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Rob Saka",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "206-684-8801",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Rob.Saka@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://saka.seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to blog found under Meet the Council.",
+        "proximity_to_name": 100,
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "council member",
+      "District 1",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Mark Solomon",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "206-684-8802",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Mark.Solomon2@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact Us section.",
+        "proximity_to_name": 50,
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and title.",
+        "proximity_to_name": 5,
+        "source": "https://seattle.gov/council"
+      },
+      {
+        "data": "https://council.seattle.gov/solomon",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Appears to be his blog.",
+        "proximity_to_name": 100,
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Elaine Ikoma Ko",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Chief of Staff"
+    ]
+  },
+  {
+    "name": "Ian Griswold",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Legislative Director"
+    ]
+  },
+  {
+    "name": "Erik Schmidt",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "District 1 Director"
+    ]
+  },
+  {
+    "name": "Logan Duling",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Legislative Assistant"
+    ]
+  },
+  {
+    "name": "Sarah Mayes",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Chief of Staff"
+    ]
+  },
+  {
+    "name": "Murphy Bush",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Director of Outreach and Operations"
+    ]
+  },
+  {
+    "name": "Thaddaeus Gregory",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Policy Director"
+    ]
+  },
+  {
+    "name": "Christine Hendrickson",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Communications Director"
+    ]
+  },
+  {
+    "name": "Anthony Derrick",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Chief of Staff"
+    ]
+  },
+  {
+    "name": "Alex Altshuler",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "District Director"
+    ]
+  },
+  {
+    "name": "Nina Park",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Policy Director"
+    ]
+  },
+  {
+    "name": "Steve Smith",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Chief of Staff"
+    ]
+  },
+  {
+    "name": "Brent Lo",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Policy Director"
+    ]
+  },
+  {
+    "name": "Rebecca Duran",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Executive Aide",
+      "District Director of Constituent Affairs"
+    ]
+  }
+]
