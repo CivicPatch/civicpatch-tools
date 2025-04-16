@@ -38,7 +38,7 @@ module Core
       profile_content_dirs, accumulated_people = scrape_profiles(context, data[:accumulated_people],
                                                                  data[:content_dirs])
 
-      Core::PeopleManager.update_people(state, city_entry, data[:accumulated_people], "#{llm_service_string}-scrape-collected.before")
+      Core::PeopleManager.update_people(state, city_entry, accumulated_people, "#{llm_service_string}-scrape-collected.before")
 
       formatted_officials = accumulated_people.map do |official|
         Services::Shared::People.format_person(official)
@@ -74,7 +74,6 @@ module Core
         processed_urls: processed_urls
       }
     end
-
 
     def self.scrape_from_search_engines(
       context,
@@ -128,7 +127,6 @@ module Core
     end
 
     def self.scrape_profiles(context, accumulated_people, processed_urls)
-      city_cache_path = context[:city_cache_path]
       content_dirs = []
       # Create a set of normalized processed URLs for quick lookup during profile scraping
       normalized_processed = Set.new(processed_urls.map { |u| Utils::UrlHelper.normalize_for_comparison(u) }.compact)
@@ -143,56 +141,26 @@ module Core
           # Check if the *normalized* version of the profile URL has been processed
           next if normalized_processed.include?(Utils::UrlHelper.normalize_for_comparison(original_url))
 
-          url_content_dir = File.join(city_cache_path, Utils::UrlHelper.url_to_safe_folder_name(original_url))
-
-          person_data = scrape_person_website(
+          puts "Fetching from #{original_url} for #{person["name"]}"
+          url_content_dir, people = scrape_url_for_city_directory(
             context,
-            url_content_dir,
-            person,
             original_url
           )
 
-          next if person_data.blank?
+          next if people.blank?
+
+          person_with_website_data = Validators::Utils.find_by_name(people, person["name"])
+
+          next if person_with_website_data.blank?
 
           content_dirs << url_content_dir
-          person = Services::Shared::People.merge_person(person, person_data)
+          person = Services::Shared::People.merge_person(person, person_with_website_data)
         end
 
         person
       end
 
       [content_dirs, accumulated_people]
-    end
-
-    def self.scrape_person_website(
-      context,
-      url_content_dir,
-      person,
-      website
-    )
-      state = context[:state]
-      city_entry = context[:city_entry]
-      llm_service_string = context[:llm_service_string]
-      llm_service = get_llm_service(llm_service_string)
-      data_fetcher = context[:data_fetcher]
-      government_type = context[:government_type]
-
-      puts "#{llm_service_string}: Scraping for #{person["name"]} from #{website}"
-      FileUtils.mkdir_p(url_content_dir)
-
-      content_file = data_fetcher.extract_content(website, url_content_dir)
-      return nil unless content_file
-
-      llm_extracted_profile_data = llm_service.extract_city_profile(state,
-                                                                    city_entry,
-                                                                    government_type,
-                                                                    person,
-                                                                    content_file,
-                                                                    website)
-
-      return nil unless llm_extracted_profile_data.present? && llm_extracted_profile_data.is_a?(Hash)
-
-      llm_extracted_profile_data
     end
 
     def self.scrape_url_for_city_directory(context, url)
