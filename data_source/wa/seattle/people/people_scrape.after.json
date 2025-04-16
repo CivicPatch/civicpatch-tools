@@ -1,0 +1,166 @@
+[
+  {
+    "name": "Bruce Harrell",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "images/2937d3a3326cc98c19ddc63ec1e1e3887f3f01ca7a4a2e18ce6009629154c29f.jpg",
+    "phone_number": "(206) 684-4000",
+    "email": null,
+    "website": "https://harrell.seattle.gov",
+    "term_date": "2022 to 2026",
+    "sources": [
+      "https://seattle.gov/mayor",
+      "https://harrell.seattle.gov"
+    ]
+  },
+  {
+    "name": "Sara Nelson",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Position 9"
+    ],
+    "image": "images/b425f7fb460c669009b11fb84155c0e4b575cd0263233f2afa2ba66bf14e749d.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/nelson",
+    "term_date": "2025-01 to 2025-12",
+    "sources": [
+      "https://council.seattle.gov",
+      "https://council.seattle.gov/nelson"
+    ]
+  },
+  {
+    "name": "Rob Saka",
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "image": "images/7d67dc96beb6e596d6d579f479066998b6b33cba2f39989fd070a784ec6af8d3.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/saka",
+    "term_date": null,
+    "sources": [
+      "https://council.seattle.gov"
+    ]
+  },
+  {
+    "name": "Mark Solomon",
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "image": "images/6813ce4ddc7a01e4fb57f72f6d23016bc8088a70174339befbffcbd5badf4041.png",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "image": "images/26d31c2cdea8f38c9b47f127aebf8ed3c9a13b0789511a241d6ed4dd644ec844.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/hollingsworth",
+    "term_date": "2024-01-02 to 2025-01-02",
+    "sources": [
+      "https://council.seattle.gov",
+      "https://council.seattle.gov/hollingsworth"
+    ]
+  },
+  {
+    "name": "Maritza Rivera",
+    "positions": [
+      "Council Member",
+      "District 4"
+    ],
+    "image": "images/f14a30389d4bc9a4481dae80a0703ebd70798ddda0f42b909ff3fa453e075994.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/rivera",
+    "term_date": null,
+    "sources": [
+      "https://council.seattle.gov"
+    ]
+  },
+  {
+    "name": "Cathy Moore",
+    "positions": [
+      "Council Member",
+      "District 5"
+    ],
+    "image": "images/501f4f6896a1ff356e7d50830dc3d3595b2d0bfa6794cd72316303fc733224fa.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/moore",
+    "term_date": null,
+    "sources": [
+      "https://council.seattle.gov"
+    ]
+  },
+  {
+    "name": "Dan Strauss",
+    "positions": [
+      "Council Member",
+      "District 6"
+    ],
+    "image": "images/b6373e0a7ec9a2ac78a8058cfabc41e15c876870f16cc3f6030cc570424298bf.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/strauss",
+    "term_date": null,
+    "sources": [
+      "https://council.seattle.gov"
+    ]
+  },
+  {
+    "name": "Bob Kettle",
+    "positions": [
+      "Council Member",
+      "District 7"
+    ],
+    "image": "images/c02534cdc541bf06c025695500b5253227e673fe2bbc6f21d0ed0b0934024732.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "term_date": null,
+    "sources": []
+  },
+  {
+    "name": "Robert Kettle",
+    "positions": [
+      "Council Member",
+      "District 7"
+    ],
+    "image": "images/f43e0fa7004c5536c60e5a15e798080887b31eb438091cdb7d39a122c66aa01a.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/kettle",
+    "term_date": null,
+    "sources": [
+      "https://council.seattle.gov"
+    ]
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [
+      "Council Member",
+      "Position 8"
+    ],
+    "image": "images/f48a4f107b05710cee67f485ac056ce67a105abc1f986aac14ee3d5528f2b4aa.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://council.seattle.gov/rinck",
+    "term_date": null,
+    "sources": [
+      "https://council.seattle.gov"
+    ]
+  }
+]

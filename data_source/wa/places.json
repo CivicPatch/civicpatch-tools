@@ -15,7 +15,9 @@
       "gnis": "2411856",
       "type": "First-class city",
       "population": 737015,
-      "government_type": "Mayor-Council"
+      "government_type": "Mayor-Council",
+      "meta_updated_at": "2025-04-16",
+      "meta_hash": "ec140f080001e97f3bb5cd6a3ad21f28"
     },
     {
       "ocd_ids": [

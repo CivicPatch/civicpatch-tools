@@ -1,0 +1,309 @@
+[
+  {
+    "name": "Sara Nelson",
+    "image": "images/e8c1cdab4d72b2447513226bfbd325d791d4af9a659ac043b99e6d9f7b86ffbf.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council President",
+      "Councilmember",
+      "Position 9"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Joy Hollingsworth",
+    "image": "images/71303106617e735c21e50f9e9e256103252f2b7db14156e225b28971205073c4.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 3"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Robert Kettle",
+    "image": "images/e8c1cdab4d72b2447513226bfbd325d791d4af9a659ac043b99e6d9f7b86ffbf.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 7"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Cathy Moore",
+    "image": "images/e8c1cdab4d72b2447513226bfbd325d791d4af9a659ac043b99e6d9f7b86ffbf.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 5"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "image": "images/e8c1cdab4d72b2447513226bfbd325d791d4af9a659ac043b99e6d9f7b86ffbf.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "Position 8"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Maritza Rivera",
+    "image": "images/e8c1cdab4d72b2447513226bfbd325d791d4af9a659ac043b99e6d9f7b86ffbf.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 4"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Rob Saka",
+    "image": "images/e8c1cdab4d72b2447513226bfbd325d791d4af9a659ac043b99e6d9f7b86ffbf.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 1"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Mark Solomon",
+    "image": "images/6813ce4ddc7a01e4fb57f72f6d23016bc8088a70174339befbffcbd5badf4041.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 2"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Dan Strauss",
+    "image": "images/e8c1cdab4d72b2447513226bfbd325d791d4af9a659ac043b99e6d9f7b86ffbf.png",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://council.seattle.gov"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 6"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Bruce Harrell",
+    "image": "images/f4f279a6c7bb58e3ad0a8d6da670cc69a9b50bb6f902f8994f9d059ea77c6205.jpg",
+    "phone_numbers": [
+      {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under contact information.",
+        "proximity_to_name": 2,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the mayor's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://harrell.seattle.gov"
+      },
+      {
+        "data": "https://harrell.seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with the mayor's blog.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://seattle.gov/mayor"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Bob Kettle",
+    "image": "images/c02534cdc541bf06c025695500b5253227e673fe2bbc6f21d0ed0b0934024732.jpg",
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Councilmember",
+      "District 7"
+    ]
+  },
+  {
+    "name": "Andrew Lee",
+    "image": "images/b0816ce9f6aaabc3135743664ccc508cf3bf9ac8add172e8cf80906469fbb69a.png",
+    "phone_numbers": [
+      {
+        "data": "(206) 684-3000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under contact information.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/utilities/about/reports/water-quality"
+      }
+    ],
+    "emails": [
+      {
+        "data": "SPUCustomerService@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/utilities/about/reports/water-quality"
+      }
+    ],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "N/A",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No term date provided.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://seattle.gov/utilities/about/reports/water-quality"
+      }
+    ],
+    "positions": [
+      "General Manager",
+      "CEO"
+    ]
+  }
+]

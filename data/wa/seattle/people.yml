@@ -1,0 +1,105 @@
+---
+- name: Bruce Harrell
+  positions:
+  - Mayor
+  email:
+  phone_number: "(206) 684-4000"
+  website: https://harrell.seattle.gov
+  image: images/2937d3a3326cc98c19ddc63ec1e1e3887f3f01ca7a4a2e18ce6009629154c29f.jpg
+  sources:
+  - https://seattle.gov/mayor
+  - https://harrell.seattle.gov
+- name: Sara Nelson
+  positions:
+  - Council President
+  - Council Member
+  - Position 9
+  email:
+  phone_number:
+  website: https://council.seattle.gov/nelson
+  image: images/b425f7fb460c669009b11fb84155c0e4b575cd0263233f2afa2ba66bf14e749d.png
+  sources:
+  - https://council.seattle.gov
+  - https://council.seattle.gov/nelson
+- name: Alexis Mercedes Rinck
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://council.seattle.gov/rinck
+  image: images/f48a4f107b05710cee67f485ac056ce67a105abc1f986aac14ee3d5528f2b4aa.png
+  sources:
+  - https://council.seattle.gov
+- name: Bob Kettle
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  image: images/c02534cdc541bf06c025695500b5253227e673fe2bbc6f21d0ed0b0934024732.jpg
+  sources: []
+- name: Cathy Moore
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://council.seattle.gov/moore
+  image: images/501f4f6896a1ff356e7d50830dc3d3595b2d0bfa6794cd72316303fc733224fa.jpg
+  sources:
+  - https://council.seattle.gov
+- name: Dan Strauss
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://council.seattle.gov/strauss
+  image: images/b6373e0a7ec9a2ac78a8058cfabc41e15c876870f16cc3f6030cc570424298bf.jpg
+  sources:
+  - https://council.seattle.gov
+- name: Maritza Rivera
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://council.seattle.gov/rivera
+  image: images/f14a30389d4bc9a4481dae80a0703ebd70798ddda0f42b909ff3fa453e075994.jpg
+  sources:
+  - https://council.seattle.gov
+- name: Mark Solomon
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  image: images/6813ce4ddc7a01e4fb57f72f6d23016bc8088a70174339befbffcbd5badf4041.png
+  sources: []
+- name: Robert Kettle
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://council.seattle.gov/kettle
+  image: images/f43e0fa7004c5536c60e5a15e798080887b31eb438091cdb7d39a122c66aa01a.jpg
+  sources:
+  - https://council.seattle.gov
+- name: Rob Saka
+  positions:
+  - Council Member
+  - District 1
+  email:
+  phone_number:
+  website: https://council.seattle.gov/saka
+  image: images/7d67dc96beb6e596d6d579f479066998b6b33cba2f39989fd070a784ec6af8d3.jpg
+  sources:
+  - https://council.seattle.gov
+- name: Joy Hollingsworth
+  positions:
+  - Council Member
+  - District 3
+  email:
+  phone_number:
+  website: https://council.seattle.gov/hollingsworth
+  image: images/26d31c2cdea8f38c9b47f127aebf8ed3c9a13b0789511a241d6ed4dd644ec844.jpg
+  sources:
+  - https://council.seattle.gov
+  - https://council.seattle.gov/hollingsworth

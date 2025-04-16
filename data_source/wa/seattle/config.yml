@@ -1,0 +1,7 @@
+---
+scrape_sources:
+- https://seattle.gov/mayor
+- https://harrell.seattle.gov
+- https://council.seattle.gov
+- https://council.seattle.gov/nelson
+- https://council.seattle.gov/hollingsworth
