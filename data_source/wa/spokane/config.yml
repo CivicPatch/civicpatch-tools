@@ -1,0 +1,6 @@
+---
+scrape_sources:
+- https://my.spokanecity.org/mayor
+- https://my.spokanecity.org/mayor/about
+- https://my.spokanecity.org/citycouncil/members
+- https://my.spokanecity.org/citycouncil/members/paul-dillon
