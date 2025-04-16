@@ -46,7 +46,7 @@ module Services
 
           if existing_person.present?
             existing_name = existing_person["name"]
-            people_by_name[existing_name] = merge_person(existing_person, partial_person)
+            people_by_name[name] = merge_person(existing_person, partial_person)
           else
             people_by_name[name] = partial_person
           end

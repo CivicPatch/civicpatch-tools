@@ -1,7 +1,6 @@
 require "core/city_manager"
 require "utils/costs_helper"
 require "pp"
-require_relative "shared/gemini_people"
 require_relative "shared/llm_prompts"
 
 module Services

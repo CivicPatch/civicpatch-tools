@@ -13,7 +13,7 @@ module Services
   BASE_SLEEP = 5  # Base sleep time for exponential backoff
   class Openai
     @@MAX_TOKENS = 100_000
-    MODEL = "gpt-4o-mini"
+    MODEL = "gpt-4.1-mini"
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
@@ -46,85 +46,6 @@ module Services
       end
     end
 
-    def extract_city_profile(state, city_entry, government_type, person, content_file, url)
-      positions = Core::CityManager.get_position_roles(government_type)
-      divisions = Core::CityManager.get_position_divisions(government_type)
-      position_examples = Core::CityManager.get_position_examples(government_type)
-      current_date = Date.today.strftime("%Y-%m-%d")
-
-      content = File.read(content_file)
-      system_instructions = <<~INSTRUCTIONS
-        You are an expert data extractor.
-
-        You should be returning a JSON object with the following properties:
-        You are looking for content related to #{person["name"]}
-
-        Return a JSON object with the following properties:
-        name
-        positions (An array of strings)
-        image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-        phone_number: <an object with the following properties:
-          data: <string>
-          llm_confidence: <number>
-          llm_confidence_reason: <string>
-          proximity_to_name: <number>
-          markdown_formatting: {
-            in_list: <boolean> # Whether the contact information is in a list
-          }
-        email: <an object with the following properties:
-          data: <string>
-          llm_confidence: <number>
-          llm_confidence_reason: <string>
-          proximity_to_name: <number>
-          markdown_formatting: {
-            in_list: <boolean> # Whether the contact information is in a list
-          }
-        term_date: <an object with the following properties>
-          data: <string> # The date the person has an active term for. Format: YYYY to YYYY, YYYY-MM to YYYY-MM, or YYYY-MM-DD to YYYY-MM-DD
-          llm_confidence: <number>
-          llm_confidence_reason: <string>
-          proximity_to_name: <number>
-          markdown_formatting: {
-            in_list: <boolean> # Whether the contact information is in a list
-          }
-
-        Notes:
-        - For "llm_confidence", and "llm_confidence_reason",#{" "}
-          provide a number between 0 and 1, and an associated reason.#{" "}
-          How confident are you that the contact information#{" "}
-          is associated with #{person["name"]}? Provide the reason for your confidence.
-        - For "proximity_to_name", provide a number of the distance
-          between the contact information and the person's name in terms of word count.
-        - Extract only the contact information associated with the person. Do not return general info.
-        - For term_date, only provide dates if they are explicitly stated or
-          can be directly inferred with certainty—do not assume or estimate missing information.
-        - For the "positions" field, split the positions into an array of strings.
-          The main positions we are interested in are #{positions.join(", ")}
-          Positions may also be associated with titles like #{divisions.join(", ")}
-          where the positions are attached with vairous numbers or words.
-        - Today is #{current_date}. Ensure that only active positions are included, and#{" "}
-          exclude any positions that are not currently held or are no longer active.
-        Position Examples:
-          #{position_examples}
-      INSTRUCTIONS
-
-      user_instructions = <<~USER
-        Here is the content:
-        #{content}
-      USER
-
-      messages = [
-        { role: "system", content: system_instructions },
-        { role: "user", content: user_instructions }
-      ]
-
-      request_origin = "#{state}_#{city_entry["name"]}_person_scrape"
-      response = run_prompt(messages, request_origin)
-
-      person = response
-      Services::Shared::People.format_raw_data(person, url)
-    end
-
     def generate_city_info_prompt(government_type, content, page_url)
       positions = Core::CityManager.get_position_roles(government_type)
       divisions = Core::CityManager.get_position_divisions(government_type)
@@ -135,7 +56,8 @@ module Services
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
 
-        First, determine if the content contains elected officials' information. If not, return an empty array.
+        First, determine if the content contains elected officials' information. 
+        If not, return an empty array.
 
         Key roles: #{positions.join(", ")}
         Associated divisions: #{divisions.join(",")}
@@ -169,6 +91,8 @@ module Services
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - For "proximity_to_name": Word count distance between info and person's name
         - Extract only person-specific information, not general contact info
+        - IMPORTANT: DO NOT extract phone numbers or emails labeled as belonging to "Legislative Assistant", "Staff", "Office", or any other support personnel.
+        - DO NOT extract contact information if you are less than 90% confident it belongs directly to the person.
         - Omit missing fields except for "name"
         - For positions: Include only active roles (today is #{current_date})
         - Name extraction: Extract full names ONLY, not titles
@@ -178,6 +102,10 @@ module Services
           - Prioritize person-specific pages over landing pages
           - Consider links associated with names/photos
           - Prefer deeper paths and "/about" pages when available
+        - For email, phone_number, term_date extraction:
+          - Only extract contact information if it is CLEARLY for the specific person or their office.
+          - If contact information is more than 30 words away from the person's name, DO NOT include it unless:
+            - It appears in a section that is clearly dedicated to that person's contact information.
       INSTRUCTIONS
 
       content = <<~CONTENT
