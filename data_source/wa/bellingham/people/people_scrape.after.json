@@ -4,13 +4,13 @@
     "positions": [
       "Mayor"
     ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
+    "image": "images/9dae86339cbd4a972a2ae01a6dedbb356f926c1b3c8cd2bb94e7231c7d7d98bf.Lund1a810-320x400.jpg.webp",
+    "phone_number": "(360) 778-8100",
+    "email": "mayorsoffice@cob.org",
     "website": "https://cob.org/gov/mayor",
-    "term_date": null,
+    "term_date": "2024-01-01 to present",
     "sources": [
-      "https://cob.org/gov/mayor/top-issues"
+      "https://cob.org/gov/mayor/bio"
     ]
   },
   {
@@ -20,7 +20,7 @@
       "Council Member",
       "Ward 2"
     ],
-    "image": "1760684c254a585dfd5ced60d393e18bf0d20a05ed7e30cbf73e4ac0ef9e7880.p950131-1-320x400.jpg.webp",
+    "image": "images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg",
     "phone_number": "(360) 778-8216",
     "email": "hahuthman@cob.org",
     "website": "https://cob.org/gov/council/hollie-huthman",
@@ -37,7 +37,7 @@
       "Council Member",
       "Ward 6"
     ],
-    "image": "f16c199950e24e1f9fb5751269e1e11af1707141ceb744da67439a1bf3050adb.p950132-1-320x400.jpg.webp",
+    "image": "images/f16c199950e24e1f9fb5751269e1e11af1707141ceb744da67439a1bf3050adb.p950132-1-320x400.jpg.webp",
     "phone_number": "(360) 778-8212",
     "email": "mlilliquist@cob.org",
     "website": "https://cob.org/gov/council/michael-lilliquist",
@@ -53,7 +53,7 @@
       "Council Member",
       "At-large"
     ],
-    "image": "dcc7f2a1e1f6dd99a0beaad1c2d5e7a907c87ed25dd3f880af8e31b620e83da4.image.jpeg.webp",
+    "image": "images/dcc7f2a1e1f6dd99a0beaad1c2d5e7a907c87ed25dd3f880af8e31b620e83da4.image.jpeg.webp",
     "phone_number": "(360) 778-8214",
     "email": "jacotton@cob.org",
     "website": "https://cob.org/gov/council/council-member-jace-cotton",
@@ -100,7 +100,7 @@
       "Council Member",
       "Ward 4"
     ],
-    "image": "b4526a39f4b4b06effbe3d91da86fc3752669503ef9f90466324004da95ce7d2.Skip-Williams-2024-1.jpg.webp",
+    "image": "images/b4526a39f4b4b06effbe3d91da86fc3752669503ef9f90466324004da95ce7d2.Skip-Williams-2024-1.jpg.webp",
     "phone_number": "(360) 778-8215",
     "email": "ehwilliams@cob.org",
     "website": "https://cob.org/gov/council/edwin-williams",
@@ -116,7 +116,7 @@
       "Council Member",
       "Ward 5"
     ],
-    "image": "61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp",
+    "image": "images/61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp",
     "phone_number": "(360) 778-8217",
     "email": "laanderson@cob.org",
     "website": "https://cob.org/gov/council/lisa-anderson",

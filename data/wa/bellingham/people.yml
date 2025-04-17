@@ -2,12 +2,23 @@
 - name: Kim Lund
   positions:
   - Mayor
-  email:
-  phone_number:
+  email: mayorsoffice@cob.org
+  phone_number: "(360) 778-8100"
   website: https://cob.org/gov/mayor
-  image:
+  image: images/9dae86339cbd4a972a2ae01a6dedbb356f926c1b3c8cd2bb94e7231c7d7d98bf.Lund1a810-320x400.jpg.webp
   sources:
-  - https://cob.org/gov/mayor/top-issues
+  - https://cob.org/gov/mayor/bio
+- name: Michael Lilliquist
+  positions:
+  - Council President
+  - Council Member
+  email: mlilliquist@cob.org
+  phone_number: "(360) 778-8212"
+  website: https://cob.org/gov/council/michael-lilliquist
+  image: images/f16c199950e24e1f9fb5751269e1e11af1707141ceb744da67439a1bf3050adb.p950132-1-320x400.jpg.webp
+  sources:
+  - https://cob.org/gov/council/michael-lilliquist
+  - https://cob.org/gov/council/contacts-bios
 - name: Hollie Huthman
   positions:
   - Council President
@@ -16,7 +27,7 @@
   email: hahuthman@cob.org
   phone_number: "(360) 778-8216"
   website: https://cob.org/gov/council/hollie-huthman
-  image: 1760684c254a585dfd5ced60d393e18bf0d20a05ed7e30cbf73e4ac0ef9e7880.p950131-1-320x400.jpg.webp
+  image: images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg
   sources:
   - https://cob.org/gov/council/hollie-huthman
   - https://cob.org/gov/council/contacts-bios
@@ -28,18 +39,18 @@
   website: https://cob.org/gov/council/daniel-hammill
   image: images/d94c7f8226e98483919ce05bb5648040e2e4daf81b407cb823ca6ffe607d08cc.p001179-council.jpg.webp
   sources:
-  - https://cob.org/gov/council/contacts-bios
   - https://cob.org/gov/council/daniel-hammill
+  - https://cob.org/gov/council/contacts-bios
 - name: Edwin H. “Skip” Williams
   positions:
   - Council Member
   email: ehwilliams@cob.org
   phone_number: "(360) 778-8215"
   website: https://cob.org/gov/council/edwin-williams
-  image: b4526a39f4b4b06effbe3d91da86fc3752669503ef9f90466324004da95ce7d2.Skip-Williams-2024-1.jpg.webp
+  image: images/b4526a39f4b4b06effbe3d91da86fc3752669503ef9f90466324004da95ce7d2.Skip-Williams-2024-1.jpg.webp
   sources:
-  - https://cob.org/gov/council/contacts-bios
   - https://cob.org/gov/council/edwin-williams
+  - https://cob.org/gov/council/contacts-bios
 - name: Hannah Stone
   positions:
   - Council Member
@@ -56,19 +67,9 @@
   email: laanderson@cob.org
   phone_number: "(360) 778-8217"
   website: https://cob.org/gov/council/lisa-anderson
-  image: 61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp
+  image: images/61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp
   sources:
   - https://cob.org/gov/council/lisa-anderson
-  - https://cob.org/gov/council/contacts-bios
-- name: Michael Lilliquist
-  positions:
-  - Council Member
-  email: mlilliquist@cob.org
-  phone_number: "(360) 778-8212"
-  website: https://cob.org/gov/council/michael-lilliquist
-  image: f16c199950e24e1f9fb5751269e1e11af1707141ceb744da67439a1bf3050adb.p950132-1-320x400.jpg.webp
-  sources:
-  - https://cob.org/gov/council/michael-lilliquist
   - https://cob.org/gov/council/contacts-bios
 - name: Jace Cotton
   positions:
@@ -77,7 +78,7 @@
   email: jacotton@cob.org
   phone_number: "(360) 778-8214"
   website: https://cob.org/gov/council/council-member-jace-cotton
-  image: dcc7f2a1e1f6dd99a0beaad1c2d5e7a907c87ed25dd3f880af8e31b620e83da4.image.jpeg.webp
+  image: images/dcc7f2a1e1f6dd99a0beaad1c2d5e7a907c87ed25dd3f880af8e31b620e83da4.image.jpeg.webp
   sources:
-  - https://cob.org/gov/council/contacts-bios
   - https://cob.org/gov/council/council-member-jace-cotton
+  - https://cob.org/gov/council/contacts-bios

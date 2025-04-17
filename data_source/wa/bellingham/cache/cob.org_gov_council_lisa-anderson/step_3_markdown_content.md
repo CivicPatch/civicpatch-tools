@@ -1,4 +1,4 @@
- [Skip to content](https://cob.org/gov/council/lisa-anderson#content)  Select LanguageEnglishEspañol简体中文Tiếng ViệtРусскийਪੰਜਾਬੀAfrikaansShqipአማርኛالعربيةՀայերենAzərbaycan diliEuskaraБеларуская моваবাংলাBosanskiБългарскиCatalàCebuanoChichewa繁體中文CorsuHrvatskiČeština‎DanskNederlandsEsperantoEestiFilipinoSuomiFrançaisFryskGalegoქართულიDeutschΕλληνικάગુજરાતીKreyol ayisyenHarshen HausaŌlelo Hawaiʻiעִבְרִיתहिन्दीHmongMagyarÍslenskaIgboBahasa IndonesiaGaeilgeItaliano日本語Basa Jawaಕನ್ನಡҚазақ тіліភាសាខ្មែរ한국어كوردی‎КыргызчаພາສາລາວLatinLatviešu valodaLietuvių kalbaLëtzebuergeschМакедонски јазикMalagasyBahasa MelayuമലയാളംMalteseTe Reo MāoriमराठीМонголဗမာစာनेपालीNorsk bokmålپښتوفارسیPolskiPortuguêsRomânăSamoanGàidhligСрпски језикSesothoShonaسنڌيසිංහලSlovenčinaSlovenščinaAfsoomaaliBasa SundaKiswahiliSvenskaТоҷикӣதமிழ்తెలుగుไทยTürkçeУкраїнськаاردوO‘zbekchaCymraegisiXhosaיידישYorùbáZulu  [![City of Bellingham](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/lisa-anderson)  Menu 
+ [Skip to content](https://cob.org/gov/council/lisa-anderson#content)  Select LanguageEnglishEspañol简体中文Tiếng ViệtРусскийਪੰਜਾਬੀAfrikaansShqipአማርኛالعربيةՀայերենAzərbaycan diliEuskaraБеларуская моваবাংলাBosanskiБългарскиCatalàCebuanoChichewa繁體中文CorsuHrvatskiČeština‎DanskNederlandsEsperantoEestiFilipinoSuomiFrançaisFryskGalegoქართულიDeutschΕλληνικάગુજરાતીKreyol ayisyenHarshen HausaŌlelo Hawaiʻiעִבְרִיתहिन्दीHmongMagyarÍslenskaIgboBahasa IndonesiaGaeilgeItaliano日本語Basa Jawaಕನ್ನಡҚазақ тіліភាសាខ្មែរ한국어كوردی‎КыргызчаພາສາລາວLatinLatviešu valodaLietuvių kalbaLëtzebuergeschМакедонски јазикMalagasyBahasa MelayuമലയാളംMalteseTe Reo MāoriमराठीМонголဗမာစာनेपालीNorsk bokmålپښتوفارسیPolskiPortuguêsRomânăSamoanGàidhligСрпски језикSesothoShonaسنڌيසිංහලSlovenčinaSlovenščinaAfsoomaaliBasa SundaKiswahiliSvenskaТоҷикӣதமிழ்తెలుగుไทยTürkçeУкраїнськаاردوO‘zbekchaCymraegisiXhosaיידישYorùbáZulu  [![City of Bellingham](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/lisa-anderson)  Menu 
 
  *  [Home](https://cob.org) 
  *  [Government](https://cob.org/gov/council/lisa-anderson) 
@@ -127,7 +127,7 @@
      *  [More…](https://cob.org/services/utilities) 
  *  [Visiting](https://cob.org/visiting) 
  *  [](https://cob.org/gov/council/lisa-anderson) 
-  [![City of Bellingham](7dfd88315caa91df2716ceb72b9f8a85c9e40d5483fab93f71b30032e7152707.jpg)](https://cob.org)   [![City of Bellingham](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/lisa-anderson)  Menu MENU MENU 
+  [![City of Bellingham](images/7dfd88315caa91df2716ceb72b9f8a85c9e40d5483fab93f71b30032e7152707.jpg)](https://cob.org)   [![City of Bellingham](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/lisa-anderson)  Menu MENU MENU 
 
  *  [Home](https://cob.org) 
  *  [Government]() 
@@ -269,7 +269,7 @@
 
 # Council Member Lisa Anderson
 
-  ![Lisa Anderson](61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp)  
+  ![Lisa Anderson](images/61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp)  
 
 ​​​​​ __Represents: 5th Ward
 
@@ -336,7 +336,7 @@ Bellingham, WA 98225
  *  [](https://instagram.com/cityofbellingham)  [**X.com](https://twitter.com/cityofbhamwa) 
  *  [](https://twitter.com/cityofbhamwa)  [**YouTube](https://www.youtube.com/user/cityofbhamwa) 
  *  [](https://www.youtube.com/user/cityofbhamwa)  [**All City Social Media](https://cob.org/gov/public/social-media-guidelines) 
- Website Feedback  ![](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)   [](https://cob.org/gov/council/lisa-anderson)  Close 
+ Website Feedback  ![](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)   [](https://cob.org/gov/council/lisa-anderson)  Close 
 
  *  [Home](https://cob.org) 
  *  [Government](https://cob.org/gov/council/lisa-anderson) 
