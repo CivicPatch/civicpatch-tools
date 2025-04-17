@@ -1,4 +1,4 @@
-name: Pull Request - Validate City Representatives
+name: Pull Request - Make Comment
 
 on:
   pull_request:
@@ -11,9 +11,40 @@ permissions:
   contents: read
   pull-requests: write
 
-jobs: 
-  comment_and_validate:
+jobs:
+  #validate-changes:
+  #  runs-on: ubuntu-latest
+  #  outputs:
+  #    should-continue: ${{ steps.check-files.outputs.should-continue }}
+
+  #  steps:
+  #    - name: Checkout code
+  #      uses: actions/checkout@v4
+  #      with:
+  #        fetch-depth: 2 # Only run workflow if latest commit is solely a config.yml change
+
+  #    - name: Check for latest people.yml commit
+  #      id: check-files
+  #      run: |
+  #        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+  #        PEOPLE_FILES=$(echo "$CHANGED_FILES" | grep -c "people\.yml$" || echo "0")
+
+  #        if [[ $PEOPLE_FILES -eq 1 ]]; then
+  #          echo "A people.yml file was changed, continuing"
+  #          echo "should-continue=true" >> $GITHUB_OUTPUT
+  #        else
+  #          echo "Either multiple files were changed or no people.yml was modified, skipping"
+  #          echo "Total files changed: $TOTAL_FILES"
+  #          echo "People files changed: $PEOPLE_FILES"
+  #          echo "Changed files:"
+  #          echo "$CHANGED_FILES"
+  #          echo "should-continue=false" >> $GITHUB_OUTPUT
+  #        fi
+
+  comment_and_maybe_approve:
     runs-on: ubuntu-latest
+    #needs: validate-changes
+    #if: needs.validate-changes.outputs.should-continue == 'true'
 
     steps:  
       - name: Checkout code
@@ -54,7 +85,7 @@ jobs:
           echo "GNIS_ID=$GNIS_ID" >> $GITHUB_ENV
    
       - name: Generate PR Comment
-        id: validate_trusted_source
+        id: pr_data 
         run: |
           echo "Running validation..."
           PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[${{ env.STATE }},${{ env.GNIS_ID }}]")
@@ -74,15 +105,15 @@ jobs:
           SCORE=$(echo "$CLEANED_RESPONSE" | jq -r '.score')
           COMMENT=$(echo "$CLEANED_RESPONSE" | jq -r '.comment')
 
-          echo "APPROVE=$APPROVE"
-          echo "SCORE=$SCORE"
-          echo "COMMENT=$COMMENT"
+          echo "APPROVE=$APPROVE" >> $GITHUB_ENV
+          echo "SCORE=$SCORE" >> $GITHUB_ENV
+          echo "COMMENT=$COMMENT" >> $GITHUB_ENV
 
       - name: Comment on PR
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none --body "$COMMENT"
+          gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none --body "${{ env.COMMENT }}"
 
       - name: Approve PR if Validated
         env:
