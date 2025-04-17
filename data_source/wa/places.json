@@ -439,7 +439,9 @@
       "gnis": "2409940",
       "type": "Code city",
       "population": 52066,
-      "government_type": "Council-Manager"
+      "government_type": "Council-Manager",
+      "meta_updated_at": "2025-04-17",
+      "meta_hash": "7ca382805981e77232f1af29af0ad72c"
     },
     {
       "ocd_ids": [
