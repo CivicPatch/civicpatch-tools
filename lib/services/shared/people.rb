@@ -11,9 +11,9 @@ module Services
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
         formatted_person["emails"] =
-          data_point?(person["email"]) ? [person["email"]] : []
+          data_point?(person["email"]) && valid_email?(person["email"]["data"]) ? [person["email"]] : []
         formatted_person["websites"] =
-          data_point?(person["website"]) ? [format_website_data_point(person["website"])] : []
+          data_point?(person["website"]) && valid_website?(person["website"]["data"]) ? [format_website_data_point(person["website"])] : []
         formatted_person["term_dates"] =
           data_point?(person["term_date"]) ? [person["term_date"]] : []
         formatted_person["positions"] = person["positions"].present? ? person["positions"] : []
@@ -58,6 +58,14 @@ module Services
       def self.format_website_data_point(website_data_point)
         website_data_point["data"] = Utils::UrlHelper.format_url(website_data_point["data"])
         website_data_point
+      end
+
+      def self.valid_website?(url)
+        url.present? && url.to_s.strip.present? && url.to_s.strip.start_with?("http")
+      end
+
+      def self.valid_email?(email)
+        email.present? && email.to_s.strip.present? && email.to_s.strip.match?(URI::MailTo::EMAIL_REGEXP)
       end
 
       def self.data_points_with_source(person, source)

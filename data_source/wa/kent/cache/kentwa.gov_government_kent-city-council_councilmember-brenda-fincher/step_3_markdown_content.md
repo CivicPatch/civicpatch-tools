@@ -1336,4 +1336,4 @@ Tap the icon to expand or tap the title to go to the page.
    *  [Emergency Preparedness](https://kentwa.gov/guides/emergency-preparedness)  
  *  Expand/close  [Events]()  
    *  [Calendar & Submissions](https://kentwa.gov/events/event-calendar)  
-  ![](images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.jpg)  Original text Rate this translation Your feedback will be used to help improve Google Translate Loading... 
+ Loading...  ![](images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.jpg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
