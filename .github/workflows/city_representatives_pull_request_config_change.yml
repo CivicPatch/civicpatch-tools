@@ -23,11 +23,19 @@ jobs:
       - name: Check for solo config.yml commit
         id: check-files
         run: |
-          if git diff --name-only HEAD~1 HEAD | grep -q "config.yml"; then
-            echo "config.yml is the only changed file, continuing"
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          TOTAL_FILES=$(echo "$CHANGED_FILES" | wc -l)
+          CONFIG_FILES=$(echo "$CHANGED_FILES" | grep -c "config\.yml$" || echo "0")
+
+          if [[ $TOTAL_FILES -eq 1 && $CONFIG_FILES -eq 1 ]]; then
+            echo "Only one config.yml file was changed, continuing"
             echo "should-continue=true" >> $GITHUB_OUTPUT
           else
-            echo "config.yml is not the only changed file, exiting"
+            echo "Either multiple files were changed or no config.yml was modified, skipping"
+            echo "Total files changed: $TOTAL_FILES"
+            echo "Config files changed: $CONFIG_FILES"
+            echo "Changed files:"
+            echo "$CHANGED_FILES"
             echo "should-continue=false" >> $GITHUB_OUTPUT
           fi
   
