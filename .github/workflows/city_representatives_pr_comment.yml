@@ -41,7 +41,7 @@ jobs:
   #          echo "should-continue=false" >> $GITHUB_OUTPUT
   #        fi
 
-  comment_and_maybe_approve:
+  comment-and-maybe-approve:
     runs-on: ubuntu-latest
     #needs: validate-changes
     #if: needs.validate-changes.outputs.should-continue == 'true'
