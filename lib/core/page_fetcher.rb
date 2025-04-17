@@ -9,7 +9,7 @@ require "marcel"
 require "utils/url_helper"
 require_relative "../core/browser"
 
-module Core 
+module Core
   class PageFetcher
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
@@ -55,8 +55,15 @@ module Core
     end
 
     def with_prefixed_image_urls(html)
+      doc = Nokogiri::HTML(html)
       # for all image tags, prefix the src string with images
-      html.gsub(/<img src="([^"]+)"/, '<img src="images/\1"')
+      doc.css("img").each do |img|
+        next if img["src"].blank?
+
+        img["src"] = "images/#{img["src"]}"
+      end
+
+      doc.to_html
     end
 
     def update_html_links(base_url, nokogiri_html)
