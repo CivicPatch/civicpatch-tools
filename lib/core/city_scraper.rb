@@ -15,7 +15,7 @@ module Core
       cached_urls: []
     )
       puts "Fetching with #{llm_service_string}"
-      data_fetcher = Scrapers::DataFetcher.new
+      page_fetcher = Core::PageFetcher.new
       city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
       city_cache_path = PathHelper.get_city_cache_path(state, gnis)
 
@@ -25,7 +25,7 @@ module Core
         gnis: gnis,
         government_type: government_type,
         llm_service_string: llm_service_string,
-        data_fetcher: data_fetcher,
+        page_fetcher: page_fetcher,
         city_cache_path: city_cache_path
       }
 
@@ -167,7 +167,7 @@ module Core
       state = context[:state]
       city_entry = context[:city_entry]
       llm_service_string = context[:llm_service_string]
-      data_fetcher = context[:data_fetcher]
+      page_fetcher = context[:page_fetcher]
       cache_path = context[:city_cache_path]
       government_type = context[:government_type]
       llm_service = get_llm_service(llm_service_string)
@@ -176,7 +176,7 @@ module Core
       url_content_path = File.join(cache_path, Utils::UrlHelper.url_to_safe_folder_name(url))
       FileUtils.mkdir_p(url_content_path)
 
-      content_file = data_fetcher.extract_content(url, url_content_path)
+      content_file = page_fetcher.extract_content(url, url_content_path)
       return [nil, nil] unless content_file
 
       people = llm_service.extract_city_people(state, city_entry, government_type, content_file, url)

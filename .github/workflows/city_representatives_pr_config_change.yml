@@ -77,7 +77,7 @@ jobs:
           BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
           GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
         run: |
-          bundle exec rake city_scrape:fetch[${{ env.STATE }},${{ env.GNIS }}]
+          bundle exec rake pipeline:fetch[${{ env.STATE }},${{ env.GNIS }}]
       
       - name: Commit Changes to current branch
         env:

@@ -108,7 +108,7 @@ jobs:
       - name: Get city representatives data
         run: |
           echo "Processing city: ${{ matrix.city_entry.gnis }}"
-          bundle exec rake 'city_scrape:fetch[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
+          bundle exec rake 'pipeline:fetch[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
       
       - name: Send costs to Google Sheets
         run: |

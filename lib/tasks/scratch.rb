@@ -1,4 +1,4 @@
-require_relative "../scrapers/data_fetcher"
+require_relative "../core/page_fetcher"
 require_relative "../path_helper"
 require_relative "../services/openai"
 require_relative "../services/google_gemini"
@@ -12,7 +12,7 @@ namespace :scratch do
     destination_dir = PathHelper.project_path("./testing")
 
     begin
-      fetcher = Scrapers::DataFetcher.new
+      fetcher = Core::PageFetcher.new
       openai_service = Services::Openai.new
       result = fetcher.extract_content(url, destination_dir)
       response = openai_service.extract_city_info(result, url)
