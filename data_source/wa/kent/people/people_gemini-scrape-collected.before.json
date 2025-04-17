@@ -6,7 +6,7 @@
       {
         "data": "253-856-5700",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Reach the Mayor.",
+        "llm_confidence_reason": "Listed under Reach the Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -18,7 +18,7 @@
       {
         "data": "Mayor@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Reach the Mayor.",
+        "llm_confidence_reason": "Listed under Reach the Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -39,7 +39,7 @@
       {
         "data": "https://www.kentwa.gov/government/kent-mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -48,9 +48,7 @@
     ],
     "term_dates": [],
     "positions": [
-      "Mayor",
-      "Chief Executive Officer",
-      "Council President"
+      "Mayor"
     ],
     "sources": []
   },
@@ -61,7 +59,7 @@
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
+        "llm_confidence_reason": "Phone number is listed under 'Reach Council President Kaur'.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -72,7 +70,7 @@
       {
         "data": "skaur@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly listed under contact information.",
+        "llm_confidence_reason": "Email address is directly associated with the council president's name.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -83,7 +81,7 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -97,22 +95,13 @@
           "in_list": true
         },
         "source": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
-      },
-      {
-        "data": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://kentwa.gov/government/kent-city-council"
       }
     ],
     "term_dates": [
       {
         "data": "January 2018 to Dec. 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
+        "llm_confidence_reason": "Term dates are explicitly stated.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -121,7 +110,16 @@
     ],
     "positions": [
       "Council President",
-      "position 2"
+      "position 2",
+      "Chair, Kent Cultural Communities Board",
+      "Green Kent Park Steward",
+      "Board of Trustees, Greater Kent Historical Society",
+      "Board of Directors, Living Well Kent",
+      "Member, Mayor’s Diversity Task Force, City of Renton",
+      "Board member, Puget Sound Access",
+      "Chair, Puget Sound Clean Air Agency Advisory Council",
+      "Growth Management Planning Council",
+      "Domestic Violence Regional Task Force"
     ],
     "sources": []
   },
@@ -145,7 +143,7 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed under contact information.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
       }
@@ -154,34 +152,25 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Link to councilmember's page.",
+        "data": "mailto:bboyce@kentwa.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link associated with name.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
-      },
-      {
-        "data": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://kentwa.gov/government/kent-city-council"
       }
     ],
     "term_dates": [
       {
-        "data": "January 2012",
+        "data": "January 2012 to Dec. 31, 2027",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed under contact information.",
         "markdown_formatting": {
@@ -193,8 +182,8 @@
     "positions": [
       "Councilmember",
       "Position 5",
-      "Sound Cities Association Public Interest Committee member",
-      "Harborview Medical Center Board of Trustees member"
+      "Member Sound Cities Association Public Interest Committee",
+      "Member Harborview Board of Trustees"
     ],
     "sources": []
   },
@@ -205,7 +194,7 @@
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed under the contact information for the councilmember.",
+        "llm_confidence_reason": "Listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -216,7 +205,7 @@
       {
         "data": "JBoyd@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
+        "llm_confidence_reason": "Listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -227,36 +216,27 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "mailto:citycouncil@kentwa.gov",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Email all Council link",
+        "data": "mailto:JBoyd@KentWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link associated with name.",
         "markdown_formatting": {
           "in_list": true
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-john-boyd"
-      },
-      {
-        "data": "https://kentwa.gov/government/kent-city-council/councilmember-john-boyd",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://kentwa.gov/government/kent-city-council"
       }
     ],
     "term_dates": [
       {
         "data": "January 2024 to Dec. 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated in the provided text.",
+        "llm_confidence_reason": "Listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -279,7 +259,7 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
       }
@@ -288,9 +268,9 @@
       {
         "data": "bfincher@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed under contact information.",
+        "llm_confidence_reason": "Email address listed under contact information.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
       }
@@ -299,38 +279,29 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "mailto:citycouncil@kentwa.gov",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Email link for Kent City Council Members",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
-      },
-      {
-        "data": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
+        "data": "https://www.kentwa.gov/government/kent-city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Kent City Council page",
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://kentwa.gov/government/kent-city-council"
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
       }
     ],
     "term_dates": [
       {
-        "data": "March 2014 to Dec. 31, 2025",
+        "data": "Dec. 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates listed under contact information.",
+        "llm_confidence_reason": "Term expiration date listed under contact information.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
       }
@@ -351,7 +322,7 @@
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
+        "llm_confidence_reason": "Phone number is listed under the councilmember's contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -362,9 +333,9 @@
       {
         "data": "MLarimer@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly listed under contact information.",
+        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
       }
@@ -373,36 +344,27 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer#pagebody",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the current page.",
+        "data": "mailto:MLarimer@KentWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link provided for contact.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
-      },
-      {
-        "data": "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://kentwa.gov/government/kent-city-council"
       }
     ],
     "term_dates": [
       {
-        "data": "June 2018",
+        "data": "June 2018 to Dec. 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
+        "llm_confidence_reason": "Term dates are explicitly stated in the provided text.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -411,10 +373,7 @@
     ],
     "positions": [
       "Councilmember",
-      "position 1",
-      "Member",
-      "King County Aging and Disabilities Advisory Council",
-      "Puget Sound Regional Fire Authority Governance Board"
+      "Councilmember position 1"
     ],
     "sources": []
   },
@@ -424,8 +383,8 @@
     "phone_numbers": [
       {
         "data": "253-856-5712",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under 'Reach Councilmember Michaud'.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -436,7 +395,7 @@
       {
         "data": "ZMichaud@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
+        "llm_confidence_reason": "Email address directly associated with name.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -447,7 +406,7 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -461,22 +420,13 @@
           "in_list": true
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
-      },
-      {
-        "data": "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://kentwa.gov/government/kent-city-council"
       }
     ],
     "term_dates": [
       {
         "data": "Nov. 26th, 2019 to Dec. 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated.",
+        "llm_confidence_reason": "Term dates listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -501,7 +451,7 @@
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed under the councilmember's contact information.",
+        "llm_confidence_reason": "Listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -512,7 +462,7 @@
       {
         "data": "TTroutner@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
+        "llm_confidence_reason": "Directly listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -523,7 +473,7 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
+        "llm_confidence_reason": "Link directly associated with name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -532,27 +482,18 @@
       {
         "data": "mailto:TTroutner@KentWA.gov",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "Email link provided as a contact method.",
+        "llm_confidence_reason": "Email address provided for contact.",
         "markdown_formatting": {
           "in_list": true
         },
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
-      },
-      {
-        "data": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://kentwa.gov/government/kent-city-council"
       }
     ],
     "term_dates": [
       {
         "data": "January 2018 to Dec. 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated in the provided text.",
+        "llm_confidence_reason": "Listed under contact information.",
         "markdown_formatting": {
           "in_list": true
         },

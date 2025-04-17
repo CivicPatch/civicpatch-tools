@@ -55,6 +55,7 @@ module Services
           - Prioritize person-specific pages over landing pages
           - Consider links associated with names/photos
           - Prefer deeper paths and "/about" pages when available
+          - Websites should ALWAYS start with "https://"
         - Today is #{current_date}. Ensure that only active positions are included, and
           exclude any positions that are not currently held or are no longer active.
         Here is the content of the city page:

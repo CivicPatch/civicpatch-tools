@@ -48,21 +48,8 @@ namespace :pipeline do
 
     government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
 
-    # fetch_with_source(state, city_entry, government_type) # State source
-    # source_urls = fetch_with_scrape(state, gnis, government_type) # Web scrape
-    source_urls = [
-      "https://kentwa.gov/government/kent-mayor",
-      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
-      "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
-      "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
-      "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
-      "https://kentwa.gov/government/kent-city-council/councilmember-john-boyd",
-      "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
-      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
-      "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
-      "https://kentwa.gov/government/kent-city-council"
-    ]
-
+    fetch_with_source(state, city_entry, government_type) # State source
+    source_urls = fetch_with_scrape(state, gnis, government_type) # Web scrape
     fetch_with_gemini(state, city_entry, government_type, source_urls) # Gemini
 
     aggregate_sources(state, city_entry, government_type)
