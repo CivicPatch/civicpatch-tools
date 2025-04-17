@@ -72,6 +72,10 @@ jobs:
           echo "GNIS=$GNIS" >> $GITHUB_ENV
 
       - name: Scrape City
+        env:
+          OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
+          BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
+          GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
         run: |
           bundle exec rake city_scrape:fetch[${{ env.STATE }},${{ env.GNIS }}]
       
