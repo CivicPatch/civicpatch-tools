@@ -89,7 +89,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           echo "Running validation..."
-          PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[${{ env.STATE }},${{ env.GNIS_ID }}]")
+          PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[${{ env.STATE }},${{ env.GNIS_ID }},${{ env.BRANCH_NAME }}]")
           echo "Validation response: $PR_DATA"
 
           # Parse JSON output
