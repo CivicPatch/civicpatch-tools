@@ -29,16 +29,17 @@ module Core
         city_cache_path: city_cache_path
       }
 
-      if cached_urls.present? && cached_urls.count.positive?
-        data = scrape_city_directory_urls(context, urls_to_process: cached_urls)
-      else
-        data = scrape_from_search_engines(context, [], [], search_engines: search_engines)
-      end
+      data = if cached_urls.present? && cached_urls.count.positive?
+               scrape_city_directory_urls(context, urls_to_process: cached_urls)
+             else
+               scrape_from_search_engines(context, [], [], search_engines: search_engines)
+             end
 
       profile_content_dirs, accumulated_people = scrape_profiles(context, data[:accumulated_people],
                                                                  data[:content_dirs])
 
-      Core::PeopleManager.update_people(state, city_entry, accumulated_people, "#{llm_service_string}-scrape-collected.before")
+      Core::PeopleManager.update_people(state, city_entry, accumulated_people,
+                                        "#{llm_service_string}-scrape-collected.before")
 
       formatted_officials = accumulated_people.map do |official|
         Services::Shared::People.format_person(official)
@@ -132,7 +133,7 @@ module Core
       normalized_processed = Set.new(processed_urls.map { |u| Utils::UrlHelper.normalize_for_comparison(u) }.compact)
 
       accumulated_people = accumulated_people.map do |person|
-        next person if Services::Shared::People.all_contact_data_points_present?(person)
+        next person if Services::Shared::People.all_contact_data_points_present?(person) && person["image"].present?
         next person if person["websites"].blank?
 
         person["websites"].each do |website|
