@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Bill Boyce",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "bboyce@KentWA.gov",
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+    "term_date": "January 2012",
+    "sources": [
+      "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
+    ]
+  },
+  {
+    "name": "Marli Larimer",
+    "positions": [
+      "Council Member",
+      "Position 1"
+    ],
+    "image": null,
+    "phone_number": "(253) 856-5712",
+    "email": "MLarimer@KentWA.gov",
+    "website": "mailto:citycouncil@kentwa.gov",
+    "term_date": "June 2018 to Dec. 31, 2027",
+    "sources": [
+      "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
+    ]
+  }
+]
