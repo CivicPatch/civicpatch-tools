@@ -1,0 +1,201 @@
+[
+  {
+    "name": "Dontae Payne",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dontae_payne.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to mayor's page found directly under 'City Council & Mayor'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Yến Huỳnh",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/yen_huynh.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to mayor pro tem's page found directly under 'City Council & Mayor'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/government/city_council___mayor/yen_huynh.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/yen_huynh.php"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Mayor Pro Tem",
+      "Mayor Pro-tem"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Dani Madrone",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dani_madrone.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to council member's page found directly under 'City Council & Mayor'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/government/city_council___mayor/dani_madrone.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dani_madrone.php"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Clark Gilman",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/clark_gilman.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to council member's page found directly under 'City Council & Mayor'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/government/city_council___mayor/clark_gilman.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section and labeled with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/clark_gilman.php"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kelly Green",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/kelly_green.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to council member's page found directly under 'City Council & Mayor'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ]
+  },
+  {
+    "name": "Robert Vanderpool",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to council member's page found directly under 'City Council & Mayor'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/robert_vanderpool.php"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Jim Cooper",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/jim_cooper.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to council member's page found directly under 'City Council & Mayor'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/government/city_council___mayor/jim_cooper.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section and name matches.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/jim_cooper.php"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  }
+]

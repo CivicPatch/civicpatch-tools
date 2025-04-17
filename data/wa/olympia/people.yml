@@ -1,0 +1,64 @@
+---
+- name: Dontae Payne
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website: https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dontae_payne.php
+  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg
+  sources:
+  - https://olympiawa.gov/government/city_council___mayor/index.php
+- name: Yến Huỳnh
+  positions:
+  - Mayor Pro Tem
+  email:
+  phone_number:
+  website: https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/yen_huynh.php
+  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg
+  sources:
+  - https://olympiawa.gov/government/city_council___mayor/index.php
+- name: Clark Gilman
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/clark_gilman.php
+  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg
+  sources:
+  - https://olympiawa.gov/government/city_council___mayor/index.php
+- name: Dani Madrone
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dani_madrone.php
+  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg
+  sources:
+  - https://olympiawa.gov/government/city_council___mayor/index.php
+- name: Jim Cooper
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/jim_cooper.php
+  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg
+  sources:
+  - https://olympiawa.gov/government/city_council___mayor/index.php
+- name: Kelly Green
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/kelly_green.php
+  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg
+  sources:
+  - https://olympiawa.gov/government/city_council___mayor/index.php
+- name: Robert Vanderpool
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/robert_vanderpool.php
+  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg
+  sources:
+  - https://olympiawa.gov/government/city_council___mayor/index.php
