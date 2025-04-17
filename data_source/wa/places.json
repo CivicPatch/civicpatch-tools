@@ -139,7 +139,9 @@
       "gnis": "2410926",
       "type": "Code city",
       "population": 106785,
-      "government_type": "Mayor-Council"
+      "government_type": "Mayor-Council",
+      "meta_updated_at": "2025-04-17",
+      "meta_hash": "86e07a5e92020840556735ebf7b83b9f"
     },
     {
       "ocd_ids": [
