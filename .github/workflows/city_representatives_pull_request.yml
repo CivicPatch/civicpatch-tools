@@ -1,4 +1,4 @@
-name: Validate City Representatives
+name: Pull Request - Validate City Representatives
 
 on:
   pull_request:
@@ -52,24 +52,16 @@ jobs:
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           echo "STATE=$STATE" >> $GITHUB_ENV
           echo "GNIS_ID=$GNIS_ID" >> $GITHUB_ENV
-  
-      - name: Comment on PR (Scraped Data)
-        id: generate_markdown
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
-          SCRAPED_DATA_COMMENT=$(bundle exec rake "github_pipeline:get_pr_comment[${{ env.STATE }},${{ env.GNIS_ID }},${{ env.BRANCH_NAME }}]")
-          gh pr comment ${{ github.event.pull_request.number }} --body "$SCRAPED_DATA_COMMENT"
-      
-      - name: Run City People Validation (Trusted Source)
+   
+      - name: Generate PR Comment
         id: validate_trusted_source
         run: |
           echo "Running validation..."
-          SOURCE_VALIDATION_RESPONSE=$(bundle exec rake "github_pipeline:validate_city_people[${{ env.STATE }},${{ env.GNIS_ID }}]")
-          echo "Validation response: $SOURCE_VALIDATION_RESPONSE"
+          PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[${{ env.STATE }},${{ env.GNIS_ID }}]")
+          echo "Validation response: $PR_DATA"
 
           # Extract JSON from the response (find JSON starting with '{')
-          CLEANED_RESPONSE=$(echo "$SOURCE_VALIDATION_RESPONSE" | sed 's/^.*{/{/')
+          CLEANED_RESPONSE=$(echo "$PR_DATA" | sed 's/^.*{/{/')
 
           # Remove control characters (ASCII 0-31) which are invalid for JSON
           CLEANED_RESPONSE=$(echo "$CLEANED_RESPONSE" | tr -d '\000-\031')
@@ -78,26 +70,26 @@ jobs:
           echo "Cleaned response: $CLEANED_RESPONSE"
 
           # Parse JSON output
-          SOURCE_VALIDATION_APPROVE=$(echo "$CLEANED_RESPONSE" | jq -r '.approve')
-          SOURCE_VALIDATION_COMMENT=$(echo "$CLEANED_RESPONSE" | jq -r '.comment')
+          APPROVE=$(echo "$CLEANED_RESPONSE" | jq -r '.approve')
+          SCORE=$(echo "$CLEANED_RESPONSE" | jq -r '.score')
+          COMMENT=$(echo "$CLEANED_RESPONSE" | jq -r '.comment')
 
-          echo "SOURCE_VALIDATION_APPROVE=$SOURCE_VALIDATION_APPROVE" >> "$GITHUB_ENV"
-          echo "SOURCE_VALIDATION_COMMENT<<EOF" >> "$GITHUB_ENV"
-          echo "$SOURCE_VALIDATION_COMMENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
+          echo "APPROVE=$APPROVE"
+          echo "SCORE=$SCORE"
+          echo "COMMENT=$COMMENT"
 
-      - name: Comment on PR - Validation Step (Compare Sources)
+      - name: Comment on PR
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body "$SOURCE_VALIDATION_COMMENT"
+          gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none --body "$COMMENT"
 
       - name: Approve PR if Validated
         env:
           GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
         run: |
           echo "Checking if PR should be approved..."
-          echo "SOURCE_VALIDATION_APPROVE=$SOURCE_VALIDATION_APPROVE"
-          if [ "$SOURCE_VALIDATION_APPROVE" = "true" ]; then
+          echo "APPROVE=$APPROVE"
+          if [ "$APPROVE" = "true" ]; then
             gh pr review ${{ github.event.pull_request.number }} --approve --body "Approved by Bot - agreement score looks good"
           fi
