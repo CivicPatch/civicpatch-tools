@@ -1,0 +1,163 @@
+[
+  {
+    "name": "Pete Serrano",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-vOFbR9",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/122/City-Council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "mayor",
+      "district 4"
+    ]
+  },
+  {
+    "name": "David Milne",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/122/City-Council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "mayor pro tem",
+      "district 5"
+    ]
+  },
+  {
+    "name": "Blanche Barajas",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/122/City-Council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "district 1"
+    ]
+  },
+  {
+    "name": "Charles Grimm",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/122/City-Council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "district 2"
+    ]
+  },
+  {
+    "name": "Leo Perales",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/122/City-Council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "district 3"
+    ]
+  },
+  {
+    "name": "Melissa Blasdel",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/122/City-Council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "district 6"
+    ]
+  },
+  {
+    "name": "Peter Harpster",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/122/City-Council"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "at large"
+    ]
+  }
+]
