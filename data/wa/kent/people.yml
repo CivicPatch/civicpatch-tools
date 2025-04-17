@@ -39,6 +39,7 @@
   website: https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd
   image: images/802570b4ba84c9113842eff7bd54e1c83c7b801a245c6804db7d8b186b9c3532.jpg
   sources:
+  - https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd
   - https://kentwa.gov/government/kent-city-council/councilmember-john-boyd
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
 - name: Toni Troutner
@@ -49,6 +50,7 @@
   website: https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner
   image: images/1f4fe9544c7a0264fdb2f2c3e60b98b80daf2393c62b94d41514bd11fa59943f.jpg
   sources:
+  - https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner
   - https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
 - name: Zandria Michaud
@@ -59,8 +61,9 @@
   website: https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud
   image: images/a82b361b9a45e166dd347314285dd304575caa51946bc4607673c91fadf0d36c.jpg
   sources:
-  - https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud
+  - https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
+  - https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud
 - name: Marli Larimer
   positions:
   - Council Member
@@ -70,8 +73,9 @@
   website: https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer
   image: images/5d054c013236886a426446dd0646bd7f390205ca59aea75a386f00ea7fd6b44e.jpg
   sources:
-  - https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer
+  - https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
+  - https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer
 - name: Bill Boyce
   positions:
   - Council Member

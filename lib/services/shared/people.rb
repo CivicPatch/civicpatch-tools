@@ -109,11 +109,7 @@ module Services
         # Calculate scores for each data point
         scored_data_points = data_points.map do |dp|
           # Different scoring for websites
-          if dp["data"].is_a?(String) && dp["data"].include?("http")
-            score = score_regular_data_point(dp, data_points) + score_website(dp, data_points)
-          else
-            score = score_regular_data_point(dp, data_points)
-          end
+          score = score_regular_data_point(dp, data_points)
 
           [dp, score]
         end
@@ -123,7 +119,7 @@ module Services
 
         {
           "data" => best_data_point["data"],
-          "source" => best_data_point["source"],
+          "source" => best_data_point["source"]
         }
       end
 
@@ -148,16 +144,6 @@ module Services
         (frequency_score * 0.5) + (confidence_score * 0.3) + (formatting_score * 0.2)
       end
 
-      # Score a website data point with special website-specific factors
-      def self.score_website(website, all_websites)
-        url = website["data"]
-        source_urls = all_websites.map { |w| w["source"] }.compact
-
-        # Penalize websites that match source URLs because we've already
-        # scraped them
-        source_urls.include?(url) ? -0.5 : 0
-      end
-
       # Helper to count occurrences of each value
       def self.count_value_occurrences(data_points)
         value_counts = {}
@@ -180,7 +166,7 @@ module Services
 
         sources = selected_data_points.values.map { |dp| dp.present? ? dp["source"] : nil }.compact.uniq
 
-        person = {
+        {
           "name" => llm_person["name"],
           "positions" => llm_person["positions"],
           "image" => llm_person["image"],
@@ -190,8 +176,6 @@ module Services
           "term_date" => selected_data_points["term_date"].present? ? selected_data_points["term_date"]["data"] : nil,
           "sources" => sources
         }
-
-        person
       end
     end
   end

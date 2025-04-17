@@ -52,10 +52,17 @@ module Services
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
         - Website extraction:
-          - Prioritize person-specific pages over landing pages
-          - Consider links associated with names/photos
-          - Prefer deeper paths and "/about" pages when available
-          - Websites should ALWAYS start with "https://"
+          - Goal: Find the primary, stable profile or biography page for the person.
+          - Prioritize person-specific pages over landing pages (e.g., `/council/john-doe` over `/council/`).
+          - Consider links associated with names/photos.
+          - Prefer deeper paths and "/about", "/bio", "/profile" pages when available.
+          - CRITICAL: The value for "website" MUST be a standard web URL.
+          - ONLY include URLs starting with "http://" or "https://".
+          - EXCLUDE all other types of links like "mailto:", "tel:", "ftp:", etc.
+          - Prefer shorter, cleaner URLs over ones with many complex query parameters unless clearly necessary for the specific person's profile page.
+        - Email extraction:
+          - Extract email addresses found in the text or within "mailto:" links.
+          - Place these ONLY in the "email" field, NEVER in the "website" field.
         - Today is #{current_date}. Ensure that only active positions are included, and
           exclude any positions that are not currently held or are no longer active.
         Here is the content of the city page:

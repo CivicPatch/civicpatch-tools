@@ -2,40 +2,34 @@
   {
     "name": "Dana Ralph",
     "positions": [
-      "Mayor"
+      "Mayor",
+      "Chief Executive Officer",
+      "Council President",
+      "Council Member"
     ],
     "image": null,
     "phone_number": "253-856-5700",
     "email": "Mayor@KentWA.gov",
-    "website": "https://www.kentwa.gov/government/kent-mayor",
-    "term_date": null,
+    "website": "https://kentwa.gov/government/kent-mayor",
+    "term_date": "2018 to present",
     "sources": [
-      "https://kentwa.gov/government/kent-mayor",
-      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
+      "https://kentwa.gov/government/kent-mayor"
     ]
   },
   {
     "name": "Satwinder Kaur",
     "positions": [
       "Council President",
-      "position 2",
-      "Chair, Kent Cultural Communities Board",
-      "Green Kent Park Steward",
-      "Board of Trustees, Greater Kent Historical Society",
-      "Board of Directors, Living Well Kent",
-      "Member, Mayor’s Diversity Task Force, City of Renton",
-      "Board member, Puget Sound Access",
-      "Chair, Puget Sound Clean Air Agency Advisory Council",
-      "Growth Management Planning Council",
-      "Domestic Violence Regional Task Force"
+      "position 2"
     ],
     "image": null,
     "phone_number": "253-856-5712",
     "email": "skaur@KentWA.gov",
-    "website": "mailto:citycouncil@kentwa.gov",
-    "term_date": "January 2018 to Dec. 31, 2025",
+    "website": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
+    "term_date": "Dec. 31, 2025",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
@@ -43,14 +37,15 @@
     "positions": [
       "Councilmember",
       "Position 5",
-      "Member Sound Cities Association Public Interest Committee",
-      "Member Harborview Board of Trustees"
+      "Member",
+      "Sound Cities Association Public Interest Committee",
+      "Harborview Board of Trustees"
     ],
     "image": null,
     "phone_number": "253-856-5712",
     "email": "bboyce@KentWA.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
-    "term_date": "January 2012 to Dec. 31, 2027",
+    "term_date": "January 2012",
     "sources": [
       "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
@@ -66,10 +61,10 @@
     "image": null,
     "phone_number": "253-856-5712",
     "email": "JBoyd@KentWA.gov",
-    "website": "mailto:JBoyd@KentWA.gov",
+    "website": "mailto:citycouncil@kentwa.gov",
     "term_date": "January 2024 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-john-boyd"
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
     ]
   },
   {
@@ -85,7 +80,7 @@
     "phone_number": "253-856-5712",
     "email": "bfincher@KentWA.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
-    "term_date": "Dec. 31, 2025",
+    "term_date": "March 2014 to Dec. 31, 2025",
     "sources": [
       "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
@@ -95,7 +90,9 @@
     "name": "Marli Larimer",
     "positions": [
       "Councilmember",
-      "Councilmember position 1"
+      "position 1",
+      "Member, King County Aging and Disabilities Advisory Council",
+      "Member, Puget Sound Regional Fire Authority Governance Board"
     ],
     "image": null,
     "phone_number": "253-856-5712",
@@ -103,7 +100,7 @@
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
     "term_date": "June 2018 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
@@ -121,16 +118,18 @@
     "image": null,
     "phone_number": "253-856-5712",
     "email": "ZMichaud@KentWA.gov",
-    "website": "mailto:citycouncil@kentwa.gov",
-    "term_date": "Nov. 26th, 2019 to Dec. 31, 2027",
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
+    "term_date": "Nov. 26th, 2019",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
     "name": "Toni Troutner",
     "positions": [
       "Councilmember",
+      "Council Member",
       "Chair Puget Sound Regional Fire Authority",
       "Co-Chair Severe Weather Shelter",
       "Drug Free Coalition",
@@ -147,10 +146,10 @@
     "image": null,
     "phone_number": "253-856-5712",
     "email": "TTroutner@KentWA.gov",
-    "website": "mailto:TTroutner@KentWA.gov",
+    "website": "mailto:citycouncil@kentwa.gov",
     "term_date": "January 2018 to Dec. 31, 2025",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
     ]
   }
 ]
