@@ -1290,7 +1290,7 @@ The City of Kent is dedicated to providing the community with excellent service.
 
 ## News
 
- *  [Apr 16![Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent](afb2ddf703acfe77eb49028e4ae3a20cbc91196336ad76bdcb00ef8fbe2c0202.jpg)## Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent  
+ *  [Apr 16![Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent](5b8e41c58edbbf365c73cd5b4c641f4f425a14a977fbb3faf050c36c9a990d9a.jpg)## Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent  
 
 Media Releases](https://www.kentwa.gov/Home/Components/News/News/1953/2243) 
  *  [Mar 24![Martin Sortun receives Special Olympics honor](1f4807e62389f74262b1630d270d980522583224778efc1360b99a5661fd1fe8.jpg)## Martin Sortun receives Special Olympics honor  

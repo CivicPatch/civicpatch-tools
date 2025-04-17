@@ -42,21 +42,6 @@ module Services
       end
     end
 
-    def extract_city_profile(state, city_entry, government_type, person, content_file, url)
-      city = city_entry["name"]
-      content = File.read(content_file)
-
-      prompt = Services::Shared::LlmPrompts
-               .gemini_generate_city_profile_prompt(government_type, person, content)
-
-      request_origin = "#{state}_#{city}_gemini_#{MODEL}_city_profile_scrape"
-      response = run_prompt(prompt, request_origin, Services::Shared::ResponseSchemas::GEMINI_PERSON_SCHEMA)
-
-      return nil if response.blank?
-
-      Services::Shared::People.format_raw_data(response, url)
-    end
-
     def run_prompt(prompt, request_origin, response_schema)
       retry_attempts = 0
       url = "#{BASE_URI}/v1beta/models/#{MODEL}:generateContent?key=#{@api_key}"
@@ -72,11 +57,11 @@ module Services
           responseMimeType: "application/json",
           responseSchema: response_schema
         }
-        #tools: [
+        # tools: [
         #  {
         #    googleSearch: {}
         #  }
-        #]
+        # ]
       }.to_json
 
       options = {
