@@ -27,22 +27,36 @@ namespace :github_pipeline do
     puts directory_url
   end
 
-  desc "Generate PR comment for city people"
-  task :get_pr_comment, [:state, :gnis, :branch_name] do |_t, args|
+  desc "Generate PR comment data for city people"
+  task :generate_pr_data, [:state, :gnis, :branch_name] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
     branch_name = args[:branch_name]
 
-    state_city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-    city = state_city_entry["name"]
-    city_path = PathHelper.get_data_city_path(state, state_city_entry["gnis"])
+    people_list_comment = generate_people_list_comment(state, gnis, branch_name)
+    comparison_data = generate_comparison(state, gnis)
+
+    data = {
+      "approve" => comparison_data["approve"],
+      "score" => comparison_data["score"],
+      "comment" => [people_list_comment, comparison_data["comparison_table_comment"]]
+           .join("\n\n---\n\n")
+    }
+
+    puts data.to_json
+  end
+
+  def self.generate_people_list_comment(state, gnis, branch_name)
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city = city_entry["name"]
+    city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
     relative_path = city_path[city_path.rindex("data/#{state}")..]
 
     base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
-    city_directory = Core::PeopleManager.get_people(state, state_city_entry["gnis"])
+    city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
 
-    markdown_content = <<~MARKDOWN
+    <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Sources
       #{city_directory.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")}
@@ -89,14 +103,9 @@ namespace :github_pipeline do
         "**#{person["name"]}**| #{position_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{image_markdown}"
       end.join("\n")}
     MARKDOWN
-
-    puts markdown_content
   end
 
-  task :validate_city_people, [:state, :gnis] do |_t, args|
-    state = args[:state]
-    gnis = args[:gnis]
-
+  def self.generate_comparison(state, gnis)
     # Get the validation results
     validation_results = Validators::CityPeople.validate_sources(state, gnis)
     contested_people = validation_results[:compare_results][:contested_people]
@@ -120,9 +129,8 @@ namespace :github_pipeline do
       comment += "\n\n---\n\n" # Add a separator between each person's table
     end
 
-    json = { "approve" => score >= 0.7,
-             "score" => score,
-             "comment" => comment }.to_json
-    puts json
+    { "approve" => score >= 0.7,
+      "score" => score,
+      "comparison_table_comment" => comment }
   end
 end

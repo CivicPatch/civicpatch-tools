@@ -3,12 +3,37 @@ name: Pull Request - City Config Change
 on:
   pull_request:
     types:
+      - opened
       - synchronize
     paths:
       - '**/config.yml'
 
 jobs:
-  scrape_city:
+  validate-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should-continue: ${{ steps.check-files.outputs.should-continue }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # Only run workflow if latest commit is solely a config.yml change
+
+      - name: Check for solo config.yml commit
+        id: check-files
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -q "config.yml"; then
+            echo "config.yml is the only changed file, continuing"
+            echo "should-continue=true" >> $GITHUB_OUTPUT
+          else
+            echo "config.yml is not the only changed file, exiting"
+            echo "should-continue=false" >> $GITHUB_OUTPUT
+          fi
+  
+  run-pipeline-city-fetch:
+    needs: validate-changes
+    if: needs.validate-changes.outputs.should-continue == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +61,7 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
-          GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $5}')
+          GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $6}')
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           echo "STATE=$STATE" >> $GITHUB_ENV
@@ -44,7 +69,7 @@ jobs:
 
       - name: Scrape City
         run: |
-          bundle exec rake city_scrape:fetch[${{ env.STATE }}, ${{ env.GNIS }}]
+          bundle exec rake city_scrape:fetch[${{ env.STATE }},${{ env.GNIS }}]
       
       - name: Commit Changes to current branch
         env:
