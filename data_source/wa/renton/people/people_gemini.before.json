@@ -15,8 +15,9 @@
     ]
   },
   {
-    "name": "James Alberson Jr.",
+    "name": "James Alberson, Jr.",
     "positions": [
+      "Council Member",
       "Councilmember",
       "Council President, Position No. 1"
     ],
@@ -33,10 +34,9 @@
   {
     "name": "Ruth Pérez",
     "positions": [
+      "Council Member",
       "Councilmember",
       "Council President Pro Tem",
-      "Chair",
-      "Vice Chair",
       "Chair: Finance Committee",
       "Vice Chair: Transportation/Aviation Committee",
       "Member: Public Safety Committee"
@@ -54,10 +54,8 @@
   {
     "name": "Ryan McIrvin",
     "positions": [
+      "Council Member",
       "Councilmember",
-      "Council member",
-      "Vice Chair",
-      "Chair",
       "Chair: Transportation/Aviation Committee",
       "Vice Chair: Planning & Development Committee",
       "Member: Finance Committee"
@@ -75,11 +73,8 @@
   {
     "name": "Valerie O'Halloran",
     "positions": [
+      "Council Member",
       "Councilmember",
-      "Council member",
-      "Chair",
-      "Vice Chair",
-      "Member",
       "Council President",
       "Chair: Community Services Committee",
       "Vice Chair: Finance Committee",
@@ -98,10 +93,8 @@
   {
     "name": "Ed Prince",
     "positions": [
+      "Council Member",
       "Councilmember",
-      "Council member",
-      "Chair",
-      "Member",
       "Chair: Planning & Development Committee",
       "Vice Chair: Public Safety Committee",
       "Member: Transportation/Aviation Committee",
@@ -124,10 +117,8 @@
   {
     "name": "Carmen Rivera",
     "positions": [
+      "Council Member",
       "Councilmember",
-      "Council member",
-      "Member",
-      "Vice Chair",
       "Chair: Public Safety Committee",
       "Vice Chair: Utilities Committee",
       "Member: Community Services Committee"
@@ -144,11 +135,8 @@
   {
     "name": "Kim-Khánh Văn",
     "positions": [
+      "Council Member",
       "Councilmember",
-      "Council member",
-      "Member",
-      "Vice Chair",
-      "Chair",
       "Chair: Utilities Committee",
       "Vice Chair: Community Services Committee",
       "Member: Planning & Development Committee"
@@ -160,22 +148,6 @@
     "term_date": "2020",
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/van",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
-  },
-  {
-    "name": "James Alberson Jr.",
-    "positions": [
-      "Councilmember",
-      "Council President, Position No. 1"
-    ],
-    "image": null,
-    "phone_number": "425-430-6501",
-    "email": "jalberson@rentonwa.gov",
-    "website": "https://www.rentonwa.gov/Government/City-Council/alberson",
-    "term_date": "2022 to 2025",
-    "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/alberson",
       "https://www.rentonwa.gov/Government/City-Council/rivera"
     ]
   }
