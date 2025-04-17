@@ -91,19 +91,10 @@ jobs:
           PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[${{ env.STATE }},${{ env.GNIS_ID }}]")
           echo "Validation response: $PR_DATA"
 
-          # Extract JSON from the response (find JSON starting with '{')
-          CLEANED_RESPONSE=$(echo "$PR_DATA" | sed 's/^.*{/{/')
-
-          # Remove control characters (ASCII 0-31) which are invalid for JSON
-          CLEANED_RESPONSE=$(echo "$CLEANED_RESPONSE" | tr -d '\000-\031')
-
-          # Debug: Print the cleaned response
-          echo "Cleaned response: $CLEANED_RESPONSE"
-
           # Parse JSON output
-          APPROVE=$(echo "$CLEANED_RESPONSE" | jq -r '.approve')
-          SCORE=$(echo "$CLEANED_RESPONSE" | jq -r '.score')
-          COMMENT=$(echo "$CLEANED_RESPONSE" | jq -r '.comment')
+          APPROVE=$(echo "$PR_DATA" | jq -r '.approve')
+          SCORE=$(echo "$PR_DATA" | jq -r '.score')
+          COMMENT=$(echo "$PR_DATA" | jq -r '.comment')
 
           echo "APPROVE=$APPROVE" >> $GITHUB_ENV
           echo "SCORE=$SCORE" >> $GITHUB_ENV
