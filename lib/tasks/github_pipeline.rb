@@ -40,10 +40,10 @@ namespace :github_pipeline do
       "approve" => comparison_data["approve"],
       "score" => comparison_data["score"],
       "comment" => [people_list_comment, comparison_data["comparison_table_comment"]]
-           .join("\n\n---\n\n")
+           .join("\n\n***\n\n").to_s.gsub(/\n/, '\n')
     }
 
-    puts data.to_json
+    puts JSON.generate(data)
   end
 
   def self.generate_people_list_comment(state, gnis, branch_name)
