@@ -1,4 +1,4 @@
-  [Show/Hide]()   ![Translate](/home/showpublishedimage/18475/637801805938670000)   [Skip to Main Content](https://kentwa.gov/government/kent-mayor#pagebody)  
+  [Show/Hide]()   ![Translate](images/47591b149db844bcb80f6b8506b533f63e909f7cca84390fdd74bfbb31d2ebd6.jpg)  Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu Powered by  [![Google Translate](images/3f3f3a8d0882c4edd13c1755632554f3042dd0f45af91da1e753b94d76c2513f.googlelogo_color_42x16dp.png)Translate](https://translate.google.com)   [Skip to Main Content](https://kentwa.gov/government/kent-mayor#pagebody)  
 
 # City of Kent
 
@@ -1203,11 +1203,11 @@ Use zoning, utilities and road maps to help plan your project.
  *  [Reddit]() 
   [Feedback]()  [Print]()  
 
- ![Mayor Banner](https://www.kentwa.gov/home/showpublishedimage/2171/636131525380430000) 
+ ![Mayor Banner](4f311de417097b9975d613ba08207bc10603a19cfa60f67af21bfd4d742850d5.jpg) 
 
 ## Meet Mayor Dana Ralph
 
- ![Portrait of Mayor Ralph](https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000) 
+ ![Portrait of Mayor Ralph](images/149cb5a8d4214b3c7283dba96f96ba407452f8dd1b2c368e2c558a75996a77d8.jpg) 
 
 Re-elected by Kent voters for her second term in 2021,  __Mayor Dana Ralph __ serves as the Chief Executive Officer of the City of Kent in Washington State.
 
@@ -1255,9 +1255,9 @@ My hope is that you will join in the passion that drives me—the idea I work to
 
 ## Reach the Mayor
 
- *   ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)  253-856-5700 
- *   ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)   [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)  
- *   ![](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)  Office of the Mayor  
+ *   ![telephone](images/22375e2afe6b91f8162c8834277c443711757262e9ee5fa0b0f6bd35bcbab785.jpg)  253-856-5700 
+ *   ![envelope](images/3b37f4e0a8a693a462ce7a994b6d36f3cd59dcdc22d606cac26d9e6d4e79c813.jpg)   [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)  
+ *   ![](images/4f9576326b05f68c7c7f7182f3732f983aa73dcc3f405fc80419ca78990b0110.jpg)  Office of the Mayor  
 
 220 Fourth Ave. S  
 
@@ -1268,13 +1268,13 @@ Free viewers are required for some of the attached documents.
 
 They can be downloaded by clicking on the icons below.
 
- [Acrobat Reader![Download Acrobat Reader](/DefaultContent/Default/_gfx/downloadmessage/acrobat.jpg)](https://kentwa.gov/?splash=http://get.adobe.com/reader/&____isexternal=true)  [Windows Media Player![Download Windows Media Player](/DefaultContent/Default/_gfx/downloadmessage/wmp.jpg)](https://kentwa.gov/?splash=http://windows.microsoft.com/en-us/windows/windows-media-player&____isexternal=true)   [Word Viewer![Download Word Viewer](/DefaultContent/Default/_gfx/downloadmessage/word.jpg)](https://kentwa.gov/?splash=https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online&____isexternal=true)  [Excel Viewer![Download Excel Viewer](/DefaultContent/Default/_gfx/downloadmessage/excel.jpg)](https://kentwa.gov/?splash=https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online&____isexternal=true)  [PowerPoint Viewer![Download PowerPoint Viewer](/DefaultContent/Default/_gfx/downloadmessage/powerpoint.jpg)](https://kentwa.gov/?splash=https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online&____isexternal=true)  
+ [Acrobat Reader![Download Acrobat Reader](images/184b0aaff0c4bc31fb9806ac4bdbdaa6c225200c8ebf93659741769a3d193d5b.acrobat.jpg)](https://kentwa.gov/?splash=http://get.adobe.com/reader/&____isexternal=true)  [Windows Media Player![Download Windows Media Player](images/3e2261e19c91a2727220fd8234361a4b3b56073440630284519b8aea34c5b31d.wmp.jpg)](https://kentwa.gov/?splash=http://windows.microsoft.com/en-us/windows/windows-media-player&____isexternal=true)   [Word Viewer![Download Word Viewer](images/1410483fa76123031a32f4a0e07feb2df352b5161133b028597698cfa6e2170c.word.jpg)](https://kentwa.gov/?splash=https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online&____isexternal=true)  [Excel Viewer![Download Excel Viewer](images/c19ad50fc5279d025dad921d4787a6ba2cc51dd08b9a896df9836df51edb9b9c.excel.jpg)](https://kentwa.gov/?splash=https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online&____isexternal=true)  [PowerPoint Viewer![Download PowerPoint Viewer](images/ed71208d6658051dd761f0540c38a31b623f43bba9830c7c83e79c0914d0777e.powerpoint.jpg)](https://kentwa.gov/?splash=https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online&____isexternal=true)  
 
 ## Stay Connected
 
 Sign up for email updates from the City of Kent, including information on big events and upcoming traffic and parking restrictions.
 
-  [![Footer-Fb-Logo@2x](/home/showpublishedimage/14834/637743616331570000)](https://kentwa.gov/?splash=https://www.facebook.com/CityofKent&____isexternal=true)  [![Footer-Ig-Logo@2x](/home/showpublishedimage/14836/637743616337530000)](https://www.instagram.com/cityofkent)  [![Footer-Li-Icon@2x](/home/showpublishedimage/14838/637743616343370000)](https://www.linkedin.com/company/city-of-kent-washington)  [![Footer-Tw-Logo@2x](/home/showpublishedimage/14840/637743616349530000)](https://twitter.com/cityofkent)  [![Footer-Vimeo-Icon@2x](/home/showpublishedimage/14842/637743616355530000)](https://vimeo.com/kenttv21)  [![Footer-Yt-Icon@2x](/home/showpublishedimage/14844/637743616361900000)](https://kentwa.gov/?splash=https://youtube.com/@CityofKent&____isexternal=true)  
+  [![Footer-Fb-Logo@2x](8294f3bc6e4ac90d95b0b7e084d7033de0bc8e8c5683e6d3ddf1f0e8a5cc0a53.jpg)](https://kentwa.gov/?splash=https://www.facebook.com/CityofKent&____isexternal=true)  [![Footer-Ig-Logo@2x](471f46f7de62eb0d850a17e0edacea5fa3d1d378b88d47b131a1d0f719510f44.jpg)](https://www.instagram.com/cityofkent)  [![Footer-Li-Icon@2x](fc73d670cfe37f5988c356d70b5ef2c65067499ae12018ac469611e423556cf5.jpg)](https://www.linkedin.com/company/city-of-kent-washington)  [![Footer-Tw-Logo@2x](7a140432fb214880dec04d0149e2b2640f9187bb6d765519eed8a1769ca7f46e.jpg)](https://twitter.com/cityofkent)  [![Footer-Vimeo-Icon@2x](b624381ae7ec0b808da5844e4cd836f49185fae5677ee7f98cf7761353d17dc3.jpg)](https://vimeo.com/kenttv21)  [![Footer-Yt-Icon@2x](6886aebcd90420e1256db2acce9b5f9b4858b5d31ecf388430d534a9975573cf.jpg)](https://kentwa.gov/?splash=https://youtube.com/@CityofKent&____isexternal=true)  
 
 ### City of Kent
 
@@ -1282,7 +1282,7 @@ Sign up for email updates from the City of Kent, including information on big ev
 
  [253-856-5200]() 
 
-  [Sitemap](https://kentwa.gov/guides/important/site-map)  [Contact Us](https://kentwa.gov/government/contact-us)  [Privacy Policy](https://kentwa.gov/guides/important/terms-of-use-privacy-policy)   [![Footer-KentTv-Logo@2x](/home/showpublishedimage/14880/637743648575730000)](https://www.youtube.com/user/KentTV21)  [![Footer-Visit-Kent@2x](/home/showpublishedimage/14882/637743648580530000)](https://visitkent.com)  
+  [Sitemap](https://kentwa.gov/guides/important/site-map)  [Contact Us](https://kentwa.gov/government/contact-us)  [Privacy Policy](https://kentwa.gov/guides/important/terms-of-use-privacy-policy)   [![Footer-KentTv-Logo@2x](4f7da84433d11ff40c6ac0e3a64b7f596e6bb54b407757d57c34a1bb4c7a01dc.jpg)](https://www.youtube.com/user/KentTV21)  [![Footer-Visit-Kent@2x](613adc239663fd69fc1c14b5934124024ea31b69d43e41c45625113b506497b5.jpg)](https://visitkent.com)  
 
 WEBSITE DESIGN BY [GRANICUS](https://granicus.com/government-website-design?utm_source=customer&utm_medium=footer&utm_campaign=govAccesswebsite) - Connecting People and Government
 
@@ -1357,4 +1357,4 @@ Tap the icon to expand or tap the title to go to the page.
    *  [Emergency Preparedness](https://kentwa.gov/guides/emergency-preparedness)  
  *  Expand/close  [Events]()  
    *  [Calendar & Submissions](https://kentwa.gov/events/event-calendar)  
- Loading... 
+ Loading...  ![](images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.jpg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

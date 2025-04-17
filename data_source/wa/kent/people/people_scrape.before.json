@@ -1,120 +1,125 @@
 [
   {
+    "name": "Dana Ralph",
+    "positions": [
+      "Mayor",
+      "mayor"
+    ],
+    "image": "images/149cb5a8d4214b3c7283dba96f96ba407452f8dd1b2c368e2c558a75996a77d8.jpg",
+    "phone_number": "253-856-5700",
+    "email": "Mayor@KentWA.gov",
+    "website": "https://www.kentwa.gov/government/kent-mayor",
+    "term_date": "Re-elected in 2021 for second term, sworn in January 2018 as 27th Mayor",
+    "sources": [
+      "https://kentwa.gov/government/kent-mayor",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
+    ]
+  },
+  {
     "name": "Satwinder Kaur",
     "positions": [
-      "Council President",
       "council president",
       "position 2"
     ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000",
+    "image": "images/a99201ae0050a91ac291bdda1981b6e5e62e3f0014904d175bb2d41178d95839.jpg",
     "phone_number": "253-856-5712",
     "email": "skaur@KentWA.gov",
-    "website": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
+    "website": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
     "term_date": "January 2018 to Dec. 31, 2025",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
     "name": "Bill Boyce",
     "positions": [
-      "Councilmember",
-      "council member position 5",
-      "member Sound Cities Association Public Interest Committee",
-      "member Harborview Board of Trustees"
+      "council member",
+      "position 5"
     ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/17761/638446491818570000",
-    "phone_number": "253-856-5712, 206-915-0930",
+    "image": "images/c6e11bbe68275f487ff2a21cfd3bf913d29819e4ac706bdd3d6cbe61b513d79f.jpg",
+    "phone_number": "253-856-5712",
     "email": "bboyce@kentwa.gov",
-    "website": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
-    "term_date": "January 2012 to December 31, 2027",
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+    "term_date": "January 2012 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+      "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
     "name": "John Boyd",
     "positions": [
-      "Councilmember",
       "council member",
-      "position 3"
+      "position 3",
+      "Member Puget Sound Fire RFA Governance Board",
+      "Management Coordinator Committee member for the Local Hazardous Waste Management Program"
     ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/24260/638446489711770000",
-    "phone_number": [
-      "253-856-5712",
-      "206-930-7108"
-    ],
+    "image": "images/802570b4ba84c9113842eff7bd54e1c83c7b801a245c6804db7d8b186b9c3532.jpg",
+    "phone_number": "253-856-5712",
     "email": "JBoyd@KentWA.gov",
-    "website": null,
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd",
     "term_date": "January 2024 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-john-boyd"
+      "https://kentwa.gov/government/kent-city-council/councilmember-john-boyd",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
     "name": "Brenda Fincher",
     "positions": [
-      "Councilmember",
+      "council member",
       "council member position 6",
       "Chair of the Public Works Committee",
       "Council Liaison to the Arts Commission",
       "Member Arts Commission"
     ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000",
-    "phone_number": "253-856-5712, 206-818-7909",
-    "email": "bfincher@KentWA.gov",
-    "website": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+    "image": "images/7d14a432037325dce39e93c6e57048b1cbd1a85b45dccfc1c86bdde5053250ad.jpg",
+    "phone_number": "253-856-5712",
+    "email": "bfincher@kentwa.gov",
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
     "term_date": "March 2014 to Dec. 31, 2025",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
     "name": "Marli Larimer",
     "positions": [
-      "Councilmember",
-      "council member position 1",
-      "Member King County Aging and Disabilities Advisory Council",
-      "Member Puget Sound Regional Fire Authority Governance Board"
+      "council member",
+      "position 1"
     ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/17767/638446491131370000",
-    "phone_number": "253-856-5712, 206-247-9989",
-    "email": "MLarimer@KentWA.gov",
-    "website": "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
+    "image": "images/5d054c013236886a426446dd0646bd7f390205ca59aea75a386f00ea7fd6b44e.jpg",
+    "phone_number": "253-856-5712",
+    "email": "mlarimer@KentWA.gov",
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
     "term_date": "June 2018 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
+      "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
     "name": "Zandria Michaud",
     "positions": [
-      "Councilmember",
       "council member",
-      "position 7",
-      "Parks and Human Services Subject Matter Chair",
-      "Human Services Council Liaison",
-      "member of the Firefighters’ Relief & Pension Board",
-      "member of the King County Regional Law Safety and Justice Committee",
-      "member of the Washington Community Forestry Council",
-      "member of the Washington State Tree Equity Collaborative Steering Committee"
+      "position 7"
     ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/17773/638446490252730000",
-    "phone_number": [
-      "253-856-5712",
-      "206-402-8547"
-    ],
-    "email": "ZMichaud@KentWA.gov",
-    "website": "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
+    "image": "images/a82b361b9a45e166dd347314285dd304575caa51946bc4607673c91fadf0d36c.jpg",
+    "phone_number": "253-856-5712",
+    "email": "ZMichaud@kentwa.gov",
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
     "term_date": "Nov. 26th, 2019 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
+      "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
   {
     "name": "Toni Troutner",
     "positions": [
-      "Councilmember",
+      "council member",
       "council member position 4",
       "Chair Puget Sound Regional Fire Authority",
       "Co-Chair Severe Weather Shelter",
@@ -126,46 +131,18 @@
       "Member Region Transit Committee",
       "Coordinator Severe Weather Shelter",
       "Kent Downtown Partnership Secretary",
-      "Alternate King County Flood Control District Advisory Committee",
-      "Alternate Puget Sound Regional Council Executive Board",
-      "Council President",
-      "Chair Public Safety Committee"
+      "Member King County Flood Control District Advisory Committee (alternate)",
+      "Member Puget Sound Regional Council Executive Board (alternate)",
+      "Council President"
     ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/17771/638446490523030000",
-    "phone_number": "253-856-5712, 253-951-7765",
+    "image": "images/1f4fe9544c7a0264fdb2f2c3e60b98b80daf2393c62b94d41514bd11fa59943f.jpg",
+    "phone_number": "253-856-5712",
     "email": "TTroutner@KentWA.gov",
-    "website": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
+    "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
     "term_date": "January 2018 to Dec. 31, 2025",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
-    ]
-  },
-  {
-    "name": "Kimberley A. Komoto",
-    "positions": [
-      "City Clerk"
-    ],
-    "image": null,
-    "phone_number": "253-856-5725",
-    "email": "CityClerk@KentWA.gov",
-    "website": "https://kentwa.gov/government/city-clerk",
-    "term_date": null,
-    "sources": [
-      "https://kentwa.gov/government/city-clerk"
-    ]
-  },
-  {
-    "name": "Dana Ralph",
-    "positions": [
-      "mayor"
-    ],
-    "image": "https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000",
-    "phone_number": "253-856-5700",
-    "email": "Mayor@KentWA.gov",
-    "website": "https://kentwa.gov/government/kent-mayor",
-    "term_date": "2022 to 2025 (second term started in 2021, sworn in January 2018 for first term)",
-    "sources": [
-      "https://kentwa.gov/government/kent-mayor"
+      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   }
 ]

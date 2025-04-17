@@ -1,4 +1,4 @@
-  [Show/Hide]()   ![Translate](/home/showpublishedimage/18475/637801805938670000)   [Skip to Main Content](https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true#pagebody)  
+  [Show/Hide]()   ![Translate](images/47591b149db844bcb80f6b8506b533f63e909f7cca84390fdd74bfbb31d2ebd6.jpg)  Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu Powered by  [![Google Translate](images/https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)   [Skip to Main Content](https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true#pagebody)  
 
 # City of Kent
 
@@ -1190,21 +1190,21 @@ Use zoning, utilities and road maps to help plan your project.
    *  [Calendar & Submissions](https://www.kentwa.gov/events/event-calendar)  
  []()  
 
- *  [![Welcome](/home/showpublishedimage/17519/637769817465070000)]()    
+ *  [![Welcome](6d89a00cadb403c3f2e04690028868560b9a72b43079b4fbe806f2d7d6541ea8.jpg)]()    
 
 ## Welcome  
 
 Everything Kent, all in one place.  
 
- *  [![](/home/showpublishedimage/25390/638772948592670000)](https://www.kentwa.gov/?splash=https://wakentweb.myvscloud.com/webtrac/web/splash.html&____isexternal=true) 
- *  [![Kent City Council Newsletter](/home/showpublishedimage/25081/638657982318770000)](https://public.govdelivery.com/accounts/WAKENT/signup/43115)    
+ *  [![](ced60560b03d904b700928a789694e1017b6414c4ffe5e143152ab3351d3b2b7.jpg)](https://www.kentwa.gov/?splash=https://wakentweb.myvscloud.com/webtrac/web/splash.html&____isexternal=true) 
+ *  [![Kent City Council Newsletter](458df26ad48c898623c518b90ffb25ba6d8ca3066e36c1aee2243866bcc2df6a.jpg)](https://public.govdelivery.com/accounts/WAKENT/signup/43115)    
 
 ## Kent City Council Newsletter  
 
 Subscribe for updates and news from your councilmembers!  
 
  [Sign up](https://public.govdelivery.com/accounts/WAKENT/signup/43115)  
- *  [![KentWorks](/home/showpublishedimage/13469/637369748507370000)]()    
+ *  [![KentWorks](cd6ffee0245da97317dd8b311ad47d45e803d6c3562dda1cb154dc5835c1b191.jpg)]()    
 
 ## KentWorks  
 
@@ -1216,10 +1216,10 @@ Download the App today and stay connected!
  1.  [4]() 
   [Pause]()  
 
- *  [![daily-kent-tv](/home/showpublishedimage/14874/637743633123930000)1## City HallCity Hall is operating on its regular Monday to Friday 8 a.m. - 5 p.m. schedule.](https://www.kentwa.gov/government/city-clerk) 
- *  [![daily-pay-online](/home/showpublishedimage/14876/637743633129200000)2## Pay OnlinePay water bills, parking tickets, get a pet license, and more.](https://www.kentwa.gov/pay-and-apply/online-services) 
- *  [![TheNotItsPhotobyHaleighElliott](/home/showpublishedimage/19014/637878699229200000)3## EventsStay up to date with what's happening in Kent!](https://www.kentwa.gov/events/calendar-month-view) 
- *  [![daily-city-hall](/home/showpublishedimage/14872/637743633114570000)4## Kent TV 21Watch scheduled city council meetings.](https://www.youtube.com/user/KentTV21) 
+ *  [![daily-kent-tv](88d4f78db45957557893ca8f0be32da164a240556f2adf6a2bd3d7aed10a3832.jpg)1## City HallCity Hall is operating on its regular Monday to Friday 8 a.m. - 5 p.m. schedule.](https://www.kentwa.gov/government/city-clerk) 
+ *  [![daily-pay-online](fd080dc5aa8b3335f90fa58dbb81af1c27e6ec33b691dbd51608e26ff46ea53f.jpg)2## Pay OnlinePay water bills, parking tickets, get a pet license, and more.](https://www.kentwa.gov/pay-and-apply/online-services) 
+ *  [![TheNotItsPhotobyHaleighElliott](c1cb5febd8a4c3aa30cf02bf475a38d6fcca929fc33b70b59f29afcf59a98379.jpg)3## EventsStay up to date with what's happening in Kent!](https://www.kentwa.gov/events/calendar-month-view) 
+ *  [![daily-city-hall](fc8bcd233933dba6abd4eee50cb3840ec4b493abe657fa799e4e378180843fe3.jpg)4## Kent TV 21Watch scheduled city council meetings.](https://www.youtube.com/user/KentTV21) 
 
 ## Resource Lookup
 
@@ -1267,20 +1267,20 @@ Enter an address to get started
 
 ## Online Services
 
- *  [![CTA-4-ApplyforaPermit@2x](/home/showpublishedimage/14784/637743614795830000)Apply for a permit](https://www.kentwa.gov/pay-and-apply/apply-for-a-permit) 
- *  [![CTA-1-ApplyforaBusinessLicense@2x](/home/showpublishedimage/14772/637743614762400000)Apply for a business license](https://www.kentwa.gov/pay-and-apply/apply-for-a-business-license) 
- *  [![parks-blue@2x](/home/showpublishedimage/14705/637737753758970000)Find a park](https://www.kentwa.gov/departments/kent-parks/parks-places) 
- *  [![CTA-5-SubmitaServiceRequest@2x](/home/showpublishedimage/14788/637743614808200000)Report a non-emergency issue](https://www.kentwa.gov/pay-and-apply/kentworks) 
- *  [![CTA-6-FileaPoliceReport@2x](/home/showpublishedimage/14792/637743614819830000)File a police report](https://www.kentwa.gov/departments/police-department/file-a-police-report-online) 
- *  [![CTA-7-FileaSmallClaim@2x](/home/showpublishedimage/14796/637743614831900000)File a small claim](https://www.kentwa.gov/?splash=https://kingcounty.gov/courts/district-court/small-claims.aspx&____isexternal=true) 
- *  [![CTA-8-FileTaxes@2x](/home/showpublishedimage/14800/637743614844070000)File city taxes](https://www.kentwa.gov/pay-and-apply/file-city-taxes) 
- *  [![CTA-9-PayaFine@2x](/home/showpublishedimage/14804/637743614857070000)Pay a fine](https://www.kentwa.gov/pay-and-apply/pay-my-fines) 
- *  [![CTA-10-PayWaterandSewerBills@2x](/home/showpublishedimage/14760/637743614725500000)Pay water & sewer bill](https://www.kentwa.gov/pay-and-apply/pay-water-and-sewer-bill-online) 
- *  [![CTA-11-PublicRecordsCenter@2x](/home/showpublishedimage/14764/637743614740500000)Public records center](https://www.kentwa.gov/pay-and-apply/make-a-public-records-request) 
- *  [![Traffic Advisory](/home/showpublishedimage/17657/637771684635470000)Traffic advisories](https://www.kentwa.gov/departments/public-works/transportation/traffic-advisories) 
- *  [![language access blue](/home/showpublishedimage/24435/638434318371800000)Language Access](https://www.kentwa.gov/government/race-equity/language-access-landing-page) 
+ *  [![CTA-4-ApplyforaPermit@2x](8f42eda0837a2b8164a2220980ada23751919048b49ad4aedd252c7de934f896.jpg)Apply for a permit](https://www.kentwa.gov/pay-and-apply/apply-for-a-permit) 
+ *  [![CTA-1-ApplyforaBusinessLicense@2x](5aa54a76df0e4dd469739140fd5b59034493ba1436510649f59c62179187ff59.jpg)Apply for a business license](https://www.kentwa.gov/pay-and-apply/apply-for-a-business-license) 
+ *  [![parks-blue@2x](aef6380af2a8b81e7fecd32ab3db848daa4abbbdd7dd76242a48c8d3b6ae534e.jpg)Find a park](https://www.kentwa.gov/departments/kent-parks/parks-places) 
+ *  [![CTA-5-SubmitaServiceRequest@2x](3045d92d403c71ace73574745494251f61c462e636d2121f839643761bf5bfd8.jpg)Report a non-emergency issue](https://www.kentwa.gov/pay-and-apply/kentworks) 
+ *  [![CTA-6-FileaPoliceReport@2x](20dfff01856cf82afcf6d7438c193389d08ae035a600748cac0ae21d5420036e.jpg)File a police report](https://www.kentwa.gov/departments/police-department/file-a-police-report-online) 
+ *  [![CTA-7-FileaSmallClaim@2x](9ae0e706b2851b5f62ebff629bcacc77a97d2e99ea57551f2aeeb537ec0764a2.jpg)File a small claim](https://www.kentwa.gov/?splash=https://kingcounty.gov/courts/district-court/small-claims.aspx&____isexternal=true) 
+ *  [![CTA-8-FileTaxes@2x](36217dd2f93015baabb073635e09102f4993992d211a534e194efc2308a806ba.jpg)File city taxes](https://www.kentwa.gov/pay-and-apply/file-city-taxes) 
+ *  [![CTA-9-PayaFine@2x](18867ec681369b277ea888f2251e941394c89a03bab3e7dc880bea0df8791a42.jpg)Pay a fine](https://www.kentwa.gov/pay-and-apply/pay-my-fines) 
+ *  [![CTA-10-PayWaterandSewerBills@2x](06ab39c8f2d73d995da5eecf4b0230248de8b0f22c25f03092db309c4f856386.jpg)Pay water & sewer bill](https://www.kentwa.gov/pay-and-apply/pay-water-and-sewer-bill-online) 
+ *  [![CTA-11-PublicRecordsCenter@2x](90f6c52dfdd73e4a332ee88d2e8a1e7d5c68fad6d715f35e5a17fab2e56147b5.jpg)Public records center](https://www.kentwa.gov/pay-and-apply/make-a-public-records-request) 
+ *  [![Traffic Advisory](3caec3894b6d4b6081621dff9e2f65f2cd53b9d3f931bd06415fcf26b96af9fb.jpg)Traffic advisories](https://www.kentwa.gov/departments/public-works/transportation/traffic-advisories) 
+ *  [![language access blue](6c08c7ad9cfa27fb4b53da3106748ac20ef4686388c68f22b4076d57a9ecfc61.jpg)Language Access](https://www.kentwa.gov/government/race-equity/language-access-landing-page) 
 
- *   [![2024 Mayor Progress Report](/home/showpublishedimage/25193/638723630112870000)](https://www.youtube.com/embed/keU8Cx4T1EE?autoplay=1)    
+ *   [![2024 Mayor Progress Report](6628b335c6cefc32a53df060e9ae4161b67755341339622cce5bc28a1bc73732.jpg)](https://www.youtube.com/embed/keU8Cx4T1EE?autoplay=1)    
 
 ## Mayor's Progress Report 2024  
 
@@ -1290,101 +1290,100 @@ The City of Kent is dedicated to providing the community with excellent service.
 
 ## News
 
- *  [Mar 24![Martin Sortun receives Special Olympics honor](/home/showpublishedimage/25398/638784287774700000)## Martin Sortun receives Special Olympics honor  
+ *  [Apr 16![Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent](afb2ddf703acfe77eb49028e4ae3a20cbc91196336ad76bdcb00ef8fbe2c0202.jpg)## Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent  
+
+Media Releases](https://www.kentwa.gov/Home/Components/News/News/1953/2243) 
+ *  [Mar 24![Martin Sortun receives Special Olympics honor](1f4807e62389f74262b1630d270d980522583224778efc1360b99a5661fd1fe8.jpg)## Martin Sortun receives Special Olympics honor  
 
 News](https://www.kentwa.gov/Home/Components/News/News/1951/2243) 
- *  [Mar 21![Mayor Dana Ralph delivers 2025 State of the City](/home/showpublishedimage/25396/638784285438630000)## Mayor Dana Ralph delivers 2025 State of the City  
+ *  [Mar 21![Mayor Dana Ralph delivers 2025 State of the City](75648fcb40046bc1d542f79ac0c034fbe6008f48d23d5e241d56cc2317eb39eb.jpg)## Mayor Dana Ralph delivers 2025 State of the City  
 
 News](https://www.kentwa.gov/Home/Components/News/News/1949/2243) 
- *  [Feb 4![Ezee Fiber Coming to Kent!](/home/showpublishedimage/25269/638742607945730000)## Ezee Fiber Coming to Kent!  
+ *  [Feb 4![Ezee Fiber Coming to Kent!](acbe48fa43d2674b1bc2e276fb7584cfc972d364707dab7c6ba294e537f40b76.jpg)## Ezee Fiber Coming to Kent!  
 
 News](https://www.kentwa.gov/Home/Components/News/News/1947/2243) 
- *  [Jan 27![Settlement Reached with Phoenix Court](/home/showpublishedimage/25257/638735664327230000)## Settlement Reached with Phoenix Court  
-
-News](https://www.kentwa.gov/Home/Components/News/News/1943/2243) 
  [More News](https://www.kentwa.gov/news/city-news)  
 
 ## Upcoming Events
 
- *  [## Green Kent Earth Day EventApr 19![Green Kent Earth Day Event](project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6811/18) 
- *  [## Mini Recycling Event at Kent United Methodist ChurchMay 9![Mini Recycling Event at Kent United Methodist Church](project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6777/18) 
- *  [## Green Kent May Conservation EventMay 10![Green Kent May Conservation Event](project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6813/18) 
- *  [## TeamUp2CleanUp - Community Litter Removal EventMay 17![TeamUp2CleanUp - Community Litter Removal Event](/home/showpublishedimage/19300/637981364325400000)](https://www.kentwa.gov/Home/Components/Calendar/Event/6852/18) 
- *  [## Free Hazardous Waste Disposal - King County WastemobileJun 6![Free Hazardous Waste Disposal - King County Wastemobile](project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6801/18) 
- *  [## Summer Recycling Event - Canyon Ridge Middle SchoolJun 7![Summer Recycling Event - Canyon Ridge Middle School](project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6775/18) 
+ *  [## Green Kent Earth Day EventApr 19![Green Kent Earth Day Event](d8f46b8464c652edf37e8134bcfabadea2b8f507e2f435b8c436c0970576fa03.Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6811/18) 
+ *  [## Mini Recycling Event at Kent United Methodist ChurchMay 9![Mini Recycling Event at Kent United Methodist Church](d8f46b8464c652edf37e8134bcfabadea2b8f507e2f435b8c436c0970576fa03.Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6777/18) 
+ *  [## Green Kent May Conservation EventMay 10![Green Kent May Conservation Event](d8f46b8464c652edf37e8134bcfabadea2b8f507e2f435b8c436c0970576fa03.Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6813/18) 
+ *  [## TeamUp2CleanUp - Community Litter Removal EventMay 17![TeamUp2CleanUp - Community Litter Removal Event](de04298cbda3a1bb667c977ccc036b54ac117b37ffafb2a6200343bc2ff287a8.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6852/18) 
+ *  [## Free Hazardous Waste Disposal - King County WastemobileJun 6![Free Hazardous Waste Disposal - King County Wastemobile](d8f46b8464c652edf37e8134bcfabadea2b8f507e2f435b8c436c0970576fa03.Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6801/18) 
+ *  [## Summer Recycling Event - Canyon Ridge Middle SchoolJun 7![Summer Recycling Event - Canyon Ridge Middle School](d8f46b8464c652edf37e8134bcfabadea2b8f507e2f435b8c436c0970576fa03.Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6775/18) 
  [More Events](https://www.kentwa.gov/events/calendar-month-view)  
 
 ## Guides & Resources
 
- Previous  ![](/home/showpublishedimage/17585/637771469431570000)  
+  ![](9488a6f875edea29bf09a75cea4c517d8f4dd911cdd31b8bdb804b3014c119c1.jpg)  
 
 ## Kent History
 
  *  [History of Kent](https://www.kentwa.gov/guides/kent-history) 
  *  [Sister Cities](https://www.kentwa.gov/guides/sister-cities) 
  *  [Kent 101](https://www.kentwa.gov/guides/kent-101) 
-  ![](/home/showpublishedimage/17583/637771452289130000)  
+  ![](7551c2b65a4e00adebacf2ea428c05bf6f9cc2c56b44e34431b4efec80149b82.jpg)  
 
 ## Getting Around Kent
 
  *  [Winter Weather Plan](https://www.kentwa.gov/guides/winter-weather-plan) 
  *  [Downtown Parking](https://www.kentwa.gov/guides/downtown-parking) 
  *  [Public Transportation](https://www.kentwa.gov/departments/public-works/transportation/public-transit-and-commute-options) 
-  ![](/home/showpublishedimage/17589/637771539870470000)  
+  ![](cc5a257a78791d96369ce2433d750e1191460a5550227c568fc37542c140b46c.jpg)  
 
 ## Housing & Assistance
 
  *  [Housing Resources](https://www.kentwa.gov/guides/housing-resources) 
  *  [Human Services Resources](https://www.kentwa.gov/departments/kent-parks/human-services/human-services-resources-and-help) 
  *  [Home Repair](https://www.kentwa.gov/departments/kent-parks/human-services/home-repair) 
-  ![](/home/showpublishedimage/17581/637771422070770000)  
+  ![](e53e4309e973b0a811d33641ad4b3923b81e685167699f4a5dbbe5af7b8123f4.jpg)  
 
 ## Business Resources
 
  *  [How to Start a Restaurant](https://www.kentwa.gov/guides/restaurant-success) 
  *  [Business Licenses](https://www.kentwa.gov/pay-and-apply/apply-for-a-business-license) 
  *  [Business Assistance](https://www.kentwa.gov/departments/econ-community-dev/business-services-and-assistance) 
-  ![](/home/showpublishedimage/17641/637771614280370000)  
+  ![](f725af0b03354ee856a76a21974a9d89e5042425fa18e009e4bb00be6048b2ca.jpg)  
 
 ## Environmental Care
 
  *  [Trash, Recycling & Yard Waste](https://www.kentwa.gov/guides/garbage-recycling-food-and-yard-waste) 
  *  [Natural Yard Care](https://www.kentwa.gov/guides/natural-yard-care) 
  *  [Fats, Oils & Grease Disposal](https://www.kentwa.gov/guides/fats-oils-and-grease-f-o-g) 
-  ![](/home/showpublishedimage/17645/637771650348100000)  
+  ![](e1d32bf601adb3e48518a7d782585dfa90d51e8a3f545adc74817aaaab56441b.jpg)  
 
 ## Get Involved
 
  *  [Volunteer Opportunities](https://www.kentwa.gov/pay-and-apply/find-volunteer-opportunities) 
  *  [Neighborhood Programs](https://www.kentwa.gov/guides/neighborhood-program) 
  *  [Clean-Up Events](https://www.kentwa.gov/departments/public-works/environmental/talking-trash-recycle-and-clean-up-events-for-residents) 
- Next 
 
 ## Kent Elected Officials
 
- Previous  [![Portrait of Mayor Ralph](/home/showpublishedimage/25253/638731311339130000)## Dana Ralph
+  [![Portrait of Mayor Ralph](149cb5a8d4214b3c7283dba96f96ba407452f8dd1b2c368e2c558a75996a77d8.jpg)## Dana Ralph
 
-Mayor](https://www.kentwa.gov/government/kent-mayor)   [![Councilmember Satwinder Kaur](/home/showpublishedimage/17769/638446490832100000)## Satwinder Kaur
+Mayor](https://www.kentwa.gov/government/kent-mayor)   [![Councilmember Satwinder Kaur](a99201ae0050a91ac291bdda1981b6e5e62e3f0014904d175bb2d41178d95839.jpg)## Satwinder Kaur
 
-Council President](https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur)   [![Councilmember Bill Boyce](/home/showpublishedimage/17761/638446491818570000)## Bill Boyce
+Council President](https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur)   [![Councilmember Bill Boyce](c6e11bbe68275f487ff2a21cfd3bf913d29819e4ac706bdd3d6cbe61b513d79f.jpg)## Bill Boyce
 
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce)   [![Councilmember John Boyd](/home/showpublishedimage/24260/638446489711770000)## John Boyd
+Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce)   [![Councilmember John Boyd](802570b4ba84c9113842eff7bd54e1c83c7b801a245c6804db7d8b186b9c3532.jpg)## John Boyd
 
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd)   [![Councilmember Brenda Fincher](/home/showpublishedimage/17763/638446491525130000)## Brenda Fincher
+Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd)   [![Councilmember Brenda Fincher](7d14a432037325dce39e93c6e57048b1cbd1a85b45dccfc1c86bdde5053250ad.jpg)## Brenda Fincher
 
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher)   [![Councilmember Marli Larimer](/home/showpublishedimage/17767/638446491131370000)## Marli Larimer
+Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher)   [![Councilmember Marli Larimer](5d054c013236886a426446dd0646bd7f390205ca59aea75a386f00ea7fd6b44e.jpg)## Marli Larimer
 
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer)   [![Councilmember Zandria Michaud](/home/showpublishedimage/17773/638446490252730000)## Zandria Michaud
+Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer)   [![Councilmember Zandria Michaud](a82b361b9a45e166dd347314285dd304575caa51946bc4607673c91fadf0d36c.jpg)## Zandria Michaud
 
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud)   [![Councilmember Toni Troutner](/home/showpublishedimage/17771/638446490523030000)## Toni Troutner
+Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud)   [![Councilmember Toni Troutner](1f4fe9544c7a0264fdb2f2c3e60b98b80daf2393c62b94d41514bd11fa59943f.jpg)## Toni Troutner
 
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner)  Next  [Learn about City Council](https://www.kentwa.gov/government/kent-city-council)  
+Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner)   [Learn about City Council](https://www.kentwa.gov/government/kent-city-council)  
 
 ## Stay Connected
 
 Sign up for email updates from the City of Kent, including information on big events and upcoming traffic and parking restrictions.
 
-  [![Footer-Fb-Logo@2x](/home/showpublishedimage/14834/637743616331570000)](https://www.kentwa.gov/?splash=https://www.facebook.com/CityofKent&____isexternal=true)  [![Footer-Ig-Logo@2x](/home/showpublishedimage/14836/637743616337530000)](https://www.instagram.com/cityofkent)  [![Footer-Li-Icon@2x](/home/showpublishedimage/14838/637743616343370000)](https://www.linkedin.com/company/city-of-kent-washington)  [![Footer-Tw-Logo@2x](/home/showpublishedimage/14840/637743616349530000)](https://twitter.com/cityofkent)  [![Footer-Vimeo-Icon@2x](/home/showpublishedimage/14842/637743616355530000)](https://vimeo.com/kenttv21)  [![Footer-Yt-Icon@2x](/home/showpublishedimage/14844/637743616361900000)](https://www.kentwa.gov/?splash=https://youtube.com/@CityofKent&____isexternal=true)  
+  [![Footer-Fb-Logo@2x](8294f3bc6e4ac90d95b0b7e084d7033de0bc8e8c5683e6d3ddf1f0e8a5cc0a53.jpg)](https://www.kentwa.gov/?splash=https://www.facebook.com/CityofKent&____isexternal=true)  [![Footer-Ig-Logo@2x](471f46f7de62eb0d850a17e0edacea5fa3d1d378b88d47b131a1d0f719510f44.jpg)](https://www.instagram.com/cityofkent)  [![Footer-Li-Icon@2x](fc73d670cfe37f5988c356d70b5ef2c65067499ae12018ac469611e423556cf5.jpg)](https://www.linkedin.com/company/city-of-kent-washington)  [![Footer-Tw-Logo@2x](7a140432fb214880dec04d0149e2b2640f9187bb6d765519eed8a1769ca7f46e.jpg)](https://twitter.com/cityofkent)  [![Footer-Vimeo-Icon@2x](b624381ae7ec0b808da5844e4cd836f49185fae5677ee7f98cf7761353d17dc3.jpg)](https://vimeo.com/kenttv21)  [![Footer-Yt-Icon@2x](6886aebcd90420e1256db2acce9b5f9b4858b5d31ecf388430d534a9975573cf.jpg)](https://www.kentwa.gov/?splash=https://youtube.com/@CityofKent&____isexternal=true)  
 
 ### City of Kent
 
@@ -1392,7 +1391,7 @@ Sign up for email updates from the City of Kent, including information on big ev
 
  [253-856-5200]() 
 
-  [Sitemap](https://www.kentwa.gov/guides/important/site-map)  [Contact Us](https://www.kentwa.gov/government/contact-us)  [Privacy Policy](https://www.kentwa.gov/guides/important/terms-of-use-privacy-policy)   [![Footer-KentTv-Logo@2x](/home/showpublishedimage/14880/637743648575730000)](https://www.youtube.com/user/KentTV21)  [![Footer-Visit-Kent@2x](/home/showpublishedimage/14882/637743648580530000)](https://visitkent.com)  
+  [Sitemap](https://www.kentwa.gov/guides/important/site-map)  [Contact Us](https://www.kentwa.gov/government/contact-us)  [Privacy Policy](https://www.kentwa.gov/guides/important/terms-of-use-privacy-policy)   [![Footer-KentTv-Logo@2x](4f7da84433d11ff40c6ac0e3a64b7f596e6bb54b407757d57c34a1bb4c7a01dc.jpg)](https://www.youtube.com/user/KentTV21)  [![Footer-Visit-Kent@2x](613adc239663fd69fc1c14b5934124024ea31b69d43e41c45625113b506497b5.jpg)](https://visitkent.com)  
 
 WEBSITE DESIGN BY [GRANICUS](https://granicus.com/government-website-design?utm_source=customer&utm_medium=footer&utm_campaign=govAccesswebsite) - Connecting People and Government
 
@@ -1467,4 +1466,4 @@ Tap the icon to expand or tap the title to go to the page.
    *  [Emergency Preparedness](https://www.kentwa.gov/guides/emergency-preparedness)  
  *  Expand/close  [Events]()  
    *  [Calendar & Submissions](https://www.kentwa.gov/events/event-calendar)  
- Loading... 
+ Loading...  ![](images/https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

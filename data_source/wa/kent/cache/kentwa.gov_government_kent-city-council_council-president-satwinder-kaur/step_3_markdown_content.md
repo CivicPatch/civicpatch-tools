@@ -1,4 +1,4 @@
-  [Show/Hide]()   ![Translate](/home/showpublishedimage/18475/637801805938670000)   [Skip to Main Content](https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur#pagebody)  
+  [Show/Hide]()   ![Translate](images/47591b149db844bcb80f6b8506b533f63e909f7cca84390fdd74bfbb31d2ebd6.jpg)  Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu Powered by  [![Google Translate](images/https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)   [Skip to Main Content](https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur#pagebody)  
 
 # City of Kent
 
@@ -1203,7 +1203,7 @@ Use zoning, utilities and road maps to help plan your project.
  *  [Reddit]() 
   [Feedback]()  [Print]()  
 
- ![Councilmember Satwinder Kaur](https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000) As a life-long resident and a graduate of Kentridge High School, Kent City Council President Satwinder Kaur (pronounced Seth-win-der Core) calls Kent home, where she lives with her husband, middle-school-aged son and baby-to-be. She wants to serve on City Council to be a voice for the people who are not at the table. She sees her role on the Council as a great learning opportunity and a chance to bring a fresh set of eyes to the City’s problems.   
+ ![Councilmember Satwinder Kaur](images/a99201ae0050a91ac291bdda1981b6e5e62e3f0014904d175bb2d41178d95839.jpg) As a life-long resident and a graduate of Kentridge High School, Kent City Council President Satwinder Kaur (pronounced Seth-win-der Core) calls Kent home, where she lives with her husband, middle-school-aged son and baby-to-be. She wants to serve on City Council to be a voice for the people who are not at the table. She sees her role on the Council as a great learning opportunity and a chance to bring a fresh set of eyes to the City’s problems.   
 
 “I want to bring new perspectives that may not have been considered before,” Satwinder says.   
 
@@ -1245,11 +1245,11 @@ When she isn’t working, volunteering or serving on Council, Satwinder enjoys s
 
 ## Reach Council President Kaur, position 2
 
- *   __ ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)__  253-856-5712 
- *   ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)    206-406-2468 
- *   __ ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)__   [skaur@KentWA.gov](mailto:skaur@KentWA.gov)  
- *   __ ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)__  Email all Council: [Kent City Council Members](mailto:citycouncil@kentwa.gov)  
- *   __ ![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)__  220 Fourth Ave. S  
+ *   __ ![telephone](images/22375e2afe6b91f8162c8834277c443711757262e9ee5fa0b0f6bd35bcbab785.jpg)__  253-856-5712 
+ *   ![telephone](images/22375e2afe6b91f8162c8834277c443711757262e9ee5fa0b0f6bd35bcbab785.jpg)    206-406-2468 
+ *   __ ![envelope](images/3b37f4e0a8a693a462ce7a994b6d36f3cd59dcdc22d606cac26d9e6d4e79c813.jpg)__   [skaur@KentWA.gov](mailto:skaur@KentWA.gov)  
+ *   __ ![envelope](images/3b37f4e0a8a693a462ce7a994b6d36f3cd59dcdc22d606cac26d9e6d4e79c813.jpg)__  Email all Council: [Kent City Council Members](mailto:citycouncil@kentwa.gov)  
+ *   __ ![geo-alt](images/4f9576326b05f68c7c7f7182f3732f983aa73dcc3f405fc80419ca78990b0110.jpg)__  220 Fourth Ave. S  
 
 Kent, WA 98032 
  *   __Term Began__  January 2018 
@@ -1260,7 +1260,7 @@ Kent, WA 98032
 
 Sign up for email updates from the City of Kent, including information on big events and upcoming traffic and parking restrictions.
 
-  [![Footer-Fb-Logo@2x](/home/showpublishedimage/14834/637743616331570000)](https://kentwa.gov/?splash=https://www.facebook.com/CityofKent&____isexternal=true)  [![Footer-Ig-Logo@2x](/home/showpublishedimage/14836/637743616337530000)](https://www.instagram.com/cityofkent)  [![Footer-Li-Icon@2x](/home/showpublishedimage/14838/637743616343370000)](https://www.linkedin.com/company/city-of-kent-washington)  [![Footer-Tw-Logo@2x](/home/showpublishedimage/14840/637743616349530000)](https://twitter.com/cityofkent)  [![Footer-Vimeo-Icon@2x](/home/showpublishedimage/14842/637743616355530000)](https://vimeo.com/kenttv21)  [![Footer-Yt-Icon@2x](/home/showpublishedimage/14844/637743616361900000)](https://kentwa.gov/?splash=https://youtube.com/@CityofKent&____isexternal=true)  
+  [![Footer-Fb-Logo@2x](8294f3bc6e4ac90d95b0b7e084d7033de0bc8e8c5683e6d3ddf1f0e8a5cc0a53.jpg)](https://kentwa.gov/?splash=https://www.facebook.com/CityofKent&____isexternal=true)  [![Footer-Ig-Logo@2x](471f46f7de62eb0d850a17e0edacea5fa3d1d378b88d47b131a1d0f719510f44.jpg)](https://www.instagram.com/cityofkent)  [![Footer-Li-Icon@2x](fc73d670cfe37f5988c356d70b5ef2c65067499ae12018ac469611e423556cf5.jpg)](https://www.linkedin.com/company/city-of-kent-washington)  [![Footer-Tw-Logo@2x](7a140432fb214880dec04d0149e2b2640f9187bb6d765519eed8a1769ca7f46e.jpg)](https://twitter.com/cityofkent)  [![Footer-Vimeo-Icon@2x](b624381ae7ec0b808da5844e4cd836f49185fae5677ee7f98cf7761353d17dc3.jpg)](https://vimeo.com/kenttv21)  [![Footer-Yt-Icon@2x](6886aebcd90420e1256db2acce9b5f9b4858b5d31ecf388430d534a9975573cf.jpg)](https://kentwa.gov/?splash=https://youtube.com/@CityofKent&____isexternal=true)  
 
 ### City of Kent
 
@@ -1268,7 +1268,7 @@ Sign up for email updates from the City of Kent, including information on big ev
 
  [253-856-5200]() 
 
-  [Sitemap](https://kentwa.gov/guides/important/site-map)  [Contact Us](https://kentwa.gov/government/contact-us)  [Privacy Policy](https://kentwa.gov/guides/important/terms-of-use-privacy-policy)   [![Footer-KentTv-Logo@2x](/home/showpublishedimage/14880/637743648575730000)](https://www.youtube.com/user/KentTV21)  [![Footer-Visit-Kent@2x](/home/showpublishedimage/14882/637743648580530000)](https://visitkent.com)  
+  [Sitemap](https://kentwa.gov/guides/important/site-map)  [Contact Us](https://kentwa.gov/government/contact-us)  [Privacy Policy](https://kentwa.gov/guides/important/terms-of-use-privacy-policy)   [![Footer-KentTv-Logo@2x](4f7da84433d11ff40c6ac0e3a64b7f596e6bb54b407757d57c34a1bb4c7a01dc.jpg)](https://www.youtube.com/user/KentTV21)  [![Footer-Visit-Kent@2x](613adc239663fd69fc1c14b5934124024ea31b69d43e41c45625113b506497b5.jpg)](https://visitkent.com)  
 
 WEBSITE DESIGN BY [GRANICUS](https://granicus.com/government-website-design?utm_source=customer&utm_medium=footer&utm_campaign=govAccesswebsite) - Connecting People and Government
 
@@ -1343,4 +1343,4 @@ Tap the icon to expand or tap the title to go to the page.
    *  [Emergency Preparedness](https://kentwa.gov/guides/emergency-preparedness)  
  *  Expand/close  [Events]()  
    *  [Calendar & Submissions](https://kentwa.gov/events/event-calendar)  
- Loading... 
+ Loading...  ![](images/https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

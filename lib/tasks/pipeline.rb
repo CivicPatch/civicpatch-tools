@@ -3,15 +3,15 @@
 require_relative "../services/brave"
 require_relative "../services/openai"
 require_relative "../scrapers/places"
-require_relative "../scrapers/data_fetcher"
 require_relative "../scrapers/common"
 require_relative "../core/city_scraper"
+require_relative "../core/page_fetcher"
 require_relative "../tasks/city_scrape/state_manager"
 require_relative "../core/search_router"
 require_relative "../sources/state_source/city_people"
 require_relative "../core/people_manager"
 
-namespace :city_scrape do
+namespace :pipeline do
   desc "Pick cities from queue"
   task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args| # bug -- this is a list of city names, which is not a unique identifier
     state = args[:state]
@@ -79,7 +79,6 @@ namespace :city_scrape do
   def fetch_with_scrape(state, gnis, government_type)
     positions_config = Core::CityManager.get_positions(government_type)
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-    create_prepare_directories(state, city_entry)
 
     config_file = File.join(PathHelper.get_data_source_city_path(state, city_entry["gnis"]), "config.yml")
     config_content = { "scrape_sources" => [] }
@@ -106,7 +105,6 @@ namespace :city_scrape do
   def fetch_with_gemini(state, city_entry, government_type, seeded_urls)
     gnis = city_entry["gnis"]
     positions_config = Core::CityManager.get_positions(government_type)
-    create_prepare_directories(state, city_entry)
 
     _, gemini_people = Core::CityScraper.fetch(
       "gemini",
@@ -154,6 +152,8 @@ namespace :city_scrape do
   def create_prepare_directories(state, city_entry)
     cache_destination_dir = PathHelper.get_city_cache_path(state, city_entry["gnis"])
 
+    # Remove cache folder if it exists
+    FileUtils.rm_rf(cache_destination_dir) if Dir.exist?(cache_destination_dir)
     FileUtils.mkdir_p(cache_destination_dir)
   end
 
