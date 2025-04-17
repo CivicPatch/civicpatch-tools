@@ -3,7 +3,6 @@ name: Pull Request - Config Change
 on:
   pull_request:
     types:
-      - opened
       - synchronize
     paths:
       - '**/config.yml'
@@ -18,24 +17,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 2
 
-      - name: Check for solo config.yml commit
+      - name: Check config.yml vs people.yml changes
         id: check-files
         run: |
-          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
-          PEOPLE_FILES=$(echo "$CHANGED_FILES" | grep -c "people\.yml$" || echo "0")
-          CONFIG_FILES=$(echo "$CHANGED_FILES" | grep -c "config\.yml$" || echo "0")
-
-          if [[ $CONFIG_FILES -gt 0 && $PEOPLE_FILES -eq 0 ]]; then
-            echo "Only one config.yml file was changed, continuing"
+          # Get changed files
+          FILES=$(git diff --name-only HEAD^)
+          
+          # Simple grep checks
+          if echo "$FILES" | grep -q "config\.yml" && ! echo "$FILES" | grep -q "people\.yml"; then
+            echo "Config changed but people.yml did not"
             echo "should-continue=true" >> $GITHUB_OUTPUT
           else
-            echo "Either both config.yml and people.yml were changed or no config.yml was modified, skipping"
-            echo "Config files changed: $CONFIG_FILES"
-            echo "People files changed: $PEOPLE_FILES"
-            echo "Changed files:"
-            echo "$CHANGED_FILES"
+            echo "Either config.yml wasn't changed or people.yml was also changed"
             echo "should-continue=false" >> $GITHUB_OUTPUT
           fi
   
@@ -69,7 +65,7 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
-          GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $6}')
+          GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $7}')
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           echo "STATE=$STATE" >> $GITHUB_ENV
