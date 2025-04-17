@@ -201,7 +201,9 @@
       "gnis": "2411552",
       "type": "Code city",
       "population": 92175,
-      "government_type": "Council-Manager"
+      "government_type": "Council-Manager",
+      "meta_updated_at": "2025-04-17",
+      "meta_hash": "1f7c90aea220c3a79190e05189ab2830"
     },
     {
       "ocd_ids": [

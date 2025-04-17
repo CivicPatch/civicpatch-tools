@@ -1,0 +1,151 @@
+[
+  {
+    "name": "Kelli Curtis",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "Expires December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "positions": [
+      "Mayor",
+      "Councilmember"
+    ]
+  },
+  {
+    "name": "Jay Arnold",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "Term Expires December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "positions": [
+      "Deputy Mayor",
+      "Councilmember"
+    ]
+  },
+  {
+    "name": "Neal Black",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "Term Expires December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "positions": [
+      "Councilmember"
+    ]
+  },
+  {
+    "name": "Amy Falcone",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "Term Expires December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "positions": [
+      "Councilmember"
+    ]
+  },
+  {
+    "name": "Jon Pascal",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "Term Expires December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "positions": [
+      "Councilmember"
+    ]
+  },
+  {
+    "name": "Penny Sweet",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "Term Expires December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "positions": [
+      "Councilmember"
+    ]
+  },
+  {
+    "name": "John Tymczyszyn",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "term_dates": [
+      {
+        "data": "Term Expires December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term expiration date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "positions": [
+      "Councilmember"
+    ]
+  }
+]
