@@ -8,6 +8,7 @@ module Services
         position_examples = Core::CityManager.get_position_examples(government_type)
         current_date = Date.today.strftime("%Y-%m-%d")
 
+        # NOTE: omitting proximity_to_name from the response because there is a bug in the LLM
         %(
         You are an expert data extractor.
 
@@ -21,10 +22,10 @@ module Services
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
         - image: URL from <img> tag (starting with "images/")
-        - phone_number: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
-        - email: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
-        - website: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
-        - term_date: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
+        - phone_number: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
+        - email: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
+        - website: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
+        - term_date: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
         - positions: [array of strings]
 
         Format example:
@@ -44,7 +45,6 @@ module Services
 
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
-        - For "proximity_to_name": Word count distance between info and person's name
         - Extract only person-specific information, not general contact info
         - Omit missing fields except for "name"
         - For positions: Include only active roles (today is #{current_date})
@@ -55,74 +55,11 @@ module Services
           - Prioritize person-specific pages over landing pages
           - Consider links associated with names/photos
           - Prefer deeper paths and "/about" pages when available
-
+        - Today is #{current_date}. Ensure that only active positions are included, and
+          exclude any positions that are not currently held or are no longer active.
         Here is the content of the city page:
         #{content}
        )
-      end
-
-      def self.gemini_generate_city_profile_prompt(government_type, person, content)
-        positions = Core::CityManager.get_position_roles(government_type)
-        divisions = Core::CityManager.get_position_divisions(government_type)
-        position_examples = Core::CityManager.get_position_examples(government_type)
-
-        %(
-        You are an expert data extractor.
-
-        You should be returning a JSON object with the following properties:
-        You are looking for content related to #{person["name"]}
-
-        Return a JSON object with the following properties:
-        name
-        positions (An array of strings)
-        image (Extract the image URL from the <img> tag's src attribute. This will always be a relative URL starting with images/)
-        phone_number: <an object with the following properties:
-          data: <string>
-          llm_confidence: <number>
-          llm_confidence_reason: <string>
-          proximity_to_name: <number>
-          markdown_formatting: {
-            in_list: <boolean> # Whether the contact information is in a list
-          }
-        email: <an object with the following properties:
-          data: <string>
-          llm_confidence: <number>
-          llm_confidence_reason: <string>
-          proximity_to_name: <number>
-          markdown_formatting: {
-            in_list: <boolean> # Whether the contact information is in a list
-          }
-        term_date: <an object with the following properties>
-          data: <string> # The date the person has an active term for. Format: YYYY to YYYY, YYYY-MM to YYYY-MM, or YYYY-MM-DD to YYYY-MM-DD
-          llm_confidence: <number>
-          llm_confidence_reason: <string>
-          proximity_to_name: <number>
-          markdown_formatting: {
-            in_list: <boolean> # Whether the contact information is in a list
-          }
-
-        Notes:
-        - For "llm_confidence", and "llm_confidence_reason",#{" "}
-          provide a number between 0 and 1, and an associated reason.#{" "}
-          How confident are you that the contact information#{" "}
-          is associated with #{person["name"]}? Provide the reason for your confidence.
-        - For "proximity_to_name", provide a number of the distance
-          between the contact information and the person's name in terms of word count.
-        - Extract only the contact information associated with the person. Do not return general info.
-        - For term_date, only provide dates if they are explicitly stated or
-          can be directly inferred with certainty—do not assume or estimate missing information.
-        - For the "positions" field, split the positions into an array of strings.
-          The main positions we are interested in are #{positions.join(", ")}
-          Positions may also be associated with titles like #{divisions.join(", ")}
-          where the positions are attached with vairous numbers or words.
-        - Today is #{current_date}. Ensure that only active positions are included, and#{" "}
-          exclude any positions that are not currently held or are no longer active.
-        Position Examples:
-          #{position_examples}
-
-        Here is the content:
-        #{content}
-        )
       end
     end
   end
