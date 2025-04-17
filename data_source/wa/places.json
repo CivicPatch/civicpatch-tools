@@ -309,7 +309,9 @@
       "gnis": "1512435",
       "type": "Code city",
       "population": 70714,
-      "government_type": "Mayor-Council"
+      "government_type": "Mayor-Council",
+      "meta_updated_at": "2025-04-17",
+      "meta_hash": "fa24807b1216ca369ca076210a431522"
     },
     {
       "ocd_ids": [
