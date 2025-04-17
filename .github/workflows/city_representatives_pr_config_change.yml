@@ -18,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # Only run workflow if latest commit is solely a config.yml change
+          fetch-depth: 0
 
       - name: Check for solo config.yml commit
         id: check-files
@@ -31,9 +31,11 @@ jobs:
             echo "Only one config.yml file was changed, continuing"
             echo "should-continue=true" >> $GITHUB_OUTPUT
           else
-            echo "Either multiple files were changed or no config.yml was modified, skipping"
+            echo "Either both config.yml and people.yml were changed or no config.yml was modified, skipping"
             echo "Config files changed: $CONFIG_FILES"
             echo "People files changed: $PEOPLE_FILES"
+            echo "Changed files:"
+            echo "$CHANGED_FILES"
             echo "should-continue=false" >> $GITHUB_OUTPUT
           fi
   
