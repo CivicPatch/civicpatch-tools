@@ -1,5 +1,36 @@
 [
   {
+    "name": "Kim Lund",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "phone_number": "(360) 778-8100",
+    "email": "mayorsoffice@cob.org",
+    "website": "https://cob.org/gov/mayor",
+    "term_date": "January 1, 2024",
+    "sources": [
+      "https://cob.org/gov/mayor/bio"
+    ]
+  },
+  {
+    "name": "Michael Lilliquist",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "(360) 778-8212",
+    "email": "mlilliquist@cob.org",
+    "website": "https://cob.org/gov/council/michael-lilliquist",
+    "term_date": "Jan 2022 – Dec 2025",
+    "sources": [
+      "https://cob.org/gov/council/michael-lilliquist",
+      "https://cob.org/gov/council/contacts-bios"
+    ]
+  },
+  {
     "name": "Hollie Huthman",
     "positions": [
       "Council President",
@@ -13,7 +44,8 @@
     "website": "https://cob.org/gov/council/hollie-huthman",
     "term_date": "Jan 2022 – Dec 2025",
     "sources": [
-      "https://cob.org/gov/council/hollie-huthman"
+      "https://cob.org/gov/council/hollie-huthman",
+      "https://cob.org/gov/council/contacts-bios"
     ]
   },
   {
@@ -23,13 +55,13 @@
       "At-large"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
+    "phone_number": "(360) 778-8214",
+    "email": "jacotton@cob.org",
     "website": "https://cob.org/gov/council/council-member-jace-cotton",
     "term_date": "Jan 2024 – Dec 2025",
     "sources": [
-      "https://cob.org/gov/council/contacts-bios",
-      "https://cob.org/gov/council/council-member-jace-cotton"
+      "https://cob.org/gov/council/council-member-jace-cotton",
+      "https://cob.org/gov/council/contacts-bios"
     ]
   },
   {
@@ -39,13 +71,13 @@
       "Ward"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
+    "phone_number": "(360) 778-8213",
+    "email": "dchammill@cob.org",
     "website": "https://cob.org/gov/council/daniel-hammill",
     "term_date": "Jan 2023 – Dec 2027",
     "sources": [
-      "https://cob.org/gov/council/contacts-bios",
-      "https://cob.org/gov/council/daniel-hammill"
+      "https://cob.org/gov/council/daniel-hammill",
+      "https://cob.org/gov/council/contacts-bios"
     ]
   },
   {
@@ -55,13 +87,13 @@
       "Ward"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
+    "phone_number": "(360) 778-8215",
+    "email": "ehwilliams@cob.org",
     "website": "https://cob.org/gov/council/edwin-williams",
     "term_date": "Jan 2022 – Dec 2025",
     "sources": [
-      "https://cob.org/gov/council/contacts-bios",
-      "https://cob.org/gov/council/edwin-williams"
+      "https://cob.org/gov/council/edwin-williams",
+      "https://cob.org/gov/council/contacts-bios"
     ]
   },
   {
@@ -93,22 +125,6 @@
     "term_date": "Jan 2024 – Dec 2027",
     "sources": [
       "https://cob.org/gov/council/lisa-anderson",
-      "https://cob.org/gov/council/contacts-bios"
-    ]
-  },
-  {
-    "name": "Michael Lilliquist",
-    "positions": [
-      "Council Member",
-      "Ward"
-    ],
-    "image": null,
-    "phone_number": "(360) 778-8212",
-    "email": "mlilliquist@cob.org",
-    "website": "https://cob.org/gov/council/michael-lilliquist",
-    "term_date": "Jan 2022 – Dec 2025",
-    "sources": [
-      "https://cob.org/gov/council/michael-lilliquist",
       "https://cob.org/gov/council/contacts-bios"
     ]
   }

@@ -1,5 +1,60 @@
 [
   {
+    "name": "Kim Lund",
+    "image": "images/9dae86339cbd4a972a2ae01a6dedbb356f926c1b3c8cd2bb94e7231c7d7d98bf.Lund1a810-320x400.jpg.webp",
+    "phone_numbers": [
+      {
+        "data": "(360) 778-8100",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed under the Mayor's Office contact section directly associated with Kim Lund.",
+        "proximity_to_name": 40,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/mayor/bio"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorsoffice@cob.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is listed under the Mayor's Office contact section directly associated with Kim Lund.",
+        "proximity_to_name": 35,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/mayor/bio"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cob.org/gov/mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and links indicate this is the official mayor's office page for Kim Lund.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/mayor/bio"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2024-01-01 to present",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2024, and current date is 2025-04-17.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/mayor/bio"
+      }
+    ],
+    "positions": [
+      "mayor"
+    ]
+  },
+  {
     "name": "Hannah Stone",
     "image": "images/af358a0f8dbedd31a82541437861b9d7e304b4a9051fd0d1e782931da7bc7ac7.p950127-1-320x400.jpg.webp",
     "phone_numbers": [
@@ -40,6 +95,16 @@
       {
         "data": "https://cob.org/gov/council/hanna-stone",
         "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and image.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/council/contacts-bios"
+      },
+      {
+        "data": "https://cob.org/gov/council/hanna-stone",
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Page URL is the official profile page for Hannah Stone.",
         "proximity_to_name": 0,
         "markdown_formatting": {
@@ -63,18 +128,18 @@
     "positions": [
       "council member",
       "ward 1",
-      "chair of public works and natural resources"
+      "Chair of Public Works and Natural Resources"
     ],
     "sources": []
   },
   {
     "name": "Hollie Huthman",
-    "image": "1760684c254a585dfd5ced60d393e18bf0d20a05ed7e30cbf73e4ac0ef9e7880.p950131-1-320x400.jpg.webp",
+    "image": "images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg",
     "phone_numbers": [
       {
         "data": "(360) 778-8216",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number is listed twice directly under the name and contact section for Hollie Huthman.",
+        "llm_confidence_reason": "Phone number is listed directly under the name and contact section for Hollie Huthman.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -86,7 +151,7 @@
       {
         "data": "hahuthman@cob.org",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email is directly associated with Hollie Huthman and repeated in the contact section.",
+        "llm_confidence_reason": "Email is directly associated with Hollie Huthman and appears in the contact section near her name.",
         "proximity_to_name": 12,
         "markdown_formatting": {
           "in_list": false
@@ -108,19 +173,29 @@
       {
         "data": "https://cob.org/gov/council/hollie-huthman",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is dedicated to Hollie Huthman and contains detailed info about her role.",
+        "llm_confidence_reason": "URL is the direct page for Hollie Huthman on the City of Bellingham website.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://cob.org/gov/council/hollie-huthman"
+      },
+      {
+        "data": "https://cob.org/gov/council/hollie-huthman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and image.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/council/contacts-bios"
       }
     ],
     "term_dates": [
       {
         "data": "Jan 2022 – Dec 2025",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term dates are explicitly stated under the name and title.",
+        "llm_confidence_reason": "Term dates are explicitly listed under the name and title.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -131,7 +206,7 @@
     "positions": [
       "council member",
       "ward 2",
-      "Council President"
+      "council president"
     ],
     "sources": []
   },
@@ -141,7 +216,7 @@
     "phone_numbers": [
       {
         "data": "(360) 778-8213",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Phone number is listed directly under the name and contact section for Daniel Hammill.",
         "proximity_to_name": 10,
         "markdown_formatting": {
@@ -153,9 +228,9 @@
     "emails": [
       {
         "data": "dchammill@cob.org",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Email is directly associated with Daniel Hammill's name and contact information.",
-        "proximity_to_name": 8,
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
@@ -176,20 +251,20 @@
       {
         "data": "https://cob.org/gov/council/daniel-hammill",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official city council page dedicated to Daniel Hammill.",
-        "proximity_to_name": 0,
+        "llm_confidence_reason": "Link directly associated with name and image.",
+        "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://cob.org/gov/council/daniel-hammill"
+        "source": "https://cob.org/gov/council/contacts-bios"
       }
     ],
     "term_dates": [
       {
         "data": "Jan 2023 – Dec 2027",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term dates are explicitly stated near the name and position.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Term dates are explicitly stated near the name and title.",
+        "proximity_to_name": 8,
         "markdown_formatting": {
           "in_list": false
         },
@@ -198,22 +273,19 @@
     ],
     "positions": [
       "council member",
-      "ward 3",
-      "City Council Public Health, Safety and Justice Committee Chair",
-      "Planning Committee Member",
-      "Climate Action Committee Member"
+      "ward 3"
     ],
     "sources": []
   },
   {
     "name": "Edwin H. “Skip” Williams",
-    "image": "b4526a39f4b4b06effbe3d91da86fc3752669503ef9f90466324004da95ce7d2.Skip-Williams-2024-1.jpg.webp",
+    "image": "images/b4526a39f4b4b06effbe3d91da86fc3752669503ef9f90466324004da95ce7d2.Skip-Williams-2024-1.jpg.webp",
     "phone_numbers": [
       {
         "data": "360-778-8215",
         "llm_confidence": 0.99,
         "llm_confidence_reason": "Phone number is listed directly under the person's name and contact section.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -224,8 +296,8 @@
       {
         "data": "ehwilliams@cob.org",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email is listed directly under the person's name and contact section.",
-        "proximity_to_name": 7,
+        "llm_confidence_reason": "Email is directly associated with the person's name and contact information.",
+        "proximity_to_name": 12,
         "markdown_formatting": {
           "in_list": false
         },
@@ -242,14 +314,24 @@
           "in_list": false
         },
         "source": "https://cob.org/gov/council/contacts-bios"
+      },
+      {
+        "data": "https://cob.org/gov/council/edwin-williams",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and image.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/council/contacts-bios"
       }
     ],
     "term_dates": [
       {
         "data": "Jan 2022 – Dec 2025",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term dates are explicitly stated near the person's name.",
-        "proximity_to_name": 10,
+        "proximity_to_name": 8,
         "markdown_formatting": {
           "in_list": false
         },
@@ -264,13 +346,13 @@
   },
   {
     "name": "Lisa Anderson",
-    "image": "61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp",
+    "image": "images/61dba673546199ae24318c7eb3ef7849d983acd7fb375dd49f9eb53b6eb96e92.p950129-1-320x400.jpg.webp",
     "phone_numbers": [
       {
         "data": "(360) 778-8217",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Phone number is listed twice directly under the name and contact section for Lisa Anderson.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -282,7 +364,7 @@
         "data": "laanderson@cob.org",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Email is listed twice directly under the name and contact section for Lisa Anderson.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -299,6 +381,26 @@
           "in_list": false
         },
         "source": "https://cob.org/gov/council/contacts-bios"
+      },
+      {
+        "data": "https://cob.org/gov/council/lisa-anderson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with name and image.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/council/contacts-bios"
+      },
+      {
+        "data": "https://cob.org/gov/council/lisa-anderson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is a personal council member page for Lisa Anderson.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/council/lisa-anderson"
       }
     ],
     "term_dates": [
@@ -306,7 +408,7 @@
         "data": "Jan 2024 – Dec 2027",
         "llm_confidence": 0.99,
         "llm_confidence_reason": "Term dates are explicitly stated near the name and title.",
-        "proximity_to_name": 3,
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
@@ -321,13 +423,13 @@
   },
   {
     "name": "Michael Lilliquist",
-    "image": "f16c199950e24e1f9fb5751269e1e11af1707141ceb744da67439a1bf3050adb.p950132-1-320x400.jpg.webp",
+    "image": "images/f16c199950e24e1f9fb5751269e1e11af1707141ceb744da67439a1bf3050adb.p950132-1-320x400.jpg.webp",
     "phone_numbers": [
       {
         "data": "(360) 778-8212",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number is listed directly under the name and contact section for Michael Lilliquist.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Phone number is listed twice directly under the person's name and contact section.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -338,8 +440,8 @@
       {
         "data": "mlilliquist@cob.org",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email is directly associated with Michael Lilliquist's name and contact information.",
-        "proximity_to_name": 7,
+        "llm_confidence_reason": "Email is listed twice directly under the person's name and contact section.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -360,7 +462,17 @@
       {
         "data": "https://cob.org/gov/council/michael-lilliquist",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the personal council member page for Michael Lilliquist.",
+        "llm_confidence_reason": "Link directly associated with name and image.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/council/contacts-bios"
+      },
+      {
+        "data": "https://cob.org/gov/council/michael-lilliquist",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the person's official council member page.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -372,8 +484,8 @@
       {
         "data": "Jan 2022 – Dec 2025",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term dates are explicitly stated near the name and title.",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Term dates are explicitly stated near the top under the person's name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
@@ -389,12 +501,12 @@
   },
   {
     "name": "Jace Cotton",
-    "image": "dcc7f2a1e1f6dd99a0beaad1c2d5e7a907c87ed25dd3f880af8e31b620e83da4.image.jpeg.webp",
+    "image": "images/dcc7f2a1e1f6dd99a0beaad1c2d5e7a907c87ed25dd3f880af8e31b620e83da4.image.jpeg.webp",
     "phone_numbers": [
       {
         "data": "(360) 778-8214",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number is listed twice directly under the person's name and contact section.",
+        "llm_confidence_reason": "Phone number is listed twice directly under the name and contact section for Jace Cotton.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -406,7 +518,7 @@
       {
         "data": "jacotton@cob.org",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email is listed twice directly under the person's name and contact section.",
+        "llm_confidence_reason": "Email is listed twice directly under the name and contact section for Jace Cotton.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -415,6 +527,16 @@
       }
     ],
     "websites": [
+      {
+        "data": "https://cob.org/gov/council/council-member-jace-cotton",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with name, no image but clear context.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://cob.org/gov/council/contacts-bios"
+      },
       {
         "data": "https://cob.org/gov/council/council-member-jace-cotton",
         "llm_confidence": 0.9,
@@ -428,7 +550,7 @@
       {
         "data": "https://cob.org/gov/council/council-member-jace-cotton",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the page URL dedicated to this council member.",
+        "llm_confidence_reason": "Page URL is specific to the council member Jace Cotton and contains detailed info about him.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -440,7 +562,7 @@
       {
         "data": "Jan 2024 – Dec 2025",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term dates are explicitly stated under the name and title.",
+        "llm_confidence_reason": "Term dates are explicitly stated directly under the name and title.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -451,29 +573,6 @@
     "positions": [
       "council member",
       "at-large"
-    ],
-    "sources": []
-  },
-  {
-    "name": "Kim Lund",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://cob.org/gov/mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is the official mayor page linked from the content and associated with the mayor's office.",
-        "proximity_to_name": 10,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://cob.org/gov/mayor/top-issues"
-      }
-    ],
-    "term_dates": [],
-    "positions": [
-      "mayor"
     ],
     "sources": []
   }

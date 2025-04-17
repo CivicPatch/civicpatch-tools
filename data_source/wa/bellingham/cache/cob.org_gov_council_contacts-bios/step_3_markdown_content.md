@@ -1,4 +1,4 @@
- [Skip to content](https://cob.org/gov/council/contacts-bios#content)  Select LanguageEnglishEspañol简体中文Tiếng ViệtРусскийਪੰਜਾਬੀAfrikaansShqipአማርኛالعربيةՀայերենAzərbaycan diliEuskaraБеларуская моваবাংলাBosanskiБългарскиCatalàCebuanoChichewa繁體中文CorsuHrvatskiČeština‎DanskNederlandsEsperantoEestiFilipinoSuomiFrançaisFryskGalegoქართულიDeutschΕλληνικάગુજરાતીKreyol ayisyenHarshen HausaŌlelo Hawaiʻiעִבְרִיתहिन्दीHmongMagyarÍslenskaIgboBahasa IndonesiaGaeilgeItaliano日本語Basa Jawaಕನ್ನಡҚазақ тіліភាសាខ្មែរ한국어كوردی‎КыргызчаພາສາລາວLatinLatviešu valodaLietuvių kalbaLëtzebuergeschМакедонски јазикMalagasyBahasa MelayuമലയാളംMalteseTe Reo MāoriमराठीМонголဗမာစာनेपालीNorsk bokmålپښتوفارسیPolskiPortuguêsRomânăSamoanGàidhligСрпски језикSesothoShonaسنڌيසිංහලSlovenčinaSlovenščinaAfsoomaaliBasa SundaKiswahiliSvenskaТоҷикӣதமிழ்తెలుగుไทยTürkçeУкраїнськаاردوO‘zbekchaCymraegisiXhosaיידישYorùbáZulu  [![City of Bellingham](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/contacts-bios)  Menu 
+ [Skip to content](https://cob.org/gov/council/contacts-bios#content)  Select LanguageEnglishEspañol简体中文Tiếng ViệtРусскийਪੰਜਾਬੀAfrikaansShqipአማርኛالعربيةՀայերենAzərbaycan diliEuskaraБеларуская моваবাংলাBosanskiБългарскиCatalàCebuanoChichewa繁體中文CorsuHrvatskiČeština‎DanskNederlandsEsperantoEestiFilipinoSuomiFrançaisFryskGalegoქართულიDeutschΕλληνικάગુજરાતીKreyol ayisyenHarshen HausaŌlelo Hawaiʻiעִבְרִיתहिन्दीHmongMagyarÍslenskaIgboBahasa IndonesiaGaeilgeItaliano日本語Basa Jawaಕನ್ನಡҚазақ тіліភាសាខ្មែរ한국어كوردی‎КыргызчаພາສາລາວLatinLatviešu valodaLietuvių kalbaLëtzebuergeschМакедонски јазикMalagasyBahasa MelayuമലയാളംMalteseTe Reo MāoriमराठीМонголဗမာစာनेपालीNorsk bokmålپښتوفارسیPolskiPortuguêsRomânăSamoanGàidhligСрпски језикSesothoShonaسنڌيසිංහලSlovenčinaSlovenščinaAfsoomaaliBasa SundaKiswahiliSvenskaТоҷикӣதமிழ்తెలుగుไทยTürkçeУкраїнськаاردوO‘zbekchaCymraegisiXhosaיידישYorùbáZulu  [![City of Bellingham](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/contacts-bios)  Menu 
 
  *  [Home](https://cob.org) 
  *  [Government](https://cob.org/gov/council/contacts-bios) 
@@ -127,7 +127,7 @@
      *  [More…](https://cob.org/services/utilities) 
  *  [Visiting](https://cob.org/visiting) 
  *  [](https://cob.org/gov/council/contacts-bios) 
-  [![City of Bellingham](7dfd88315caa91df2716ceb72b9f8a85c9e40d5483fab93f71b30032e7152707.jpg)](https://cob.org)   [![City of Bellingham](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/contacts-bios)  Menu MENU MENU 
+  [![City of Bellingham](images/7dfd88315caa91df2716ceb72b9f8a85c9e40d5483fab93f71b30032e7152707.jpg)](https://cob.org)   [![City of Bellingham](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)](https://cob.org)   [](https://cob.org/gov/council/contacts-bios)  Menu MENU MENU 
 
  *  [Home](https://cob.org) 
  *  [Government]() 
@@ -301,21 +301,21 @@ The [Mayor](https://cob.org/mayor) is the executive and administrative leader, o
 
 ## Council Members
 
-  [![Hanna Stone](1d39454ed49aa165385ac6c3ad587270ace0563c5129e9d088cd492cea569ab6.p950127-1-430x245.jpg.webp)## Hannah S​tone
+  [![Hanna Stone](images/1d39454ed49aa165385ac6c3ad587270ace0563c5129e9d088cd492cea569ab6.p950127-1-430x245.jpg.webp)## Hannah S​tone
 
-1st Ward](https://cob.org/gov/council/hanna-stone)   [![Holli​e​ Huthman](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Holli​e​ Huthman
+1st Ward](https://cob.org/gov/council/hanna-stone)   [![Holli​e​ Huthman](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Holli​e​ Huthman
 
-2nd Ward](https://cob.org/gov/council/hollie-huthman)   [![Daniel Hammill](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Daniel Hammill
+2nd Ward](https://cob.org/gov/council/hollie-huthman)   [![Daniel Hammill](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Daniel Hammill
 
 3rd Ward](https://cob.org/gov/council/daniel-hammill)  
 
-  [![](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Edwin H. “Skip” Williams
+  [![](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Edwin H. “Skip” Williams
 
-4th Ward](https://cob.org/gov/council/edwin-williams)   [![Lisa Anderson](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Lisa Anderson
+4th Ward](https://cob.org/gov/council/edwin-williams)   [![Lisa Anderson](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Lisa Anderson
 
-5th Ward](https://cob.org/gov/council/lisa-anderson)   [![Michael Lilliquist](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Michael Lilliquist
+5th Ward](https://cob.org/gov/council/lisa-anderson)   [![Michael Lilliquist](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)## Michael Lilliquist
 
-6th Ward](https://cob.org/gov/council/michael-lilliquist)   ![](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)  
+6th Ward](https://cob.org/gov/council/michael-lilliquist)   ![](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)  
 
 ## Jace Cotton
 
@@ -379,7 +379,7 @@ Bellingham, WA 98225
  *  [](https://instagram.com/cityofbellingham)  [**X.com](https://twitter.com/cityofbhamwa) 
  *  [](https://twitter.com/cityofbhamwa)  [**YouTube](https://www.youtube.com/user/cityofbhamwa) 
  *  [](https://www.youtube.com/user/cityofbhamwa)  [**All City Social Media](https://cob.org/gov/public/social-media-guidelines) 
- Website Feedback  ![](d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)   [](https://cob.org/gov/council/contacts-bios)  Close 
+ Website Feedback  ![](images/d16ae5d51dda6f58995171aa23c0fa5e6dcd9c777cf9c251c4be3b1d62fdf670.jpg)   [](https://cob.org/gov/council/contacts-bios)  Close 
 
  *  [Home](https://cob.org) 
  *  [Government](https://cob.org/gov/council/contacts-bios) 
