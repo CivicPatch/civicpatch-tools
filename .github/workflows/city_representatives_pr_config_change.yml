@@ -24,18 +24,16 @@ jobs:
         id: check-files
         run: |
           CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
-          TOTAL_FILES=$(echo "$CHANGED_FILES" | wc -l)
+          PEOPLE_FILES=$(echo "$CHANGED_FILES" | grep -c "people\.yml$" || echo "0")
           CONFIG_FILES=$(echo "$CHANGED_FILES" | grep -c "config\.yml$" || echo "0")
 
-          if [[ $TOTAL_FILES -eq 1 && $CONFIG_FILES -eq 1 ]]; then
+          if [[ $CONFIG_FILES -gt 0 && $PEOPLE_FILES -eq 0 ]]; then
             echo "Only one config.yml file was changed, continuing"
             echo "should-continue=true" >> $GITHUB_OUTPUT
           else
             echo "Either multiple files were changed or no config.yml was modified, skipping"
-            echo "Total files changed: $TOTAL_FILES"
             echo "Config files changed: $CONFIG_FILES"
-            echo "Changed files:"
-            echo "$CHANGED_FILES"
+            echo "People files changed: $PEOPLE_FILES"
             echo "should-continue=false" >> $GITHUB_OUTPUT
           fi
   
