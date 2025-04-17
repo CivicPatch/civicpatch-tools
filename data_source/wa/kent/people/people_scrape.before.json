@@ -2,13 +2,14 @@
   {
     "name": "Dana Ralph",
     "positions": [
+      "Mayor",
       "mayor"
     ],
     "image": "images/149cb5a8d4214b3c7283dba96f96ba407452f8dd1b2c368e2c558a75996a77d8.jpg",
     "phone_number": "253-856-5700",
     "email": "Mayor@KentWA.gov",
     "website": "https://www.kentwa.gov/government/kent-mayor",
-    "term_date": "Re-elected in 2021 for second term, sworn in January 2018 as 27th Mayor",
+    "term_date": "2022 to 2025",
     "sources": [
       "https://kentwa.gov/government/kent-mayor",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
@@ -52,9 +53,7 @@
     "name": "John Boyd",
     "positions": [
       "council member",
-      "position 3",
-      "Member Puget Sound Fire RFA Governance Board",
-      "Management Coordinator Committee member for the Local Hazardous Waste Management Program"
+      "position 3"
     ],
     "image": "images/802570b4ba84c9113842eff7bd54e1c83c7b801a245c6804db7d8b186b9c3532.jpg",
     "phone_number": "253-856-5712",
@@ -62,7 +61,7 @@
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd",
     "term_date": "January 2024 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-john-boyd",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
@@ -97,7 +96,7 @@
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
     "term_date": "June 2018 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
@@ -105,15 +104,20 @@
     "name": "Zandria Michaud",
     "positions": [
       "council member",
-      "position 7"
+      "position 7",
+      "Human Services Commission",
+      "King County Regional Law Safety and Justice Committee",
+      "Firefighter's Relief and Pension Board",
+      "Washington Community Forestry Council",
+      "Washington State Tree Equity Collaborative Steering Committee"
     ],
     "image": "images/a82b361b9a45e166dd347314285dd304575caa51946bc4607673c91fadf0d36c.jpg",
     "phone_number": "253-856-5712",
-    "email": "ZMichaud@kentwa.gov",
+    "email": "ZMichaud@KentWA.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
     "term_date": "Nov. 26th, 2019 to Dec. 31, 2027",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
     ]
   },
@@ -121,7 +125,7 @@
     "name": "Toni Troutner",
     "positions": [
       "council member",
-      "council member position 4",
+      "position 4",
       "Chair Puget Sound Regional Fire Authority",
       "Co-Chair Severe Weather Shelter",
       "Chair Drug Free Coalition",
@@ -134,16 +138,18 @@
       "Kent Downtown Partnership Secretary",
       "Member King County Flood Control District Advisory Committee (alternate)",
       "Member Puget Sound Regional Council Executive Board (alternate)",
-      "Council President"
+      "Council President",
+      "council member position 4"
     ],
     "image": "images/1f4fe9544c7a0264fdb2f2c3e60b98b80daf2393c62b94d41514bd11fa59943f.jpg",
     "phone_number": "253-856-5712",
     "email": "TTroutner@KentWA.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
-    "term_date": "January 2018 to Dec. 31, 2025",
+    "term_date": "January 2018 to December 31, 2025",
     "sources": [
-      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
-      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
     ]
   }
 ]
