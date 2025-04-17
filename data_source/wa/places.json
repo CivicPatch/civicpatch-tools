@@ -415,7 +415,9 @@
       "gnis": "1512362",
       "type": "Code city",
       "population": 53526,
-      "government_type": "Council-Manager"
+      "government_type": "Council-Manager",
+      "meta_updated_at": "2025-04-17",
+      "meta_hash": "510f3bb62444dee2e4d56031b6e7063a"
     },
     {
       "ocd_ids": [
