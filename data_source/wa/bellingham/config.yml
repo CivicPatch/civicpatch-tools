@@ -1,6 +1,7 @@
 ---
 scrape_sources:
-- https://cob.org/gov/mayor/top-issues
+- https://cob.org/gov/mayor/bio
+- https://cob.org/gov/council/contacts-bios
 - https://cob.org/gov/council/hollie-huthman
 - https://cob.org/gov/council/contacts-bios
 - https://cob.org/gov/council/daniel-hammill
