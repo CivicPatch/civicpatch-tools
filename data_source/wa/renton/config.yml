@@ -1,8 +1,8 @@
 ---
 scrape_sources:
+- https://www.rentonwa.gov/Government/City-Council
 - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
 - https://www.rentonwa.gov/Government/City-Council/rivera
-- https://www.rentonwa.gov/Government/City-Council/Council-Committees
 - https://www.rentonwa.gov/Government/City-Council/ohalloran
 - https://www.rentonwa.gov/Government/City-Council/prince
 - https://www.rentonwa.gov/Government/City-Council/van
