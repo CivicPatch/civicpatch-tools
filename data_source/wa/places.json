@@ -351,7 +351,9 @@
       "gnis": "2411615",
       "type": "Code city",
       "population": 63612,
-      "government_type": "Council-Manager"
+      "government_type": "Council-Manager",
+      "meta_updated_at": "2025-04-17",
+      "meta_hash": "245c5e60e56433abc12cbe552f45f2d2"
     },
     {
       "ocd_ids": [
