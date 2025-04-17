@@ -3,7 +3,7 @@
     "name": "James Alberson, Jr.",
     "positions": [
       "council member",
-      "council president",
+      "Council President",
       "position 1"
     ],
     "image": "f5283fdf84d41a2263a4a676af592605ae8e86de4ba604a6c4f5b146fd5456de.jpg",
@@ -12,8 +12,7 @@
     "website": "https://www.rentonwa.gov/Government/City-Council/alberson",
     "term_date": "2022 to 2025",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/alberson",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ]
   },
   {
@@ -21,7 +20,6 @@
     "positions": [
       "council member",
       "council president pro tem",
-      "finance committee chair",
       "position no. 6",
       "chair finance committee",
       "vice chair transportation/aviation committee",
@@ -33,18 +31,13 @@
     "website": "https://www.rentonwa.gov/Government/City-Council/perez",
     "term_date": "2014 to 2025",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/perez",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/City-Council/perez"
     ]
   },
   {
     "name": "Ryan McIrvin",
     "positions": [
       "council member",
-      "transportation/aviation committee chair",
-      "finance committee member",
-      "planning & development committee vice chair",
-      "public safety committee vice chair",
       "position 4",
       "chair transportation/aviation committee",
       "vice chair planning & development committee",
@@ -56,17 +49,13 @@
     "website": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
     "term_date": "2016 to 2027",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
     ]
   },
   {
     "name": "Valerie O'Halloran",
     "positions": [
       "council member",
-      "community services committee chair",
-      "finance committee vice chair",
-      "utilities committee member",
       "council president",
       "position 3",
       "chair community services committee",
@@ -79,38 +68,31 @@
     "website": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
     "term_date": "2019 to 2027",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran"
     ]
   },
   {
     "name": "Ed Prince",
     "positions": [
       "council member",
-      "planning & development committee chair",
-      "public safety committee chair",
-      "transportation/aviation committee member",
       "position 5",
-      "chair planning & development committee",
-      "vice chair public safety committee",
-      "member transportation/aviation committee"
+      "chair Planning & Development Committee",
+      "vice chair Public Safety Committee",
+      "member Transportation/Aviation Committee"
     ],
     "image": "e04d2c3aad83f93e5948803eb0ea5c5c4ba1db848bbdf43c17110cc240334829.jpg",
     "phone_number": "425-430-6501",
     "email": "eprince@rentonwa.gov",
-    "website": "https://www.rentonwa.gov/Government/City-Council/prince",
+    "website": null,
     "term_date": "2012 to 2027",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/City-Council/prince"
     ]
   },
   {
     "name": "Carmen Rivera",
     "positions": [
       "council member",
-      "community services committee member",
-      "utilities committee vice chair",
       "position 2",
       "chair public safety committee",
       "vice chair utilities committee",
@@ -122,18 +104,13 @@
     "website": "https://www.rentonwa.gov/Government/City-Council/rivera",
     "term_date": "2021 to 2025",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/rivera",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/City-Council/rivera"
     ]
   },
   {
     "name": "Kim-Khánh Văn",
     "positions": [
       "council member",
-      "community services committee vice chair",
-      "planning & development committee member",
-      "public safety committee member",
-      "utilities committee chair",
       "position 7",
       "chair utilities committee",
       "vice chair community services committee",
@@ -145,8 +122,7 @@
     "website": "https://www.rentonwa.gov/Government/City-Council/van",
     "term_date": "2020 to 2027",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/van",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/City-Council/van"
     ]
   },
   {
@@ -160,8 +136,7 @@
     "website": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
     "term_date": "2019 to present",
     "sources": [
-      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
-      "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
     ]
   }
 ]

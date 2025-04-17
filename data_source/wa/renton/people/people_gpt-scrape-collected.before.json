@@ -6,7 +6,7 @@
       {
         "data": "425-430-6501",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number is listed directly under Contact Information section for James Alberson, Jr.",
+        "llm_confidence_reason": "Phone number is listed directly under Contact Information for James Alberson, Jr.",
         "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
@@ -18,8 +18,8 @@
       {
         "data": "jalberson@rentonwa.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email is listed directly under Contact Information section for James Alberson, Jr.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Email is listed directly under Contact Information for James Alberson, Jr.",
+        "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
         },
@@ -30,12 +30,12 @@
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and councilmember title.",
+        "llm_confidence_reason": "Page URL is the official city council page dedicated to James Alberson, Jr.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
     "term_dates": [
@@ -43,7 +43,7 @@
         "data": "2022 to 2025",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Term dates are clearly listed under Term section for James Alberson, Jr.",
-        "proximity_to_name": 30,
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
         },
@@ -52,7 +52,7 @@
     ],
     "positions": [
       "council member",
-      "council president",
+      "Council President",
       "position 1"
     ],
     "sources": []
@@ -63,7 +63,7 @@
     "phone_numbers": [
       {
         "data": "425-430-6501",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number is listed directly under Contact Information for Ruth Pérez.",
         "proximity_to_name": 15,
         "markdown_formatting": {
@@ -75,7 +75,7 @@
     "emails": [
       {
         "data": "rperez@rentonwa.gov",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Email is listed directly under Contact Information for Ruth Pérez.",
         "proximity_to_name": 20,
         "markdown_formatting": {
@@ -85,16 +85,6 @@
       }
     ],
     "websites": [
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and councilmember title.",
-        "proximity_to_name": 0,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
-      },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/perez",
         "llm_confidence": 0.9,
@@ -121,7 +111,6 @@
     "positions": [
       "council member",
       "council president pro tem",
-      "finance committee chair",
       "position no. 6",
       "chair finance committee",
       "vice chair transportation/aviation committee",
@@ -160,17 +149,7 @@
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and councilmember title.",
-        "proximity_to_name": 0,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is specific to Councilmember Ryan McIrvin and contains his profile.",
+        "llm_confidence_reason": "Page URL is specific to Councilmember Ryan McIrvin and contains detailed info about him.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -182,8 +161,8 @@
       {
         "data": "2016 to 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start and expiration dates are clearly listed under Term section.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Term start and expiration dates are clearly listed under Term section near the name.",
+        "proximity_to_name": 30,
         "markdown_formatting": {
           "in_list": true
         },
@@ -192,10 +171,6 @@
     ],
     "positions": [
       "council member",
-      "transportation/aviation committee chair",
-      "finance committee member",
-      "planning & development committee vice chair",
-      "public safety committee vice chair",
       "position 4",
       "chair transportation/aviation committee",
       "vice chair planning & development committee",
@@ -210,8 +185,8 @@
       {
         "data": "425-430-6501",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under Contact Information for Valerie O'Halloran.",
-        "proximity_to_name": 15,
+        "llm_confidence_reason": "Phone number is listed directly under Contact Information section for Valerie O'Halloran.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
         },
@@ -222,8 +197,8 @@
       {
         "data": "vohalloran@rentonwa.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email listed directly under Contact Information for Valerie O'Halloran.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Email is listed directly under Contact Information section for Valerie O'Halloran.",
+        "proximity_to_name": 25,
         "markdown_formatting": {
           "in_list": false
         },
@@ -231,16 +206,6 @@
       }
     ],
     "websites": [
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and councilmember title.",
-        "proximity_to_name": 0,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
-      },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
         "llm_confidence": 0.95,
@@ -256,19 +221,16 @@
       {
         "data": "2019 to 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates explicitly listed under Term section for Valerie O'Halloran.",
+        "llm_confidence_reason": "Term start and expiration dates are clearly listed under Term section near the name.",
         "proximity_to_name": 30,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       }
     ],
     "positions": [
       "council member",
-      "community services committee chair",
-      "finance committee vice chair",
-      "utilities committee member",
       "council president",
       "position 3",
       "chair community services committee",
@@ -304,18 +266,7 @@
         "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/prince",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and councilmember title.",
-        "proximity_to_name": 0,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
-      }
-    ],
+    "websites": [],
     "term_dates": [
       {
         "data": "2012 to 2027",
@@ -330,13 +281,10 @@
     ],
     "positions": [
       "council member",
-      "planning & development committee chair",
-      "public safety committee chair",
-      "transportation/aviation committee member",
       "position 5",
-      "chair planning & development committee",
-      "vice chair public safety committee",
-      "member transportation/aviation committee"
+      "chair Planning & Development Committee",
+      "vice chair Public Safety Committee",
+      "member Transportation/Aviation Committee"
     ],
     "sources": []
   },
@@ -348,7 +296,7 @@
         "data": "425-430-6501",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Phone number is listed directly under Contact Information for Carmen Rivera.",
-        "proximity_to_name": 15,
+        "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
         },
@@ -360,7 +308,7 @@
         "data": "crivera@rentonwa.gov",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Email is listed directly under Contact Information for Carmen Rivera.",
-        "proximity_to_name": 20,
+        "proximity_to_name": 42,
         "markdown_formatting": {
           "in_list": false
         },
@@ -370,18 +318,8 @@
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and councilmember title.",
-        "proximity_to_name": 0,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the official city council member page for Carmen Rivera.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is specific to Councilmember Carmen Rivera.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -393,8 +331,8 @@
       {
         "data": "2021 to 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated under Term section near the name.",
-        "proximity_to_name": 25,
+        "llm_confidence_reason": "Term dates are explicitly stated under Term section.",
+        "proximity_to_name": 50,
         "markdown_formatting": {
           "in_list": false
         },
@@ -403,8 +341,6 @@
     ],
     "positions": [
       "council member",
-      "community services committee member",
-      "utilities committee vice chair",
       "position 2",
       "chair public safety committee",
       "vice chair utilities committee",
@@ -418,9 +354,9 @@
     "phone_numbers": [
       {
         "data": "425-430-6501",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number is directly under the Contact Information section for Kim-Khánh Văn and close to the name.",
-        "proximity_to_name": 15,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Contact Information for Kim-Khánh Văn.",
+        "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
         },
@@ -430,9 +366,9 @@
     "emails": [
       {
         "data": "kvan@rentonwa.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email is directly under the Contact Information section for Kim-Khánh Văn and close to the name.",
-        "proximity_to_name": 17,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is listed directly under Contact Information for Kim-Khánh Văn.",
+        "proximity_to_name": 45,
         "markdown_formatting": {
           "in_list": false
         },
@@ -442,18 +378,8 @@
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/van",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and councilmember title.",
-        "proximity_to_name": 0,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/van",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is specific to Councilmember Kim-Khánh Văn and contains detailed info about her.",
+        "llm_confidence_reason": "URL is the personal page for Councilmember Kim-Khánh Văn.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -465,8 +391,8 @@
       {
         "data": "2020 to 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly listed under Term section near the name.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Term dates are clearly listed under Term section for Kim-Khánh Văn.",
+        "proximity_to_name": 60,
         "markdown_formatting": {
           "in_list": true
         },
@@ -475,10 +401,6 @@
     ],
     "positions": [
       "council member",
-      "community services committee vice chair",
-      "planning & development committee member",
-      "public safety committee member",
-      "utilities committee chair",
       "position 7",
       "chair utilities committee",
       "vice chair community services committee",
@@ -493,8 +415,8 @@
       {
         "data": "425-430-6500",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed directly under the Contact section dedicated to Mayor Pavone.",
-        "proximity_to_name": 15,
+        "llm_confidence_reason": "Phone number is listed under the Contact section specifically for the mayor's office and is within 10 words of the name.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -505,7 +427,7 @@
       {
         "data": "mayor@rentonwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is listed directly under the Contact section dedicated to Mayor Pavone.",
+        "llm_confidence_reason": "Email is listed under the Contact section specifically for the mayor's office and is within 10 words of the name.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -517,17 +439,7 @@
       {
         "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled with name and mayor title.",
-        "proximity_to_name": 0,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/Council-Committees"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL and content is dedicated to Mayor Armondo Pavone.",
+        "llm_confidence_reason": "The URL is the page dedicated to Mayor Armondo Pavone, directly associated with the person.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -538,8 +450,8 @@
       {
         "data": "2019 to present",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Text states he was first elected mayor in 2019 and is currently serving second term.",
-        "proximity_to_name": 50,
+        "llm_confidence_reason": "Text states he was first elected mayor in 2019 and is currently serving a second term as of 2025.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
         },
