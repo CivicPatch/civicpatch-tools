@@ -106,6 +106,8 @@ module Services
           - Only extract contact information if it is CLEARLY for the specific person or their office.
           - If contact information is more than 30 words away from the person's name, DO NOT include it unless:
             - It appears in a section that is clearly dedicated to that person's contact information.
+        - For phone_number:
+          - If there are multiple phone numbers, extract the primary one.
       INSTRUCTIONS
 
       content = <<~CONTENT
