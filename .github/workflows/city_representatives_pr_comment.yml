@@ -1,4 +1,4 @@
-name: Pull Request - Make Comment
+name: Pull Request - Comment
 
 on:
   pull_request:
@@ -84,27 +84,25 @@ jobs:
           echo "STATE=$STATE" >> $GITHUB_ENV
           echo "GNIS_ID=$GNIS_ID" >> $GITHUB_ENV
    
-      - name: Generate PR Comment
-        id: pr_data 
+      - name: Comment on PR
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           echo "Running validation..."
           PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[${{ env.STATE }},${{ env.GNIS_ID }}]")
           echo "Validation response: $PR_DATA"
 
           # Parse JSON output
-          APPROVE=$(echo "$PR_DATA" | jq -r '.approve')
-          SCORE=$(echo "$PR_DATA" | jq -r '.score')
-          COMMENT=$(echo "$PR_DATA" | jq -r '.comment')
+          APPROVE=$(printf %b "$PR_DATA" | jq -r '.approve')
+          SCORE=$(printf %b "$PR_DATA" | jq -r '.score')
+          COMMENT=$(printf %b "$PR_DATA" | jq -r '.comment')
+
+          echo $COMMENT
 
           echo "APPROVE=$APPROVE" >> $GITHUB_ENV
           echo "SCORE=$SCORE" >> $GITHUB_ENV
-          echo "COMMENT=$COMMENT" >> $GITHUB_ENV
-
-      - name: Comment on PR
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
-          gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none --body "${{ env.COMMENT }}"
+          
+          gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none --body "$COMMENT"
 
       - name: Approve PR if Validated
         env:
