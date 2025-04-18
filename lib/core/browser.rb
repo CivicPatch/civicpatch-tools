@@ -154,7 +154,7 @@ module Browser
     FileUtils.mv(file.path, image_path)
 
     browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
-                           img_element, image_path)
+                           img_element, filename)
 
     # if download_with_httparty(absolute_src, image_path)
     #  browser.execute_script("arguments[0].setAttribute('src', arguments[1])",

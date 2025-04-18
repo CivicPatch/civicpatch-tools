@@ -2,100 +2,128 @@
   {
     "name": "Dontae Payne",
     "positions": [
+      "Councilmember",
       "Mayor"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dontae_payne.php",
+    "phone_number": "360.753.8447",
+    "email": "dpayne@ci.olympia.wa.us",
+    "website": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
     "term_date": null,
     "sources": [
-      "https://olympiawa.gov/government/city_council___mayor/index.php"
+      "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
     ]
   },
   {
     "name": "Yến Huỳnh",
     "positions": [
+      "Mayor Pro-tem",
       "Mayor Pro Tem",
-      "Mayor Pro-tem"
+      "Councilmember",
+      "Chair",
+      "Police Auditor Liaison",
+      "Alternate"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/yen_huynh.php",
-    "term_date": null,
+    "phone_number": "360.753.8447",
+    "email": "yhuynh@ci.olympia.wa.us",
+    "website": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
+    "term_date": "January 2021 to December 31, 2023",
     "sources": [
-      "https://olympiawa.gov/government/city_council___mayor/index.php"
+      "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
+      "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
     ]
   },
   {
     "name": "Dani Madrone",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Councilmember",
+      "Land Use and Environment Committee – Chair",
+      "Deschutes Estuary Restoration - Alternate",
+      "Deschutes Stewardship Coalition",
+      "Intercity Transit Authority Board - Alternate",
+      "LOTT Board of Directors",
+      "Regional Housing Council",
+      "Sea Level Rise Governance Committee",
+      "Thurston Regional Planning Council",
+      "Tribal Relations Working Group"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dani_madrone.php",
+    "phone_number": "360.753.8447",
+    "email": "dmadrone@ci.olympia.wa.us",
+    "website": "http://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php",
     "term_date": null,
     "sources": [
-      "https://olympiawa.gov/government/city_council___mayor/index.php"
+      "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
     ]
   },
   {
     "name": "Clark Gilman",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Mayor Pro-Tem",
+      "Land Use and Environment Committee",
+      "Finance Committee",
+      "Community Livability & Public Safety Committee",
+      "Communications Board (TCCOM911)",
+      "Intercity Transit Authority Board",
+      "Regional Transportation Policy Board",
+      "Coalition of Neighborhood Associations",
+      "Regional Transportation Policy Board – Alternate"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/clark_gilman.php",
+    "phone_number": "360.753.8447",
+    "email": "cgilman@ci.olympia.wa.us",
+    "website": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
     "term_date": null,
     "sources": [
-      "https://olympiawa.gov/government/city_council___mayor/index.php"
+      "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
     ]
   },
   {
     "name": "Kelly Green",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Councilmember"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/kelly_green.php",
+    "phone_number": "360.753.8447",
+    "email": "kgreen@ci.olympia.wa.us",
+    "website": "http://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
     "term_date": null,
     "sources": [
-      "https://olympiawa.gov/government/city_council___mayor/index.php"
+      "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
     ]
   },
   {
     "name": "Robert Vanderpool",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Councilmember"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/robert_vanderpool.php",
-    "term_date": null,
+    "phone_number": "360.753.8447",
+    "email": "rvanderp@ci.olympia.wa.us",
+    "website": "http://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
+    "term_date": "January 2024 to November 2025",
     "sources": [
-      "https://olympiawa.gov/government/city_council___mayor/index.php"
+      "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
     ]
   },
   {
     "name": "Jim Cooper",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Councilmember"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/jim_cooper.php",
-    "term_date": null,
+    "phone_number": "360.753.8447",
+    "email": "jcooper@ci.olympia.wa.us",
+    "website": "http://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
+    "term_date": "December 31, 2025",
     "sources": [
-      "https://olympiawa.gov/government/city_council___mayor/index.php"
+      "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
     ]
   }
 ]
