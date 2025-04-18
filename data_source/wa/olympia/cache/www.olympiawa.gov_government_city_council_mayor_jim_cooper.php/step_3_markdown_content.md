@@ -237,6 +237,10 @@ All correspondence to a Councilmember is a public record potentially eligible fo
 
   [olympiawa.gov/subscribe](https://olympiawa.gov/news)  
 
+## Notice
+
+All correspondence to a Councilmember is a public record potentially eligible for release.
+
   [Home](https://www.olympiawa.gov)   [Government](https://www.olympiawa.gov/government/index.php)    [City Council & Mayor](https://www.olympiawa.gov/government/city_council___mayor/index.php)   Jim Cooper
 
 # Jim Cooper

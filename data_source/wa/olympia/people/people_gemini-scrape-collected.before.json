@@ -5,7 +5,7 @@
     "phone_numbers": [
       {
         "data": "360.753.8447",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
           "in_list": false
@@ -14,7 +14,7 @@
       },
       {
         "data": "360.753.8447",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
           "in_list": false
@@ -23,7 +23,7 @@
       },
       {
         "data": "360.753.8447",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
           "in_list": false
@@ -32,7 +32,7 @@
       },
       {
         "data": "360.753.8447",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
           "in_list": false
@@ -82,7 +82,7 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -91,7 +91,16 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to personal page found in City Council & Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -100,16 +109,7 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found in navigation.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
-      },
-      {
-        "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -118,7 +118,7 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -127,7 +127,7 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -136,8 +136,8 @@
     ],
     "term_dates": [],
     "positions": [
-      "Councilmember",
-      "Mayor"
+      "Mayor",
+      "Councilmember"
     ],
     "sources": []
   },
@@ -170,7 +170,7 @@
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
       },
       {
         "data": "360.753.8447",
@@ -179,7 +179,7 @@
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+        "source": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
       },
       {
         "data": "360.753.8447",
@@ -195,7 +195,7 @@
       {
         "data": "yhuynh@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is directly associated with the councilmember's information.",
+        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -213,20 +213,20 @@
       {
         "data": "yhuynh@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is directly associated with the councilmember's information.",
+        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+      },
+      {
+        "data": "yhuynh@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
-      },
-      {
-        "data": "yhuynh@ci.olympia.wa.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
       },
       {
         "data": "yhuynh@ci.olympia.wa.us",
@@ -242,16 +242,25 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
       },
       {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct profile page for Yến Huỳnh on the city website.",
+        "llm_confidence_reason": "This is the dedicated profile page for Yến Huỳnh on the city website.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -260,25 +269,16 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
+        "llm_confidence_reason": "Link to personal page found in City Council & Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
       },
       {
-        "data": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found in navigation.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
-      },
-      {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct profile page for Yến Huỳnh on the city website.",
+        "llm_confidence_reason": "This is the dedicated profile page for Yến Huỳnh on the city website.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -286,6 +286,15 @@
       },
       {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the dedicated profile page for Yến Huỳnh on the city website.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "This is the direct profile page for Yến Huỳnh on the city website.",
         "markdown_formatting": {
@@ -296,16 +305,7 @@
       {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct profile page for Yến Huỳnh on the city website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
-      },
-      {
-        "data": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct profile page for Yến Huỳnh on the city website.",
+        "llm_confidence_reason": "This is the dedicated profile page for Yến Huỳnh on the city website.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -320,25 +320,7 @@
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
-      },
-      {
-        "data": "January 2021 to December 31, 2023",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Term date is mentioned in the bio section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
-      },
-      {
-        "data": "January 2021 to December 31, 2023",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Term date is mentioned in the bio section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+        "source": "http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
       }
     ],
     "positions": [
@@ -346,8 +328,7 @@
       "Mayor Pro Tem",
       "Councilmember",
       "Chair",
-      "Police Auditor Liaison",
-      "Alternate"
+      "Police Auditor Liaison"
     ],
     "sources": []
   },
@@ -358,7 +339,7 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under contact information.",
+        "llm_confidence_reason": "Listed under Contact section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -367,7 +348,7 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name and title.",
+        "llm_confidence_reason": "Phone number listed under Contact section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -376,7 +357,16 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name and title.",
+        "llm_confidence_reason": "Phone number listed under Contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under Contact section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -384,6 +374,15 @@
       }
     ],
     "emails": [
+      {
+        "data": "dmadrone@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      },
       {
         "data": "dmadrone@ci.olympia.wa.us",
         "llm_confidence": 0.95,
@@ -396,7 +395,7 @@
       {
         "data": "dmadrone@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name and title.",
+        "llm_confidence_reason": "Email found directly associated with name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -405,7 +404,7 @@
       {
         "data": "dmadrone@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name and title.",
+        "llm_confidence_reason": "Email found directly associated with name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -416,16 +415,34 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
       },
       {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
+        "llm_confidence_reason": "Link to personal page found in City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -455,14 +472,12 @@
       "Council Member",
       "Councilmember",
       "Land Use and Environment Committee – Chair",
-      "Deschutes Estuary Restoration - Alternate",
       "Deschutes Stewardship Coalition",
-      "Intercity Transit Authority Board - Alternate",
-      "LOTT Board of Directors",
       "Regional Housing Council",
       "Sea Level Rise Governance Committee",
       "Thurston Regional Planning Council",
-      "Tribal Relations Working Group"
+      "Tribal Relations Working Group",
+      "LOTT Board of Directors"
     ],
     "sources": []
   },
@@ -473,7 +488,7 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
+        "llm_confidence_reason": "Phone number is listed under Contact section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -491,18 +506,36 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
+        "llm_confidence_reason": "Phone number is listed under Contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under Contact.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed under Contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
       }
     ],
     "emails": [
       {
         "data": "cgilman@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
+        "llm_confidence_reason": "Email address is directly associated with the name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -520,27 +553,72 @@
       {
         "data": "cgilman@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
+        "llm_confidence_reason": "Email address is directly associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      },
+      {
+        "data": "cgilman@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email found directly associated with name.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      },
+      {
+        "data": "cgilman@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address is directly associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
       }
     ],
     "websites": [
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
       },
       {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
+        "llm_confidence_reason": "This is the dedicated profile page for Clark Gilman on the city website.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to personal page found in City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found under City Council & Mayor.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -549,7 +627,7 @@
       {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
+        "llm_confidence_reason": "This is the dedicated profile page for Clark Gilman on the city website.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -558,11 +636,20 @@
       {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
+        "llm_confidence_reason": "Found under City Council & Mayor.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the dedicated profile page for Clark Gilman on the city website.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
       }
     ],
     "term_dates": [],
@@ -574,9 +661,8 @@
       "Community Livability & Public Safety Committee",
       "Communications Board (TCCOM911)",
       "Intercity Transit Authority Board",
-      "Regional Transportation Policy Board",
-      "Coalition of Neighborhood Associations",
-      "Regional Transportation Policy Board – Alternate"
+      "Regional Transportation Policy Board – Alternate",
+      "Coalition of Neighborhood Associations"
     ],
     "sources": []
   },
@@ -587,7 +673,7 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact section.",
+        "llm_confidence_reason": "Phone number listed directly under name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -596,7 +682,7 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact section.",
+        "llm_confidence_reason": "Phone number listed directly under name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -605,7 +691,25 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed under contact information.",
+        "llm_confidence_reason": "Phone number listed directly under name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -616,7 +720,7 @@
       {
         "data": "kgreen@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact section.",
+        "llm_confidence_reason": "Email listed directly under name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -625,7 +729,7 @@
       {
         "data": "kgreen@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact section.",
+        "llm_confidence_reason": "Email listed directly under name and title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -634,7 +738,25 @@
       {
         "data": "kgreen@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address listed under contact information.",
+        "llm_confidence_reason": "Email listed directly under name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      },
+      {
+        "data": "kgreen@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      },
+      {
+        "data": "kgreen@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -645,16 +767,34 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
       },
       {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to personal page found in City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      },
+      {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -663,7 +803,7 @@
       {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -672,7 +812,25 @@
       {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the City Council & Mayor section.",
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor section.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -692,7 +850,7 @@
     "phone_numbers": [
       {
         "data": "360.753.8447",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed under Contact.",
         "markdown_formatting": {
           "in_list": false
@@ -702,7 +860,7 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed directly under name.",
+        "llm_confidence_reason": "Listed under Contact.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -711,7 +869,25 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed directly under name.",
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -722,7 +898,7 @@
       {
         "data": "rvanderp@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
+        "llm_confidence_reason": "Listed under Contact.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -731,7 +907,7 @@
       {
         "data": "rvanderp@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed directly under name.",
+        "llm_confidence_reason": "Listed under Contact.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -740,7 +916,25 @@
       {
         "data": "rvanderp@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed directly under name.",
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "rvanderp@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "rvanderp@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -751,16 +945,52 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
       },
       {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to personal page found in City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      },
+      {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
+        "llm_confidence_reason": "Link to profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to profile page.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -788,7 +1018,7 @@
     "term_dates": [
       {
         "data": "January 2024 to November 2025",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Stated in bio.",
         "markdown_formatting": {
           "in_list": false
@@ -797,7 +1027,25 @@
       },
       {
         "data": "January 2024 to November 2025",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated in bio.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "January 2024 to November 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated in bio.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      },
+      {
+        "data": "January 2024 to November 2025",
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Stated in bio.",
         "markdown_formatting": {
           "in_list": false
@@ -826,8 +1074,8 @@
     "phone_numbers": [
       {
         "data": "360.753.8447",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under Contact section.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -836,7 +1084,16 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under Contact section.",
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under contact information.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -845,7 +1102,16 @@
       {
         "data": "360.753.8447",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under contact information for Jim Cooper.",
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under Contact.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -856,7 +1122,7 @@
       {
         "data": "jcooper@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email found directly associated with name.",
+        "llm_confidence_reason": "Email listed under contact information.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -865,7 +1131,7 @@
       {
         "data": "jcooper@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email found directly associated with name.",
+        "llm_confidence_reason": "Email directly associated with name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -874,7 +1140,25 @@
       {
         "data": "jcooper@ci.olympia.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
+        "llm_confidence_reason": "Email listed under contact information.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
+      {
+        "data": "jcooper@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
+      {
+        "data": "jcooper@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email directly associated with name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -885,16 +1169,43 @@
       {
         "data": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found in the navigation.",
+        "llm_confidence_reason": "Link to personal page found in the navigation menu.",
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
       },
       {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found under City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to personal page found in City Council & Mayor section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      },
+      {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Link to profile page found in navigation.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -912,7 +1223,16 @@
       {
         "data": "http://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Jim Cooper's profile page found under City Council & Mayor.",
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
+      {
+        "data": "http://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link to profile page found under City Council & Mayor.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -920,6 +1240,24 @@
       }
     ],
     "term_dates": [
+      {
+        "data": "December 31, 2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term end date mentioned in bio.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
+      {
+        "data": "December 31, 2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term end date mentioned in bio.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      },
       {
         "data": "December 31, 2025",
         "llm_confidence": 0.9,

@@ -6,7 +6,7 @@
   email: dpayne@ci.olympia.wa.us
   phone_number: "(360) 753-8447"
   website: https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
-  image: images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.jpg
+  image: images/3bd86d8a9debe6fad45722ad10a12deb7bee79b8de9262c9474726b4dd58bfa0.jpg
   sources:
   - https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
   - https://olympiawa.gov/government/city_council___mayor/index.php
@@ -21,6 +21,7 @@
   sources:
   - https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php
   - https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
+  - http://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php
   - https://olympiawa.gov/government/city_council___mayor/index.php
 - name: Clark Gilman
   positions:
@@ -31,6 +32,7 @@
   image: images/9769f38327ea724d78cc10cf92ca9482c4652df429a54b4a322fe898faeb3d73.jpg
   sources:
   - https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php
+  - https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
   - https://olympiawa.gov/government/city_council___mayor/index.php
 - name: Dani Madrone
   positions:
@@ -51,6 +53,7 @@
   image: images/4d649769fc658de83a37575a6c46761564cc05ed1d769e200067b03ac8448923.jpg
   sources:
   - https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php
+  - https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
   - https://olympiawa.gov/government/city_council___mayor/index.php
 - name: Kelly Green
   positions:
@@ -61,6 +64,7 @@
   image: images/0fda41e7cbc0a464334f52761b51882c7c478b0444c8c2593259338422753c43.jpg
   sources:
   - https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php
+  - https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
   - https://olympiawa.gov/government/city_council___mayor/index.php
 - name: Robert Vanderpool
   positions:
@@ -71,4 +75,5 @@
   image: images/94e617dfa1e6c8ede0eb7daae230ff8619b94a4302d52dc6acffb722ecda3736.jpg
   sources:
   - https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php
+  - https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
   - https://olympiawa.gov/government/city_council___mayor/index.php

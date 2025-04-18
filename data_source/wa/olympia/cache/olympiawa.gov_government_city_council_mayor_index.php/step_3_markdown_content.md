@@ -241,6 +241,10 @@ All written correspondence to the Olympia City Council, including email, is a pu
 
   [olympiawa.gov/subscribe](https://olympiawa.gov/news)  
 
+## Notice
+
+All written correspondence to the Olympia City Council, including email, is a public record, potentially eligible for release upon request.
+
   [Home](https://www.olympiawa.gov)   [Government](https://www.olympiawa.gov/government/index.php)   City Council & Mayor
 
 # City Council & Mayor
