@@ -44,7 +44,7 @@ module Utils
         base_elements = Nokogiri::HTML(page_html_string).css("base")
 
         unless base_elements.empty?
-          base_href_attribute = base_elements[0].attribute("href")
+          base_href_attribute = base_elements[0]["href"].to_s.strip
 
           if base_href_attribute && !base_href_attribute.empty?
             # Resolve the base href against the document's URL

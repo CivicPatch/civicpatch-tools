@@ -1,163 +1,442 @@
 [
   {
     "name": "Dontae Payne",
-    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg",
-    "phone_numbers": [],
-    "emails": [],
+    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.jpg",
+    "phone_numbers": [
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the name and title 'Councilmember' and is clearly associated with Dontae Payne's office.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dpayne@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the name and title 'Councilmember' and clearly belongs to Dontae Payne.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
+      }
+    ],
     "websites": [
       {
-        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dontae_payne.php",
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly associated with the person's name and position.",
-        "proximity_to_name": 1,
+        "llm_confidence_reason": "The URL is the personal city council/mayor page dedicated to Dontae Payne.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "URL explicitly includes the person's name and is under City Council & Mayor section.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "Elected mayor in November 2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term start date is explicitly mentioned in the bio section.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php"
+      }
+    ],
     "positions": [
       "mayor",
       "position 1"
-    ]
+    ],
+    "sources": []
   },
   {
     "name": "Yến Huỳnh",
-    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg",
-    "phone_numbers": [],
-    "emails": [],
+    "image": "images/508cad260d9b537a2102df1b6cbf99c93a954ea2b2b96e0e94ce60821cd188f2.jpg",
+    "phone_numbers": [
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the contact section with the person's name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "yhuynh@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the person's name and contact section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+      }
+    ],
     "websites": [
       {
-        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/yen_huynh.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly associated with the person's name and position.",
-        "proximity_to_name": 1,
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "URL explicitly includes the person's name and is under City Council & Mayor section.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "2021-01 to 2023-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are explicitly stated in the bio section.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php"
+      }
+    ],
     "positions": [
       "mayor pro tem",
-      "position 2"
-    ]
+      "position 2",
+      "council member",
+      "council member position 2"
+    ],
+    "sources": []
   },
   {
     "name": "Dani Madrone",
-    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg",
-    "phone_numbers": [],
-    "emails": [],
+    "image": "images/5369826dba1e797d8b0a11fb8f8827e7af2e83af0514a66a53adbf08c849bea5.jpg",
+    "phone_numbers": [
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the name and title 'Councilmember'.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dmadrone@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the name and title 'Councilmember'.",
+        "proximity_to_name": 7,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      }
+    ],
     "websites": [
       {
-        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/dani_madrone.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly associated with the person's name and position.",
-        "proximity_to_name": 1,
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "URL explicitly includes the person's name and is under City Council & Mayor section.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "Elected November 2019",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term start date is explicitly mentioned in the bio section.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/dani_madrone.php"
+      }
+    ],
     "positions": [
       "council member",
       "position 3"
-    ]
+    ],
+    "sources": []
   },
   {
     "name": "Clark Gilman",
-    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg",
-    "phone_numbers": [],
-    "emails": [],
+    "image": "images/9769f38327ea724d78cc10cf92ca9482c4652df429a54b4a322fe898faeb3d73.jpg",
+    "phone_numbers": [
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Clark Gilman's contact section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cgilman@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with Clark Gilman's name in the contact section.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      }
+    ],
     "websites": [
       {
-        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/clark_gilman.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly associated with the person's name and position.",
-        "proximity_to_name": 1,
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "URL explicitly includes the person's name and is under City Council & Mayor section.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "January 2016 (appointed), November 2017 to 2025 (elected terms)",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term dates are described in the bio with appointment and election years; last re-election in 2021 for a four-year term.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/clark_gilman.php"
+      }
+    ],
     "positions": [
       "council member",
-      "position 4"
-    ]
+      "position 4",
+      "mayor pro tem",
+      "council member position 4"
+    ],
+    "sources": []
   },
   {
     "name": "Kelly Green",
-    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg",
-    "phone_numbers": [],
-    "emails": [],
+    "image": "images/0fda41e7cbc0a464334f52761b51882c7c478b0444c8c2593259338422753c43.jpg",
+    "phone_numbers": [
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the name and title 'Councilmember'.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kgreen@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with Kelly Green's name and title.",
+        "proximity_to_name": 7,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      }
+    ],
     "websites": [
       {
-        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/kelly_green.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly associated with the person's name and position.",
-        "proximity_to_name": 1,
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "URL explicitly includes the person's name and is under City Council & Mayor section.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the personal city council page for Kelly Green.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "January 2025 to November 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates explicitly stated in bio section.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php"
+      }
+    ],
     "positions": [
       "council member",
-      "position 5"
-    ]
+      "position 5",
+      "council member position 5",
+      "Finance Committee",
+      "Joint Animal Services",
+      "LEOFF 1 Disability Board",
+      "Olympic Region Clean Air Agency - Alternate",
+      "Sea Level Rise Governance Committee - Alternate",
+      "Thurston Climate Mitigation Collaborative - Alternate",
+      "Thurston County Solid Waste Advisory Committee (SWAC)"
+    ],
+    "sources": []
   },
   {
     "name": "Robert Vanderpool",
-    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg",
-    "phone_numbers": [],
-    "emails": [],
+    "image": "images/94e617dfa1e6c8ede0eb7daae230ff8619b94a4302d52dc6acffb722ecda3736.jpg",
+    "phone_numbers": [
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the person's name and title in the Contact section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rvanderp@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the person's name and title in the Contact section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      }
+    ],
     "websites": [
       {
-        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/robert_vanderpool.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly associated with the person's name and position.",
-        "proximity_to_name": 1,
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "URL explicitly includes the person's name and is under City Council & Mayor section.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
+      },
+      {
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the person's dedicated city council page.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "January 2024 to November 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates explicitly stated in the bio section.",
+        "proximity_to_name": 40,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php"
+      }
+    ],
     "positions": [
       "council member",
       "position 6"
-    ]
+    ],
+    "sources": []
   },
   {
     "name": "Jim Cooper",
-    "image": "images/d70896cb153f5f848a61bc1aeddd091e21e0951869c8d8ba9948aef56353a3e4.2025-Council-Header.jpg",
-    "phone_numbers": [],
-    "emails": [],
+    "image": "images/4d649769fc658de83a37575a6c46761564cc05ed1d769e200067b03ac8448923.jpg",
+    "phone_numbers": [
+      {
+        "data": "360.753.8447",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the name and title 'Councilmember' in the contact section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jcooper@ci.olympia.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with Jim Cooper's name and title in the contact section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      }
+    ],
     "websites": [
       {
-        "data": "https://olympiawa.gov/government/city_council___mayor/government/city_council___mayor/jim_cooper.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly associated with the person's name and position.",
-        "proximity_to_name": 1,
+        "data": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "URL explicitly includes the person's name and is under City Council & Mayor section.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://olympiawa.gov/government/city_council___mayor/index.php"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "until December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date is explicitly stated in the bio section with clear association to Jim Cooper.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php"
+      }
+    ],
     "positions": [
       "council member",
       "position 7"
-    ]
+    ],
+    "sources": []
   }
 ]
