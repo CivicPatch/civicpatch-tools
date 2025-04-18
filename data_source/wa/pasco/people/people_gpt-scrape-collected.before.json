@@ -1,163 +1,456 @@
 [
   {
-    "name": "Pete Serrano",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-vOFbR9",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "proximity_to_name": 1,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.pasco-wa.gov/122/City-Council"
-      }
-    ],
-    "term_dates": [],
-    "positions": [
-      "mayor",
-      "district 4"
-    ]
-  },
-  {
-    "name": "David Milne",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "proximity_to_name": 1,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.pasco-wa.gov/122/City-Council"
-      }
-    ],
-    "term_dates": [],
-    "positions": [
-      "mayor pro tem",
-      "district 5"
-    ]
-  },
-  {
     "name": "Blanche Barajas",
-    "image": null,
-    "phone_numbers": [],
+    "image": "images/36f919b01dd59c2bd58fc2cf0d4111174b43bd9fc6f7557fc5edbae5ec085d93.jpg",
+    "phone_numbers": [
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the row with the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=8"
+      }
+    ],
     "emails": [],
     "websites": [
       {
-        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+        "data": "https://www.pasco-wa.gov/directory.aspx?EID=8",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "proximity_to_name": 1,
+        "llm_confidence_reason": "Link directly associated with the person's name.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.pasco-wa.gov/122/City-Council"
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "January 1, 2022 - December 31, 2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term date clearly labeled under the person's name and title.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=8"
+      }
+    ],
     "positions": [
       "council member",
       "district 1"
-    ]
+    ],
+    "sources": []
   },
   {
     "name": "Charles Grimm",
-    "image": null,
-    "phone_numbers": [],
+    "image": "images/81afb06e93868a2263dc274801c95c1c6c06d9af8e6b8f105f345ac878c1eb2e.jpg",
+    "phone_numbers": [
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the row with the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=2"
+      }
+    ],
     "emails": [],
     "websites": [
       {
-        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+        "data": "https://www.pasco-wa.gov/directory.aspx?EID=2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "proximity_to_name": 1,
+        "llm_confidence_reason": "Link directly associated with the person's name.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.pasco-wa.gov/122/City-Council"
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Councilmember-Charles-Grimm-80",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contact link clearly associated with Charles Grimm.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=2"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "January 1, 2024 - December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates listed directly under the name and title.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=2"
+      }
+    ],
     "positions": [
       "council member",
       "district 2"
-    ]
+    ],
+    "sources": []
   },
   {
     "name": "Leo Perales",
-    "image": null,
-    "phone_numbers": [],
+    "image": "images/9114d427c50822b05215787f4032e4ae553dc561afaa6a866b99371dc88093e4.jpg",
+    "phone_numbers": [
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the row with the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the name and title of Leo Perales.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=5"
+      }
+    ],
     "emails": [],
     "websites": [
       {
-        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+        "data": "https://www.pasco-wa.gov/directory.aspx?EID=5",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "proximity_to_name": 1,
+        "llm_confidence_reason": "Link directly associated with the person's name.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.pasco-wa.gov/122/City-Council"
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Councilmember-Leo-Perales-81",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contact link is directly associated with Leo Perales.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=5"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "January 1, 2024 - December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are listed directly under the name and title.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=5"
+      }
+    ],
     "positions": [
       "council member",
       "district 3"
-    ]
+    ],
+    "sources": []
+  },
+  {
+    "name": "Pete Serrano",
+    "image": "images/37fca58cc2a2725988e64eeb5650d94071a67f286588d0e6c2cccad0c6afd798.jpg",
+    "phone_numbers": [
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the row with the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=163"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pasco-wa.gov/directory.aspx?EID=163",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with the person's name.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Mayor-Pete-Serrano-82",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contact link explicitly for Mayor Pete Serrano.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=163"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2022 - December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates listed under Current Term section near name.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=163"
+      }
+    ],
+    "positions": [
+      "mayor",
+      "council member",
+      "district 4"
+    ],
+    "sources": []
+  },
+  {
+    "name": "David Milne",
+    "image": "images/14c83f5c26c18320963edd7163b74f6037520aa9201091bad530d1bcb7706524.jpg",
+    "phone_numbers": [
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the row with the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the person's name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=6"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pasco-wa.gov/directory.aspx?EID=6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with the person's name.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Mayor-ProTem-David-Milne-83",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contact link is directly associated with the person's name and title.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=6"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2020 - December 31, 2023",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term date is listed directly under the person's contact information.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=6"
+      }
+    ],
+    "positions": [
+      "mayor pro tem",
+      "council member",
+      "district 5"
+    ],
+    "sources": []
   },
   {
     "name": "Melissa Blasdel",
-    "image": null,
-    "phone_numbers": [],
+    "image": "images/fbbc4133a9c502d6db291abae307c1897f3bda3faff2ed7473cb424df13823d5.jpg",
+    "phone_numbers": [
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the row with the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=4"
+      }
+    ],
     "emails": [],
     "websites": [
       {
-        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+        "data": "https://www.pasco-wa.gov/directory.aspx?EID=4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "proximity_to_name": 1,
+        "llm_confidence_reason": "Link directly associated with the person's name.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.pasco-wa.gov/122/City-Council"
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Councilmember-Melissa-Blasdel-79",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Contact link specifically for Councilmember Melissa Blasdel.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=4"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "October 2, 2023 - December 31, 2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term dates listed directly under the name and title.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=4"
+      }
+    ],
     "positions": [
       "council member",
       "district 6"
-    ]
+    ],
+    "sources": []
   },
   {
     "name": "Peter Harpster",
-    "image": null,
-    "phone_numbers": [],
+    "image": "images/68fb7f1831ba8f6a6b9f2fa393753682a4bb0e64dee8c88ceb166e388b8e23b3.jpg",
+    "phone_numbers": [
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the row with the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "509-544-3060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the name and title of Peter Harpster.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=193"
+      }
+    ],
     "emails": [],
     "websites": [
       {
-        "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+        "data": "https://www.pasco-wa.gov/directory.aspx?EID=193",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "proximity_to_name": 1,
+        "llm_confidence_reason": "Link directly associated with the person's name.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.pasco-wa.gov/122/City-Council"
+        "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+      },
+      {
+        "data": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Councilmember-Peter-Harpster-84",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contact link is directly associated with Peter Harpster's name.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=193"
       }
     ],
-    "term_dates": [],
+    "term_dates": [
+      {
+        "data": "January 1, 2024 - December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are explicitly listed under the name and title.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.pasco-wa.gov/directory.aspx?EID=193"
+      }
+    ],
     "positions": [
       "council member",
-      "at large"
-    ]
+      "at-large"
+    ],
+    "sources": []
   }
 ]

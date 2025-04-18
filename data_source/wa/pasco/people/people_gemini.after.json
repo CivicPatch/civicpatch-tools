@@ -7,26 +7,28 @@
       "District 4"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "(509) 544-3060",
     "email": null,
-    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-vOFbR9",
-    "term_date": null,
+    "website": "https://www.pasco-wa.gov/directory.aspx?EID=163",
+    "term_date": "January 1, 2022 - December 31, 2025",
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/directory.aspx?EID=163",
+      "https://www.pasco-wa.gov/Directory.aspx?DID=4"
     ]
   },
   {
     "name": "Peter Harpster",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "At-large"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "(509) 544-3060",
     "email": null,
-    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
-    "term_date": null,
+    "website": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Councilmember-Peter-Harpster-84",
+    "term_date": "January 1, 2024 - December 31, 2027",
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/directory.aspx?EID=193"
     ]
   },
   {
@@ -36,12 +38,13 @@
       "District 1"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "(509) 544-3060",
     "email": null,
-    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
-    "term_date": null,
+    "website": "https://www.pasco-wa.gov/directory.aspx?EID=8",
+    "term_date": "January 1, 2022 - December 31, 2025",
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/directory.aspx?EID=8",
+      "https://www.pasco-wa.gov/Directory.aspx?DID=4"
     ]
   },
   {
@@ -53,10 +56,11 @@
     "image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
-    "term_date": null,
+    "website": "https://www.pasco-wa.gov/directory.aspx?EID=2",
+    "term_date": "January 1, 2024 - December 31, 2027",
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/Directory.aspx?DID=4",
+      "https://www.pasco-wa.gov/directory.aspx?EID=2"
     ]
   },
   {
@@ -68,10 +72,11 @@
     "image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
-    "term_date": null,
+    "website": "https://www.pasco-wa.gov/directory.aspx?EID=5",
+    "term_date": "January 1, 2024 - December 31, 2027",
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/Directory.aspx?DID=4",
+      "https://www.pasco-wa.gov/directory.aspx?EID=5"
     ]
   },
   {
@@ -83,10 +88,11 @@
     "image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
-    "term_date": null,
+    "website": "https://www.pasco-wa.gov/directory.aspx?EID=6",
+    "term_date": "January 1, 2020 - December 31, 2023",
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/Directory.aspx?DID=4",
+      "https://www.pasco-wa.gov/directory.aspx?EID=6"
     ]
   },
   {
@@ -98,10 +104,11 @@
     "image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
-    "term_date": null,
+    "website": "https://www.pasco-wa.gov/directory.aspx?EID=4",
+    "term_date": "October 2, 2023 - December 31, 2025",
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/Directory.aspx?DID=4",
+      "https://www.pasco-wa.gov/directory.aspx?EID=4"
     ]
   }
 ]

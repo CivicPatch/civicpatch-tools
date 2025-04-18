@@ -1,3 +1,10 @@
 ---
 scrape_sources:
+- https://www.pasco-wa.gov/directory.aspx?EID=163
 - https://www.pasco-wa.gov/Directory.aspx?DID=4
+- https://www.pasco-wa.gov/directory.aspx?EID=193
+- https://www.pasco-wa.gov/directory.aspx?EID=8
+- https://www.pasco-wa.gov/directory.aspx?EID=2
+- https://www.pasco-wa.gov/directory.aspx?EID=5
+- https://www.pasco-wa.gov/directory.aspx?EID=6
+- https://www.pasco-wa.gov/directory.aspx?EID=4
