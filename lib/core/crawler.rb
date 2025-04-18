@@ -13,7 +13,10 @@ class Crawler
     visited = Set.new
     queue = [{ url: base_url, depth: 0 }]
 
-    results = process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth, avoid_keywords)
+    results = process_queue(
+      base_url, queue, visited, max_pages,
+      keyword_groups, max_depth, avoid_keywords
+    )
 
     results = results.values
                      .map(&:shuffle)  # Shuffle within groups to avoid bias
@@ -26,7 +29,10 @@ class Crawler
     results || []
   end
 
-  def self.process_queue(base_url, queue, visited, max_pages, keyword_groups, max_depth, avoid_keywords)
+  def self.process_queue(
+    base_url, queue, visited, max_pages,
+    keyword_groups, max_depth, avoid_keywords
+  )
     results = Hash.new { |hash, key| hash[key] = [] } # Default to an empty array for each keyword group
 
     while queue.any? && visited.size < max_pages
@@ -67,7 +73,7 @@ class Crawler
     page = fetch_page(url)
     return [] unless page
 
-    links = extract_links(base_url, page)
+    links = extract_links(page, base_url)
 
     valid_links = links.select do |link|
       next false if IGNORE_SUFFIXES.any? { |suffix| link[:href].end_with?(suffix) }
@@ -78,7 +84,7 @@ class Crawler
         url_match?(link[:href], keywords)
     end
 
-    valid_links.map { |link| absolute_url(url, link[:href]) }.reject { |link| visited.include?(link) }
+    valid_links.map { |link| link[:href] }.reject { |link_href| visited.include?(link_href) }
   end
 
   def self.fetch_page(url)
@@ -86,56 +92,26 @@ class Crawler
     response = HTTParty.get(uri)
     raise "HTTP request failed: #{response.code}" unless response.success?
 
-    Nokogiri::HTML(response.body)
+    formatted_html = Utils::UrlHelper.format_links_to_absolute(response.body, url)
+    Nokogiri::HTML(formatted_html)
   rescue StandardError
     html = Browser.fetch_html(url)
     Nokogiri::HTML(html)
   end
 
-  def self.extract_links(base_url, page)
+  def self.extract_links(page, base_url)
     # Page's base url can be rewritten, depending on the html
-    page_base_url = get_page_base_url(base_url, page)
     raw_links = page.css("a").map do |link|
       href = link["href"]&.strip
       next nil unless href.present?
 
-      full_url = get_full_url(page_base_url, href)
-      next nil unless full_url
-
-      { text: link.text.strip, href: Utils::UrlHelper.format_url(full_url) }
+      { text: link.text.strip, href: Utils::UrlHelper.format_url(href) }
     end.compact
 
     raw_links.select do |raw_link|
       raw_link[:href].present? &&
         same_domain?(base_url, raw_link[:href])
     end
-  end
-
-  def self.get_full_url(base_url, href)
-    if Addressable::URI.parse(href).absolute?
-      Addressable::URI.parse(href).to_s
-    else
-      Addressable::URI.parse(base_url).join(href).to_s
-    end
-  rescue StandardError
-    # Href might not be valid. Bail
-    nil
-  end
-
-  def self.get_page_base_url(base_url, page)
-    base_override = page.css("base").first&.attr("href")
-
-    if base_override.present?
-      Addressable::URI.parse(base_url).join(base_url)
-    else
-      base_url
-    end
-  end
-
-  def self.absolute_url(base_url, href)
-    return href if href.start_with?("http")
-
-    URI.join(base_url, href).to_s
   end
 
   def self.same_domain?(base_url, href)
