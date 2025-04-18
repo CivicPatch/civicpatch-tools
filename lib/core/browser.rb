@@ -2,6 +2,13 @@ module Browser
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 2  # Base sleep time for exponential backoff
 
+  IMAGE_MIME_TO_EXTENSION = {
+    "image/jpeg" => "jpg",
+    "image/png" => "png",
+    "image/gif" => "gif",
+    "image/webp" => "webp" # Not supported by GitHub :/
+  }.freeze
+
   def self.start
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--headless") # Run without UI
@@ -19,29 +26,19 @@ module Browser
 
     begin
       browser.navigate.to(url)
-      base_url = detect_base_url(browser, url)
 
-      img_elements = browser.find_elements(tag_name: 'img')
+      return nil unless html_page?(browser)
 
-      img_elements.each do |img_element|
-        process_image(browser, img_element, image_dir, base_url)
-      end
+      original_page_source = browser.page_source
+      base_url = Utils::UrlHelper.extract_page_base_url(original_page_source, url)
 
-      browser.page_source
+      FileUtils.mkdir_p(image_dir)
+      download_images(browser, image_dir, base_url)
+      page_source_with_images = browser.page_source
+
+      Utils::UrlHelper.format_links_to_absolute(page_source_with_images, base_url)
     ensure
       browser.quit
-    end
-  end
-
-  def self.detect_base_url(browser, default_url)
-    base_elements = browser.find_elements(tag_name: "base")
-
-    if !base_elements.empty? && base_elements[0].attribute('href')
-      base_href = base_elements[0].attribute("href")
-      base_href += "/" unless base_href.end_with?("/")
-      base_href
-    else
-      default_url
     end
   end
 
@@ -70,15 +67,25 @@ module Browser
     end
   end
 
-  def self.generate_filename(src)
-    match = src.match(%r{([^/]+\.(jpg|jpeg|png|gif|webp))$}i)
-    hash = Digest::SHA256.hexdigest(src)
+  def self.html_page?(browser)
+    content_type = browser.execute_script("return document.contentType")
 
-    if match
-      "#{hash}.#{match[1]}"
-    else
-      "#{hash}.jpg" # TODO: Be more accurate
+    return false if content_type.blank?
+
+    content_type.downcase.include?("text/html")
+  end
+
+  def self.download_images(browser, image_dir, base_url)
+    image_elements = browser.find_elements(tag_name: "img")
+
+    image_elements.each do |image_element|
+      process_image(browser, image_dir, base_url, image_element)
     end
+  end
+
+  def self.generate_filename(src, file_type)
+    hash = Digest::SHA256.hexdigest(src)
+    "#{hash}.#{file_type}"
   end
 
   def self.capture_image_as_data_url(browser, img_element)
@@ -107,76 +114,114 @@ module Browser
     ", img_element)
   end
 
-  def self.save_image_from_data_url(data_url, image_path)
+  def self.save_image_from_data_url(data_url)
     # Strip data URL prefix to get base64 data
-    if data_url.start_with?("data:image/")
-      base64_data = data_url.split(",")[1]
+    return nil unless data_url.start_with?("data:image/")
 
-      # Save image file
-      File.open(image_path, "wb") do |f|
-        f.write(Base64.decode64(base64_data))
-      end
-      return true
-    end
-    false
+    base64_data = data_url.split(",")[1]
+
+    # Save image file
+    downloaded_file = Tempfile.new(binmode: true)
+    downloaded_file.write(Base64.decode64(base64_data))
+    downloaded_file.close
+
+    downloaded_file
   end
 
-  def self.process_image(browser, img_element, image_dir, base_url)
-    begin
-      src = img_element.attribute('src')
-      return if src.nil? || src.empty?
+  def self.process_image(browser, image_dir, base_url, img_element)
+    src = img_element.attribute("src")
+    return if src.nil? || src.empty?
 
-      filename = generate_filename(src)
-      image_path = File.join(image_dir, filename)
+    absolute_src = Addressable::URI.join(base_url, src).to_s
 
-      absolute_src = Addressable::URI.join(base_url, src).to_s
-
-      if download_with_httparty(absolute_src, image_path, base_url)
-        browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
-                             img_element, filename)
-      else
-        # Fallback to canvas method
-        data_url = capture_image_as_data_url(browser, img_element)
-
-        if data_url.start_with?('ERROR:')
-          puts "Canvas error for #{src}: #{data_url}"
-          return
-        end
-
-        if save_image_from_data_url(data_url, image_path)
-          browser.execute_script("arguments[0].setAttribute('src', arguments[1])", 
-                               img_element, filename)
-        end
+    file = download_with_httparty(absolute_src)
+    unless file
+      data_url = capture_image_as_data_url(browser, img_element)
+      if data_url.start_with?("ERROR:")
+        puts "Canvas error for #{src}: #{data_url}"
+        return
       end
-    rescue => e
-      puts "Error processing image (#{src}): #{e.message}"
+      file = save_image_from_data_url(data_url)
     end
+
+    file_type = determine_file_type(file)
+
+    return if file_type.nil?
+
+    filename = generate_filename(src, file_type)
+    image_path = File.join(image_dir, filename)
+
+    FileUtils.mv(file.path, image_path)
+
+    browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
+                           img_element, image_path)
+
+    # if download_with_httparty(absolute_src, image_path)
+    #  browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
+    #                         img_element, filename)
+    # else
+    #  # Fallback to canvas method
+    #  data_url = capture_image_as_data_url(browser, img_element)
+
+    #  if data_url.start_with?("ERROR:")
+    #    puts "Canvas error for #{src}: #{data_url}"
+    #    return
+    #  end
+
+    #  if save_image_from_data_url(data_url, image_path)
+    #    browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
+    #                           img_element, filename)
+    #  end
+    # end
+  rescue StandardError => e
+    puts "Error processing image (#{src}): #{e.message}"
   end
 
-  def self.download_with_httparty(src_url, image_path, referrer)
-    begin
-      # Handle relative URLs
-      src_url = make_absolute_url(src_url, referrer) unless src_url.start_with?("http")
-      # Skip data URLs
-      return false if src_url.start_with?("data:")
+  def self.download_with_httparty(absolute_src)
+    # Handle relative URLs
+    # Skip data URLs
+    return false if absolute_src.start_with?("data:")
 
-      response = HTTParty.get(src_url, timeout: 5)
+    downloaded_file = Tempfile.new(binmode: true)
+    response = HTTParty.get(absolute_src, timeout: 5, stream_body: true) do |chunk|
+      next if [301, 302].include?(chunk.code)
 
-      # Check if request was successful
-      if response.code == 200
-        # Save image content
-        File.open(image_path, 'wb') do |file|
-          file.write(response.body)
-        end
-        return true
-      end
+      downloaded_file.write(chunk)
+    end
 
-      # Return false if status code wasn't 200
-      puts "HTTParty request failed with code #{response.code} for #{src_url}"
-      return false
-    rescue => e
-      puts "HTTParty error for #{src_url}: #{e.message}"
-      return false
+    downloaded_file.close
+
+    if response.success?
+      downloaded_file
+    else
+      nil
+    end
+
+    ## Check if request was successful
+    # if response.code == 200
+    ## Save image content
+    # File.open(image_path, "wb") do |file|
+    # file.write(response.body)
+    # end
+    # return true
+    # end
+
+    ## Return false if status code wasn't 200
+    # puts "HTTParty request failed with code #{response.code} for #{absolute_src}"
+    # false
+  rescue StandardError => e
+    puts "HTTParty error for #{absolute_src}: #{e.message}"
+    nil
+  end
+
+  def self.determine_file_type(file)
+    content_type = `file --mime-type -b #{file.path}`.strip
+    extension = IMAGE_MIME_TO_EXTENSION[content_type]
+    if extension.nil?
+      puts "Unknown file type for #{file.path}: #{content_type}"
+      nil
+    else
+      extension
     end
   end
 end
