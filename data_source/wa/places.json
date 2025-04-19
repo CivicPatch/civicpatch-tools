@@ -555,7 +555,7 @@
         "king"
       ],
       "website": "https://www.issaquahwa.gov",
-      "fips": "",
+      "fips": "53-33805",
       "gnis": "2410123",
       "type": "Code city",
       "population": 40051,
@@ -660,7 +660,7 @@
         "skagit"
       ],
       "website": "https://mountvernonwa.gov",
-      "fips": "",
+      "fips": "53-47560",
       "gnis": "2411183",
       "type": "Code city",
       "population": 35219,
@@ -1269,7 +1269,7 @@
         "benton"
       ],
       "website": "http://www.westrichland.org",
-      "fips": "",
+      "fips": "53-77665",
       "gnis": "2412227",
       "type": "Code city",
       "population": 16295,
