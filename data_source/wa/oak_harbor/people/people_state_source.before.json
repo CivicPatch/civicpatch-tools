@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Ronnie Wright",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "rwright@oakharbor.org"
+  },
+  {
+    "name": "Barbara Armes",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "barmes@oakharbor.org"
+  },
+  {
+    "name": "James P. Marrow",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jmarrow@oakharbor.org"
+  },
+  {
+    "name": "Eric  Marshall",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "emarshall@oakharbor.org"
+  },
+  {
+    "name": "Bryan Stucky",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bstucky@oakharbor.org"
+  },
+  {
+    "name": "Christopher  Wiegenstein",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cwiegenstein@oakharbor.org"
+  },
+  {
+    "name": "Jim Woessner",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jwoessner@oakharbor.org"
+  },
+  {
+    "name": "Tara Hizon",
+    "positions": [
+      "Councilmember (MPT)"
+    ],
+    "email": "thizon@oakharbor.org"
+  },
+  {
+    "name": "Sabrina Combs",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "scombs@oakharbor.org"
+  },
+  {
+    "name": "Julie  Nester",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "jnester@oakharbor.org"
+  },
+  {
+    "name": "David Kuhl",
+    "positions": [
+      "Development Services Director"
+    ],
+    "email": "dkuhl@oakharbor.org"
+  },
+  {
+    "name": "David  Goldman",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "dgoldman@oakharbor.org"
+  },
+  {
+    "name": "Chris Sublet",
+    "positions": [
+      "Harbormaster"
+    ],
+    "email": "csublet@oakharbor.org"
+  },
+  {
+    "name": "Emma House",
+    "positions": [
+      "Human Resources Director"
+    ],
+    "email": "ehouse@oakharbor.org"
+  },
+  {
+    "name": "Anthony Slowik",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "tslowik@oakharbor.org"
+  },
+  {
+    "name": "Steve Schuller",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "sschuller@oakharbor.org"
+  },
+  {
+    "name": "Liz Lange",
+    "positions": [
+      "Senior Services Administrator"
+    ],
+    "email": "llange@oakharbor.org"
+  }
+]

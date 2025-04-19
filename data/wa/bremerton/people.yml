@@ -1,0 +1,33 @@
+---
+- name: Greg Wheeler
+  positions:
+  - Mayor
+  email: Greg.Wheeler@ci.bremerton.wa.us
+- name: Eric Younger
+  positions:
+  - Council President
+  email: City.Council@ci.bremerton.wa.us
+- name: Jane Rebelowski
+  positions:
+  - Council Vice President
+  email:
+- name: Anna Mockler
+  positions:
+  - Council Member
+  email: City.Council@ci.bremerton.wa.us
+- name: Denise Frey
+  positions:
+  - Council Member
+  email: denise.frey@ci.bremerton.wa.us
+- name: Jeff Coughlin
+  positions:
+  - Council Member
+  email: angela.hoover@ci.bremerton.wa.us
+- name: Jennifer Chamberlin
+  positions:
+  - Council Member
+  email: City.Council@ci.bremerton.wa.us
+- name: Michael Goodnow
+  positions:
+  - Council Member
+  email: city.council@ci.bremerton.wa.us

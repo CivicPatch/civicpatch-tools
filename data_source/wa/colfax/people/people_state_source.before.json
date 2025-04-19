@@ -1,0 +1,86 @@
+[
+  {
+    "name": "James Retzer",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@colfaxwa.org"
+  },
+  {
+    "name": "Blaine Golden",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "blaine.golden@icloud.com"
+  },
+  {
+    "name": "Crystn Guenthner",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cmguenthner@lcsc.edu"
+  },
+  {
+    "name": "Tom Huntwork",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "tom@decagon.com"
+  },
+  {
+    "name": "Mark   Mackleit",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "markmackleit@yahoo.com"
+  },
+  {
+    "name": "Anne  McRae",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Travis  Schaefer",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Sarah  Sevedge",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Matt Hammer",
+    "positions": [
+      "City Administrator/Public Works Director"
+    ],
+    "email": "pwdir@colfaxwa.org"
+  },
+  {
+    "name": "Lynda  Kramlich",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "clerk@colfaxwa.org"
+  },
+  {
+    "name": "Amanda Link",
+    "positions": [
+      "Deputy Clerk"
+    ],
+    "email": "depclerk@colfaxwa.org"
+  },
+  {
+    "name": "Craig Corbeill",
+    "positions": [
+      "Fire Chief (Vol)"
+    ],
+    "email": "firechief@colfaxwa.org"
+  }
+]

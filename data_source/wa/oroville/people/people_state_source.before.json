@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Edward Naillon",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "Naillon@orovillewa.gov"
+  },
+  {
+    "name": "Walt Hart",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Hart@orovillewa.gov"
+  },
+  {
+    "name": "Mike Marthaller",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Marthaller@orovillewa.gov"
+  },
+  {
+    "name": "Kolo Moser",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Moser@orovillewa.gov"
+  },
+  {
+    "name": "Tasha Shaw",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Shaw@orovillewa.gov"
+  },
+  {
+    "name": "Richard Werner",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Werner@orovillewa.gov"
+  },
+  {
+    "name": "Michael D. Howe",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Steve Thompson",
+    "positions": [
+      "City Superintendent"
+    ],
+    "email": "PublicWorks@orovillewa.gov"
+  },
+  {
+    "name": "JoAnn Denney",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "CityClerk@orovillewa.gov"
+  },
+  {
+    "name": "Emily Finsen",
+    "positions": [
+      "Deputy Clerk/Treasurer"
+    ],
+    "email": "Emily@orovillewa.gov"
+  },
+  {
+    "name": "Bruce Rawley",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "FireHallDist1@orovillewa.gov"
+  },
+  {
+    "name": "Heather  Burnell",
+    "positions": [
+      "Librarian"
+    ],
+    "email": null
+  },
+  {
+    "name": "Gary Hirst",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "chiefopd@orovillewa.gov"
+  },
+  {
+    "name": "Robert Marcille",
+    "positions": [
+      "Wastewater Treatment Plant Operator"
+    ],
+    "email": "STP@orovillewa.gov"
+  }
+]

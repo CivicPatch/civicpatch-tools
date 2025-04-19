@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Brian Hille",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "tucnamayor@gmail.com"
+  },
+  {
+    "name": "Cathy  Blankenship",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Fred  Blauert",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Brett  Guske",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Mike  Stroud",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "John Kraght",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Teresa Correll",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "clerk.washtucna@gmail.com"
+  },
+  {
+    "name": "Buck  Jessop",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Don McKenzie",
+    "positions": [
+      "Fire Marshal"
+    ],
+    "email": null
+  },
+  {
+    "name": "Justin Rundquist",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": null
+  }
+]

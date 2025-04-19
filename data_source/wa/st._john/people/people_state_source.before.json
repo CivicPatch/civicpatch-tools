@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Mike Webb",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@stjohncable.com"
+  },
+  {
+    "name": "Bryan Bezdicek",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council5@stjohncable.com"
+  },
+  {
+    "name": "Lisa Blumenshein",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council1@stjohncable.com"
+  },
+  {
+    "name": "Ed  Hamshar",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Council4@stjohncable.com"
+  },
+  {
+    "name": "Dennis Hinds",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council2@stjohncable.com"
+  },
+  {
+    "name": "Jeff  Smick",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council3@stjohncable.com"
+  },
+  {
+    "name": "Rusty McGuire",
+    "positions": [
+      "Attorney"
+    ],
+    "email": "rmcguire@mdkjlaw.com"
+  },
+  {
+    "name": "F. Shani Hergert",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "stjohn@stjohncable.com"
+  },
+  {
+    "name": "Steve Gibson",
+    "positions": [
+      "Public Works Assistant Supervisor"
+    ],
+    "email": "Publicworks@stjohncable.com"
+  },
+  {
+    "name": "Steven Engles",
+    "positions": [
+      "Public Works Supervisor"
+    ],
+    "email": "publicworks2@stjohncable.com"
+  }
+]

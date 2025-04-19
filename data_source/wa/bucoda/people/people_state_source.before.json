@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Callie Carpenter",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "bucoda@scattercreek.com"
+  },
+  {
+    "name": "Mike  Finley",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bucoda@scattercreek.com"
+  },
+  {
+    "name": "Gary  Givens",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Steven Lyle",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "counlyle@scattercreek.com"
+  },
+  {
+    "name": "Alan Vanell",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "James M.B. Buzzard",
+    "positions": [
+      "Attorney"
+    ],
+    "email": "jim@buzzardlaw.com"
+  },
+  {
+    "name": "James Fowler",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Jim Fowler",
+    "positions": [
+      "Planning Commission Chair"
+    ],
+    "email": null
+  },
+  {
+    "name": "Thurston County Sheriff",
+    "positions": [
+      "Police Marshal"
+    ],
+    "email": null
+  },
+  {
+    "name": "Sonia Svach",
+    "positions": [
+      "Town Clerk/Treasurer"
+    ],
+    "email": "bucoda@scattercreek.com"
+  }
+]

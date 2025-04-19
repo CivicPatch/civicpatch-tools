@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Shawn O'Neill",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "soneill@cityofnapavine.com"
+  },
+  {
+    "name": "Duane  Crouse",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "dcrouse@cityofnapavine.com"
+  },
+  {
+    "name": "Heather  Stewart",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "hstewart@cityofnapavine.com"
+  },
+  {
+    "name": "Brian Watson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bwatson@cityofnapavine.com"
+  },
+  {
+    "name": "Don Webster",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "dwebster@cityofnapavine.com"
+  },
+  {
+    "name": "Ivan  Wiediger",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "iwiediger@cityofnapavine.com"
+  },
+  {
+    "name": "Rachelle  Denham",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "rdenham@cityofnapavine.com"
+  },
+  {
+    "name": "Michelle  Whitten",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": "mwhitten@cityofnapavine.com"
+  },
+  {
+    "name": "Lacie DeWitt",
+    "positions": [
+      "Court Administrator"
+    ],
+    "email": "ldewitt@cityofnapavine.com"
+  },
+  {
+    "name": "Allen C.  Unzelman",
+    "positions": [
+      "Municipal Court Judge"
+    ],
+    "email": null
+  },
+  {
+    "name": "John  Brockmueller",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "jbrokmueller@cityofnapavine.com"
+  },
+  {
+    "name": "Bryan Morris",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "bmorris@cityofnapavine.com"
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Peter Sharp",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "peters@soaplakewa.gov"
+  },
+  {
+    "name": "Kayleen  Bryson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "CM4@soaplakewa.gov"
+  },
+  {
+    "name": "John  Carlson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "CM2@soaplakewa.gov"
+  },
+  {
+    "name": "Susan  Carson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "CM5@soaplakewa.gov"
+  },
+  {
+    "name": "Judith  Gorman",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "CM7@soaplakewa.gov"
+  },
+  {
+    "name": "Eli Olson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "CM1@soaplakewa.gov"
+  },
+  {
+    "name": "JoAnn Rushton",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "CM6@soaplakewa.gov"
+  },
+  {
+    "name": "Karen  Woodhouse",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "CM3@soaplakewa.gov"
+  },
+  {
+    "name": "Ryan Cox",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "ryanc@soaplakewa.gov"
+  },
+  {
+    "name": "Cliff Sears",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "csears@nwi.net"
+  },
+  {
+    "name": "Coley Olson",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "coleyo@soaplakewa.gov"
+  },
+  {
+    "name": "Jeffrey  Balentine",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": null
+  },
+  {
+    "name": "Ryan Cox",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "slpd501@outlook.com"
+  },
+  {
+    "name": "Darrin Fronsman",
+    "positions": [
+      "Public Works Supervisor"
+    ],
+    "email": "cityhall@soaplakecity.org"
+  },
+  {
+    "name": "Tania Babak",
+    "positions": [
+      "Utility Clerk"
+    ],
+    "email": null
+  }
+]

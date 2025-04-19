@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Sue Svendsen",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "ssvendsen@longbeachwa.gov"
+  },
+  {
+    "name": "George  Coleman",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "gcoleman@longbeachwa.gov"
+  },
+  {
+    "name": "Mark  Perez",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mperez@longbeachwa.gov"
+  },
+  {
+    "name": "Larry Phelps",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "lphelps@longbeachwa.gov"
+  },
+  {
+    "name": "Ralph  Provenzano",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "rprovenzano@longbeachwa.gov"
+  },
+  {
+    "name": "Patrick  Reddy",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "preddy@longbeachwa.gov"
+  },
+  {
+    "name": "Richard  Jacoby",
+    "positions": [
+      "Building Inspector"
+    ],
+    "email": "rjacoby@longbeachwa.gov"
+  },
+  {
+    "name": "David Glasson",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "administrator@longbeachwa.gov"
+  },
+  {
+    "name": "Joel Penoyar",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Helen Bell",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": "hbell@longbeachwa.gov"
+  },
+  {
+    "name": "Ariel Smith",
+    "positions": [
+      "City Planner"
+    ],
+    "email": "asmith@longbeachwa.gov"
+  },
+  {
+    "name": "Kyle Jewell",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "kjewell@longbeachwa.gov"
+  },
+  {
+    "name": "Flint Wright",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "fwright@longbeachwa.gov"
+  },
+  {
+    "name": "Brian Loos",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "bloos@longbeachwa.gov"
+  }
+]

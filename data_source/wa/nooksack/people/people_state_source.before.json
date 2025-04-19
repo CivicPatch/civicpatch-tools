@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Kevin  Hester",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "kevin@cityofnooksack.com"
+  },
+  {
+    "name": "Dave Finet",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Collin Hester",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Marshall Judy",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Steve Neyens",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Randy Relethford",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Robert Carmichael",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "bob@CarmichaelClark.com"
+  },
+  {
+    "name": "Monica King",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": "monica@cityofnooksack.com"
+  },
+  {
+    "name": "Whatcom County Protection Dist. No. 1",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "mblankers@wcfd1.com"
+  },
+  {
+    "name": "Rollin Harper",
+    "positions": [
+      "Planning Consultant"
+    ],
+    "email": "rollinh@sehome.com"
+  },
+  {
+    "name": "Todd Daniels",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "todd@cityofnooksack.com"
+  }
+]

@@ -1,0 +1,33 @@
+---
+- name: Christine Frizzell
+  positions:
+  - Mayor
+  email: CFrizzell@lynnwoodwa.gov
+- name: Nick Coelho
+  positions:
+  - Council President
+  email: ncoelho@lynnwoodwa.gov
+- name: Almaderica "Derica" Escamilla
+  positions:
+  - Council Member
+  email: descamilla@lynnwoodwa.gov
+- name: David Parshall
+  positions:
+  - Council Member
+  email: dparshall@lynnwoodwa.gov
+- name: George Hurst
+  positions:
+  - Council Member
+  email: ghurst@lynnwoodwa.gov
+- name: Josh Binda
+  positions:
+  - Council Member
+  email: jbinda@lynnwoodwa.gov
+- name: Patrick Decker
+  positions:
+  - Council Member
+  email: Pdecker@lynnwoodwa.gov
+- name: Robert Leutwyler
+  positions:
+  - Council Member
+  email: rleutwyler@lynnwoodwa.gov

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Pete Daggett",
+    "positions": [
+      "Mayor"
+    ],
+    "email": null
+  },
+  {
+    "name": "Mike Flanagan",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "townofmetaline@outlook.com"
+  },
+  {
+    "name": "Jade  MacArthur",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Rick Reiber",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "townofmetaline@outlook.com"
+  },
+  {
+    "name": "Alicia Seaney",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "townofmetaline@outlook.com"
+  },
+  {
+    "name": "Janet Sullivan",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "townofmetaline@outlook.com"
+  },
+  {
+    "name": "Alison McGrane",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Kelly Flanagan",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "townofmetaline@ifiber.tv"
+  }
+]

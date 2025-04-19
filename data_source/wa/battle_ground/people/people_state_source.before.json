@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Troy McCoy",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "troy.mccoy@cityofbg.org"
+  },
+  {
+    "name": "Shane Bowman",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "email": "shane.bowman@cityofbg.org"
+  },
+  {
+    "name": "Tricia Davis",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "tricia.davis@cityofbg.org"
+  },
+  {
+    "name": "Cherish DesRochers",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cherish.desrochers@cityofbg.org"
+  },
+  {
+    "name": "Victoria  Ferrer",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "victoria.ferrer@cityofbg.org"
+  },
+  {
+    "name": "Jeanie Kuypers",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Jeanie.Kuypers@cityofbg.org"
+  },
+  {
+    "name": "Eric Overholser",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "eric.overholser@cityofbg.org"
+  },
+  {
+    "name": "Elizabeth  Halili",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "elizabeth.halili@cityofbg.org"
+  },
+  {
+    "name": "Kris Swanson",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "Kris.Swanson@cityofbg.org"
+  },
+  {
+    "name": "Alisha  Smith",
+    "positions": [
+      "Communications Manager/Public Information Officer"
+    ],
+    "email": "alisha.smith@cityofbg.org"
+  },
+  {
+    "name": "Kristin Lehto",
+    "positions": [
+      "Community Development Director"
+    ],
+    "email": "kristin.lehto@cityofbg.org"
+  },
+  {
+    "name": "Robert Ferrier",
+    "positions": [
+      "Deputy City Manager"
+    ],
+    "email": "robert.ferrier@cityofbg.org"
+  },
+  {
+    "name": "Meagan Lowery",
+    "positions": [
+      "Finance/Information Services Director"
+    ],
+    "email": "meagan.lowery@cityofbg.org"
+  },
+  {
+    "name": "Scott Sorenson",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "scott@fire3.org"
+  },
+  {
+    "name": "Tamara Gunter",
+    "positions": [
+      "Human Resources Manager"
+    ],
+    "email": "tamara.gunter@cityofbg.org"
+  },
+  {
+    "name": "Dan Oehler",
+    "positions": [
+      "Information Technology Manager"
+    ],
+    "email": "dan.oehler@cityofbg.org"
+  },
+  {
+    "name": "Dennis Flynn",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "dennis.flynn@cityofbg.org"
+  },
+  {
+    "name": "Mark Herceg",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "mark.herceg@cityofbg.org"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Margaret Estrada",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mestrada@wapato-city.org"
+  },
+  {
+    "name": "Rita  Alvarado",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "ralvarado@wapato-city.org"
+  },
+  {
+    "name": "Frances M. Ayres",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Frank Jaime",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "fjaime@wapato-city.org"
+  },
+  {
+    "name": "Caroline Solis",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Chuck Stephens",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cstephens@wapato-city.org"
+  },
+  {
+    "name": "Elizabeth Villa",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "evilla@wapato-city.org"
+  },
+  {
+    "name": "Ken  Workman",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "kworkman@wapato-city.org"
+  },
+  {
+    "name": "Kathy  Davis",
+    "positions": [
+      "Human Resources Director"
+    ],
+    "email": "kdavis@wapato-city.org"
+  },
+  {
+    "name": "Jeff Schumacker",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "jschumacker@wapato-city.org"
+  }
+]

@@ -1,0 +1,121 @@
+[
+  {
+    "name": "John Perry",
+    "positions": [
+      "Mayor"
+    ],
+    "email": null
+  },
+  {
+    "name": "Ashley Brown",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "abrown@ci.everson.wa.us"
+  },
+  {
+    "name": "Matthew Goering",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mgoering@ci.everson.wa.us"
+  },
+  {
+    "name": "John  Hammond",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jhammond@ci.everson.wa.us"
+  },
+  {
+    "name": "Tim Hanowell",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "thanowell@ci.everson.wa.us"
+  },
+  {
+    "name": "Jennifer  Lautenbach",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jlautenbach@ci.everson.wa.us"
+  },
+  {
+    "name": "Jon Sitkin",
+    "positions": [
+      "Attorney"
+    ],
+    "email": "jsitkin@chmelik.com"
+  },
+  {
+    "name": "Jack Faulkner",
+    "positions": [
+      "Building Official"
+    ],
+    "email": "jfaulkner@ci.everson.wa.us"
+  },
+  {
+    "name": "Alex Putnam",
+    "positions": [
+      "City Planner"
+    ],
+    "email": "aputnam@ci.everson.wa.us"
+  },
+  {
+    "name": "Rhonda Hanowell",
+    "positions": [
+      "Court Clerk"
+    ],
+    "email": "rhanowell@ci.everson.wa.us"
+  },
+  {
+    "name": "Savannah Larson",
+    "positions": [
+      "Deputy City Clerk/Treasurer"
+    ],
+    "email": "slarson@ci.everson.wa.us"
+  },
+  {
+    "name": "Mandy Hadeen",
+    "positions": [
+      "Finance Director/City Clerk"
+    ],
+    "email": "mhadeen@ci.everson.wa.us"
+  },
+  {
+    "name": "Thomas Lyden",
+    "positions": [
+      "Municipal Court Judge"
+    ],
+    "email": "judge@ci.everson.wa.us"
+  },
+  {
+    "name": "Dan MacPhee",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "dmacphee@ci.everson.wa.us"
+  },
+  {
+    "name": "Kelly Valum",
+    "positions": [
+      "Police Clerk"
+    ],
+    "email": "kvalum@ci.everson.wa.us"
+  },
+  {
+    "name": "David Schoonover",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "dschoonover@ci.everson.wa.us"
+  },
+  {
+    "name": "Jared Witman",
+    "positions": [
+      "Water/Sewer Superintendent"
+    ],
+    "email": "jwitman@ci.everson.wa.us"
+  }
+]

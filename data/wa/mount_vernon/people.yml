@@ -1,0 +1,33 @@
+---
+- name: Peter Donovan
+  positions:
+  - Mayor
+  email: mvmayor@mountvernonwa.gov
+- name: Andrew Vander Stoep
+  positions:
+  - Council Member
+  email: andrewv@mountvernonwa.gov
+- name: Gary Molenaar
+  positions:
+  - Council Member
+  email: garym@mountvernonwa.gov
+- name: Iris Carias
+  positions:
+  - Council Member
+  email: irisc@mountvernonwa.gov
+- name: Mary Hudson
+  positions:
+  - Council Member
+  email: maryh@mountvernonwa.gov
+- name: Melissa Beaton
+  positions:
+  - Council Member
+  email: melissab@mountvernonwa.gov
+- name: Navor Tercero
+  positions:
+  - Council Member
+  email: navort@mountvernonwa.gov
+- name: Richard Brocksmith
+  positions:
+  - Council Member
+  email: richardb@mountvernonwa.gov

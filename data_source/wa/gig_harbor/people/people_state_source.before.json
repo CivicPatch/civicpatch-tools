@@ -1,0 +1,135 @@
+[
+  {
+    "name": "Mary  Barber",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mbarber@gigharborwa.gov"
+  },
+  {
+    "name": "Ben Coronado",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bcoronado@gigharborwa.gov"
+  },
+  {
+    "name": "Reid Ekberg",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "rekberg@gigharborwa.gov"
+  },
+  {
+    "name": "Roger Henderson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "rhenderson@gigharborwa.gov"
+  },
+  {
+    "name": "Le Rodenberg",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "lrodenberg@gigharborwa.gov"
+  },
+  {
+    "name": "Em Stone",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "estone@gigharborwa.gov"
+  },
+  {
+    "name": "Seth  Storset",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sstorset@gigharborwa.gov"
+  },
+  {
+    "name": "Jeni Woock",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jwoock@gigharborwa.gov"
+  },
+  {
+    "name": "Daniel Kenny",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Paul Rice",
+    "positions": [
+      "Building Official/Fire Marshall"
+    ],
+    "email": "price@gigharborwa.gov"
+  },
+  {
+    "name": "Katrina Knutson",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "KKnutson@gigharborwa.gov"
+  },
+  {
+    "name": "Joshua Stecker",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "cityclerk@gigharborwa.gov"
+  },
+  {
+    "name": "Aaron Hulst",
+    "positions": [
+      "City Engineer"
+    ],
+    "email": "ahulst@gigharborwa.gov"
+  },
+  {
+    "name": "Eric Baker",
+    "positions": [
+      "Community Development Director"
+    ],
+    "email": "ebaker@gigharborwa.gov"
+  },
+  {
+    "name": "Dave Rodenbach",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "drodenbach@gigharborwa.gov"
+  },
+  {
+    "name": "Shannon  Costanti",
+    "positions": [
+      "Human Resources Director"
+    ],
+    "email": "scostanti@gigharborwa.gov"
+  },
+  {
+    "name": "Stacy Colberg",
+    "positions": [
+      "Municipal Court Administrator"
+    ],
+    "email": "scolberg@gigharborwa.gov"
+  },
+  {
+    "name": "Kelly Busey",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "kbusey@gigharborwa.gov"
+  },
+  {
+    "name": "Jeff Langhelm",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "jlanghelm@gigharborwa.gov"
+  }
+]

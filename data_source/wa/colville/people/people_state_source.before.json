@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Jack Smith",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "jacksmith@colville.wa.us"
+  },
+  {
+    "name": "Thomas Carpenter",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "thomascarpenter@colville.wa.us"
+  },
+  {
+    "name": "Ben Cosby",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bencosby@colville.wa.us"
+  },
+  {
+    "name": "Kim Gallo",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "kimgallo@colville.wa.us"
+  },
+  {
+    "name": "Robin Kurowski",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "robinkurowski@colville.wa.us"
+  },
+  {
+    "name": "Dick Nichols",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "richardnichols@colville.wa.us"
+  },
+  {
+    "name": "Ben Nielsen",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bennielsen@colville.wa.us"
+  },
+  {
+    "name": "Vickie Strong",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "vickiestrong@colville.wa.us"
+  },
+  {
+    "name": "Holly  Pannell, MMC, PFO",
+    "positions": [
+      "Administrative Services/Human Resources Director"
+    ],
+    "email": "hpannell@colville.wa.us"
+  },
+  {
+    "name": "Gary  VanDrew",
+    "positions": [
+      "Building Official/Inspector"
+    ],
+    "email": "gvandrew@colville.wa.us"
+  },
+  {
+    "name": "Logan Worley",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "logan@mcgraneschuerman.com"
+  },
+  {
+    "name": "Holly Pannell, MMC, PFO",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "hpannell@colville.wa.us"
+  },
+  {
+    "name": "Cheryl  Kaelber",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": "ckaelber@colville.wa.us"
+  },
+  {
+    "name": "Wayne Walker",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "firechief@colville.wa.us"
+  },
+  {
+    "name": "Holly Pannell, MMC, PFO",
+    "positions": [
+      "Human Resources Manager"
+    ],
+    "email": "hpannell@colville.wa.us"
+  },
+  {
+    "name": "Jillian Marshall",
+    "positions": [
+      "Parks/Recreation Director"
+    ],
+    "email": "jmarshall@colville.wa.us"
+  },
+  {
+    "name": "Robert Meshishnek",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "thechief@colville.wa.us"
+  },
+  {
+    "name": "David Harper",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "dharper@colville.wa.us"
+  }
+]

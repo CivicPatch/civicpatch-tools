@@ -1,0 +1,93 @@
+[
+  {
+    "name": "René  Maldanodo",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@tonasketwa.gov"
+  },
+  {
+    "name": "Matt  Alexander",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council5@tonasketwa.gov"
+  },
+  {
+    "name": "Patti  Hill",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council3@tonasketwa.gov"
+  },
+  {
+    "name": "Teagan  Levine",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council1@tonasketwa.gov"
+  },
+  {
+    "name": "Jeff  McMIllan",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Alisa Weddle",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "alisa@tonasket.org"
+  },
+  {
+    "name": "Michael D. Howe",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Alice  Attwood",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": "clerktreasurer@tonasketwa.gov"
+  },
+  {
+    "name": "Darren Johnson",
+    "positions": [
+      "City Superintendent"
+    ],
+    "email": "djohnson.tonasket@nvinet.com"
+  },
+  {
+    "name": "Gay  Seydlitz",
+    "positions": [
+      "Court Clerk"
+    ],
+    "email": "utilityclerk@tonasketwa.gov"
+  },
+  {
+    "name": "Joël Pilkinton",
+    "positions": [
+      "Deputy City Clerk/Treasurer"
+    ],
+    "email": "jpilkinton@tonasketcity.org"
+  },
+  {
+    "name": "Darren  Johnson",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": "djohnson.tonasket@nvinet.com"
+  },
+  {
+    "name": "Gay Seydlitz",
+    "positions": [
+      "Utility Clerk"
+    ],
+    "email": "utilityclerk@tonasketwa.gov"
+  }
+]

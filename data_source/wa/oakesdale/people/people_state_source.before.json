@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Dennis Palmer",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "townofoakesdale@msn.com"
+  },
+  {
+    "name": "Bill Auvil",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "NULL"
+  },
+  {
+    "name": "Shon Eck",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "shonjeck@gmail.com"
+  },
+  {
+    "name": "Claudia Louk",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "NULL"
+  },
+  {
+    "name": "Bruce  Palmer",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Randy Robinson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "robinsonrl@msn.com"
+  },
+  {
+    "name": "Mary DeGon",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "townofoakesdale@msn.com"
+  },
+  {
+    "name": "Pam Jacobs",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "townofoakesdale@msn.com"
+  },
+  {
+    "name": "Eric Hanson",
+    "positions": [
+      "Town Attorney"
+    ],
+    "email": "ehanson@palouse.net"
+  },
+  {
+    "name": "Keith Cooper",
+    "positions": [
+      "Town Marshal"
+    ],
+    "email": "KeithC@whitmancounty.net"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Juan Villalpando",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayorjuan@cityofgeorge.org"
+  },
+  {
+    "name": "Brulee Hoskins",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "council1@cityofgeorge.org"
+  },
+  {
+    "name": "Debby Kooy",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "council3@cityofgeorge.org"
+  },
+  {
+    "name": "Julia Schooler",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Kate Schooler",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Patricia Neff",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Jessica Rossman",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "jrossman@medina-wa.gov"
+  },
+  {
+    "name": "Randy Reeves",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "email": "rreeves@medina-wa.gov"
+  },
+  {
+    "name": "Joseph Brazen",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jbrazen@medina-wa.gov"
+  },
+  {
+    "name": "Harini Gokul",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "hgokul@medina-wa.gov"
+  },
+  {
+    "name": "Mac Johnston",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mjohnston@medina-wa.gov"
+  },
+  {
+    "name": "Michael Luis",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mluis@medina-wa.gov"
+  },
+  {
+    "name": "Heija Nunn",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "hnunn@medina-wa.gov"
+  },
+  {
+    "name": "Aimee Kellerman",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "akellerman@medina-wa.gov"
+  },
+  {
+    "name": "Steve  Burns",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "sburns@medina-wa.gov"
+  },
+  {
+    "name": "Dawn Nations",
+    "positions": [
+      "Deputy City Clerk"
+    ],
+    "email": "dnations@medina-wa.gov"
+  },
+  {
+    "name": "Steve Wilcox",
+    "positions": [
+      "Development Services Director"
+    ],
+    "email": "swilcox@medina-wa.gov"
+  },
+  {
+    "name": "Ryan Wagner",
+    "positions": [
+      "Finance/Human Resources Director"
+    ],
+    "email": "rwagner@medina-wa.gov"
+  },
+  {
+    "name": "Jeff Sass",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "jsass@medina-wa.gov"
+  },
+  {
+    "name": "Ryan Osada",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "rosada@medina-wa.gov"
+  }
+]

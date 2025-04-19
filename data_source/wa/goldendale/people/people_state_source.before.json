@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Dave  Jones",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "djones@ci.goldendale.wa.us"
+  },
+  {
+    "name": "Ellie  Casey",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Danielle Clevidence",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "daniclevi@yahoo.com"
+  },
+  {
+    "name": "Andy Halm",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Steve Johnston",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Loren Meagher",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Miland Waling",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Theone Wheeler",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "moto@startmail.com"
+  },
+  {
+    "name": "Mike Hussey",
+    "positions": [
+      "Building/Code Enforcement/Planning"
+    ],
+    "email": "mhussey@ci.goldendale.wa.us"
+  },
+  {
+    "name": "Sandy  Wells",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "swells@ci.goldendale.wa.us"
+  },
+  {
+    "name": "Menke Jackson Beyer Elofson Ehlis & Harper",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Shelly Enderby",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": null
+  },
+  {
+    "name": "Noah Halm",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "NHalm@ci.goldendale.wa.us"
+  },
+  {
+    "name": "Mike Smith",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "msmith@ci.goldendale.wa.us"
+  }
+]

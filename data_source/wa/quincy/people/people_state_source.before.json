@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Paul Worley",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "pworley@quincywashington.us"
+  },
+  {
+    "name": "Dave  Dormier",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Josey Ferguson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jferguson@quincywashington.us"
+  },
+  {
+    "name": "Tom Harris",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "tharris@quincywashington.us"
+  },
+  {
+    "name": "Dylan Kling",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "dkling@quincywashington.us"
+  },
+  {
+    "name": "Jim Kling",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Andrew Royer",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "aroyer@quincywashington.us"
+  },
+  {
+    "name": "Jeff  Spence",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Danielle Marchant",
+    "positions": [
+      "Attorney"
+    ],
+    "email": "Danielle@dadkp.com"
+  },
+  {
+    "name": "Pat Haley",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "phaley@quincywashington.us"
+  },
+  {
+    "name": "Stephanie Boorman",
+    "positions": [
+      "City Clerk/Public Records Officer"
+    ],
+    "email": "skeller@quincywashington.us"
+  },
+  {
+    "name": "Ariel Belino",
+    "positions": [
+      "City Engineer"
+    ],
+    "email": "abelino@quincywashington.us"
+  },
+  {
+    "name": "Laura Camacho",
+    "positions": [
+      "Deputy Finance Director"
+    ],
+    "email": "lcamacho@quincywashington.us"
+  },
+  {
+    "name": "Carrie Lnenicka",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "clnenicka@quincywashington.us"
+  },
+  {
+    "name": "David Durfee",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "ddurfee@gcfd3.net"
+  },
+  {
+    "name": "Schiree Ybarra",
+    "positions": [
+      "Librarian"
+    ],
+    "email": null
+  },
+  {
+    "name": "Carl Worley",
+    "positions": [
+      "Municipal Services Director"
+    ],
+    "email": "cworley@quincywashington.us"
+  },
+  {
+    "name": "Ryan Green",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "rgreen@quincypd.org"
+  },
+  {
+    "name": "Howard VanBaugh",
+    "positions": [
+      "Public Works Maintenance Supervisor"
+    ],
+    "email": "hvanbaugh@quincywashington.us"
+  },
+  {
+    "name": "Russ Harrington",
+    "positions": [
+      "Recreation Director"
+    ],
+    "email": "rharrington@quincywashington.us"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Jeff Sellers",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@townofwilkeson.com"
+  },
+  {
+    "name": "Krista  Farmer",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Rick Sellers",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "rsellers@townofwilkeson.com"
+  },
+  {
+    "name": "William Summers",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Bambi Thawsh",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Mark Zumba",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mzumba@townofwilkeson.com"
+  },
+  {
+    "name": "Michael J. Reynolds",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Marie Wellock",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "clerk@townofwilkeson.com"
+  },
+  {
+    "name": "Shelly Undlin",
+    "positions": [
+      "Court Clerk"
+    ],
+    "email": null
+  },
+  {
+    "name": "Luke Wilbanks",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": "lwilbanks@townofwilkeson.com"
+  }
+]

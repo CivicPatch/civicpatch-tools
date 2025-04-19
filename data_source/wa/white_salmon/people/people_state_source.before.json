@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Marla Keethler",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Patty Fink",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "pattyf@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Ben Giant",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "beng@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Jason Hartmann",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jasonh@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "David Lindley",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "davidl@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Jim Ransier",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jimr@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Troy Rayburn",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "administrator@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Shawn  MacPherson",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "macphersonlaw@comcast.net"
+  },
+  {
+    "name": "Troy Rosenburg",
+    "positions": [
+      "Deputy Clerk/Utility Clerk"
+    ],
+    "email": "utilityclerk@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Jennifer Neils",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "jennifern@whitesalmonwa.gov"
+  },
+  {
+    "name": "Bill Hunsaker",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "billh@ci.white-salmon.wa.us"
+  },
+  {
+    "name": "Mike Hepner",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "mike@bwspolice.com"
+  },
+  {
+    "name": "Andrew  Dirks",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "Andrewd@ci.white-salmon.wa.us"
+  }
+]

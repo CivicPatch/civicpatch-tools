@@ -1,0 +1,29 @@
+---
+- name: Jim Kastama
+  positions:
+  - Mayor
+  email: jkastama@puyallupwa.gov
+- name: Dennis King
+  positions:
+  - Deputy Mayor
+  email: dking@puyallupwa.gov
+- name: Ned Witting
+  positions:
+  - Deputy Mayor
+  email: nwitting@puyallupwa.gov
+- name: Dean Johnson
+  positions:
+  - Council Member
+  email: djohnson@puyallupwa.gov
+- name: Julie Door
+  positions:
+  - Council Member
+  email: jdoor@puyallupwa.gov
+- name: Lauren Adler
+  positions:
+  - Council Member
+  email: ladler@puyallupwa.gov
+- name: Renne Gilliam
+  positions:
+  - Council Member
+  email: rgilliam@puyallupwa.gov

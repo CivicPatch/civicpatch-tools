@@ -1,0 +1,33 @@
+---
+- name: Brett Gailey
+  positions:
+  - Mayor
+  email: bgailey@lakestevenswa.gov
+- name: Anji Jorstad
+  positions:
+  - Council Member
+  email: ajorstad@lakestevenswa.gov
+- name: Gary Petershagen
+  positions:
+  - Council Member
+  email: gpetershagen@lakestevenswa.gov
+- name: Kim Daughtry
+  positions:
+  - Council Member
+  email: kdaughtry@lakestevenswa.gov
+- name: Kymm Shipman
+  positions:
+  - Council Member
+  email: kshipman@lakestevenswa.gov
+- name: Marcus Tageant
+  positions:
+  - Council Member
+  email: mtageant@lakestevenswa.gov
+- name: Ryan Donoghue
+  positions:
+  - Council Member
+  email: rdonoghue@lakestevenswa.gov
+- name: Steve Ewing
+  positions:
+  - Council Member
+  email: sewing@lakestevenswa.gov

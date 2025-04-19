@@ -5,13 +5,16 @@ require_relative "./person_manager/utils"
 module Core
   class PeopleManager
     def self.get_people(state, gnis, type = nil)
-
       if type.present?
         people_file_path = PathHelper.get_people_candidates_file_path(state, gnis, type)
         content = JSON.parse(File.read(people_file_path))
       else
         people_file_path = File.join(PathHelper.get_data_city_path(state, gnis), "people.yml")
-        content = YAML.safe_load(File.read(people_file_path))
+        content = if File.exist?(people_file_path)
+                    YAML.safe_load(File.read(people_file_path))
+                  else
+                    []
+                  end
       end
 
       content

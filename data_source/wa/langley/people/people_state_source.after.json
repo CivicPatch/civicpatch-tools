@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Kennedy Horstman",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@langleywa.org"
+  },
+  {
+    "name": "Chris Carlson",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Craig Cyr",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "council@langleywa.org"
+  },
+  {
+    "name": "Gail Fleming",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Harolynne Bobis",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Rhonda Salerno",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  }
+]

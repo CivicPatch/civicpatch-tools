@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Randall Sasser",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@cityofmossyrock.com"
+  },
+  {
+    "name": "Craig  Byrum",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Shannon  Mcarron",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Beatrice  Minnear",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Teresa Quinlan",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cityofmossyrock@tds.net"
+  },
+  {
+    "name": "Juliana Simon",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "James M. Buzzard",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "jim@buzzardlaw.com"
+  },
+  {
+    "name": "Linda  Hannon",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "clerk@cityofmossyrock.com"
+  },
+  {
+    "name": "Jessica Bragg",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": "treasurer@cityofmossyrock.com"
+  }
+]

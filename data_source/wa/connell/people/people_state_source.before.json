@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Lee  Barrow",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "lbarrow@connellwa.org"
+  },
+  {
+    "name": "Patricia  Barrera",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "pbarrera@connellwa.org"
+  },
+  {
+    "name": "Joe Escalera",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Shelly Harper",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sharper@connellwa.org"
+  },
+  {
+    "name": "Preston  Hart",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "phart@connellwa.org"
+  },
+  {
+    "name": "John  White",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jwhite@connellwa.org"
+  },
+  {
+    "name": "Kelly Hogan",
+    "positions": [
+      "Accounting Clerk"
+    ],
+    "email": "khogan@connellwa.org"
+  },
+  {
+    "name": "Heather  Keel",
+    "positions": [
+      "Accounting Clerk"
+    ],
+    "email": "hkeel@connellwa.org"
+  },
+  {
+    "name": "Cathleen Koch",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "ckoch@Connellwa.org"
+  },
+  {
+    "name": "Marissa  Ortiz",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "mortiz@connellwa.org"
+  },
+  {
+    "name": "Teresa  Steele",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": "tsteele@Connellwa.org"
+  },
+  {
+    "name": "Ken  Woffenden",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Chris Lee",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "clee@connellwa.org"
+  },
+  {
+    "name": "Toni  Hoffman",
+    "positions": [
+      "Police Clerk"
+    ],
+    "email": "thoffman@connellwa.org"
+  },
+  {
+    "name": "Hallie  Tuck",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "htuck@connellwa.org"
+  }
+]

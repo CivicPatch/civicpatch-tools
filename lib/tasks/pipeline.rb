@@ -10,6 +10,7 @@ require_relative "../tasks/city_scrape/state_manager"
 require_relative "../core/search_router"
 require_relative "../sources/state_source/city_people"
 require_relative "../core/people_manager"
+require_relative "../scrapers/local_officials_scraper"
 
 namespace :pipeline do
   desc "Pick cities from queue"
@@ -52,7 +53,7 @@ namespace :pipeline do
     source_urls = fetch_with_scrape(state, gnis, government_type) # Web scrape
     fetch_with_gemini(state, city_entry, government_type, source_urls) # Gemini
 
-    aggregate_sources(state, city_entry, government_type)
+    aggregate_sources(state, city_entry, government_type, sources: %w[gemini openai state_source])
     # Create config.yml for the city
     create_config_yml(state, city_entry)
 
@@ -60,16 +61,33 @@ namespace :pipeline do
     remove_cache_folders(state, city_entry, people)
   end
 
-  def fetch_with_source(state, city_entry, government_type)
-    gnis = city_entry["gnis"]
+  desc "Scrape city offficials from a state-level source"
+  task :fetch_from_state_source, [:state] do |_t, args|
+    state = args[:state]
+    government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
+
+    municipalities = CityScrape::StateManager.get_state_places(state)["places"]
+    filtered_municipalities = municipalities.select do |m|
+      people = Core::PeopleManager.get_people(state, m["gnis"])
+      people.empty?
+    end
+
+    filtered_municipalities.each do |municipality|
+      fetch_with_source(state, municipality, government_type)
+      aggregate_sources(state, municipality, government_type, sources: %w[state_source])
+    end
+  end
+
+  def fetch_with_source(state, municipality, government_type)
+    gnis = municipality["gnis"]
     positions_config = Core::CityManager.get_positions(government_type)
 
     # This call can fail if the state source is down (e.g. MRSC.org for WA)
     begin
-      source_city_people = Sources::StateSource::CityPeople.get_city_people(state, gnis)
-      Core::PeopleManager.update_people(state, city_entry, source_city_people, "state_source.before")
+      source_city_people = Scrapers::LocalOfficialScraper.fetch_with_state_source(state, municipality)
+      Core::PeopleManager.update_people(state, municipality, source_city_people, "state_source.before")
       formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, positions_config)
-      Core::PeopleManager.update_people(state, city_entry, formatted_source_city_people, "state_source.after")
+      Core::PeopleManager.update_people(state, municipality, formatted_source_city_people, "state_source.after")
     rescue StandardError => e
       puts "Error pulling from state source: #{e}"
       puts "Backtrace: #{e.backtrace}"
@@ -118,7 +136,7 @@ namespace :pipeline do
     Core::PeopleManager.update_people(state, city_entry, formatted_gemini_people, "gemini.after")
   end
 
-  def aggregate_sources(state, city_entry, government_type)
+  def aggregate_sources(state, city_entry, government_type, sources: [])
     gnis = city_entry["gnis"]
     positions_config = Core::CityManager.get_positions(government_type)
     validated_result = Validators::CityPeople.validate_sources(state, gnis)
@@ -134,7 +152,8 @@ namespace :pipeline do
                                                      "meta_updated_at" => Time.now
                                                       .in_time_zone("America/Los_Angeles")
                                                       .strftime("%Y-%m-%d"),
-                                                     "meta_hash" => city_people_hash }
+                                                     "meta_hash" => city_people_hash,
+                                                     "meta_sources" => sources }
                                                  ])
   end
 

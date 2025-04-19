@@ -1,0 +1,29 @@
+---
+- name: Sean P. Kelly
+  positions:
+  - Mayor
+  email: sean.kelly@maplevalleywa.gov
+- name: Dana Parnello
+  positions:
+  - Deputy Mayor
+  email: dana.parnello@maplevalleywa.gov
+- name: Didem Pierson
+  positions:
+  - Council Member
+  email: didem.pierson@maplevalleywa.gov
+- name: John Herbert
+  positions:
+  - Council Member
+  email: john.herbert@maplevalleywa.gov
+- name: Les Burberry
+  positions:
+  - Council Member
+  email: council@maplevalleywa.gov
+- name: Syd Dawson
+  positions:
+  - Council Member
+  email: council@maplevalleywa.gov
+- name: Victoria Schroff
+  positions:
+  - Council Member
+  email: victoria.schroff@maplevalleywa.gov

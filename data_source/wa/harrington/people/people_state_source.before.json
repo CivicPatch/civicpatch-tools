@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Joseph Armand",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@harrington.city"
+  },
+  {
+    "name": "David Buddrius",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Stephen Hardy",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Chris Meats",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "chris.meats@harrington.city"
+  },
+  {
+    "name": "Crayton Oestreich",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "crayton.oestreich@harrington.city"
+  },
+  {
+    "name": "Gavin Wagner",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "gavin.wagner@harrington.city"
+  },
+  {
+    "name": "David  Bingaman",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "david@nwcorporatecounsel.com"
+  },
+  {
+    "name": "Cassandra Nixon",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "clerk@harrington.city"
+  },
+  {
+    "name": "Dee Ann Edwards",
+    "positions": [
+      "Deputy Clerk"
+    ],
+    "email": "clerk@harrington.city"
+  },
+  {
+    "name": "Brandon  Larmer",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Lincoln County (Contract)",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": null
+  }
+]

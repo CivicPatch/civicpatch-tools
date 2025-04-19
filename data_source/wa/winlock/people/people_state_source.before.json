@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Brandon  Svenson",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@cityofwinlock.com"
+  },
+  {
+    "name": "Jeramy Allman",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council4@cityofwinlock.com"
+  },
+  {
+    "name": "Lindsey Alvord",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council5@cityofwinlock.com"
+  },
+  {
+    "name": "Jess Bowers",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council1@cityofwinlock.com"
+  },
+  {
+    "name": "Chuck Camps",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council2@cityofwinlock.com"
+  },
+  {
+    "name": "Jodie Curtis",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council3@cityofwinlock.com"
+  },
+  {
+    "name": "Cris Dodd",
+    "positions": [
+      "Administrative Assistant"
+    ],
+    "email": "winac@cityofwinlock.com"
+  },
+  {
+    "name": "Stormy Bradley",
+    "positions": [
+      "Billing Clerk"
+    ],
+    "email": "wincdclerk@cityofwinlock.com"
+  },
+  {
+    "name": "Jillian Davis",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": "wintrea@cityofwinlock.com"
+  },
+  {
+    "name": "Robert Webster",
+    "positions": [
+      "Community Development Director/City Planner"
+    ],
+    "email": "winplan@cityofwinlock.com"
+  },
+  {
+    "name": "Stephen Valentine",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "wpd901@cityofwinlock.com"
+  },
+  {
+    "name": "Deavon Jacobson",
+    "positions": [
+      "Police Clerk"
+    ],
+    "email": "wpdclerk@cityofwinlock.com"
+  },
+  {
+    "name": "Kenny Simpson",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": "winpw@cityofwinlock.com"
+  },
+  {
+    "name": "Rodney Cecil",
+    "positions": [
+      "Water/Sewer Superintendent"
+    ],
+    "email": "winws@cityofwinlock.com"
+  }
+]

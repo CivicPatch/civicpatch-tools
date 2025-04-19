@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Chris Miller",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "chrism@cityofmccleary.com"
+  },
+  {
+    "name": "Andrea Dahl",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Brent Schiller",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Brycen Huff",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "byrcenh@cityofmccleary.com"
+  },
+  {
+    "name": "Jacob Simmons",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Keith Klimek",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  }
+]

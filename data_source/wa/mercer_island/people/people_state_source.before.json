@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Salim Nice",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "salim.nice@mercergov.org"
+  },
+  {
+    "name": "David Rosenbaum",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "email": "david.rosenbaum@mercergov.org"
+  },
+  {
+    "name": "Lisa Anderl",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "lisa.anderl@mercergov.org"
+  },
+  {
+    "name": "Craig Reynolds",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "craig.reynolds@mercergov.org"
+  },
+  {
+    "name": "Wendy Weiker",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "wendy.weiker@mercergov.org"
+  },
+  {
+    "name": "Ted Weinberg",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "ted.weinberg@mercerisland.gov"
+  },
+  {
+    "name": "Allison Spietz",
+    "positions": [
+      "Chief of Administration"
+    ],
+    "email": "ali.spietz@mercergov.org"
+  },
+  {
+    "name": "Jason Kintner",
+    "positions": [
+      "Chief of Operations/Public Works Director"
+    ],
+    "email": "jason.kintner@mercergov.org"
+  },
+  {
+    "name": "Bio Park",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "bio.park@mercergov.org"
+  },
+  {
+    "name": "Andrea Larson",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "andrea.larson@mercerisland.gov"
+  },
+  {
+    "name": "Patrick Yamashita",
+    "positions": [
+      "City Engineer"
+    ],
+    "email": "patrick.yamashita@mercergov.org"
+  },
+  {
+    "name": "Jessi Bon",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "jessi.bon@mercergov.org"
+  },
+  {
+    "name": "Jeff Thomas",
+    "positions": [
+      "Community Planning/Development Director"
+    ],
+    "email": "jeff.thomas@mercerisland.org"
+  },
+  {
+    "name": "Matt Mornick",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "matt.mornick@mercergov.org"
+  },
+  {
+    "name": "Jeff Gregory",
+    "positions": [
+      "Municipal Court Judge"
+    ],
+    "email": "jeff.gregory@mercerisland.gov"
+  },
+  {
+    "name": "Chris Sutter",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "chris.sutter@mercerisland.gov"
+  },
+  {
+    "name": "Alanna DeRogatis",
+    "positions": [
+      "Sustainability Analyst"
+    ],
+    "email": "alanna.derogatis@mercerisland.gov"
+  }
+]

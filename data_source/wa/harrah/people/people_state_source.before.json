@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Barbara Harrer",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "townharrah@embarqmail.com"
+  },
+  {
+    "name": "Patricia Krueger",
+    "positions": [
+      "Mayor"
+    ],
+    "email": null
+  },
+  {
+    "name": "Ben Dulaney",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Avelina Garcia",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Ann Glover",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Kathryn Henry",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "John E. Maxwell",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Sarah Hovis",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "townhall@harrahwa.us"
+  },
+  {
+    "name": "Paul Diefenbach",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "publicworks@harrahwa.us"
+  }
+]

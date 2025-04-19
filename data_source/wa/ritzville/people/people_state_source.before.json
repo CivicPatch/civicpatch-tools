@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Scott Yaeger",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "scott.yaeger@ritzville-wa.us"
+  },
+  {
+    "name": "Dennis  Chamberlain",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "dennis.chamberlain@ritzville-wa.us"
+  },
+  {
+    "name": "William Green",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "william.green@ritzville-wa.us"
+  },
+  {
+    "name": "Michelle  Plumb",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "michelle.plumb@ritzville-wa.us"
+  },
+  {
+    "name": "Jessica Quinn",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jessica.quinn@ritzville-wa.us"
+  },
+  {
+    "name": "Brooke Scheel",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "brookescheel@ritzville-wa.us"
+  },
+  {
+    "name": "Mike Schrag",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Jen Verhey",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jen.verhey@ritzville-wa.us"
+  },
+  {
+    "name": "John  Kragt",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Julie Flyckt",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "Julie.Flyckt@ritzville-wa.us"
+  },
+  {
+    "name": "Joel Bell",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "fire.chief@ritzville-wa.us"
+  },
+  {
+    "name": "Bill Benner",
+    "positions": [
+      "Interim Police Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Dave Breazeale",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "dave.breazeale@ritzville-wa.us"
+  }
+]

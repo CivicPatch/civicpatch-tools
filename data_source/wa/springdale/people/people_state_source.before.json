@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Stefany Smith",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "Ssmithtownofspringdale@gmail.com"
+  },
+  {
+    "name": "Christine Cannon",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Paul Dean",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "springdale.townhall@gmail.com"
+  },
+  {
+    "name": "Klaus Joeschke",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "springdale.townhall@gmail.com"
+  },
+  {
+    "name": "Lori Newell",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "springdale.townhall@gmail.com"
+  }
+]

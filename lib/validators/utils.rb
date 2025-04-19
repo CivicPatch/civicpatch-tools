@@ -226,6 +226,8 @@ module Validators
     end
 
     def self.merge_people_across_sources(sources)
+      return sources.first[:people] if sources.count == 1
+
       merged = []
 
       unique_names = get_unique_names(sources)
@@ -313,6 +315,7 @@ module Validators
 
         source[:people].each do |person|
           next unless person && person["name"]
+
           full_name = person["name"].to_s.strip
           next if full_name.empty?
 
