@@ -1,11 +1,5 @@
 name: Fetch City Representatives
 
-# Number of cities to process in each workflow run
-env:
-  OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
-  BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
-  GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
-
 on:
   workflow_dispatch:
     inputs:
@@ -24,6 +18,9 @@ on:
 
 jobs:
   get_cities_from_queue:
+    environment: 
+      name: env-${{ github.actor }}
+
     runs-on: ubuntu-latest
     outputs:
       cities: ${{ steps.set-cities.outputs.cities }}
@@ -60,6 +57,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   populate_city_directory:
+    environment: 
+      name: env-${{ github.actor }}
+    env:
+      OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
+      BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
+      GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
     timeout-minutes: 10
     permissions:
       contents: write
@@ -83,11 +86,11 @@ jobs:
           bundler-cache: true
 
       - name: Generate GitHub App Token
-        id: generate-token
+        id: generate-pipeline-token
         uses: actions/create-github-app-token@v2
         with:
-            app-id: ${{ secrets.GH_APP_BOT_APP_ID }}
-            private-key: ${{ secrets.GH_APP_BOT_PRIVATE_KEY }}
+            app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+            private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
 
       - name: Install dependencies
         run: |
@@ -95,8 +98,8 @@ jobs:
 
       - name: Set up git
         run: |
-          git config --global user.name "Civic Patch Bot"
-          git config --global user.email "civic-patch-bot[bot]@users.noreply.github.com"
+          git config --global user.name "Civic Patch Pipeline Bot"
+          git config --global user.email "civic-patch-pipeline-bot[bot]@users.noreply.github.com"
 
       - name: Create a new branch for changes
         run: |
@@ -141,6 +144,7 @@ jobs:
             --base main \
             --head ${{ env.BRANCH_NAME }} \
             --title "Populate city info for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}" \
-            --body "$COMMENT"
+            --body "$COMMENT" \
+            --label "env-${{ github.actor }}"
         env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
