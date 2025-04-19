@@ -8,7 +8,31 @@ on:
       - '**/config.yml'
 
 jobs:
+  validate-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.check-label.outputs.env_name }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for environment label
+        id: check-label
+        run: |
+          # Loop through PR labels and find one that starts with "env-"
+          for label in "${{ github.event.pull_request.labels[*].name }}"; do
+            if [[ "$label" == env-* ]]; then
+              echo "Matched label $label, using it for the environment"
+              echo "env_name=$label" >> $GITHUB_ENV
+              exit 0
+            fi
+          done
+          echo "No env-* label found. Exiting."
+          exit 1
+
   validate-changes:
+    needs: validate-environment
     runs-on: ubuntu-latest
     outputs:
       should-continue: ${{ steps.check-files.outputs.should-continue }}
@@ -36,7 +60,8 @@ jobs:
           fi
   
   run-pipeline-city-fetch:
-    needs: validate-changes
+    needs: [validate-environment, validate-changes]
+    environment: ${{ needs.validate-environment.outputs.env_name }} 
     if: needs.validate-changes.outputs.should-continue == 'true'
     runs-on: ubuntu-latest
 
@@ -53,11 +78,11 @@ jobs:
           bundler-cache: true
       
       - name: Generate GitHub App Token
-        id: generate-civicpatch-token
+        id: generate-pipeline-token
         uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ secrets.GH_APP_BOT_APP_ID }}
-          private-key: ${{ secrets.GH_APP_BOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
 
       - name: Install dependencies
         run: |
@@ -83,10 +108,10 @@ jobs:
       
       - name: Commit Changes to current branch
         env:
-          GITHUB_TOKEN: ${{ steps.generate-civicpatch-token.outputs.token }}
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
         run: |
-          git config --global user.name "Civic Patch Bot"
-          git config --global user.email "civic-patch-bot[bot]@users.noreply.github.com"
+          git config --global user.name "Civic Patch Pipeline Bot"
+          git config --global user.email "civic-patch-pipeline-bot[bot]@users.noreply.github.com"
 
           git add .
           git commit -m "Config changes for ${{ env.BRANCH_NAME }}"
