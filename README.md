@@ -24,35 +24,15 @@ rake 'city_scrape:get_places[mi]'
 
 ## Priorities
 ### Washington
-- [ ] Top 10 cities by population
-- [ ] Bottom 10 cities by population
-- [ ] Executive branch officials
-- [ ] CD Map
-
-### City Directory
-- [ ] Grab council members & city leaders for:
-  - [ ] Washington
-    - [ ] Top 20 cities by population
-  - [ ] Alabama
-    - [ ] Top 20 cities by population
-
-### State Directory
-- [ ] Grab info for:
-  - [ ] Washington
-    - [ ] Executive branch officials
-    - [ ] CD Maps
-  - [ ] California
-    - [ ] Executive branch officials
-    - [ ] CD Maps
-  - [ ] Texas
-    - [ ] Executive branch officials
-    - [ ] CD Map 
-  - [ ] Florida
-    - [ ] Executive branch officials
-    - [ ] CD Map
-  - [ ] New York
-    - [ ] Executive branch officials
-    - [ ] CD Map
+- **State local officials directory (unofficial)**: https://mrsc.org/mrsctools/officials-directory/city.aspx
+### Oregon
+- **State local officials directory (unofficial)**: https://www.orcities.org/resources/reference/city-directory
+### California
+- **State local officials directory (official SOS)**: 
+  - https://www.sos.ca.gov/administration/california-roster (2024 only)
+### Idaho (TBD)
+- **State local officials directory (unofficial)**:
+  - https://idahocities.org/store/ListProducts.aspx?catid=440197 (not scrapeable -- must be a member)
 
 ### Country Directory
 - [ ] Maps of states

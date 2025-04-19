@@ -1,5 +1,3 @@
-require_relative "../scrapers/city_directory"
-
 module Core
   class SearchRouter
     def self.fetch_search_results(engine, state, city_entry, government_type)
