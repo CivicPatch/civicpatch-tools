@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Juan Villalpando",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayorjuan@cityofgeorge.org"
+  },
+  {
+    "name": "Brulee Hoskins",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council1@cityofgeorge.org"
+  },
+  {
+    "name": "Debby Kooy",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council3@cityofgeorge.org"
+  },
+  {
+    "name": "Patricia Neff",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Kate Schooler",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Julia Schooler",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Kaitlin Schilling",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "kschilling@omwlaw.com"
+  },
+  {
+    "name": "Chuck  Zimmerman",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "czimmerman@omwlaw.com"
+  },
+  {
+    "name": "Amy  Grace",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": "cityclerk@cityofgeorge.org"
+  },
+  {
+    "name": "Alex Kovach",
+    "positions": [
+      "Planning Administrator"
+    ],
+    "email": "alex@kovacharchitects.com"
+  },
+  {
+    "name": "Aaron Harwood",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": "pwd@cityofgeorge.org"
+  }
+]

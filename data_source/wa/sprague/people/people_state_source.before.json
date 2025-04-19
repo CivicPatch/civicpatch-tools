@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Shawn Coombs",
+    "positions": [
+      "Mayor"
+    ],
+    "email": null
+  },
+  {
+    "name": "Alice Callen",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cityhall@sprague-wa.us"
+  },
+  {
+    "name": "Scooter Dearing",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Sunyalie Fortin",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Patricia Kanan",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "NULL"
+  },
+  {
+    "name": "Jeff Smith",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Heather  Krauter",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": "cityhall@sprague-wa.us"
+  },
+  {
+    "name": "Merrin  Lawrence",
+    "positions": [
+      "Deputy Clerk/Librarian"
+    ],
+    "email": "deputyclerk@sprague-wa.us"
+  },
+  {
+    "name": "Lincoln County Fire District #1",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Sheriff's Office Lincoln County",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Heather  Krauter",
+    "positions": [
+      "Public Records Officer"
+    ],
+    "email": "cityhall@sprague-wa.us"
+  },
+  {
+    "name": "Justin Sauer",
+    "positions": [
+      "Public Works"
+    ],
+    "email": "publicworks@sprague-wa.us"
+  }
+]

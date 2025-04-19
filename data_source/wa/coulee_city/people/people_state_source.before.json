@@ -1,0 +1,65 @@
+[
+  {
+    "name": "ShirleyRae Maes",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "tcoulee@odessaoffice.com"
+  },
+  {
+    "name": "Steve Bond",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Erin Correia",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Richard Heiberg",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Mel LaFleur",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Travis Liening",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "travisl@aglink.biz"
+  },
+  {
+    "name": "Katherine Kenison",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "kkenison@basinlaw.com"
+  },
+  {
+    "name": "Natalie Garrett",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "tcoulee@odessaoffice.com"
+  },
+  {
+    "name": "Don Rushton",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "tcoulee@odessaoffice.com"
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Chris  Miller",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "chrism@cityofmccleary.com"
+  },
+  {
+    "name": "Andrea  Dahl",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Brycen Huff",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "byrcenh@cityofmccleary.com"
+  },
+  {
+    "name": "Keith Klimek",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Brent Schiller",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Jacob Simmons",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Christopher J. Coker",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "cjcoker@ylclaw.com"
+  },
+  {
+    "name": "Jamie Vinyard",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": "vinyardj@cityofmccleary.com"
+  },
+  {
+    "name": "Paul Nott",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Sam  Patrick",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "spatrick@cityofmccleary.com"
+  },
+  {
+    "name": "Lori Ann Hanson",
+    "positions": [
+      "Utility Accounts Manager"
+    ],
+    "email": "lorih@cityofmccleary.com"
+  }
+]

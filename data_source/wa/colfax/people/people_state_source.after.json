@@ -1,0 +1,58 @@
+[
+  {
+    "name": "James Retzer",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@colfaxwa.org"
+  },
+  {
+    "name": "Anne McRae",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Blaine Golden",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "blaine.golden@icloud.com"
+  },
+  {
+    "name": "Crystn Guenthner",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "cmguenthner@lcsc.edu"
+  },
+  {
+    "name": "Mark Mackleit",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "markmackleit@yahoo.com"
+  },
+  {
+    "name": "Sarah Sevedge",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Tom Huntwork",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "tom@decagon.com"
+  },
+  {
+    "name": "Travis Schaefer",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  }
+]

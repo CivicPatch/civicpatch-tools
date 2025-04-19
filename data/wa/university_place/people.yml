@@ -1,0 +1,29 @@
+---
+- name: Javier Figueroa
+  positions:
+  - Mayor
+  email: Jfigueroa@cityofup.com
+- name: Denise McCluskey
+  positions:
+  - Council Member
+  email: dmccluskey@cityofup.com
+- name: Edward Wood
+  positions:
+  - Council Member
+  email: ewood@cityofup.com
+- name: Frank Boykin
+  positions:
+  - Council Member
+  email: Fboykin@cityofup.com
+- name: Melanie Grassi
+  positions:
+  - Council Member
+  email: Mgrassi@cityofup.com
+- name: Stan Flemming
+  positions:
+  - Council Member
+  email: stanflemming@cityofup.com
+- name: Steve Worthington
+  positions:
+  - Council Member
+  email: sworthington@cityofup.com

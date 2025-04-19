@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Carrie Roecks",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "carrier@rockfordwa.com"
+  },
+  {
+    "name": "Tim Fricke",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "tfricke81@gmail.com"
+  },
+  {
+    "name": "Micki Harnois",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mickiharnois@gmail.com"
+  },
+  {
+    "name": "Walt Whitman",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "wlwhitrockford@gmail.com"
+  },
+  {
+    "name": "Kevin Willms",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "kevinwillms5@yahoo.com"
+  },
+  {
+    "name": "Clint Stevenson",
+    "positions": [
+      "Councilmember (MPT)"
+    ],
+    "email": null
+  },
+  {
+    "name": "Heidi Johnson",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "townclerk@rockfordwa.com"
+  },
+  {
+    "name": "Jason Seehorn",
+    "positions": [
+      "Division Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Gary Hill",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Dave Thompson",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "publicworks@rockfordwa.com"
+  }
+]

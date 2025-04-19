@@ -1,0 +1,29 @@
+---
+- name: Pete Serrano
+  positions:
+  - Mayor
+  email: serranocouncil@pasco-wa.gov
+- name: Blanche Barajas
+  positions:
+  - Council Member
+  email: barajascouncil@pasco-wa.gov
+- name: Charles Grimm
+  positions:
+  - Council Member
+  email: grimmcouncil@pasco-wa.gov
+- name: David Milne
+  positions:
+  - Council Member
+  email: milnecouncil@pasco-wa.gov
+- name: Leo Perales
+  positions:
+  - Council Member
+  email: peralescouncil@pasco-wa.gov
+- name: Melissa Blasdel
+  positions:
+  - Council Member
+  email: blasdelcouncil@pasco-wa.gov
+- name: Peter Harpster
+  positions:
+  - Council Member
+  email: harpstercouncil@pasco-wa.gov

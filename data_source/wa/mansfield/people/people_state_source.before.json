@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Clint Wall",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mansfield@nwi.net"
+  },
+  {
+    "name": "Jaci Bayless",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mansfield@nwi.net"
+  },
+  {
+    "name": "Adam Foged",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Keldon Jardine",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Mikki Lamar",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mansfield@nwi.net"
+  },
+  {
+    "name": "Thomas Tupling",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mansfield@nwi.net"
+  },
+  {
+    "name": "Steve Smith",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Tricia Sima",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "mansfield@nwi.net"
+  },
+  {
+    "name": "Tyler Caille",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "mansfield@nwi.net"
+  },
+  {
+    "name": "Douglas County Sheriff",
+    "positions": [
+      "Police Marshal"
+    ],
+    "email": null
+  },
+  {
+    "name": "Jesse Shafer",
+    "positions": [
+      "Public Works Assistant"
+    ],
+    "email": "mansfield@nwi.net"
+  }
+]

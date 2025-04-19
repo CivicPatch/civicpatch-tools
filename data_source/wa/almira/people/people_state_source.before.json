@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Jason Evers",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "almiramayor@gmail.com"
+  },
+  {
+    "name": "Jed Brink",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "almiracouncil1@gmail.com"
+  },
+  {
+    "name": "Hannah Hand",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "almiracouncil3@gmail.com"
+  },
+  {
+    "name": "Einar Larson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "almiracouncil2@gmail.com"
+  },
+  {
+    "name": "Catherine Payne-Ferris",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "almiracouncil5@gmail.com"
+  },
+  {
+    "name": "Jan Tuttle",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "almiracouncil4@gmail.com"
+  },
+  {
+    "name": "Bill Crow",
+    "positions": [
+      "Building Inspector"
+    ],
+    "email": "townhall@televar.com"
+  },
+  {
+    "name": "Brian Belsby",
+    "positions": [
+      "Engineer"
+    ],
+    "email": "bb@belsbyengineering.com"
+  },
+  {
+    "name": "Dennis Pinar, Jr.",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "firechief800@hotmail.com"
+  },
+  {
+    "name": "Tim   Jennings",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": "almirasuperintendent@hotmail.com"
+  },
+  {
+    "name": "Michelle Blair",
+    "positions": [
+      "Town Clerk/Treasurer"
+    ],
+    "email": "almiratownhall@gmail.com"
+  }
+]

@@ -1,0 +1,29 @@
+---
+- name: Mary Lou Pauly
+  positions:
+  - Mayor
+  email: MaryLouP@issaquahwa.gov
+- name: Lindsey Walsh
+  positions:
+  - Council President
+  email: lindseyw@issaquahwa.gov
+- name: Barbara de Michele
+  positions:
+  - Council Member
+  email: barbd@issaquahwa.gov
+- name: Chris Reh
+  positions:
+  - Council Member
+  email: chrisr@issaquahwa.gov
+- name: Kelly Jiang
+  positions:
+  - Council Member
+  email: kelly.jiang@issaquahwa.gov
+- name: Russell Joe
+  positions:
+  - Council Member
+  email: russellj@issaquahwa.gov
+- name: Tola Marts
+  positions:
+  - Council Member
+  email: tolam@issaquahwa.gov

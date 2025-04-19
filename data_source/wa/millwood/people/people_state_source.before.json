@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Kevin Freeman",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@millwoodwa.us"
+  },
+  {
+    "name": "Shawna Beese",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sbeese@millwoodwa.us"
+  },
+  {
+    "name": "Shaun Culler",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sculler@millwoodwa.us"
+  },
+  {
+    "name": "Daniel Sander",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "dsander@millwoodwa.us"
+  },
+  {
+    "name": "Kelly Stravens",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Andy Van Hees",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "andy.vanhees@millwoodwa.us"
+  },
+  {
+    "name": "Brian M. Werst",
+    "positions": [
+      "Attorney"
+    ],
+    "email": "brian.werst@klgates.com"
+  },
+  {
+    "name": "Lisa Cassels",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "office@millwoodwa.us"
+  },
+  {
+    "name": "Deborah Matkin",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": "treasurer@millwoodwa.us"
+  }
+]

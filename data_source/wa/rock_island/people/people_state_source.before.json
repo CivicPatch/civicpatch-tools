@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Randy Agnew",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@rockislandwa.gov"
+  },
+  {
+    "name": "Carmen  Andonaegui",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "carmena@rockislandwa.gov"
+  },
+  {
+    "name": "Paul Downs",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "pauld@rockislandwa.gov"
+  },
+  {
+    "name": "Niko Gabaldo",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "nikog@rockislandwa.gov"
+  },
+  {
+    "name": "Brad Hampton",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bradh@rockislandwa.gov"
+  },
+  {
+    "name": "Tara  Whaley",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "tara@rockislandwa.gov"
+  },
+  {
+    "name": "Brock Laughlin",
+    "positions": [
+      "Building Inspector"
+    ],
+    "email": "bladescodeservices@gmail.com"
+  },
+  {
+    "name": "James Zumini",
+    "positions": [
+      "City Clerk/Treasurer"
+    ],
+    "email": "treasurer@rockislandwa.gov"
+  },
+  {
+    "name": "Sonia Gonzalez",
+    "positions": [
+      "Deputy City Clerk"
+    ],
+    "email": "deputyclerk@rockislandwa.gov"
+  },
+  {
+    "name": "Douglas County Sheriff (Contract)",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "rockisland@nwi.net"
+  },
+  {
+    "name": "Wyatt Long",
+    "positions": [
+      "Public Works Supervisor"
+    ],
+    "email": "publicworks@rockislandwa.gov"
+  }
+]

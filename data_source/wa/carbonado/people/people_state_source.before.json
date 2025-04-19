@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Kevin Vesey",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@carbonado.org"
+  },
+  {
+    "name": "Tom Argo",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "tomargo@carbonado.org"
+  },
+  {
+    "name": "Terry  Carter",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "terrycarter@carbonado.org"
+  },
+  {
+    "name": "Clint  Emry",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "clintemry@carbonado.org"
+  },
+  {
+    "name": "David  Rodway",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "davidrodway@carbonado.org"
+  },
+  {
+    "name": "JJ  Sandin",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jjsandin@carbonado.org"
+  },
+  {
+    "name": "Sandi Carlson",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "sandicarlson@carbonado.org"
+  },
+  {
+    "name": "Eric Skogen",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "eskogen@cityofbuckley.com"
+  },
+  {
+    "name": "Holli  Pendergast",
+    "positions": [
+      "Public Works"
+    ],
+    "email": "hollipendergast@carbonado.org"
+  },
+  {
+    "name": "Michael Reynolds",
+    "positions": [
+      "Town Attorney"
+    ],
+    "email": "mjr@reynoldsburton.com"
+  },
+  {
+    "name": "Holli  Pendergast",
+    "positions": [
+      "Water/Sewer Utility Maintenance Worker"
+    ],
+    "email": "hollipendergast@carbonado.org"
+  }
+]

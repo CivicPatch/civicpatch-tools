@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Sally Ranzau",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@townofwinthrop.com"
+  },
+  {
+    "name": "Sophia Boesenberg",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sophiab@townofwinthrop.com"
+  },
+  {
+    "name": "Seth Miles",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sethm@townofwinthrop.com"
+  },
+  {
+    "name": "Marisa Monteverde",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "marisam@townofwinthrop.com"
+  },
+  {
+    "name": "Joseph O'Driscoll",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "josepho@townofwinthrop.com"
+  },
+  {
+    "name": "Signe Shaw",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "signes@townofwinthrop.com"
+  },
+  {
+    "name": "W. Scott DeTro",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Jacob Gates",
+    "positions": [
+      "Building Official"
+    ],
+    "email": "buildingofficial@townofwinthrop.com"
+  },
+  {
+    "name": "Michelle Gaines",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "winthropclerk@townofwinthrop.com"
+  },
+  {
+    "name": "Laura Wright",
+    "positions": [
+      "Court Clerk"
+    ],
+    "email": "court@townofwinthrop.com"
+  },
+  {
+    "name": "Gretchen Landin",
+    "positions": [
+      "Deputy Clerk"
+    ],
+    "email": "deputyclerk@townofwinthrop.com"
+  },
+  {
+    "name": "Ty Sheehan",
+    "positions": [
+      "Marshal"
+    ],
+    "email": "marshal@townofwinthrop.com"
+  },
+  {
+    "name": "Amber Williams",
+    "positions": [
+      "Permit Administrator/Office Assistant"
+    ],
+    "email": "amber@townofwinthrop.com"
+  },
+  {
+    "name": "Jacob Gates",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": "jacob@townofwinthrop.com"
+  },
+  {
+    "name": "Rocklynn Culp",
+    "positions": [
+      "Town Planner"
+    ],
+    "email": "rocklynn@townofwinthrop.com"
+  }
+]

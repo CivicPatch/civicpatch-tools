@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Sam Martin",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "smartin@townofconconully.com"
+  },
+  {
+    "name": "Shom Frantz",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sfrantz@townofconconully.com"
+  },
+  {
+    "name": "Kyle Haugan",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Christine Scott",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cscott@townofconconully.com"
+  },
+  {
+    "name": "Curtis  Sweet",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "csweet@townofconconully.com"
+  },
+  {
+    "name": "Geno Zinani",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Tami Cochran",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "clerk@townofconconully.com"
+  },
+  {
+    "name": "Zachary Claussen",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "zclaussen@townofconconully.com"
+  },
+  {
+    "name": "Zachary Claussen",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "zclaussen@townofconconully.com"
+  }
+]

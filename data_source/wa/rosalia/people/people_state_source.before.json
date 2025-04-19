@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Lee Root",
+    "positions": [
+      "Mayor"
+    ],
+    "email": null
+  },
+  {
+    "name": "Valerie Bryan",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council2@rosaliatown.org"
+  },
+  {
+    "name": "Ryan Diamond",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council4@rosaliatown.org"
+  },
+  {
+    "name": "Eric Eilertson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Council5@rosaliatown.org"
+  },
+  {
+    "name": "John Goyke",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council3@rosaliatown.org"
+  },
+  {
+    "name": "Judith Littleton",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "council1@rosaliatown.org"
+  },
+  {
+    "name": "Eric Hanson",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Jacob  Billington",
+    "positions": [
+      "Building Inspector"
+    ],
+    "email": "maintenance@rosaliatown.org"
+  },
+  {
+    "name": "Barbara Leighton",
+    "positions": [
+      "Clerk/Treasurer"
+    ],
+    "email": "clerk@rosaliatown.org"
+  },
+  {
+    "name": "Bill Tensfeld",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "billt@rosaliafire.org"
+  },
+  {
+    "name": "Marcy Campbell",
+    "positions": [
+      "Librarian"
+    ],
+    "email": null
+  },
+  {
+    "name": "Jacob Billington",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "maintenance@rosaliatown.org"
+  }
+]

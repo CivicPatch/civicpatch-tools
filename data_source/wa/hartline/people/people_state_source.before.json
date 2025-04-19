@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Andrew Allsbrook",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "Drew.Allsbrook@townofhartline.com"
+  },
+  {
+    "name": "Matt  Baergen",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Matthew.Baergen@townofhartline.com"
+  },
+  {
+    "name": "Mark  Frye",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mark.frye@townofhartline.com"
+  },
+  {
+    "name": "Jacob Johnson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Jacob.Johnson@townofhartline.com"
+  },
+  {
+    "name": "Goldye Moyer",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Goldye.Moyer@townofhartline.com"
+  },
+  {
+    "name": "David  Philp",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Dave@townofhartline.com"
+  },
+  {
+    "name": "Anna Franz",
+    "positions": [
+      "Attorney"
+    ],
+    "email": "afranz@basinlaw.com"
+  },
+  {
+    "name": "Daryl Dormaier",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Grant County (Contract)",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": null
+  },
+  {
+    "name": "Rayna Edwards",
+    "positions": [
+      "Town Clerk/Treasurer"
+    ],
+    "email": "rayna.edwards@townofhartline.com"
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Dave Jones",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "djones@ci.goldendale.wa.us"
+  },
+  {
+    "name": "Andy Halm",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Danielle Clevidence",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "daniclevi@yahoo.com"
+  },
+  {
+    "name": "Ellie Casey",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Loren Meagher",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Miland Waling",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Steve Johnston",
+    "positions": [
+      "Council Member"
+    ],
+    "email": null
+  },
+  {
+    "name": "Theone Wheeler",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "moto@startmail.com"
+  }
+]

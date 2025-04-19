@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Bruce Bosch",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "bbosch@cityofsumas.com"
+  },
+  {
+    "name": "Bob Bromley",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bbromley@cityofsumas.com"
+  },
+  {
+    "name": "Josh Clawson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jclawson@cityofsumas.com"
+  },
+  {
+    "name": "Jesse Clawson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "JAClawson@cityofsumas.com"
+  },
+  {
+    "name": "Todd Daniels",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "tdaniels@cityofsumas.com"
+  },
+  {
+    "name": "Rich Postma",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "rpostma@cityofsumas.com"
+  },
+  {
+    "name": "James Wright",
+    "positions": [
+      "Attorney"
+    ],
+    "email": "jwright@skwlaw.net"
+  },
+  {
+    "name": "Michelle Quinn",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "mquinn@cityofsumas.com"
+  },
+  {
+    "name": "Carson Cortez",
+    "positions": [
+      "City Planner"
+    ],
+    "email": "ccortez@cityofsumas.com"
+  },
+  {
+    "name": "Mollie  Bost",
+    "positions": [
+      "Deputy Clerk/Utility Clerk"
+    ],
+    "email": "mbost@cityofsumas.com"
+  },
+  {
+    "name": "Mollie  Bost",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "mbost@cityofsumas.com"
+  },
+  {
+    "name": "Daniel  DeBruin",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "ddebruin@cityofsumas.com"
+  },
+  {
+    "name": "Sunny Aulakh",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "saulakh@cityofsumas.com"
+  }
+]

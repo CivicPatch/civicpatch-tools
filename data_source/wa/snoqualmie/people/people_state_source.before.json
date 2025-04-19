@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Katherine Ross",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "kross@ci.snoqualmie.wa.us"
+  },
+  {
+    "name": "Ethan Benson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "ebenson@snoqualmiewa.gov"
+  },
+  {
+    "name": "Cara Christensen",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "cchristensen@snoqualmiewa.gov"
+  },
+  {
+    "name": "Catherine Cotton",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "ccotton@snoqualmiewa.gov"
+  },
+  {
+    "name": "Bryan  Holloway",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bholloway@ci.snoqualmie.wa.us"
+  },
+  {
+    "name": "Jolyon Johnson",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jjohnson@snoqualmiewa.gov"
+  },
+  {
+    "name": "Louis  Washington",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Rob Wotton",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "rwotton@snoqualmiewa.gov"
+  },
+  {
+    "name": "Mike  Chambless",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "mchambless@snoqualmiewa.gov"
+  },
+  {
+    "name": "Deana  Dean",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "ddean@snoqualmiewa.gov"
+  },
+  {
+    "name": "Drew Bouta",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "dbouta@snoqualmiewa.gov"
+  },
+  {
+    "name": "Mike  Bailey",
+    "positions": [
+      "Fire Chief/EOC Director"
+    ],
+    "email": "mbailey@snoqualmiewa.gov"
+  },
+  {
+    "name": "Kim Johnson",
+    "positions": [
+      "Human Resources Manager"
+    ],
+    "email": "kjohnson@snoqualmiewa.gov"
+  },
+  {
+    "name": "Jeff Hamlin",
+    "positions": [
+      "Parks/Public Works Director"
+    ],
+    "email": "jhamlin@snoqualmiewa.gov"
+  },
+  {
+    "name": "Brian Lynch",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "blynch@snoqualmiewa.gov"
+  }
+]

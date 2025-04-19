@@ -1,0 +1,33 @@
+---
+- name: Mike Rosen
+  positions:
+  - Mayor
+  email: mike.rosen@edmondswa.gov
+- name: Chris Eck
+  positions:
+  - Council Member
+  email: chris.eck@edmondswa.gov
+- name: Jenna Nand
+  positions:
+  - Council Member
+  email: jenna.nand@edmondswa.gov
+- name: Michelle Dotsch
+  positions:
+  - Council Member
+  email: michelle.dotsch@edmondswa.gov
+- name: Neil Tibbott
+  positions:
+  - Council Member
+  email: Neil.Tibbott@edmondswa.gov
+- name: Susan Paine
+  positions:
+  - Council Member
+  email: susan.paine@edmondswa.gov
+- name: Vivian Olson
+  positions:
+  - Council Member
+  email: vivian.olson@edmondswa.gov
+- name: Will Chen
+  positions:
+  - Council Member
+  email: will.chen@edmondswa.gov

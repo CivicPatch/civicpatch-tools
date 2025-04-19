@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Michael  Christensen",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@royalcitywa.org"
+  },
+  {
+    "name": "Perla Garcia",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Rick  Kannely",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Ryan Piercy",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Hector Rodriguez",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null
+  },
+  {
+    "name": "Katherine Kenison",
+    "positions": [
+      "Attorney"
+    ],
+    "email": null
+  },
+  {
+    "name": "Sherrie Rodriguez",
+    "positions": [
+      "Deputy City Clerk"
+    ],
+    "email": "sherrie@royalcitywa.org"
+  },
+  {
+    "name": "Janice Flynn",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "Janice@royalcitywa.org"
+  },
+  {
+    "name": "Rey Rodriguez",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": null
+  }
+]
