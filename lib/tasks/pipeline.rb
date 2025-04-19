@@ -8,7 +8,6 @@ require_relative "../core/city_scraper"
 require_relative "../core/page_fetcher"
 require_relative "../tasks/city_scrape/state_manager"
 require_relative "../core/search_router"
-require_relative "../sources/state_source/city_people"
 require_relative "../core/people_manager"
 require_relative "../scrapers/local_officials_scraper"
 
@@ -23,7 +22,8 @@ namespace :pipeline do
 
     cities = state_places["places"].select do |c|
       !gnis_to_ignore.include?(c["gnis"]) &&
-        c["meta_updated_at"].nil? && c["website"].present?
+        c["website"].present? &&
+        c["meta_sources"].count == 1 # If there's only one source, we can assume it's a state source
     end.first(num_cities.to_i)
 
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
@@ -49,11 +49,15 @@ namespace :pipeline do
 
     government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
 
-    fetch_with_source(state, city_entry, government_type) # State source
-    source_urls = fetch_with_scrape(state, gnis, government_type) # Web scrape
-    fetch_with_gemini(state, city_entry, government_type, source_urls) # Gemini
+    fetch_with_source(state, city_entry, government_type) # State-level city directory source
 
-    aggregate_sources(state, city_entry, government_type, sources: %w[gemini openai state_source])
+    # OpenAI - LLM call
+    source_urls = fetch_with_openai(state, gnis, government_type)
+
+    # Gemini - LLM call
+    fetch_with_gemini(state, city_entry, government_type, source_urls)
+
+    aggregate_sources(state, city_entry, government_type, sources: %w[state_source emini openai])
     # Create config.yml for the city
     create_config_yml(state, city_entry)
 
@@ -61,25 +65,7 @@ namespace :pipeline do
     remove_cache_folders(state, city_entry, people)
   end
 
-  desc "Scrape city offficials from a state-level source"
-  task :fetch_from_state_source, [:state] do |_t, args|
-    state = args[:state]
-    government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
-
-    municipalities = CityScrape::StateManager.get_state_places(state)["places"]
-    filtered_municipalities = municipalities.select do |m|
-      people = Core::PeopleManager.get_people(state, m["gnis"])
-      people.empty?
-    end
-
-    filtered_municipalities.each do |municipality|
-      fetch_with_source(state, municipality, government_type)
-      aggregate_sources(state, municipality, government_type, sources: %w[state_source])
-    end
-  end
-
   def fetch_with_source(state, municipality, government_type)
-    gnis = municipality["gnis"]
     positions_config = Core::CityManager.get_positions(government_type)
 
     # This call can fail if the state source is down (e.g. MRSC.org for WA)
@@ -94,7 +80,7 @@ namespace :pipeline do
     end
   end
 
-  def fetch_with_scrape(state, gnis, government_type)
+  def fetch_with_openai(state, gnis, government_type)
     positions_config = Core::CityManager.get_positions(government_type)
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
 
