@@ -17,19 +17,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check for environment label
+      - name: Find Env Label from PR Labels and Set Outputs
         id: check-label
         run: |
-          # Loop through PR labels and find one that starts with "env-"
-          for label in "${{ github.event.pull_request.labels[*].name }}"; do
-            if [[ "$label" == env-* ]]; then
-              echo "Matched label $label, using it for the environment"
-              echo "env_name=$label" >> $GITHUB_ENV
-              exit 0
-            fi
-          done
-          echo "No env-* label found. Exiting."
-          exit 1
+          labels_json='${{ toJSON(github.event.pull_request.labels) }}'
+          # Use jq to find the first label name starting with 'env-'
+          env_label_name=$(echo "$labels_json" | jq -r '.[] | select(.name | startswith("env-")) | .name' | head -n 1)
+
+          if [[ -n "$env_label_name" ]]; then
+            echo "Matched label: '$env_label_name'"
+            echo "env_name=${env_label_name}" >> $GITHUB_OUTPUT
+          else
+            echo "No label starting with 'env-' found on the PR. Exiting."
+            exit 1
+          fi
+        shell: bash
 
   validate-changes:
     needs: validate-environment
