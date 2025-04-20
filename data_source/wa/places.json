@@ -634,9 +634,11 @@
       "population": 42973,
       "government_type": "Council-Manager",
       "meta_updated_at": "2025-04-19",
-      "meta_hash": "62457ec35e07b6e328db38e0a88491a1",
+      "meta_hash": "cf31a315c0d5236d741382edd4680856",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "emini",
+        "openai"
       ]
     },
     {
