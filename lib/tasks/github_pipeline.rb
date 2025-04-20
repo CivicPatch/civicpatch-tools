@@ -112,11 +112,10 @@ namespace :github_pipeline do
     contested_people = compare_results[:contested_people]
     missing_people = compare_results[:missing_people]
     score = compare_results[:agreement_score]
-    pretty_score = (score * 100).round(2)
     config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
 
     # Initialize the comment with the agreement score
-    comment = "# Agreement Score: #{pretty_score}%\n\n---\n\n"
+    comment = "# Agreement Score: #{score}%\n\n---\n\n"
 
     missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
 

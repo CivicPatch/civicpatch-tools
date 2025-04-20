@@ -133,24 +133,6 @@ module Validators
       total_similarity / total_items.to_f
     end
 
-    def self.overall_agreement_score(contested_people, total_people, total_fields)
-      return 1.0 if total_people.zero? || total_fields.zero? # Avoid division by zero
-
-      # Extract disagreement scores from all contested fields
-      all_disagreement_scores = contested_people.values.flat_map do |fields|
-        fields.values.map do |field|
-          # Handle the case where field might be nil or not have a disagreement_score
-          field.is_a?(Hash) && field[:disagreement_score].is_a?(Numeric) ? field[:disagreement_score] : 0.0
-        end
-      end
-
-      # Calculate total agreement score
-      total_disagreement = all_disagreement_scores.sum
-      max_possible_disagreement = total_people * total_fields # Max disagreement is when all fields are fully contested
-
-      1.0 - (total_disagreement.to_f / max_possible_disagreement)
-    end
-
     def self.compare_people_across_sources(sources)
       fields = %w[positions email phone_number website] # Fields to compare
 
