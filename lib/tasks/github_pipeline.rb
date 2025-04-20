@@ -39,7 +39,7 @@ namespace :github_pipeline do
     data = {
       "approve" => comparison_data["approve"],
       "score" => comparison_data["score"],
-      "comment" => [people_list_comment, comparison_data["comparison_table_comment"]]
+      "comment" => [people_list_comment, comparison_data["comment"]]
            .join("\n\n***\n\n").to_s.gsub(/\n/, '\n')
     }
 
@@ -108,20 +108,27 @@ namespace :github_pipeline do
   def self.generate_comparison(state, gnis)
     # Get the validation results
     validation_results = Validators::CityPeople.validate_sources(state, gnis)
-    contested_people = validation_results[:compare_results][:contested_people]
-    score = validation_results[:compare_results][:agreement_score]
+    compare_results = validation_results[:compare_results]
+    contested_people = compare_results[:contested_people]
+    missing_people = compare_results[:missing_people]
+    score = compare_results[:agreement_score]
     pretty_score = (score * 100).round(2)
     config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
 
     # Initialize the comment with the agreement score
     comment = "# Agreement Score: #{pretty_score}%\n\n---\n\n"
 
+    missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
+
+    comment += missing_people_comment
+    comment += "\n\n---\n\n"
+
     # Iterate through each contested person and their contested fields
     contested_people.each do |name, fields|
       # Generate the markdown table for the contested person
       merged_person = validation_results[:merged_sources].find { |person| person["name"] == name }
       formatted_merged_person = Core::PeopleManager.format_people([merged_person], config).first
-      contested_people_markdown = GitHub::CityPeople.to_markdown_table(fields, formatted_merged_person)
+      contested_people_markdown = GitHub::CityPeople.to_markdown_disagreement_table(fields, formatted_merged_person)
 
       # Add a header for each contested person and append the table
       comment += "### #{name}\n\n"
@@ -131,6 +138,6 @@ namespace :github_pipeline do
 
     { "approve" => score >= 0.7,
       "score" => score,
-      "comparison_table_comment" => comment }
+      "comment" => comment }
   end
 end

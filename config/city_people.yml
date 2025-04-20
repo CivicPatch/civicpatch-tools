@@ -6,6 +6,7 @@ government_types:
       - role: mayor pro tem
       - role: deputy mayor
       - role: council president
+      - role: deputy council president
       - role: council vice president
       - role: council manager
       - role: deputy council manager

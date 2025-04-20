@@ -16,23 +16,31 @@ namespace :one_off do
     end
   end
 
-  task :fix_meta_sources do
+  task :test_source do
     state = "wa"
     municipalities = CityScrape::StateManager.get_state_places(state)["places"]
-    municipalities_to_update = municipalities.map do |municipality|
-      next nil if municipality["meta_sources"].present?
+    municipality_entry = municipalities.first
+    puts municipality_entry
 
-      people = Core::PeopleManager.get_people(state, municipality["gnis"])
-      next nil if people.empty?
+    government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
+    positions_config = Core::CityManager.get_positions(government_type)
+    source_city_people = Scrapers::LocalOfficialScraper.fetch_with_state_source(state, municipality_entry)
+    Core::PeopleManager.update_people(state, municipality_entry, source_city_people, "state_source.before")
+    formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, positions_config)
+    Core::PeopleManager.update_people(state, municipality_entry, formatted_source_city_people, "state_source.after")
 
-      puts "Updating #{municipality["name"]} with gnis #{municipality["gnis"]}"
-      {
-        "gnis" => municipality["gnis"],
-        "meta_sources" => %w[state_source gemini openai]
-      }
-    end.compact
+    # updated_city = {
+    #  "gnis" => city_entry["gnis"],
+    #  "meta_sources" => %w[state_source gemini openai]
+    # }
 
-    puts "Updating #{municipalities_to_update.size} municipalities"
-    CityScrape::StateManager.update_state_places(state, municipalities_to_update)
+    # CityScrape::StateManager.update_state_places(state, [updated_city])
+  end
+
+  task :view_comparison do
+    state = "wa"
+    gnis = "2411856"
+    results = Validators::CityPeople.validate_sources(state, gnis)
+    pp results
   end
 end

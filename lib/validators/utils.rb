@@ -152,63 +152,88 @@ module Validators
     end
 
     def self.compare_people_across_sources(sources)
-      contested_people = {}
-      fields = %w[positions email phone_number website]
+      fields = %w[positions email phone_number website] # Fields to compare
 
       unique_names = get_unique_names(sources)
       total_people = unique_names.count
       total_fields = fields.count
+      num_sources = sources.count
+
+      if total_people.zero? || num_sources.zero? || total_fields.zero?
+        return { contested_people: {},
+                 agreement_score: 100.0 }
+      end
+
+      total_possible_data_points = total_people * num_sources * total_fields
+      total_disagreements = 0
+      detailed_contested_fields = {}
+      missing_people_report = {}
 
       unique_names.each do |name|
         person_records = sources.map do |source|
           {
-            people: find_by_name(source[:people], name),
+            person: find_by_name(source[:people], name),
             source_name: source[:source_name],
             confidence_score: source[:confidence_score]
           }
         end
 
-        existing_records = (person_records || []).select do |r|
-          r[:people].present?
+        existing_records = person_records.select { |r| r[:person].present? }
+        found_in_sources_count = existing_records.count
+        missing_sources_count = num_sources - found_in_sources_count
+
+        person_contested_fields = {}
+
+        if missing_sources_count.positive?
+          missing_from_sources = person_records.select { |r| r[:person].nil? }
+                                               .map { |r| r[:source_name] }
+          # Add to the separate missing people report
+          missing_people_report[name] = missing_from_sources
+          # Increment total disagreements (as done before)
+          total_disagreements += missing_sources_count * total_fields
         end
 
-        contested_fields = {}
-
-        fields.each do |field|
-          # Skip if there aren't at least two sources with a non-empty value for this field
-          non_empty_count = existing_records.count do |r|
-            r[:people]&.[](field).present? && r[:people][field] != ""
+        if found_in_sources_count >= 2
+          fields.each do |field|
+            contested_field_result = compare_field_values(existing_records, field)
+            if contested_field_result
+              total_disagreements += 1 # Increment overall disagreement count
+              person_contested_fields[field] = contested_field_result
+            end
           end
-
-          next if non_empty_count < 2
-
-          # Compare the field values across sources
-          contested_field_result = compare_field_values(existing_records, field)
-          contested_fields[field] = contested_field_result if contested_field_result
         end
 
-        contested_people[name] = contested_fields unless contested_fields.empty?
+        detailed_contested_fields[name] = person_contested_fields unless person_contested_fields.empty?
       end
 
-      # Calculate the agreement score based on contested data
-      agreement_score = overall_agreement_score(contested_people, total_people, total_fields)
+      # Calculate agreement score (0-100, higher is better)
+      agreement_score = ((total_possible_data_points - total_disagreements).to_f / total_possible_data_points) * 100
+      agreement_score = [0, agreement_score].max # Ensure score is not negative
+      agreement_score = [100, agreement_score].min # Ensure score does not exceed 100
 
       {
-        contested_people: contested_people,
-        agreement_score: agreement_score
+        contested_people: detailed_contested_fields,
+        missing_people: missing_people_report,
+        agreement_score: agreement_score.round(2)
       }
     end
 
     def self.compare_field_values(existing_records, field)
       pairwise_similarities = existing_records.combination(2).map do |a, b|
-        value_a = a[:people][field]
-        value_b = b[:people][field]
+        # Check if a or b is nil before accessing keys
+        unless a && b
+          puts "ERROR: Found nil in pair: a=#{a.inspect}, b=#{b.inspect}"
+          next 1.0 # Treat as max similarity if pair is malformed
+        end
+
+        value_a = a[:person][field]
+        value_b = b[:person][field]
 
         conf_a = a[:confidence_score]
         conf_b = b[:confidence_score]
 
         if value_a.nil? || value_b.nil?
-          1.0
+          0.9 # Treat nil value comparison as 90% similarity
         else
           similarity_score(field, value_a, value_b, conf_a, conf_b)
         end
@@ -220,7 +245,12 @@ module Validators
       {
         disagreement_score: 1 - worst_similarity,
         values: existing_records.each_with_object({}) do |r, acc|
-          acc[r[:source_name]] = r[:people][field]
+          # Ensure r is not nil before accessing :source_name and :person
+          if r
+            acc[r[:source_name]] = r[:person][field]
+          else
+            puts "WARN: Encountered nil record when building final values hash for field '#{field}'"
+          end
         end
       }
     end
@@ -244,12 +274,13 @@ module Validators
 
         merged_person = { "name" => name }
 
-        %w[positions email phone_number website image].each do |field|
+        %w[positions email phone_number website].each do |field|
           values = person_records.map { |p| { value: p[field], confidence_score: p["confidence_score"] } }
 
           merged_person[field] = select_best_value(field, values)
         end
 
+        merged_person["image"] = person_records.map { |p| p["image"] }.compact.first
         merged_person["sources"] = person_records.map { |p| p["sources"] }.flatten.compact.uniq
 
         merged << merged_person

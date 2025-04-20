@@ -3,29 +3,40 @@ module Scrapers::States::Wa::LocalOfficialScraper
     DIRECTORY_URL = "https://mrsc.org/mrsctools/officials-directory/city.aspx".freeze
     @@html_cache ||= {}
 
+    def self.source_url(city_entry)
+      city_initial = city_entry["name"][0]
+      "#{DIRECTORY_URL}?ci=#{city_initial}"
+    end
+
     def self.get_officials(city_entry)
       puts "Scraping #{city_entry["name"]} officials from state source: mrsc"
-
-      city_initial = city_entry["name"][0]
+      source_url = source_url(city_entry)
 
       # Check cache first
-      if @@html_cache[city_initial]
-        puts "Cache hit for initial '#{city_initial}'."
+      if @@html_cache[city_entry["name"]]
+        puts "Cache hit for #{city_entry["name"]}."
       else
-        puts "Cache miss for initial '#{city_initial}'. Fetching from URL..."
-        response = HTTParty.get("#{DIRECTORY_URL}?ci=#{city_initial}")
-        @@html_cache[city_initial] = response.body
+        puts "Cache miss for #{city_entry["name"]}. Fetching from URL..."
+        response = HTTParty.get(source_url)
+        @@html_cache[city_entry["name"]] = response.body
       end
 
       # Use cached or newly fetched HTML
-      html_string = @@html_cache[city_initial]
+      html_string = @@html_cache[city_entry["name"]]
 
-      parse_officials(city_entry, html_string)
+      officials = parse_officials(city_entry, html_string)
+      officials.map do |official|
+        {
+          **official,
+          "sources" => [source_url]
+        }
+      end
     end
 
     def self.parse_officials(city_entry, html_string)
       html_doc = Nokogiri::HTML(html_string)
       city_name = city_entry["name"]
+
       # Replace underscores with spaces before lowercasing
       city_name_with_spaces = city_name.gsub("_", " ")
       lowercase_city_name = city_name_with_spaces.downcase
@@ -51,12 +62,6 @@ module Scrapers::States::Wa::LocalOfficialScraper
         normalized_h3_text = h3_text_content.gsub(/\s+/, " ").strip.downcase
         # Normalize the target name (already has spaces instead of _, and is lowercase)
         normalized_city_name = lowercase_city_name.gsub(/\s+/, " ").strip
-
-        # --- DEBUG LOGGING --- Start
-        if normalized_h3_text != normalized_city_name && normalized_city_name.start_with?(normalized_h3_text.chars.first || "") # Log only potential misses, handle empty string case
-          puts "Comparing: '#{normalized_h3_text}' (from HTML) with '#{normalized_city_name}' (target)"
-        end
-        # --- DEBUG LOGGING --- End
 
         if normalized_h3_text == normalized_city_name
           parent_div = div
