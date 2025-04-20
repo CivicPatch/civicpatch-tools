@@ -292,13 +292,12 @@ module Validators
         confidence_score: 0.8,
         source_name: "source2",
         people: [
-          { "name" => "Alex - Robinson", "positions" => ["Councilwoman"], "email" => "alex@example.com", "sources" => ["https://peach.com"] }
+          { "name" => "Alex - Robinson", "positions" => ["Councilwoman"], "email" => "alex@example.com",
+            "sources" => ["https://peach.com"] }
         ]
       }
 
       sources = [source_a, source_b]
-
-      comparison_result = Validators::Utils.compare_people_across_sources(sources)
 
       merged = Validators::Utils.merge_people_across_sources(sources)
 
@@ -380,7 +379,6 @@ module Validators
       assert_equal "Alice Smith", result["name"]
     end
 
-
     # Rename and rewrite the test for matching despite middle names/initials
     def test_find_by_name_matches_despite_middle_initials
       people = [
@@ -394,12 +392,53 @@ module Validators
 
       # Test the other way around
       people_with_initial = [
-        { "name" => "Charles R. Darwin"},
-        { "name" => "Gregor Mendel"}
+        { "name" => "Charles R. Darwin" },
+        { "name" => "Gregor Mendel" }
       ]
       result_no_initial = Validators::Utils.find_by_name(people_with_initial, "Charles Darwin")
       refute_nil result_no_initial, "Should find a match even searching without middle initial"
       assert_equal "Charles R. Darwin", result_no_initial["name"], "Should return the matching person object"
+    end
+
+    def test_compare_people_across_sources_with_missing_person
+      sources = [
+        {
+          confidence_score: 0.9,
+          source_name: "source1",
+          people: [
+            { "name" => "Alice Smith", "positions" => ["Mayor"], "email" => "alice@example.com" }
+          ]
+        },
+        {
+          confidence_score: 0.8,
+          source_name: "source2",
+          people: [
+            { "name" => "Bob Jones", "positions" => ["Council Member"] }
+          ]
+        },
+        {
+          confidence_score: 0.8,
+          source_name: "source3",
+          people: [
+            { "name" => "Bob Jones", "positions" => ["Council Member"] }
+          ]
+        }
+      ]
+
+      result = Validators::Utils.compare_people_across_sources(sources)
+
+      expected_agreement_score = 50.0
+
+      # Corrected expected output
+      expected_contested_people = {
+        "Alice Smith" => %w[source2 source3],
+        "Bob Jones" => %w[source1]
+      }
+
+      assert_equal expected_contested_people, result[:missing_people],
+                   "Missing people hash mismatch when person is missing"
+      assert_in_delta expected_agreement_score, result[:agreement_score], 0.001,
+                      "Agreement score mismatch when person is missing"
     end
   end
 end

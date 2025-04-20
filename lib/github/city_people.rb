@@ -1,6 +1,27 @@
 module GitHub
   class CityPeople
-    def self.to_markdown_table(contested_fields, merged_person)
+    def self.to_markdown_missing_people_table(missing_people)
+      return "" if missing_people.nil? || missing_people.empty?
+
+      headers = ["Name", "Missing From"]
+      table = []
+      markdown = "### Missing People\n\n"
+
+      missing_people.each do |name, sources|
+        table << [name, sources.join(", ")]
+      end
+
+      markdown += "| #{headers.join(" | ")} |"
+      separator_line = "| #{headers.map { |header| "-" * header.length }.join(" | ")} |"
+      markdown += "\n#{separator_line}"
+      table.each do |row|
+        markdown += "\n| #{row.join(" | ")} |"
+      end
+
+      markdown
+    end
+
+    def self.to_markdown_disagreement_table(contested_fields, merged_person)
       # Prepare source headers
       source_names = contested_fields.map { |_, field_data| field_data[:values].keys }.flatten.uniq
       headers = ["Field", "Disagreement Score"] + source_names
