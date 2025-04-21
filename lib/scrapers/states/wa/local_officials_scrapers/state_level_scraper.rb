@@ -24,13 +24,7 @@ module Scrapers::States::Wa::LocalOfficialScraper
       # Use cached or newly fetched HTML
       html_string = @@html_cache[city_entry["name"]]
 
-      officials = parse_officials(city_entry, html_string)
-      officials.map do |official|
-        {
-          **official,
-          "sources" => [source_url]
-        }
-      end
+      parse_officials(city_entry, html_string)
     end
 
     def self.parse_officials(city_entry, html_string)

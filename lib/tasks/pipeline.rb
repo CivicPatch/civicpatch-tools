@@ -10,6 +10,7 @@ require_relative "../tasks/city_scrape/state_manager"
 require_relative "../core/search_router"
 require_relative "../core/people_manager"
 require_relative "../scrapers/local_officials_scraper"
+require_relative "../services/spaces"
 
 namespace :pipeline do
   desc "Pick cities from queue"
@@ -57,7 +58,7 @@ namespace :pipeline do
     # Gemini - LLM call
     fetch_with_gemini(state, city_entry, government_type, source_urls)
 
-    aggregate_sources(state, city_entry, government_type, sources: %w[state_source emini openai])
+    aggregate_sources(state, city_entry, government_type, sources: %w[state_source gemini openai])
     # Create config.yml for the city
     create_config_yml(state, city_entry)
 
@@ -96,14 +97,16 @@ namespace :pipeline do
       government_type,
       cached_urls: config_content["scrape_sources"]
     )
-    Core::PeopleManager.update_people(state, city_entry, openai_people, "scrape.before")
+    Core::PeopleManager.update_people(state, city_entry, openai_people, "openai.before")
     formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "scrape.after")
+    Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "openai.after")
 
-    # Move images into the right places
-    process_images(state, city_entry, source_dirs, formatted_openai_people)
+    sources = formatted_openai_people.map { |person| person["sources"] }.flatten.uniq
 
-    formatted_openai_people.map { |person| person["sources"] }.flatten.uniq
+    # This is the only call that scrapes images
+    people_with_images = process_images(state, city_entry, source_dirs, formatted_openai_people)
+    Core::PeopleManager.update_people(state, city_entry, people_with_images, "openai.after")
+    sources
   end
 
   def fetch_with_gemini(state, city_entry, government_type, seeded_urls)
@@ -162,21 +165,13 @@ namespace :pipeline do
     FileUtils.mkdir_p(cache_destination_dir)
   end
 
-  def process_images(
-    state,
-    city_entry,
-    source_dirs,
-    people
-  )
-    puts "Copying source files for #{city_entry["name"]}"
+  def process_images(state, city_entry, source_dirs, people)
+    puts "Uploading images for #{city_entry["name"]}"
     puts "Source dirs: #{source_dirs.inspect}"
 
-    final_city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
+    data_city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
+    remote_city_path = data_city_path.partition("data/").last
 
-    images_dir = File.join(final_city_path, "images")
-    FileUtils.rm_rf Dir.glob("#{images_dir}/*") if Dir.exist?(images_dir)
-
-    FileUtils.mkdir_p(images_dir)
     images_in_use = people.map { |person| person["image"] }.compact
 
     source_dirs.each do |source_dir|
@@ -189,10 +184,25 @@ namespace :pipeline do
       end
 
       filtered_images.each do |filtered_image|
-        puts "Copying #{filtered_image} to #{images_dir}"
-        FileUtils.cp(File.join(source_images_dir, filtered_image), images_dir)
+        file_path = File.join(source_images_dir, filtered_image)
+        file_key = File.join(remote_city_path, "images", filtered_image)
+        puts "Uploading #{file_path} to remote #{file_key}"
+        content_type = Utils::ImageHelper.determine_mime_type(file_path)
+        Services::Spaces.put_object(file_key, file_path, content_type)
       end
+
+      # Cleanup images
+      FileUtils.rm_rf(source_images_dir)
+      Dir.mkdir(source_images_dir)
     end
+
+    # Update sources with remote URLs
+    people.each do |person|
+      key = File.join(remote_city_path, "images", File.basename(person["image"]))
+      person["image"] = Utils::ImageHelper.get_cdn_url(key)
+    end
+
+    people
   end
 
   def self.remove_cache_folders(state, city_entry, people)

@@ -1,13 +1,8 @@
+require_relative "../utils/image_helper"
+
 module Browser
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 2  # Base sleep time for exponential backoff
-
-  IMAGE_MIME_TO_EXTENSION = {
-    "image/jpeg" => "jpg",
-    "image/png" => "png",
-    "image/gif" => "gif",
-    "image/webp" => "webp" # Not supported by GitHub :/
-  }.freeze
 
   def self.start
     options = Selenium::WebDriver::Chrome::Options.new
@@ -215,8 +210,8 @@ module Browser
   end
 
   def self.determine_file_type(file)
-    content_type = `file --mime-type -b #{file.path}`.strip
-    extension = IMAGE_MIME_TO_EXTENSION[content_type]
+    content_type = Utils::ImageHelper.determine_mime_type(file.path)
+    extension = Utils::ImageHelper.mime_type_to_extension(content_type)
     if extension.nil?
       puts "Unknown file type for #{file.path}: #{content_type}"
       nil
