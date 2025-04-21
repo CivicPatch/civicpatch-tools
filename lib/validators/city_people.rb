@@ -22,8 +22,8 @@ module Validators
         source_people = JSON.parse(File.read(source_file))
         source_name = if source_file.include?("state_source")
                         "state_source"
-                      elsif source_file.include?("scrape")
-                        "scrape"
+                      elsif source_file.include?("openai")
+                        "openai"
                       elsif source_file.include?("gemini")
                         "gemini"
                       end
@@ -34,10 +34,10 @@ module Validators
           confidence_score: case source_name
                             when "state_source"
                               0.9
-                            when "scrape"
+                            when "openai"
                               0.7
                             when "gemini"
-                              0.6 # TODO: you hallucinate a lot!
+                              0.7
                             else
                               0.0
                             end
