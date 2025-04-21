@@ -1,17 +1,5 @@
 # OpenData
 
-## How this works
-
-```mermaid
-flowchart TD;
-    A[Manual Pipeline: Grab a list of cities from STATE/places.yml] --> B[Scrape City Data for people -- council members, mayor, etc.]
-    B --> C[Bot opens a Pull Request for Review]
-    C --> D[Contributors Review and Merge Changes]
-    %% Pull Request Link: https://github.com/CivicPatch/open-data/pull/17
-    D.special[/You, the volunteer/] --> D
-    D --> F[Data coverage improves]
-```
-
 ## Rules
 * Cities can be in two counties (ex: King/Snohomish -> Bothell)
 * A county can have the same name as a city (ex: Spokane/Spokane)
@@ -51,6 +39,8 @@ gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-
   * Input: $0.40 Per Million
   * Output: $1.60 Per Million
   * https://platform.openai.com/docs/pricing 
+* Digital Ocean
+  * Host images under spaces
 
 ### Links
 * https://editor.dicebear.com/
