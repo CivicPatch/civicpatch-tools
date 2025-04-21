@@ -48,3 +48,5 @@ gem "csv", "~> 3.3"
 gem "marcel", "~> 1.0"
 
 gem "pp", "~> 0.6.2"
+
+gem "aws-sdk-s3", "~> 1.183"

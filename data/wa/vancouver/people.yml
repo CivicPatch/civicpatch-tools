@@ -5,7 +5,7 @@
   email:
   phone_number:
   website: https://cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1
-  image: images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg
+  image: https://cdn.civicpatch.org/open-data/wa/vancouver/https://cdn.civicpatch.org/open-data/wa/vancouver/images/11cd4b85ce156f02611a177c1d1bd1cfa59f9ea17d9f86fdfbeeafd51f61f368.jpg
   sources:
   - https://www.cityofvancouver.us/departments/mayor-city-council
   - https://cityofvancouver.us/departments/mayor-city-council
@@ -65,7 +65,7 @@
   email:
   phone_number:
   website: https://www.cityofvancouver.us/departments/mayor-city-council
-  image: images/8f5ae0b99b2bb1b6db274cb2d2606d88a064045bb23adbdfe03bd0e17853e823.png
+  image: https://cdn.civicpatch.org/open-data/wa/vancouver/https://cdn.civicpatch.org/open-data/wa/vancouver/images/8f5ae0b99b2bb1b6db274cb2d2606d88a064045bb23adbdfe03bd0e17853e823.png
   sources:
   - https://cityofvancouver.us/departments/mayor-city-council
   - https://www.cityofvancouver.us/government/mayor-and-city-council

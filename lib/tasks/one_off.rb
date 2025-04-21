@@ -1,3 +1,5 @@
+require "services/spaces"
+
 namespace :one_off do
   desc "Scrape city offficials from a state-level source"
   task :fetch_from_state_source, [:state] do |_t, args|
@@ -42,5 +44,56 @@ namespace :one_off do
     gnis = "2411856"
     results = Validators::CityPeople.validate_sources(state, gnis)
     pp results
+  end
+
+  task :move_images_to_spaces do
+    # Get all images under data/<state>/<cities>/images
+    # MIME_TYPE_MAPPINGS = {
+    #  "png" => "image/png",
+    #  "jpg" => "image/jpeg",
+    #  "jpeg" => "image/jpeg",
+    #  "gif" => "image/gif",
+    #  "webp" => "image/webp"
+    # }
+    images = Dir.glob("data/**/**/images/*")
+
+    # images.each do |image_path|
+    #  puts image_path
+    #  File.delete(image_path)
+    #  directory = File.dirname(image_path)
+    #  FileUtils.rm_rf(directory) if directory.empty?
+    #  # key = image_path.gsub("data/", "")
+    #  # file_extension = File.extname(key)
+    #  # content_type = MIME_TYPE_MAPPINGS[file_extension.delete(".")]
+    #  # Services::Spaces.put_object(key, image_path, content_type)
+    # end
+
+    # image_dirs = Dir.glob("data/**/**/images")
+    # image_dirs.each do |image_dir|
+    #  puts image_dir
+    #  FileUtils.rm_rf(image_dir) if image_dir.empty?
+    # end
+
+    ## Delete the images directory and all files under it
+    # path = PathHelper.project_path("data/**/**/images")
+    # puts "Deleting #{path}"
+    # FileUtils.rm_rf(path)
+
+    # Update image refs
+    # Get all files under data/<state>/<cities>/people.yml
+    people_files = Dir.glob("data/**/**/people.yml")
+    people_files.each do |people_file|
+      city_path = people_file.gsub("data/", "").gsub("/people.yml", "")
+      people = YAML.load_file(people_file)
+      fixed_people = people.map do |person|
+        next person if person["image"].blank?
+
+        image_key = "#{city_path}/#{person["image"]}"
+        person["image"] = "https://cdn.civicpatch.org/open-data/#{image_key}"
+        person
+      end
+
+      File.write(people_file, fixed_people.to_yaml)
+    end
   end
 end
