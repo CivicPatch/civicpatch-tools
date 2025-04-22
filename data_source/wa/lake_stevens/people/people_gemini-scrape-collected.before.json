@@ -1,0 +1,530 @@
+[
+  {
+    "name": "Brett Gailey",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "425-407-3497",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://lakestevenswa.gov/65/Mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bgailey@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://lakestevenswa.gov/65/Mayor"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "Mayor"
+    ]
+  },
+  {
+    "name": "Kim Daughtry",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3869",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "(425) 407-3869",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=31"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kdaughtry@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "kdaughtry@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=31"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.lakestevenswa.gov/directory.aspx?EID=31",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to staff directory entry.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "https://www.lakestevenswa.gov/Directory.aspx?DID=10",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Associated with City Council",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=31"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Position #1"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Gary Petershagen",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3327",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "(425) 407-3327",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=57"
+      }
+    ],
+    "emails": [
+      {
+        "data": "gpetershagen@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "gpetershagen@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=57"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.lakestevenswa.gov/directory.aspx?EID=57",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to staff directory entry.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "https://www.lakestevenswa.gov/Directory.aspx?DID=10",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link to City Council directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=57"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January of 2017 to serve another 4 year term",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Stated in biography.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=57"
+      }
+    ],
+    "positions": [
+      "Council Position #2",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Ryan Donoghue",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(425) 903-6771",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "(425) 903-6771",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=33"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rdonoghue@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "rdonoghue@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=33"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.lakestevenswa.gov/directory.aspx?EID=33",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to staff directory entry.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "https://www.lakestevenswa.gov/Directory.aspx?DID=10",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Found under header",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=33"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Position #3",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kymm Shipman",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(425) 870-1767",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "(425) 870-1767",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=34"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kshipman@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "kshipman@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=34"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.lakestevenswa.gov/directory.aspx?EID=34",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to staff directory entry.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "https://www.lakestevenswa.gov/Directory.aspx?DID=10",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=34"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Position #4"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Anji Jorstad",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3147",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "(425) 407-3147",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under title and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=35"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ajorstad@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "ajorstad@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=35"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.lakestevenswa.gov/directory.aspx?EID=35",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to staff directory entry.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "https://www.lakestevenswa.gov/Directory.aspx?DID=10",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link to City Council directory page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=35"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Position #5",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Steve Ewing",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(425) 530-6832",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "(425) 530-6832",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=32"
+      }
+    ],
+    "emails": [
+      {
+        "data": "sewing@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "sewing@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=32"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.lakestevenswa.gov/directory.aspx?EID=32",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to staff directory entry.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "https://www.lakestevenswa.gov/Directory.aspx?DID=10",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Linked to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=32"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Position #6",
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Marcus Tageant",
+    "image": null,
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3880",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "(425) 407-3880",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under Contact.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=37"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mtageant@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "mtageant@lakestevenswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=37"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.lakestevenswa.gov/directory.aspx?EID=37",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to staff directory entry.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      },
+      {
+        "data": "https://www.lakestevenswa.gov/Directory.aspx?DID=10",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link to city council directory page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/directory.aspx?EID=37"
+      }
+    ],
+    "term_dates": [],
+    "positions": [
+      "Council Position #7"
+    ],
+    "sources": []
+  }
+]

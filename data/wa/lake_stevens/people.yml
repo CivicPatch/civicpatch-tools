@@ -3,31 +3,80 @@
   positions:
   - Mayor
   email: bgailey@lakestevenswa.gov
-- name: Anji Jorstad
-  positions:
-  - Council Member
-  email: ajorstad@lakestevenswa.gov
-- name: Gary Petershagen
-  positions:
-  - Council Member
-  email: gpetershagen@lakestevenswa.gov
+  phone_number: "(425) 407-3497"
+  website: http://lakestevenswa.gov/CivicAlerts.aspx?AID=933
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/e8adb7d68ffda754723294264c9ebaa7f64eadd1424a05bed3cae9f46b9152c4.png
+  sources:
+  - http://lakestevenswa.gov/65/Mayor
+  - http://lakestevenswa.gov/#taba3c16802-3663-44cc-b40f-897bae4f26f7_0
 - name: Kim Daughtry
   positions:
   - Council Member
+  - Position 1
   email: kdaughtry@lakestevenswa.gov
-- name: Kymm Shipman
+  phone_number: "(425) 407-3869"
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=31
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif
+  sources:
+  - https://www.lakestevenswa.gov/Directory.aspx?did=10
+- name: Gary Petershagen
   positions:
   - Council Member
-  email: kshipman@lakestevenswa.gov
-- name: Marcus Tageant
-  positions:
-  - Council Member
-  email: mtageant@lakestevenswa.gov
+  - Position 2
+  email: gpetershagen@lakestevenswa.gov
+  phone_number: "(425) 407-3327"
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=57
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif
+  sources:
+  - https://www.lakestevenswa.gov/Directory.aspx?did=10
+  - https://www.lakestevenswa.gov/directory.aspx?EID=57
 - name: Ryan Donoghue
   positions:
   - Council Member
+  - Position 3
   email: rdonoghue@lakestevenswa.gov
+  phone_number: "(425) 903-6771"
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=33
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif
+  sources:
+  - https://www.lakestevenswa.gov/Directory.aspx?did=10
+- name: Kymm Shipman
+  positions:
+  - Council Member
+  - Position 4
+  email: kshipman@lakestevenswa.gov
+  phone_number: "(425) 870-1767"
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=34
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif
+  sources:
+  - https://www.lakestevenswa.gov/Directory.aspx?did=10
+- name: Anji Jorstad
+  positions:
+  - Council Member
+  - Position 5
+  email: ajorstad@lakestevenswa.gov
+  phone_number: "(425) 407-3147"
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=35
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif
+  sources:
+  - https://www.lakestevenswa.gov/Directory.aspx?did=10
 - name: Steve Ewing
   positions:
   - Council Member
+  - Position 6
   email: sewing@lakestevenswa.gov
+  phone_number: "(425) 530-6832"
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=32
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif
+  sources:
+  - https://www.lakestevenswa.gov/Directory.aspx?did=10
+- name: Marcus Tageant
+  positions:
+  - Council Member
+  - Position 7
+  email: mtageant@lakestevenswa.gov
+  phone_number: "(425) 407-3880"
+  website: https://www.lakestevenswa.gov/directory.aspx?EID=37
+  image: https://cdn.civicpatch.org/open-data/wa/lake_stevens/images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif
+  sources:
+  - https://www.lakestevenswa.gov/Directory.aspx?did=10

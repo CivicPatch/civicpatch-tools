@@ -1,0 +1,296 @@
+[
+  {
+    "name": "Brett Gailey",
+    "image": "images/e8adb7d68ffda754723294264c9ebaa7f64eadd1424a05bed3cae9f46b9152c4.png",
+    "phone_numbers": [
+      {
+        "data": "425-407-3497",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly next to the name and title.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://lakestevenswa.gov/65/Mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bgailey@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email is directly associated with the name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://lakestevenswa.gov/65/Mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "http://lakestevenswa.gov/CivicAlerts.aspx?AID=933",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link associated with 'Meet up with the Mayor' event featuring Brett Gailey.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://lakestevenswa.gov/#taba3c16802-3663-44cc-b40f-897bae4f26f7_0"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Mentioned as Mayor in 2025 context; no explicit term dates found.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://lakestevenswa.gov/#taba3c16802-3663-44cc-b40f-897bae4f26f7_0"
+      }
+    ],
+    "positions": [
+      "mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kim Daughtry",
+    "image": "images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif",
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3869",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kdaughtry@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "position 1"
+    ]
+  },
+  {
+    "name": "Gary Petershagen",
+    "image": "images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif",
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3327",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "gpetershagen@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "position 2"
+    ]
+  },
+  {
+    "name": "Ryan Donoghue",
+    "image": "images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif",
+    "phone_numbers": [
+      {
+        "data": "(425) 903-6771",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rdonoghue@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "position 3"
+    ]
+  },
+  {
+    "name": "Kymm Shipman",
+    "image": "images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif",
+    "phone_numbers": [
+      {
+        "data": "(425) 870-1767",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kshipman@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "position 4"
+    ]
+  },
+  {
+    "name": "Anji Jorstad",
+    "image": "images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif",
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3147",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ajorstad@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "position 5"
+    ]
+  },
+  {
+    "name": "Steve Ewing",
+    "image": "images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif",
+    "phone_numbers": [
+      {
+        "data": "(425) 530-6832",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "sewing@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "position 6"
+    ]
+  },
+  {
+    "name": "Marcus Tageant",
+    "image": "images/7ccaccbbce0dfe8ce93cf92ff78e183bc335c15daefdce7491a6460f594e7596.gif",
+    "phone_numbers": [
+      {
+        "data": "(425) 407-3880",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to name and title.",
+        "proximity_to_name": 3,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mtageant@lakestevenswa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with name and title.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.lakestevenswa.gov/Directory.aspx?did=10"
+      }
+    ],
+    "websites": [],
+    "term_dates": [],
+    "positions": [
+      "council member",
+      "position 7"
+    ]
+  }
+]
