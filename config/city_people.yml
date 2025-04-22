@@ -4,6 +4,7 @@ government_types:
     positions:
       - role: mayor
       - role: mayor pro tem
+        aliases: mayor pro-tem
       - role: deputy mayor
       - role: council president
       - role: deputy council president
