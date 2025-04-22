@@ -1,0 +1,490 @@
+[
+  {
+    "name": "Spencer Boudreau",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?EID=109",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/497/City-Council"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link to City Council directory provided.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=109"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link to City Council directory provided.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=109"
+      },
+      {
+        "data": "http://www.mylongview.com/directory.aspx?EID=109",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?DID=40"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2022 to December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=109"
+      },
+      {
+        "data": "January 1, 2022 to December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term date.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=109"
+      }
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Erik Halvorson",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?EID=120",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/497/City-Council"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.65,
+        "llm_confidence_reason": "Link to city council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=120"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.65,
+        "llm_confidence_reason": "Link to city council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=120"
+      },
+      {
+        "data": "http://www.mylongview.com/directory.aspx?EID=120",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?DID=40"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "November 28, 2023 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under the title and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=120"
+      },
+      {
+        "data": "November 28, 2023 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under the title and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=120"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Ruth Kendall",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.mylongview.com/629/Ruth-Kendall",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/497/City-Council"
+      },
+      {
+        "data": "http://www.mylongview.com/629/Ruth-Kendall",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link to profile found in list of council members.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/629/Ruth-Kendall"
+      },
+      {
+        "data": "http://www.mylongview.com/629/Ruth-Kendall",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link to profile found in list of council members.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/629/Ruth-Kendall"
+      },
+      {
+        "data": "http://www.mylongview.com/629/Ruth-Kendall",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link to profile found in list of council members.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/629/Ruth-Kendall"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2020 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term date listed directly below name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/629/Ruth-Kendall"
+      },
+      {
+        "data": "January 1, 2020 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term date listed directly below name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/629/Ruth-Kendall"
+      },
+      {
+        "data": "January 1, 2020 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term date listed directly below name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/629/Ruth-Kendall"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Kalei LaFave",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?EID=121",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/497/City-Council"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to City Council directory associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=121"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=121"
+      },
+      {
+        "data": "http://www.mylongview.com/directory.aspx?EID=121",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?DID=40"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2024 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under the title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=121"
+      },
+      {
+        "data": "January 1, 2024 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Term.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=121"
+      }
+    ],
+    "positions": [
+      "Mayor Pro-tem",
+      "Mayor Pro-Tem",
+      "City Council"
+    ],
+    "sources": []
+  },
+  {
+    "name": "MaryAlice Wallis",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?EID=83",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/497/City-Council"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.65,
+        "llm_confidence_reason": "Link to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=83"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.65,
+        "llm_confidence_reason": "Link to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=83"
+      },
+      {
+        "data": "http://www.mylongview.com/directory.aspx?EID=83",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link in staff directory",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?DID=40"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2018 to December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term date listed directly below title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=83"
+      },
+      {
+        "data": "January 1, 2018 to December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term date listed directly below title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=83"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "City Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Angie Wean",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?EID=108",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/497/City-Council"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.65,
+        "llm_confidence_reason": "Link to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=108"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.65,
+        "llm_confidence_reason": "Link to city council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=108"
+      },
+      {
+        "data": "http://www.mylongview.com/directory.aspx?EID=108",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link in staff directory",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?DID=40"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2022 to December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term date listed directly below title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=108"
+      },
+      {
+        "data": "January 1, 2022 to December 31, 2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under term.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=108"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  },
+  {
+    "name": "Keith Young",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?EID=122",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/497/City-Council"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=122"
+      },
+      {
+        "data": "http://www.mylongview.com/Directory.aspx?DID=40",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to City Council page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=122"
+      },
+      {
+        "data": "http://www.mylongview.com/directory.aspx?EID=122",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link found in staff directory.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?DID=40"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "January 1, 2024 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Term.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=122"
+      },
+      {
+        "data": "January 1, 2024 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Term.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=122"
+      }
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "sources": []
+  }
+]
