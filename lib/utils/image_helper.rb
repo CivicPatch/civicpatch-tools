@@ -17,6 +17,6 @@ module Utils::ImageHelper
   end
 
   def self.get_cdn_url(file_key)
-    "https://cdn.civicpatch.org/#{file_key}"
+    "https://cdn.civicpatch.org/open-data/#{file_key}"
   end
 end
