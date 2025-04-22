@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Jose Luis Cuevas",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.wenatcheewa.gov/Home/Components/Form/Form/f7d4cc72bf24417f835388821d85068c/1289?fsiteid=1&npage=2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed next to name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "positions": [
+      "council member",
+      "District 1"
+    ]
+  },
+  {
+    "name": "Chelsea Ewer",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.wenatcheewa.gov/Home/Components/Form/Form/b34b23e0c45746efbf6402166026996d/1289",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed next to name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "positions": [
+      "council member",
+      "District 2"
+    ]
+  },
+  {
+    "name": "Top Rojanasthien",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.wenatcheewa.gov/Home/Components/Form/Form/ac6108eaff4b41c8becec60564f4dbb4/1289",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed next to name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "positions": [
+      "council member",
+      "District 3"
+    ]
+  },
+  {
+    "name": "Travis Hornby",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.wenatcheewa.gov/Home/Components/Form/Form/c1a474e20f8b4c01a9f98dc2e7f4aa60/1289?fsiteid=1&npage=2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed next to name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "positions": [
+      "council member",
+      "District 4"
+    ]
+  },
+  {
+    "name": "Charlie Atkinson",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.wenatcheewa.gov/Home/Components/Form/Form/cd175fb599644c3080378a0829d2a810/1289",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed next to name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "positions": [
+      "council member",
+      "District 5"
+    ]
+  },
+  {
+    "name": "Linda Herald",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.wenatcheewa.gov/Home/Components/Form/Form/a079f093c14a43d98fb8b1ee6fed2f7c/1289?fsiteid=1&npage=2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed next to name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "positions": [
+      "council member",
+      "At-Large A"
+    ]
+  },
+  {
+    "name": "Mayra Navarro Gomez",
+    "image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.wenatcheewa.gov/Home/Components/Form/Form/59a10c1d2f514cc4abc60fcf018687cd/1289",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed next to name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members?locale=en"
+      }
+    ],
+    "positions": [
+      "council member",
+      "At-Large B"
+    ]
+  }
+]
