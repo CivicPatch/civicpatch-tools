@@ -49,10 +49,6 @@ namespace :github_pipeline do
   def self.generate_people_list_comment(state, gnis, branch_name)
     city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
     city = city_entry["name"]
-    city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
-    relative_path = city_path[city_path.rindex("data/#{state}")..]
-
-    base_image_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}"
 
     city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
 
@@ -76,8 +72,7 @@ namespace :github_pipeline do
                             end
 
         image_markdown = if image.present?
-                           image_url = "#{base_image_url}/#{image}?raw=true"
-                           "![](#{image_url})"
+                           "![](#{image})"
                          else
                            "N/A"
                          end
