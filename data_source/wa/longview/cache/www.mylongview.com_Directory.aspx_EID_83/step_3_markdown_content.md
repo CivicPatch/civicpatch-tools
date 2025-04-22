@@ -9,7 +9,7 @@ Loading
  1.  [Community](http://www.mylongview.com/31/Community) 
  1.  [Business](http://www.mylongview.com/35/Business) 
  1.  [How Do I...](http://www.mylongview.com/9/How-Do-I) 
-  [![Facebook](images//ImageRepository/Document?documentID=3199)](https://www.facebook.com/CityofLongviewWA/)   [![Twitter](images//ImageRepository/Document?documentID=3205)](https://twitter.com/MyLongview)   [![Instagram](images//ImageRepository/Document?documentID=3200)](https://www.instagram.com/city_of_longview_washington/)   [![Search](images//ImageRepository/Document?documentID=3216)](http://www.mylongview.com/Search/Results) Search  ![](images/0d7cc8dd9a678c87551e73fc869b9240cc44fa44dbc248681f5d3fac281c483a.jpg)  
+  [![Facebook](images//ImageRepository/Document?documentID=3199)](https://www.facebook.com/CityofLongviewWA/)   [![Twitter](images//ImageRepository/Document?documentID=3205)](https://twitter.com/MyLongview)   [![Instagram](images//ImageRepository/Document?documentID=3200)](https://www.instagram.com/city_of_longview_washington/)   [![Search](images//ImageRepository/Document?documentID=3216)](http://www.mylongview.com/Search/Results) Search  ![](images/08331582ae90575843375b69ace8993eb17fb2a138e29b7db84429765ca35fe4.jpg)  
 
  1.  [Home](http://www.mylongview.com) 
  1. Staff Directory

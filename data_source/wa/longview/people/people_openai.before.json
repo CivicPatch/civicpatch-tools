@@ -47,7 +47,8 @@
   {
     "name": "Kalei LaFave",
     "positions": [
-      "mayor pro tem"
+      "mayor pro tem",
+      "Mayor Pro-Tem"
     ],
     "image": "images/df3eaa177239aabfa9824984462dd7dfb2d05d17938cfbacad0b1fb5202bc209.jpg",
     "phone_number": null,
@@ -62,8 +63,7 @@
   {
     "name": "MaryAlice Wallis",
     "positions": [
-      "council member",
-      "city council member"
+      "council member"
     ],
     "image": "images/83ca57f1fd8d951c1e887c31ca2c7fba0927eac4205fa3f02b738dfd60b881c1.jpg",
     "phone_number": null,

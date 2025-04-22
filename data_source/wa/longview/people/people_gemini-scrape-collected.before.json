@@ -16,8 +16,8 @@
       },
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link to City Council directory provided.",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Link to City Council page is associated with the name.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -25,8 +25,8 @@
       },
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link to City Council directory provided.",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Link to City Council provided.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -45,8 +45,8 @@
     "term_dates": [
       {
         "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term date.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term date listed directly below title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -54,8 +54,8 @@
       },
       {
         "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term date.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term date listed directly below the email link.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -94,7 +94,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
         "llm_confidence": 0.65,
-        "llm_confidence_reason": "Link to city council page.",
+        "llm_confidence_reason": "Link to City Council page provided.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -114,16 +114,17 @@
       {
         "data": "November 28, 2023 to December 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the title and name.",
+        "llm_confidence_reason": "Listed under title.",
         "markdown_formatting": {
           "in_list": false
         },
+        "proximity_to_name": 10,
         "source": "http://www.mylongview.com/Directory.aspx?EID=120"
       },
       {
         "data": "November 28, 2023 to December 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the title and name.",
+        "llm_confidence_reason": "Term date listed directly under the title.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -152,28 +153,28 @@
       },
       {
         "data": "http://www.mylongview.com/629/Ruth-Kendall",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to profile found in list of council members.",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to the council member's page is available in the navigation.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "http://www.mylongview.com/629/Ruth-Kendall"
       },
       {
         "data": "http://www.mylongview.com/629/Ruth-Kendall",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to profile found in list of council members.",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to profile page found in the navigation list.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "http://www.mylongview.com/629/Ruth-Kendall"
       },
       {
         "data": "http://www.mylongview.com/629/Ruth-Kendall",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to profile found in list of council members.",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to the council member's page is available in the navigation.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "http://www.mylongview.com/629/Ruth-Kendall"
       }
@@ -182,27 +183,27 @@
       {
         "data": "January 1, 2020 to December 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date listed directly below name.",
+        "llm_confidence_reason": "Term date is explicitly stated.",
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "http://www.mylongview.com/629/Ruth-Kendall"
       },
       {
         "data": "January 1, 2020 to December 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date listed directly below name.",
+        "llm_confidence_reason": "Term date listed directly under name and title.",
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "http://www.mylongview.com/629/Ruth-Kendall"
       },
       {
         "data": "January 1, 2020 to December 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date listed directly below name.",
+        "llm_confidence_reason": "Term date is explicitly stated.",
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "http://www.mylongview.com/629/Ruth-Kendall"
       }
@@ -230,7 +231,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "Link to City Council directory associated with name.",
+        "llm_confidence_reason": "Link to City Council directory.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -238,8 +239,8 @@
       },
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Link to City Council page.",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to City Council directory.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -259,7 +260,7 @@
       {
         "data": "January 1, 2024 to December 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the title.",
+        "llm_confidence_reason": "Listed under term date.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -268,7 +269,7 @@
       {
         "data": "January 1, 2024 to December 31, 2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
+        "llm_confidence_reason": "Listed under term date.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -299,17 +300,18 @@
       },
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
-        "llm_confidence": 0.65,
+        "llm_confidence": 0.85,
         "llm_confidence_reason": "Link to City Council page.",
         "markdown_formatting": {
           "in_list": false
         },
+        "proximity_to_name": 20,
         "source": "http://www.mylongview.com/Directory.aspx?EID=83"
       },
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
         "llm_confidence": 0.65,
-        "llm_confidence_reason": "Link to City Council page.",
+        "llm_confidence_reason": "Link to city council page.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -318,7 +320,7 @@
       {
         "data": "http://www.mylongview.com/directory.aspx?EID=83",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link in staff directory",
+        "llm_confidence_reason": "Link found in staff directory.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -329,16 +331,17 @@
       {
         "data": "January 1, 2018 to December 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date listed directly below title.",
+        "llm_confidence_reason": "Listed under the title.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
+        "proximity_to_name": 15,
         "source": "http://www.mylongview.com/Directory.aspx?EID=83"
       },
       {
         "data": "January 1, 2018 to December 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date listed directly below title.",
+        "llm_confidence_reason": "Listed directly under the title and name.",
         "markdown_formatting": {
           "in_list": true
         },
@@ -387,7 +390,7 @@
       {
         "data": "http://www.mylongview.com/directory.aspx?EID=108",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link in staff directory",
+        "llm_confidence_reason": "Link found in staff directory.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -398,7 +401,7 @@
       {
         "data": "January 1, 2022 to December 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date listed directly below title.",
+        "llm_confidence_reason": "Listed under Term.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -407,7 +410,7 @@
       {
         "data": "January 1, 2022 to December 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
+        "llm_confidence_reason": "Listed under term date.",
         "markdown_formatting": {
           "in_list": false
         },
@@ -436,7 +439,7 @@
       },
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
-        "llm_confidence": 0.85,
+        "llm_confidence": 0.65,
         "llm_confidence_reason": "Link to City Council page.",
         "markdown_formatting": {
           "in_list": false
@@ -445,7 +448,7 @@
       },
       {
         "data": "http://www.mylongview.com/Directory.aspx?DID=40",
-        "llm_confidence": 0.85,
+        "llm_confidence": 0.65,
         "llm_confidence_reason": "Link to City Council page.",
         "markdown_formatting": {
           "in_list": false

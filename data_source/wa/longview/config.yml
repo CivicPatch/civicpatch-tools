@@ -1,7 +1,8 @@
 ---
 scrape_sources:
-- http://www.mylongview.com/497/City-Council
 - http://www.mylongview.com/Directory.aspx?EID=109
+- http://www.mylongview.com/497/City-Council
+- http://www.mylongview.com/Directory.aspx?EID=121
 - http://www.mylongview.com/Directory.aspx?EID=108
 - http://www.mylongview.com/Directory.aspx?EID=120
 - http://www.mylongview.com/Directory.aspx?EID=122

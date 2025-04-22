@@ -9,6 +9,16 @@
   sources:
   - http://www.mylongview.com/Directory.aspx?EID=109
   - http://www.mylongview.com/497/City-Council
+- name: Kalei LaFave
+  positions:
+  - Mayor Pro Tem
+  email:
+  phone_number:
+  website: http://www.mylongview.com/Directory.aspx?DID=40
+  image: https://cdn.civicpatch.org/open-data/wa/longview/images/df3eaa177239aabfa9824984462dd7dfb2d05d17938cfbacad0b1fb5202bc209.jpg
+  sources:
+  - http://www.mylongview.com/Directory.aspx?EID=121
+  - http://www.mylongview.com/497/City-Council
 - name: Angie Wean
   positions:
   - Council Member
@@ -57,5 +67,5 @@
   website: http://www.mylongview.com/629/Ruth-Kendall
   image: https://cdn.civicpatch.org/open-data/wa/longview/images/06c9b09abda96e1a95af51e78e6c96bc34648d955c82f51436acd92eacdd8624.jpg
   sources:
-  - http://www.mylongview.com/629/Ruth-Kendall
   - http://www.mylongview.com/497/City-Council
+  - http://www.mylongview.com/629/Ruth-Kendall

@@ -8,7 +8,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?EID=109",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the person's name and image.",
+        "llm_confidence_reason": "Link directly associated with the name and image of Spencer Boudreau, the Mayor.",
         "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
@@ -20,7 +20,17 @@
       {
         "data": "January 1, 2022 to December 31, 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date clearly listed under Spencer Boudreau's name.",
+        "llm_confidence_reason": "Term date is explicitly listed under Spencer Boudreau's section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=109"
+      },
+      {
+        "data": "January 1, 2022 to December 31, 2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term dates clearly listed under Spencer Boudreau's section.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -42,7 +52,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?EID=120",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the person's name and image.",
+        "llm_confidence_reason": "Link directly associated with the name and image of Erik Halvorson, Council Member.",
         "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
@@ -53,11 +63,21 @@
     "term_dates": [
       {
         "data": "November 28, 2023 to December 31, 2027",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Term dates are explicitly listed under the person's name and title.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=120"
+      },
+      {
+        "data": "November 28, 2023 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are explicitly listed under the person's name and title.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
         },
         "source": "http://www.mylongview.com/Directory.aspx?EID=120"
       }
@@ -76,7 +96,7 @@
       {
         "data": "http://www.mylongview.com/629/Ruth-Kendall",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the person's name and image.",
+        "llm_confidence_reason": "Link directly associated with the name and image of Ruth Kendall, Council Member.",
         "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
@@ -87,7 +107,17 @@
     "term_dates": [
       {
         "data": "January 1, 2020 to December 31, 2027",
-        "llm_confidence": 0.95,
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term dates are explicitly listed under Ruth Kendall's name and title.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/629/Ruth-Kendall"
+      },
+      {
+        "data": "January 1, 2020 to December 31, 2027",
+        "llm_confidence": 1,
         "llm_confidence_reason": "Term dates are explicitly listed under Ruth Kendall's name and title.",
         "proximity_to_name": 10,
         "markdown_formatting": {
@@ -110,7 +140,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?EID=121",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the person's name and image.",
+        "llm_confidence_reason": "Link directly associated with the name and image of Kalei LaFave, Mayor Pro-tem.",
         "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
@@ -121,8 +151,8 @@
     "term_dates": [
       {
         "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term dates are explicitly listed under Kalei LaFave's section.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are listed directly under the name and title.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": true
@@ -131,7 +161,8 @@
       }
     ],
     "positions": [
-      "mayor pro tem"
+      "mayor pro tem",
+      "Mayor Pro-Tem"
     ],
     "sources": []
   },
@@ -144,7 +175,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?EID=83",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the person's name and image.",
+        "llm_confidence_reason": "Link directly associated with the name and image of MaryAlice Wallis, Council Member.",
         "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
@@ -155,7 +186,17 @@
     "term_dates": [
       {
         "data": "January 1, 2018 to December 31, 2025",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are explicitly listed under MaryAlice Wallis' name and title.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=83"
+      },
+      {
+        "data": "January 1, 2018 to December 31, 2025",
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Term date is explicitly listed under MaryAlice Wallis' section.",
         "proximity_to_name": 10,
         "markdown_formatting": {
@@ -165,8 +206,7 @@
       }
     ],
     "positions": [
-      "council member",
-      "city council member"
+      "council member"
     ],
     "sources": []
   },
@@ -179,7 +219,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?EID=108",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the person's name and image.",
+        "llm_confidence_reason": "Link directly associated with the name and image of Angie Wean, Council Member.",
         "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
@@ -190,11 +230,21 @@
     "term_dates": [
       {
         "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly listed under Angie Wean's section.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term dates are explicitly listed under Angie Wean's profile.",
         "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=108"
+      },
+      {
+        "data": "January 1, 2022 to December 31, 2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term dates listed directly under Angie Wean's name and title.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
         },
         "source": "http://www.mylongview.com/Directory.aspx?EID=108"
       }
@@ -213,7 +263,7 @@
       {
         "data": "http://www.mylongview.com/Directory.aspx?EID=122",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the person's name and image.",
+        "llm_confidence_reason": "Link directly associated with the name and image of Keith Young, Council Member.",
         "proximity_to_name": 1,
         "markdown_formatting": {
           "in_list": false
@@ -224,8 +274,18 @@
     "term_dates": [
       {
         "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term date is explicitly listed under Keith Young's profile.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are explicitly listed under Keith Young's profile.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "http://www.mylongview.com/Directory.aspx?EID=122"
+      },
+      {
+        "data": "January 1, 2024 to December 31, 2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term dates are explicitly listed under Keith Young's profile.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": true

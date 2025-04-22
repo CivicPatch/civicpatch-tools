@@ -726,7 +726,14 @@
       "gnis": "2410871",
       "type": "Code city",
       "population": 37818,
-      "government_type": "Council-Manager"
+      "government_type": "Council-Manager",
+      "meta_updated_at": "2025-04-22",
+      "meta_hash": "979f2de7ce332b54cc1bcf47fb9c97cc",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "ocd_ids": [
