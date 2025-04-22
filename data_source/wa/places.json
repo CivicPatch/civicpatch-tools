@@ -704,10 +704,12 @@
       "type": "Code city",
       "population": 38568,
       "government_type": "Mayor-Council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "e7cbb16c2d0ff2cd96a0a7ec343404e1",
+      "meta_updated_at": "2025-04-22",
+      "meta_hash": "02796462bf23d063af0d106f8aa64389",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
