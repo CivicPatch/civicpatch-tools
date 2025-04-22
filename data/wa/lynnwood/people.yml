@@ -2,32 +2,85 @@
 - name: Christine Frizzell
   positions:
   - Mayor
-  email: CFrizzell@lynnwoodwa.gov
+  email: mayor@LynnwoodWA.gov
+  phone_number: "(425) 670-5001"
+  website: https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell/About-Mayor-Christine-Frizzell
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/32d75c0cece4701cbc67b161b85f1ec18c77685a387e44e5762530989d4d7451.jpg
+  sources:
+  - https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell
+  - https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell/About-Mayor-Christine-Frizzell
+  - https://www.lynnwoodwa.gov/Government/City-Council
+- name: George Hurst
+  positions:
+  - Council President
+  - Council Member
+  email: CouncilPos6@lynnwoodwa.gov
+  phone_number:
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/c061c7dc6d64fcababaed168a1f94dee9937e8872283ec342d2b54217d2b04a2.jpg
+  sources:
+  - https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format
+  - https://www.lynnwoodwa.gov/Government/City-Council
 - name: Nick Coelho
   positions:
   - Council President
-  email: ncoelho@lynnwoodwa.gov
-- name: Almaderica "Derica" Escamilla
-  positions:
   - Council Member
-  email: descamilla@lynnwoodwa.gov
+  email: CouncilPos4@lynnwoodwa.gov
+  phone_number:
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Coelho-new-format
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/3b1ec9514a7ef9963393fbef8cfe0c09bd20c88d82e48e1a12d1fa23e9454fad.jpg
+  sources:
+  - https://www.lynnwoodwa.gov/Government/City-Council/Coelho-new-format
+  - https://www.lynnwoodwa.gov/Government/City-Council
+- name: Josh Binda
+  positions:
+  - Council Vice President
+  - Council Member
+  email: CouncilPos3@lynnwoodwa.gov
+  phone_number:
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Binda-new-format
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/7d238d86031bcddc6a15179c469936b6e04e140a99bf8118520c2c4b75932877.png
+  sources:
+  - https://www.lynnwoodwa.gov/Government/City-Council/Binda-new-format
+  - https://www.lynnwoodwa.gov/Government/City-Council
 - name: David Parshall
   positions:
   - Council Member
-  email: dparshall@lynnwoodwa.gov
-- name: George Hurst
+  email: CouncilPos7@lynnwoodwa.gov
+  phone_number:
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Parshall-new-format
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/cba4220ec482cfaf17629a915808b3a45069017ddc23df0f12ded6538d6afbc1.jpg
+  sources:
+  - https://www.lynnwoodwa.gov/Government/City-Council/Parshall-new-format
+  - https://www.lynnwoodwa.gov/Government/City-Council
+- name: Derica Escamilla
   positions:
   - Council Member
-  email: ghurst@lynnwoodwa.gov
-- name: Josh Binda
-  positions:
-  - Council Member
-  email: jbinda@lynnwoodwa.gov
-- name: Patrick Decker
-  positions:
-  - Council Member
-  email: Pdecker@lynnwoodwa.gov
+  email: CouncilPos1@lynnwoodwa.gov
+  phone_number:
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Council-Member-Escamilla
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/97af0dc9cb3654398f904b8e957ddbc530c5dcd1d18ed4323b1deb8003dbb33f.jpg
+  sources:
+  - https://www.lynnwoodwa.gov/Government/City-Council/Council-Member-Escamilla
+  - https://www.lynnwoodwa.gov/Government/City-Council
 - name: Robert Leutwyler
   positions:
   - Council Member
-  email: rleutwyler@lynnwoodwa.gov
+  email: CouncilPos5@lynnwoodwa.gov
+  phone_number:
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Robert-Leutwyler
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/e317ff1d55e986a8dc55074e1832d25415899cb30c05de8a095e66c3d89f13bc.jpg
+  sources:
+  - https://www.lynnwoodwa.gov/Government/City-Council/Robert-Leutwyler
+  - https://www.lynnwoodwa.gov/Government/City-Council
+- name: Patrick Decker
+  positions:
+  - Council Member
+  - Position 2
+  email: Pdecker@lynnwoodwa.gov
+  phone_number:
+  website: https://www.lynnwoodwa.gov/Government/City-Council/Decker-new-format
+  image: https://cdn.civicpatch.org/open-data/data/wa/lynnwood/images/d90690a20fc354010d09d3bc12461401e859390951d8795e2bff15038de32e4e.jpg
+  sources:
+  - https://www.lynnwoodwa.gov/Government/City-Council
+  - https://www.lynnwoodwa.gov/Government/City-Council/Decker-new-format
