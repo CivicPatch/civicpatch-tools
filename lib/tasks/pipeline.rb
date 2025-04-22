@@ -24,7 +24,7 @@ namespace :pipeline do
     cities = state_places["places"].select do |c|
       !gnis_to_ignore.include?(c["gnis"]) &&
         c["website"].present? &&
-        c["meta_sources"].count == 1 # If there's only one source, we can assume it's a state source
+        (c["meta_sources"].blank? || c["meta_sources"].count == 1) # If there's only one source, we can assume it's a state source
     end.first(num_cities.to_i)
 
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
