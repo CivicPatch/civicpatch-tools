@@ -109,6 +109,10 @@ jobs:
           git checkout -b $BRANCH_NAME
       
       - name: Get city representatives data
+        env:
+          SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+          SPACES_SECRET_KEY: ${{ secrets.SPACES_SECRET_KEY }}
+          SPACES_ENDPOINT: ${{ secrets.SPACES_ENDPOINT }}
         run: |
           echo "Processing city: ${{ matrix.city_entry.gnis }}"
           bundle exec rake 'pipeline:fetch[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }}]'
