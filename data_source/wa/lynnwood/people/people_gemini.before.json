@@ -2,13 +2,16 @@
   {
     "name": "Christine Frizzell",
     "positions": [
-      "Mayor"
+      "Mayor",
+      "Board Member, Community Transit",
+      "Board Member, Sound Transit",
+      "Board of Trustees Member, Economic Alliance Snohomish County"
     ],
     "image": null,
     "phone_number": null,
     "email": "mayor@LynnwoodWA.gov",
-    "website": "https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell/About-Mayor-Christine-Frizzell",
-    "term_date": null,
+    "website": "https://www.economicalliancesc.org/about/board-of-trustees",
+    "term_date": "January of 2022",
     "sources": [
       "https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell",
       "https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell/About-Mayor-Christine-Frizzell"
@@ -95,7 +98,7 @@
     "phone_number": null,
     "email": "CouncilPos6@lynnwoodwa.gov",
     "website": "https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format",
-    "term_date": "Elected in 2015, re-elected in 2019 and 2023",
+    "term_date": "Elected in 2015",
     "sources": [
       "https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format",
       "https://www.lynnwoodwa.gov/Government/City-Council"
@@ -110,7 +113,7 @@
     "phone_number": null,
     "email": "CouncilPos5@lynnwoodwa.gov",
     "website": "https://www.lynnwoodwa.gov/Government/City-Council/Robert-Leutwyler",
-    "term_date": "2025",
+    "term_date": "appointed in 2025",
     "sources": [
       "https://www.lynnwoodwa.gov/Government/City-Council/Robert-Leutwyler",
       "https://www.lynnwoodwa.gov/Government/City-Council"
@@ -138,17 +141,17 @@
       "Council Member",
       "Council Finance Committee",
       "Lynnwood Tourism Advisory Committee (Chair)",
-      "City Council",
-      "Council Position #2"
+      "Snohomish County 911 Board",
+      "Veterans",
+      "City Council"
     ],
     "image": null,
     "phone_number": null,
     "email": null,
     "website": "https://www.lynnwoodwa.gov/Government/City-Council/Decker-new-format",
-    "term_date": "Elected in 2021",
+    "term_date": null,
     "sources": [
-      "https://www.lynnwoodwa.gov/Government/City-Council",
-      "https://www.lynnwoodwa.gov/Government/City-Council/Decker-new-format"
+      "https://www.lynnwoodwa.gov/Government/City-Council"
     ]
   },
   {
@@ -162,7 +165,7 @@
     "phone_number": null,
     "email": "CouncilPos3@lynnwoodwa.gov",
     "website": "https://www.lynnwoodwa.gov/Government/City-Council/Binda-new-format",
-    "term_date": null,
+    "term_date": "Elected in 2021",
     "sources": [
       "https://www.lynnwoodwa.gov/Government/City-Council/Binda-new-format",
       "https://www.lynnwoodwa.gov/Government/City-Council"
@@ -179,7 +182,7 @@
     "phone_number": null,
     "email": "CouncilPos4@lynnwoodwa.gov",
     "website": "https://www.lynnwoodwa.gov/Government/City-Council/Coelho-new-format",
-    "term_date": null,
+    "term_date": "Elected in 2023",
     "sources": [
       "https://www.lynnwoodwa.gov/Government/City-Council/Coelho-new-format",
       "https://www.lynnwoodwa.gov/Government/City-Council"
