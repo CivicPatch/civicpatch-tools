@@ -170,7 +170,8 @@ namespace :pipeline do
     puts "Source dirs: #{source_dirs.inspect}"
 
     data_city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
-    remote_city_path = data_city_path.partition("data/").last
+    # Find last instance of data/ because repo could start with open-data/data/
+    remote_city_path = data_city_path.rpartition("data/").last
 
     images_in_use = people.map { |person| person["image"] }.compact
 
