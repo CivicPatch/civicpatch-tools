@@ -4,13 +4,14 @@
     "positions": [
       "council member",
       "position 6",
+      "council member position 6",
       "council president"
     ],
     "image": "images/c061c7dc6d64fcababaed168a1f94dee9937e8872283ec342d2b54217d2b04a2.jpg",
     "phone_number": null,
     "email": "CouncilPos6@lynnwoodwa.gov",
     "website": "https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format",
-    "term_date": "Elected in 2015, re-elected in 2019 and 2023, current term active in 2025",
+    "term_date": "Elected in 2015, re-elected in 2019 and 2023, currently serving",
     "sources": [
       "https://www.lynnwoodwa.gov/Government/City-Council/Hurst-new-format",
       "https://www.lynnwoodwa.gov/Government/City-Council"
@@ -69,7 +70,7 @@
       "council member",
       "position 3",
       "Council Vice President",
-      "council member position 3"
+      "Council member position 3"
     ],
     "image": "images/7d238d86031bcddc6a15179c469936b6e04e140a99bf8118520c2c4b75932877.png",
     "phone_number": null,
@@ -87,7 +88,9 @@
       "council member",
       "position 4",
       "council president",
-      "council member position 4"
+      "council member position 4",
+      "Council President",
+      "Council member position 4"
     ],
     "image": "images/3b1ec9514a7ef9963393fbef8cfe0c09bd20c88d82e48e1a12d1fa23e9454fad.jpg",
     "phone_number": null,
@@ -120,14 +123,30 @@
     "positions": [
       "mayor"
     ],
-    "image": "images/32d75c0cece4701cbc67b161b85f1ec18c77685a387e44e5762530989d4d7451.jpg",
+    "image": "images/3858c5839e7e000e1fd1c82d79f20db7da02800cba55e0d5896f82fd2d684ff9.jpg",
     "phone_number": "425-670-5001",
     "email": "mayor@LynnwoodWA.gov",
     "website": "https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell",
-    "term_date": null,
+    "term_date": "January 2022 to present",
     "sources": [
       "https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell",
-      "https://www.lynnwoodwa.gov/Government/City-Council"
+      "https://www.lynnwoodwa.gov/Government/City-Council",
+      "https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell/About-Mayor-Christine-Frizzell"
+    ]
+  },
+  {
+    "name": "Almaderica Escamilla",
+    "positions": [
+      "council member",
+      "position 1"
+    ],
+    "image": "images/941af12bf062e2f7461917de5500bcd65facc5d6722f7e6f8ab01dbce4cebae5.jpg",
+    "phone_number": null,
+    "email": "CouncilPos1@lynnwoodwa.gov",
+    "website": null,
+    "term_date": "Appointed in 2024",
+    "sources": [
+      "https://www.lynnwoodwa.gov/Government/City-Council/Council-Member-Escamilla"
     ]
   }
 ]
