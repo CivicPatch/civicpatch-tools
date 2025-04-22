@@ -703,14 +703,7 @@
       "gnis": "1512414",
       "type": "Code city",
       "population": 38568,
-      "government_type": "Mayor-Council",
-      "meta_updated_at": "2025-04-22",
-      "meta_hash": "02796462bf23d063af0d106f8aa64389",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
+      "government_type": "Mayor-Council"
     },
     {
       "ocd_ids": [
@@ -726,14 +719,7 @@
       "gnis": "2410871",
       "type": "Code city",
       "population": 37818,
-      "government_type": "Council-Manager",
-      "meta_updated_at": "2025-04-22",
-      "meta_hash": "d8b0e2e62eaae030cdd9d10ee67b2db2",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
+      "government_type": "Council-Manager"
     },
     {
       "ocd_ids": [
