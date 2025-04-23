@@ -6,43 +6,33 @@
     "phone_numbers": [
       {
         "data": "253.682.7379",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is directly associated with the person in the contact column.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the contact column next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "253.566.5656",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Clear phone number associated with the person",
-        "proximity_to_name": 2,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/280/Mayor-Javier-Figueroa"
       }
     ],
     "emails": [
       {
         "data": "jfigueroa@cityofup.com",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is directly linked to the person in the contact column.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly linked with the name.",
         "proximity_to_name": 1,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "jfigueroa@CityofUP.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit email link directly associated with the person",
-        "proximity_to_name": 2,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email is directly linked with the text 'Email Mayor Figueroa' immediately following the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/280/Mayor-Javier-Figueroa"
       }
@@ -50,21 +40,21 @@
     "websites": [
       {
         "data": "https://www.cityofup.com/280/Mayor-Javier-Figueroa",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's biography link.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Biography link directly associated with the person.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "https://www.cityofup.com/280/Mayor-Javier-H-Figueroa",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL directly linked to the person's profile",
-        "proximity_to_name": 2,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and link text directly correspond to the person's name and role.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/280/Mayor-Javier-Figueroa"
       }
@@ -72,19 +62,19 @@
     "term_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly listed in the contact table.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date listed in the table next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "2024 to current",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Mentions term starting in 2024 and ongoing",
-        "proximity_to_name": 2,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Current & Past Council Roles' with clear date range.",
+        "proximity_to_name": 50,
         "markdown_formatting": {
           "in_list": true
         },
@@ -92,7 +82,8 @@
       }
     ],
     "positions": [
-      "mayor"
+      "mayor",
+      "position 1"
     ],
     "sources": []
   },
@@ -103,43 +94,33 @@
     "phone_numbers": [
       {
         "data": "253.677.5707",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is directly associated with the person in the contact column.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the contact column next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "253.566.5656",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Clear phone number associated with the official contact info",
-        "proximity_to_name": 10,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood"
       }
     ],
     "emails": [
       {
         "data": "ewood@cityofup.com",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is directly linked to the person in the contact column.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly linked with the name.",
         "proximity_to_name": 1,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "ewood@cityofup.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email link directly associated with the person",
-        "proximity_to_name": 12,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email is directly linked with the text 'Email Mayor Pro Tem Wood' immediately following the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood"
       }
@@ -147,40 +128,18 @@
     "websites": [
       {
         "data": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's biography link.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Biography link directly associated with the person.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL directly linked to the person's page",
-        "proximity_to_name": 15,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2025",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly listed in the contact table.",
-        "proximity_to_name": 1,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "2025-04-23",
-        "llm_confidence": 0,
-        "llm_confidence_reason": "No explicit term date provided",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and link text directly correspond to the person's name and position.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -188,10 +147,21 @@
         "source": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood"
       }
     ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date listed in the table next to the name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
     "positions": [
       "mayor pro tem",
-      "Mayor Pro Tem",
-      "City of University Place"
+      "position 4"
     ],
     "sources": []
   },
@@ -202,21 +172,21 @@
     "phone_numbers": [
       {
         "data": "253.566.5656",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is directly associated with the person in the contact column.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the contact column next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "253.566.5656",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Clear phone number associated with contact info",
-        "proximity_to_name": 10,
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under Contact Us section on the same page for the council member's office, reasonably close to the name.",
+        "proximity_to_name": 120,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/281/Council-Member-Frank-Boykin"
       }
@@ -224,21 +194,21 @@
     "emails": [
       {
         "data": "fboykin@cityofup.com",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is directly linked to the person in the contact column.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly linked with the name.",
         "proximity_to_name": 1,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "fboykin@CityofUP.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email directly linked to the person",
-        "proximity_to_name": 12,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link text explicitly associates the email with Council Member Frank Boykin.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/281/Council-Member-Frank-Boykin"
       }
@@ -246,21 +216,21 @@
     "websites": [
       {
         "data": "https://www.cityofup.com/281/Council-Member-Frank-Boykin",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's biography link.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Biography link directly associated with the person.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "https://www.cityofup.com/281/Council-Member-Frank-Boykin",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL directly associated with the person's profile",
-        "proximity_to_name": 15,
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is a dedicated profile page for Council Member Frank Boykin.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/281/Council-Member-Frank-Boykin"
       }
@@ -268,19 +238,19 @@
     "term_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly listed in the contact table.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date listed in the table next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
-        "data": "2023-01-01 to 2025-12-31",
-        "llm_confidence": 0.2,
-        "llm_confidence_reason": "No explicit term date provided; assuming current term",
-        "proximity_to_name": 20,
+        "data": "2023 to 2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in 2023 to first term on University Place City Council; typical council terms are 4 years.",
+        "proximity_to_name": 50,
         "markdown_formatting": {
           "in_list": false
         },
@@ -289,8 +259,7 @@
     ],
     "positions": [
       "council member",
-      "Council Member",
-      "University Place City Council"
+      "position 2"
     ],
     "sources": []
   },
@@ -301,43 +270,33 @@
     "phone_numbers": [
       {
         "data": "253.565.4855",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is directly associated with the person in the contact column.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the contact column next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "253.566.5656",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Clear phone number associated with the person in contact info",
-        "proximity_to_name": 20,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/279/Council-Member-Steve-Worthington"
       }
     ],
     "emails": [
       {
         "data": "Sworthington@cityofup.com",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is directly linked to the person in the contact column.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly linked with the name.",
         "proximity_to_name": 1,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "Sworthington@CityofUP.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email directly linked to the person in contact info",
-        "proximity_to_name": 20,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link text directly references Council Member Worthington.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/279/Council-Member-Steve-Worthington"
       }
@@ -345,41 +304,31 @@
     "websites": [
       {
         "data": "https://www.cityofup.com/279/Council-Member-Steve-Worthington",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's biography link.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Biography link directly associated with the person.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "https://www.cityofup.com/279/Council-Member-Steve-Worthington",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL directly associated with the person's biography page",
-        "proximity_to_name": 25,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/279/Council-Member-Steve-Worthington"
       }
     ],
     "term_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly listed in the contact table.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date listed in the table next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
-        "data": "2022-2024",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Elected experience indicates term dates",
-        "proximity_to_name": 30,
+        "data": "2022 to 2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under Elected Experience as Mayor of University Place City Council 2022 to 2024.",
+        "proximity_to_name": 120,
         "markdown_formatting": {
           "in_list": true
         },
@@ -388,8 +337,8 @@
     ],
     "positions": [
       "council member",
-      "Council Member",
-      "University Place City Council"
+      "position 3",
+      "mayor pro tem"
     ],
     "sources": []
   },
@@ -401,32 +350,32 @@
       {
         "data": "253.566.5656",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number format is clear and directly associated with the person",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Phone number listed directly in the contact column next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.cityofup.com/285/Council-Member-Denise-McCluskey"
+        "source": "https://www.cityofup.com/252/City-Council"
       }
     ],
     "emails": [
       {
         "data": "DMcCluskey@CityofUP.com",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is directly linked to the person in the contact column.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly linked with the name.",
         "proximity_to_name": 1,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "DMcCluskey@CityofUP.com",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address is directly linked to the person and clearly presented",
-        "proximity_to_name": 12,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly linked with the text 'Email Council Member McCluskey' immediately following the name and image.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/285/Council-Member-Denise-McCluskey"
       }
@@ -434,40 +383,30 @@
     "websites": [
       {
         "data": "https://www.cityofup.com/285/Council-Member-Denise-McCluskey",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's biography link.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Biography link directly associated with the person.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "https://www.cityofup.com/285/Council-Member-Denise-McCluskey",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's council page",
-        "proximity_to_name": 15,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/285/Council-Member-Denise-McCluskey"
       }
     ],
     "term_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly listed in the contact table.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date listed in the table next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       }
     ],
     "positions": [
       "council member",
-      "ward 3"
+      "position 5"
     ],
     "sources": []
   },
@@ -479,32 +418,32 @@
       {
         "data": "253.566.5656",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Clear phone number associated with the person in contact info",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Phone number listed directly in the contact column next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.cityofup.com/284/Council-Member-Stan-Flemming"
+        "source": "https://www.cityofup.com/252/City-Council"
       }
     ],
     "emails": [
       {
         "data": "stanflemming@cityofup.com",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is directly linked to the person in the contact column.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly linked with the name.",
         "proximity_to_name": 1,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "stanflemming@cityofup.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email link directly labeled for the person",
-        "proximity_to_name": 12,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link text directly associates the email with Council Member Stan Flemming.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/284/Council-Member-Stan-Flemming"
       }
@@ -512,50 +451,30 @@
     "websites": [
       {
         "data": "https://www.cityofup.com/284/Council-Member-Stan-Flemming",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's biography link.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Biography link directly associated with the person.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "https://www.cityofup.com/284/Council-Member-Stan-Flemming",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL directly associated with the person's page",
-        "proximity_to_name": 15,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/284/Council-Member-Stan-Flemming"
       }
     ],
     "term_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly listed in the contact table.",
-        "proximity_to_name": 1,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "2025-04-23",
-        "llm_confidence": 0,
-        "llm_confidence_reason": "No explicit term end date provided",
-        "proximity_to_name": 0,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date listed in the table next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.cityofup.com/284/Council-Member-Stan-Flemming"
+        "source": "https://www.cityofup.com/252/City-Council"
       }
     ],
     "positions": [
       "council member",
-      "ward 1"
+      "position 6"
     ],
     "sources": []
   },
@@ -567,32 +486,32 @@
       {
         "data": "253.566.5656",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Clear phone number associated with the official contact info",
-        "proximity_to_name": 15,
+        "llm_confidence_reason": "Phone number listed directly in the contact column next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.cityofup.com/278/Council-Member-Melanie-Grassi"
+        "source": "https://www.cityofup.com/252/City-Council"
       }
     ],
     "emails": [
       {
         "data": "mgrassi@cityofup.com",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is directly linked to the person in the contact column.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly linked with the name.",
         "proximity_to_name": 1,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       },
       {
         "data": "mgrassi@CityofUP.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email directly linked to the person in the contact section",
-        "proximity_to_name": 20,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link text explicitly associates the email with Council Member Melanie Grassi.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/278/Council-Member-Melanie-Grassi"
       }
@@ -600,40 +519,30 @@
     "websites": [
       {
         "data": "https://www.cityofup.com/278/Council-Member-Melanie-Grassi",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly associated with the person's biography link.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Biography link directly associated with the person.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
-      },
-      {
-        "data": "https://www.cityofup.com/278/Council-Member-Melanie-Grassi",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL matches the page and is person-specific",
-        "proximity_to_name": 25,
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.cityofup.com/278/Council-Member-Melanie-Grassi"
       }
     ],
     "term_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly listed in the contact table.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date listed in the table next to the name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.cityofup.com/252/City-Council"
       }
     ],
     "positions": [
       "council member",
-      "ward 1"
+      "position 7"
     ],
     "sources": []
   }

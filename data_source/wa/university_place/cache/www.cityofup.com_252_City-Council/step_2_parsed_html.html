@@ -59,9 +59,35 @@
 <style>      .htmx-indicator{opacity:0}      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}      </style>
 
 
+<style>
+      .skip-link {
+        display: inline-block !important;
+        position: absolute;
+        left: -9999px;
+        overflow: hidden;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        z-index: 50000 !important;
+      }
+      .skip-link:focus, .skip-link:active {
+        left: 0;
+        width: auto;
+        height: auto;
+        background: #fff;
+        color: #000;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 1.5;
+        margin-bottom: 8px;
+        padding: 5px;
+        border: 3px solid #000;
+        transition: none;
+      }
+    </style>
 
 
-<div id="divAjaxProgress" style="position: fixed;  text-align: center; border: 1px solid rgb(102, 102, 102); z-index: 90000000; height: 1486px; width: 1187px; display: none;">
+<a href="https://www.cityofup.com/252/City-Council/#mainWrapTS" class="skip-link">Skip To Main Content</a><div id="divAjaxProgress" style="position: fixed;  text-align: center; border: 1px solid rgb(102, 102, 102); z-index: 90000000; height: 1486px; width: 1187px; display: none;">
 <div id="divAjaxShade" style="position: fixed;  background: rgb(255, 255, 255); opacity: 0.5; height: 1484px; width: 1185px;"></div>
 <div id="divAjaxImgProgress" class="loading" style="position: relative; top: 742px; display: none;"><p>Loading</p></div>
 </div>
@@ -69,8 +95,8 @@
     
 
     <div id="fb-root"></div>
-<div id="skipToContentLinks">
-<a href="https://www.cityofup.com/252/City-Council/#cceb64f78c-0584-429e-b140-76a27e40bf54" class="skipToContentLink">Skip to Main Content</a>
+<div id="skipToContentLinks" class="ae-exclude" tabindex="-1">
+<a href="https://www.cityofup.com/252/City-Council/#cceb64f78c-0584-429e-b140-76a27e40bf54" class="skipToContentLink ae-exclude" tabindex="-1">Skip to Main Content</a>
 </div>
     
 
@@ -262,14 +288,14 @@ font-size: 18px;
 
 
 		<div id="bannerImagesJSON50" class="hidden"></div>
-<div class="bannerObject external fixedBanner" id="bannerDivbanner1" style="min-height: 180px; top: 0px; left: -397.5px; right: 0px; position: absolute; overflow: hidden; z-index: -999999; padding: 0px;"><img class="bannerObject" width="1185px" style="position: absolute; left: 0px; margin: 0px; width: 1980px;" src="images/247309be48b789363741f76fa297bc73242d27c2a31468ba5e8b1cac2f572cc4.jpg" alt=""></div>
+<div class="bannerObject external fixedBanner" id="bannerDivbanner1" style="min-height: 180px; top: 0px; left: -397.5px; right: 0px; position: absolute; overflow: hidden; z-index: -999999; padding: 0px;"><img class="bannerObject" width="1185px" style="position: absolute; left: 0px; margin: 0px; width: 1980px;" src="images/47463d02cbfb08b05eaec9649d2266575b0774c3d16a01aa95c9224d88a8e984.jpg" alt=""></div>
 		
 			
 
 </div>
 </div>
 <div id="mainContainerTS">
-<div class="siteWrap" style="padding-left: 96px;"><div id="mainWrapTS" class="mainWrap">
+<div class="siteWrap" style="padding-left: 96px;"><div id="mainWrapTS" class="mainWrap" tabindex="-1">
 <div id="outerContentWrapTS" class="outerContentWrap">
 <div id="contentWrapTS" class="contentWrap">
 <div id="breadCrumbs" class="breadCrumbContainer">		<ol class="semanticList breadCrumbs">
@@ -397,7 +423,7 @@ City Council		</h1>
 </tr>
 </tbody>
 </table>
-<h2><br></h2>
+<h2 tabindex="-1"><br></h2>
 <h2 id="isPasted">About the Council</h2>
 <p>University Place is governed by a Council/Manager form of government. Each council member is directly elected by the citizens of University Place to serve a four-year term. Elections are held every two years and alternate between the seven-member council. The Mayor is elected by the Council from among its members for a two-year term and presides at City Council meetings.</p>
 <p><a href="https://www.cityofup.com/DocumentCenter/View/4427/City-Council-Rules-of-Procedure-Rev-2022">View Council Rules of Procedure</a></p>
@@ -463,7 +489,7 @@ City Council		</h1>
 	<li class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem277">
 		<div class="accordionNavItem">
 			<a href="https://www.cityofup.com/277/Council-Member-Biographies" class="navMainItem secondaryNavItem cpComponent">Council Member Biographies</a>
-				<a href="https://www.cityofup.com/252/City-Council" class="openAccordionNav accordionSecondaryNavItem" title="Expand Council Member Biographies Submenu"></a>
+				<a href="https://www.cityofup.com/252/City-Council" class="openAccordionNav accordionSecondaryNavItem" title="Expand Council Member Biographies Submenu" tabindex="0"></a>
 		</div>
 					<ol class="accordionNavContainer accordionNavContainer--lvl1" style="display: none;">
 						<li class="sideNavLi subMenuItem hasAccordionChildren" id="SideItem280">
@@ -2005,6 +2031,6 @@ line-height: 1.2;}
     
 
 </div>
-
+<style> body[data-audioeye-carousel-modal-active] .pageContent .col, body[data-audioeye-carousel-modal-active] .pageContent .row, body[data-audioeye-carousel-modal-active] .widget, body[data-audioeye-carousel-modal-active] [data-cprole$=Container], body[data-audioeye-carousel-modal-active] [data-cprole=banner], body[data-audioeye-carousel-modal-active] [data-cprole=nav] { z-index: unset !important; }</style>
 
 

@@ -1,4 +1,4 @@
- 
+ [Skip To Main Content](https://www.cityofup.com/252/City-Council/#mainWrapTS)  
 
 Loading
 
@@ -14,7 +14,7 @@ Loading
  1.  [Community](https://www.cityofup.com/31/Community) 
  1.  [Engage](https://www.cityofup.com/101/Engage) 
  1.  [How Do I...](https://www.cityofup.com/9/How-Do-I) 
-  ![](images/247309be48b789363741f76fa297bc73242d27c2a31468ba5e8b1cac2f572cc4.jpg)  
+  ![](images/47463d02cbfb08b05eaec9649d2266575b0774c3d16a01aa95c9224d88a8e984.jpg)  
 
  1.  [Home](https://www.cityofup.com) 
  1.  [Government](https://www.cityofup.com/27/Government) 

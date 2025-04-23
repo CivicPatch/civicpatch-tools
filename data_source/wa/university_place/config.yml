@@ -1,10 +1,6 @@
 ---
 scrape_sources:
-- https://www.cityofup.com/280/Mayor-Javier-Figueroa
-- https://www.cityofup.com/281/Council-Member-Frank-Boykin
 - https://www.cityofup.com/252/City-Council
+- https://www.cityofup.com/280/Mayor-Javier-Figueroa
 - https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood
-- https://www.cityofup.com/285/Council-Member-Denise-McCluskey
-- https://www.cityofup.com/278/Council-Member-Melanie-Grassi
-- https://www.cityofup.com/284/Council-Member-Stan-Flemming
-- https://www.cityofup.com/279/Council-Member-Steve-Worthington
+- https://www.cityofup.com/281/Council-Member-Frank-Boykin
