@@ -100,10 +100,7 @@ module Core
           city_entry,
           government_type
         )
-        # Combine processed and search URLs, find unique ones based on normalization (keeping first occurrence),
-        # then remove the already processed URLs to get the list of new unique URLs to scrape.
-        urls_to_scrape = (processed_urls + search_result_urls)
-                         .uniq { |url| Utils::UrlHelper.normalize_for_comparison(url) } - processed_urls
+        urls_to_scrape = search_result_urls - processed_urls
 
         puts "#{context[:llm_service_string]} Search result urls: #{search_result_urls}"
         puts "#{context[:llm_service_string]} Urls already scraped: #{processed_urls}"
@@ -132,8 +129,6 @@ module Core
 
     def self.scrape_profiles(context, accumulated_people, processed_urls)
       content_dirs = []
-      # We don't want to re-scrape www* versions of urls
-      normalized_processed = Set.new(processed_urls.map { |u| Utils::UrlHelper.normalize_for_comparison(u) }.compact)
 
       accumulated_people = accumulated_people.map do |person|
         next person if Services::Shared::People.all_contact_data_points_present?(person) && person["image"].present?
@@ -142,9 +137,7 @@ module Core
         person["websites"].each do |website|
           original_url = website["data"]
           next if original_url.blank?
-          next if normalized_processed.include?(Utils::UrlHelper.normalize_for_comparison(original_url))
-
-          normalized_processed.add(Utils::UrlHelper.normalize_for_comparison(original_url))
+          next if processed_urls.include?(original_url)
 
           puts "Fetching from #{original_url} for #{person["name"]}"
           url_content_dir, people = scrape_url_for_municipal_directory(
