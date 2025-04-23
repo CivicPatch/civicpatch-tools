@@ -13,13 +13,17 @@ module Services
   BASE_SLEEP = 5  # Base sleep time for exponential backoff
   class Openai
     @@MAX_TOKENS = 100_000
-    MODEL = "gpt-4.1-mini"
+    MODEL = "gpt-4o-mini"
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_people(state, city_entry, government_type, content_file, page_url)
+    def extract_city_people(city_context, content_file, page_url)
+      state = city_context["state"]
+      city_entry = city_context["city_entry"]
+      government_type = city_context["government_type"]
+
       content = File.read(content_file)
 
       return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
@@ -56,7 +60,7 @@ module Services
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
 
-        First, determine if the content contains elected officials' information. 
+        First, determine if the content contains elected officials' information.#{" "}
         If not, return an empty array.
 
         Key roles: #{positions.join(", ")}
@@ -65,27 +69,12 @@ module Services
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
-        - image: URL from <img> tag (starting with "images/")
+        - image: URL from markdown image: (starting with "images/")
         - phone_number: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - email: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - website: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - term_date: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - positions: [array of strings]
-
-        Format example:
-        {
-          "people": [
-            {
-              "name": "John Doe",
-              "image": "images/12341324132.jpg",
-              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact.", "proximity_to_name": 50, "markdown_formatting": {"in_list": true}},
-              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name.", "proximity_to_name": 10, "markdown_formatting": {"in_list": false}},
-              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header", "markdown_formatting": {"in_list": true}},
-              "positions": ["Mayor", "Council Member"],
-              "term_date": {"data": "2022-01-01 to 2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
-            }
-          ]
-        }
 
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
@@ -94,7 +83,9 @@ module Services
         - IMPORTANT: DO NOT extract phone numbers or emails labeled as belonging to "Legislative Assistant", "Staff", "Office", or any other support personnel.
         - DO NOT extract contact information if you are less than 90% confident it belongs directly to the person.
         - Omit missing fields except for "name"
-        - For positions: Include only active roles (today is #{current_date})
+        - For positions:#{" "}
+          - Include only active roles (today is #{current_date}).
+          - Include both roles and divisions.
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
@@ -108,6 +99,8 @@ module Services
             - It appears in a section that is clearly dedicated to that person's contact information.
         - For phone_number:
           - If there are multiple phone numbers, extract the primary one.
+        - For term_date:
+          - Do not include words like "present" or "current"
       INSTRUCTIONS
 
       content = <<~CONTENT

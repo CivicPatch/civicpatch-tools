@@ -129,4 +129,21 @@ class PeopleManagerTest < Minitest::Test
 
     assert_equal expected, result
   end
+
+  def test_merge_people_with_source_image
+    list1 = [
+      { "name" => "Alice Smith", "email" => "alice@domain.com", "phone_number" => "1234567890", "source_image" => "https://example.com/image.jpg" }
+    ]
+    list2 = [
+      { "name" => "Alice Smith", "email" => "alice@domain.com", "phone_number" => "0987654321", "source_image" => "https://example.com/image2.jpg" }
+    ]
+
+    expected = [
+      { "name" => "Alice Smith", "email" => "alice@domain.com", "phone_number" => "1234567890", "source_image" => "https://example.com/image.jpg" }
+    ]
+
+    result = Core::PeopleManager.merge_people_lists(list1, list2)
+
+    assert_equal expected, result
+  end
 end

@@ -6,7 +6,8 @@ module Services
       def self.format_raw_data(person, source)
         formatted_person = {
           "name" => person["name"],
-          "image" => person["image"]
+          "image" => person["image"],
+          "source_image" => person["source_image"]
         }
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
@@ -24,6 +25,7 @@ module Services
       def self.merge_person(person, partial_person)
         merged = person.dup
         merged["image"] = partial_person["image"] || person["image"]
+        merged["source_image"] = partial_person["source_image"] || person["source_image"]
         merged["phone_numbers"] += partial_person["phone_numbers"]
         merged["emails"] += partial_person["emails"]
         merged["websites"] += partial_person["websites"]
@@ -44,12 +46,11 @@ module Services
           name = partial_person["name"]
           existing_person = Validators::Utils.find_by_name(people, name)
 
-          if existing_person.present?
-            existing_name = existing_person["name"]
-            people_by_name[name] = merge_person(existing_person, partial_person)
-          else
-            people_by_name[name] = partial_person
-          end
+          people_by_name[name] = if existing_person.present?
+                                   merge_person(existing_person, partial_person)
+                                 else
+                                   partial_person
+                                 end
         end
 
         people_by_name.values
@@ -178,6 +179,7 @@ module Services
           "name" => llm_person["name"],
           "positions" => llm_person["positions"],
           "image" => llm_person["image"],
+          "source_image" => llm_person["source_image"],
           "phone_number" => selected_data_points["phone_number"].present? ? selected_data_points["phone_number"]["data"] : nil,
           "email" => selected_data_points["email"].present? ? selected_data_points["email"]["data"] : nil,
           "website" => selected_data_points["website"].present? ? selected_data_points["website"]["data"] : nil,

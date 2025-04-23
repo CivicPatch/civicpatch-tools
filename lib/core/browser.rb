@@ -28,13 +28,18 @@ module Browser
       base_url = Utils::UrlHelper.extract_page_base_url(original_page_source, url)
 
       FileUtils.mkdir_p(image_dir)
-      download_images(browser, image_dir, base_url)
+      image_map = download_images(browser, image_dir, base_url)
       page_source_with_images = browser.page_source
 
-      Utils::UrlHelper.format_links_to_absolute(page_source_with_images, base_url)
+      page_html = Utils::UrlHelper.format_links_to_absolute(page_source_with_images, base_url)
+
+      [page_html, image_map]
     ensure
       browser.quit
     end
+  rescue StandardError => e
+    puts "Browser fetch failed for #{url}: #{e.message}"
+    nil
   end
 
   def self.fetch_html(url)
@@ -73,9 +78,14 @@ module Browser
   def self.download_images(browser, image_dir, base_url)
     image_elements = browser.find_elements(tag_name: "img")
 
+    image_map = {}
+
     image_elements.each do |image_element|
-      process_image(browser, image_dir, base_url, image_element)
+      key, source_image = process_image(browser, image_dir, base_url, image_element)
+      image_map[key] = source_image if key.present? && source_image.present?
     end
+
+    image_map
   end
 
   def self.generate_filename(src, file_type)
@@ -151,23 +161,7 @@ module Browser
     browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
                            img_element, filename)
 
-    # if download_with_httparty(absolute_src, image_path)
-    #  browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
-    #                         img_element, filename)
-    # else
-    #  # Fallback to canvas method
-    #  data_url = capture_image_as_data_url(browser, img_element)
-
-    #  if data_url.start_with?("ERROR:")
-    #    puts "Canvas error for #{src}: #{data_url}"
-    #    return
-    #  end
-
-    #  if save_image_from_data_url(data_url, image_path)
-    #    browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
-    #                           img_element, filename)
-    #  end
-    # end
+    [filename, absolute_src]
   rescue StandardError => e
     puts "Error processing image (#{src}): #{e.message}"
   end

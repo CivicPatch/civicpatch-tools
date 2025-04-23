@@ -1,7 +1,7 @@
 module Services
   module Shared
     class LlmPrompts
-      def self.gemini_generate_city_directory_prompt(state, city_entry, government_type, content)
+      def self.gemini_generate_municipal_directory_prompt(state, city_entry, government_type, content)
         city_name = city_entry["name"]
         positions = Core::CityManager.get_position_roles(government_type)
         divisions = Core::CityManager.get_position_divisions(government_type)
@@ -21,7 +21,6 @@ module Services
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
-        - image: URL from <img> tag (starting with "images/")
         - phone_number: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
         - email: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
         - website: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
@@ -33,7 +32,6 @@ module Services
           "people": [
             {
               "name": "John Doe",
-              "image": "images/12341324132.jpg",
               "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact.", "proximity_to_name": 50, "markdown_formatting": {"in_list": true}},
               "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name.", "proximity_to_name": 10, "markdown_formatting": {"in_list": false}},
               "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header", "markdown_formatting": {"in_list": true}},
@@ -46,8 +44,12 @@ module Services
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - Extract only person-specific information, not general contact info
+        - Pay attention to phone numbers that might be
+          formatted as link text (e.g., `[PHONE_NUMBER]()`).
         - Omit missing fields except for "name"
-        - For positions: Include only active roles (today is #{current_date})
+        - For positions:
+          - Include only active roles (today is #{current_date})
+          - Include both roles and divisions
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
@@ -61,8 +63,11 @@ module Services
           - EXCLUDE all other types of links like "mailto:", "tel:", "ftp:", etc.
           - Prefer shorter, cleaner URLs over ones with many complex query parameters unless clearly necessary for the specific person's profile page.
         - Email extraction:
-          - Extract email addresses found in the text or within "mailto:" links.
-          - Place these ONLY in the "email" field, NEVER in the "website" field.
+          - Extract email addresses found directly in the text.
+          - Also extract emails formatted as Markdown link *text*,
+            like `[email@example.com]()` or `[email@example.com](some-link)`.
+            Extract the email address shown in the brackets.
+          - Place extracted emails ONLY in the "email" field, NEVER in the "website" field.
         - Today is #{current_date}. Ensure that only active positions are included, and
           exclude any positions that are not currently held or are no longer active.
         Here is the content of the city page:

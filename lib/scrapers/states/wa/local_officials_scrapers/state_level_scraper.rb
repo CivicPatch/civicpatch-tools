@@ -8,7 +8,9 @@ module Scrapers::States::Wa::LocalOfficialScraper
       "#{DIRECTORY_URL}?ci=#{city_initial}"
     end
 
-    def self.get_officials(city_entry)
+    def self.get_officials(municipality_context)
+      city_entry = municipality_context[:city_entry]
+
       puts "Scraping #{city_entry["name"]} officials from state source: mrsc"
       source_url = source_url(city_entry)
 

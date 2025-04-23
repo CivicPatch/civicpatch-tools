@@ -7,6 +7,7 @@ module Services
   class GoogleGemini
     # MODEL = "gemini-2.5-pro-exp-03-25".freeze # FREE TIER
     MODEL = "gemini-2.0-flash".freeze
+    # MODEL = "gemini-2.5-flash-preview-04-17".freeze
     # MODEL = "gemini-1.5-pro".freeze
     # MODEL = "gemini-2.0-flash"
     BASE_URI = "https://generativelanguage.googleapis.com".freeze
@@ -16,7 +17,10 @@ module Services
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
     end
 
-    def extract_city_people(state, city_entry, government_type, content_file, url)
+    def extract_city_people(city_context, content_file, url)
+      state = city_context["state"]
+      city_entry = city_context["city_entry"]
+      government_type = city_context["government_type"]
       city = city_entry["name"]
       content = File.read(content_file)
 
@@ -24,7 +28,7 @@ module Services
       # return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
       prompt = Services::Shared::LlmPrompts
-               .gemini_generate_city_directory_prompt(state, city_entry, government_type, content)
+               .gemini_generate_municipal_directory_prompt(state, city_entry, government_type, content)
 
       request_origin = "#{state}_#{city}_gemini_#{MODEL}_city_scrape"
       response = run_prompt(prompt, request_origin, Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
@@ -37,9 +41,17 @@ module Services
           person["positions"].present?
       end
 
-      people.map do |person|
+      File.write("chat.txt", "FOR URL BEFORE: #{url}\n", mode: "a")
+      File.write("chat.txt", JSON.pretty_generate(people), mode: "a")
+
+      people = people.map do |person|
         Services::Shared::People.format_raw_data(person, url)
       end
+
+      File.write("chat.txt", "FOR URL AFTER: #{url}\n", mode: "a")
+      File.write("chat.txt", JSON.pretty_generate(people), mode: "a")
+
+      people
     end
 
     def run_prompt(prompt, request_origin, response_schema)

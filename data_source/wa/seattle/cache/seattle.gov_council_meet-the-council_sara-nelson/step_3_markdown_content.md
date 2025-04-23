@@ -1,4 +1,4 @@
-  ![]()   ![]()   ![](images/ae32bced298b0e750604ecd13c7dd65e95b604981f9f6bad9004fe0a4bf769db.jpg)  This is an official government website. Here's how you know  __Official websites use.gov__ 
+  ![Councilmember Sara Nelson - Position 9, Citywide]()   ![Councilmember Sara Nelson - Position 9, Citywide]()   ![Councilmember Sara Nelson - Position 9, Citywide](images/ae32bced298b0e750604ecd13c7dd65e95b604981f9f6bad9004fe0a4bf769db.jpg)  This is an official government website. Here's how you know  __Official websites use.gov__ 
 
 Website addresses ending in.gov belong to official government organizations in the United States.  __Secure.gov websites use HTTPS__ 
 
@@ -25,350 +25,350 @@ A lock () or https:// means you've safely connected to the.gov website. Only sha
  *  [ພາສາລາວ]() 
  *  [ਪੰਜਾਬੀ]() 
  *  [عربى]() 
-  ![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)   [Select Language![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)​![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)▼](https://seattle.gov/council/meet-the-council/sara-nelson)  Search Pay or Apply Menu Menu Close menu for Global site Close  [Pay or ApplyBills, tickets, permits, reservations](https://seattle.gov/pay-and-apply)  City Administration Council, Mayor, Court, Law, Finance Public Safety Police, fire, emergencies Assistance and Utilities Electricity, water, free services, grants Learning and Education Classes, youth programs, preschool Explore the City Events, recreation, parks, landmarks Transportation and Development Construction, transit, roads, parking Close menu for City Administration Close Back to City Administration 
+  ![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)   [Select Language![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)​![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)▼](https://seattle.gov)  Search Pay or Apply Menu Menu Close menu for Global site Close  [Pay or ApplyBills, tickets, permits, reservations](https://seattle.gov/pay-and-apply)  City Administration Council, Mayor, Court, Law, Finance Public Safety Police, fire, emergencies Assistance and Utilities Electricity, water, free services, grants Learning and Education Classes, youth programs, preschool Explore the City Events, recreation, parks, landmarks Transportation and Development Construction, transit, roads, parking Close menu for City Administration Close Back to City Administration 
 
 ### Connect with Elected Officials
 
- *  [All Elected Officials](https://seattle.gov/council/meet-the-council/elected-officials) 
- *  [City Attorney](https://seattle.gov/council/meet-the-council/cityattorney) 
- *  [City Council](https://seattle.gov/council/meet-the-council/council) 
- *  [Mayor's Office](https://seattle.gov/council/meet-the-council/mayor) 
+ *  [All Elected Officials](https://seattle.gov/elected-officials) 
+ *  [City Attorney](https://seattle.gov/cityattorney) 
+ *  [City Council](https://seattle.gov/council) 
+ *  [Mayor's Office](https://seattle.gov/mayor) 
 
 ### Departments and Contacts
 
- *  [All Departments](https://seattle.gov/council/meet-the-council/departments) 
- *  [Media Contacts](https://seattle.gov/council/meet-the-council/media-contacts) 
+ *  [All Departments](https://seattle.gov/departments) 
+ *  [Media Contacts](https://seattle.gov/media-contacts) 
 
 ### Get Involved with the City
 
- *  [All Get Involved](https://seattle.gov/council/meet-the-council/get-involved) 
- *  [Boards and Commissions](https://seattle.gov/council/meet-the-council/boards-and-commissions) 
- *  [Council Meeting Calendar and Agendas](https://seattle.gov/council/meet-the-council/council/committees) 
- *  [Have a Say in City Projects (Your Voice, Your Choice)](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/pedestrian-program/yvyc-program) 
- *  [How Seattle's Government Works](https://seattle.gov/council/meet-the-council/cityclerk/agendas-and-legislative-resources/seattles-form-of-government) 
- *  [Seattle Channel TV](https://www.seattlechannel.org) 
+ *  [All Get Involved](https://seattle.gov/get-involved) 
+ *  [Boards and Commissions](https://seattle.gov/boards-and-commissions) 
+ *  [Council Meeting Calendar and Agendas](https://seattle.gov/council/committees) 
+ *  [Have a Say in City Projects (Your Voice, Your Choice)](https://seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/yvyc-program) 
+ *  [How Seattle's Government Works](https://seattle.gov/cityclerk/agendas-and-legislative-resources/seattles-form-of-government) 
+ *  [Seattle Channel TV](https://www.seattlechannel.org/) 
 
 ### Finance and Purchasing
 
- *  [Auction Vehicles or Equipment](https://seattle.gov/council/meet-the-council/fleet-management/vehicle-auction) 
- *  [Business Taxes and Licenses](https://seattle.gov/council/meet-the-council/city-finance/business-taxes-and-licenses) 
- *  [City Budget](https://seattle.gov/council/meet-the-council/city-budget-office) 
- *  [City Finance](https://seattle.gov/council/meet-the-council/city-finance) 
- *  [City Surplus Equipment](https://seattle.gov/council/meet-the-council/warehousing-services) 
- *  [Purchasing, Contracting Bids and Proposals](https://seattle.gov/council/meet-the-council/purchasing-and-contracting/purchasing) 
- *  [Real Estate Services](https://seattle.gov/council/meet-the-council/real-estate-services) 
+ *  [Auction Vehicles or Equipment](https://seattle.gov/fleet-management/vehicle-auction) 
+ *  [Business Taxes and Licenses](https://seattle.gov/city-finance/business-taxes-and-licenses) 
+ *  [City Budget](https://seattle.gov/city-budget-office) 
+ *  [City Finance](https://seattle.gov/city-finance) 
+ *  [City Surplus Equipment](https://seattle.gov/warehousing-services) 
+ *  [Purchasing, Contracting Bids and Proposals](https://seattle.gov/purchasing-and-contracting/purchasing) 
+ *  [Real Estate Services](https://seattle.gov/real-estate-services) 
 
 ### Issues and Initiatives
 
- *  [City Council Issues](https://seattle.gov/council/meet-the-council/council/issues) 
- *  [Digital Equity](https://seattle.gov/council/meet-the-council/tech/reports-and-data/about-digital-equity) 
- *  [Environment and Sustainability](https://seattle.gov/council/meet-the-council/environment) 
- *  [Free College Tuition](https://seattle.gov/council/meet-the-council/education/fepp-levy/the-seattle-promise) 
- *  [Homelessness Action Plan](https://experience.arcgis.com/experience/af548fd66fc94e98a5067b299b7d1209) 
- *  [Race and Social Justice Initiative](https://seattle.gov/council/meet-the-council/rsji) 
+ *  [City Council Issues](https://seattle.gov/council/issues) 
+ *  [Digital Equity](https://seattle.gov/tech/reports-and-data/about-digital-equity) 
+ *  [Environment and Sustainability](https://seattle.gov/environment) 
+ *  [Free College Tuition](https://seattle.gov/education/fepp-levy/the-seattle-promise) 
+ *  [Homelessness Action Plan](https://experience.arcgis.com/experience/af548fd66fc94e98a5067b299b7d1209/) 
+ *  [Race and Social Justice Initiative](https://seattle.gov/rsji) 
 
 ### Seattle Municipal Court
 
- *  [All Seattle Municipal Court](https://seattle.gov/council/meet-the-council/courts) 
- *  [Jury Duty](https://seattle.gov/council/meet-the-council/courts/jury) 
- *  [Pay My Ticket](https://seattle.gov/council/meet-the-council/courts/tickets-and-payments/pay-my-ticket) 
- *  [Marriage Ceremonies](https://seattle.gov/council/meet-the-council/courts/programs-and-services/marriage-ceremonies/marriage-ceremony-faqs) 
- *  [Youth Traffic Court](https://seattle.gov/council/meet-the-council/courts/programs-and-services/specialized-courts/seattle-youth-traffic-court) 
+ *  [All Seattle Municipal Court](https://seattle.gov/courts) 
+ *  [Jury Duty](https://seattle.gov/courts/jury) 
+ *  [Pay My Ticket](https://seattle.gov/courts/tickets-and-payments/pay-my-ticket) 
+ *  [Marriage Ceremonies](https://seattle.gov/courts/programs-and-services/marriage-ceremonies/marriage-ceremony-faqs) 
+ *  [Youth Traffic Court](https://seattle.gov/courts/programs-and-services/specialized-courts/seattle-youth-traffic-court) 
 
 ### Voting
 
- *  [Democracy Vouchers](https://seattle.gov/council/meet-the-council/democracyvoucher) 
+ *  [Democracy Vouchers](https://seattle.gov/democracyvoucher) 
  *  [Ethics and Elections](http://web6.seattle.gov/ethics/elections/home.aspx) 
 
 ### Your Rights and Regulations
 
- *  [Americans with Disabilities Act (ADA)](https://seattle.gov/council/meet-the-council/civilrights/complaints/title-ii-americans-with-disabilities-act-) 
- *  [Civil Rights Act](https://seattle.gov/council/meet-the-council/civilrights/laws-we-enforce/title-vi-civil-rights-act) 
- *  [Fair Housing](https://seattle.gov/council/meet-the-council/civilrights/housing-rights/fair-housing) 
- *  [Immigrant Rights (Public Charge)](https://seattle.gov/council/meet-the-council/iandraffairs/issues-and-policies/public-charge) 
- *  [Labor Standards](https://seattle.gov/council/meet-the-council/laborstandards/ordinances) 
- *  [Municipal Code](https://seattle.gov/council/meet-the-council/cityclerk/legislation-and-research/seattle-municipal-code-and-city-charter) 
- *  [Public Notices](https://seattle.gov/council/meet-the-council/cityclerk/agendas-and-legislative-resources/public-notices) 
- *  [Renter's and Landlord's Rights and Responsibilities](https://seattle.gov/council/meet-the-council/rentinginseattle) 
- *  [Rights as a Customer](https://seattle.gov/council/meet-the-council/your-rights-as-a-customer) 
+ *  [Americans with Disabilities Act (ADA)](https://seattle.gov/civilrights/complaints/title-ii-americans-with-disabilities-act-) 
+ *  [Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act) 
+ *  [Fair Housing](https://seattle.gov/civilrights/housing-rights/fair-housing) 
+ *  [Immigrant Rights (Public Charge)](https://seattle.gov/iandraffairs/issues-and-policies/public-charge) 
+ *  [Labor Standards](https://seattle.gov/laborstandards/ordinances) 
+ *  [Municipal Code](https://seattle.gov/cityclerk/legislation-and-research/seattle-municipal-code-and-city-charter) 
+ *  [Public Notices](https://seattle.gov/cityclerk/agendas-and-legislative-resources/public-notices) 
+ *  [Renter's and Landlord's Rights and Responsibilities](https://seattle.gov/rentinginseattle) 
+ *  [Rights as a Customer](https://seattle.gov/your-rights-as-a-customer) 
  Close menu for Public Safety Close Back to Public Safety 
 
 ### Animals
 
- *  [Animal Control](https://seattle.gov/council/meet-the-council/animal-shelter/animal-control) 
- *  [Animal Shelter](https://seattle.gov/council/meet-the-council/animalshelter) 
+ *  [Animal Control](https://seattle.gov/animal-shelter/animal-control) 
+ *  [Animal Shelter](https://seattle.gov/animalshelter) 
 
 ### Emergencies
 
  *  [Earthquake Safety](https://www.seattle.gov/earthquake) 
- *  [Flooding Safety](https://seattle.gov/council/meet-the-council/flood-safety) 
- *  [Plan for an Emergency](https://seattle.gov/council/meet-the-council/emergency-management/prepare/prepare-yourself) 
- *  [Regional Hazards](https://seattle.gov/council/meet-the-council/emergency-management/hazards) 
- *  [Regional Emergency Plans](https://seattle.gov/council/meet-the-council/emergency-management/plans) 
- *  [Seattle 9-1-1/CARE](https://seattle.gov/council/meet-the-council/care) 
- *  [Smoke and Wildfires](https://seattle.gov/council/meet-the-council/wildfire-smoke-safety) 
- *  [Subscribe to Emergency Alerts](https://seattle.gov/council/meet-the-council/alert) 
- *  [Summer Heat Safety](https://seattle.gov/council/meet-the-council/heat-safety) 
- *  [Winter Storms](https://seattle.gov/council/meet-the-council/winter-weather) 
+ *  [Flooding Safety](https://seattle.gov/flood-safety) 
+ *  [Plan for an Emergency](https://seattle.gov/emergency-management/prepare/prepare-yourself) 
+ *  [Regional Hazards](https://seattle.gov/emergency-management/hazards) 
+ *  [Regional Emergency Plans](https://seattle.gov/emergency-management/plans) 
+ *  [Seattle 9-1-1/CARE](https://seattle.gov/care) 
+ *  [Smoke and Wildfires](https://seattle.gov/wildfire-smoke-safety) 
+ *  [Subscribe to Emergency Alerts](https://seattle.gov/alert) 
+ *  [Summer Heat Safety](https://seattle.gov/heat-safety) 
+ *  [Winter Storms](https://seattle.gov/winter-weather) 
 
 ### Fire
 
- *  [All Fire](https://seattle.gov/council/meet-the-council/fire) 
- *  [Fire Codes](https://seattle.gov/council/meet-the-council/fire/business-services/fire-code-and-fire-safety-documents) 
- *  [Fire Jobs](https://seattle.gov/council/meet-the-council/fire/jobs-and-opportunities/career-overview) 
- *  [Fire Permits](https://seattle.gov/council/meet-the-council/fire/business-services/permits) 
- *  [Fire Programs for Children](https://seattle.gov/council/meet-the-council/fire/safety-and-community/childrens-programs) 
- *  [Fire Stations](https://seattle.gov/council/meet-the-council/fire/about-us/fire-stations) 
- *  [Schedule a Firefighter Visit or Station Tour](https://seattle.gov/council/meet-the-council/fire/safety-and-community/station-tours-firefighter-visits-and-community-events) 
+ *  [All Fire](https://seattle.gov/fire) 
+ *  [Fire Codes](https://seattle.gov/fire/business-services/fire-code-and-fire-safety-documents) 
+ *  [Fire Jobs](https://seattle.gov/fire/jobs-and-opportunities/career-overview) 
+ *  [Fire Permits](https://seattle.gov/fire/business-services/permits) 
+ *  [Fire Programs for Children](https://seattle.gov/fire/safety-and-community/childrens-programs) 
+ *  [Fire Stations](https://seattle.gov/fire/about-us/fire-stations) 
+ *  [Schedule a Firefighter Visit or Station Tour](https://seattle.gov/fire/safety-and-community/station-tours-firefighter-visits-and-community-events) 
 
 ### Police
 
- *  [All Police](https://seattle.gov/council/meet-the-council/police) 
- *  [Block Watch](https://seattle.gov/council/meet-the-council/police/crime-prevention/block-watch) 
- *  [Calling 911](https://seattle.gov/council/meet-the-council/care/9-1-1-communications-center) 
- *  [Crime Statistics](https://seattle.gov/council/meet-the-council/police/information-and-data/data/crime-dashboard) 
- *  [Police Jobs](https://seattle.gov/council/meet-the-council/police/police-jobs) 
- *  [Police Precincts](https://seattle.gov/council/meet-the-council/police/information-and-data/data/mcpp-about/mcpp-location-map) 
- *  [Real-time 911 and Crime Maps](https://seattle.gov/council/meet-the-council/police/information-and-data/data/online-crime-maps) 
- *  [Report a Crime](https://seattle.gov/council/meet-the-council/police/need-help/property-crimes/online-reporting) 
- *  [Victim Assistance](https://seattle.gov/council/meet-the-council/cityattorney/crime-victim-assistance) 
+ *  [All Police](https://seattle.gov/police) 
+ *  [Block Watch](https://seattle.gov/police/crime-prevention/block-watch) 
+ *  [Calling 911](https://seattle.gov/care/9-1-1-communications-center) 
+ *  [Crime Statistics](https://seattle.gov/police/information-and-data/data/crime-dashboard) 
+ *  [Police Jobs](https://seattle.gov/police/police-jobs) 
+ *  [Police Precincts](https://seattle.gov/police/information-and-data/data/mcpp-about/mcpp-location-map) 
+ *  [Real-time 911 and Crime Maps](https://seattle.gov/police/information-and-data/data/online-crime-maps) 
+ *  [Report a Crime](https://seattle.gov/police/need-help/property-crimes/online-reporting) 
+ *  [Victim Assistance](https://seattle.gov/cityattorney/crime-victim-assistance) 
 
 ### Police Oversight
 
- *  [Community Police Commission](https://seattle.gov/council/meet-the-council/community-police-commission) 
- *  [File a Police Complaint](https://seattle.gov/council/meet-the-council/opa/complaints/file-a-complaint) 
- *  [Office of Inspector General](https://seattle.gov/council/meet-the-council/oig) 
+ *  [Community Police Commission](https://seattle.gov/community-police-commission) 
+ *  [File a Police Complaint](https://seattle.gov/opa/complaints/file-a-complaint) 
+ *  [Office of Inspector General](https://seattle.gov/oig) 
 
 ### Safety Tips
 
- *  [Boating and Water Safety Rules](https://seattle.gov/council/meet-the-council/police/community-policing/prevention-and-safety/boating-and-water-safety) 
- *  [Fire Prevention and Safety](https://seattle.gov/council/meet-the-council/fire/safety-and-community) 
- *  [Personal Safety](https://seattle.gov/council/meet-the-council/police/crime-prevention/personal-safety) 
- *  [What to Do After a Collision](https://seattle.gov/council/meet-the-council/police/need-help/property-crimes/collision) 
+ *  [Boating and Water Safety Rules](https://seattle.gov/police/community-policing/prevention-and-safety/boating-and-water-safety) 
+ *  [Fire Prevention and Safety](https://seattle.gov/fire/safety-and-community) 
+ *  [Personal Safety](https://seattle.gov/police/crime-prevention/personal-safety) 
+ *  [What to Do After a Collision](https://seattle.gov/police/need-help/property-crimes/collision) 
  Close menu for Assistance and Utilities Close Back to Assistance and Utilities 
 
 ### Assistance and Discounts
 
- *  [All Assistance and Discounts](https://seattle.gov/council/meet-the-council/assistance-and-discounts) 
- *  [Child Care and Preschool](https://seattle.gov/council/meet-the-council/education/for-parents) 
- *  [Community Resource Center](https://seattle.gov/council/meet-the-council/courts/programs-and-services/community-resource-center) 
- *  [Free Legal Services for Immigrants](https://seattle.gov/council/meet-the-council/iandraffairs/programs-and-services/immigration-legal-defense) 
- *  [Free Smoke and Carbon Monoxide Alarms](https://seattle.gov/council/meet-the-council/fire/safety-and-community/smoke-and-carbon-monoxide-alarms) 
- *  [Free Summer Meals](https://seattle.gov/council/meet-the-council/human-services/services-and-programs/youth-and-young-adults/summer-food-service-program) 
- *  [Fresh Food Vouchers](https://seattle.gov/council/meet-the-council/environment/food-policy-and-programs/fresh-bucks) 
- *  [Recreation Scholarships](https://seattle.gov/council/meet-the-council/parks/scholarships-and-financial-aid) 
- *  [Senior Discounts](https://seattle.gov/council/meet-the-council/agefriendly/programs/discounts) 
- *  [Utility Discount Program](https://seattle.gov/council/meet-the-council/human-services/services-and-programs/utility-discount-program) 
+ *  [All Assistance and Discounts](https://seattle.gov/assistance-and-discounts) 
+ *  [Child Care and Preschool](https://seattle.gov/education/for-parents) 
+ *  [Community Resource Center](https://seattle.gov/courts/programs-and-services/community-resource-center) 
+ *  [Free Legal Services for Immigrants](https://seattle.gov/iandraffairs/programs-and-services/immigration-legal-defense) 
+ *  [Free Smoke and Carbon Monoxide Alarms](https://seattle.gov/fire/safety-and-community/smoke-and-carbon-monoxide-alarms) 
+ *  [Free Summer Meals](https://seattle.gov/human-services/services-and-programs/youth-and-young-adults/summer-food-service-program) 
+ *  [Fresh Food Vouchers](https://seattle.gov/environment/food-policy-and-programs/fresh-bucks) 
+ *  [Recreation Scholarships](https://seattle.gov/parks/scholarships-and-financial-aid) 
+ *  [Senior Discounts](https://seattle.gov/agefriendly/programs/discounts) 
+ *  [Utility Discount Program](https://seattle.gov/human-services/services-and-programs/utility-discount-program) 
 
 ### Discounted or Free Technology
 
- *  [Discount Cable Service](https://seattle.gov/council/meet-the-council/tech/tv-and-video/discounted-cable-tv) 
- *  [Free or Discounted Devices](https://seattle.gov/council/meet-the-council/tech/internet-and-devices/discounted-computers-and-phones) 
- *  [Free or Discounted Internet Access](https://seattle.gov/council/meet-the-council/tech/internet-and-devices/low-cost-internet) 
+ *  [Discount Cable Service](https://seattle.gov/tech/tv-and-video/discounted-cable-tv) 
+ *  [Free or Discounted Devices](https://seattle.gov/tech/internet-and-devices/discounted-computers-and-phones) 
+ *  [Free or Discounted Internet Access](https://seattle.gov/tech/internet-and-devices/low-cost-internet) 
 
 ### Grants and Funding
 
- *  [All Grants and Funding](https://seattle.gov/council/meet-the-council/grants-and-funding) 
- *  [Funding for the Arts](https://seattle.gov/council/meet-the-council/arts/programs/grants) 
- *  [Neighborhood Matching Fund](https://seattle.gov/council/meet-the-council/neighborhoods/community-grants/neighborhood-matching-fund) 
- *  [Only in Seattle Grants](https://seattle.gov/council/meet-the-council/economic-development/business-districts/only-in-seattle) 
- *  [The Seattle Promise](https://seattle.gov/council/meet-the-council/education/fepp-levy/the-seattle-promise) 
- *  [Small Business Support](https://seattle.gov/council/meet-the-council/economic-development/start-a-business) 
- *  [Technology Matching Fund](https://seattle.gov/council/meet-the-council/tech/grant-opportunities/digital-equity-grant-opportunities) 
+ *  [All Grants and Funding](https://seattle.gov/grants-and-funding) 
+ *  [Funding for the Arts](https://seattle.gov/arts/programs/grants) 
+ *  [Neighborhood Matching Fund](https://seattle.gov/neighborhoods/community-grants/neighborhood-matching-fund) 
+ *  [Only in Seattle Grants](https://seattle.gov/economic-development/business-districts/only-in-seattle) 
+ *  [The Seattle Promise](https://seattle.gov/education/fepp-levy/the-seattle-promise) 
+ *  [Small Business Support](https://seattle.gov/economic-development/start-a-business) 
+ *  [Technology Matching Fund](https://seattle.gov/tech/grant-opportunities/digital-equity-grant-opportunities) 
 
 ### Housing
 
- *  [All Housing](https://seattle.gov/council/meet-the-council/housing) 
- *  [Affordable Housing](https://seattle.gov/council/meet-the-council/housing/renters/find-housing) 
- *  [Home Loan Repair](https://seattle.gov/council/meet-the-council/housing/homeowners/home-repair) 
+ *  [All Housing](https://seattle.gov/housing) 
+ *  [Affordable Housing](https://seattle.gov/housing/renters/find-housing) 
+ *  [Home Loan Repair](https://seattle.gov/housing/homeowners/home-repair) 
 
 ### Services For...
 
- *  [Businesses](https://seattle.gov/council/meet-the-council/economic-development/start-a-business) 
- *  [Immigrants and Refugees](https://seattle.gov/council/meet-the-council/iandraffairs) 
- *  [People with Disabilities](https://seattle.gov/council/meet-the-council/people-with-disabilities) 
- *  [Renters and Landlords](https://seattle.gov/council/meet-the-council/rentinginseattle) 
- *  [Seniors](https://seattle.gov/council/meet-the-council/agefriendly/programs) 
+ *  [Businesses](https://seattle.gov/economic-development/start-a-business) 
+ *  [Immigrants and Refugees](https://seattle.gov/iandraffairs) 
+ *  [People with Disabilities](https://seattle.gov/people-with-disabilities) 
+ *  [Renters and Landlords](https://seattle.gov/rentinginseattle) 
+ *  [Seniors](https://seattle.gov/agefriendly/programs) 
 
 ### Utilities
 
- *  [Current Electricity Outages](https://seattle.gov/council/meet-the-council/city-light/outages) 
- *  [How to Dispose of Trash, Recyling, and Compost](https://seattle.gov/council/meet-the-council/utilities/your-services/collection-and-disposal/where-does-it-go) 
- *  [Look Up Collection Day](https://seattle.gov/council/meet-the-council/utilities/your-services/collection-and-disposal/your-collection-day/look-up-collection-day) 
- *  [Missed Collection](https://seattle.gov/council/meet-the-council/utilities/your-services/collection-and-disposal/your-collection-day/report-missed-collection) 
+ *  [Current Electricity Outages](https://seattle.gov/city-light/outages) 
+ *  [How to Dispose of Trash, Recyling, and Compost](https://seattle.gov/utilities/your-services/collection-and-disposal/where-does-it-go) 
+ *  [Look Up Collection Day](https://seattle.gov/utilities/your-services/collection-and-disposal/your-collection-day/look-up-collection-day) 
+ *  [Missed Collection](https://seattle.gov/utilities/your-services/collection-and-disposal/your-collection-day/report-missed-collection) 
  *  [Missing or Damaged Container](https://myutilities.seattle.gov/eportal/#/accountlookup/missingbin) 
- *  [Pay Utility Bills](https://myutilities.seattle.gov) 
- *  [Report Pollution, Graffiti, or Dumping](https://seattle.gov/council/meet-the-council/utilities/protecting-our-environment/seattle-clean-city) 
- *  [Water Outage Map](https://seattle.gov/council/meet-the-council/utilities/neighborhood-projects/water-outages) 
+ *  [Pay Utility Bills](https://myutilities.seattle.gov/) 
+ *  [Report Pollution, Graffiti, or Dumping](https://seattle.gov/utilities/protecting-our-environment/seattle-clean-city) 
+ *  [Water Outage Map](https://seattle.gov/utilities/neighborhood-projects/water-outages) 
  Close menu for Learning and Education Close Back to Learning and Education 
 
 ### Classes and Trainings
 
- *  [Community Police Academy](https://seattle.gov/council/meet-the-council/police/community-policing/community-programs/community-police-academy) 
- *  [CPR Certifications](https://seattle.gov/council/meet-the-council/fire/safety-and-community/medic-ii-cpr-training) 
- *  [Employment Trainings and Webinars](https://seattle.gov/council/meet-the-council/laborstandards/training-and-events/training) 
- *  [English and Job Skills](https://seattle.gov/council/meet-the-council/iandraffairs/RTW) 
+ *  [Community Police Academy](https://seattle.gov/police/community-policing/community-programs/community-police-academy) 
+ *  [CPR Certifications](https://seattle.gov/fire/safety-and-community/medic-ii-cpr-training) 
+ *  [Employment Trainings and Webinars](https://seattle.gov/laborstandards/training-and-events/training) 
+ *  [English and Job Skills](https://seattle.gov/iandraffairs/RTW) 
  *  [Online Learning from the Library](https://www.spl.org/online-resources/online-learning) 
- *  [People's Academy for Community Engagement](https://seattle.gov/council/meet-the-council/neighborhoods/public-participation/peoples-academy-for-community-engagement) 
- *  [Womens Personal Safety Class](https://seattle.gov/council/meet-the-council/police/crime-prevention/personal-safety-training) 
+ *  [People's Academy for Community Engagement](https://seattle.gov/neighborhoods/public-participation/peoples-academy-for-community-engagement) 
+ *  [Womens Personal Safety Class](https://seattle.gov/police/crime-prevention/personal-safety-training) 
 
 ### Data and Research
 
- *  [All Data and Research](https://seattle.gov/council/meet-the-council/data-and-research) 
- *  [Immigrant and Refugee Data](https://seattle.gov/council/meet-the-council/iandraffairs/data) 
- *  [Legislative Research](https://seattle.gov/council/meet-the-council/cityclerk/legislation-and-research) 
- *  [Open Data Portal](https://data.seattle.gov) 
- *  [City History Archives](https://seattle.gov/council/meet-the-council/cityarchives) 
+ *  [All Data and Research](https://seattle.gov/data-and-research) 
+ *  [Immigrant and Refugee Data](https://seattle.gov/iandraffairs/data) 
+ *  [Legislative Research](https://seattle.gov/cityclerk/legislation-and-research) 
+ *  [Open Data Portal](https://data.seattle.gov/) 
+ *  [City History Archives](https://seattle.gov/cityarchives) 
 
 ### Early Learning (age 3-5)
 
- *  [Discovery Park Nature Kids Preschool](https://seattle.gov/council/meet-the-council/parks/learning-and-childcare/childcare-and-preschool/discovery-park-nature-kids-preschool) 
- *  [Early Childhood Education and Assistance Program](https://seattle.gov/council/meet-the-council/education/for-parents/child-care-and-preschool/early-childhood-education-and-assistance-program) 
- *  [Seattle Preschool Program](https://seattle.gov/council/meet-the-council/education/for-parents/child-care-and-preschool/seattle-preschool-program) 
- *  [Child Care Assistance Program](https://seattle.gov/council/meet-the-council/education/for-parents/child-care-and-preschool/child-care-assistance-program) 
+ *  [Discovery Park Nature Kids Preschool](https://seattle.gov/parks/learning-and-childcare/childcare-and-preschool/discovery-park-nature-kids-preschool) 
+ *  [Early Childhood Education and Assistance Program](https://seattle.gov/education/for-parents/child-care-and-preschool/early-childhood-education-and-assistance-program) 
+ *  [Seattle Preschool Program](https://seattle.gov/education/for-parents/child-care-and-preschool/seattle-preschool-program) 
+ *  [Child Care Assistance Program](https://seattle.gov/education/for-parents/child-care-and-preschool/child-care-assistance-program) 
 
 ### Environment and Sustainability
 
- *  [All Environment and Sustainability](https://seattle.gov/council/meet-the-council/environment-and-sustainability) 
- *  [Climate Change](https://seattle.gov/council/meet-the-council/environment/climate-change) 
- *  [Environmental Education & Outdoor Learning](https://seattle.gov/council/meet-the-council/parks/learning-and-childcare/environmental-education-all-ages) 
- *  [Seattle's Environmental Progress](https://seattle.gov/council/meet-the-council/environment/environmental-progress) 
- *  [Watershed Tour or Program](https://seattle.gov/council/meet-the-council/utilities/protecting-our-environment/our-water-sources/cedar-river-watershed/education-center) 
+ *  [All Environment and Sustainability](https://seattle.gov/environment-and-sustainability) 
+ *  [Climate Change](https://seattle.gov/environment/climate-change) 
+ *  [Environmental Education & Outdoor Learning](https://seattle.gov/parks/learning-and-childcare/environmental-education-all-ages) 
+ *  [Seattle's Environmental Progress](https://seattle.gov/environment/environmental-progress) 
+ *  [Watershed Tour or Program](https://seattle.gov/utilities/protecting-our-environment/our-water-sources/cedar-river-watershed/education-center) 
 
 ### Youth Programs (age 14-24)
 
- *  [All Youth Programs](https://seattle.gov/council/meet-the-council/youth-programs) 
- *  [Fire Cadets Program (16-20)](https://seattle.gov/council/meet-the-council/fire/jobs-and-opportunities/cadet-program) 
- *  [Immigrant Family Institute (14+)](https://seattle.gov/council/meet-the-council/iandraffairs/RWI) 
+ *  [All Youth Programs](https://seattle.gov/youth-programs) 
+ *  [Fire Cadets Program (16-20)](https://seattle.gov/fire/jobs-and-opportunities/cadet-program) 
+ *  [Immigrant Family Institute (14+)](https://seattle.gov/iandraffairs/RWI) 
  *  [Learning Buddies (14-18)](https://www.spl.org/programs-and-services/learning/student-success/learning-buddies) 
- *  [Police Explorers (14-21)](https://seattle.gov/council/meet-the-council/police/community-policing/community-programs/police-explorers) 
- *  [Seattle Youth Employment Program (16-24)](https://seattle.gov/council/meet-the-council/human-services/services-and-programs/youth-and-young-adults/seattle-youth-employment-program) 
- *  [Teen Jobs and Leadership Programs with Seattle Parks (14-24)](https://seattle.gov/council/meet-the-council/parks/learning-and-childcare/teen-programs/job-readiness-opportunities-for-teens) 
- *  [Youth Green Corps (18-24)](https://seattle.gov/council/meet-the-council/parks/learning-and-childcare/teen-programs/youth-green-corps) 
+ *  [Police Explorers (14-21)](https://seattle.gov/police/community-policing/community-programs/police-explorers) 
+ *  [Seattle Youth Employment Program (16-24)](https://seattle.gov/human-services/services-and-programs/youth-and-young-adults/seattle-youth-employment-program) 
+ *  [Teen Jobs and Leadership Programs with Seattle Parks (14-24)](https://seattle.gov/parks/learning-and-childcare/teen-programs/job-readiness-opportunities-for-teens) 
+ *  [Youth Green Corps (18-24)](https://seattle.gov/parks/learning-and-childcare/teen-programs/youth-green-corps) 
  Close menu for Explore the City Close Back to Explore the City 
 
 ### About Seattle
 
- *  [All About Seattle](https://seattle.gov/council/meet-the-council/opcd/population-and-demographics/about-seattle) 
- *  [Facts about Seattle](https://seattle.gov/council/meet-the-council/cityarchives/seattle-facts) 
- *  [Newcomers Guide](https://seattle.gov/council/meet-the-council/customer-service-bureau/newcomers-guide) 
- *  [Population and Demographics](https://seattle.gov/council/meet-the-council/opcd/population-and-demographics) 
+ *  [All About Seattle](https://seattle.gov/opcd/population-and-demographics/about-seattle) 
+ *  [Facts about Seattle](https://seattle.gov/cityarchives/seattle-facts) 
+ *  [Newcomers Guide](https://seattle.gov/customer-service-bureau/newcomers-guide) 
+ *  [Population and Demographics](https://seattle.gov/opcd/population-and-demographics) 
 
 ### Parks
 
- *  [All Parks](https://seattle.gov/council/meet-the-council/parks/allparks) 
- *  [Beaches](https://seattle.gov/council/meet-the-council/parks/recreation/outdoor-water-recreation/swimming-beaches) 
- *  [Boating and Sailing](https://seattle.gov/council/meet-the-council/parks/recreation/outdoor-water-recreation/boating-and-sailing) 
- *  [Hiking and Trails](https://seattle.gov/council/meet-the-council/parks/recreation/hiking-and-trails) 
- *  [Dog Off-Leash Areas](https://seattle.gov/council/meet-the-council/parks/recreation/dog-off-leash-areas) 
- *  [Sprayparks and Wading Pools](https://seattle.gov/council/meet-the-council/parks/recreation/outdoor-water-recreation/sprayparks-and-wading-pools) 
+ *  [All Parks](https://seattle.gov/parks/allparks) 
+ *  [Beaches](https://seattle.gov/parks/recreation/outdoor-water-recreation/swimming-beaches) 
+ *  [Boating and Sailing](https://seattle.gov/parks/recreation/outdoor-water-recreation/boating-and-sailing) 
+ *  [Hiking and Trails](https://seattle.gov/parks/recreation/hiking-and-trails) 
+ *  [Dog Off-Leash Areas](https://seattle.gov/parks/recreation/dog-off-leash-areas) 
+ *  [Sprayparks and Wading Pools](https://seattle.gov/parks/recreation/outdoor-water-recreation/sprayparks-and-wading-pools) 
 
 ### Recreation
 
- *  [Camps](https://seattle.gov/council/meet-the-council/parks/learning-and-childcare/camps) 
+ *  [Camps](https://seattle.gov/parks/learning-and-childcare/camps) 
  *  [Activities and Recreation](https://anc.apm.activecommunities.com/seattle/home?onlineSiteId=0&from_original_cui=true) 
- *  [All Community Centers](https://seattle.gov/council/meet-the-council/parks/all-community-centers) 
- *  [Pools](https://seattle.gov/council/meet-the-council/parks/pools) 
- *  [Recreation for 50+](https://seattle.gov/council/meet-the-council/parks/recreation/for-adults-50) 
- *  [Sports for Adults](https://seattle.gov/council/meet-the-council/parks/recreation/sports/adult-sports-teams-and-programs) 
- *  [Sports for Youth](https://seattle.gov/council/meet-the-council/parks/recreation/sports/youth-sports) 
- *  [Toddler Indoor Play Areas](https://seattle.gov/council/meet-the-council/parks/learning-and-childcare/toddler-indoor-play-areas) 
+ *  [All Community Centers](https://seattle.gov/parks/all-community-centers) 
+ *  [Pools](https://seattle.gov/parks/pools) 
+ *  [Recreation for 50+](https://seattle.gov/parks/recreation/for-adults-50) 
+ *  [Sports for Adults](https://seattle.gov/parks/recreation/sports/adult-sports-teams-and-programs) 
+ *  [Sports for Youth](https://seattle.gov/parks/recreation/sports/youth-sports) 
+ *  [Toddler Indoor Play Areas](https://seattle.gov/parks/learning-and-childcare/toddler-indoor-play-areas) 
 
 ### Reservations and Events
 
- *  [All Reservations and Events](https://seattle.gov/council/meet-the-council/special-events) 
- *  [Arts Spaces](https://seattle.gov/council/meet-the-council/arts/programs/cultural-space) 
- *  [Ceremony Sites](https://seattle.gov/council/meet-the-council/parks/rentals-and-permits/outdoor-ceremony-reservations) 
- *  [City Events Calendar](https://seattle.gov/council/meet-the-council/event-calendar) 
- *  [Event Permits](https://seattle.gov/council/meet-the-council/special-events/permits/permitting-process) 
- *  [Picnic Sites](https://seattle.gov/council/meet-the-council/parks/rentals-and-permits/picnic-rentals) 
- *  [Play Streets and Block Parties](https://seattle.gov/council/meet-the-council/transportation/permits-and-services/permits/play-streets-and-block-parties) 
- *  [Rent a Space](https://www.spacefinderseattle.org) 
- *  [Sports Fields](https://seattle.gov/council/meet-the-council/parks/rentals-and-permits/sports-fields) 
+ *  [All Reservations and Events](https://seattle.gov/special-events) 
+ *  [Arts Spaces](https://seattle.gov/arts/programs/cultural-space) 
+ *  [Ceremony Sites](https://seattle.gov/parks/rentals-and-permits/outdoor-ceremony-reservations) 
+ *  [City Events Calendar](https://seattle.gov/event-calendar) 
+ *  [Event Permits](https://seattle.gov/special-events/permits/permitting-process) 
+ *  [Picnic Sites](https://seattle.gov/parks/rentals-and-permits/picnic-rentals) 
+ *  [Play Streets and Block Parties](https://seattle.gov/transportation/permits-and-services/permits/play-streets-and-block-parties) 
+ *  [Rent a Space](https://www.spacefinderseattle.org/) 
+ *  [Sports Fields](https://seattle.gov/parks/rentals-and-permits/sports-fields) 
 
 ### Urban Activities
 
- *  [Artwalks](https://seattle.gov/council/meet-the-council/arts/experience/art-walks) 
- *  [City Art Galleries](https://seattle.gov/council/meet-the-council/arts/experience/galleries) 
- *  [City Landmarks](https://seattle.gov/council/meet-the-council/neighborhoods/historic-preservation/city-landmarks/landmarks-list) 
- *  [Community Gardens (P-Patch)](https://seattle.gov/council/meet-the-council/neighborhoods/p-patch-gardening) 
+ *  [Artwalks](https://seattle.gov/arts/experience/art-walks) 
+ *  [City Art Galleries](https://seattle.gov/arts/experience/galleries) 
+ *  [City Landmarks](https://seattle.gov/neighborhoods/historic-preservation/city-landmarks/landmarks-list) 
+ *  [Community Gardens (P-Patch)](https://seattle.gov/neighborhoods/p-patch-gardening) 
  *  [Free Passes to Local Museums](https://www.spl.org/programs-and-services/arts-and-culture/museum-pass) 
- *  [Historic Districts](https://seattle.gov/council/meet-the-council/neighborhoods/historic-preservation/historic-districts) 
+ *  [Historic Districts](https://seattle.gov/neighborhoods/historic-preservation/historic-districts) 
  *  [Libraries](https://www.spl.org/hours-and-locations) 
- *  [Public Art in Your Neighborhood](https://seattle.gov/council/meet-the-council/arts/experience/maps-and-apps) 
- *  [Seattle Center](http://www.seattlecenter.com) 
- *  [Seattle Walking Map](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/pedestrian-program/walking-map) 
- *  [Tree Walks](https://seattle.gov/council/meet-the-council/trees/get-involved/tree-walks) 
+ *  [Public Art in Your Neighborhood](https://seattle.gov/arts/experience/maps-and-apps) 
+ *  [Seattle Center](http://www.seattlecenter.com/) 
+ *  [Seattle Walking Map](https://seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/walking-map) 
+ *  [Tree Walks](https://seattle.gov/trees/get-involved/tree-walks) 
  Close menu for Transportation and Development Close Back to Transportation and Development 
 
 ### City Maintenance
 
- *  [Potholes](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/maintenance-and-paving/potholes) 
- *  [Street Maintenance and Paving](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/maintenance-and-paving) 
+ *  [Potholes](https://seattle.gov/transportation/projects-and-programs/programs/maintenance-and-paving/potholes) 
+ *  [Street Maintenance and Paving](https://seattle.gov/transportation/projects-and-programs/programs/maintenance-and-paving) 
  *  [Streetlight Repair Status Map](http://seattlecitygis.maps.arcgis.com/apps/webappviewer/index.html?id=23b9ae8f5843407cb0adaae12663878b) 
- *  [Tree and Landscaping Services](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/trees-and-landscaping-program) 
- *  [Tree Trimming Schedule](https://seattle.gov/council/meet-the-council/city-light/in-the-community/vegetation-management) 
+ *  [Tree and Landscaping Services](https://seattle.gov/transportation/projects-and-programs/programs/trees-and-landscaping-program) 
+ *  [Tree Trimming Schedule](https://seattle.gov/city-light/in-the-community/vegetation-management) 
  *  [Winter Weather Snow Plow Routes](http://seattlecitygis.maps.arcgis.com/apps/webappviewer/index.html?id=78d66825a3e6478c9fc6bdd3116038c8) 
 
 ### City Planning
 
- *  [All City Planning](https://seattle.gov/council/meet-the-council/city-planning) 
- *  [Community Planning Meetings](https://seattle.gov/council/meet-the-council/opcd/meetings-and-events) 
- *  [Planning Commission](https://seattle.gov/council/meet-the-council/planningcommission) 
- *  [Planning Initiatives](https://seattle.gov/council/meet-the-council/opcd/current-projects) 
+ *  [All City Planning](https://seattle.gov/city-planning) 
+ *  [Community Planning Meetings](https://seattle.gov/opcd/meetings-and-events) 
+ *  [Planning Commission](https://seattle.gov/planningcommission) 
+ *  [Planning Initiatives](https://seattle.gov/opcd/current-projects) 
 
 ### City Construction Projects
 
  *  [Capital Projects](https://capitalprojects.seattle.gov/projects) 
- *  [City Light Projects](https://seattle.gov/council/meet-the-council/city-light/in-the-community/current-projects) 
- *  [Design Commission](https://seattle.gov/council/meet-the-council/designcommission) 
- *  [Parks and Recreation Projects](https://seattle.gov/council/meet-the-council/parks/about-us/projects) 
- *  [Project and Construction Map](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/pedestrian-program/construction-coordination-and-mobility-management/project-and-construction-coordination-map) 
- *  [Public Utilities Projects](https://seattle.gov/council/meet-the-council/utilities/neighborhood-projects) 
- *  [Transportation Projects](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/current-projects) 
+ *  [City Light Projects](https://seattle.gov/city-light/in-the-community/current-projects) 
+ *  [Design Commission](https://seattle.gov/designcommission) 
+ *  [Parks and Recreation Projects](https://seattle.gov/parks/about-us/projects) 
+ *  [Project and Construction Map](https://seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/construction-coordination-and-mobility-management/project-and-construction-coordination-map) 
+ *  [Public Utilities Projects](https://seattle.gov/utilities/neighborhood-projects) 
+ *  [Transportation Projects](https://seattle.gov/transportation/projects-and-programs/current-projects) 
  *  [Waterfront Projects](https://waterfrontseattle.org/waterfront-projects/alaskan-way) 
 
 ### Incentives for Housing Developers
 
- *  [Multifamily Property Tax Exemption (MFTE)](https://seattle.gov/council/meet-the-council/housing/housing-developers/multifamily-tax-exemption) 
- *  [Rental Housing Funding](https://seattle.gov/council/meet-the-council/housing/housing-developers/rental-housing-program) 
+ *  [Multifamily Property Tax Exemption (MFTE)](https://seattle.gov/housing/housing-developers/multifamily-tax-exemption) 
+ *  [Rental Housing Funding](https://seattle.gov/housing/housing-developers/rental-housing-program) 
 
 ### Neighborhood and Home Projects
 
  *  [Comment on a Project](https://cosaccela.seattle.gov/Portal/customization/comments/default.aspx) 
- *  [Common Building Projects](https://seattle.gov/council/meet-the-council/sdci/permits/common-projects) 
- *  [Community Crosswalks](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/pedestrian-program/community-crosswalks) 
- *  [Safe Routes to School Mini Grants](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/safety-first/safe-routes-to-school/mini-grants) 
- *  [Schedule an Inspection](https://seattle.gov/council/meet-the-council/sdci/inspections) 
- *  [Transportation ADA Requests](https://seattle.gov/council/meet-the-council/transportation/permits-and-services/make-an-ada-request) 
+ *  [Common Building Projects](https://seattle.gov/sdci/permits/common-projects) 
+ *  [Community Crosswalks](https://seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/community-crosswalks) 
+ *  [Safe Routes to School Mini Grants](https://seattle.gov/transportation/projects-and-programs/safety-first/safe-routes-to-school/mini-grants) 
+ *  [Schedule an Inspection](https://seattle.gov/sdci/inspections) 
+ *  [Transportation ADA Requests](https://seattle.gov/transportation/permits-and-services/make-an-ada-request) 
  *  [Zoning Map](https://seattlecitygis.maps.arcgis.com/apps/webappviewer/index.html?id=f822b2c6498c4163b0cf908e2241e9c2) 
 
 ### Parking
 
- *  [All Parking](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/parking-program/play-like-a-parking-pro) 
- *  [Bike Parking](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/bike-program/bike-racks) 
- *  [Free Parking Days](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/parking-program/paid-parking-information/free-parking-days) 
- *  [Motorcycle and Scooter Parking](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/parking-program/parking-regulations/motorcycle-and-scooter-parking-in-seattle) 
- *  [Parking and Traffic Permits](https://seattle.gov/council/meet-the-council/transportation/permits-and-services/permits/parking-permits) 
+ *  [All Parking](https://seattle.gov/transportation/projects-and-programs/programs/parking-program/play-like-a-parking-pro) 
+ *  [Bike Parking](https://seattle.gov/transportation/projects-and-programs/programs/bike-program/bike-racks) 
+ *  [Free Parking Days](https://seattle.gov/transportation/projects-and-programs/programs/parking-program/paid-parking-information/free-parking-days) 
+ *  [Motorcycle and Scooter Parking](https://seattle.gov/transportation/projects-and-programs/programs/parking-program/parking-regulations/motorcycle-and-scooter-parking-in-seattle) 
+ *  [Parking and Traffic Permits](https://seattle.gov/transportation/permits-and-services/permits/parking-permits) 
  *  [Pay for Parking by Phone](https://www.paybyphone.com/locations/seattle) 
- *  [Public Parking Map](http://web6.seattle.gov/SDOT/seattleparkingmap) 
- *  [Restricted Parking Zone (RPZ) Permits](https://seattle.gov/council/meet-the-council/transportation/permits-and-services/permits/parking-permits/rpz-permits) 
+ *  [Public Parking Map](http://web6.seattle.gov/SDOT/seattleparkingmap/) 
+ *  [Restricted Parking Zone (RPZ) Permits](https://seattle.gov/transportation/permits-and-services/permits/parking-permits/rpz-permits) 
 
 ### Permits
 
- *  [Construction Permits](https://seattle.gov/council/meet-the-council/sdci/permits) 
+ *  [Construction Permits](https://seattle.gov/sdci/permits) 
  *  [Permit Activity Map](https://web8.seattle.gov/sdci/shapingseattle/buildings) 
- *  [Permit Assistance](https://seattle.gov/council/meet-the-council/sdci/about-us/who-we-are/sdci-services) 
- *  [Permit and Property Records](http://web6.seattle.gov/dpd/edms) 
+ *  [Permit Assistance](https://seattle.gov/sdci/about-us/who-we-are/sdci-services) 
+ *  [Permit and Property Records](http://web6.seattle.gov/dpd/edms/) 
  *  [Seattle Services Portal (Permits and Licenses)](https://cosaccela.seattle.gov/Portal/welcome.aspx) 
- *  [Transportation Permits](https://seattle.gov/council/meet-the-council/transportation/permits-and-services/permits) 
- *  [Send Us a Question](https://seattle.gov/council/meet-the-council/sdci/about-us/contact-us) 
+ *  [Transportation Permits](https://seattle.gov/transportation/permits-and-services/permits) 
+ *  [Send Us a Question](https://seattle.gov/sdci/about-us/contact-us) 
 
 ### Transit and Commuting
 
- *  [All Getting Around](https://seattle.gov/council/meet-the-council/transportation/getting-around) 
- *  [Discount ORCA Cards](https://seattle.gov/council/meet-the-council/transportation/projects-and-programs/programs/transportation-access-programs/orca-cards-for-sha-tenants) 
- *  [Traffic and Construction Cameras](https://web6.seattle.gov/Travelers) 
+ *  [All Getting Around](https://seattle.gov/transportation/getting-around) 
+ *  [Discount ORCA Cards](https://seattle.gov/transportation/projects-and-programs/programs/transportation-access-programs/orca-cards-for-sha-tenants) 
+ *  [Traffic and Construction Cameras](https://web6.seattle.gov/Travelers/) 
  Google Translate may not accurately translate all content. [Read disclaimer]().
 
 For general City questions, please call [206-684-2489](). Tell us your requested language in English, and we can connect you with an interpreter. Es posible que Google Translate no traduzca con precisión todo el contenido. [Lea el descargo de responsabilidad]().
@@ -416,7 +416,7 @@ Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](). Afaan Ingil
  * Close
  * Main Menu
    *  Main Menu 
-   *  [Council](https://seattle.gov/council/meet-the-council/council) 
+   *  [Council](https://seattle.gov/council) 
    *  [Meet the Council](https://seattle.gov/council/meet-the-council) 
      *  [Newsletter Signup](https://seattle.gov/council/meet-the-council/newsletter-signup) 
      *  [Find Your District and Councilmembers](https://seattle.gov/council/meet-the-council/find-your-district-and-councilmembers) 
@@ -435,7 +435,7 @@ Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](). Afaan Ingil
        *  [Mark's Committees & Calendar](https://seattle.gov/council/meet-the-council/mark-solomon/committees-and-calendar) 
        *  [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=e205296124) 
        *  [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=e205296124) 
-       *  [Mark's Blog](https://council.seattle.gov/solomon) 
+       *  [Mark's Blog](https://council.seattle.gov/solomon/) 
        *  [About Councilmember Mark Solomon](https://seattle.gov/council/meet-the-council/mark-solomon/about-mark) 
      *  [Joy Hollingsworth](https://seattle.gov/council/hollingsworth) 
        *  [About Councilmember Joy Hollingsworth](https://seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy) 
@@ -456,7 +456,7 @@ Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](). Afaan Ingil
        *  [About Councilmember Cathy Moore](https://seattle.gov/council/meet-the-council/cathy-moore/about-cathy) 
        *  [Councilmember Cathy Moore's Staff](https://seattle.gov/council/meet-the-council/cathy-moore/staff) 
        *  [Cathy's Committees & Calendar](https://seattle.gov/council/meet-the-council/cathy-moore/committees-and-calendar) 
-       *  [Request a Meeting](https://outlook.office365.com/owa/calendar/CouncilmemberCathyMooreDistrict5@seattlegov.onmicrosoft.com/bookings) 
+       *  [Request a Meeting](https://outlook.office365.com/owa/calendar/CouncilmemberCathyMooreDistrict5@seattlegov.onmicrosoft.com/bookings/) 
        *  [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=75c0562362) 
        *  [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=75c0562362) 
        *  [Cathy's Blog](https://moore.seattle.gov) 
@@ -464,12 +464,12 @@ Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](). Afaan Ingil
        *  [About Councilmember Dan Strauss](https://seattle.gov/council/meet-the-council/dan-strauss/about-dan) 
        *  [Councilmember Dan Strauss' Staff](https://seattle.gov/council/meet-the-council/dan-strauss/staff) 
        *  [Dan's Committees & Calendar](https://seattle.gov/council/meet-the-council/dan-strauss/committees-and-calendar) 
-       *  [Request a Meeting](https://outlook.office365.com/book/OfficeofCouncilmemberDanStraussOfficeHours@seattle.gov) 
+       *  [Request a Meeting](https://outlook.office365.com/book/OfficeofCouncilmemberDanStraussOfficeHours@seattle.gov/) 
        *  [District 6 Town Halls](https://seattle.gov/council/meet-the-council/dan-strauss/district-6-town-halls) 
        *  [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=d57b26f739) 
        *  [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=d57b26f739) 
        *  [Video Updates](https://seattle.gov/council/meet-the-council/dan-strauss/video-updates) 
-       *  [Dan's Blog](http://strauss.seattle.gov) 
+       *  [Dan's Blog](http://strauss.seattle.gov/) 
      *  [Robert Kettle](https://seattle.gov/council/kettle) 
        *  [About Councilmember Robert Kettle](https://seattle.gov/council/meet-the-council/robert-kettle/about-robert) 
        *  [Councilmember Robert Kettle's Staff](https://seattle.gov/council/meet-the-council/robert-kettle/staff) 
@@ -485,7 +485,7 @@ Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](). Afaan Ingil
        *  [Alexis' Committees & Calendar](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/committees-and-calendar) 
        *  [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=f60af58778) 
        *  [Newsletter Sign Up](https://eepurl.com/i47iEs) 
-       *  [Alexis' Blog](https://council.seattle.gov/rinck) 
+       *  [Alexis' Blog](https://council.seattle.gov/rinck/) 
        *  [Protecting our community from changes at the federal level](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/federal-changes-and-city-protections) 
      *  [Sara Nelson](https://seattle.gov/council/meet-the-council/sara-nelson) 
        *  [About Councilmember Sara Nelson](https://seattle.gov/council/meet-the-council/sara-nelson/about-sara) 
@@ -529,12 +529,12 @@ Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](). Afaan Ingil
      *  [Agenda Sign Up](https://seattle.gov/council/committees/agenda-sign-up) 
      *  [Public Comment](https://seattle.gov/council/committees/public-comment) 
    *  [Legislation & Research](https://seattle.gov/council/legislation-and-research) 
-     *  [Legislative Process Guide](https://seattle.gov/council/meet-the-council/cityclerk/agendas-and-legislative-resources) 
+     *  [Legislative Process Guide](https://seattle.gov/cityclerk/agendas-and-legislative-resources) 
      *  [Council Agendas](https://seattle.legistar.com/Calendar.aspx) 
      *  [Seattle Municipal Code (SMC)](http://clerk.seattle.gov/~public/code1.htm) 
-     *  [Council Rules](http://clerk.seattle.gov/search/council-rules) 
+     *  [Council Rules](http://clerk.seattle.gov/search/council-rules/) 
      *  [City Charter](http://clerk.seattle.gov/~public/char1.htm) 
-     *  [City Clerk](https://seattle.gov/council/meet-the-council/cityclerk) 
+     *  [City Clerk](https://seattle.gov/cityclerk) 
    *  [Calendar](https://seattle.gov/council/calendar) 
    *  [Watch Council Live](https://seattle.gov/council/watch-council-live) 
    *  [Elected Officials](https://seattle.gov/elected-officials) 
@@ -542,15 +542,15 @@ Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](). Afaan Ingil
    *  [News.Seattle.Gov](https://news.seattle.gov) 
    *  [Events](https://seattle.gov/event-calendar) 
 
-  [Seattle City Council](https://seattle.gov/council/meet-the-council/council)  
+  [Seattle City Council](https://seattle.gov/council)  
 
- *  [Meet the Council](https://seattle.gov/council/meet-the-council/council/meet-the-council) 
- *  [Issues](https://seattle.gov/council/meet-the-council/council/issues) 
- *  [News](https://seattle.gov/council/meet-the-council/council/news) 
- *  [Committees](https://seattle.gov/council/meet-the-council/council/committees) 
- *  [Legislation & Research](https://seattle.gov/council/meet-the-council/council/legislation-and-research) 
- *  [Calendar](https://seattle.gov/council/meet-the-council/council/calendar) 
-  [](https://seattle.gov/council/meet-the-council/sara-nelson)  [Home](https://seattle.gov/council/meet-the-council/council)  [Meet the Council](https://seattle.gov/council/meet-the-council/council/meet-the-council)  
+ *  [Meet the Council](https://seattle.gov/council/meet-the-council) 
+ *  [Issues](https://seattle.gov/council/issues) 
+ *  [News](https://seattle.gov/council/news) 
+ *  [Committees](https://seattle.gov/council/committees) 
+ *  [Legislation & Research](https://seattle.gov/council/legislation-and-research) 
+ *  [Calendar](https://seattle.gov/council/calendar) 
+  [](https://seattle.gov)  [Home](https://seattle.gov/council)  [Meet the Council](https://seattle.gov/council/meet-the-council)  
 
 #  Sara Nelson 
 
@@ -568,11 +568,11 @@ Thank you, from the bottom of my heart, for this opportunity to serve you. Pleas
 
 ### Contact Us
 
- Phone: [(206) 684-8809]()  Email:Sara.Nelson@seattle.gov Address: [Office](https://seattle.gov/council/meet-the-council/sara-nelson#tileOffice)  |  [Mailing](https://seattle.gov/council/meet-the-council/sara-nelson#tileMailing)  
+ Phone: [(206) 684-8809]()  Email:Sara.Nelson@seattle.gov Address: [Office](https://seattle.gov/#tileOffice)  |  [Mailing](https://seattle.gov/#tileMailing)  
 
 ### Follow Us
 
- [](https://www.facebook.com/CMSaraNelson)  [](https://twitter.com/cmsaranelson)   __Street Address:__ 
+ [](https://www.facebook.com/CMSaraNelson/)  [](https://twitter.com/cmsaranelson)   __Street Address:__ 
 
 Seattle City Hall
 
@@ -586,7 +586,7 @@ Seattle, WA 98104
 
 PO Box 34025
 
-Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-council/council/meet-the-council) 
+Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-council) 
 
  *   [Newsletter Signup](https://seattle.gov/council/meet-the-council/newsletter-signup)  
  *   [Find Your District and Councilmembers](https://seattle.gov/council/meet-the-council/find-your-district-and-councilmembers)  
@@ -605,7 +605,7 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
    *   [Committees & Calendar](https://seattle.gov/council/meet-the-council/mark-solomon/committees-and-calendar)  
    *   [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=e205296124)  
    *   [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=e205296124)  
-   *   [Mark's Blog](https://council.seattle.gov/solomon)  
+   *   [Mark's Blog](https://council.seattle.gov/solomon/)  
    *   [About Mark](https://seattle.gov/council/meet-the-council/mark-solomon/about-mark)  
  *   [Joy Hollingsworth](https://seattle.gov/council/hollingsworth)  Toggle children of Joy Hollingsworth 
    *   [About Joy](https://seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy)  
@@ -626,7 +626,7 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
    *   [About Cathy](https://seattle.gov/council/meet-the-council/cathy-moore/about-cathy)  
    *   [Staff](https://seattle.gov/council/meet-the-council/cathy-moore/staff)  
    *   [Committees & Calendar](https://seattle.gov/council/meet-the-council/cathy-moore/committees-and-calendar)  
-   *   [Request a Meeting](https://outlook.office365.com/owa/calendar/CouncilmemberCathyMooreDistrict5@seattlegov.onmicrosoft.com/bookings)  
+   *   [Request a Meeting](https://outlook.office365.com/owa/calendar/CouncilmemberCathyMooreDistrict5@seattlegov.onmicrosoft.com/bookings/)  
    *   [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=75c0562362)  
    *   [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=75c0562362)  
    *   [Cathy's Blog](https://moore.seattle.gov)  
@@ -634,12 +634,12 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
    *   [About Dan](https://seattle.gov/council/meet-the-council/dan-strauss/about-dan)  
    *   [Staff](https://seattle.gov/council/meet-the-council/dan-strauss/staff)  
    *   [Committees & Calendar](https://seattle.gov/council/meet-the-council/dan-strauss/committees-and-calendar)  
-   *   [Request a Meeting](https://outlook.office365.com/book/OfficeofCouncilmemberDanStraussOfficeHours@seattle.gov)  
+   *   [Request a Meeting](https://outlook.office365.com/book/OfficeofCouncilmemberDanStraussOfficeHours@seattle.gov/)  
    *   [District 6 Town Halls](https://seattle.gov/council/meet-the-council/dan-strauss/district-6-town-halls)  
    *   [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=d57b26f739)  
    *   [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=d57b26f739)  
    *   [Video Updates](https://seattle.gov/council/meet-the-council/dan-strauss/video-updates)  
-   *   [Dan's Blog](http://strauss.seattle.gov)  
+   *   [Dan's Blog](http://strauss.seattle.gov/)  
  *   [Robert Kettle](https://seattle.gov/council/kettle)  Toggle children of Robert Kettle 
    *   [About Robert](https://seattle.gov/council/meet-the-council/robert-kettle/about-robert)  
    *   [Staff](https://seattle.gov/council/meet-the-council/robert-kettle/staff)  
@@ -655,7 +655,7 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
    *   [Committees & Calendar](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/committees-and-calendar)  
    *   [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=f60af58778)  
    *   [Newsletter Sign Up](https://eepurl.com/i47iEs)  
-   *   [Alexis' Blog](https://council.seattle.gov/rinck)  
+   *   [Alexis' Blog](https://council.seattle.gov/rinck/)  
    *   [Federal Changes and City Protections](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/federal-changes-and-city-protections)  
  *   [Sara Nelson](https://seattle.gov/council/meet-the-council/sara-nelson)  Toggle children of Sara Nelson 
    *   [About Sara](https://seattle.gov/council/meet-the-council/sara-nelson/about-sara)  
@@ -677,12 +677,12 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 Councilmember Sara Nelson is a small business owner, former public servant, and policy nerd who watches the Seattle Channel for fun. She brings a pragmatic, collaborative approach to addressing our current challenges and improving quality of life for all Seattleites.
 
-  [About Sara](https://seattle.gov/council/meet-the-council/council/meet-the-council/sara-nelson/about-sara)   [![Jeremy Mohn](images/acb47d999e46bfbda7fea302ed71065a51be90a053726c96b1efdbb2b9a3fca7.jpg)### Jeremy MohnChief of Staff](https://seattle.gov/council/meet-the-council/council/meet-the-council/sara-nelson/staff#JeremyMohn)   [![Taemin Um](images/a7c1f74e9ee130da0fe8389df3d57a1d94ca717357999fca726c3de33bb03335.jpg)### Taemin UmLegislative Assistant](https://seattle.gov/council/meet-the-council/council/meet-the-council/sara-nelson/staff#TaeminUm)   [Staff](https://seattle.gov/council/meet-the-council/council/meet-the-council/sara-nelson/staff)  
+  [About Sara](https://seattle.gov/council/meet-the-council/sara-nelson/about-sara)   [![Jeremy Mohn](images/acb47d999e46bfbda7fea302ed71065a51be90a053726c96b1efdbb2b9a3fca7.jpg)### Jeremy MohnChief of Staff](https://seattle.gov/council/meet-the-council/sara-nelson/staff#JeremyMohn)   [![Taemin Um](images/a7c1f74e9ee130da0fe8389df3d57a1d94ca717357999fca726c3de33bb03335.jpg)### Taemin UmLegislative Assistant](https://seattle.gov/council/meet-the-council/sara-nelson/staff#TaeminUm)   [Staff](https://seattle.gov/council/meet-the-council/sara-nelson/staff)  
 
 ## Calendar
 
-  [### Committees & Calendar](https://seattle.gov/council/meet-the-council/council/meet-the-council/sara-nelson/committees-and-calendar)   [### Agenda Sign Up](https://seattle.gov/council/meet-the-council/council/committees/agenda-sign-up)   [](https://seattle.gov/council/meet-the-council/sara-nelson#header)  
+  [### Committees & Calendar](https://seattle.gov/council/meet-the-council/sara-nelson/committees-and-calendar)   [### Agenda Sign Up](https://seattle.gov/council/committees/agenda-sign-up)   [](https://seattle.gov/council/meet-the-council/sara-nelson#header)  
 
 ## Policies
 
-  [About Our Digital Properties](https://seattle.gov/council/meet-the-council/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/council/meet-the-council/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/council/meet-the-council/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/council/meet-the-council/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](images/13a949374212f668e5cb41968b00a15c585519968fe4f6c7f4975d235370f0d0.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](images/https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

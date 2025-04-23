@@ -263,6 +263,7 @@ module Validators
         end
 
         merged_person["image"] = person_records.map { |p| p["image"] }.compact.first
+        merged_person["source_image"] = person_records.map { |p| p["source_image"] }.compact.first
         merged_person["sources"] = person_records.map { |p| p["sources"] }.flatten.compact.uniq
 
         merged << merged_person
