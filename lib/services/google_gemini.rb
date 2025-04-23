@@ -6,8 +6,8 @@ require_relative "shared/llm_prompts"
 module Services
   class GoogleGemini
     # MODEL = "gemini-2.5-pro-exp-03-25".freeze # FREE TIER
-    MODEL = "gemini-2.0-flash".freeze
-    # MODEL = "gemini-2.5-flash-preview-04-17".freeze
+    # MODEL = "gemini-2.0-flash".freeze
+    MODEL = "gemini-2.5-flash-preview-04-17".freeze
     # MODEL = "gemini-1.5-pro".freeze
     # MODEL = "gemini-2.0-flash"
     BASE_URI = "https://generativelanguage.googleapis.com".freeze
@@ -34,6 +34,8 @@ module Services
       response = run_prompt(prompt, request_origin, Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
 
       return nil if response.blank?
+
+      puts "Response?? #{JSON.pretty_generate(response)}"
 
       # filter out invalid people
       people = response["people"].select do |person|

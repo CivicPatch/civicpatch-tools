@@ -1,1 +1,401 @@
-[]
+[
+  {
+    "name": "Javier Figueroa",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [
+      {
+        "data": "253.682.7379",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jfigueroa@cityofup.com",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/280/Mayor-Javier-Figueroa",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Website URL extracted from a link in a table cell labeled 'Biography' associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "Mayor",
+      "Position #1"
+    ]
+  },
+  {
+    "name": "Edward Wood",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [
+      {
+        "data": "253.677.5707",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ewood@cityofup.com",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Website URL extracted from a link in a table cell labeled 'Biography' associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "Mayor Pro Tem",
+      "Position #4"
+    ]
+  },
+  {
+    "name": "Frank Boykin",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "fboykin@cityofup.com",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/281/Council-Member-Frank-Boykin",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Website URL extracted from a link in a table cell labeled 'Biography' associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Position #2"
+    ]
+  },
+  {
+    "name": "Steve Worthington",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [
+      {
+        "data": "253.565.4855",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Sworthington@cityofup.com",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/279/Council-Member-Steve-Worthington",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Website URL extracted from a link in a table cell labeled 'Biography' associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Position #3"
+    ]
+  },
+  {
+    "name": "Denise McCluskey",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "DMcCluskey@CityofUP.com",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/285/Council-Member-Denise-McCluskey",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Website URL extracted from a link in a table cell labeled 'Biography' associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Position #5"
+    ]
+  },
+  {
+    "name": "Stan Flemming",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "stanflemming@cityofup.com",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/284/Council-Member-Stan-Flemming",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Website URL extracted from a link in a table cell labeled 'Biography' associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Position #6"
+    ]
+  },
+  {
+    "name": "Melanie Grassi",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mgrassi@cityofup.com",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/278/Council-Member-Melanie-Grassi",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Website URL extracted from a link in a table cell labeled 'Biography' associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year extracted directly from a table cell associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "Council Member",
+      "Position #7"
+    ]
+  }
+]
