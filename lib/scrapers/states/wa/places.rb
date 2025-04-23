@@ -9,7 +9,7 @@ module Scrapers
         STATE_SOURCE_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles"
         STATE_SOURCE_CITY_PAGE_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles/city-officials"
 
-        def self.fetch_places
+        def self.fetch
           title = "List_of_municipalities_in_Washington"
           cities = Services::Wikipedia.fetch_places_from_wikipedia("wa", title)
 
