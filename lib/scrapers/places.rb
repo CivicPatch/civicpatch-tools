@@ -1,19 +1,22 @@
 require_relative "states/wa/places"
+require_relative "states/or/municipalities"
 
 module Scrapers
   class Places
-    def self.get_places_scraper(state)
+    def self.get_municipalities_scraper(state)
       case state
       when "wa"
         Scrapers::States::Wa::Places
+      when "or"
+        Scrapers::States::Or::Municipalities
       else
         raise NotImplementedError
       end
     end
 
-    def self.fetch_places(state)
-      scraper = get_places_scraper(state)
-      scraper.fetch_places
+    def self.fetch(state)
+      scraper = get_municipalities_scraper(state)
+      scraper.fetch
     end
   end
 end

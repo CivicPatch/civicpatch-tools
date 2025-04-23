@@ -2,52 +2,34 @@ module Services
   class Wikipedia
     URL = "https://en.wikipedia.org/api/rest_v1/page/html"
 
-    def self.fetch_places_from_wikipedia(state, title)
+    test = {
+      row_start: 1,
+
+      city_name: 0,
+      county: 1,
+      population: 2
+    }
+
+    def self.fetch_municipalities(state, title, table_data_config)
       response = fetch_with_wikipedia(title)
       nokogiri_doc = Nokogiri::HTML(response)
       table = nokogiri_doc.css("table.wikitable.sortable")[0]
 
-      city_rows = table.css("tr")
+      rows = table.css("tr")
 
-      parse_cities_from_wikipedia_table(state, city_rows[3..])
+      parse_municipalities_from_table(state, rows, table_data_config)
     end
 
-    def self.fetch_with_wikipedia(title)
-      url = "#{URL}/#{title}"
-      response = HTTParty.get(url)
-
-      raise "Error: #{response.code}" unless response.success?
-
-      response.parsed_response
-    end
-
-    def self.fetch_city_page(wikipedia_title)
-      response = fetch_with_wikipedia(wikipedia_title)
-      nokogiri_doc = Nokogiri::HTML(response)
-
-      infobox = nokogiri_doc.css("table.infobox")
-      # find tr with th that has a td that contains "website"
-      # then find the a tag within that tr that has a href attribute
-      website_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("website") }
-      website = website_row.present? ? website_row.css("a").find { |a| a.attr("href") } : nil
-      website = website ? Scrapers::Common.format_url(website.attr("href")) : ""
-
-      fips_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("fips") }
-      fips = fips_row.present? ? without_superscripts(fips_row.css("td")).text : ""
-
-      gnis_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("gnis") }
-      gnis = gnis_row.present? ? without_superscripts(gnis_row.css("td")).text : ""
-
-      [website, fips, gnis]
-    end
-
-    def self.parse_cities_from_wikipedia_table(state, table_rows)
+    def self.parse_cities_from_table(state, table_rows)
       places = []
       table_rows.css("tr").each do |city_row|
         columns = city_row.css("td, th")
         city_name = format_name(columns[0].text)
         city_type = columns[1].text
-        county_names = without_superscripts(columns[2]).text.split(",").map { |county| format_name(county) }
+        county_names = without_superscripts(columns[2])
+          .text.split(",").map { 
+            |county| format_name(county) 
+          }
         city_link = columns[0].css("a")[0].attr("href")
 
         city_page_title = city_link.split("/").last
@@ -72,6 +54,35 @@ module Services
       end
 
       places
+    end    
+
+    def self.fetch_with_wikipedia(title)
+      url = "#{URL}/#{title}"
+      response = HTTParty.get(url)
+
+      raise "Error: #{response.code}" unless response.success?
+
+      response.parsed_response
+    end 
+
+    def self.fetch_city_page(wikipedia_title)
+      response = fetch_with_wikipedia(wikipedia_title)
+      nokogiri_doc = Nokogiri::HTML(response)
+
+      infobox = nokogiri_doc.css("table.infobox")
+      # find tr with th that has a td that contains "website"
+      # then find the a tag within that tr that has a href attribute
+      website_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("website") }
+      website = website_row.present? ? website_row.css("a").find { |a| a.attr("href") } : nil
+      website = website ? Scrapers::Common.format_url(website.attr("href")) : ""
+
+      fips_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("fips") }
+      fips = fips_row.present? ? without_superscripts(fips_row.css("td")).text : ""
+
+      gnis_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("gnis") }
+      gnis = gnis_row.present? ? without_superscripts(gnis_row.css("td")).text : ""
+
+      [website, fips, gnis]
     end
 
     # Clean up text

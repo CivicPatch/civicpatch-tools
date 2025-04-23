@@ -30,14 +30,14 @@ namespace :pipeline do
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
   end
 
-  desc "Find official cities for a state"
+  desc "Find municipalities for a state"
   task :get_places, [:state] do |_t, args|
     raise "Missing required parameter: state" if args[:state].blank?
 
     state = args[:state]
 
-    new_places = Scrapers::Places.fetch_places(state)
-    CityScrape::StateManager.update_state_places(state, new_places)
+    new_places = Scrapers::Places.fetch(state)
+    #CityScrape::StateManager.update_state_places(state, new_places)
   end
 
   desc "Scrape city info for a specific city"
