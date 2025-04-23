@@ -13,7 +13,7 @@ require_relative "../validators/city_people"
 require_relative "../github/city_people"
 
 namespace :github_pipeline do
-  desc "Get GitHub City Directory Link"
+  desc "Get people.yml link for pull request"
   task :get_city_directory_link, [:state, :gnis, :branch_name] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
@@ -25,6 +25,20 @@ namespace :github_pipeline do
 
     directory_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/people.yml"
     puts directory_url
+  end
+
+  desc "Get config.yml link for pull request"
+  task :get_config_link, [:state, :gnis, :branch_name] do |_t, args|
+    state = args[:state]
+    gnis = args[:gnis]
+    branch_name = args[:branch_name]
+
+    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_path = PathHelper.get_data_source_city_path(state, city_entry["gnis"])
+    relative_path = city_path[city_path.rindex("data_source/#{state}")..]
+
+    config_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/config.yml"
+    puts config_url
   end
 
   desc "Generate PR comment data for city people"
