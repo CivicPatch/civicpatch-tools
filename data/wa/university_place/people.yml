@@ -9,6 +9,17 @@
   source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
   sources:
   - https://www.cityofup.com/252/City-Council
+- name: Edward Wood
+  positions:
+  - Mayor Pro Tem
+  - Council Member
+  email: ewood@cityofup.com
+  phone_number: "(253) 677-5707"
+  website: https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood
+  image: https://cdn.civicpatch.org/open-data/wa/university_place/images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif
+  source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
+  sources:
+  - https://www.cityofup.com/252/City-Council
 - name: Denise McCluskey
   positions:
   - Council Member

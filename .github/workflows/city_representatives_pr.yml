@@ -140,8 +140,9 @@ jobs:
           CITY_DIRECTORY_LINK=$(bundle exec rake "github_pipeline:get_city_directory_link[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]")
           COMMENT=$(
             cat <<EOF
-          PR opened automatically by the City Scrape workflow.
-          You can make any modifications or corrections [here]($CITY_DIRECTORY_LINK) and validation workflows will re-run.
+          PR opened by the Municipal Scrape workflow.
+          * people.yml - Make changes [here]($CITY_DIRECTORY_LINK) and validation workflows will re-run.
+
           EOF
           )
           gh pr create \

@@ -57,7 +57,10 @@ namespace :pipeline do
     fetch_with_state_source(city_context) # State-level city directory source
 
     # OpenAI - LLM call
-    page_fetcher, source_urls = fetch_with_openai(city_context)
+    # page_fetcher, source_urls = fetch_with_openai(city_context)
+
+    source_urls = ["https://www.cityofup.com/252/City-Council"]
+    page_fetcher = Core::PageFetcher.new
 
     ## Gemini - LLM call
     fetch_with_gemini(city_context, page_fetcher, source_urls)
