@@ -35,9 +35,9 @@ gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-
   * Pricing Page - https://ai.google.dev/gemini-api/docs/pricing
   * Input: $0.15 Per Million
   * Output: $0.60 Per Million
-* OpenAI API - GPT 4o Mini (used only with scraping)
-  * Input: $0.15 Per Million
-  * Output: $0.60 Per Million
+* OpenAI API - GPT 4.1 Nano (used with scraping)
+  * Input: $0.10 Per Million
+  * Output: $0.40 Per Million
   * https://platform.openai.com/docs/pricing 
 * Digital Ocean
   * Host images under spaces

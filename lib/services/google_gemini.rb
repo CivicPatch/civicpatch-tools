@@ -35,25 +35,15 @@ module Services
 
       return nil if response.blank?
 
-      puts "Response?? #{JSON.pretty_generate(response)}"
-
       # filter out invalid people
       people = response["people"].select do |person|
         Scrapers::Standard.valid_name?(person["name"]) &&
           person["positions"].present?
       end
 
-      File.write("chat.txt", "FOR URL BEFORE: #{url}\n", mode: "a")
-      File.write("chat.txt", JSON.pretty_generate(people), mode: "a")
-
-      people = people.map do |person|
+      people.map do |person|
         Services::Shared::People.format_raw_data(person, url)
       end
-
-      File.write("chat.txt", "FOR URL AFTER: #{url}\n", mode: "a")
-      File.write("chat.txt", JSON.pretty_generate(people), mode: "a")
-
-      people
     end
 
     def run_prompt(prompt, request_origin, response_schema)

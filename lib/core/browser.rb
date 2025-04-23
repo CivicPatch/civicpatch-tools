@@ -20,7 +20,7 @@ module Browser
     browser = start
 
     begin
-      browser.navigate.to(url)
+      browser.get(url)
 
       return nil unless html_page?(browser)
 
@@ -48,6 +48,11 @@ module Browser
     begin
       browser = start
       browser.navigate.to(url)
+
+      # Wait for the page to be fully loaded
+      wait = Selenium::WebDriver::Wait.new(timeout: 30) # seconds
+      wait.until { browser.execute_script("return document.readyState") == "complete" }
+
       browser.page_source
     rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
@@ -137,6 +142,15 @@ module Browser
     src = img_element.attribute("src")
     return if src.nil? || src.empty?
 
+    # Pre-processing: Skip common spinner images
+    spinner_patterns = ["loading.gif", "spinner.gif", "ajax-loader.gif", "loader.gif"]
+    if spinner_patterns.any? { |spinner| src.downcase.include?(spinner) }
+      # Remove the element from the DOM
+      browser.execute_script("arguments[0].remove()", img_element)
+      puts "Removed spinner image element with src: #{src}" # Optional logging
+      return # Don't process this element further
+    end
+
     absolute_src = Addressable::URI.join(base_url, src).to_s
 
     file = download_with_httparty(absolute_src)
@@ -180,24 +194,7 @@ module Browser
 
     downloaded_file.close
 
-    if response.success?
-      downloaded_file
-    else
-      nil
-    end
-
-    ## Check if request was successful
-    # if response.code == 200
-    ## Save image content
-    # File.open(image_path, "wb") do |file|
-    # file.write(response.body)
-    # end
-    # return true
-    # end
-
-    ## Return false if status code wasn't 200
-    # puts "HTTParty request failed with code #{response.code} for #{absolute_src}"
-    # false
+    downloaded_file if response.success?
   rescue StandardError => e
     puts "HTTParty error for #{absolute_src}: #{e.message}"
     nil
