@@ -13,7 +13,7 @@ module Services
   BASE_SLEEP = 5  # Base sleep time for exponential backoff
   class Openai
     @@MAX_TOKENS = 100_000
-    MODEL = "gpt-4.1-nano"
+    MODEL = "gpt-4.1-mini"
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
@@ -69,12 +69,28 @@ module Services
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
-        - image: URL from markdown image: (starting with "images/")
+        - image: String, URL from markdown image: (starting with "images/")
         - phone_number: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - email: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - website: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - term_date: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
         - positions: [array of strings]
+
+
+        Format example:
+        {
+          "people": [
+            {
+              "name": "John Doe",
+              "image": "images/john-doe.jpg",
+              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact.", "proximity_to_name": 50, "markdown_formatting": {"in_list": true}},
+              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name.", "proximity_to_name": 10, "markdown_formatting": {"in_list": false}},
+              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header", "markdown_formatting": {"in_list": true}},
+              "positions": ["Mayor", "Council Member"],
+              "term_date": {"data": "2022-01-01 to 2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
+            }
+          ]
+        }
 
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
@@ -94,7 +110,7 @@ module Services
         - Omit missing fields except for "name"
         - For positions:#{" "}
           - Include only active roles (today is #{current_date}).
-          - Include both roles and divisions.
+          - Include both roles and divisions, where available.
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names

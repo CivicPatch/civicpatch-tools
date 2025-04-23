@@ -67,7 +67,7 @@ namespace :pipeline do
     create_config_yml(state, city_entry)
 
     people = Core::PeopleManager.get_people(state, gnis)
-    # ~3remove_unused_cache_folders(state, city_entry, people)
+    remove_unused_cache_folders(state, city_entry, people)
   end
 
   def fetch_with_state_source(municipality_context)
