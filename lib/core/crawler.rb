@@ -115,12 +115,18 @@ class Crawler
   end
 
   def self.same_domain?(base_url, href)
-    base_domain = Addressable::URI.parse(base_url).host
-    link_domain = Addressable::URI.parse(href).host
+    base_uri = Addressable::URI.parse(base_url)
+    link_uri = Addressable::URI.parse(href)
 
-    return nil unless base_domain.present? && link_domain.present?
+    base_host = base_uri.host
+    link_host = link_uri.host
 
-    base_domain.include?(link_domain) || link_domain.include?(base_domain)
+    return false unless base_host.present? && link_host.present?
+
+    core_base_host = base_host.start_with?("www.") ? base_host[4..] : base_host
+    core_link_host = link_host.start_with?("www.") ? link_host[4..] : link_host
+
+    core_base_host == core_link_host
   end
 
   def self.text_match?(text, keywords)

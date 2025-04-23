@@ -11,19 +11,25 @@ require_relative "../core/browser"
 
 module Core
   class PageFetcher
+    @@image_map ||= {}
+
+    def image_map
+      @@image_map
+    end
+
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
       cached_file = PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
 
       if File.exist?(cached_file)
         puts "Skipping page fetch to #{url} because cache file already exists"
-        return cached_file
+        return [cached_file, image_map]
       end
 
       image_dir = PathHelper.project_path(File.join(destination_dir, "images"))
-      html = Browser.fetch_page_and_images(url, image_dir)
+      html, image_map = Browser.fetch_page_and_images(url, image_dir)
 
-      return nil if html.blank?
+      return [nil, nil] if html.blank?
 
       FileUtils.mkdir_p(destination_dir)
 
@@ -40,7 +46,9 @@ module Core
       markdown_content_file_path = PathHelper.project_path(File.join(destination_dir.to_s,
                                                                      "step_3_markdown_content.md"))
       File.write(markdown_content_file_path, markdown_content)
-      PathHelper.project_path(markdown_content_file_path)
+      content_file_path = PathHelper.project_path(markdown_content_file_path)
+
+      [content_file_path, image_map]
     end
 
     private

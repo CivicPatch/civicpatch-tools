@@ -1,6 +1,8 @@
 require "zaru"
 require "amatch"
-require_relative "./person_manager/utils"
+require "utils/url_helper"
+require "utils/phone_helper"
+require "core/person_manager/utils"
 
 module Core
   class PeopleManager
@@ -21,17 +23,15 @@ module Core
     end
 
     def self.normalize_people(people, positions_config)
-      people.each do |person|
+      people.map do |person|
         person["positions"] = Core::PersonManager::Utils
                               .sort_positions(person["positions"], positions_config)
       end
-
-      people
     end
 
     # Without extra positions
     def self.format_people(people, positions_config)
-      people.each do |person|
+      people.map do |person|
         person["name"] = person["name"].squeeze(" ")
         person["positions"] = Core::PersonManager::Utils
                               .sort_positions(person["positions"], positions_config)
@@ -43,14 +43,16 @@ module Core
         person["website"] = Utils::UrlHelper.format_url(person["website"]) if person["website"].present?
         if person["phone_number"].present?
           person["phone_number"] =
-            Scrapers::Standard.format_phone_number(person["phone_number"])
+            Utils::PhoneHelper.format_phone_number(person["phone_number"])
         end
 
-        next unless person["sources"].present?
+        next person unless person["sources"].present?
 
         person["sources"] = person["sources"].map do |source|
           Utils::UrlHelper.format_url(source)
         end
+
+        person
       end
 
       filtered_people = people.reject { |person| person["positions"].count.zero? }
@@ -70,6 +72,8 @@ module Core
           merged_person["name"] = value
         when "image"
           merged_person["image"] = person2["image"] || value
+        when "source_image"
+          merged_person["source_image"] = person2["source_image"] || value
         when "positions"
           merged_person["positions"] = (Array(value) + Array(person2["positions"])).uniq
         when "email"

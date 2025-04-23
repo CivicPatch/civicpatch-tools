@@ -1,132 +1,72 @@
 [
   {
     "name": "Bruce Harrell",
-    "image": null,
     "positions": [
       "Mayor"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "bruce.harrell@seattle.gov"
   },
   {
     "name": "Sara Nelson",
-    "image": null,
     "positions": [
       "Council President"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Sara.Nelson@seattle.gov"
   },
   {
     "name": "Alexis Mercedes Rinck",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "AlexisMercedes.Rinck@seattle.gov"
   },
   {
     "name": "Cathy Moore",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Cathy.Moore@seattle.gov"
   },
   {
     "name": "Dan Strauss",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Dan.Strauss@seattle.gov"
   },
   {
     "name": "Joy Hollingsworth",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Joy.Hollingsworth@seattle.gov"
   },
   {
     "name": "Maritza Rivera",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Maritza.Rivera@seattle.gov"
   },
   {
     "name": "Mark Solomon",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "mark.solomon@seattle.gov"
   },
   {
     "name": "Rob Saka",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Rob.Saka@seattle.gov"
   },
   {
     "name": "Robert Kettle",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Robert.Kettle@seattle.gov"
   }
 ]
