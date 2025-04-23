@@ -3,27 +3,59 @@
   positions:
   - Mayor
   email: Jfigueroa@cityofup.com
+  phone_number: "(253) 682-7379"
+  website: https://www.cityofup.com/280/Mayor-Javier-Figueroa
+  image: https://cdn.civicpatch.org/open-data/wa/university_place/images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif
+  source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
+  sources:
+  - https://www.cityofup.com/252/City-Council
 - name: Denise McCluskey
   positions:
   - Council Member
   email: dmccluskey@cityofup.com
-- name: Edward Wood
-  positions:
-  - Council Member
-  email: ewood@cityofup.com
+  phone_number: "(253) 566-5656"
+  website: https://www.cityofup.com/285/Council-Member-Denise-McCluskey
+  image: https://cdn.civicpatch.org/open-data/wa/university_place/images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif
+  source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
+  sources:
+  - https://www.cityofup.com/252/City-Council
 - name: Frank Boykin
   positions:
   - Council Member
   email: Fboykin@cityofup.com
+  phone_number: "(253) 566-5656"
+  website: https://www.cityofup.com/281/Council-Member-Frank-Boykin
+  image: https://cdn.civicpatch.org/open-data/wa/university_place/images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif
+  source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
+  sources:
+  - https://www.cityofup.com/252/City-Council
 - name: Melanie Grassi
   positions:
   - Council Member
   email: Mgrassi@cityofup.com
+  phone_number: "(253) 566-5656"
+  website: https://www.cityofup.com/278/Council-Member-Melanie-Grassi
+  image: https://cdn.civicpatch.org/open-data/wa/university_place/images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif
+  source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
+  sources:
+  - https://www.cityofup.com/252/City-Council
 - name: Stan Flemming
   positions:
   - Council Member
   email: stanflemming@cityofup.com
+  phone_number: "(253) 566-5656"
+  website: https://www.cityofup.com/284/Council-Member-Stan-Flemming
+  image: https://cdn.civicpatch.org/open-data/wa/university_place/images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif
+  source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
+  sources:
+  - https://www.cityofup.com/252/City-Council
 - name: Steve Worthington
   positions:
   - Council Member
   email: sworthington@cityofup.com
+  phone_number: "(253) 565-4855"
+  website: https://www.cityofup.com/279/Council-Member-Steve-Worthington
+  image: https://cdn.civicpatch.org/open-data/wa/university_place/images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif
+  source_image: https://www.cityofup.com/Common/images/ajax-loader.gif
+  sources:
+  - https://www.cityofup.com/252/City-Council

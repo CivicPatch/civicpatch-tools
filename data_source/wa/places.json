@@ -806,10 +806,12 @@
       "type": "Code city",
       "population": 34866,
       "government_type": "Council-Manager",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "5d9b8c5767df67077587b5c3461d430f",
+      "meta_updated_at": "2025-04-23",
+      "meta_hash": "24bb9d5ded183208342e06dc04b3adf1",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {

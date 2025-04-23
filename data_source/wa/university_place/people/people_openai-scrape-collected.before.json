@@ -1,0 +1,394 @@
+[
+  {
+    "name": "Javier Figueroa",
+    "image": "images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif",
+    "source_image": "https://www.cityofup.com/Common/images/ajax-loader.gif",
+    "phone_numbers": [
+      {
+        "data": "253.682.7379",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is directly associated with the Mayor's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jfigueroa@cityofup.com",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the Mayor's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/280/Mayor-Javier-Figueroa",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link is specifically about Mayor Javier Figueroa.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration is clearly stated next to the Mayor's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "mayor"
+    ]
+  },
+  {
+    "name": "Edward Wood",
+    "image": "images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif",
+    "source_image": "https://www.cityofup.com/Common/images/ajax-loader.gif",
+    "phone_numbers": [
+      {
+        "data": "253.677.5707",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is directly associated with the Mayor Pro Tem's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ewood@cityofup.com",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the Mayor Pro Tem's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link is specifically about Mayor Pro Tem Edward Wood.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration is clearly stated next to the Mayor Pro Tem's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "mayor pro tem"
+    ]
+  },
+  {
+    "name": "Frank Boykin",
+    "image": "images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif",
+    "source_image": "https://www.cityofup.com/Common/images/ajax-loader.gif",
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "fboykin@cityofup.com",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/281/Council-Member-Frank-Boykin",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link is specifically about Council Member Frank Boykin.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration is clearly stated next to the Council Member's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "council member"
+    ]
+  },
+  {
+    "name": "Steve Worthington",
+    "image": "images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif",
+    "source_image": "https://www.cityofup.com/Common/images/ajax-loader.gif",
+    "phone_numbers": [
+      {
+        "data": "253.565.4855",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Sworthington@cityofup.com",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/279/Council-Member-Steve-Worthington",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link is specifically about Council Member Steve Worthington.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration is clearly stated next to the Council Member's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "council member"
+    ]
+  },
+  {
+    "name": "Denise McCluskey",
+    "image": "images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif",
+    "source_image": "https://www.cityofup.com/Common/images/ajax-loader.gif",
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "DMcCluskey@CityofUP.com",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/285/Council-Member-Denise-McCluskey",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link is specifically about Council Member Denise McCluskey.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration is clearly stated next to the Council Member's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "council member"
+    ]
+  },
+  {
+    "name": "Stan Flemming",
+    "image": "images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif",
+    "source_image": "https://www.cityofup.com/Common/images/ajax-loader.gif",
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "stanflemming@cityofup.com",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/284/Council-Member-Stan-Flemming",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link is specifically about Council Member Stan Flemming.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration is clearly stated next to the Council Member's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "council member"
+    ]
+  },
+  {
+    "name": "Melanie Grassi",
+    "image": "images/900e663d6846f66ad6d8649b577a32d798c224332122457d9a5181211a7df566.gif",
+    "source_image": "https://www.cityofup.com/Common/images/ajax-loader.gif",
+    "phone_numbers": [
+      {
+        "data": "253.566.5656",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mgrassi@cityofup.com",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly associated with the Council Member's contact information.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofup.com/278/Council-Member-Melanie-Grassi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link is specifically about Council Member Melanie Grassi.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "term_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration is clearly stated next to the Council Member's name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.cityofup.com/252/City-Council"
+      }
+    ],
+    "positions": [
+      "council member"
+    ]
+  }
+]
