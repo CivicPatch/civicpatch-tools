@@ -2,7 +2,7 @@
 
 Loading
 
-  [Skip to Main Content](http://www.mylongview.com/Directory.aspx?EID=122/#contentarea)   [![Longview WA Homepage Logo](images/ca09e82f1bb04668c5232919e514866a7acb88459c6632300bf111292bea40e3.png)](http://www.mylongview.com)  
+  [Skip to Main Content](http://www.mylongview.com/Directory.aspx?EID=121/#contentarea)   [![Longview WA Homepage Logo](images/ca09e82f1bb04668c5232919e514866a7acb88459c6632300bf111292bea40e3.png)](http://www.mylongview.com)  
 
  1.  [Government](http://www.mylongview.com/27/Government) 
  1.  [Departments](http://www.mylongview.com/150/Departments) 
@@ -13,18 +13,19 @@ Loading
 
  1.  [Home](http://www.mylongview.com) 
  1. Staff Directory
-  ![Keith Young](images/186a263fc7d3dfe02c1a40af99ad0c12670a8c3eebd53572b55e89ee8e8aa606.jpg)  
+  ![Kalei LaFave](images/df3eaa177239aabfa9824984462dd7dfb2d05d17938cfbacad0b1fb5202bc209.jpg)  
 
-# Keith Young
+# Kalei LaFave
 
    [City Council](http://www.mylongview.com/Directory.aspx?DID=40) 
 
-Title: Council Member
+Title: Mayor Pro-Tem
 
- [Email Keith Young](http://www.mylongview.com/formcenter/Contact-City-Council-26/Contact-Keith-Young-106)  
+ [Email Kalei LaFave](http://www.mylongview.com/formcenter/Contact-City-Council-26/Contact-Kalei-LaFave-105)  
 
-Term: January 1, 2024 to December 31, 2027
+ * Term: January 1, 2024 to December 31, 2027
 
+ * Mayor Pro-Tem: January 11, 2024 - December 31, 2025
   
 
  [Return to Staff Directory](http://www.mylongview.com/Directory.aspx) 
