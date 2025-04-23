@@ -13,7 +13,7 @@ module Services
   BASE_SLEEP = 5  # Base sleep time for exponential backoff
   class Openai
     @@MAX_TOKENS = 100_000
-    MODEL = "gpt-4o-mini"
+    MODEL = "gpt-4.1-nano"
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
@@ -80,7 +80,16 @@ module Services
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - For "proximity_to_name": Word count distance between info and person's name
         - Extract only person-specific information, not general contact info
-        - IMPORTANT: DO NOT extract phone numbers or emails labeled as belonging to "Legislative Assistant", "Staff", "Office", or any other support personnel.
+        - Image selection:
+          - Find the image URL most closely associated with the person, preferably
+            appearing immediately near or directly following the person's name or biography heading in the text.
+          - Prioritize portraits or headshots. IGNORE logos, icons, banners,
+            or images with alt text like "Loading", "Logo", "Icon", "Search", "Banner".
+          - Check the image's alt text (e.g., `![Alt text](image.jpg)`) for clues#{" "}
+            like the person's name, but prioritize proximity and portrait style.
+        - Website extraction:
+          - Goal: Find the primary, stable profile or biography page for the person.
+          - Prioritize person-specific pages over landing pages (e.g., `/council/john-doe` over `/council/`).
         - DO NOT extract contact information if you are less than 90% confident it belongs directly to the person.
         - Omit missing fields except for "name"
         - For positions:#{" "}

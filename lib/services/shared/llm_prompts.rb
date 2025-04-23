@@ -53,6 +53,10 @@ module Services
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
+        - Image selection:
+          - Find the image URL most closely associated with the person, preferably appearing immediately near or directly following the person's name or biography heading in the text.
+          - Prioritize portraits or headshots. IGNORE logos, icons, banners, or images with alt text like "Loading", "Logo", "Icon", "Search", "Banner".
+          - Check the image's alt text (e.g., `![Alt text](image.jpg)`) for clues like the person's name, but prioritize proximity and portrait style.
         - Website extraction:
           - Goal: Find the primary, stable profile or biography page for the person.
           - Prioritize person-specific pages over landing pages (e.g., `/council/john-doe` over `/council/`).

@@ -57,10 +57,7 @@ namespace :pipeline do
     fetch_with_state_source(city_context) # State-level city directory source
 
     # OpenAI - LLM call
-    # page_fetcher, source_urls = fetch_with_openai(city_context)
-
-    source_urls = ["https://www.cityofup.com/252/City-Council"]
-    page_fetcher = Core::PageFetcher.new
+    page_fetcher, source_urls = fetch_with_openai(city_context)
 
     ## Gemini - LLM call
     fetch_with_gemini(city_context, page_fetcher, source_urls)
@@ -70,7 +67,7 @@ namespace :pipeline do
     create_config_yml(state, city_entry)
 
     people = Core::PeopleManager.get_people(state, gnis)
-    remove_cache_folders(state, city_entry, people)
+    # ~3remove_unused_cache_folders(state, city_entry, people)
   end
 
   def fetch_with_state_source(municipality_context)
@@ -219,7 +216,7 @@ namespace :pipeline do
     end
   end
 
-  def self.remove_cache_folders(state, city_entry, people)
+  def self.remove_unused_cache_folders(state, city_entry, people)
     gnis = city_entry["gnis"]
     cache_dir = PathHelper.get_city_cache_path(state, gnis)
     cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
