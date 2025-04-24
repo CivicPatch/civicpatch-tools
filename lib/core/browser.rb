@@ -22,6 +22,9 @@ module Browser
     begin
       browser.get(url)
 
+      wait = Selenium::WebDriver::Wait.new(timeout: 30) # seconds
+      wait.until { browser.execute_script("return document.readyState") == "complete" }
+
       return nil unless html_page?(browser)
 
       original_page_source = browser.page_source
@@ -47,11 +50,13 @@ module Browser
 
     begin
       browser = start
-      browser.navigate.to(url)
+      browser.get(url)
 
-      # Wait for the page to be fully loaded
+      # Wait for document ready AND jQuery AJAX requests to complete (if jQuery is present)
       wait = Selenium::WebDriver::Wait.new(timeout: 30) # seconds
-      wait.until { browser.execute_script("return document.readyState") == "complete" }
+      wait.until do
+        browser.execute_script("return document.readyState == 'complete' && (typeof jQuery == 'undefined' || jQuery.active == 0)")
+      end
 
       browser.page_source
     rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e

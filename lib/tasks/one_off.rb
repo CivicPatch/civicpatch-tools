@@ -95,5 +95,13 @@ namespace :one_off do
 
       File.write(people_file, fixed_people.to_yaml)
     end
+
+    task :sort_by_population do
+      # Get all files under data/<state>/<cities>/people.yml
+      people_file = PathHelper.project_path("data_source/or/municipalities.json")
+      people = JSON.parse(File.read(people_file))
+      people.sort_by! { |person| person["population"] }
+      File.write(people_file, JSON.pretty_generate(people))
+    end
   end
 end

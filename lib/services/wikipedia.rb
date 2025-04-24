@@ -2,34 +2,35 @@ module Services
   class Wikipedia
     URL = "https://en.wikipedia.org/api/rest_v1/page/html"
 
-    test = {
-      row_start: 1,
+    # test = {
+    #  row_start: 1,
 
-      city_name: 0,
-      county: 1,
-      population: 2
-    }
+    #  city_name: 0,
+    #  county: 1,
+    #  population: 2
+    # }
 
     def self.fetch_municipalities(state, title, table_data_config)
       response = fetch_with_wikipedia(title)
       nokogiri_doc = Nokogiri::HTML(response)
       table = nokogiri_doc.css("table.wikitable.sortable")[0]
 
-      rows = table.css("tr")
+      table_rows = table.css("tr")
 
-      parse_municipalities_from_table(state, rows, table_data_config)
+      parse_municipalities_from_table(state, table_rows, table_data_config)
     end
 
-    def self.parse_cities_from_table(state, table_rows)
+    def self.parse_cities_from_table(state, table_rows, row_data_config)
       places = []
       table_rows.css("tr").each do |city_row|
+        puts city_row
         columns = city_row.css("td, th")
         city_name = format_name(columns[0].text)
         city_type = columns[1].text
         county_names = without_superscripts(columns[2])
-          .text.split(",").map { 
-            |county| format_name(county) 
-          }
+                       .text.split(",").map do |county|
+          format_name(county)
+        end
         city_link = columns[0].css("a")[0].attr("href")
 
         city_page_title = city_link.split("/").last
@@ -54,7 +55,7 @@ module Services
       end
 
       places
-    end    
+    end
 
     def self.fetch_with_wikipedia(title)
       url = "#{URL}/#{title}"
@@ -63,7 +64,7 @@ module Services
       raise "Error: #{response.code}" unless response.success?
 
       response.parsed_response
-    end 
+    end
 
     def self.fetch_city_page(wikipedia_title)
       response = fetch_with_wikipedia(wikipedia_title)
@@ -87,7 +88,7 @@ module Services
 
     # Clean up text
 
-    def self.format_name(name)
+    def self.format_municipality_name(name)
       name = name.gsub("[c]", "")
       name = name.gsub("†", "")
       name = name.gsub("‡", "")
