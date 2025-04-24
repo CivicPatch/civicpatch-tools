@@ -19,7 +19,7 @@ namespace :github_pipeline do
     gnis = args[:gnis]
     branch_name = args[:branch_name]
 
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
     city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
     relative_path = city_path[city_path.rindex("data/#{state}")..]
 
@@ -33,7 +33,7 @@ namespace :github_pipeline do
     gnis = args[:gnis]
     branch_name = args[:branch_name]
 
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
     city_path = PathHelper.get_data_source_city_path(state, city_entry["gnis"])
     relative_path = city_path[city_path.rindex("data_source/#{state}")..]
 
@@ -61,7 +61,7 @@ namespace :github_pipeline do
   end
 
   def self.generate_people_list_comment(state, gnis, branch_name)
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
     city = city_entry["name"]
 
     city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
