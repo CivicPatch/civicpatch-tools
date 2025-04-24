@@ -8,8 +8,8 @@ on:
         type: choice
         required: true
         options:
+          - or
           - wa
-          - mi
       num_cities:
         description: 'Number of cities to process'
         type: number
