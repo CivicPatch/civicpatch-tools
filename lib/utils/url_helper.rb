@@ -89,5 +89,21 @@ module Utils
 
       nokogiri_html.to_html
     end
+
+    def self.urls_without_keywords(url_pairs, keywords)
+      url_pairs.select do |url, _text|
+        keywords.none? { |keyword| url.downcase.include?(keyword.downcase) }
+      end
+    end
+
+    def self.urls_without_dates(url_pairs)
+      url_pairs.reject do |url|
+        uri = URI.parse(url)
+        path = uri.path
+
+        # Check for date patterns (YYYY/MM/DD) in the URL path
+        path.match?(%r{/\d{4}/\d{2}/\d{2}/})
+      end
+    end
   end
 end

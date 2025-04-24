@@ -2,6 +2,7 @@ require "core/city_manager"
 require "utils/costs_helper"
 require "pp"
 require_relative "shared/llm_prompts"
+require "utils/name_helper"
 
 module Services
   class GoogleGemini
@@ -37,7 +38,7 @@ module Services
 
       # filter out invalid people
       people = response["people"].select do |person|
-        Scrapers::Standard.valid_name?(person["name"]) &&
+        Utils::NameHelper.valid_name?(person["name"]) &&
           person["positions"].present?
       end
 

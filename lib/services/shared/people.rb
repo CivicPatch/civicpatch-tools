@@ -1,4 +1,4 @@
-require "scrapers/common"
+require "utils/url_helper"
 
 module Services
   module Shared

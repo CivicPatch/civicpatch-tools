@@ -2,8 +2,6 @@
 
 require_relative "../services/brave"
 require_relative "../services/openai"
-require_relative "../scrapers/places"
-require_relative "../scrapers/common"
 require_relative "../core/municipal_scraper"
 require_relative "../core/page_fetcher"
 require_relative "../tasks/city_scrape/state_manager"
