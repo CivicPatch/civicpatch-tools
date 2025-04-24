@@ -5,46 +5,57 @@ module CityScrape
     end
 
     # each places must have a gnis key
-    def self.get_state_places_file(state)
-      PathHelper.project_path(File.join("data_source", state, "places.json"))
+    def self.get_state_municipalities_file(state)
+      PathHelper.project_path(File.join("data_source", state, "municipalities.json"))
     end
 
-    def self.get_state_places(state)
-      state_places_file = get_state_places_file(state)
-      JSON.parse(File.read(state_places_file)) if File.exist?(state_places_file)
+    # TODO: fix broken get_state_places
+    def self.get_state_municipalities(state)
+      state_municipalities_file = get_state_municipalities_file(state)
+      JSON.parse(File.read(state_municipalities_file)) if File.exist?(state_municipalities_file)
     end
 
-    def self.update_state_places(state, updated_places)
-      state_places = { # scaffold just in case it doesn't exist
+    def self.update_state_municipalities(state, updated_municipalities)
+      state_municipalities = { # scaffold just in case it doesn't exist
         "ocd_id" => "ocd-division/country:us/state:#{state}",
-        "places" => []
+        "municipalities" => []
       }
 
-      state_places_file = get_state_places_file(state)
-      state_places = JSON.parse(File.read(state_places_file)) if File.exist?(state_places_file)
+      state_municipalities_file = get_state_municipalities_file(state)
 
-      updated_places.each do |updated_place|
-        next unless updated_place["gnis"].present?
+      if File.exist?(state_municipalities_file)
+        state_municipalities = JSON.parse(File.read(state_municipalities_file))
+      else
+        FileUtils.mkdir_p(File.dirname(state_municipalities_file))
+        File.write(state_municipalities_file, JSON.pretty_generate(state_municipalities))
+      end
 
-        existing_place_index = state_places["places"].find_index { |p| p["gnis"] == updated_place["gnis"] }
-        if existing_place_index
-          existing_place = state_places["places"][existing_place_index]
+      puts "Updating #{updated_municipalities.size} municipalities for #{state}"
 
-          merged = existing_place.merge(updated_place) do |_key, old_val, new_val|
+      updated_municipalities.each do |updated_municipality|
+        next unless updated_municipality["gnis"].present?
+
+        existing_municipality_index = state_municipalities["municipalities"].find_index do |m|
+          m["gnis"] == updated_municipality["gnis"]
+        end
+        if existing_municipality_index
+          existing_municipality = state_municipalities["municipalities"][existing_municipality_index]
+
+          merged = existing_municipality.merge(updated_municipality) do |_key, old_val, new_val|
             new_val.present? ? new_val.dup : old_val.dup
           end
-          state_places["places"][existing_place_index] = merged
+          state_municipalities["municipalities"][existing_municipality_index] = merged
         else
-          state_places["places"] << updated_place
+          state_municipalities["municipalities"] << updated_municipality
         end
       end
 
-      File.write(state_places_file, JSON.pretty_generate(state_places))
+      File.write(state_municipalities_file, JSON.pretty_generate(state_municipalities))
     end
 
     def self.get_city_entry_by_gnis(state, gnis)
-      state_places = get_state_places(state)
-      state_places["places"].find { |place| place["gnis"] == gnis }
+      state_municipalities = get_state_municipalities(state)
+      state_municipalities["municipalities"].find { |municipality| municipality["gnis"] == gnis }
     end
   end
 end

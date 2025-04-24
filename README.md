@@ -22,8 +22,8 @@ rake 'city_scrape:get_places[mi]'
 - **State local officials directory (unofficial)**:
   - https://idahocities.org/store/ListProducts.aspx?catid=440197 (not scrapeable -- must be a member)
 
-### Country Directory
-- [ ] Maps of states
+### FIPS examples
+* https://www2.census.gov/geo/docs/reference/codes2020/place/st41_or_place2020.txt
 
 ### Scratch
 ```bash

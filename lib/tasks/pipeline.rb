@@ -9,8 +9,9 @@ require_relative "../core/page_fetcher"
 require_relative "../tasks/city_scrape/state_manager"
 require_relative "../core/search_router"
 require_relative "../core/people_manager"
-require_relative "../scrapers/local_officials_scraper"
 require_relative "../services/spaces"
+require_relative "../scrapers/municipalities"
+require_relative "../scrapers/municipality_officials"
 
 namespace :pipeline do
   desc "Pick cities from queue"
@@ -30,14 +31,14 @@ namespace :pipeline do
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
   end
 
-  desc "Find municipalities for a state"
-  task :get_places, [:state] do |_t, args|
+  desc "Find municipalities for a state, (m is short for municipalities)"
+  task :fetch_m, [:state] do |_t, args|
     raise "Missing required parameter: state" if args[:state].blank?
 
     state = args[:state]
 
-    new_places = Scrapers::Places.fetch(state)
-    #CityScrape::StateManager.update_state_places(state, new_places)
+    new_municipalities = Scrapers::Municipalities.fetch(state)
+    CityScrape::StateManager.update_state_municipalities(state, new_municipalities)
   end
 
   desc "Scrape city info for a specific city"
@@ -75,7 +76,7 @@ namespace :pipeline do
 
     # This call can fail if the state source is down (e.g. MRSC.org for WA)
     begin
-      source_city_people = Scrapers::LocalOfficialScraper.fetch_with_state_source(municipality_context)
+      source_city_people = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
       Core::PeopleManager.update_people(municipality_context[:state], municipality_context[:city_entry],
                                         source_city_people, "state_source.before")
       formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, positions_config)
