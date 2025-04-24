@@ -1,4 +1,5 @@
 require "services/spaces"
+require "utils/folder_helper"
 
 namespace :one_off do
   desc "Scrape city offficials from a state-level source"
@@ -111,14 +112,14 @@ namespace :one_off do
 
   task :fix_or_casings do
     # Get all directories under data/or/<cities>
-    folders = Dir.glob("data/or/*")
+    folders = Dir.glob("data_source/or/*")
     folders.each do |folder|
       # Get the name of the folder
       name = folder.split("/").last
       # Format the name
       formatted_name = Utils::FolderHelper.format_name(name)
       # Rename the folder
-      File.rename(folder, "data/or/#{formatted_name}")
+      File.rename(folder, "data_source/or/#{formatted_name}")
     end
   end
 
