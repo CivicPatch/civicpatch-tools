@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 require "openai"
-require "scrapers/standard"
-require "scrapers/common"
 require "services/shared/response_schemas"
 require "utils/costs_helper"
+require "utils/name_helper"
 require "core/city_manager"
 
 # TODO: track token usage
@@ -41,7 +40,7 @@ module Services
 
       # filter out invalid people
       people = response["people"].select do |person|
-        Scrapers::Standard.valid_name?(person["name"]) &&
+        Utils::NameHelper.valid_name?(person["name"]) &&
           person["positions"].present?
       end
 

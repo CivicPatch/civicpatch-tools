@@ -1,4 +1,4 @@
-module Scrapers::States::Wa::LocalOfficialScraper
+module Scrapers::Wa::MunicipalityOfficials
   class StateLevelScraper
     DIRECTORY_URL = "https://mrsc.org/mrsctools/officials-directory/city.aspx".freeze
     @@html_cache ||= {}

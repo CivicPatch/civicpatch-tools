@@ -1,3 +1,5 @@
+require "utils/url_helper"
+
 module Services
   class Wikipedia
     URL = "https://en.wikipedia.org/api/rest_v1/page/html"
@@ -75,7 +77,7 @@ module Services
       # then find the a tag within that tr that has a href attribute
       website_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("website") }
       website = website_row.present? ? website_row.css("a").find { |a| a.attr("href") } : nil
-      website = website ? Scrapers::Common.format_url(website.attr("href")) : ""
+      website = website ? Utils::UrlHelper.format_url(website.attr("href")) : ""
 
       fips_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("fips") }
       fips = fips_row.present? ? without_superscripts(fips_row.css("td")).text : ""

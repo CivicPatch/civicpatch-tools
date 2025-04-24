@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../scrapers/common"
+require "utils/url_helper"
 
 module Services
   class Brave
@@ -27,7 +27,7 @@ module Services
         }
       end
 
-      url_text_pairs.map { |pair| Scrapers::Common.format_url(pair["url"]) }
+      url_text_pairs.map { |pair| Utils::UrlHelper.format_url(pair["url"]) }
     end
   end
 end

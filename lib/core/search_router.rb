@@ -1,3 +1,4 @@
+require "utils/url_helper"
 module Core
   class SearchRouter
     def self.fetch_search_results(engine, state, city_entry, government_type)
@@ -21,8 +22,8 @@ module Core
         end
       end
 
-      filtered_urls = Scrapers::Common.urls_without_keywords(urls, %w[alerts news event calendar video])
-      filtered_urls = Scrapers::Common.urls_without_dates(filtered_urls)
+      filtered_urls = Utils::UrlHelper.urls_without_keywords(urls, %w[alerts news event calendar video])
+      filtered_urls = Utils::UrlHelper.urls_without_dates(filtered_urls)
       puts "Urls fetched: urls: #{urls}"
       filtered_urls.map { |url, _text| url }
     end

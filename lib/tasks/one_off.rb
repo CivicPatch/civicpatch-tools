@@ -95,13 +95,17 @@ namespace :one_off do
 
       File.write(people_file, fixed_people.to_yaml)
     end
+  end
 
-    task :sort_by_population do
-      # Get all files under data/<state>/<cities>/people.yml
-      people_file = PathHelper.project_path("data_source/or/municipalities.json")
-      people = JSON.parse(File.read(people_file))
-      people.sort_by! { |person| person["population"] }
-      File.write(people_file, JSON.pretty_generate(people))
+  task :sort_by_population do
+    # Get all files under data/<state>/<cities>/people.yml
+    file_path = PathHelper.project_path("data_source/or/municipalities.json")
+    municipalities = JSON.parse(File.read(file_path))
+    descending = -1
+    updated_municipalities = municipalities["municipalities"].sort_by do |municipality|
+      municipality["population"] * descending
     end
+    municipalities["municipalities"] = updated_municipalities
+    File.write(file_path, JSON.pretty_generate(municipalities))
   end
 end
