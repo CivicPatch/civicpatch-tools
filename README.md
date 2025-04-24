@@ -10,7 +10,12 @@
 rake 'city_scrape:get_places[mi]'
 ```
 
-## Priorities
+## Sources
+* All populations & municipalities are pulled primarily from US Census
+  * Population
+    * [CENSUS_POPULATION_API](https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:43)
+  * Codes (fips & gnis codes)
+    * [CENSUS_MUNICIPALITIES_CODES](https://www2.census.gov/geo/docs/reference/codes2020/place/st53_wa_place2020.txt)
 ### Washington
 - **State local officials directory (unofficial)**: https://mrsc.org/mrsctools/officials-directory/city.aspx
 ### Oregon
@@ -21,7 +26,7 @@ rake 'city_scrape:get_places[mi]'
 ### Idaho (TBD)
 - **State local officials directory (unofficial)**:
   - https://idahocities.org/store/ListProducts.aspx?catid=440197 (not scrapeable -- must be a member)
-
+  
 ### FIPS examples
 * https://www2.census.gov/geo/docs/reference/codes2020/place/st41_or_place2020.txt
 

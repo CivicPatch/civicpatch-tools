@@ -7,7 +7,8 @@ module Services
         formatted_person = {
           "name" => person["name"],
           "image" => person["image"],
-          "source_image" => person["source_image"]
+          "source_image" => person["source_image"],
+          "sources" => [source]
         }
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
@@ -191,7 +192,7 @@ module Services
           "email" => selected_data_points["email"].present? ? selected_data_points["email"]["data"] : nil,
           "website" => selected_data_points["website"].present? ? selected_data_points["website"]["data"] : nil,
           "term_date" => selected_data_points["term_date"].present? ? selected_data_points["term_date"]["data"] : nil,
-          "sources" => sources
+          "sources" => (Array(llm_person["sources"]) + Array(sources)).uniq
         }
       end
     end

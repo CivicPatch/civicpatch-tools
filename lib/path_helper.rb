@@ -2,7 +2,7 @@
 
 require "pathname"
 require "core/state_manager"
-
+require "utils/folder_helper"
 module PathHelper
   def self.project_path(relative_path)
     File.expand_path(relative_path, Dir.pwd)
@@ -19,7 +19,7 @@ module PathHelper
       path_name = "#{city_entry["name"]}_#{city_entry["gnis"]}"
     end
 
-    path_name
+    Utils::FolderHelper.format_name(path_name)
   end
 
   def self.get_data_source_city_path(state, gnis)

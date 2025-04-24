@@ -18,10 +18,10 @@ module Services
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_people(city_context, content_file, page_url)
-      state = city_context["state"]
-      city_entry = city_context["city_entry"]
-      government_type = city_context["government_type"]
+    def extract_city_people(municipality_context, content_file, page_url)
+      state = municipality_context[:state]
+      municipality_entry = municipality_context[:municipality_entry]
+      government_type = municipality_context[:government_type]
 
       content = File.read(content_file)
 
@@ -33,7 +33,7 @@ module Services
         { role: "system", content: system_instructions },
         { role: "user", content: user_instructions }
       ]
-      request_origin = "#{state}_#{city_entry["name"]}_city_scrape"
+      request_origin = "#{state}_#{municipality_entry["name"]}_city_scrape"
       response = run_prompt(messages, request_origin)
 
       return nil if response.blank?

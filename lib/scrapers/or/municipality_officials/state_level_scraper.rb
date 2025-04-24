@@ -29,7 +29,6 @@ module Scrapers::Or::MunicipalityOfficials
     end
 
     def self.parse_html(html)
-      # File.write("html.html", html)
       doc = Nokogiri::HTML(html)
       officials = []
 

@@ -17,9 +17,11 @@
       "website": "https://www.portland.gov",
       "email": null,
       "meta_updated_at": "2025-04-24",
-      "meta_hash": "2eda798dddba25786f64968e69d46d56",
+      "meta_hash": "cb41fdf1fcbeb04ef388932dca9dcaec",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
