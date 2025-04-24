@@ -29,48 +29,38 @@ namespace :pipeline do
     puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
   end
 
-  desc "Find municipalities for a state, (m is short for municipalities)"
-  task :fetch_m, [:state] do |_t, args|
-    raise "Missing required parameter: state" if args[:state].blank?
-
-    state = args[:state]
-
-    new_municipalities = Scrapers::Municipalities.fetch(state)
-    Core::StateManager.update_municipalities(state, new_municipalities)
-  end
-
   desc "Scrape city info for a specific city"
   task :fetch, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
 
-    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-    city_context = {
+    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
+    municipality_context = {
       state: state,
-      city_entry: city_entry,
-      government_type: Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
+      municipality_entry: municipality_entry,
+      government_type: Scrapers::Municipalities.get_government_type(state, municipality_entry)
     }
 
-    create_prepare_directories(state, city_entry)
+    create_prepare_directories(state, municipality_entry)
 
-    fetch_with_state_source(city_context) # State-level city directory source
+    fetch_with_state_source(municipality_context) # State-level city directory source
 
     # OpenAI - LLM call
-    page_fetcher, source_urls = fetch_with_openai(city_context)
+    page_fetcher, source_urls = fetch_with_openai(municipality_context)
 
-    ## Gemini - LLM call
-    fetch_with_gemini(city_context, page_fetcher, source_urls)
+    # Gemini - LLM call
+    fetch_with_gemini(municipality_context, page_fetcher, source_urls)
 
-    aggregate_sources(city_context, sources: %w[state_source gemini openai])
-    # Create config.yml for the city
-    create_config_yml(state, city_entry)
+    aggregate_sources(municipality_context, sources: %w[state_source gemini openai])
+    ## Create config.yml for the city
+    create_config_yml(state, municipality_entry)
 
     people = Core::PeopleManager.get_people(state, gnis)
-    remove_unused_cache_folders(state, city_entry, people)
+    remove_unused_cache_folders(state, municipality_entry, people)
   end
 
   desc "Fetch city officials from state source"
-  task :fetch_state_level, [:state] do |_t, args|
+  task :fetch_from_state, [:state] do |_t, args|
     state = args[:state]
 
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
@@ -83,6 +73,16 @@ namespace :pipeline do
       fetch_with_state_source(municipality_context)
       aggregate_sources(municipality_context, sources: %w[state_source])
     end
+  end
+
+  desc "Find municipalities for a state"
+  task :fetch_mun, [:state] do |_t, args|
+    raise "Missing required parameter: state" if args[:state].blank?
+
+    state = args[:state]
+
+    new_municipalities = Scrapers::Municipalities.fetch(state)
+    Core::StateManager.update_municipalities(state, new_municipalities)
   end
 
   def fetch_with_state_source(municipality_context)
@@ -108,8 +108,8 @@ namespace :pipeline do
 
   def fetch_with_openai(municipality_context)
     state = municipality_context[:state]
-    city_entry = municipality_context[:city_entry]
-    gnis = municipality_context[:city_entry]["gnis"]
+    municipality_entry = municipality_context[:municipality_entry]
+    gnis = municipality_entry["gnis"]
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
 
     config_file = File.join(PathHelper.get_data_source_city_path(state, gnis), "config.yml")
@@ -121,13 +121,13 @@ namespace :pipeline do
       municipality_context,
       cached_urls: config_content["scrape_sources"]
     )
-    Core::PeopleManager.update_people(state, city_entry, openai_people, "openai.before")
+    Core::PeopleManager.update_people(state, municipality_entry, openai_people, "openai.before")
     formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_openai_people, "openai.after")
+    Core::PeopleManager.update_people(state, municipality_entry, formatted_openai_people, "openai.after")
 
     # This is the only call that scrapes images
     people_with_images = process_images(municipality_context, source_dirs, formatted_openai_people)
-    Core::PeopleManager.update_people(state, city_entry, people_with_images, "openai.after")
+    Core::PeopleManager.update_people(state, municipality_entry, people_with_images, "openai.after")
     sources = formatted_openai_people.map { |person| person["sources"] }.flatten.uniq
 
     [page_fetcher, sources]
@@ -135,7 +135,7 @@ namespace :pipeline do
 
   def fetch_with_gemini(municipality_context, page_fetcher, cached_urls)
     state = municipality_context[:state]
-    city_entry = municipality_context[:city_entry]
+    municipality_entry = municipality_context[:municipality_entry]
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
 
     _page_fetcher, _source_dirs, gemini_people = Core::MunicipalScraper.fetch(
@@ -144,9 +144,9 @@ namespace :pipeline do
       page_fetcher: page_fetcher,
       cached_urls: cached_urls
     )
-    Core::PeopleManager.update_people(state, city_entry, gemini_people, "gemini.before")
+    Core::PeopleManager.update_people(state, municipality_entry, gemini_people, "gemini.before")
     formatted_gemini_people = Core::PeopleManager.format_people(gemini_people, positions_config)
-    Core::PeopleManager.update_people(state, city_entry, formatted_gemini_people, "gemini.after")
+    Core::PeopleManager.update_people(state, municipality_entry, formatted_gemini_people, "gemini.after")
   end
 
   def aggregate_sources(municipality_context, sources: [])
@@ -171,19 +171,19 @@ namespace :pipeline do
                                              ])
   end
 
-  def create_config_yml(state, city_entry)
-    gnis = city_entry["gnis"]
+  def create_config_yml(state, municipality_entry)
+    gnis = municipality_entry["gnis"]
     people = Core::PeopleManager.get_people(state, gnis)
     config_yml = {
       "scrape_sources" => people.map { |person| person["sources"] }.flatten.uniq
     }
 
-    config_path = File.join(PathHelper.get_data_source_city_path(state, city_entry["gnis"]), "config.yml")
+    config_path = File.join(PathHelper.get_data_source_city_path(state, municipality_entry["gnis"]), "config.yml")
     File.write(config_path, config_yml.to_yaml)
   end
 
-  def create_prepare_directories(state, city_entry)
-    cache_destination_dir = PathHelper.get_city_cache_path(state, city_entry["gnis"])
+  def create_prepare_directories(state, municipality_entry)
+    cache_destination_dir = PathHelper.get_city_cache_path(state, municipality_entry["gnis"])
 
     # Remove cache folder if it exists
     FileUtils.rm_rf(cache_destination_dir) if Dir.exist?(cache_destination_dir)
@@ -192,11 +192,11 @@ namespace :pipeline do
 
   def process_images(municipality_context, source_dirs, people)
     state = municipality_context[:state]
-    city_entry = municipality_context[:city_entry]
-    puts "Uploading images for #{city_entry["name"]}"
+    municipality_entry = municipality_context[:municipality_entry]
+    puts "Uploading images for #{municipality_entry["name"]}"
     puts "Source dirs: #{source_dirs.inspect}"
 
-    data_city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
+    data_city_path = PathHelper.get_data_city_path(state, municipality_entry["gnis"])
     # Find last instance of data/ because repo could start with open-data/data/
     remote_city_path = data_city_path.rpartition("data/").last
 
@@ -235,8 +235,8 @@ namespace :pipeline do
     end
   end
 
-  def self.remove_unused_cache_folders(state, city_entry, people)
-    gnis = city_entry["gnis"]
+  def self.remove_unused_cache_folders(state, municipality_entry, people)
+    gnis = municipality_entry["gnis"]
     cache_dir = PathHelper.get_city_cache_path(state, gnis)
     cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 

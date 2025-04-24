@@ -1,10 +1,12 @@
 require "utils/url_helper"
 require "services/shared/people"
+require "services/google_gemini"
+require "services/openai"
 require "set"
 
 module Core
   class MunicipalScraper
-    @@MAX_URLS_TO_SCRAPE = 20
+    @@MAX_URLS_TO_SCRAPE = 30
 
     def self.fetch(
       llm_service_string,
@@ -15,31 +17,33 @@ module Core
     )
       puts "Fetching with #{llm_service_string}"
       page_fetcher ||= Core::PageFetcher.new
-      city_entry = municipality_context[:city_entry]
+      municipality_entry = municipality_context[:municipality_entry]
       state = municipality_context[:state]
-      gnis = municipality_context[:city_entry]["gnis"]
+      gnis = municipality_entry["gnis"]
       city_cache_path = PathHelper.get_city_cache_path(state, gnis)
 
       context = {
         llm_service_string: llm_service_string,
-        state: municipality_context[:state],
-        city_entry: municipality_context[:city_entry],
-        gnis: municipality_context[:city_entry]["gnis"],
-        government_type: municipality_context[:government_type],
+        municipality_context: municipality_context,
         page_fetcher: page_fetcher,
         city_cache_path: city_cache_path
       }
 
-      data = if cached_urls.present? && cached_urls.count.positive?
-               scrape_city_directory_urls(context, urls_to_process: cached_urls)
-             else
-               scrape_from_search_engines(context, [], [], search_engines: search_engines)
-             end
+      # Initialize combined data hash
+      data = { accumulated_people: [], processed_urls: [], content_dirs: [] }
+
+      if cached_urls.present? && cached_urls.count.positive?
+        cached_data = scrape_city_directory_urls(context, urls_to_process: cached_urls)
+        data = cached_data
+      end
+
+      data = scrape_from_search_engines(context, data[:accumulated_people], data[:processed_urls],
+                                        search_engines: search_engines)
 
       profile_content_dirs, accumulated_people = scrape_profiles(context, data[:accumulated_people],
-                                                                 data[:content_dirs])
+                                                                 data[:processed_urls])
 
-      Core::PeopleManager.update_people(state, city_entry, accumulated_people,
+      Core::PeopleManager.update_people(state, municipality_entry, accumulated_people,
                                         "#{llm_service_string}-scrape-collected.before")
 
       formatted_officials = accumulated_people.map do |official|
@@ -85,10 +89,7 @@ module Core
       processed_urls = [],
       search_engines: %w[manual brave]
     )
-      state = context[:state]
-      city_entry = context[:city_entry]
-      government_type = context[:government_type]
-
+      municipality_context = context[:municipality_context]
       content_dirs = []
 
       search_engines.each do |engine|
@@ -96,15 +97,11 @@ module Core
 
         search_result_urls = Core::SearchRouter.fetch_search_results(
           engine,
-          state,
-          city_entry,
-          government_type
+          municipality_context
         )
         urls_to_scrape = search_result_urls - processed_urls
 
-        puts "#{context[:llm_service_string]} Search result urls: #{search_result_urls}"
         puts "#{context[:llm_service_string]} Urls already scraped: #{processed_urls}"
-        puts "#{context[:llm_service_string]} Engine #{engine} found #{search_result_urls.count} search results for #{city_entry["name"]}"
         puts "#{context[:llm_service_string]} URLs to scrape: #{urls_to_scrape.count}"
 
         data_from_scraped_urls = scrape_city_directory_urls(
@@ -162,12 +159,10 @@ module Core
     end
 
     def self.scrape_url_for_municipal_directory(context, url)
-      state = context[:state]
-      city_entry = context[:city_entry]
       llm_service_string = context[:llm_service_string]
       page_fetcher = context[:page_fetcher]
       cache_path = context[:city_cache_path]
-      government_type = context[:government_type]
+      municipality_context = context[:municipality_context]
       llm_service = get_llm_service(llm_service_string)
 
       puts "#{llm_service_string} Scraping #{url} for municipal directory"
@@ -177,8 +172,7 @@ module Core
       content_file, image_map = page_fetcher.extract_content(url, url_content_path)
       return [nil, nil] unless content_file.present?
 
-      local_context = { "state" => state, "city_entry" => city_entry, "government_type" => government_type }
-      people = llm_service.extract_city_people(local_context, content_file, url)
+      people = llm_service.extract_city_people(municipality_context, content_file, url)
 
       unless people.present? && people.is_a?(Array) && people.count.positive?
         return [nil,

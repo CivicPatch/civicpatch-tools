@@ -18,20 +18,19 @@ module Services
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
     end
 
-    def extract_city_people(city_context, content_file, url)
-      state = city_context["state"]
-      city_entry = city_context["city_entry"]
-      government_type = city_context["government_type"]
-      city = city_entry["name"]
+    def extract_city_people(municipality_context, content_file, url)
+      state = municipality_context[:state]
+      municipality_entry = municipality_context[:municipality_entry]
+      government_type = municipality_context[:government_type]
       content = File.read(content_file)
 
       # TODO: check if input is too long
       # return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
       prompt = Services::Shared::LlmPrompts
-               .gemini_generate_municipal_directory_prompt(state, city_entry, government_type, content)
+               .gemini_generate_municipal_directory_prompt(state, municipality_entry, government_type, content)
 
-      request_origin = "#{state}_#{city}_gemini_#{MODEL}_city_scrape"
+      request_origin = "#{state}_#{municipality_entry["name"]}_gemini_#{MODEL}_municipality_scrape"
       response = run_prompt(prompt, request_origin, Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
 
       return nil if response.blank?

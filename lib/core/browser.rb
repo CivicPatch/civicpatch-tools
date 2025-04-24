@@ -1,3 +1,4 @@
+require "utils/url_helper"
 require_relative "../utils/image_helper"
 
 module Browser
@@ -34,7 +35,7 @@ module Browser
       image_map = download_images(browser, image_dir, base_url)
       page_source_with_images = browser.page_source
 
-      page_html = Utils::UrlHelper.format_links_to_absolute(page_source_with_images, base_url)
+      page_html = Utils::UrlHelper.format_links_to_absolute(page_source_with_images, url)
 
       [page_html, image_map]
     ensure
@@ -61,7 +62,8 @@ module Browser
       # Yield the browser instance to the block for interactions
       yield(browser, wait) if block_given?
 
-      browser.page_source
+      source = browser.page_source
+      Utils::UrlHelper.format_links_to_absolute(source, url)
     rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
@@ -162,7 +164,7 @@ module Browser
       return # Don't process this element further
     end
 
-    absolute_src = Addressable::URI.join(base_url, src).to_s
+    absolute_src = Utils::UrlHelper.format_url(Addressable::URI.join(base_url, src).to_s)
 
     file = download_with_httparty(absolute_src)
     unless file
@@ -176,39 +178,92 @@ module Browser
 
     file_type = determine_file_type(file)
 
-    return if file_type.nil?
+    # Log and return if file type is unknown
+    if file_type.nil?
+      file.unlink # Clean up the unusable temp file
+      return
+    end
 
-    filename = generate_filename(src, file_type)
+    filename = generate_filename(src, file_type).to_s
     image_path = File.join(image_dir, filename)
 
     FileUtils.mv(file.path, image_path)
 
     browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
-                           img_element, filename)
+                           img_element, "images/#{filename}")
 
     [filename, absolute_src]
   rescue StandardError => e
     puts "Error processing image (#{src}): #{e.message}"
+    puts e.backtrace
   end
 
   def self.download_with_httparty(absolute_src)
-    # Handle relative URLs
     # Skip data URLs
-    return false if absolute_src.start_with?("data:")
+    return nil if absolute_src.start_with?("data:")
 
-    downloaded_file = Tempfile.new(binmode: true)
-    response = HTTParty.get(absolute_src, timeout: 5, stream_body: true) do |chunk|
-      next if [301, 302].include?(chunk.code)
+    max_redirects = 5
+    _fetch_and_follow_redirects(absolute_src, max_redirects)
+  end
 
-      downloaded_file.write(chunk)
+  private_class_method def self._fetch_and_follow_redirects(initial_url, max_redirects)
+    current_url = initial_url
+    redirect_count = 0
+
+    while redirect_count < max_redirects
+      encoded_url = nil
+      begin
+        # Normalize URL before each request attempt
+        uri = Addressable::URI.parse(current_url).normalize
+        encoded_url = uri.to_s
+      rescue Addressable::URI::InvalidURIError => e
+        puts "Invalid URI during redirect handling for #{initial_url} (current: #{current_url}): #{e.message}"
+        return nil # Cannot proceed
+      end
+
+      temp_file = Tempfile.new(binmode: true)
+      response = nil
+
+      begin
+        response = HTTParty.get(encoded_url, timeout: 10, stream_body: true, follow_redirects: false) do |chunk|
+          temp_file.write(chunk) unless chunk.empty?
+        end
+        temp_file.close
+
+        if response.success? # 2xx codes
+          return temp_file # Successful download
+        elsif [301, 302, 303, 307, 308].include?(response.code)
+          # Handle Redirect
+          temp_file.unlink # Discard temp file from redirect response
+          redirect_count += 1
+          location = response.headers["location"]
+
+          if location.blank?
+            puts "Redirect from #{encoded_url} missing Location header."
+            return nil
+          end
+
+          current_url = location # Update URL for the next iteration
+          # puts "Redirecting (#{redirect_count}/#{max_redirects}) to: #{current_url}" # Log raw redirect target
+          next # Continue to the next loop iteration
+        else
+          # Handle other HTTP errors (4xx, 5xx)
+          puts "HTTP request failed for #{encoded_url} with code: #{response.code}"
+          temp_file.unlink
+          return nil
+        end
+      rescue StandardError => e
+        # Handle network errors, timeouts, etc.
+        puts "HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
+        temp_file.close
+        temp_file.unlink
+        return nil
+      end
     end
 
-    downloaded_file.close
-
-    downloaded_file if response.success?
-  rescue StandardError => e
-    puts "HTTParty error for #{absolute_src}: #{e.message}"
-    nil
+    # If the loop finishes, max redirects were exceeded
+    puts "Max redirects (#{max_redirects}) exceeded for original URL: #{initial_url}"
+    nil # Return nil explicitly
   end
 
   def self.determine_file_type(file)

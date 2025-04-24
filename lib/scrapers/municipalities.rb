@@ -1,3 +1,4 @@
+require "services/census"
 require_relative "wa/municipalities"
 require_relative "or/municipalities"
 
@@ -6,25 +7,9 @@ module Scrapers
     CENSUS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:".freeze
     CENSUS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place".freeze
 
-    STATE_TO_STATEFP = {
-      "wa" => "53",
-      "or" => "41"
-    }.freeze
-
-    def self.get_scraper(state)
-      case state
-      when "wa"
-        Scrapers::Wa::Municipalities
-      when "or"
-        Scrapers::Or::Municipalities
-      else
-        raise NotImplementedError
-      end
-    end
-
     def self.fetch(state)
       scraper = get_scraper(state)
-      statefp = STATE_TO_STATEFP[state]
+      statefp = Services::STATE_TO_STATEFP[state]
 
       raise "No statefp found for #{state}" if statefp.nil?
 
@@ -46,11 +31,12 @@ module Scrapers
 
     def self.get_government_type(state, municipality_entry)
       scraper = get_scraper(state)
-      government_type = scraper.get_government_type(municipality_entry)
 
-      return Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL if government_type.nil?
-
-      government_type
+      if scraper.respond_to?(:get_government_type)
+        scraper.get_government_type(municipality_entry)
+      else
+        Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
+      end
     end
 
     def self.fetch_census_data(state, statefp)

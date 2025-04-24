@@ -35,8 +35,7 @@ module Core
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_1_original_html.html")), html)
 
-      parsed_html = with_prefixed_image_urls(html)
-      parsed_html = Sanitize.fragment(parsed_html, Sanitize::Config::RELAXED)
+      parsed_html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
       nokogiri_doc = Nokogiri::HTML(parsed_html)
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_parsed_html.html")),
@@ -49,21 +48,6 @@ module Core
       content_file_path = PathHelper.project_path(markdown_content_file_path)
 
       [content_file_path, image_map]
-    end
-
-    private
-
-    # TODO: Upload images to Digital Ocean Spaces
-    def with_prefixed_image_urls(html)
-      doc = Nokogiri::HTML(html)
-      # for all image tags, prefix the src string with images
-      doc.css("img").each do |img|
-        next if img["src"].blank?
-
-        img["src"] = "images/#{img["src"]}"
-      end
-
-      doc
     end
   end
 end

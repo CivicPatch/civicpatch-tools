@@ -922,10 +922,12 @@
       "type": "Code city",
       "population": 28013,
       "government_type": "Council-Manager",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "810e81a451590595b8183d537f75e69f",
+      "meta_updated_at": "2025-04-24",
+      "meta_hash": "0bb026c2fd99d38ed15a43f2a5b462f9",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
