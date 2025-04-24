@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "pathname"
+require "core/state_manager"
 
 module PathHelper
   def self.project_path(relative_path)
@@ -8,13 +9,13 @@ module PathHelper
   end
 
   def self.get_unique_city_name(state, gnis)
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
-    state_places = CityScrape::StateManager.get_state_places(state)
+    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
+    state_places = Core::StateManager.get_municipalities(state)
 
     path_name = city_entry["name"]
 
     # Some cities within the same state have the same name
-    if state_places["places"].count { |place| place["name"] == city_entry["name"] } > 1
+    if state_places["municipalities"].count { |place| place["name"] == city_entry["name"] } > 1
       path_name = "#{city_entry["name"]}_#{city_entry["gnis"]}"
     end
 

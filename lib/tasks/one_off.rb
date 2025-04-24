@@ -6,7 +6,7 @@ namespace :one_off do
     state = args[:state]
     government_type = Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
 
-    municipalities = CityScrape::StateManager.get_state_places(state)["places"]
+    municipalities = Core::StateManager.get_state_places(state)["places"]
     filtered_municipalities = municipalities.select do |m|
       people = Core::PeopleManager.get_people(state, m["gnis"])
       people.empty?
@@ -20,7 +20,7 @@ namespace :one_off do
 
   task :test_source do
     state = "wa"
-    municipalities = CityScrape::StateManager.get_state_places(state)["places"]
+    municipalities = Core::StateManager.get_state_places(state)["places"]
     municipality_entry = municipalities.first
     puts municipality_entry
 

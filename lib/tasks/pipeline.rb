@@ -4,7 +4,7 @@ require_relative "../services/brave"
 require_relative "../services/openai"
 require_relative "../core/municipal_scraper"
 require_relative "../core/page_fetcher"
-require_relative "../tasks/city_scrape/state_manager"
+require_relative "../core/state_manager"
 require_relative "../core/search_router"
 require_relative "../core/people_manager"
 require_relative "../services/spaces"
@@ -18,9 +18,9 @@ namespace :pipeline do
     num_cities = args[:num_cities]
     gnis_to_ignore = args[:gnis_to_ignore].present? ? args[:gnis_to_ignore].split(" ") : []
 
-    state_places = CityScrape::StateManager.get_state_places(state)
+    state_places = Core::StateManager.get_municipalities(state)
 
-    cities = state_places["places"].select do |c|
+    cities = state_places["municipalities"].select do |c|
       !gnis_to_ignore.include?(c["gnis"]) &&
         c["website"].present? &&
         (c["meta_sources"].blank? || c["meta_sources"].count == 1) # If there's only one source, we can assume it's a state source
@@ -36,7 +36,7 @@ namespace :pipeline do
     state = args[:state]
 
     new_municipalities = Scrapers::Municipalities.fetch(state)
-    CityScrape::StateManager.update_state_municipalities(state, new_municipalities)
+    Core::StateManager.update_municipalities(state, new_municipalities)
   end
 
   desc "Scrape city info for a specific city"
@@ -44,7 +44,7 @@ namespace :pipeline do
     state = args[:state]
     gnis = args[:gnis]
 
-    city_entry = CityScrape::StateManager.get_city_entry_by_gnis(state, gnis)
+    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
     city_context = {
       state: state,
       city_entry: city_entry,
@@ -67,6 +67,16 @@ namespace :pipeline do
 
     people = Core::PeopleManager.get_people(state, gnis)
     remove_unused_cache_folders(state, city_entry, people)
+  end
+
+  desc "Fetch city officials from state source"
+  task :fetch_state_level, [:state] do |_t, args|
+    state = args[:state]
+
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    municipalities.each do |municipality|
+      fetch_with_state_source(municipality)
+    end
   end
 
   def fetch_with_state_source(municipality_context)
