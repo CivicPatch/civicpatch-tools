@@ -7,6 +7,17 @@ module Scrapers
     CENSUS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:".freeze
     CENSUS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place".freeze
 
+    def self.get_scraper(state)
+      case state
+      when "wa"
+        Scrapers::Wa::Municipalities
+      when "or"
+        Scrapers::Or::Municipalities
+      else
+        raise "No scraper found for #{state}"
+      end
+    end
+
     def self.fetch(state)
       scraper = get_scraper(state)
       statefp = Services::STATE_TO_STATEFP[state]
