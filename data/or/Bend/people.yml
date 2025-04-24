@@ -1,0 +1,36 @@
+---
+- name: Melanie Kebler
+  positions:
+  - Mayor
+  email: mkebler@bendoregon.gov
+  phone_number: "(541) 388-5505"
+- name: Ariel Mendez
+  positions:
+  - Council Member
+  email: amendez@bendoregon.gov
+  phone_number: "(541) 388-5505"
+- name: Gina Franzosa
+  positions:
+  - Council Member
+  email: gfranzosa@bendoregon.gov
+  phone_number: "(541) 388-5505"
+- name: Megan Norris
+  positions:
+  - Council Member
+  email: mnorris@bendoregon.gov
+  phone_number: "(541) 388-5505"
+- name: Megan Perkins
+  positions:
+  - Council Member
+  email: mperkins@bendoregon.gov
+  phone_number: "(541) 388-5505"
+- name: Mike Riley
+  positions:
+  - Council Member
+  email: mriley@bendoregon.gov
+  phone_number: "(541) 388-5505"
+- name: Steve Platt
+  positions:
+  - Council Member
+  email: splatt@bendoregon.gov
+  phone_number: "(541) 388-5505"

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Austin Evans",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "rufusmayorevans@gmail.com",
+    "phone_number": "(541) 739-2321"
+  },
+  {
+    "name": "Brenda Coleman",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "rufusrecorder@gmail.com",
+    "phone_number": "(541) 739-2321"
+  },
+  {
+    "name": "Daniel Ruise",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "druisecouncil3@gmail.com",
+    "phone_number": "(541) 739-2321"
+  },
+  {
+    "name": "Don Arthur",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "rufuscouncil2@gmail.com",
+    "phone_number": "(541) 739-2321"
+  },
+  {
+    "name": "Fred Fahrni",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "ffahrnirufuscouncil4@gmail.com",
+    "phone_number": "(541) 739-2321"
+  },
+  {
+    "name": "Janice Strand",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "rufuscouncil1@gmail.com",
+    "phone_number": "(541) 739-2321"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Alexis Cannon",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "alexis.cannon@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  },
+  {
+    "name": "Boss Parker",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "boss.parker@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  },
+  {
+    "name": "Dave Johnson",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "dave.johnson@cityofcove.org",
+    "phone_number": "(541) 786-0377"
+  },
+  {
+    "name": "Eric Stone",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "eric.stone@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  },
+  {
+    "name": "Jason Hagey",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "Jason.hagey@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  },
+  {
+    "name": "Kerri McCowan",
+    "positions": [
+      "Billing Clerk"
+    ],
+    "email": "city.clerk@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  },
+  {
+    "name": "Matt McCowan",
+    "positions": [
+      "Council President"
+    ],
+    "email": "matt.mccowan@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  },
+  {
+    "name": "Shawn Parker",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "shawn.parker@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  },
+  {
+    "name": "Sherry L. Haeger",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "sherry.haeger@cityofcove.org",
+    "phone_number": "(541) 568-4566"
+  }
+]

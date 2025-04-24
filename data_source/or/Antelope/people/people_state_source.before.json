@@ -1,0 +1,50 @@
+[
+  {
+    "name": "David LaSalle",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 489-3201"
+  },
+  {
+    "name": "Elizabeth Samul",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 489-3201"
+  },
+  {
+    "name": "Julianne Herman",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "jherman@cityofantelope.us",
+    "phone_number": "(541) 489-3201"
+  },
+  {
+    "name": "Patrick Raymond",
+    "positions": [
+      "Councilor/Small System Water Operator"
+    ],
+    "email": "patssportinggoods@gmail.com",
+    "phone_number": "(541) 489-3201"
+  },
+  {
+    "name": "Sarah Hartenstein",
+    "positions": [
+      "City Recorder/Finance Officer"
+    ],
+    "email": "admin@cityofantelope.us",
+    "phone_number": "(541) 489-3201"
+  },
+  {
+    "name": "Scott Horrocks",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "Scotthorrocks15@gmail.com",
+    "phone_number": "(541) 489-3201"
+  }
+]

@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Alex Hartwell",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Austin Findling",
+    "positions": [
+      "Maintenance"
+    ],
+    "email": "afindling@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Chad Cooper",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "ccooper@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Dave Carlson",
+    "positions": [
+      "Municipal Judge"
+    ],
+    "email": "judge@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Derrick Peasley",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "tfuller@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Eric Fugate",
+    "positions": [
+      "Streets"
+    ],
+    "email": "efugate@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Jack McElravy",
+    "positions": [
+      "Water Supervisor"
+    ],
+    "email": "publicworks@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Jess  Tolman",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "jtolman@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Katelyn Strawn",
+    "positions": [
+      "Administrative Assistant"
+    ],
+    "email": "kstrawn@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Kelly Wolfe",
+    "positions": [
+      "Public Works Sanitation"
+    ],
+    "email": "kwolfe@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Leighton L. Keller",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "lkeller@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Logan Pennington",
+    "positions": [
+      "Parks"
+    ],
+    "email": "lpennington@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Marea Skultety",
+    "positions": [
+      "Financial Officer"
+    ],
+    "email": "mhartwell@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Mark Wilson",
+    "positions": [
+      "Water/Wastewater"
+    ],
+    "email": "publicworks@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Monty Bixby",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "mbixby@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Samantha Chamberlain",
+    "positions": [
+      "Ambulance Supervisor"
+    ],
+    "email": "schamberlain@cityofvale.com",
+    "phone_number": "(541) 473-3133"
+  },
+  {
+    "name": "Todd J. Fuller",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "tfuller@cityofvale.com",
+    "phone_number": "(541) 243-5818"
+  }
+]

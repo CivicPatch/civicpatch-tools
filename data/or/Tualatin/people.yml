@@ -1,0 +1,36 @@
+---
+- name: Frank Bubenik
+  positions:
+  - Mayor
+  email: fbubenik@tualatin.gov
+  phone_number: "(503) 691-2000"
+- name: Valerie Pratt
+  positions:
+  - Council President
+  email: vpratt@tualatin.gov
+  phone_number: "(503) 692-2000"
+- name: Bridget Brooks
+  positions:
+  - Council Member
+  email: bbrooks@tualatin.gov
+  phone_number: "(503) 692-2000"
+- name: Christen Sacco
+  positions:
+  - Council Member
+  email: csacco@tualatin.gov
+  phone_number: "(503) 692-2000"
+- name: Cyndy Hillier
+  positions:
+  - Council Member
+  email: chillier@tualatin.gov
+  phone_number: "(503) 692-2000"
+- name: Maria Reyes
+  positions:
+  - Council Member
+  email: mreyes@tualatin.gov
+  phone_number: "(503) 691-3011"
+- name: Octavio Gonzalez
+  positions:
+  - Council Member
+  email: ogonzalez@tualatin.gov
+  phone_number: "(503) 692-2000"

@@ -3,8 +3,8 @@ require_relative "or/municipalities"
 
 module Scrapers
   class Municipalities
-    CENSUS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:"
-    CENSUS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place"
+    CENSUS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:".freeze
+    CENSUS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place".freeze
 
     STATE_TO_STATEFP = {
       "wa" => "53",
@@ -42,6 +42,15 @@ module Scrapers
           **additional_info_hash_by_municipality_name[m["name"]]
         }
       end
+    end
+
+    def self.get_government_type(state, municipality_entry)
+      scraper = get_scraper(state)
+      government_type = scraper.get_government_type(municipality_entry)
+
+      return Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL if government_type.nil?
+
+      government_type
     end
 
     def self.fetch_census_data(state, statefp)

@@ -1,0 +1,41 @@
+---
+- name: Bill P. Rosacker
+  positions:
+  - Mayor
+  email: bill.rosacker@newbergoregon.gov
+  phone_number: "(503) 537-1201"
+- name: Mike McBride
+  positions:
+  - Council President
+  email: mike.mcbride@newbergoregon.gov
+  phone_number: "(503) 537-1201"
+- name: Derek Carmon
+  positions:
+  - Council Member
+  email: Derek.Carmon@newbergoregon.gov
+  phone_number: "(503) 537-1201"
+- name: Elise Yarnell Hollamon
+  positions:
+  - Council Member
+  email: elise.yarnell@newbergoregon.gov
+  phone_number: "(503) 830-1756"
+- name: Jeri Turgesen
+  positions:
+  - Council Member
+  email: jeri.turgesen@newbergoregon.gov
+  phone_number: "(503) 537-1201"
+- name: Peggy Kilburg
+  positions:
+  - Council Member
+  email: Peggy.Kilburg@newbergoregon.gov
+  phone_number: "(503) 537-1201"
+- name: Robin Wheatley
+  positions:
+  - Council Member
+  email: robin.wheatley@newbergoregon.gov
+  phone_number: ''
+- name: Robyn Wheatley
+  positions:
+  - Council Member
+  email: Robyn.Wheatley@newbergoregon.gov
+  phone_number: "(503) 537-1201"

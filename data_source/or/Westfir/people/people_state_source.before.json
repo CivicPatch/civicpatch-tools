@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Deretta Huey",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "dhuey@ci.westfir.or.us",
+    "phone_number": "(541) 782-3983"
+  },
+  {
+    "name": "Dillan Cheatham",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "dcheatham@ci.westfir.or.us",
+    "phone_number": "(541) 782-3983"
+  },
+  {
+    "name": "Jessica Snyder",
+    "positions": [
+      "Relief City Recorder"
+    ],
+    "email": "reliefrecorder@ci.westfir.or.us",
+    "phone_number": "(541) 782-3983"
+  },
+  {
+    "name": "Linda Love",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "lmlove@ci.westfir.or.us",
+    "phone_number": "(541) 782-3983"
+  },
+  {
+    "name": "Nicole Tritten",
+    "positions": [
+      "City Recorder"
+    ],
+    "email": "westfircity@gmail.com",
+    "phone_number": "(541) 782-3983"
+  },
+  {
+    "name": "Richard Watson",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "rwatson@ci.westfir.or.us",
+    "phone_number": "(541) 782-3983"
+  },
+  {
+    "name": "Robert Archer",
+    "positions": [
+      "Water & Wastewater Operator"
+    ],
+    "email": "cityoperator@ci.westfir.or.us",
+    "phone_number": "(541) 782-3983"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Brad Poyser",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "brad.poyser@gmail.com",
+    "phone_number": "(503) 523-8200"
+  },
+  {
+    "name": "Cathy Bless",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "cathy_bless@hotmail.com",
+    "phone_number": "(971) 269-9420"
+  },
+  {
+    "name": "Dennis Koellermeier",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "dkadvisoryservicesllc@gmail.com",
+    "phone_number": "(503) 523-8200"
+  },
+  {
+    "name": "Jake Bishop",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(503) 523-8200"
+  },
+  {
+    "name": "Scott Bradfeldt",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "jbradfeldt24@gmail.com",
+    "phone_number": "(503) 523-8200"
+  }
+]

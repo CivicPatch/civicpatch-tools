@@ -58,6 +58,9 @@ module Browser
         browser.execute_script("return document.readyState == 'complete' && (typeof jQuery == 'undefined' || jQuery.active == 0)")
       end
 
+      # Yield the browser instance to the block for interactions
+      yield(browser, wait) if block_given?
+
       browser.page_source
     rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
@@ -68,12 +71,15 @@ module Browser
         retry
       else
         puts "[429] Too many requests. Max retries reached for #{url}."
+        # Explicitly return nil or raise a custom error if needed
+        nil
       end
     rescue StandardError => e
       puts "Browser fetch failed for #{url}: #{e.message}"
       nil
     ensure
-      browser.quit
+      # Check if browser variable exists and is not nil before calling quit
+      browser&.quit
     end
   end
 

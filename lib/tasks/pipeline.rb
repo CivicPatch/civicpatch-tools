@@ -74,21 +74,31 @@ namespace :pipeline do
     state = args[:state]
 
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
-    municipalities.each do |municipality|
-      fetch_with_state_source(municipality)
+    municipalities.each do |municipality_entry|
+      municipality_context = {
+        state: state,
+        municipality_entry: municipality_entry,
+        government_type: Scrapers::Municipalities.get_government_type(state, municipality_entry)
+      }
+      fetch_with_state_source(municipality_context)
+      aggregate_sources(municipality_context, sources: %w[state_source])
     end
   end
 
   def fetch_with_state_source(municipality_context)
+    puts "#{municipality_context[:state]} - #{municipality_context[:municipality_entry]["name"]} - Fetching with state source"
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
+    data_source_dir = PathHelper.get_data_source_city_path(municipality_context[:state],
+                                                           municipality_context[:municipality_entry]["gnis"])
 
     # This call can fail if the state source is down (e.g. MRSC.org for WA)
     begin
       source_city_people = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
-      Core::PeopleManager.update_people(municipality_context[:state], municipality_context[:city_entry],
+      FileUtils.mkdir_p(data_source_dir) unless Dir.exist?(data_source_dir)
+      Core::PeopleManager.update_people(municipality_context[:state], municipality_context[:municipality_entry],
                                         source_city_people, "state_source.before")
       formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, positions_config)
-      Core::PeopleManager.update_people(municipality_context[:state], municipality_context[:city_entry],
+      Core::PeopleManager.update_people(municipality_context[:state], municipality_context[:municipality_entry],
                                         formatted_source_city_people, "state_source.after")
     rescue StandardError => e
       puts "Error pulling from state source: #{e}"
@@ -141,24 +151,24 @@ namespace :pipeline do
 
   def aggregate_sources(municipality_context, sources: [])
     state = municipality_context[:state]
-    city_entry = municipality_context[:city_entry]
+    municipality_entry = municipality_context[:municipality_entry]
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
-    validated_result = Validators::CityPeople.validate_sources(state, city_entry["gnis"])
+    validated_result = Validators::CityPeople.validate_sources(state, municipality_entry["gnis"])
 
     combined_people = validated_result[:merged_sources]
     formatted_people = Core::PeopleManager.format_people(combined_people, positions_config)
 
-    Core::PeopleManager.update_people(state, city_entry, formatted_people)
+    Core::PeopleManager.update_people(state, municipality_entry, formatted_people)
 
-    city_people_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
-    CityScrape::StateManager.update_state_places(state, [
-                                                   { "gnis" => city_entry["gnis"],
-                                                     "meta_updated_at" => Time.now
-                                                      .in_time_zone("America/Los_Angeles")
-                                                      .strftime("%Y-%m-%d"),
-                                                     "meta_hash" => city_people_hash,
-                                                     "meta_sources" => sources }
-                                                 ])
+    officials_hash = Digest::MD5.hexdigest(combined_people.to_yaml)
+    Core::StateManager.update_municipalities(state, [
+                                               { "gnis" => municipality_entry["gnis"],
+                                                 "meta_updated_at" => Time.now
+                                                  .in_time_zone("America/Los_Angeles")
+                                                  .strftime("%Y-%m-%d"),
+                                                 "meta_hash" => officials_hash,
+                                                 "meta_sources" => sources }
+                                             ])
   end
 
   def create_config_yml(state, city_entry)
