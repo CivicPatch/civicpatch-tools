@@ -1,0 +1,31 @@
+---
+- name: Tim Rosener
+  positions:
+  - Mayor
+  email: Rosenert@sherwoodoregon.gov
+  phone_number: "(503) 625-4222"
+- name: Doug Scott
+  positions:
+  - Council Member
+  email: scottd@sherwoodoregon.gov
+  phone_number: "(503) 625-3059"
+- name: Keith Mays
+  positions:
+  - Council Member
+  email: maysk@sherwoodoregon.gov
+  phone_number: "(503) 625-3059"
+- name: Kim Young
+  positions:
+  - Council Member
+  email: youngk@sherwoodoregon.gov
+  phone_number: "(503) 625-3059"
+- name: Renee Elaine Brouse
+  positions:
+  - Council Member
+  email: brouser@sherwoodoregon.gov
+  phone_number: "(503) 625-3059"
+- name: Taylor Giles
+  positions:
+  - Council Member
+  email: gilest@sherwoodoregon.gov
+  phone_number: "(503) 625-3059"

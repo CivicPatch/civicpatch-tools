@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Andy Beebe",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "andybeebe@1791.com",
+    "phone_number": "(541) 384-2098"
+  },
+  {
+    "name": "Donna Lopiparo",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "lopiparo62@gmail.com",
+    "phone_number": "(541) 384-2098"
+  },
+  {
+    "name": "Ray Deloe",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 384-2098"
+  },
+  {
+    "name": "Stanely Forrest",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "stan_forrest@yahoo.com",
+    "phone_number": "(541) 384-2098"
+  },
+  {
+    "name": "Tamera Forrest",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "lonerock@lonerock.me",
+    "phone_number": "(541) 384-2098"
+  }
+]

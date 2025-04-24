@@ -1,0 +1,31 @@
+---
+- name: Larry Rich
+  positions:
+  - Mayor
+  email: lrich@roseburgor.gov
+  phone_number: "(541) 672-7701"
+- name: Andrea Zielinski
+  positions:
+  - Council Member
+  email: azielinski@roseburgor.gov
+  phone_number: "(541) 430-4054"
+- name: Ellen Porter
+  positions:
+  - Council Member
+  email: eporter@roseburgor.gov
+  phone_number: "(541) 492-6700"
+- name: Ruth Smith
+  positions:
+  - Council Member
+  email: rmsmith@roseburgor.gov
+  phone_number: "(541) 492-6700"
+- name: Shelley Briggs Loosley
+  positions:
+  - Council Member
+  email: sbriggs@roseburgor.gov
+  phone_number: "(541) 492-6700"
+- name: Tom Michalek
+  positions:
+  - Council Member
+  email: tmichalek@roseburgor.gov
+  phone_number: "(541) 492-6700"

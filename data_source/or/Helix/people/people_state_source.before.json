@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Annette Kubishta",
+    "positions": [
+      "Librarian"
+    ],
+    "email": "helixlibrary@helixtel.com",
+    "phone_number": "(541) 457-6130"
+  },
+  {
+    "name": "Dusty Bennett",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "dustybennett95@gmail.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Glen Tipton",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "cityofhelix@gmail.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Jeff Iles",
+    "positions": [
+      "City Maintenance"
+    ],
+    "email": "cityofhelixpublicworks@gmail.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Karen Woolbright",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "kkwoolbright@msn.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Kim Herron",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "bkherron1@outlook.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Kylie McClintock",
+    "positions": [
+      "City Recorder"
+    ],
+    "email": "cityofhelix@gmail.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Monica Curtiss",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "Monicacurtiss@gmail.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Rory Simpson",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "roryeno@gmail.com",
+    "phone_number": "(541) 457-2521"
+  },
+  {
+    "name": "Zachariah Buckley",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "skidoo98619@live.com",
+    "phone_number": "(541) 457-2521"
+  }
+]

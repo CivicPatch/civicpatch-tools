@@ -108,4 +108,24 @@ namespace :one_off do
     municipalities["municipalities"] = updated_municipalities
     File.write(file_path, JSON.pretty_generate(municipalities))
   end
+
+  task :fix_or_casings do
+    # Get all directories under data/or/<cities>
+    folders = Dir.glob("data/or/*")
+    folders.each do |folder|
+      # Get the name of the folder
+      name = folder.split("/").last
+      # Format the name
+      formatted_name = Utils::FolderHelper.format_name(name)
+      # Rename the folder
+      File.rename(folder, "data/or/#{formatted_name}")
+    end
+  end
+
+  def self.format_name(name)
+    # Split the name by space separated by _
+    # Capitalize the first letter of each word
+    # Join the words back together
+    name.split("_").map(&:capitalize).join(" ")
+  end
 end

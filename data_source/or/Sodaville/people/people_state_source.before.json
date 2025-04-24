@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Adina Olivares",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "counciloradina@gmail.com",
+    "phone_number": "(541) 258-8882"
+  },
+  {
+    "name": "Brian Lewis",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "sodavillemayor.brianlewis@gmail.com",
+    "phone_number": "(541) 258-8882"
+  },
+  {
+    "name": "Caleb Gay",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "cgcitycouncilman@gmail.com",
+    "phone_number": "(541) 258-8882"
+  },
+  {
+    "name": "J D. Burns",
+    "positions": [
+      "Public Works Director"
+    ],
+    "email": "sodavillepw@cityofsodaville.org",
+    "phone_number": "(541) 258-8882"
+  },
+  {
+    "name": "Joseph Parsons",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "mpjoe@comcast.net",
+    "phone_number": "(541) 619-3976"
+  },
+  {
+    "name": "Molly McGuire",
+    "positions": [
+      "City Administrator/Recorder"
+    ],
+    "email": "sodaville@cityofsodaville.org",
+    "phone_number": "(541) 258-8882"
+  },
+  {
+    "name": "Roger Perry",
+    "positions": [
+      "Council President"
+    ],
+    "email": "rogerswrench@yahoo.com",
+    "phone_number": "(541) 258-8882"
+  }
+]

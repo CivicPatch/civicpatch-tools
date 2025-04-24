@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Carlos Mendoza",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "",
+    "phone_number": "(541) 372-2179"
+  },
+  {
+    "name": "Echo Snyder",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 372-2179"
+  },
+  {
+    "name": "Karen E. Olsen",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 372-2179"
+  },
+  {
+    "name": "Keith Baldwin",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 372-2179"
+  },
+  {
+    "name": "Quinten Shenk",
+    "positions": [
+      "Deputy Water & Sewer"
+    ],
+    "email": "",
+    "phone_number": "(541) 372-2179"
+  },
+  {
+    "name": "Shawn Snyder",
+    "positions": [
+      "City Recorder"
+    ],
+    "email": "cityofadrian@hotmail.com",
+    "phone_number": "(541) 372-2179"
+  },
+  {
+    "name": "Tom Pierce",
+    "positions": [
+      "Council President"
+    ],
+    "email": "cityofadrian@hotmail.com",
+    "phone_number": "(541) 372-2179"
+  }
+]

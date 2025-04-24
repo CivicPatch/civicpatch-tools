@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Donald Mann",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "councilor.mann@gmail.com",
+    "phone_number": "(503) 897-2669"
+  },
+  {
+    "name": "Emily Scofield",
+    "positions": [
+      "City Councilor"
+    ],
+    "email": "councilor.scofield@gmail.com",
+    "phone_number": "(503) 897-2669"
+  },
+  {
+    "name": "Gary Crum",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "councilor.garycrum@gmail.com",
+    "phone_number": "(503) 897-2669"
+  },
+  {
+    "name": "Greg Benthin",
+    "positions": [
+      "Public Works Superintendent"
+    ],
+    "email": "gbenthin.gateswtp@wbcable.net",
+    "phone_number": "(503) 897-2669"
+  },
+  {
+    "name": "SANDI HEWARD",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "councilor.heward@gmail.com",
+    "phone_number": "(503) 897-2669"
+  },
+  {
+    "name": "Tonya Chamberlain",
+    "positions": [
+      "Councilor President"
+    ],
+    "email": "gatesstreets@gmail.com",
+    "phone_number": "(503) 897-2669"
+  },
+  {
+    "name": "Traci Archer",
+    "positions": [
+      "City Recorder"
+    ],
+    "email": "ctygtes@wbcable.net",
+    "phone_number": "(503) 897-2669"
+  },
+  {
+    "name": "Tree Fredrickson",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "gatescityclerk@gmail.com",
+    "phone_number": "(503) 897-2669"
+  }
+]

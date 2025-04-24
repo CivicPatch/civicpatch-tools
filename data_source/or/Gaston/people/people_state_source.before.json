@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Bob Dooley",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "tanknight@aol.com",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "Don Richter",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "donr@cityofgaston.com",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "Jerry Hoodenpyl",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "gaston.city@comcast.net",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "Margaret Bell",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "margaretb@cityofgaston.com",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "Richard Oberdorfer",
+    "positions": [
+      "Municipal Judge"
+    ],
+    "email": "richoberdorferlaw@gmail.com",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "Scott Hoodenpyl",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "scotth@cityofgaston.com",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "Tim Sullivan",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "tims@cityofgaston.com",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "Wenonah James Blanchette",
+    "positions": [
+      "City Recorder"
+    ],
+    "email": "wenonahb@cityofgaston.com",
+    "phone_number": "(503) 985-3340"
+  },
+  {
+    "name": "William Martin",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "billm@cityofgaston.com",
+    "phone_number": "(503) 985-3340"
+  }
+]

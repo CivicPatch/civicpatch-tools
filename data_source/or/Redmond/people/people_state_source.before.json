@@ -1,0 +1,418 @@
+[
+  {
+    "name": "Cat Zwicker",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "cat.zwicker@redmondoregon.gov",
+    "phone_number": "(541) 504-3032"
+  },
+  {
+    "name": "Chuck Arnold",
+    "positions": [
+      "Economic Development/Urban Renewal Program Manager"
+    ],
+    "email": "chuck.arnold@redmondoregon.gov",
+    "phone_number": "(541) 923-7761"
+  },
+  {
+    "name": "Clifford Evelyn",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "Clifford.Evelyn@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Corissa Holmes",
+    "positions": [
+      "Environmental Programs Supervisor"
+    ],
+    "email": "corissa.holmes@redmondoregon.gov",
+    "phone_number": "(503) 504-5074"
+  },
+  {
+    "name": "David Pilling",
+    "positions": [
+      "Engineering Development Manager"
+    ],
+    "email": "david.pilling@redmondoregon.gov",
+    "phone_number": "(541) 504-2013"
+  },
+  {
+    "name": "DeAnne Wakefield",
+    "positions": [
+      "Payroll Manager"
+    ],
+    "email": "deanne.wakefield@redmondoregon.gov",
+    "phone_number": "(541) 923-7713"
+  },
+  {
+    "name": "Devin Lewis",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "devin.lewis@redmondoregon.gov",
+    "phone_number": "(541) 504-3424"
+  },
+  {
+    "name": "Ed Fitch",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "ed.fitch@redmondoregon.gov",
+    "phone_number": "(541) 504-3039"
+  },
+  {
+    "name": "Erica Waldbillig",
+    "positions": [
+      "Engineering Administrative Assistant"
+    ],
+    "email": "erica.waldbillig@redmondoregon.gov",
+    "phone_number": "(541) 504-2018"
+  },
+  {
+    "name": "Felila Narotski",
+    "positions": [
+      "Airport Business Coordinator"
+    ],
+    "email": "felila.narotski@flyrdm.com",
+    "phone_number": "(541) 504-3086"
+  },
+  {
+    "name": "Fred LeLacheur",
+    "positions": [
+      "Engineering and Construction Manager"
+    ],
+    "email": "fred.lelacheur@flyrdm.com",
+    "phone_number": "(541) 504-3087"
+  },
+  {
+    "name": "Hailey Looney",
+    "positions": [
+      "Human Resources Specialist"
+    ],
+    "email": "hailey.looney@redmondoregon.gov",
+    "phone_number": "(541) 923-7739"
+  },
+  {
+    "name": "Heather Cassaro",
+    "positions": [
+      "Director of Communications"
+    ],
+    "email": "heather.cassaro@redmondoregon.gov",
+    "phone_number": "(541) 504-3031"
+  },
+  {
+    "name": "Herlinda Corn",
+    "positions": [
+      "Budget Analyst"
+    ],
+    "email": "herlinda.corn@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Jason Bavuso",
+    "positions": [
+      "Human Resources Director"
+    ],
+    "email": "jason.bavuso@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Jason Neff",
+    "positions": [
+      "Deputy City Manager/Chief Financial Officer"
+    ],
+    "email": "jason.neff@redmondoregon.gov",
+    "phone_number": "(541) 923-7729"
+  },
+  {
+    "name": "Jay Patrick",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "jay.patrick@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Jayde Hawkins",
+    "positions": [
+      "Airport Security Manager"
+    ],
+    "email": "jayde.hawkins@flyrdm.com",
+    "phone_number": "(541) 504-3090"
+  },
+  {
+    "name": "Jeremy Stachowski",
+    "positions": [
+      "Wastewater Division Supervisor"
+    ],
+    "email": "jeremy.stachowski@redmondoregon.gov",
+    "phone_number": "(541) 504-5077"
+  },
+  {
+    "name": "Jesse Petersen",
+    "positions": [
+      "Police Captain"
+    ],
+    "email": "jesse.petersen@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Jessica MacClanahan",
+    "positions": [
+      "Public Works Director/City Engineer"
+    ],
+    "email": "jessica.macclanahan@redmondoregon.gov",
+    "phone_number": "(541) 504-2011"
+  },
+  {
+    "name": "John Nielsen",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "john.nielsen@redmondoregon.gov",
+    "phone_number": "(541) 504-3038"
+  },
+  {
+    "name": "Joshua Wedding",
+    "positions": [
+      "PW Operations Manager-Water/Parks/Facilities"
+    ],
+    "email": "joshua.wedding@redmondoregon.gov",
+    "phone_number": "(541) 504-2022"
+  },
+  {
+    "name": "Joyce Mumia-Stubbs",
+    "positions": [
+      "Legal Assistant"
+    ],
+    "email": "joyce.mumia-stubbs@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Kathryn Osborne",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "kathryn.osborne@redmondoregon.gov",
+    "phone_number": "(541) 504-3037"
+  },
+  {
+    "name": "Katie Lynn Graham",
+    "positions": [
+      "Deputy Director of Human Resourses"
+    ],
+    "email": "katie.graham@redmondoregon.gov",
+    "phone_number": "(541) 923-7725"
+  },
+  {
+    "name": "Kayla Duddy",
+    "positions": [
+      "Deputy City Recorder"
+    ],
+    "email": "kayla.duddy@redmondoregon.gov",
+    "phone_number": "(541) 923-7755"
+  },
+  {
+    "name": "Keith Leitz",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "keith.leitz@redmondoregon.gov",
+    "phone_number": "(541) 923-7738"
+  },
+  {
+    "name": "Keith Witcosky",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "keith.witcosky@redmondoregon.gov",
+    "phone_number": "(541) 923-7711"
+  },
+  {
+    "name": "Kelly Morse",
+    "positions": [
+      "City Recorder"
+    ],
+    "email": "kelly.morse@redmondoregon.gov",
+    "phone_number": "(541) 923-7751"
+  },
+  {
+    "name": "Kyle Roberts",
+    "positions": [
+      "Planning Director"
+    ],
+    "email": "kyle.roberts@redmondoregon.gov",
+    "phone_number": "(541) 923-7758"
+  },
+  {
+    "name": "Larry  Morse",
+    "positions": [
+      "Wastewater Project Manager"
+    ],
+    "email": "larry.morse@redmondoregon.gov",
+    "phone_number": "(541) 504-5079"
+  },
+  {
+    "name": "Leif Anderson",
+    "positions": [
+      "Airport Contracts and Properties Manager"
+    ],
+    "email": "leif.anderson@flyrdm.com",
+    "phone_number": "(541) 504-3082"
+  },
+  {
+    "name": "Linda Cline",
+    "positions": [
+      "Housing Programs Analyst"
+    ],
+    "email": "linda.cline@redmondoregon.gov",
+    "phone_number": "(541) 504-3046"
+  },
+  {
+    "name": "Lindsey Cromsigt",
+    "positions": [
+      "Assistant City Engineer"
+    ],
+    "email": "lindsey.cromsigt@redmondoregon.gov",
+    "phone_number": "(541) 504-2042"
+  },
+  {
+    "name": "Maria Ramirez",
+    "positions": [
+      "Parks Planner and Project Manager"
+    ],
+    "email": "maria.ramirez@redmondoregon.gov",
+    "phone_number": "(541) 504-2003"
+  },
+  {
+    "name": "Megan Peninger",
+    "positions": [
+      "Associate Planner"
+    ],
+    "email": "megan.peninger@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Meghan Gassner",
+    "positions": [
+      "Urban Renewal Program Analyst"
+    ],
+    "email": "meghan.gassner@redmondoregon.gov",
+    "phone_number": "(541) 923-7759"
+  },
+  {
+    "name": "Nicolle Myrick",
+    "positions": [
+      "Properties Specialist"
+    ],
+    "email": "nicolle.myrick@flyrdm.com",
+    "phone_number": "(541) 504-3499 ext. 3077"
+  },
+  {
+    "name": "Ramona Sorensen",
+    "positions": [
+      "Office Assistant II"
+    ],
+    "email": "ramona.sorensen@redmondoregon.gov",
+    "phone_number": "(541) 923-7730"
+  },
+  {
+    "name": "Ryan Kirchner",
+    "positions": [
+      "PW Operations Manager-Wastewater/Transportation/Fleet"
+    ],
+    "email": "ryan.kirchner@redmondoregon.gov",
+    "phone_number": "(541) 504-5072"
+  },
+  {
+    "name": "Sarah Vowell",
+    "positions": [
+      "Associate Planner"
+    ],
+    "email": "sarah.vowell@redmondoregon.gov",
+    "phone_number": "(541) 504-3044"
+  },
+  {
+    "name": "Scott Brang",
+    "positions": [
+      "Procurement and Payables Manager"
+    ],
+    "email": "scott.brang@redmondoregon.gov",
+    "phone_number": "(541) 923-7728"
+  },
+  {
+    "name": "Shannon Wedding",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "shannon.wedding@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Steve Ashworth",
+    "positions": [
+      "Deputy City Manager"
+    ],
+    "email": "steve.ashworth@redmondoregon.gov",
+    "phone_number": "(541) 923-7710"
+  },
+  {
+    "name": "Tom Ferrell",
+    "positions": [
+      "Senior Financial Accountant"
+    ],
+    "email": "tom.ferrell@redmondoregon.gov",
+    "phone_number": "(541) 923-7727"
+  },
+  {
+    "name": "Tom Hart",
+    "positions": [
+      "Senior Civil Engineer"
+    ],
+    "email": "tom.hart@redmondoregon.gov",
+    "phone_number": "(541) 504-2017"
+  },
+  {
+    "name": "Travis Robbins",
+    "positions": [
+      "Wastewater Utilities Manager"
+    ],
+    "email": "travis.robbins@redmondoregon.gov",
+    "phone_number": "(541) 504-5073"
+  },
+  {
+    "name": "Valerie Taylor",
+    "positions": [
+      "Billing and Collections Manager"
+    ],
+    "email": "valerie.taylor@redmondoregon.gov",
+    "phone_number": "(541) 923-7732"
+  },
+  {
+    "name": "Velia Pagnotta-Brunette",
+    "positions": [
+      "Risk Manager"
+    ],
+    "email": "velia.pagnotta-brunette@redmondoregon.gov",
+    "phone_number": "(541) 504-3041"
+  },
+  {
+    "name": "Veronica Reinertson",
+    "positions": [
+      "Engineering Technician"
+    ],
+    "email": "veronica.reinertson@redmondoregon.gov",
+    "phone_number": "(541) 504-2026"
+  },
+  {
+    "name": "Zachary Bass",
+    "positions": [
+      "Airport Director"
+    ],
+    "email": "zachary.bass@redmondoregon.gov",
+    "phone_number": "(541) 504-3085"
+  }
+]

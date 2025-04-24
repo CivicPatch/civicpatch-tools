@@ -1,0 +1,31 @@
+---
+- name: Brian Hodson
+  positions:
+  - Mayor
+  email: hodsonb@canbyoregon.gov
+  phone_number: "(503) 263-5528"
+- name: Traci Hensley
+  positions:
+  - Council President
+  email: hensleyt@canbyoregon.gov
+  phone_number: "(503) 263-5525"
+- name: Daniel Stearns
+  positions:
+  - Council Member
+  email: stearnsd@canbyoregon.gov
+  phone_number: "(503) 266-4021"
+- name: James Davis
+  positions:
+  - Council Member
+  email: DavisJ@canbyoregon.gov
+  phone_number: "(503) 266-4021"
+- name: Jason Padden
+  positions:
+  - Council Member
+  email: paddenj@canbyoregon.gov
+  phone_number: "(503) 266-4021"
+- name: Paul Waterman
+  positions:
+  - Council Member
+  email: ridgleyt@canbyoregon.gov
+  phone_number: "(503) 266-4021"

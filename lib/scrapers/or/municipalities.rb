@@ -19,6 +19,11 @@ module Scrapers
         end
       end
 
+      # TODO: Hardcode for now, figure out defaults later
+      def self.get_government_type(_municipality_context)
+        Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
+      end
+
       def self.fetch_sos_municipality_data(url)
         response = Browser.fetch_html(url)
 

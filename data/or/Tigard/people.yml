@@ -1,0 +1,36 @@
+---
+- name: Heidi Lueb
+  positions:
+  - Mayor
+  email: heidil@tigard-or.gov
+  phone_number: "(503) 718-2476"
+- name: Maureen Jefvert Wolf
+  positions:
+  - Council President
+  email: Maureen.wolf@tigard-or.gov
+  phone_number: "(503) 639-4171"
+- name: Faraz Ghoddusi
+  positions:
+  - Council Member
+  email: faraz.ghoddusi@tigard-or.gov
+  phone_number: "(503) 639-4171"
+- name: Heather Robbins
+  positions:
+  - Council Member
+  email: Heather.Robbins@tigard-or.gov
+  phone_number: "(503) 639-4171"
+- name: Jake Schlack
+  positions:
+  - Council Member
+  email: Jake.Schlack@tigard-or.gov
+  phone_number: "(503) 639-4171"
+- name: Jeanette Shaw
+  positions:
+  - Council Member
+  email: jeanettes@tigard-or.gov
+  phone_number: "(503) 639-4171"
+- name: Yi-Kang Hu
+  positions:
+  - Council Member
+  email: yikang.hu@tigard-or.gov
+  phone_number: "(503) 718-2490"

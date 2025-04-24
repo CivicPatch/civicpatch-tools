@@ -1,0 +1,106 @@
+[
+  {
+    "name": "Andrea Rogers",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "andrea@cityofmosier.com",
+    "phone_number": "(541) 806-3250"
+  },
+  {
+    "name": "Brenna  Campbell",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "brenna.campbell@cityofmosier.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Charlie Cannon",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "charlie.cannon@cityofmosier.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Chris McCalib",
+    "positions": [
+      "Wastewater Treatment Plant Operator"
+    ],
+    "email": "",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Colleen Coleman",
+    "positions": [
+      "Project Manager"
+    ],
+    "email": "projects@cityofmosier.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Gary Lindemeyr",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "ezdzit89@gmail.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Lydia Koerner",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "Koernerlydia@gmail.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Monica Morris",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Noah Kai Estes",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "noah.estes@icloud.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Ron Wright",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "ronald.f.wright@gmail.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Steven Seymour",
+    "positions": [
+      "Municipal Judge"
+    ],
+    "email": "sws@samuelslaw.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Stoner Bell",
+    "positions": [
+      "City Engineer"
+    ],
+    "email": "stonerbell@belldesigncompany.com",
+    "phone_number": "(541) 478-3505"
+  },
+  {
+    "name": "Witt Anderson",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "Witt.anderson@cityofmosier.com",
+    "phone_number": "(503) 334-6677"
+  }
+]

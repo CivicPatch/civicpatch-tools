@@ -1,0 +1,36 @@
+---
+- name: Ed Fitch
+  positions:
+  - Mayor
+  email: ed.fitch@redmondoregon.gov
+  phone_number: "(541) 504-3039"
+- name: Cat Zwicker
+  positions:
+  - Council Member
+  email: cat.zwicker@redmondoregon.gov
+  phone_number: "(541) 504-3032"
+- name: Clifford Evelyn
+  positions:
+  - Council Member
+  email: Clifford.Evelyn@redmondoregon.gov
+  phone_number: "(541) 923-7710"
+- name: Jay Patrick
+  positions:
+  - Council Member
+  email: jay.patrick@redmondoregon.gov
+  phone_number: "(541) 923-7710"
+- name: John Nielsen
+  positions:
+  - Council Member
+  email: john.nielsen@redmondoregon.gov
+  phone_number: "(541) 504-3038"
+- name: Kathryn Osborne
+  positions:
+  - Council Member
+  email: kathryn.osborne@redmondoregon.gov
+  phone_number: "(541) 504-3037"
+- name: Shannon Wedding
+  positions:
+  - Council Member
+  email: shannon.wedding@redmondoregon.gov
+  phone_number: "(541) 923-7710"

@@ -1,0 +1,106 @@
+[
+  {
+    "name": "Connie Budge",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "cbudge@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Dana Potter",
+    "positions": [
+      "Utility Billing Clerk"
+    ],
+    "email": "dpotter@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Denise Watson",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "dwatson@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Jeremy Howell",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "jhowell@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Jerry Cole",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Michelle Ritchie",
+    "positions": [
+      "Municipal Court Clerk"
+    ],
+    "email": "mritchie@cityofrainier.com",
+    "phone_number": "(503) 556-3644"
+  },
+  {
+    "name": "Mike Kreger",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "mkreger@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Paul Langner",
+    "positions": [
+      "City Councilor"
+    ],
+    "email": "plangner@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Robert DuPlessis",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "rduplessis@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Russ Reigel",
+    "positions": [
+      "Interim Public Works Director"
+    ],
+    "email": "RReigel@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Sarah Blodgett",
+    "positions": [
+      "Office Manager/Planning AP Clerk"
+    ],
+    "email": "sblodgett@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "Scott T. Cooper",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "scooper@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  },
+  {
+    "name": "William Scott Jorgensen",
+    "positions": [
+      "City Administrator"
+    ],
+    "email": "Sjorgensen@cityofrainier.com",
+    "phone_number": "(503) 556-7301"
+  }
+]

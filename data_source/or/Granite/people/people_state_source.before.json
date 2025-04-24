@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Daniel LaPlaca",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "dalap52@gmail.com",
+    "phone_number": "(541) 755-5100"
+  },
+  {
+    "name": "Glenn Iholts",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 755-5100"
+  },
+  {
+    "name": "Kyle McKinney",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "graniteor@yahoo.com",
+    "phone_number": "(541) 755-5100"
+  },
+  {
+    "name": "Mitch Fielding",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 755-5100"
+  },
+  {
+    "name": "Sandra Smith",
+    "positions": [
+      "Councilor"
+    ],
+    "email": "",
+    "phone_number": "(541) 755-5100"
+  }
+]
