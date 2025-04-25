@@ -112,14 +112,15 @@ namespace :one_off do
 
   task :fix_or_casings do
     # Get all directories under data/or/<cities>
-    folders = Dir.glob("data_source/or/*")
+    folders = Dir.glob("data/or/*")
     folders.each do |folder|
       # Get the name of the folder
       name = folder.split("/").last
       # Format the name
       formatted_name = Utils::FolderHelper.format_name(name)
       # Rename the folder
-      File.rename(folder, "data_source/or/#{formatted_name}")
+      system("git mv #{folder} #{folder}2")
+      system("git mv #{folder}2 data/or/#{formatted_name}")
     end
   end
 
