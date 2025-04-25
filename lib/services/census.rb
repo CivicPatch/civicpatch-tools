@@ -18,7 +18,7 @@ module Services
         outfile.write(fragment)
       end
 
-      dest_dir = PathHelper.project_path(File.join("data_source", state, ".maps", "place_2024"))
+      dest_dir = PathHelper.project_path(File.join("data", state, ".maps", "place_2024"))
 
       FileUtils.mkdir_p(dest_dir)
 
