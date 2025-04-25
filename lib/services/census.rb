@@ -20,6 +20,8 @@ module Services
 
       dest_dir = PathHelper.project_path(File.join("data_source", state, ".maps", "place_2024"))
 
+      FileUtils.mkdir_p(dest_dir)
+
       # Unzip to data_source/<state>/.maps/place_2024
       Zip::File.open(outfile.path) do |zip_file|
         zip_file.each do |entry|
