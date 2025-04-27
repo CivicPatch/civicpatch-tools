@@ -46,7 +46,7 @@ government_types:
         - council districts
         - city hall
         - council
-      city leaders:
+      mayor:
         - mayor and city council
         - about mayor
         - meet the mayor

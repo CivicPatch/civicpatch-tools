@@ -18,7 +18,7 @@ module Services
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_people(municipality_context, content_file, page_url)
+    def extract_city_people(municipality_context, content_file, page_url, person_name = "")
       state = municipality_context[:state]
       municipality_entry = municipality_context[:municipality_entry]
       government_type = municipality_context[:government_type]
@@ -27,7 +27,8 @@ module Services
 
       return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
-      system_instructions, user_instructions = generate_city_info_prompt(government_type, content, page_url)
+      system_instructions, user_instructions = generate_city_info_prompt(government_type, content, page_url,
+                                                                         person_name)
 
       messages = [
         { role: "system", content: system_instructions },
@@ -40,8 +41,7 @@ module Services
 
       # filter out invalid people
       people = response["people"].select do |person|
-        Utils::NameHelper.valid_name?(person["name"]) &&
-          person["positions"].present?
+        Utils::NameHelper.valid_name?(person["name"])
       end
 
       people.map do |person|
@@ -49,19 +49,26 @@ module Services
       end
     end
 
-    def generate_city_info_prompt(government_type, content, page_url)
+    def generate_city_info_prompt(government_type, content, page_url, person_name = "")
       positions = Core::CityManager.get_position_roles(government_type)
       divisions = Core::CityManager.get_position_divisions(government_type)
       position_examples = Core::CityManager.get_position_examples(government_type)
       current_date = Date.today.strftime("%Y-%m-%d")
 
+      content_type = if person_name.present?
+                       "First, determine if the content contains information about the target person."
+                     else
+                       "First, determine if the content contains a directory of elected officials."
+                     end
+
       # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
         You are an expert data extractor.
 
-        First, determine if the content contains elected officials' information.#{" "}
+        #{content_type}#{" "}
         If not, return an empty array.
 
+        #{person_name.present? ? "Target Person: #{person_name}" : ""}
         Key roles: #{positions.join(", ")}
         Associated divisions: #{divisions.join(",")}
         Examples: #{position_examples}

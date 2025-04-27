@@ -41,22 +41,19 @@ namespace :pipeline do
       government_type: Scrapers::Municipalities.get_government_type(state, municipality_entry)
     }
 
-    create_prepare_directories(state, municipality_entry)
+    prepare_directories(state, municipality_entry)
 
-    fetch_with_state_source(municipality_context) # State-level city directory source
+    state_source_people = fetch_with_state_source(municipality_context) # State-level city directory source
+    scrape_exit_config = { people_count: state_source_people.count }
 
-    # OpenAI - LLM call
-    page_fetcher, source_urls = fetch_with_openai(municipality_context)
-
-    # Gemini - LLM call
-    fetch_with_gemini(municipality_context, page_fetcher, source_urls)
+    fetch_with_scrape(municipality_context, scrape_exit_config)
 
     aggregate_sources(municipality_context, sources: %w[state_source gemini openai])
     ## Create config.yml for the city
     create_config_yml(state, municipality_entry)
 
     people = Core::PeopleManager.get_people(state, gnis)
-    remove_unused_cache_folders(state, municipality_entry, people)
+    # remove_unused_cache_folders(state, municipality_entry, people)
   end
 
   desc "Fetch city officials from state source"
@@ -93,60 +90,73 @@ namespace :pipeline do
 
     # This call can fail if the state source is down (e.g. MRSC.org for WA)
     begin
-      source_city_people = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
+      people = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
       FileUtils.mkdir_p(data_source_dir) unless Dir.exist?(data_source_dir)
       Core::PeopleManager.update_people(municipality_context[:state], municipality_context[:municipality_entry],
-                                        source_city_people, "state_source.before")
-      formatted_source_city_people = Core::PeopleManager.format_people(source_city_people, positions_config)
+                                        people, "state_source.before")
+      formatted_people = Core::PeopleManager.format_people(people, positions_config)
       Core::PeopleManager.update_people(municipality_context[:state], municipality_context[:municipality_entry],
-                                        formatted_source_city_people, "state_source.after")
+                                        formatted_people, "state_source.after")
+
+      formatted_people
     rescue StandardError => e
       puts "Error pulling from state source: #{e}"
       puts "Backtrace: #{e.backtrace}"
     end
   end
 
-  def fetch_with_openai(municipality_context)
+  def fetch_with_scrape(municipality_context, scrape_exit_config)
+    request_cache = {}
     state = municipality_context[:state]
     municipality_entry = municipality_context[:municipality_entry]
-    gnis = municipality_entry["gnis"]
-    positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
+    config_file_path = PathHelper.get_municipality_config_path(state, municipality_entry["gnis"])
+    config = { "scrape_sources" => [] }
+    config = YAML.load_file(config_file_path) if File.exist?(config_file_path)
+    config_urls = config["scrape_sources"] ||= []
 
-    config_file = File.join(PathHelper.get_data_source_city_path(state, gnis), "config.yml")
-    config_content = { "scrape_sources" => [] }
-    config_content = YAML.load_file(config_file) if File.exist?(config_file)
-
-    page_fetcher, source_dirs, openai_people = Core::MunicipalScraper.fetch(
-      "openai",
-      municipality_context,
-      cached_urls: config_content["scrape_sources"]
+    # OpenAI - LLM call
+    page_fetcher, source_urls, source_dirs, people = process_with_llm(
+      municipality_context, "openai",
+      scrape_exit_config: scrape_exit_config,
+      seeded_urls: config_urls,
+      request_cache: request_cache
     )
-    Core::PeopleManager.update_people(state, municipality_entry, openai_people, "openai.before")
-    formatted_openai_people = Core::PeopleManager.format_people(openai_people, positions_config)
-    Core::PeopleManager.update_people(state, municipality_entry, formatted_openai_people, "openai.after")
 
-    # This is the only call that scrapes images
-    people_with_images = process_images(municipality_context, source_dirs, formatted_openai_people)
+    # openai is the only call that scrapes images; arbitrarily choose openai for this
+    # since it's the first call
+    people_with_images = process_images(municipality_context, source_dirs, people)
     Core::PeopleManager.update_people(state, municipality_entry, people_with_images, "openai.after")
-    sources = formatted_openai_people.map { |person| person["sources"] }.flatten.uniq
 
-    [page_fetcher, sources]
+    # Gemini - LLM call
+    process_with_llm(municipality_context, "gemini",
+                     scrape_exit_config: scrape_exit_config,
+                     page_fetcher: page_fetcher,
+                     seeded_urls: source_urls,
+                     request_cache: request_cache)
   end
 
-  def fetch_with_gemini(municipality_context, page_fetcher, cached_urls)
+  def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil, scrape_exit_config: [],
+                       seeded_urls: [], request_cache: {})
     state = municipality_context[:state]
     municipality_entry = municipality_context[:municipality_entry]
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
 
-    _page_fetcher, _source_dirs, gemini_people = Core::MunicipalScraper.fetch(
-      "gemini",
+    page_fetcher, source_dirs, accumulated_people = Core::MunicipalScraper.fetch(
+      llm_service_string,
       municipality_context,
       page_fetcher: page_fetcher,
-      cached_urls: cached_urls
+      scrape_exit_config: scrape_exit_config,
+      seeded_urls: seeded_urls,
+      request_cache: request_cache
     )
-    Core::PeopleManager.update_people(state, municipality_entry, gemini_people, "gemini.before")
-    formatted_gemini_people = Core::PeopleManager.format_people(gemini_people, positions_config)
-    Core::PeopleManager.update_people(state, municipality_entry, formatted_gemini_people, "gemini.after")
+
+    Core::PeopleManager.update_people(state, municipality_entry, accumulated_people, "#{llm_service_string}.before")
+    people = Core::PeopleManager.format_people(accumulated_people, positions_config)
+    Core::PeopleManager.update_people(state, municipality_entry, people, "#{llm_service_string}.after")
+
+    source_urls = people.map { |person| person["sources"] }.flatten.uniq
+
+    [page_fetcher, source_urls, source_dirs, people]
   end
 
   def aggregate_sources(municipality_context, sources: [])
@@ -182,7 +192,7 @@ namespace :pipeline do
     File.write(config_path, config_yml.to_yaml)
   end
 
-  def create_prepare_directories(state, municipality_entry)
+  def prepare_directories(state, municipality_entry)
     cache_destination_dir = PathHelper.get_city_cache_path(state, municipality_entry["gnis"])
 
     # Remove cache folder if it exists

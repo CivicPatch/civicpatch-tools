@@ -1,0 +1,475 @@
+{
+  "kind": "customsearch#search",
+  "url": {
+    "type": "application/json",
+    "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json"
+  },
+  "queries": {
+    "request": [
+      {
+        "title": "Google Custom Search - buchanon michigan council members",
+        "totalResults": "31",
+        "searchTerms": "buchanon michigan council members",
+        "count": 10,
+        "startIndex": 1,
+        "inputEncoding": "utf8",
+        "outputEncoding": "utf8",
+        "safe": "off",
+        "cx": "33159e8cac214474e",
+        "siteSearch": "https://www.cityofbuchanan.com",
+        "siteSearchFilter": "i"
+      }
+    ],
+    "nextPage": [
+      {
+        "title": "Google Custom Search - buchanon michigan council members",
+        "totalResults": "31",
+        "searchTerms": "buchanon michigan council members",
+        "count": 10,
+        "startIndex": 11,
+        "inputEncoding": "utf8",
+        "outputEncoding": "utf8",
+        "safe": "off",
+        "cx": "33159e8cac214474e",
+        "siteSearch": "https://www.cityofbuchanan.com",
+        "siteSearchFilter": "i"
+      }
+    ]
+  },
+  "context": {
+    "title": "CivicPatch"
+  },
+  "searchInformation": {
+    "searchTime": 0.244573,
+    "formattedSearchTime": "0.24",
+    "totalResults": "31",
+    "formattedTotalResults": "31"
+  },
+  "spelling": {
+    "correctedQuery": "buchanan michigan council members site:https://www.cityofbuchanan.com",
+    "htmlCorrectedQuery": "\u003cb\u003e\u003ci\u003ebuchanan\u003c/i\u003e\u003c/b\u003e michigan council members site:https://www.cityofbuchanan.com"
+  },
+  "items": [
+    {
+      "kind": "customsearch#result",
+      "title": "City Commission | Buchanan Michigan",
+      "htmlTitle": "City Commission | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/citycommission",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "Meetings are held on the second and fourth Monday of each month at 7:00 p.m. unless it is a holiday and then the meeting is the next business day. Residents are ...",
+      "htmlSnippet": "Meetings are held on the second and fourth Monday of each month at 7:00 p.m. unless it is a holiday and then the \u003cb\u003emeeting\u003c/b\u003e is the next business day. Residents are&nbsp;...",
+      "formattedUrl": "https://www.cityofbuchanan.com/citycommission",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/citycommission",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6puowIdpBhTee_LLJW7ExHi5P7wLHhhS1OFXNDZgZ75Gf3o98UNUNS_yD&s",
+            "width": "375",
+            "height": "134"
+          }
+        ],
+        "Item": [
+          {
+            "title": "City Commission"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/citycommission/page/98/buchanan_logo1_transparent.png",
+            "og:type": "website",
+            "og:image:width": "1393",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "City Commission",
+            "og:image:height": "499",
+            "og:url": "https://www.cityofbuchanan.com/citycommission",
+            "og:description": "The City operates under the Commission – Manager form of government as prescribed by Charter. Under this model the City Manager is responsible for managing the day-to-day operations of the City with the Buchanan City Commission’s main function being legislative and setting important policies that chart the future course of Buchanan. The City Commission is made up of five (5) members who serve four (4) year terms."
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/citycommission/page/98/buchanan_logo1_transparent.png"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Commission Members | Buchanan Michigan",
+      "htmlTitle": "Commission \u003cb\u003eMembers\u003c/b\u003e | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/citycommission/page/commission-members",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "Commission Members ... Mayor Pro Tem, Mark Weedon ... Mark Weedon ... Mayor ... mweedon@cityofbuchanan.com.",
+      "htmlSnippet": "Commission \u003cb\u003eMembers\u003c/b\u003e ... \u003cb\u003eMayor\u003c/b\u003e Pro Tem, Mark Weedon ... Mark Weedon ... \u003cb\u003eMayor\u003c/b\u003e ... mweedon@cityofbuchanan.com.",
+      "formattedUrl": "https://www.cityofbuchanan.com/citycommission/.../commission-members",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/citycommission/.../commission-\u003cb\u003emembers\u003c/b\u003e",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdOfCeRlHASogvl7OCjtb3rEYWAkXpUPqWswOJI9Rt6ly8xIuwTkN38PHR&s",
+            "width": "175",
+            "height": "225"
+          }
+        ],
+        "Item": [
+          {
+            "title": "Commission Members"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png",
+            "og:type": "website",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Commission Members",
+            "og:url": "https://www.cityofbuchanan.com/citycommission/page/commission-members"
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/default/files/styles/directory_listings_-_body__4-column/public/imageattachments/directory/4814/image_13.jpeg?itok=SiXifvUS"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Buchanan Area Fine Arts Council | Buchanan Michigan",
+      "htmlTitle": "\u003cb\u003eBuchanan\u003c/b\u003e Area Fine Arts \u003cb\u003eCouncil\u003c/b\u003e | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/bc-bapac",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "Number of Members: 15 including one City Commissioner ; Term: 4 years ; Meetings: First Monday of each month, 6 p.m. at City Hall ...",
+      "htmlSnippet": "Number of \u003cb\u003eMembers\u003c/b\u003e: 15 including one City Commissioner ; Term: 4 years ; Meetings: First Monday of each month, 6 p.m. at City \u003cb\u003eHall\u003c/b\u003e&nbsp;...",
+      "formattedUrl": "https://www.cityofbuchanan.com/bc-bapac",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/bc-bapac",
+      "pagemap": {
+        "Item": [
+          {
+            "title": "Buchanan Area Fine Arts Council"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png",
+            "og:type": "website",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Buchanan Area Fine Arts Council",
+            "og:url": "https://www.cityofbuchanan.com/bc-bapac",
+            "og:description": "Charged with encouraging participation among citizens of the Buchanan area in all areas of fine arts to be accomplished through soliciting and selecting fine arts programs for citizen participation and enjoyment, planning exhibitions, concerts, demonstrations, and any other programs that might allow citizens of the Buchanan area to experience and appreciate the fine arts."
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Buchanan, Michigan Home Page | Buchanan Michigan",
+      "htmlTitle": "\u003cb\u003eBuchanan\u003c/b\u003e, \u003cb\u003eMichigan\u003c/b\u003e Home Page | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/home",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "Column 1. City Commission · Boards & Councils · Agendas & Minutes. Column 2. City Charter · Code of Ordinances · Zoning Ordinances. Column 3.",
+      "htmlSnippet": "Column 1. City Commission &middot; Boards &amp; \u003cb\u003eCouncils\u003c/b\u003e &middot; Agendas &amp; Minutes. Column 2. City Charter &middot; Code of Ordinances &middot; Zoning Ordinances. Column 3.",
+      "formattedUrl": "https://www.cityofbuchanan.com/home",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/home",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4AQAaeYa0kKDNIrvPOhUVY9C5oe798WKljZ14Wk24_rKx2FZmXyM2k7E&s",
+            "width": "376",
+            "height": "134"
+          }
+        ],
+        "Item": [
+          {
+            "title": "Buchanan, Michigan Home Page"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png",
+            "og:type": "website",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Buchanan, Michigan Home Page",
+            "og:url": "https://www.cityofbuchanan.com/home"
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Planning Commission | Buchanan Michigan",
+      "htmlTitle": "Planning Commission | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/bc-pc",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "Meetings: Second Tuesday of each month, 6:00 p.m. at City Hall. Current Members: Ralph McDonald - Chairperson; Sean Denison - City Commission Representative ...",
+      "htmlSnippet": "Meetings: Second Tuesday of each month, 6:00 p.m. at City \u003cb\u003eHall\u003c/b\u003e. Current \u003cb\u003eMembers\u003c/b\u003e: Ralph McDonald - Chairperson; Sean Denison - City Commission Representative&nbsp;...",
+      "formattedUrl": "https://www.cityofbuchanan.com/bc-pc",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/bc-pc",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4EXThBq83X0-zWBtEji_KgqHqjDzoy_QOs0vbs8PR42FOjUvv4vjHO6xH&s",
+            "width": "269",
+            "height": "187"
+          }
+        ],
+        "Item": [
+          {
+            "title": "Planning Commission"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png",
+            "og:type": "website",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Planning Commission",
+            "og:url": "https://www.cityofbuchanan.com/bc-pc",
+            "og:description": "The Plan Commission is charged with the development and adoption of a City Master Plan, and advising the City Commission on zoning and land use ordinances related to the implementation of that plan. The Plan Commission also has the responsibility for conducting public hearings on rezoning requests, and for conducting site plan reviews for proposed commercial, industrial, and multi-family residential developments."
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/default/files/styles/embedded_pages_-_simple_list/public/imageattachments/city-manager/page/3289/image00021.jpg?itok=pnxand5H"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Larry Money | Buchanan Michigan",
+      "htmlTitle": "Larry Money | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/directory-listing/larry-money",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "As a lifelong resident of Buchanan, graduating from BHS in 1966, I have served the community in many capacities, from a 27-year member of the Buchanan City ...",
+      "htmlSnippet": "As a lifelong resident of \u003cb\u003eBuchanan\u003c/b\u003e, graduating from BHS in 1966, I have served the community in many capacities, from a 27-year \u003cb\u003emember\u003c/b\u003e of the \u003cb\u003eBuchanan\u003c/b\u003e City&nbsp;...",
+      "formattedUrl": "https://www.cityofbuchanan.com/directory-listing/larry-money",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/directory-listing/larry-money",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFwV4DI8nw3V7KLtIx4MNY2DCm2J4zSlJWS0QBJz9ajDYjj2OS_1B-oUQ&s",
+            "width": "194",
+            "height": "259"
+          }
+        ],
+        "Item": [
+          {
+            "title": "Larry Money"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/directory/2344/money3.jpg",
+            "og:type": "website",
+            "og:image:width": "1512",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Larry Money",
+            "og:image:height": "2016",
+            "og:url": "https://www.cityofbuchanan.com/directory-listing/larry-money"
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/directory/2344/money3.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Buchanan Area Recreation Board (B.A.R.B.) | Buchanan Michigan",
+      "htmlTitle": "\u003cb\u003eBuchanan\u003c/b\u003e Area Recreation Board (B.A.R.B.) | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/bc-barb",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "... Buchanan Township Hall for February, April, June, August, October, and December meetings. Current Members: Wendi Heyliger - Chairman - Buchanan Township ...",
+      "htmlSnippet": "... \u003cb\u003eBuchanan\u003c/b\u003e Township \u003cb\u003eHall\u003c/b\u003e for February, April, June, August, October, and December meetings. Current \u003cb\u003eMembers\u003c/b\u003e: Wendi Heyliger - Chairman - \u003cb\u003eBuchanan\u003c/b\u003e Township&nbsp;...",
+      "formattedUrl": "https://www.cityofbuchanan.com/bc-barb",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/bc-barb",
+      "pagemap": {
+        "Item": [
+          {
+            "title": "Buchanan Area Recreation Board (B.A.R.B.)"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png",
+            "og:type": "website",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Buchanan Area Recreation Board (B.A.R.B.)",
+            "og:url": "https://www.cityofbuchanan.com/bc-barb",
+            "og:description": "The BARB has representatives from the City, Buchanan Township and the Buchanan Community Schools, who oversee programming and capital improvements at the City’s various park and recreation facilities."
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "City Commission Meeting | Buchanan Michigan",
+      "htmlTitle": "City Commission \u003cb\u003eMeeting\u003c/b\u003e | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/citycommission/page/city-commission-meeting-0",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "A regular meeting of the Buchanan City Commission to be held in the Chamber of Buchanan City Hall, 302 N Redbud Trail, Buchanan MI.",
+      "htmlSnippet": "A regular \u003cb\u003emeeting\u003c/b\u003e of the \u003cb\u003eBuchanan\u003c/b\u003e City Commission to be held in the Chamber of \u003cb\u003eBuchanan\u003c/b\u003e City \u003cb\u003eHall\u003c/b\u003e, 302 N Redbud Trail, \u003cb\u003eBuchanan MI\u003c/b\u003e.",
+      "formattedUrl": "https://www.cityofbuchanan.com/.../page/city-commission-meeting-0",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/.../page/city-commission-meeting-0",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG18gQtDuVFI8UKsAhVt9mj2w1xvNIR6CqE6IL3ildBWBi5T8qgjG3AmBG&s",
+            "width": "300",
+            "height": "168"
+          }
+        ],
+        "Item": [
+          {
+            "date": "2021-07-26T19:00:00-04:00",
+            "title": "City Commission Meeting"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/all/themes/aha_compass/logo.png",
+            "og:type": "website",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "City Commission Meeting",
+            "og:url": "https://www.cityofbuchanan.com/citycommission/page/city-commission-meeting-0"
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://i.ytimg.com/vi/Dh9ue7CLZ4w/mqdefault.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Election Information | Buchanan Michigan",
+      "htmlTitle": "Election Information | \u003cb\u003eBuchanan Michigan\u003c/b\u003e",
+      "link": "https://www.cityofbuchanan.com/city-clerk/page/election-information-0",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "Next Election: State General - November 5th, 2024. Polls are Open 7 AM- 8 PM. Early Voting Information. Location: Berrien County South County Building Door 13.",
+      "htmlSnippet": "Next Election: State General - November 5th, 2024. Polls are Open 7 AM- 8 PM. Early Voting Information. Location: Berrien County South County Building Door 13.",
+      "formattedUrl": "https://www.cityofbuchanan.com/city-clerk/page/election-information-0",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/city-clerk/page/election-information-0",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1yM7m_hOwwTB8P-jaOufor8wr9QbcjfPPNcpqy3t3gjCTcqoEjiGOlbKd&s",
+            "width": "197",
+            "height": "256"
+          }
+        ],
+        "Item": [
+          {
+            "title": "Election Information"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/city-clerk/page/4209/screenshot_2024-08-26_145326.png",
+            "og:type": "website",
+            "og:image:width": "628",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Election Information",
+            "og:image:height": "817",
+            "og:url": "https://www.cityofbuchanan.com/city-clerk/page/election-information-0",
+            "og:description": " \nNEXT ELECTION: State General - November 5th, 2024 Polls are Open 7 AM- 8 PM\n\nEarly Voting Information\nLocation: Berrien County South County Building Door 13\n                 1205 North Front Street Niles, MI 49120\nDates &amp; Times: \nSaturday, October 26th - Tuesday, October 29th       8: 30 AM- 4:30 PM "
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/city-clerk/page/4209/screenshot_2024-08-26_145326.png"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Oakridge Cemetery Rules and Regulations Regarding Veteran's ...",
+      "htmlTitle": "Oakridge Cemetery Rules and Regulations Regarding Veteran&#39;s ...",
+      "link": "https://www.cityofbuchanan.com/bc-oc/page/oakridge-cemetery-rules-and-regulations-regarding-veterans-circle",
+      "displayLink": "www.cityofbuchanan.com",
+      "snippet": "Veteran's circle is reserved for honorable serving members, or those discharged honorably. No non-military or veterans that were discharged dis-honorably shall ...",
+      "htmlSnippet": "Veteran&#39;s circle is reserved for honorable serving \u003cb\u003emembers\u003c/b\u003e, or those discharged honorably. No non-military or veterans that were discharged dis-honorably shall&nbsp;...",
+      "formattedUrl": "https://www.cityofbuchanan.com/.../oakridge-cemetery-rules-and-regulatio...",
+      "htmlFormattedUrl": "https://www.cityofbuchanan.com/.../oakridge-cemetery-rules-and-regulatio...",
+      "pagemap": {
+        "cse_thumbnail": [
+          {
+            "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdzZESbewf7kqGNCDCWO-Gf9QSMr2dms3Yj7GQ3_6EtREvyEWRhYDLlk8&s",
+            "width": "375",
+            "height": "134"
+          }
+        ],
+        "Item": [
+          {
+            "title": "Oakridge Cemetery Rules and Regulations Regarding Veteran's Circle"
+          }
+        ],
+        "metatags": [
+          {
+            "og:image": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/bc-oc/page/4034/buchanan_logo1_transparent.png",
+            "og:type": "website",
+            "og:image:width": "1393",
+            "og:site_name": "Buchanan Michigan",
+            "handheldfriendly": "true",
+            "viewport": "width=device-width, initial-scale=1",
+            "mobileoptimized": "width",
+            "og:title": "Oakridge Cemetery Rules and Regulations Regarding Veteran's Circle",
+            "og:image:height": "499",
+            "og:url": "https://www.cityofbuchanan.com/bc-oc/page/oakridge-cemetery-rules-and-regulations-regarding-veterans-circle",
+            "og:description": "Oakridge Cemetery Rules &amp; Regulations regarding Veteran's Circle:\n\n1. These rules and regulations are agreed upon between the City of Buchanan, and\nthe American Legion Post 51 (Administrative Board). Our goal is uniformity.\n2. One single Sheppard hook per grave site starting one week prior to Memorial\nDay and ending one week after Labor Day."
+          }
+        ],
+        "cse_image": [
+          {
+            "src": "https://www.cityofbuchanan.com/sites/default/files/imageattachments/bc-oc/page/4034/buchanan_logo1_transparent.png"
+          }
+        ]
+      }
+    }
+  ]
+}

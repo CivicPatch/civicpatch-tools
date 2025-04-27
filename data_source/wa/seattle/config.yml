@@ -1,12 +1,13 @@
 ---
 scrape_sources:
 - https://seattle.gov/mayor/about
-- https://seattle.gov/council/meet-the-council
-- https://seattle.gov/council/meet-the-council/sara-nelson/about-sara
-- https://seattle.gov/council/solomon
-- https://seattle.gov/council/hollingsworth
-- https://seattle.gov/council/rivera
-- https://moore.seattle.gov
-- https://seattle.gov/council/strauss
-- https://seattle.gov/council/kettle
-- https://seattle.gov/council/rinck
+- https://www.seattle.gov/elected-officials
+- https://www.seattle.gov/mayor
+- https://www.seattle.gov/council/saka
+- https://www.seattle.gov/council/solomon
+- https://www.seattle.gov/council/hollingsworth
+- https://www.seattle.gov/council/rivera
+- https://www.seattle.gov/council/moore
+- https://www.seattle.gov/council/strauss
+- https://www.seattle.gov/council/rinck
+- https://www.seattle.gov/council/meet-the-council/sara-nelson

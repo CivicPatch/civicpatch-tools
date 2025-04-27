@@ -6,7 +6,7 @@
  *  [Contact](https://seattle.gov/mayor/contact) 
  *  [Mayor's Team](https://seattle.gov/mayor/team) 
  *  [About the Mayor](https://seattle.gov/mayor/about) 
-  [](https://seattle.gov)  [Home](https://seattle.gov/mayor)  
+  [](https://seattle.gov/)  [Home](https://seattle.gov/mayor)  
 
 # About Mayor Bruce Harrell
 
@@ -64,7 +64,7 @@ Sign up for the latest updates from Mayor Bruce Harrell
  *  [Public Records](https://seattle.gov/public-records) 
  *  [City Holidays and Closures](https://seattle.gov/holidays-and-closures) 
 
- *  [City News Feed](https://news.seattle.gov) 
+ *  [City News Feed](https://news.seattle.gov/) 
  *  [City Event Calendar](https://seattle.gov/event-calendar) 
  *  [All City Newsletters](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/topics?qsp=CODE_RED) 
  *  [View the Departments & Agencies List](https://seattle.gov/departments) 
@@ -81,4 +81,4 @@ Seattle's Mayor is the head of the Executive department. The Mayor directs and c
 
 ## Policies
 
-  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](images/https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

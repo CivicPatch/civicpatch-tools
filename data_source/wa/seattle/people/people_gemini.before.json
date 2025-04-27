@@ -6,192 +6,167 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(206) 684-4000",
     "email": null,
-    "website": null,
-    "term_date": "2021",
+    "website": "https://www.seattle.gov/mayor",
+    "term_date": null,
     "sources": [
-      "https://seattle.gov/mayor/about"
-    ]
-  },
-  {
-    "name": "Sara Nelson",
-    "positions": [
-      "Council President",
-      "Council member",
-      "position 9",
-      "Citywide",
-      "Chair of the Governance, Accountability, and Economic Development Committee",
-      "Council Member",
-      "Position 9",
-      "Councilmember"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(206) 684-8809",
-    "email": "Sara.Nelson@seattle.gov",
-    "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
-    "term_date": "January 2022 - December 2025",
-    "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://seattle.gov/mayor/about",
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/mayor"
     ]
   },
   {
     "name": "Rob Saka",
     "positions": [
-      "Council member",
       "Council Member",
-      "District 1",
-      "Councilmember"
+      "District 1"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8801",
     "email": null,
-    "website": "https://seattle.gov/council/saka",
+    "website": "https://www.seattle.gov/council/saka",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/saka"
     ]
   },
   {
     "name": "Mark Solomon",
     "positions": [
-      "Council member",
       "Council Member",
       "District 2",
-      "Councilmember"
+      "Council Member, District 2"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8802",
-    "email": null,
-    "website": "https://seattle.gov/council/solomon",
+    "email": "Mark.Solomon2@seattle.gov",
+    "website": "https://www.seattle.gov/council/solomon",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/solomon"
     ]
   },
   {
     "name": "Joy Hollingsworth",
     "positions": [
-      "Council member",
       "Council Member",
-      "District 3",
-      "Councilmember",
-      "Chair of the Select Committee on the Comprehensive Plan"
+      "District 3"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(206) 684-8803",
-    "email": null,
-    "website": "https://hollingsworth.seattle.gov",
+    "phone_number": "206-684-8803",
+    "email": "Joy.Hollingsworth@seattle.gov",
+    "website": "https://www.seattle.gov/council/hollingsworth",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/hollingsworth"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/hollingsworth"
     ]
   },
   {
     "name": "Maritza Rivera",
     "positions": [
-      "Council member",
       "Council Member",
-      "District 4",
-      "Councilmember"
+      "District 4"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8804",
     "email": null,
-    "website": "https://rivera.seattle.gov",
+    "website": "https://www.seattle.gov/council/rivera",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/rivera"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/rivera"
     ]
   },
   {
     "name": "Cathy Moore",
     "positions": [
-      "Council member",
       "Council Member",
-      "District 5",
-      "Councilmember",
-      "council member"
+      "District 5"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8805",
     "email": null,
-    "website": "https://seattle.gov/council/moore",
+    "website": "https://www.seattle.gov/council/moore",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/moore"
     ]
   },
   {
     "name": "Dan Strauss",
     "positions": [
-      "Council member",
       "Council Member",
-      "District 6",
-      "Councilmember"
+      "District 6"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8806",
     "email": null,
-    "website": "https://seattle.gov/council/strauss",
+    "website": "https://www.seattle.gov/council/strauss",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/strauss"
     ]
   },
   {
-    "name": "Robert Kettle",
+    "name": "Bob Kettle",
     "positions": [
-      "Council member",
       "Council Member",
-      "District 7",
-      "Councilmember",
-      "chair of the Public Safety Committee"
+      "District 7"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(206) 684-8807",
+    "phone_number": null,
     "email": null,
-    "website": "https://seattle.gov/council/kettle",
+    "website": "https://www.seattle.gov/council/kettle",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials"
     ]
   },
   {
     "name": "Alexis Mercedes Rinck",
     "positions": [
-      "Council member",
       "Council Member",
-      "Position 8",
-      "Councilmember",
-      "citywide Councilmember",
-      "citywide"
+      "Position 8"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "206-684-8808",
     "email": null,
-    "website": "https://seattle.gov/council/rinck",
+    "website": "https://www.seattle.gov/council/rinck",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/rinck",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/rinck"
+    ]
+  },
+  {
+    "name": "Sara Nelson",
+    "positions": [
+      "Council Member",
+      "Position 9"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(206) 684-8809",
+    "email": null,
+    "website": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+    "term_date": null,
+    "sources": [
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/meet-the-council/sara-nelson"
     ]
   }
 ]

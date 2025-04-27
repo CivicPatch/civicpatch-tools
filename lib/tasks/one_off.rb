@@ -124,6 +124,20 @@ namespace :one_off do
     end
   end
 
+  task :test_gemini_search do
+    state = "mi"
+    municipality_context = {
+      state: state,
+      municipality_entry: {
+        "name" => "Buchanan",
+        "website" => "https://www.cityofbuchanan.com"
+      }
+    }
+    google_gemini = Services::GoogleGemini.new
+    response = google_gemini.search_for_candidate_urls(municipality_context)
+    puts response
+  end
+
   def self.format_name(name)
     # Split the name by space separated by _
     # Capitalize the first letter of each word
