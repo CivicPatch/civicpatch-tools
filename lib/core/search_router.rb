@@ -28,7 +28,7 @@ module Core
         end
       end
 
-      filtered_urls = Utils::UrlHelper.urls_without_keywords(urls, %w[alerts news event calendar video])
+      filtered_urls = Utils::UrlHelper.urls_without_keywords(urls, %w[archive alerts news event calendar video])
       filtered_urls = Utils::UrlHelper.urls_without_dates(filtered_urls)
       puts "#{engine} - urls fetched: #{urls.count}"
       pp urls
