@@ -36,7 +36,17 @@ gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-
 ```
 
 ### Services
+* Search Services
+  * Google Search - free tier only
+    * [Manage](https://console.cloud.google.com/apis/api/customsearch.googleapis.com)
+    * Free Tier - 100 req/day
+      * (should error out)
+    * Paid Tier - $5.00 per 1000 requests
+  * Brave - free tier only
+    * [Manage](https://api-dashboard.search.brave.com/app/dashboard)
+    * Free Tier - 2000 req/month
 * Google Gemini 2.5 Flash (used with scraping) - Paid Tier 1
+  * [Manage](https://console.cloud.google.com/apis/api/generativelanguage.googleapis.com/metrics)
   * Pricing Page - https://ai.google.dev/gemini-api/docs/pricing
   * Input: $0.15 Per Million
   * Output: $0.60 Per Million

@@ -6,50 +6,14 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(206) 684-4000",
     "email": null,
-    "website": null,
-    "term_date": "2021",
-    "sources": [
-      "https://seattle.gov/mayor/about"
-    ]
-  },
-  {
-    "name": "Sara Nelson",
-    "positions": [
-      "Council President",
-      "Council Member",
-      "Citywide",
-      "Position 9"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(206) 684-8809",
-    "email": "Sara.Nelson@seattle.gov",
-    "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
-    "term_date": "January 2022 - December 2025",
-    "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
-    ]
-  },
-  {
-    "name": "Alexis Mercedes Rinck",
-    "positions": [
-      "Council Member",
-      "Citywide",
-      "Citywide Councilmember",
-      "Position 8"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(206) 684-8808",
-    "email": null,
-    "website": "https://seattle.gov/council/rinck",
+    "website": "https://www.seattle.gov/mayor",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/rinck",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://seattle.gov/mayor/about",
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/mayor"
     ]
   },
   {
@@ -62,11 +26,11 @@
     "source_image": null,
     "phone_number": "(206) 684-8801",
     "email": null,
-    "website": "https://seattle.gov/council/saka",
+    "website": "https://www.seattle.gov/council/saka",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/saka"
     ]
   },
   {
@@ -78,12 +42,12 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8802",
-    "email": null,
-    "website": "https://seattle.gov/council/solomon",
+    "email": "Mark.Solomon2@seattle.gov",
+    "website": "https://www.seattle.gov/council/solomon",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/solomon"
     ]
   },
   {
@@ -95,12 +59,12 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8803",
-    "email": null,
-    "website": "https://hollingsworth.seattle.gov",
+    "email": "Joy.Hollingsworth@seattle.gov",
+    "website": "https://www.seattle.gov/council/hollingsworth",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/hollingsworth"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/hollingsworth"
     ]
   },
   {
@@ -113,11 +77,11 @@
     "source_image": null,
     "phone_number": "(206) 684-8804",
     "email": null,
-    "website": "https://rivera.seattle.gov",
+    "website": "https://www.seattle.gov/council/rivera",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/rivera"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/rivera"
     ]
   },
   {
@@ -130,11 +94,11 @@
     "source_image": null,
     "phone_number": "(206) 684-8805",
     "email": null,
-    "website": "https://seattle.gov/council/moore",
+    "website": "https://www.seattle.gov/council/moore",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/moore"
     ]
   },
   {
@@ -147,28 +111,61 @@
     "source_image": null,
     "phone_number": "(206) 684-8806",
     "email": null,
-    "website": "https://seattle.gov/council/strauss",
+    "website": "https://www.seattle.gov/council/strauss",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/strauss"
     ]
   },
   {
-    "name": "Robert Kettle",
+    "name": "Bob Kettle",
     "positions": [
       "Council Member",
       "District 7"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(206) 684-8807",
+    "phone_number": null,
     "email": null,
-    "website": "https://seattle.gov/council/kettle",
+    "website": "https://www.seattle.gov/council/kettle",
     "term_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson/about-sara"
+      "https://www.seattle.gov/elected-officials"
+    ]
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [
+      "Council Member",
+      "Position 8"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(206) 684-8808",
+    "email": null,
+    "website": "https://www.seattle.gov/council/rinck",
+    "term_date": null,
+    "sources": [
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/rinck"
+    ]
+  },
+  {
+    "name": "Sara Nelson",
+    "positions": [
+      "Council Member",
+      "Position 9"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(206) 684-8809",
+    "email": null,
+    "website": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+    "term_date": null,
+    "sources": [
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council/meet-the-council/sara-nelson"
     ]
   }
 ]

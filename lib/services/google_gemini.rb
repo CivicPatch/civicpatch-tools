@@ -6,11 +6,11 @@ require "utils/name_helper"
 
 module Services
   class GoogleGemini
-    # MODEL = "gemini-2.5-pro-exp-03-25".freeze # FREE TIER
-    # MODEL = "gemini-2.0-flash".freeze
+    MAX_RETRIES = 5
+    # MODEL = "gemini-2.5-pro-exp-03-25".freeze
     MODEL = "gemini-2.5-flash-preview-04-17".freeze
+    # MODEL = "gemini-2.0-flash".freeze
     # MODEL = "gemini-1.5-pro".freeze
-    # MODEL = "gemini-2.0-flash"
     BASE_URI = "https://generativelanguage.googleapis.com".freeze
     BASE_SLEEP = 5
 
@@ -18,7 +18,7 @@ module Services
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
     end
 
-    def extract_city_people(municipality_context, content_file, url)
+    def extract_city_people(municipality_context, content_file, url, person_name = "")
       state = municipality_context[:state]
       municipality_entry = municipality_context[:municipality_entry]
       government_type = municipality_context[:government_type]
@@ -28,7 +28,7 @@ module Services
       # return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
       prompt = Services::Shared::LlmPrompts
-               .gemini_generate_municipal_directory_prompt(state, municipality_entry, government_type, content)
+               .gemini_generate_municipal_directory_prompt(state, municipality_entry, government_type, content, person_name)
 
       request_origin = "#{state}_#{municipality_entry["name"]}_gemini_#{MODEL}_municipality_scrape"
       response = run_prompt(prompt, request_origin, Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
@@ -37,8 +37,7 @@ module Services
 
       # filter out invalid people
       people = response["people"].select do |person|
-        Utils::NameHelper.valid_name?(person["name"]) &&
-          person["positions"].present?
+        Utils::NameHelper.valid_name?(person["name"])
       end
 
       people.map do |person|
@@ -61,11 +60,6 @@ module Services
           responseMimeType: "application/json",
           responseSchema: response_schema
         }
-        # tools: [
-        #  {
-        #    googleSearch: {}
-        #  }
-        # ]
       }.to_json
 
       options = {
@@ -123,6 +117,7 @@ module Services
         parsed_response
       else
         puts "Request failed. HTTP Status: #{response.code}"
+        puts "Response: #{response.message}"
         nil
       end
     rescue StandardError => e
@@ -138,6 +133,19 @@ module Services
         puts "Too many requests. Max retries reached for Google Gemini."
       end
       nil
+    end
+
+    def self.get_cost(input_tokens_num, output_tokens_num)
+      input_cost_per_million = 0.15 # USD
+      output_cost_per_million = 0.60 # USD
+
+      input_millions = input_tokens_num / 1_000_000.0
+      output_millions = output_tokens_num / 1_000_000.0
+
+      input_cost = input_millions * input_cost_per_million
+      output_cost = output_millions * output_cost_per_million
+
+      input_cost + output_cost
     end
   end
 end

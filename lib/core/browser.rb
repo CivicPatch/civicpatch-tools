@@ -270,7 +270,7 @@ module Browser
     content_type = Utils::ImageHelper.determine_mime_type(file.path)
     extension = Utils::ImageHelper.mime_type_to_extension(content_type)
     if extension.nil?
-      puts "Unknown file type for #{file.path}: #{content_type}"
+      puts "\tUnknown file type for #{file.path}: #{content_type}"
       nil
     else
       extension

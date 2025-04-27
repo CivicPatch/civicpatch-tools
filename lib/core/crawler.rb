@@ -2,6 +2,7 @@
 
 # Given a base url and keyword groups, crawl the domain
 require "selenium-webdriver"
+require "utils/array_helper"
 require_relative "browser"
 require_relative "../utils/url_helper"
 
@@ -19,13 +20,11 @@ module Core
         keyword_groups, max_depth, avoid_keywords
       )
 
-      results = results.values
-                       .map { |group| group.sort_by(&:length).shuffle } # Sort by URL length, then shuffle within groups
-                       .inject(&:zip)   # Interleave to distribute fairly
-                       &.flatten        # Flatten into a single list
-                       &.compact        # Remove nil values
-                       &.uniq           # Remove duplicates
-                       &.sort_by { |url| visited.to_a.index(url) || Float::INFINITY } # Keep early crawled URLs first
+      results_to_interleave = results.values
+                                     .map { |group| group.sort_by(&:length).shuffle } # Sort by URL length, then shuffle within groups
+
+      results = Utils::ArrayHelper.interleave_arrays(results_to_interleave)
+                                  &.uniq # Remove duplicates
 
       results || []
     end

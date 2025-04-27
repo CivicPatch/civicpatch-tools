@@ -3,6 +3,7 @@ require "services/shared/people"
 require "services/google_gemini"
 require "services/openai"
 require "set"
+require "resolvers/search_resolver"
 
 module Core
   class MunicipalScraper
@@ -11,9 +12,10 @@ module Core
     def self.fetch(
       llm_service_string,
       municipality_context,
-      search_engines: %w[manual brave],
+      request_cache: {},
+      scrape_exit_config: [], # [{position: "mayor", count: 1}, {position: "council member", count: 4}]
       page_fetcher: nil,
-      cached_urls: []
+      seeded_urls: [] # Urls to scrape first
     )
       puts "Fetching with #{llm_service_string}"
       page_fetcher ||= Core::PageFetcher.new
@@ -21,24 +23,50 @@ module Core
       state = municipality_context[:state]
       gnis = municipality_entry["gnis"]
       city_cache_path = PathHelper.get_city_cache_path(state, gnis)
+      keyword_groups = Core::CityManager.get_search_keywords_as_array(municipality_context[:government_type])
+
+      puts "#{llm_service_string}: Looking for #{scrape_exit_config}"
 
       context = {
         llm_service_string: llm_service_string,
         municipality_context: municipality_context,
         page_fetcher: page_fetcher,
-        city_cache_path: city_cache_path
+        city_cache_path: city_cache_path,
+        scrape_exit_config: scrape_exit_config,
+        request_cache: request_cache
       }
 
       # Initialize combined data hash
       data = { accumulated_people: [], processed_urls: [], content_dirs: [] }
 
-      if cached_urls.present? && cached_urls.count.positive?
-        cached_data = scrape_city_directory_urls(context, urls_to_process: cached_urls)
-        data = cached_data
-      end
+      %w[seeded search crawler].each do |scrape_with|
+        puts "Scraping with #{scrape_with}"
+        break unless should_continue_scraping?(context, data)
 
-      data = scrape_from_search_engines(context, data[:accumulated_people], data[:processed_urls],
-                                        search_engines: search_engines)
+        case scrape_with
+        when "seeded"
+          next if seeded_urls.blank?
+
+          puts "#{llm_service_string}: Scraping with seeded URLs"
+
+          urls = seeded_urls
+        when "search"
+          keyword_terms = keyword_groups.map { |group| group[:name] }
+          puts "#{llm_service_string}: Scraping with search with keyword_terms: #{keyword_terms}"
+          urls = scrape_with_search(context, keyword_terms)
+          puts "Search results: #{urls}"
+        when "crawler"
+          avoid_keywords = %w[alerts news event calendar]
+          puts "#{llm_service_string}: Scraping with crawler #{keyword_groups}, avoid keywords #{avoid_keywords}"
+          urls = scrape_with_crawler(context, keyword_groups, avoid_keywords)
+        end
+
+        next if urls.blank?
+
+        urls = urls.map { |url| Utils::UrlHelper.format_url(url) }
+
+        data = scrape_city_directory_urls(context, data, urls_to_process: urls, early_exit: true)
+      end
 
       profile_content_dirs, accumulated_people = scrape_profiles(context, data[:accumulated_people],
                                                                  data[:processed_urls])
@@ -55,73 +83,54 @@ module Core
       [page_fetcher, content_dirs, formatted_officials]
     end
 
-    def self.scrape_city_directory_urls(
-      context,
-      urls_to_process: [],
-      processed_urls: [],
-      accumulated_people: [],
-      early_exit: false
-    )
-      content_dirs = []
+    def self.scrape_with_search(context, keyword_terms)
+      return context[:request_cache]["search"] if context[:request_cache]["search"].present?
 
-      urls_to_process.each do |url|
-        break if early_exit && !should_continue_scraping?(accumulated_people, processed_urls.count)
-
-        puts "Fetching from URL: #{url}"
-        url_content_path, people = scrape_url_for_municipal_directory(context, url)
-        next if people.blank?
-
-        processed_urls << url
-        content_dirs << url_content_path
-        accumulated_people = Services::Shared::People.collect_people(accumulated_people, people)
-      end
-
-      {
-        accumulated_people: accumulated_people,
-        content_dirs: content_dirs,
-        processed_urls: processed_urls
-      }
+      results = Resolvers::SearchResolver.municipal_search(context[:municipality_context],
+                                                           keyword_terms)
+      context[:request_cache]["search"] = results
+      results
     end
 
-    def self.scrape_from_search_engines(
+    def self.scrape_with_crawler(context, keyword_groups, avoid_keywords)
+      return context[:request_cache]["crawler"] if context[:request_cache]["crawler"].present?
+
+      results = Core::Crawler.crawl(context[:municipality_context][:municipality_entry]["website"],
+                                    keyword_groups: keyword_groups,
+                                    avoid_keywords: avoid_keywords)
+      context[:request_cache]["crawler"] = results
+      results
+    end
+
+    def self.scrape_city_directory_urls(
       context,
-      accumulated_people = [],
-      processed_urls = [],
-      search_engines: %w[manual brave]
+      data,
+      urls_to_process: [],
+      early_exit: false
     )
-      municipality_context = context[:municipality_context]
+      return data if urls_to_process.blank?
+
+      accumulated_people = data[:accumulated_people] || []
       content_dirs = []
+      processed_urls = data[:processed_urls] || []
 
-      search_engines.each do |engine|
-        break unless should_continue_scraping?(accumulated_people, content_dirs.count)
+      urls_to_process.each do |url|
+        break if early_exit && !should_continue_scraping?(context, data)
 
-        search_result_urls = Core::SearchRouter.fetch_search_results(
-          engine,
-          municipality_context
-        )
-        urls_to_scrape = search_result_urls - processed_urls
+        puts "#{context[:llm_service_string]} Scraping #{url} for municipal directory"
+        content_dir, people = scrape_url_for_municipal_directory(context, url)
+        next if people.blank?
 
-        puts "#{context[:llm_service_string]} Urls already scraped: #{processed_urls}"
-        puts "#{context[:llm_service_string]} URLs to scrape: #{urls_to_scrape.count}"
+        accumulated_people = Services::Shared::People.collect_people(accumulated_people, people)
+        content_dirs << content_dir
+        processed_urls << url
 
-        data_from_scraped_urls = scrape_city_directory_urls(
-          context,
-          urls_to_process: urls_to_scrape,
-          processed_urls: processed_urls,
-          accumulated_people: accumulated_people,
-          early_exit: true
-        )
-
-        accumulated_people = data_from_scraped_urls[:accumulated_people]
-        processed_urls += data_from_scraped_urls[:processed_urls]
-        content_dirs += data_from_scraped_urls[:content_dirs]
+        data[:accumulated_people] = accumulated_people
+        data[:content_dirs] = content_dirs
+        data[:processed_urls] = processed_urls
       end
 
-      {
-        accumulated_people: accumulated_people,
-        processed_urls: processed_urls,
-        content_dirs: content_dirs
-      }
+      data
     end
 
     def self.scrape_profiles(context, accumulated_people, processed_urls)
@@ -131,15 +140,18 @@ module Core
         next person if Services::Shared::People.all_contact_data_points_present?(person) && person["image"].present?
         next person if person["websites"].blank?
 
-        person["websites"].each do |website|
-          original_url = website["data"]
+        unique_websites = person["websites"].map { |website| website["data"] }.uniq
+        puts "Websites found for #{person["name"]}: #{unique_websites}"
+
+        unique_websites.each do |original_url|
           next if original_url.blank?
           next if processed_urls.include?(original_url)
 
           puts "Fetching from #{original_url} for #{person["name"]}"
           url_content_dir, people = scrape_url_for_municipal_directory(
             context,
-            original_url
+            original_url,
+            person["name"]
           )
 
           next if people.blank?
@@ -158,21 +170,20 @@ module Core
       [content_dirs, accumulated_people]
     end
 
-    def self.scrape_url_for_municipal_directory(context, url)
+    def self.scrape_url_for_municipal_directory(context, url, person_name = "")
       llm_service_string = context[:llm_service_string]
       page_fetcher = context[:page_fetcher]
       cache_path = context[:city_cache_path]
       municipality_context = context[:municipality_context]
       llm_service = get_llm_service(llm_service_string)
 
-      puts "#{llm_service_string} Scraping #{url} for municipal directory"
       url_content_path = File.join(cache_path, Utils::UrlHelper.url_to_safe_folder_name(url))
       FileUtils.mkdir_p(url_content_path)
 
       content_file, image_map = page_fetcher.extract_content(url, url_content_path)
       return [nil, nil] unless content_file.present?
 
-      people = llm_service.extract_city_people(municipality_context, content_file, url)
+      people = llm_service.extract_city_people(municipality_context, content_file, url, person_name)
 
       unless people.present? && people.is_a?(Array) && people.count.positive?
         return [nil,
@@ -203,24 +214,27 @@ module Core
       end
     end
 
-    def self.should_continue_scraping?(accumulated_officials, num_urls_scraped)
+    def self.should_continue_scraping?(context, data)
+      accumulated_officials = data[:accumulated_people]
+      num_urls_scraped = data[:processed_urls].count
+      scrape_exit_config = context[:scrape_exit_config]
+
       return false if num_urls_scraped >= @@MAX_URLS_TO_SCRAPE
 
-      member_count = accumulated_officials.count do |person|
-        person["positions"].present? &&
-          person["positions"].any? { |position| position.downcase.include?("member") } &&
-          Services::Shared::People.profile_data_points_present?(person)
+      valid_officials_count = accumulated_officials.count do |official|
+        # TODO: should only check if the positions are relevant
+        official["positions"].present? && Services::Shared::People.profile_data_points_present?(official)
       end
 
-      leader_count = accumulated_officials.count do |person|
-        person["positions"].present? &&
-          person["positions"].any? { |position| position.downcase.include?("mayor") } &&
-          Services::Shared::People.profile_data_points_present?(person)
+      if context[:llm_service_string] == "gemini"
+        puts "Valid officials count: #{valid_officials_count}"
+        puts "Scrape exit config: #{scrape_exit_config[:people_count]}"
+        puts "people found: #{accumulated_officials.map { |official| official["positions"] }}"
       end
 
-      return false if leader_count >= 1 && member_count >= 4
+      return true if valid_officials_count < scrape_exit_config[:people_count]
 
-      true
+      false
     end
   end
 end

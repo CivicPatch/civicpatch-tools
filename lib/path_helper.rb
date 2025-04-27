@@ -8,6 +8,11 @@ module PathHelper
     File.expand_path(relative_path, Dir.pwd)
   end
 
+  def self.get_municipality_config_path(state, gnis)
+    municipality_path = PathHelper.get_data_source_city_path(state, gnis)
+    PathHelper.project_path(File.join(municipality_path, "config.yml"))
+  end
+
   def self.get_unique_city_name(state, gnis)
     city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
     state_places = Core::StateManager.get_municipalities(state)
