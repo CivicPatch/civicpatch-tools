@@ -47,13 +47,13 @@ gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-
     * Free Tier - 2000 req/month
 * Google Gemini 2.5 Flash (used with scraping) - Paid Tier 1
   * [Manage](https://console.cloud.google.com/apis/api/generativelanguage.googleapis.com/metrics)
-  * Pricing Page - https://ai.google.dev/gemini-api/docs/pricing
+  * [Pricing](https://ai.google.dev/gemini-api/docs/pricing)
   * Input: $0.15 Per Million
   * Output: $0.60 Per Million
 * OpenAI API - GPT 4.1 Mini (used with scraping)
+  * [Pricing](https://platform.openai.com/docs/pricing)
   * Input: $0.40 Per Million
   * Output: $1.60 Per Million
-  * https://platform.openai.com/docs/pricing 
 * Digital Ocean
   * Host images under spaces
 
