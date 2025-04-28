@@ -4,33 +4,150 @@
   - Mayor
   email: Beach.Pace@hillsboro-oregon.gov
   phone_number: "(503) 681-6269"
+  website: https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
+  start_date: '2025-01-07'
+  end_date: '2029-01-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/131faccb3a31b55e6634d2bcb334fac5bed9f5fe355f5214c49e27f83e1d6334.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/38010/638696944449230000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/
+  - https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office
+  - https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
+- name: Steve Callaway
+  positions:
+  - Mayor
+  email:
+  phone_number: "(503) 681-6100"
+  website: https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718
+  start_date: '2016-01-01'
+  end_date: '2024-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/642ee55716c4434c762de84436f259900ec6fd3893b0220a2a6abec79d40c8a2.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/9106/636293224483430000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/
+- name: Anthony Martin
+  positions:
+  - Council President
+  - Council Member
+  - Position B
+  - Ward 2
+  email: Anthony.Martin@Hillsboro-Oregon.gov
+  phone_number:
+  website: https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718
+  start_date: '2016-11-01'
+  end_date: '2025-01-01'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/26ee208e1ee02329e839eb6c273e15eb886f33204ca6b19636d04fc4d2480cc0.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/9301/636252655694900000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718
 - name: Cristian Salgado
   positions:
   - Council Member
   email: cristian.salgado@hillsboro-oregon.gov
   phone_number: "(503) 681-6100"
-- name: Elizabeth Case
-  positions:
-  - Council Member
-  email: elizabeth.case@hillsboro-oregon.gov
-  phone_number: "(503) 681-6100"
-- name: Kipperlyn Sinclair
-  positions:
-  - Council Member
-  email: kipperlyn.sinclair@hillsboro-oregon.gov
-  phone_number: "(503) 681-6100"
+  website:
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
 - name: Olivia Alcaire
   positions:
   - Council Member
+  - Position A
+  - Ward 3
+  - Ward 3 Position A
   email: olivia.alcaire@hillsboro-oregon.gov
   phone_number: "(503) 681-6269"
-- name: Rob Harris
+  website: https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718
+  start_date:
+  end_date: '2026-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/30ee38c4fd9c8bae5b2e94a6cf3eed54c7e22eea0c54085050b8054a9cc83981.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/9114/636233509318630000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/
+  - https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718
+- name: Rick Van Beveren
   positions:
   - Council Member
-  email: rob.harris@hillsboro-oregon.gov
-  phone_number: "(503) 681-6100"
+  - Position B
+  - Ward 1
+  email:
+  phone_number:
+  website: https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718
+  start_date: '2016-01-01'
+  end_date: '2024-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/9807e8db743a77dfb07f8724db00b780512287b084b9ffa8a17b9784fc9f17a0.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/6185/636904928829630000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718
 - name: Saba Anvery
   positions:
   - Council Member
+  - Ward 1 Position B
   email: saba.anvery@hillsboro-oregon.gov
   phone_number: "(503) 681-6100"
+  website:
+  start_date:
+  end_date: '2028-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/009b8597d2e236594fe16d8d5ff5cb13358ba7210042a00ccbe934b088386f18.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/38158/638703103435470000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/
+  - https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
+- name: Kipperlyn Sinclair
+  positions:
+  - Council Member
+  - Ward 2 Position A
+  email: kipperlyn.sinclair@hillsboro-oregon.gov
+  phone_number: "(503) 681-6100"
+  website: https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/
+  start_date:
+  end_date: '2026-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/c8f5e121d8494955306944f9af8d9cb651f6e1e26829d7c2c8011c2fb9517d76.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/30827/638067221304930000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/
+  - https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718
+- name: Elizabeth Case
+  positions:
+  - Council Member
+  - Ward 2 Position B
+  email: elizabeth.case@hillsboro-oregon.gov
+  phone_number: "(503) 681-6100"
+  website:
+  start_date:
+  end_date: '2028-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/cf714dd822ae7a31ca998202308220b3e720fd53f153b8eff7e49d1fdc96e347.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/38154/638703103421170000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/
+  - https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
+- name: Rob Harris
+  positions:
+  - Council Member
+  - Ward 3 Position B
+  email: rob.harris@hillsboro-oregon.gov
+  phone_number: "(503) 681-6100"
+  website:
+  start_date:
+  end_date: '2028-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/hillsboro/images/38b3bd85ca1d144929202ac45958c5a2f79f556d81b7b1e041b4a52f841a6652.jpg
+  source_image: https://www.hillsboro-oregon.gov/home/showpublishedimage/38156/638703103429800000
+  sources:
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/
+  - https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office
+  - https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300

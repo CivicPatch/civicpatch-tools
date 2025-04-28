@@ -1,0 +1,1167 @@
+[
+  {
+    "name": "Beach Pace",
+    "image": "images/131faccb3a31b55e6634d2bcb334fac5bed9f5fe355f5214c49e27f83e1d6334.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38010/638696944449230000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
+      "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+    ],
+    "positions": [
+      "mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link titled 'Mayor Beach Pace' directly associated with the person.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with election news for Mayor Beach Pace.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Sworn into office for a four-year term in January 2025, swearing-in date explicitly mentioned as January 7, 2025.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
+      },
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated 'Mayor Pace's term began on January 7, 2025'.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News"
+      },
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated 'Mayor Pace's term began on January 7, 2025'.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as Mayor with term expiration December 31, 2028 in the council positions table.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+      },
+      {
+        "data": "2029-01-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires January 2029, interpreted as end of January 2029.",
+        "proximity_to_name": 25,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News"
+      },
+      {
+        "data": "2029-01-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires January 2029, interpreted as end of January 2029.",
+        "proximity_to_name": 25,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      }
+    ]
+  },
+  {
+    "name": "Saba Anvery",
+    "image": "images/009b8597d2e236594fe16d8d5ff5cb13358ba7210042a00ccbe934b088386f18.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38158/638703103435470000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ],
+    "positions": [
+      "council member",
+      "ward 1",
+      "position B",
+      "ward 1 position b"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Will join the Council on January 7, 2025, explicitly stated.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed with term expiration December 31, 2028 in the council positions table.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+      }
+    ]
+  },
+  {
+    "name": "Elizabeth Case",
+    "image": "images/cf714dd822ae7a31ca998202308220b3e720fd53f153b8eff7e49d1fdc96e347.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38154/638703103421170000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ],
+    "positions": [
+      "council member",
+      "ward 2",
+      "position B",
+      "ward 2 position b"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Will join the Council on January 7, 2025, explicitly stated.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed with term expiration December 31, 2028 in the council positions table.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+      }
+    ]
+  },
+  {
+    "name": "Rob Harris",
+    "image": "images/38b3bd85ca1d144929202ac45958c5a2f79f556d81b7b1e041b4a52f841a6652.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38156/638703103429800000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ],
+    "positions": [
+      "council member",
+      "ward 3",
+      "position B",
+      "ward 3 position b"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Will join the Council on January 7, 2025, explicitly stated.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed with term expiration December 31, 2028 in the council positions table.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+      }
+    ]
+  },
+  {
+    "name": "Olivia Alcaire",
+    "image": "images/30ee38c4fd9c8bae5b2e94a6cf3eed54c7e22eea0c54085050b8054a9cc83981.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/9114/636233509318630000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ],
+    "positions": [
+      "council member",
+      "ward 3",
+      "position A",
+      "ward 3 position a"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed with term expiration December 31, 2026 in the council positions table.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+      }
+    ]
+  },
+  {
+    "name": "Kipperlyn Sinclair",
+    "image": "images/c8f5e121d8494955306944f9af8d9cb651f6e1e26829d7c2c8011c2fb9517d76.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/30827/638067221304930000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ],
+    "positions": [
+      "council member",
+      "ward 2",
+      "position A",
+      "ward 2 position a"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed with term expiration December 31, 2026 in the council positions table.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+      }
+    ]
+  },
+  {
+    "name": "Steve Callaway",
+    "image": "images/642ee55716c4434c762de84436f259900ec6fd3893b0220a2a6abec79d40c8a2.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/9106/636293224483430000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+    ],
+    "positions": [
+      "mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 681-6100",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed near the mayor's profile and city contact info, likely main office line.",
+        "proximity_to_name": 150,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/our-city/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No direct personal profile link found, city council page is best available.",
+        "proximity_to_name": 100,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/our-city/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No direct personal profile link found, but city council page is the closest relevant official page.",
+        "proximity_to_name": 200,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with the mayor's name in the candidate filing section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016-11-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected Mayor in November 2016, date inferred as start of term.",
+        "proximity_to_name": 40,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718"
+      },
+      {
+        "data": "2017-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated 'Took office in January 2017' and 'First elected Mayor in November 2016'.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/"
+      },
+      {
+        "data": "2016-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in 2016, interpreted as term start January 1, 2016.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-01-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term expires January 2025.",
+        "proximity_to_name": 40,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Mentioned '2024 is his final year in office' indicating term ends in 2024.",
+        "proximity_to_name": 100,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/"
+      },
+      {
+        "data": "2024-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term-limited after eight years, implying term ends in 2024.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      }
+    ]
+  },
+  {
+    "name": "Cristian Salgado",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ],
+    "positions": [
+      "council member",
+      "ward 1 position a"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed with term expiration December 31, 2026 in the council positions table.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+      }
+    ]
+  },
+  {
+    "name": "B Genduso",
+    "image": "images/f2aa6c37ea968d62062f1ce4831ce45b7ebbece0901e932c05a64d7efcdc395e.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/39130/638766912141170000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Co-Chair",
+      "Youth Advisory Council"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Ends June 2025 explicitly stated in table near name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+      }
+    ]
+  },
+  {
+    "name": "Rona Isakharov",
+    "image": "images/f2aa6c37ea968d62062f1ce4831ce45b7ebbece0901e932c05a64d7efcdc395e.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/39130/638766912141170000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Co-Chair",
+      "Youth Advisory Council"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Ends June 2025 explicitly stated in table near name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+      }
+    ]
+  },
+  {
+    "name": "Yasmine Othman-Gomez",
+    "image": "images/f2aa6c37ea968d62062f1ce4831ce45b7ebbece0901e932c05a64d7efcdc395e.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/39130/638766912141170000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Secretary",
+      "Youth Advisory Council"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Ends June 2025 explicitly stated in table near name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+      }
+    ]
+  },
+  {
+    "name": "Shaayan Sinha",
+    "image": "images/f2aa6c37ea968d62062f1ce4831ce45b7ebbece0901e932c05a64d7efcdc395e.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/39130/638766912141170000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Ambassador",
+      "Youth Advisory Council"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Ends June 2025 explicitly stated in table near name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+      }
+    ]
+  },
+  {
+    "name": "Mari Park",
+    "image": "images/f2aa6c37ea968d62062f1ce4831ce45b7ebbece0901e932c05a64d7efcdc395e.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/39130/638766912141170000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Media Coordinator",
+      "Youth Advisory Council",
+      "Chair Diversity, Equity, and Inclusion Subcommittee"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Ends June 2025 explicitly stated in table near name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+      }
+    ]
+  },
+  {
+    "name": "Anna Kapler",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Chair Climate Resilience & Sustainability Subcommittee"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Jupiter Nickles",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Climate Resilience & Sustainability Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Amaya Buescher",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Climate Resilience & Sustainability Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Parker Brown",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Climate Resilience & Sustainability Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Joe Wamunyu",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Diversity, Equity, and Inclusion Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Nicole Ayala Congachi",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Diversity, Equity, and Inclusion Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Yasmine Othman",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Diversity, Equity, and Inclusion Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Ashley-Clare Sarafa",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Diversity, Equity, and Inclusion Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Riley Gregory",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Diversity, Equity, and Inclusion Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Ian Powell",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Chair Transportation Subcommittee"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Brigette Harrington",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Transportation Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Kieran Garigan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Transportation Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Annabelle Bailey",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Transportation Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Autumn Schnathorst",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Chair Youth Engagement Subcommittee"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Pearson Jessop",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Youth Engagement Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Gwen Kondor",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Youth Engagement Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Sophia Godoy",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Chair Youth Houselessness Subcommittee"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Jessy Alfonso Garcia",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Youth Houselessness Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Ria Quintilla",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Youth Houselessness Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Alex Zuniga",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Youth Houselessness Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Ricky Knocke",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Chair Youth Welfare Subcommittee"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Vihaan Kini",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Youth Welfare Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Vikram Javali",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/our-city/commissions-committees-boards/youth-advisory-council"
+    ],
+    "positions": [
+      "Youth Welfare Subcommittee Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Rick Van Beveren",
+    "image": "images/9807e8db743a77dfb07f8724db00b780512287b084b9ffa8a17b9784fc9f17a0.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/6185/636904928829630000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+    ],
+    "positions": [
+      "council member",
+      "ward 1",
+      "position b"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with councilor's name in the candidate filing section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/our-city/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No direct personal profile link found, but city council page is the best available related page.",
+        "proximity_to_name": 100,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in 2016, interpreted as term start January 1, 2016.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      },
+      {
+        "data": "2015-10-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed to City Council in October 2015, indicating start date.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2024-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term-limited after nine years, implying term ends in 2024.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      },
+      {
+        "data": "2025-01-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current term expires in January 2025, explicitly stated.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+      }
+    ]
+  },
+  {
+    "name": "Anthony Martin",
+    "image": "images/26ee208e1ee02329e839eb6c273e15eb886f33204ca6b19636d04fc4d2480cc0.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/9301/636252655694900000",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
+    ],
+    "positions": [
+      "council president",
+      "ward 2",
+      "position b",
+      "council member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "anthony.martin@hillsboro-oregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email explicitly stated as Anthony Martin's contact in the text near his name.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with council president's name in the candidate filing section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/our-city/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No direct personal profile link found, but city council page is the closest relevant official page.",
+        "proximity_to_name": 100,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in 2016, interpreted as term start January 1, 2016.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      },
+      {
+        "data": "2016-11-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in November 2016 as stated; date inferred as start of term.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2024-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term-limited after eight years, implying term ends in 2024.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      },
+      {
+        "data": "2025-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Current term expires in January 2025 as explicitly stated.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
+      }
+    ]
+  },
+  {
+    "name": "Gina Sanchez-Roletto",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+    ],
+    "positions": [
+      "council member",
+      "ward 3",
+      "position b"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/12387/1718?npage=3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link directly associated with councilor's name in the candidate filing section.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in 2020, interpreted as term start January 1, 2020.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      }
+    ],
+    "end_dates": []
+  }
+]

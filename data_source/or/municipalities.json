@@ -101,10 +101,12 @@
       "phone_number": "(503) 681-6100",
       "website": "https://www.hillsboro-oregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "7a3b6c78a1f2e034a6edf289efdcdb97",
+      "meta_updated_at": "2025-04-28",
+      "meta_hash": "6237d70f84ae1ea13f4f8a33e0967602",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
