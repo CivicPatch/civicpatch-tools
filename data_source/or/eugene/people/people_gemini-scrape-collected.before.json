@@ -1,0 +1,494 @@
+[
+  {
+    "name": "Kaarin Knudson",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/3458/Mayor-Kaarin-Knudson-Bio"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-5010",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below the term and address for the mayor.",
+        "proximity_to_name": 100,
+        "source": "https://www.eugene-or.gov/3458/Mayor-Kaarin-Knudson-Bio"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/3458/Mayor-Kaarin-Knudson-Bio",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/3458/Mayor-Kaarin-Knudson-Bio/",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL is the specific bio page for the target person.",
+        "proximity_to_name": 5,
+        "source": "https://www.eugene-or.gov/3458/Mayor-Kaarin-Knudson-Bio"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Eliza Kashinsky",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/3457"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8341",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly labeled 'Phone' under the person's name and title.",
+        "proximity_to_name": 100,
+        "source": "https://www.eugene-or.gov/3457"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/3457",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2608/Eliza-Kashinsky",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the current page URL, which is a dedicated page for the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.eugene-or.gov/3457"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Matt Keating",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/4628"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 2",
+      "City Councilor, Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8342",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Directly listed under name and title.",
+        "proximity_to_name": 100,
+        "source": "https://www.eugene-or.gov/4628"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/4628",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2608/Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the general council page, not a specific profile page, but it's the closest relevant URL.",
+        "proximity_to_name": 500,
+        "source": "https://www.eugene-or.gov/4628"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term: January 2025-January 2029'.",
+        "proximity_to_name": 150,
+        "source": "https://www.eugene-or.gov/4628"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Alan Zelenka",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/2619"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8343",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly labeled 'Phone' near the name.",
+        "proximity_to_name": 25,
+        "source": "https://www.eugene-or.gov/2619"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/2619",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2619/Alan-Zelenka",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL matches the page content and name.",
+        "proximity_to_name": 0,
+        "source": "https://www.eugene-or.gov/2619"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Jennifer Yeh",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/2620"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8344",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly labeled 'Phone' near the name and title.",
+        "proximity_to_name": 100,
+        "source": "https://www.eugene-or.gov/2620"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/2620",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2608/Council/2620/Jennifer-Yeh",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The URL path clearly indicates a page for Jennifer Yeh under the Council section.",
+        "proximity_to_name": 0,
+        "source": "https://www.eugene-or.gov/2620"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Mike Clark",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/2621"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 5"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8345",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly labeled 'Phone' under the person's name and title.",
+        "proximity_to_name": 100,
+        "source": "https://www.eugene-or.gov/2621"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/2621",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2621/Mike-Clark",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the URL of the page the information was extracted from, which is a profile page for the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.eugene-or.gov/2621"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Greg Evans",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/2622"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 6",
+      "City Councilor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8346",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly labeled 'Phone:' near the person's name and address.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 80,
+        "source": "https://www.eugene-or.gov/2622"
+      }
+    ],
+    "emails": [
+      {
+        "data": "gevans@eugene-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text associated with the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.eugene-or.gov/2622"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/2622",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2622/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the current page URL, likely the person's profile page, but not explicitly labeled as a personal website.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.eugene-or.gov/2622"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term: January 2023– January 2027' under the person's name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/2622"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Lyndsie Leech",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/2623/Lyndsie-Leech"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 7"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8347",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly labeled 'Phone:'",
+        "proximity_to_name": 100.0,
+        "source": "https://www.eugene-or.gov/2623/Lyndsie-Leech"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/2623/Lyndsie-Leech",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2623/Lyndsie-Leech/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the profile page for the person.",
+        "proximity_to_name": 100.0,
+        "source": "https://www.eugene-or.gov/2623/Lyndsie-Leech"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Randy Groves",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.eugene-or.gov/537/Mayor-and-City-Council",
+      "https://www.eugene-or.gov/4629"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 8",
+      "Councilor, Ward 8"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-682-8348",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the person's name and address.",
+        "proximity_to_name": 80,
+        "source": "https://www.eugene-or.gov/4629"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rgroves@eugene-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly associated with the name and labeled 'Email Councilor Groves'.",
+        "proximity_to_name": 100,
+        "source": "https://www.eugene-or.gov/4629"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.eugene-or.gov/4629",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with name/image, likely profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "https://www.eugene-or.gov/2608/Council/Randy-Groves",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "This is the page dedicated to Randy Groves on the city council website.",
+        "proximity_to_name": 0,
+        "source": "https://www.eugene-or.gov/4629"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Date range clearly listed below name.",
+        "proximity_to_name": 20,
+        "source": "https://www.eugene-or.gov/537/Mayor-and-City-Council"
+      },
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Start date explicitly stated as 'January 2025' in the 'Term' information.",
+        "proximity_to_name": 50,
+        "source": "https://www.eugene-or.gov/4629"
+      }
+    ],
+    "end_dates": []
+  }
+]

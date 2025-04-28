@@ -37,10 +37,12 @@
       "phone_number": "(541) 682-5010",
       "website": "https://www.eugene-or.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "a43018e26cebd5e8b0b361c30f518b57",
+      "meta_updated_at": "2025-04-28",
+      "meta_hash": "2beb883636c8a49bc533e35839c5d401",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
