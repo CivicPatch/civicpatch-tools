@@ -78,10 +78,12 @@
       "phone_number": "(503) 661-3000",
       "website": "https://www.greshamoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "b89083c5b48c58539e9ecb7f1ccf2fa9",
+      "meta_updated_at": "2025-04-28",
+      "meta_hash": "95c3bc23f40b57aa52943bc49c084b92",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
