@@ -19,7 +19,8 @@ module Services
           phone_number: LLM_DATA_POINT_SCHEMA,
           email: LLM_DATA_POINT_SCHEMA,
           website: LLM_DATA_POINT_SCHEMA,
-          term_date: LLM_DATA_POINT_SCHEMA
+          start_date: LLM_DATA_POINT_SCHEMA,
+          end_date: LLM_DATA_POINT_SCHEMA
         },
         required: ["name"] # Enforce that name is required
       }.freeze
