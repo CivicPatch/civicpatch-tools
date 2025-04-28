@@ -2,59 +2,18 @@
   {
     "name": "Beach Pace",
     "positions": [
-      "Mayor",
-      "Council Member"
+      "Mayor"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 681-6219",
     "email": null,
     "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News",
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ]
-  },
-  {
-    "name": "Steve Callaway",
-    "positions": [
-      "Mayor"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-    ]
-  },
-  {
-    "name": "Anthony Martin",
-    "positions": [
-      "Council President",
-      "Council Member",
-      "Position B",
-      "Ward 2"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "Anthony.Martin@Hillsboro-Oregon.gov",
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718",
-    "start_date": "2016-11-01",
-    "end_date": "2025-01-01",
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
     ]
   },
   {
@@ -62,44 +21,43 @@
     "positions": [
       "Council Member",
       "Position A",
-      "Ward 3",
-      "Ward 3 Position A",
-      "Ward 3, Position A"
+      "Ward 3"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 681-6219",
     "email": null,
     "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718"
     ]
   },
   {
-    "name": "Gina Sanchez-Roletto",
+    "name": "Elizabeth Case",
     "positions": [
       "Council Member",
       "Position B",
-      "Ward 3"
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 681-6219",
     "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/12387/1718?npage=3",
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300"
     ]
   },
   {
-    "name": "Rick Van Beveren",
+    "name": "Saba Anvery",
     "positions": [
       "Council Member",
       "Position B",
@@ -107,113 +65,72 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 681-6219",
     "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718",
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
     ]
   },
   {
     "name": "Cristian Salgado",
     "positions": [
       "Council Member",
-      "Ward 1 Position A"
+      "Ward 1, Position A"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 681-6219",
     "email": null,
-    "website": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ]
-  },
-  {
-    "name": "Saba Anvery",
-    "positions": [
-      "Council Member",
-      "Ward 1 Position B",
-      "Ward 1, Position B"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
     ]
   },
   {
     "name": "Kipperlyn Sinclair",
     "positions": [
       "Council Member",
-      "Ward 2 Position A",
       "Ward 2, Position A"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 681-6219",
     "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/",
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
-    ]
-  },
-  {
-    "name": "Elizabeth Case",
-    "positions": [
-      "Council Member",
-      "Ward 2 Position B",
-      "Ward 2, Position B"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
     ]
   },
   {
     "name": "Rob Harris",
     "positions": [
       "Council Member",
-      "Ward 3 Position B",
       "Ward 3, Position B"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 681-6219",
     "email": null,
-    "website": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
     ]
   }
 ]

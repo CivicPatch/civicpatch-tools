@@ -4,156 +4,51 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News",
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
     ],
     "positions": [
-      "Mayor",
-      "City Councilor"
+      "Mayor"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(503) 681-6219",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under individual contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      }
+    ],
     "emails": [],
     "websites": [
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link provided next to her name/title.",
-        "proximity_to_name": 100,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
-      },
-      {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is the URL of the current page, which is a spotlight on the mayor.",
+        "llm_confidence_reason": "Link to individual spotlight/profile page.",
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News"
+        "proximity_to_name": 250,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
       },
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
         "llm_confidence": 0.7,
-        "llm_confidence_reason": "This is the page URL itself, not a dedicated profile page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "This is the URL of the spotlight article about her, not a dedicated profile page.",
         "proximity_to_name": 0,
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
       }
     ],
     "start_dates": [
       {
-        "data": "2025-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated she will be sworn in for a four-year term in January 2025.",
-        "proximity_to_name": 50,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
-      },
-      {
-        "data": "2025-01-07",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as the start date of the Mayor term.",
-        "proximity_to_name": 150,
-        "source": "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News"
-      },
-      {
         "data": "2025-01-07",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Explicitly stated 'term began on January 7, 2025'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
         "proximity_to_name": 150,
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-      }
-    ],
-    "end_dates": []
-  },
-  {
-    "name": "Saba Anvery",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ],
-    "positions": [
-      "City Councilor, Ward 1, Position B",
-      "Council Member",
-      "Ward 1 Position B",
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [
-      {
-        "data": "2025-01-07",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated she will join the Council on January 7, 2025.",
-        "proximity_to_name": 50,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
-      }
-    ],
-    "end_dates": []
-  },
-  {
-    "name": "Elizabeth Case",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ],
-    "positions": [
-      "City Councilor, Ward 2, Position B",
-      "Council Member",
-      "Ward 2 Position B",
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [
-      {
-        "data": "2025-01-07",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied start date based on the swearing-in date mentioned for new councilors.",
-        "proximity_to_name": 150,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
-      }
-    ],
-    "end_dates": []
-  },
-  {
-    "name": "Rob Harris",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ],
-    "positions": [
-      "City Councilor, Ward 3, Position B",
-      "Council Member",
-      "Ward 3 Position B",
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [
-      {
-        "data": "2025-01-07",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied start date based on the swearing-in date mentioned for new councilors.",
-        "proximity_to_name": 150,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
       }
     ],
     "end_dates": []
@@ -163,28 +58,46 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718"
     ],
     "positions": [
-      "City Councilor, Ward 3, Position A",
-      "Council Member",
-      "Ward 3 Position A",
       "Councilor",
+      "Council Member",
       "Ward 3",
       "Position A"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(503) 681-6219",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under individual contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      }
+    ],
     "emails": [],
     "websites": [
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link provided next to her name/title.",
-        "proximity_to_name": 100,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
+        "llm_confidence_reason": "Link to individual spotlight/profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 250,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the URL of a spotlight article about her, not a dedicated profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
       },
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718",
@@ -214,27 +127,44 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
     ],
     "positions": [
-      "City Councilor, Ward 2, Position A",
-      "Council Member",
-      "Ward 2 Position A",
       "Councilor",
       "Councilor, Ward 2, Position A"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(503) 681-6219",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under individual contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      }
+    ],
     "emails": [],
     "websites": [
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link provided next to her name/title.",
-        "proximity_to_name": 100,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/"
+        "llm_confidence_reason": "Link to individual spotlight/profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 250,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the URL of a spotlight article about her, not a dedicated profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
       },
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/",
@@ -256,249 +186,266 @@
     "end_dates": []
   },
   {
+    "name": "Saba Anvery",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
+    ],
+    "positions": [
+      "Councilor",
+      "Council Ward 1",
+      "Position B"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 681-6219",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under individual contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual spotlight/profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 250,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the URL of a spotlight article about her, not a dedicated profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the URL of the page dedicated to the City Council Spotlight on Saba Anvery.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'term began on January 7, 2025'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Elizabeth Case",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300"
+    ],
+    "positions": [
+      "Councilor",
+      "Council Member",
+      "Ward 2",
+      "Position B"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 681-6219",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under individual contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual spotlight/profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 250,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the URL of a spotlight article about her, not a dedicated profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page dedicated to the councilor spotlight.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'term began on January 7, 2025'.",
+        "proximity_to_name": 100,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Rob Harris",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
+    ],
+    "positions": [
+      "Councilor",
+      "Council Member, Ward 3, Position B"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 681-6219",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under individual contact section.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual spotlight/profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 250,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the URL of a spotlight article about him, not a dedicated profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page about the person, but not a dedicated profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-07",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'term began on January 7, 2025'",
+        "proximity_to_name": 100,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
+      }
+    ],
+    "end_dates": []
+  },
+  {
     "name": "Cristian Salgado",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ],
-    "positions": [
-      "Council Member",
-      "Ward 1 Position A",
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": []
-  },
-  {
-    "name": "Steve Callaway",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-    ],
-    "positions": [
-      "Mayor"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hillsboro-oregon.gov/our-city/city-council",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "General City Council page, no specific profile page found.",
-        "proximity_to_name": 500.0,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718"
-      },
-      {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Link titled 'City Council Spotlight: Mayor Steve Callaway' appears to be a profile page.",
-        "proximity_to_name": 2000,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/"
-      },
-      {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link provided next to name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2020",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Re-elected Mayor in November 2020. Term likely started shortly after.",
-        "proximity_to_name": 100.0,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718"
-      },
-      {
-        "data": "2017-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states he took office in January 2017.",
-        "proximity_to_name": 300,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/"
-      },
-      {
-        "data": "2016",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected year explicitly stated.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-      }
-    ],
-    "end_dates": []
-  },
-  {
-    "name": "Rick Van Beveren",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
     ],
     "positions": [
       "Councilor",
-      "Ward 1",
-      "Position B"
+      "Council Member, Ward 1, Position A"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link provided next to name.",
+        "data": "(503) 681-6219",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under individual contact section.",
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-      },
-      {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718/",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the page URL where the information is found, but not a dedicated profile page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2015",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Appointed year explicitly stated.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-      },
-      {
-        "data": "2015-10-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated appointment date.",
         "proximity_to_name": 150,
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
       }
     ],
-    "end_dates": []
-  },
-  {
-    "name": "Anthony Martin",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
-    ],
-    "positions": [
-      "Council President",
-      "Councilor",
-      "Ward 2",
-      "Position B",
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "Anthony.Martin@Hillsboro-Oregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly provided and associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link provided next to name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2016",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected year explicitly stated.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-      },
-      {
-        "data": "2016-11-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "First election date explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
-      }
-    ]
-  },
-  {
-    "name": "Gina Sanchez-Roletto",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
-    ],
-    "positions": [
-      "Councilor",
-      "Ward 3",
-      "Position B"
-    ],
-    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/12387/1718?npage=3",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link provided next to name.",
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual spotlight/profile page.",
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+        "proximity_to_name": 250,
+        "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the URL of a spotlight article about him, not a dedicated profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+      },
+      {
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page dedicated to the councilor's spotlight, serving as a profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
       }
     ],
     "start_dates": [
       {
-        "data": "2020",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected year explicitly stated.",
+        "data": "2025-01-21",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated date of swearing-in.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+        "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
       }
     ],
     "end_dates": []
