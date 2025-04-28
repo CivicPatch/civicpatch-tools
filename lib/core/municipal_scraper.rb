@@ -226,11 +226,10 @@ module Core
         official["positions"].present? && Services::Shared::People.profile_data_points_present?(official)
       end
 
-      if context[:llm_service_string] == "gemini"
-        puts "Valid officials count: #{valid_officials_count}"
-        puts "Scrape exit config: #{scrape_exit_config[:people_count]}"
-        puts "people found: #{accumulated_officials.map { |official| official["positions"] }}"
-      end
+      puts "#{context[:llm_service_string]}: Scrape exit config: #{scrape_exit_config[:people_count]}"
+      puts "#{context[:llm_service_string]}: People found: #{accumulated_officials.map do |official|
+        official["positions"]
+      end}"
 
       return true if valid_officials_count < scrape_exit_config[:people_count]
 

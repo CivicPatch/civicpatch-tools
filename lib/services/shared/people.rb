@@ -10,28 +10,31 @@ module Services
           "source_image" => person["source_image"],
           "sources" => [source]
         }
+        formatted_person["positions"] = person["positions"].present? ? person["positions"] : []
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
         formatted_person["emails"] =
           data_point?(person["email"]) && valid_email?(person["email"]["data"]) ? [person["email"]] : []
         formatted_person["websites"] =
           data_point?(person["website"]) && valid_website?(person["website"]["data"]) ? [format_website_data_point(person["website"])] : []
-        formatted_person["term_dates"] =
-          data_point?(person["term_date"]) ? [person["term_date"]] : []
-        formatted_person["positions"] = person["positions"].present? ? person["positions"] : []
+        formatted_person["start_dates"] =
+          data_point?(person["start_date"]) ? [person["start_date"]] : []
+        formatted_person["end_dates"] =
+          data_point?(person["end_date"]) ? [person["end_date"]] : []
 
         data_points_with_source(formatted_person, source)
       end
 
       def self.merge_person(person, partial_person)
         merged = person.dup
+        merged["positions"] = (Array(person["positions"]) + Array(partial_person["positions"])).uniq
         merged["image"] = partial_person["image"] || person["image"]
         merged["source_image"] = partial_person["source_image"] || person["source_image"]
         merged["phone_numbers"] += partial_person["phone_numbers"]
         merged["emails"] += partial_person["emails"]
         merged["websites"] += partial_person["websites"]
-        merged["term_dates"] += partial_person["term_dates"]
-        merged["positions"] = (Array(person["positions"]) + Array(partial_person["positions"])).uniq
+        merged["start_dates"] += partial_person["start_date"]
+        merged["end_dates"] += partial_person["end_date"]
         merged["sources"] = (Array(person["sources"]) + Array(partial_person["sources"])).uniq
 
         merged
@@ -71,7 +74,7 @@ module Services
       end
 
       def self.data_points_with_source(person, source)
-        %w[phone_numbers emails websites term_dates].each do |data_point|
+        %w[phone_numbers emails websites start_dates end_dates].each do |data_point|
           next unless person[data_point].present?
 
           person[data_point].each do |data_point_item|
@@ -133,6 +136,23 @@ module Services
         }
       end
 
+      # We are more interested in end dates
+      def self.pick_best_term_dates(start_dates, end_dates)
+        return nil if end_dates.blank?
+
+        best_end_date = pick_best_data_point(end_dates)
+
+        return nil if best_end_date.blank?
+
+        best_source = best_end_date["source"]
+        start_date = (start_dates.find { |dp| dp["source"] == best_source } if start_dates.present?)
+
+        {
+          "start_date" => start_date,
+          "end_date" => best_end_date
+        }
+      end
+
       # Score a regular (non-website) data point
       def self.score_regular_data_point(data_point, all_data_points)
         # Count frequency
@@ -174,11 +194,12 @@ module Services
 
       # Combines all data points into a single person hash
       def self.format_person(llm_person)
+        term_date = pick_best_term_dates(llm_person["start_dates"], llm_person["end_dates"])
         selected_data_points = {
           "phone_number" => pick_best_data_point(llm_person["phone_numbers"]),
           "email" => pick_best_data_point(llm_person["emails"]),
           "website" => pick_best_data_point(llm_person["websites"]),
-          "term_date" => pick_best_data_point(llm_person["term_dates"])
+          **(term_date.present? ? term_date : {})
         }
 
         sources = selected_data_points.values.map { |dp| dp.present? ? dp["source"] : nil }.compact.uniq
@@ -191,7 +212,8 @@ module Services
           "phone_number" => selected_data_points["phone_number"].present? ? selected_data_points["phone_number"]["data"] : nil,
           "email" => selected_data_points["email"].present? ? selected_data_points["email"]["data"] : nil,
           "website" => selected_data_points["website"].present? ? selected_data_points["website"]["data"] : nil,
-          "term_date" => selected_data_points["term_date"].present? ? selected_data_points["term_date"]["data"] : nil,
+          "start_date" => selected_data_points["start_date"].present? ? selected_data_points["start_date"]["data"] : nil,
+          "end_date" => selected_data_points["end_date"].present? ? selected_data_points["end_date"]["data"] : nil,
           "sources" => (Array(llm_person["sources"]) + Array(sources)).uniq
         }
       end

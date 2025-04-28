@@ -264,14 +264,7 @@
       "gnis": "2411552",
       "type": "Code city",
       "population": 92175,
-      "government_type": "Council-Manager",
-      "meta_updated_at": "2025-04-17",
-      "meta_hash": "1f7c90aea220c3a79190e05189ab2830",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
+      "government_type": "Council-Manager"
     },
     {
       "ocd_ids": [
@@ -358,12 +351,7 @@
       "gnis": "2411381",
       "type": "Code city",
       "population": 77108,
-      "government_type": "Council-Manager",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "dcdec26f6167bfe0a441a03aa34a4d18",
-      "meta_sources": [
-        "state_source"
-      ]
+      "government_type": "Council-Manager"
     },
     {
       "ocd_ids": [

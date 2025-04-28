@@ -32,8 +32,9 @@ module Services
         - phone_number: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
         - email: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
         - website: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
-        - term_date: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
         - positions: [array of strings]
+        - start_date: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
+        - end_date: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
 
         Format example:
         {
@@ -44,13 +45,15 @@ module Services
               "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name.", "proximity_to_name": 10, "markdown_formatting": {"in_list": false}},
               "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header", "markdown_formatting": {"in_list": true}},
               "positions": ["Mayor", "Council Member"],
-              "term_date": {"data": "2022-01-01 to 2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
+              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}},
+              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
             },
             {
               "name": "Jane Smith",
               "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()", "markdown_formatting": {"in_list": false}},
               "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name.", "markdown_formatting": {"in_list": false}},
-              "positions": ["Council President"]
+              "positions": ["Council President"],
+              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'", "markdown_formatting": {"in_list": true}}
             }
           ]
         }
@@ -90,10 +93,34 @@ module Services
             like `[email@example.com]()` or `[email@example.com](some-link)`.
             Extract the email address shown in the brackets.
           - Place extracted emails ONLY in the "email" field, NEVER in the "website" field.
+        - start_date and end_date extraction:
+          - Format: YYYY, YYYY-MM-DD or null
+          - SEARCH FOR END DATES using these patterns:
+            - "Term Expires:"
+            - "Term Ends:"
+            - "Serving Until:"
+            - "Until:"
+            - "Next Election:"
+            - "End of Term:"
+            - "Through"
+            - "Expires"
+            - "Ending"
+          - Date format rules:
+            - Years only: use YYYY format (e.g., "2025")
+            - Month and year: use YYYY-MM-01 format
+            - Complete dates: use YYYY-MM-DD format
+          - EXAMPLES - end dates (CRITICAL TO EXTRACT):
+            - "Term expires December 31, 2026" → end_date: {"data": "2026-12-31"}
+            - "Term expires December 2026" → end_date: {"data": "2026-12-01"}
+            - "Serving through 2025" → end_date: {"data": "2025"}
+            - "Next election: November 2024" → end_date: {"data": "2024-11-01"}
         - Today is #{current_date}. Ensure that only active positions are included, and
           exclude any positions that are not currently held or are no longer active.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us' that appear structurally close (e.g., immediately following section) to a specific person's name or section should be associated with that person unless the text clearly indicates otherwise (e.g., 'General City Contact').
         - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record
+
+        FINAL CHECK: If you see a phrase like "Term Expires December 31, 2025" for a person (e.g., Jay Arnold),
+        you MUST include end_date in their entry. Do not skip any dates that appear with a person's information.
 
         Here is the content:
         #{content}

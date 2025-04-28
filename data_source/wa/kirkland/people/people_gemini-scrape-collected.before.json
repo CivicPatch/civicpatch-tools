@@ -2,150 +2,283 @@
   {
     "name": "Kelli Curtis",
     "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "term_dates": [
-      {
-        "data": "Expires December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
+    "source_image": null,
+    "sources": [
+      "https://www.kirklandwa.gov/Government/City-Council"
     ],
     "positions": [
       "Mayor",
-      "Councilmember"
-    ]
+      "Position 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-587-3532",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kcurtis@kirklandwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed.",
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
   },
   {
     "name": "Jay Arnold",
     "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "term_dates": [
-      {
-        "data": "Term Expires December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
+    "source_image": null,
+    "sources": [
+      "https://www.kirklandwa.gov/Government/City-Council"
     ],
     "positions": [
       "Deputy Mayor",
-      "Councilmember"
+      "Position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-587-3535",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jarnold@kirklandwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "proximity_to_name": 20,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
     ]
   },
   {
     "name": "Neal Black",
     "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "term_dates": [
+    "source_image": null,
+    "sources": [
+      "https://www.kirklandwa.gov/Government/City-Council"
+    ],
+    "positions": [
+      "Councilmember",
+      "Position 5"
+    ],
+    "phone_numbers": [
       {
-        "data": "Term Expires December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "425-587-3544",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "positions": [
-      "Councilmember"
+    "emails": [
+      {
+        "data": "nblack@kirklandwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "proximity_to_name": 20,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
     ]
   },
   {
     "name": "Amy Falcone",
     "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "term_dates": [
+    "source_image": null,
+    "sources": [
+      "https://www.kirklandwa.gov/Government/City-Council"
+    ],
+    "positions": [
+      "Councilmember",
+      "Position 6"
+    ],
+    "phone_numbers": [
       {
-        "data": "Term Expires December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "425-587-3526",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "positions": [
-      "Councilmember"
+    "emails": [
+      {
+        "data": "afalcone@kirklandwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "proximity_to_name": 20,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
     ]
   },
   {
     "name": "Jon Pascal",
     "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "term_dates": [
+    "source_image": null,
+    "sources": [
+      "https://www.kirklandwa.gov/Government/City-Council"
+    ],
+    "positions": [
+      "Councilmember",
+      "Position 7"
+    ],
+    "phone_numbers": [
       {
-        "data": "Term Expires December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "425-587-3530",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "positions": [
-      "Councilmember"
+    "emails": [
+      {
+        "data": "jpascal@kirklandwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "proximity_to_name": 20,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
     ]
   },
   {
     "name": "Penny Sweet",
     "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "term_dates": [
+    "source_image": null,
+    "sources": [
+      "https://www.kirklandwa.gov/Government/City-Council"
+    ],
+    "positions": [
+      "Councilmember",
+      "Position 3"
+    ],
+    "phone_numbers": [
       {
-        "data": "Term Expires December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "425-587-3534",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "positions": [
-      "Councilmember"
+    "emails": [
+      {
+        "data": "psweet@kirklandwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "proximity_to_name": 20,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
     ]
   },
   {
     "name": "John Tymczyszyn",
     "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.kirklandwa.gov/Government/City-Council"
+    ],
+    "positions": [
+      "Councilmember",
+      "Position 4"
+    ],
     "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "term_dates": [
+    "emails": [
       {
-        "data": "Term Expires December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "JohnT@Kirklandwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted from markdown link text.",
+        "markdown_formatting": {},
+        "proximity_to_name": 50,
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "positions": [
-      "Councilmember"
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "proximity_to_name": 20,
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
     ]
   }
 ]

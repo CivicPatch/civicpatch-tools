@@ -1,7 +1,7 @@
-  [Skip to main content](https://www.kirklandwa.gov/Government/City-Council#main-content)  opens in new tab or window  ![City of Kirkland - Logo](images/4a65b8e8b38a3862675a61182b11b5d50ed48e50500cf7bee40b0bfd055dcd36.print-header.png)   ![QR code to access this page](images/738909aabe334ea5174c3824ea2e74784207526d0d85493b36bda2aa5856f0ec.jpg)  Quick Links: Quick Links  **  
+  [Skip to main content](https://www.kirklandwa.gov/Government/City-Council/)  opens in new tab or window  ![City of Kirkland - Logo](images/4a65b8e8b38a3862675a61182b11b5d50ed48e50500cf7bee40b0bfd055dcd36.jpg)   ![QR code to access this page](images/738909aabe334ea5174c3824ea2e74784207526d0d85493b36bda2aa5856f0ec.jpg)  Quick Links: Quick Links  **  
 
  *  [Contact Us](https://www.kirklandwa.gov/Government/Contact-Us) 
- *  [Facebook](https://www.facebook.com/kirklandwa.gov) 
+ *  [Facebook](https://www.facebook.com/kirklandwa.gov/) 
  *  [X](https://x.com/kirklandgov) 
  *  [Land Acknowledgement](https://www.kirklandwa.gov/Government/City-Managers-Office/Local-Land-Acknowledgement) 
   [English (United States)Select this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=en-US)  [SpanishSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=es)  [Chinese (Simplified)Select this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=zh-CN)  [RussianSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=ru)  [VietnameseSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=vi)  [PersianSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=fa)  [PortugueseSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=pt)  [HindiSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=hi)  [TeluguSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=te)  [KoreanSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=ko)  English (United States)  **  is your current preferred language. 
@@ -16,10 +16,9 @@
  *  [HindiSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=hi) 
  *  [TeluguSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=te) 
  *  [KoreanSelect this as your preferred language](https://www.kirklandwa.gov/Government/City-Council?oc_lang=ko) 
-  [City of Kirkland - Home - Logo](https://www.kirklandwa.gov/Home)   **  Open Search  **  Menu Search 
+  [City of Kirkland - Home - Logo](https://www.kirklandwa.gov/Home)   **  Open Search  **  Menu 
 
  *  [**Resident](https://www.kirklandwa.gov/Resident)  **  Sub-menu 
-   *  [Back to  Resident](https://www.kirklandwa.gov/Government/City-Council) 
    *  [Utilities](https://www.kirklandwa.gov/Resident/Utilities) 
    *  [Garbage, Recycling and Compost](https://www.kirklandwa.gov/Resident/Garbage-Recycling-and-Compost) 
    *  [My Property](https://www.kirklandwa.gov/Resident/My-Property) 
@@ -28,12 +27,11 @@
    *  [Getting Around](https://www.kirklandwa.gov/Resident/Getting-Around) 
    *  [Senior Resources](https://www.kirklandwa.gov/Resident/Senior-Resources) 
    *  [Pets](https://www.kirklandwa.gov/Resident/Pets) 
-   *  [Human and Social Services​](https://www.kirklandwa.gov/Resident/Human-and-Social-Services) 
+   *  [Human and Social Services​](https://www.kirklandwa.gov/Resident/Human-and-Social-Services%E2%80%8B) 
    *  [Public Safety](https://www.kirklandwa.gov/Resident/Public-Safety) 
    *  [Volunteer​](https://www.kirklandwa.gov/Resident/Volunteer) 
    *  [Sustainability](https://www.kirklandwa.gov/Resident/Sustainability) 
  *  [What's Happening](https://www.kirklandwa.gov/Whats-Happening)  **  Sub-menu 
-   *  [Back to What's Happening](https://www.kirklandwa.gov/Government/City-Council) 
    *  [News & Info](https://www.kirklandwa.gov/Whats-Happening/News) 
    *  [Community Events](https://www.kirklandwa.gov/Whats-Happening/Community-Events) 
    *  [Council Meetings](https://www.kirklandwa.gov/Whats-Happening/Council-Meetings) 
@@ -43,7 +41,6 @@
    *  [Community Conversations](https://www.kirklandwa.gov/Whats-Happening/Community-Conversations) 
    *  [Construction Projects](https://www.kirklandwa.gov/Whats-Happening/Construction-Projects) 
  *  [Government](https://www.kirklandwa.gov/Government)  **  Sub-menu 
-   *  [Back to Government](https://www.kirklandwa.gov/Government/City-Council) 
    *  [City Council](https://www.kirklandwa.gov/Government/City-Council) 
    *  [City Manager's Office](https://www.kirklandwa.gov/Government/City-Managers-Office) 
    *  [Municipal Court](https://www.kirklandwa.gov/Government/Municipal-Court) 
@@ -55,16 +52,14 @@
    *  [Subscribe to Kirkland Email Lists](https://www.kirklandwa.gov/Government/Subscribe-to-Kirkland-Email-Lists) 
    *  [Staff Directory](https://www.kirklandwa.gov/Government/Staff-Directory) 
  *  [Business](https://www.kirklandwa.gov/Business)  **  Sub-menu 
-   *  [Back to Business](https://www.kirklandwa.gov/Government/City-Council) 
    *  [Doing Business with the City](https://www.kirklandwa.gov/Business/Doing-Business-with-the-City) 
    *  [Economic Development in Kirkland](https://www.kirklandwa.gov/Business/Economic-Development) 
    *  [Business Licenses and Fees](https://www.kirklandwa.gov/Business/Business-Licenses-and-Fees) 
    *  [Apply for a Permit](https://www.kirklandwa.gov/Business/Apply-for-a-Permit) 
-   *  [Business Trash, Recycling, and Compost​](https://www.kirklandwa.gov/Business/Trash-Recycling-and-Compost) 
+   *  [Business Trash, Recycling, and Compost​](https://www.kirklandwa.gov/Business/Trash-Recycling-and-Compost%E2%80%8B) 
    *  [Business Resources](https://www.kirklandwa.gov/Business/Business-Resources) 
    *  [Parking](https://www.kirklandwa.gov/Business/Parking) 
  *  [Services](https://www.kirklandwa.gov/Services)  **  Sub-menu 
-   *  [Back to Services](https://www.kirklandwa.gov/Government/City-Council) 
    *  [Pay a Utility Bill](https://www.kirklandwa.gov/Services/Pay-a-Utility-Bill) 
    *  [Register for a Recreation Program](https://www.kirklandwa.gov/Services/Register-for-a-Recreation-Program) 
    *  [License Your Pet](https://www.kirklandwa.gov/Services/License-Your-Pet) 
@@ -77,11 +72,11 @@
 
 Select the Escape key to close the menu. Focus will then be set to the first menu item.
 
- You Are Here :  [Home](https://www.kirklandwa.gov/Home)  /  [Government](https://www.kirklandwa.gov/Government)  / City Council 
+ Search You Are Here :  [Home](https://www.kirklandwa.gov/Home)  /  [Government](https://www.kirklandwa.gov/Government)  / City Council 
 
 # City Council
 
-  ![2024 City Council](dbaca73f6cdc56df71a94fd7b6f46c25299f4b6d8ef171c2ce30e802f674a6d9.jpg) 
+  ![2024 City Council](images/dbaca73f6cdc56df71a94fd7b6f46c25299f4b6d8ef171c2ce30e802f674a6d9.jpg) 
 
  The City Council is Kirkland’s governing body and is comprised of seven non-partisan members who are  [elected](https://www.kingcounty.gov/depts/elections.aspx)  by the registered voters of Kirkland to serve “at large” (not representing a district or ward). Councilmembers are elected every two years to serve four-year terms. The Mayor and Deputy Mayor are elected among the members to serve two-year terms. 
 
@@ -159,7 +154,7 @@ Whenever a group wishes to address the Council on a subject, the Mayor will norm
 
 The City of Kirkland is committed to sustaining strong relations with neighborhood associations and residents.
 
- [Kirkland's Neighborhood Associations](https://www.kirklandwa.gov/Government/City-Managers-Office/Neighborhood-Services)  serve as an important communications link between the City and its residents. They also provide an effective way for neighbors to improve the quality of life in Kirkland’s Neighborhoods. There are currently eleven associations meeting on a regular basis. For additional information on organizing, Programs, and upcoming meetings check the  [Neighborhood Services Web Page](https://www.kirklandwa.gov/Government/City-Managers-Office/Neighborhood-Services). Stay connected to Kirkland by subscribing to Neighborhood E-Bulletins by going to  [www.kirklandwa.gov](https://www.kirklandwa.gov)  and click on the Kirkland Email Alerts icon.
+ [Kirkland's Neighborhood Associations](https://www.kirklandwa.gov/Government/City-Managers-Office/Neighborhood-Services)  serve as an important communications link between the City and its residents. They also provide an effective way for neighbors to improve the quality of life in Kirkland’s Neighborhoods. There are currently eleven associations meeting on a regular basis. For additional information on organizing, Programs, and upcoming meetings check the  [Neighborhood Services Web Page](https://www.kirklandwa.gov/Government/City-Managers-Office/Neighborhood-Services). Stay connected to Kirkland by subscribing to Neighborhood E-Bulletins by going to  [www.kirklandwa.gov](https://www.kirklandwa.gov/)  and click on the Kirkland Email Alerts icon.
 
  __Volunteer Program__ 
 
@@ -181,7 +176,7 @@ The City operates a  [volunteer program](https://www.kirklandwa.gov/Government/C
 
   [**(show below)## Mayor Kelli Curtis(show below)]()  
 
- ![Kelli Curtis](0ef00e6debb931607ba39d60789c96bca3d6266adb5dbb8aa1f996a4c60ff82d.jpg) 
+ ![Kelli Curtis](images/0ef00e6debb931607ba39d60789c96bca3d6266adb5dbb8aa1f996a4c60ff82d.jpg) 
 
  __Mayor Kelli Curtis
 
@@ -201,7 +196,7 @@ Curtis attended the University of Washington, graduating with a Bachelor of Arts
 
 Mayor Curtis can be reached at kcurtis@kirklandwa.gov or 425-587-3532. For scheduling assistance, please contact Amy Bolen, Executive Assistant, at abolen@kirklandwa.gov, or 425-587-3007.
 
-  [**(show below)## Deputy Mayor Jay Arnold(show below)]()   __ ![Jay Arnold](4769ce0b159985abc6a188e272ca78631d86f58cfda643e60a8088a97ec360b4.jpg) Deputy Mayor Jay Arnold__  
+  [**(show below)## Deputy Mayor Jay Arnold(show below)]()   __ ![Jay Arnold](images/4769ce0b159985abc6a188e272ca78631d86f58cfda643e60a8088a97ec360b4.jpg) Deputy Mayor Jay Arnold__  
 
  __Position #1
 
@@ -231,7 +226,7 @@ Deputy Mayor Arnold can be reached at  [jarnold@kirklandwa.gov](mailto:)  or  [4
 
   [**(show below)## Councilmember Neal Black(show below)]()  
 
- __ ![Neal Black](f6375a653230a8cfdc9946f7e5715e12785a98060afed5fc7d578953d80c2f16.jpg) Councilmember Neal Black
+ __ ![Neal Black](images/f6375a653230a8cfdc9946f7e5715e12785a98060afed5fc7d578953d80c2f16.jpg) Councilmember Neal Black
 
 Position #5
 
@@ -265,7 +260,7 @@ Councilmember Black may be reached at  [nblack@kirklandwa.gov](mailto:)  or  [42
 
   [**(show below)## Councilmember Amy Falcone(show below)]()  
 
- ![](images/b648575018a486a35331b5334ac46e15e4a3f0e84f8439d8047db2d41656b083.amy-falcone-2024.jpg)  __Councilmember Amy Falcone
+ ![](images/b648575018a486a35331b5334ac46e15e4a3f0e84f8439d8047db2d41656b083.jpg)  __Councilmember Amy Falcone
 
 Position #6
 
@@ -293,7 +288,7 @@ Councilmember Amy Falcone can be reached at  [afalcone@kirklandwa.gov](mailto:) 
 
   [**(show below)## Councilmember Jon Pascal(show below)]()  
 
- __ ![Jon Pascal](698779dce29834e3a63522e3b130878ccd6e0bd4486a8f3b69cc57694eb71624.jpg) Councilmember Jon Pascal
+ __ ![Jon Pascal](images/698779dce29834e3a63522e3b130878ccd6e0bd4486a8f3b69cc57694eb71624.jpg) Councilmember Jon Pascal
 
 Position # 7
 
@@ -305,7 +300,7 @@ Councilmember Jon Pascal was first elected to Position 7 on the Kirkland City Co
 
  __External Committee Assignments:__ Cascade Water Alliance Board Alternate, Cascade Water Alliance Resource Management Committee, Eastrail Regional Advisory Council Alternate, King County EMS Advisory Committee Alternate, NORCOM Principals Assembly Delegate
 
- __Statewide Appointed Assignments:__  [Cooper Jones Active Transportation Safety Council](https://wtsc.wa.gov/safe-driving/active-transportation-safety-council) , Washington State [Transportation Improvement Board](http://www.tib.wa.gov) 
+ __Statewide Appointed Assignments:__  [Cooper Jones Active Transportation Safety Council](https://wtsc.wa.gov/safe-driving/active-transportation-safety-council/) , Washington State [Transportation Improvement Board](http://www.tib.wa.gov/) 
 
  __About Councilmember Pascal:__ Councilmember Pascal has actively volunteered his time on various City of Kirkland Commissions, organizations, and stakeholder groups since moving to Kirkland in 2001. He was first appointed by the Kirkland City Council to the Transportation Commission and served eight years as a Commissioner, two of those years as Chair. During that time, he led the effort to develop the Commission's Transportation Conversations policy document and helped develop the City's Active Transportation Plan and Complete Streets Ordinance. In 2009 he was appointed to the Planning Commission where he served for 6 years and assisted in reconciling and updating land use regulations after the annexation of Juanita, Finn Hill, and Kingsgate neighborhoods.
 
@@ -319,7 +314,7 @@ Councilmember Pascal can be reached at [jpascal@kirklandwa.gov](mailto:jpascal@k
 
   [**(show below)## Councilmember Penny Sweet(show below)]()  
 
- __ ![Penny Sweet](ff55d5785f6c9cbfe94627bae2598dbb882f78db1c6936980b8e06bc3ef87299.jpg) Councilmember Penny Sweet__  __Position #3__  __Term Expires December 31, 2025__ 
+ __ ![Penny Sweet](images/ff55d5785f6c9cbfe94627bae2598dbb882f78db1c6936980b8e06bc3ef87299.jpg) Councilmember Penny Sweet__  __Position #3__  __Term Expires December 31, 2025__ 
 
 Councilmember Sweet began her first term on the Kirkland City Council in January 2010. She served as Deputy Mayor  from 2010-2011, and 2014-2015. The Kirkland City Council selected Councilmember Penny Sweet to serve as Mayor for the remainder of 2019, and again in 2021-2023. She has lived in Kirkland since 1985 and served as the Chair of the Market Neighborhood Association from 2007–2009.
 
@@ -345,7 +340,7 @@ Councilmember Sweet can be reached at  [psweet@kirklandwa.gov](mailto:) , or  [4
 
   [**(show below)## Councilmember John Tymczyszyn(show below)]()  
 
- ![John Tymczyszyn](1c4bbf09acdac719a9a68d819f168004bbe205bfdd68eb8b18db3d18891ac4c6.jpg)  __Councilmember John Tymczyszyn__ 
+ ![John Tymczyszyn](images/1c4bbf09acdac719a9a68d819f168004bbe205bfdd68eb8b18db3d18891ac4c6.jpg)  __Councilmember John Tymczyszyn__ 
 
  __Position #4
 
@@ -401,7 +396,7 @@ In February 2012, the City Council approved  [Ordinance 4348](https://www.kirkla
 
  [**Code-of-Conduct(PDF, 64KB)](https://www.kirklandwa.gov/files/sharedassets/public/v/1/boards-and-commissions/code-of-conduct.pdf) 
 
- [Kirkland Municipal Code](http://www.codepublishing.com/wa/kirkland) ,  [Chapter 3.14, Code of Ethics](https://www.codepublishing.com/WA/Kirkland/html/Kirkland03/Kirkland0314.html) 
+ [Kirkland Municipal Code](http://www.codepublishing.com/wa/kirkland/) ,  [Chapter 3.14, Code of Ethics](https://www.codepublishing.com/WA/Kirkland/html/Kirkland03/Kirkland0314.html) 
 
  [State Code of Ethics for Municipal Officers, Chapter 42.23 RCW](http://apps.leg.wa.gov/RCW/default.aspx?cite=42.23) 
 
@@ -413,7 +408,7 @@ In February 2012, the City Council approved  [Ordinance 4348](https://www.kirkla
 
 The Kirkland City Council approved  [Ordinance No. 4190](https://kirkland.prelive.opencities.com/files/sharedassets/public/kirkland-city-council/kirkland-municipal-code-3.12.pdf)  which sets dollar limits on  the size of contributions a Kirkland City Council candidate may receive during an election cycle.  The Ordinance is codified as Kirkland Municipal Code Chapter 3.12 and relies largely on the relevant definitions found in state law and on the interpretations of these definitions provided by rule or order of the Washington State Public Disclosure Commission.
 
-Effective June 1, 2010, state campaign contribution limits now apply to City Council candidates. For information, visit the  [PDC website](https://www.pdc.wa.gov)  or call toll free 1-877-601-2828.
+Effective June 1, 2010, state campaign contribution limits now apply to City Council candidates. For information, visit the  [PDC website](https://www.pdc.wa.gov/)  or call toll free 1-877-601-2828.
 
 ***
 
@@ -439,12 +434,12 @@ Yes.  There are exceptions to the contributions dollar limit for: contributions 
 
  __ Related Links__ 
 
- *  [Washington State Public Disclosure Commission](http://www.pdc.wa.gov) 
+ *  [Washington State Public Disclosure Commission](http://www.pdc.wa.gov/) 
  *  [King County Elections](http://www.kingcounty.gov/elections.aspx) 
- *  [Revised Code of Washington](http://apps.leg.wa.gov/RCW) 
+ *  [Revised Code of Washington](http://apps.leg.wa.gov/RCW/) 
   [**(show below)## Serving on the City Council(show below)]()  
 
- ![Serving-on-City-Council-image.jpg](3e8624280fc52b7530e6609a8cce771659b367195b79b0d8da4b6ab954c6a4db.jpg) 
+ ![Serving-on-City-Council-image.jpg](images/3e8624280fc52b7530e6609a8cce771659b367195b79b0d8da4b6ab954c6a4db.jpg) 
 
  Four City Council seats will be up for election in 2025 (positions 1, 3, 5, & 7 for four-year terms ending 12/31/2029).    For all elections related information, including filing period methods and dates, please visit  [King County Elections webpage](https://www.kingcounty.gov/depts/elections/for-candidates.aspx). 
 
@@ -468,7 +463,7 @@ The [Salary Commission](https://kirkland.prelive.opencities.com/Government/Depar
 
  *  (During council sessions)* 
 
- [**City Council Agenda Calendar(PDF, 251KB)](https://www.kirklandwa.gov/files/sharedassets/public/v/95/city-council/agenda-calendar/ccsched.pdf) 
+ [**City Council Agenda Calendar(PDF, 251KB)](https://www.kirklandwa.gov/files/sharedassets/public/v/97/city-council/agenda-calendar/ccsched.pdf) 
 
  *This calendar is subject to frequent change. It does not constitute legal notice. * 
 
@@ -522,9 +517,9 @@ City Clerk's Office
 
  [King County District 1](http://www.kingcounty.gov/Dembowski.aspx) 
 
- [King County District 6](http://www.kingcounty.gov/Hague.aspx)  [1st, 45th & 48th State Legislative Districts](http://leg.wa.gov) 
+ [King County District 6](http://www.kingcounty.gov/Hague.aspx)  [1st, 45th & 48th State Legislative Districts](http://leg.wa.gov/) 
 
- [1st Congressional District](http://www.house.gov)  
+ [1st Congressional District](http://www.house.gov/)  
 
 ## Proclamations & Commendations
 
@@ -540,8 +535,8 @@ City Clerk's Office
  *  [**Facebook](https://www.facebook.com/sharer/sharer.php?u=https://www.kirklandwa.gov/Government/City-Council) 
  *  [**X](https://twitter.com/share?url=https://www.kirklandwa.gov/Government/City-Council) 
  *  [**Email](mailto:?Body=https%3a%2f%2fwww.kirklandwa.gov%2fGovernment%2fCity-Council) 
- *  [**Print](https://www.kirklandwa.gov/Government/City-Council) 
-  [**Back to top](https://www.kirklandwa.gov/Government/City-Council#body-top)  
+ *  [**Print](https://www.kirklandwa.gov/Government/City-Council/) 
+  [**Back to top](https://www.kirklandwa.gov/Government/City-Council/)  
 
 ### Contact Us
 
@@ -587,7 +582,7 @@ City Hall is closed on Washington State holidays.
 
  
 
-  [Website Disclaimer](https://www.kirklandwa.gov/Site-Footer/Website-Disclaimer)  | [Privacy & Security](https://www.kirklandwa.gov/Site-Footer/Site-Privacy-and-Security-Notice)  | [Translation Disclaimer](https://www.kirklandwa.gov/Site-Footer/Translation-Disclaimer)  | [Kirkland ADA Information](https://www.kirklandwa.gov/Site-Footer/Americans-with-Disabilities-Act-ADA-Notice)  | [Linking Policy](https://www.kirklandwa.gov/Site-Footer/Linking-Policy)  | [Title VI: Non-Discrimination](https://www.kirklandwa.gov/Site-Footer/Title-VI-Non-Discrimination)  © 2025 City of Kirkland |  Powered by [Granicus](https://granicus.com/solution/govaccess/opencities)  Houghton Beach Park Swimming Area Closed The Houghton Beach Park swimming area is closed for at least one week due to elevated bacteria levels. People and pets should not swim, drink lake water, or engage in other water activities at Houghton Beach Park. The rest of the park is open. For more information visit King County's Lake Swimming Beach Program website. 
+  [Website Disclaimer](https://www.kirklandwa.gov/Site-Footer/Website-Disclaimer)  | [Privacy & Security](https://www.kirklandwa.gov/Site-Footer/Site-Privacy-and-Security-Notice)  | [Translation Disclaimer](https://www.kirklandwa.gov/Site-Footer/Translation-Disclaimer)  | [Kirkland ADA Information](https://www.kirklandwa.gov/Site-Footer/Americans-with-Disabilities-Act-ADA-Notice)  | [Linking Policy](https://www.kirklandwa.gov/Site-Footer/Linking-Policy)  | [Title VI: Non-Discrimination](https://www.kirklandwa.gov/Site-Footer/Title-VI-Non-Discrimination)  © 2025 City of Kirkland |  Powered by [Granicus](https://granicus.com/solution/govaccess/opencities/)  Houghton Beach Park Swimming Area Closed The Houghton Beach Park swimming area is closed for at least one week due to elevated bacteria levels. People and pets should not swim, drink lake water, or engage in other water activities at Houghton Beach Park. The rest of the park is open. For more information visit King County's Lake Swimming Beach Program website. 
 
  [King County Lake Swimming Beach Data Program](https://green2.kingcounty.gov/swimbeach/default.aspx) 
 
