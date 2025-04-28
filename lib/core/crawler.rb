@@ -71,6 +71,7 @@ module Core
       return [] if depth > max_depth
 
       page = fetch_page(url)
+      File.write("html_page.html", page.body)
       return [] unless page
 
       links = extract_links(page, base_url)

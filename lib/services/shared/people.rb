@@ -33,8 +33,8 @@ module Services
         merged["phone_numbers"] += partial_person["phone_numbers"]
         merged["emails"] += partial_person["emails"]
         merged["websites"] += partial_person["websites"]
-        merged["start_dates"] += partial_person["start_date"]
-        merged["end_dates"] += partial_person["end_date"]
+        merged["start_dates"] += partial_person["start_dates"]
+        merged["end_dates"] += partial_person["end_dates"]
         merged["sources"] = (Array(person["sources"]) + Array(partial_person["sources"])).uniq
 
         merged

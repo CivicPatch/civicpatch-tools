@@ -108,6 +108,8 @@ jobs:
           SPACES_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
           SPACES_SECRET_KEY: ${{ secrets.SPACES_SECRET_KEY }}
           SPACES_ENDPOINT: ${{ secrets.SPACES_ENDPOINT }}
+          GOOGLE_SEARCH_API_KEY: ${{ secrets.GOOGLE_SEARCH_API_KEY }}
+          GOOGLE_SEARCH_ENGINE_ID: ${{ secrets.GOOGLE_SEARCH_ENGINE_ID }}
         run: |
           bundle exec rake pipeline:fetch[${{ env.STATE }},${{ env.GNIS }}]
       
