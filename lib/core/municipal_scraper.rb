@@ -226,14 +226,24 @@ module Core
         official["positions"].present? && Services::Shared::People.profile_data_points_present?(official)
       end
 
-      puts "#{context[:llm_service_string]}: Scrape exit config: #{scrape_exit_config[:people_count]}"
-      puts "#{context[:llm_service_string]}: People found: #{accumulated_officials.map do |official|
+      found_positions = accumulated_officials.map do |official|
         official["positions"]
-      end}"
+      end
+
+      puts "#{context[:llm_service_string]}: Scrape exit config: #{scrape_exit_config}"
+      puts "#{context[:llm_service_string]}: People found: #{found_positions}"
+      puts "#{context[:llm_service_string]}: Officials count: #{valid_officials_count}"
+      return true unless found_key_position?(scrape_exit_config, found_positions)
 
       return true if valid_officials_count < scrape_exit_config[:people_count]
 
       false
+    end
+
+    def self.found_key_position?(scrape_exit_config, found_positions)
+      return true if scrape_exit_config[:key_position].blank?
+
+      found_positions.flatten.map(&:downcase).include?(scrape_exit_config[:key_position].downcase)
     end
   end
 end

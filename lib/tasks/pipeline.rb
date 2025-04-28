@@ -44,7 +44,12 @@ namespace :pipeline do
     prepare_directories(state, municipality_entry)
 
     state_source_people = fetch_with_state_source(municipality_context) # State-level city directory source
-    scrape_exit_config = { people_count: state_source_people.count }
+    # TODO: require all municipalities to have a mayor until we discover otherwise
+
+    # Sometimes state source can lag behind the city source
+    #  -- there may be more members listed than are
+    # available on the city website
+    scrape_exit_config = { people_count: state_source_people.count - 2, key_position: "mayor" }
 
     fetch_with_scrape(municipality_context, scrape_exit_config)
 
