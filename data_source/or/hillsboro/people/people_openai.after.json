@@ -1,0 +1,180 @@
+[
+  {
+    "name": "Beach Pace",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/131faccb3a31b55e6634d2bcb334fac5bed9f5fe355f5214c49e27f83e1d6334.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38010/638696944449230000",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+    "start_date": "2025-01-07",
+    "end_date": "2029-01-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office",
+      "https://www.hillsboro-oregon.gov/our-city/news-announcements/-item-9497/-cftype-News",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
+    ]
+  },
+  {
+    "name": "Steve Callaway",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/642ee55716c4434c762de84436f259900ec6fd3893b0220a2a6abec79d40c8a2.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/9106/636293224483430000",
+    "phone_number": "(503) 681-6100",
+    "email": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
+    "start_date": "2016-01-01",
+    "end_date": "2024-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/848/1718",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16074/",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/"
+    ]
+  },
+  {
+    "name": "Anthony Martin",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Position B",
+      "Ward 2"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/26ee208e1ee02329e839eb6c273e15eb886f33204ca6b19636d04fc4d2480cc0.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/9301/636252655694900000",
+    "phone_number": null,
+    "email": "anthony.martin@hillsboro-oregon.gov",
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718",
+    "start_date": "2016-01-01",
+    "end_date": "2024-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/2743/1718"
+    ]
+  },
+  {
+    "name": "Kipperlyn Sinclair",
+    "positions": [
+      "Council Member",
+      "Position A",
+      "Ward 2",
+      "Ward 2 Position A"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/c8f5e121d8494955306944f9af8d9cb651f6e1e26829d7c2c8011c2fb9517d76.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/30827/638067221304930000",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ]
+  },
+  {
+    "name": "Olivia Alcaire",
+    "positions": [
+      "Council Member",
+      "Position A",
+      "Ward 3",
+      "Ward 3 Position A"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/30ee38c4fd9c8bae5b2e94a6cf3eed54c7e22eea0c54085050b8054a9cc83981.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/9114/636233509318630000",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ]
+  },
+  {
+    "name": "Elizabeth Case",
+    "positions": [
+      "Council Member",
+      "Position B",
+      "Ward 2",
+      "Ward 2 Position B"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/cf714dd822ae7a31ca998202308220b3e720fd53f153b8eff7e49d1fdc96e347.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38154/638703103421170000",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ]
+  },
+  null,
+  {
+    "name": "Rick Van Beveren",
+    "positions": [
+      "Council Member",
+      "Position B",
+      "Ward 1"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/9807e8db743a77dfb07f8724db00b780512287b084b9ffa8a17b9784fc9f17a0.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/6185/636904928829630000",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718",
+    "start_date": "2016-01-01",
+    "end_date": "2024-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/15700/",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/1785/1718"
+    ]
+  },
+  {
+    "name": "Rob Harris",
+    "positions": [
+      "Council Member",
+      "Position B",
+      "Ward 3",
+      "Ward 3 Position B"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/38b3bd85ca1d144929202ac45958c5a2f79f556d81b7b1e041b4a52f841a6652.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38156/638703103429800000",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ]
+  },
+  {
+    "name": "Saba Anvery",
+    "positions": [
+      "Council Member",
+      "Position B",
+      "Ward 1",
+      "Ward 1 Position B"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/hillsboro/images/009b8597d2e236594fe16d8d5ff5cb13358ba7210042a00ccbe934b088386f18.jpg",
+    "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38158/638703103435470000",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/",
+      "https://www.hillsboro-oregon.gov/our-city/city-recorder-s-office"
+    ]
+  },
+  null
+]
