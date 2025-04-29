@@ -30,7 +30,7 @@ I am honored to serve my hometown through this role on city council. Getting to 
 
 ### Contact Us
 
-####  [![a woman smiling for the camera](https://content.civicplus.com/api/assets/939a4491-92f0-4abc-9bd3-0170c7a3252d?cache=1800)AshleyHartmeier-Prigg](https://www.beavertonoregon.gov/832/Councilor-Position-1?contentId=c6638e07-1494-46cd-8c47-26825a183b5a) 
+####  [![a woman smiling for the camera](images/5237c3ee5f9d49caa0aab89f38aac7a40fdd312d88b2694f63f6db324eb09a3e.jpg)AshleyHartmeier-Prigg](https://www.beavertonoregon.gov/832/Councilor-Position-1?contentId=c6638e07-1494-46cd-8c47-26825a183b5a) 
 
  Title City Council Position 1 Email 
 
@@ -139,4 +139,4 @@ Use 7-1-1 for relay
 
 Hi, I'm a virtual assistant, how can I help?
 
-  ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ Original text Rate this translation Your feedback will be used to help improve Google Translate 

@@ -30,7 +30,7 @@ I feel inspired to serve by a simple belief: That government has a big role to p
 
 ### Contact Us
 
-####  [![Close up of John Dugger](https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800)JohnDugger](https://www.beavertonoregon.gov/849/Councilor-Position-5?contentId=73254dfb-f2c3-4661-8be7-60320ed3df19) 
+####  [![Close up of John Dugger](images/1436f4b74916ce3ca06868012c91b6c62b1aa1fdd36e6130c56fab61c975de07.jpg)JohnDugger](https://www.beavertonoregon.gov/849/Councilor-Position-5?contentId=73254dfb-f2c3-4661-8be7-60320ed3df19) 
 
  Title City Council Position 5 Email 
 
@@ -139,4 +139,4 @@ Use 7-1-1 for relay
 
 Hi, I'm a virtual assistant, how can I help?
 
-  ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ Original text Rate this translation Your feedback will be used to help improve Google Translate 

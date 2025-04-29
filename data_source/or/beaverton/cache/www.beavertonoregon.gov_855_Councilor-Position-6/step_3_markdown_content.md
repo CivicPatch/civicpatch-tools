@@ -5,7 +5,7 @@
  1.  [Services](https://www.beavertonoregon.gov/101/Services) 
  1.  [Business](https://www.beavertonoregon.gov/35/Business) 
  1.  [How Do I...](https://www.beavertonoregon.gov/9/How-Do-I) 
-  ![a file](images/d59a12e03ae5fa74ba38831fc9a52620475e33e0963784cab308f25d1fecc4e4.jpg)  
+  ![a file](images/36291f7fbcd3f69001ca83726c9016dd025edb487dcf18b8800c9a0356ed5fde.jpg)  
 
  1.  [Home](https://www.beavertonoregon.gov/) 
  1.  [Government](https://www.beavertonoregon.gov/27/Government) 
@@ -135,4 +135,4 @@ Use 7-1-1 for relay
 
 Hi, I'm a virtual assistant, how can I help?
 
-  ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ Original text Rate this translation Your feedback will be used to help improve Google Translate 

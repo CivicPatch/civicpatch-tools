@@ -26,7 +26,7 @@ I look forward to working alongside my fellow councilors and Mayor Beaty, our ci
 
 ### Contact Us
 
-####  [![Allison Tivnon](https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800)AllisonTivnon](https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e) 
+####  [![Allison Tivnon](images/fd1fe3347b1c3feed2afb756dd567cd16a7fd2ea8047dea0be751ac09f5dbe3b.jpg)AllisonTivnon](https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e) 
 
  Title Council Position 4 Email 
 
@@ -135,4 +135,4 @@ Use 7-1-1 for relay
 
 Hi, I'm a virtual assistant, how can I help?
 
-  ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ Original text Rate this translation Your feedback will be used to help improve Google Translate 

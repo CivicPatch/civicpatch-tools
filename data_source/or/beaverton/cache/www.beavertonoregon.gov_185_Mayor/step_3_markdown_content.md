@@ -160,4 +160,4 @@ Use 7-1-1 for relay
 
 Hi, I'm a virtual assistant, how can I help?
 
-  ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ Original text Rate this translation Your feedback will be used to help improve Google Translate 

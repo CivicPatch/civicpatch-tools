@@ -7,8 +7,8 @@
   website: https://www.beavertonoregon.gov/185/Mayor
   start_date:
   end_date:
-  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/ba6afb5733611b4d55eab95b123278ee02d783720e38e8595b8bcd45d7e03583.jpg
-  source_image: https://content.civicplus.com/api/assets/6531d9b7-3b3a-47c1-9ca7-ffb0dd55f64f?cache=1800&width=1880&mode=min
+  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/d59a12e03ae5fa74ba38831fc9a52620475e33e0963784cab308f25d1fecc4e4.jpg
+  source_image: https://content.civicplus.com/api/assets/8f3b9429-373c-42f4-a76f-19dbe2f1cb7a?cache=1800&width=1880&mode=min
   sources:
   - https://www.beavertonoregon.gov/789/City-Council
   - https://www.beavertonoregon.gov/185/Mayor
@@ -21,12 +21,11 @@
   website: https://www.beavertonoregon.gov/832/Councilor-Position-1
   start_date:
   end_date:
-  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/939a4491-92f0-4abc-9bd3-0170c7a3252d?cache=1800
-  source_image:
+  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/5237c3ee5f9d49caa0aab89f38aac7a40fdd312d88b2694f63f6db324eb09a3e.jpg
+  source_image: https://content.civicplus.com/api/assets/939a4491-92f0-4abc-9bd3-0170c7a3252d?cache=1800
   sources:
   - https://www.beavertonoregon.gov/789/City-Council
   - https://www.beavertonoregon.gov/832/Councilor-Position-1
-  - https://www.beavertonoregon.gov/832/Councilor-Position-1/
 - name: Kevin Teater
   positions:
   - Council Member
@@ -34,20 +33,19 @@
   email: kteater@beavertonoregon.gov
   phone_number: "(503) 941-6793"
   website: https://www.beavertonoregon.gov/834/Councilor-Position-2
-  start_date: '2023'
-  end_date: '2027-12-31'
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/or/beaverton/images/faff028a202d515db935cbfae09b909d4b970fbf7a647f091375f13d0880222b.jpg
   source_image: https://content.civicplus.com/api/assets/72cf1f40-03f3-426e-996b-c57823a82507?cache=1800
   sources:
   - https://www.beavertonoregon.gov/789/City-Council
   - https://www.beavertonoregon.gov/834/Councilor-Position-2
-  - https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760
 - name: Edward Kimmi
   positions:
   - Council Member
   - Position 3
   email: ekimmi@beavertonoregon.gov
-  phone_number: "(503) 526-2222"
+  phone_number:
   website: https://www.beavertonoregon.gov/839/Councilor-Position-3
   start_date:
   end_date:
@@ -65,8 +63,8 @@
   website: https://www.beavertonoregon.gov/848/Councilor-Position-4
   start_date:
   end_date:
-  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800
-  source_image:
+  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/fd1fe3347b1c3feed2afb756dd567cd16a7fd2ea8047dea0be751ac09f5dbe3b.jpg
+  source_image: https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800
   sources:
   - https://www.beavertonoregon.gov/789/City-Council
   - https://www.beavertonoregon.gov/848/Councilor-Position-4
@@ -75,12 +73,12 @@
   - Council Member
   - Position 5
   email: jdugger@BeavertonOregon.gov
-  phone_number: "(503) 526-2222"
+  phone_number: "(503) 526-2370"
   website: https://www.beavertonoregon.gov/849/Councilor-Position-5
   start_date:
   end_date:
-  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800
-  source_image:
+  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/1436f4b74916ce3ca06868012c91b6c62b1aa1fdd36e6130c56fab61c975de07.jpg
+  source_image: https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800
   sources:
   - https://www.beavertonoregon.gov/789/City-Council
   - https://www.beavertonoregon.gov/849/Councilor-Position-5

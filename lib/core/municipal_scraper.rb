@@ -201,6 +201,10 @@ module Core
       return person if person["image"].blank?
 
       image_key = person["image"].gsub("images/", "")
+      if person["image"].present? && !image_map[image_key].present?
+        puts "image_key: #{image_key} not found in image_map"
+        pp image_map
+      end
       person["source_image"] = image_map[image_key]
       person
     end

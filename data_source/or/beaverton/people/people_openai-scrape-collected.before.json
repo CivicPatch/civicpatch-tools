@@ -1,8 +1,8 @@
 [
   {
     "name": "Lacey Beaty",
-    "image": "images/ba6afb5733611b4d55eab95b123278ee02d783720e38e8595b8bcd45d7e03583.jpg",
-    "source_image": "https://content.civicplus.com/api/assets/6531d9b7-3b3a-47c1-9ca7-ffb0dd55f64f?cache=1800&width=1880&mode=min",
+    "image": "images/d59a12e03ae5fa74ba38831fc9a52620475e33e0963784cab308f25d1fecc4e4.jpg",
+    "source_image": "https://content.civicplus.com/api/assets/8f3b9429-373c-42f4-a76f-19dbe2f1cb7a?cache=1800&width=1880&mode=min",
     "sources": [
       "https://www.beavertonoregon.gov/789/City-Council"
     ],
@@ -13,8 +13,8 @@
       {
         "data": "(503) 526-2222",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed in city leaders contact section, likely mayor's office number.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Phone number listed in the city leaders contact section, likely for mayor's office.",
+        "proximity_to_name": 30,
         "markdown_formatting": {
           "in_list": false
         },
@@ -26,7 +26,7 @@
         "data": "lbeaty@beavertonoregon.gov",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Email directly associated with Mayor Lacey Beaty in a dedicated contact section.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -37,8 +37,8 @@
       {
         "data": "https://www.beavertonoregon.gov/185/Mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'Mayor' directly associated with Lacey Beaty's name.",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Official mayor page linked directly from mayor's name.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": true
         },
@@ -50,8 +50,8 @@
   },
   {
     "name": "Ashley Hartmeier-Prigg",
-    "image": "https://content.civicplus.com/api/assets/939a4491-92f0-4abc-9bd3-0170c7a3252d?cache=1800",
-    "source_image": null,
+    "image": "images/5237c3ee5f9d49caa0aab89f38aac7a40fdd312d88b2694f63f6db324eb09a3e.jpg",
+    "source_image": "https://content.civicplus.com/api/assets/939a4491-92f0-4abc-9bd3-0170c7a3252d?cache=1800",
     "sources": [
       "https://www.beavertonoregon.gov/789/City-Council",
       "https://www.beavertonoregon.gov/832/Councilor-Position-1"
@@ -62,10 +62,10 @@
     ],
     "phone_numbers": [
       {
-        "data": "503-526-2624",
+        "data": "(503) 526-2624",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under contact information for Ashley Hartmeier-Prigg.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Phone number listed directly under Contact Us section with her name and title.",
+        "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
         },
@@ -76,8 +76,8 @@
       {
         "data": "ahartmeier-Prigg@beavertonoregon.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly associated with Ashley Hartmeier-Prigg in contact section.",
-        "proximity_to_name": 30,
+        "llm_confidence_reason": "Email address directly associated with her name and title in Contact Us section.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -88,7 +88,7 @@
       {
         "data": "https://www.beavertonoregon.gov/832/Councilor-Position-1",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'Councilor Position 1' directly associated with Ashley Hartmeier-Prigg's name.",
+        "llm_confidence_reason": "Official councilor position page linked directly from name.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": true
@@ -97,8 +97,8 @@
       },
       {
         "data": "https://www.beavertonoregon.gov/832/Councilor-Position-1?contentId=c6638e07-1494-46cd-8c47-26825a183b5a",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the specific councilor position page for Ashley Hartmeier-Prigg.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the specific councilor position page with her name linked.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -110,8 +110,8 @@
       {
         "data": "2021-12-01",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Sworn into City Council in late 2021; interpreted as December 2021 start.",
-        "proximity_to_name": 15,
+        "llm_confidence_reason": "Sworn into City Council in late 2021; interpreted as December 2021.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
         },
@@ -160,7 +160,7 @@
       {
         "data": "https://www.beavertonoregon.gov/834/Councilor-Position-2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'Councilor Position 2' directly associated with Kevin Teater's name.",
+        "llm_confidence_reason": "Official councilor position page linked directly from name.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": true
@@ -170,7 +170,7 @@
       {
         "data": "https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is directly linked with Kevin Teater's name and photo on the council position page.",
+        "llm_confidence_reason": "URL is directly linked with Kevin Teater's name and photo.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -180,9 +180,9 @@
     ],
     "start_dates": [
       {
-        "data": "2023-01-01",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Text states he joined City Council in January (assumed January 2023 as current year context).",
+        "data": "2025-01-01",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Text states he joined City Council in January; current year assumed 2025 based on context.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -210,7 +210,7 @@
         "data": "ekimmi@beavertonoregon.gov",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Email directly associated with Edward Kimmi's name and title.",
-        "proximity_to_name": 10,
+        "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
         },
@@ -221,7 +221,7 @@
       {
         "data": "https://www.beavertonoregon.gov/839/Councilor-Position-3",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'Councilor Position 3' directly associated with Edward Kimmi's name.",
+        "llm_confidence_reason": "Official councilor position page linked directly from name.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": true
@@ -234,7 +234,7 @@
         "data": "2022-06-21",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'joined the Beaverton City Council on June 21, 2022'.",
-        "proximity_to_name": 15,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -245,8 +245,8 @@
   },
   {
     "name": "Allison Tivnon",
-    "image": "https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800",
-    "source_image": null,
+    "image": "images/fd1fe3347b1c3feed2afb756dd567cd16a7fd2ea8047dea0be751ac09f5dbe3b.jpg",
+    "source_image": "https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800",
     "sources": [
       "https://www.beavertonoregon.gov/789/City-Council",
       "https://www.beavertonoregon.gov/848/Councilor-Position-4"
@@ -270,11 +270,11 @@
     "emails": [
       {
         "data": "ativnon@beavertonoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly labeled as Allison Tivnon's email.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly labeled with Allison Tivnon's name.",
         "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4"
       }
@@ -283,7 +283,7 @@
       {
         "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'Councilor Position 4' directly associated with Allison Tivnon's name.",
+        "llm_confidence_reason": "Official councilor position page linked directly from name.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": true
@@ -293,10 +293,10 @@
       {
         "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is the direct profile page for Allison Tivnon as Councilor Position 4.",
+        "llm_confidence_reason": "Link associated with Allison Tivnon's name and image.",
         "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4"
       }
@@ -306,8 +306,8 @@
   },
   {
     "name": "John Dugger",
-    "image": "https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800",
-    "source_image": null,
+    "image": "images/1436f4b74916ce3ca06868012c91b6c62b1aa1fdd36e6130c56fab61c975de07.jpg",
+    "source_image": "https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800",
     "sources": [
       "https://www.beavertonoregon.gov/789/City-Council",
       "https://www.beavertonoregon.gov/849/Councilor-Position-5"
@@ -320,8 +320,8 @@
       {
         "data": "(503) 526-2370",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed directly under John Dugger's contact section.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Phone number is listed directly under the Contact Us section for John Dugger.",
+        "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
         },
@@ -332,8 +332,8 @@
       {
         "data": "jdugger@BeavertonOregon.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is directly associated with John Dugger's name and contact info.",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Email is directly associated with John Dugger's name and contact section.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
         },
@@ -344,7 +344,7 @@
       {
         "data": "https://www.beavertonoregon.gov/849/Councilor-Position-5",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'Councilor Position 5' directly associated with John Dugger's name.",
+        "llm_confidence_reason": "Official councilor position page linked directly from name.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": true
@@ -353,7 +353,7 @@
       },
       {
         "data": "https://www.beavertonoregon.gov/849/Councilor-Position-5?contentId=73254dfb-f2c3-4661-8be7-60320ed3df19",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "URL is directly linked with John Dugger's name and image.",
         "proximity_to_name": 5,
         "markdown_formatting": {
@@ -366,7 +366,7 @@
       {
         "data": "2022-09-01",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Sworn into office in September 2022; exact day not specified, defaulted to first of month.",
+        "llm_confidence_reason": "Sworn into office in September 2022, interpreted as 2022-09-01.",
         "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
@@ -404,7 +404,7 @@
       {
         "data": "nhasan@BeavertonOregon.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email directly associated with Nadia Hasan's name and contact info.",
+        "llm_confidence_reason": "Email address directly associated with Nadia Hasan's name and contact info.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -416,7 +416,7 @@
       {
         "data": "https://www.beavertonoregon.gov/855/Councilor-Position-6",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'Councilor Position 6' directly associated with Nadia Hasan's name.",
+        "llm_confidence_reason": "Official councilor position page linked directly from name.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": true
@@ -426,7 +426,7 @@
       {
         "data": "https://www.beavertonoregon.gov/855/Councilor-Position-6",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the dedicated profile page for Councilor Position 6 held by Nadia Hasan.",
+        "llm_confidence_reason": "Page URL is the official profile page for Councilor Position 6, Nadia Hasan.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
