@@ -1,0 +1,451 @@
+[
+  {
+    "name": "Michael Zarosinski",
+    "image": "images/4886cbd944796ba78552d1ced343a49671db1cae5ab5c33254262ae8c77f6cca.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/michaelzarosinski2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the mayor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the mayor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2024 and began serving in January 2025.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Jessica Ayres",
+    "image": "images/c31d417f2a74fefb2579e12ce6c0073db59b031e382027276406a0b128828d29.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/jessicaayres2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jessica.ayres@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2022 and began serving in January 2023.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Mike Kerlinger",
+    "image": "images/d2b3489cc5fbfe01cf025a8e7701775f6a5ded5b625a61c87c36aad8bdc4086d.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/mikekerlinger2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2024 and began serving in January 2025.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "John Quinn",
+    "image": "images/a4eed1a12bf11b3d98722cfbccec577fcc783e2829092c84224f21a3fb17aeb6.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/johnquinn2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2024 and began serving in January 2025.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Zac Smith",
+    "image": "images/bf47da76f11eefca7bbc259ebe620bec1e6c5657de6fc1725f8f9d1d51dd5d00.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/zacsmith2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2022 and began serving in January 2023.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Kevin Stine",
+    "image": "images/acf0a5cb77103839f2963a24591eb5d4bf1367d997e7b03909c16d3e380e6e4e.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/kevinstinei2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kevin.stine@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2015-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2014 and began serving in January 2015.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Garrett West",
+    "image": "images/8fca52d5ada0bee45416e2b980d16d8f38f85c617543c3660d37fa55928afb47.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/garrettwest2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2024 and began serving in January 2025.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Nick Card",
+    "image": "images/958851a8ff6f7f00c2d86848448fa6b5965f27e2022c59a307cdffd8a2b1bc63.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/nickcard2025_sm-2.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2022 and began serving in January 2023.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Kevin Keating",
+    "image": "images/ccb2487496f688f61bbc7cbc45c78baa773d7fb05a1a7dc4bb7ca404556d16da.jpg",
+    "source_image": "https://www.medfordoregon.gov/files/assets/public/v/1/city-managers-office/city-council/council-photos/kevinkeating2025_sm-1.jpg?dimension=userprofile&w=150&h=150",
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+    ],
+    "positions": [
+      "council member",
+      "ward 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the councilor's contact section.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under the councilor's contact section.",
+        "proximity_to_name": 12,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile states elected in 2024 and began serving in January 2025.",
+        "proximity_to_name": 30,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      }
+    ],
+    "end_dates": []
+  }
+]

@@ -1,0 +1,1253 @@
+[
+  {
+    "name": "Michael Zarosinski",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@medfordoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Email' and extracted from markdown link text.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 25,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Jessica Ayres",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+    ],
+    "positions": [
+      "Councilor, Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jessica.ayres@medfordoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted from markdown link text directly associated with the person.",
+        "proximity_to_name": 50.0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'began serving in January 2023'.",
+        "proximity_to_name": 150.0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Mike Kerlinger",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1"
+    ],
+    "positions": [
+      "Councilor, Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to 'Email' and name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 60,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'began serving as Ward 1 Councilor in January of 2025'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 200,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "John Quinn",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2"
+    ],
+    "positions": [
+      "Councilor",
+      "Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from markdown link text labeled 'Email'.",
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'began serving as Ward 2 Councilor in January 2025'.",
+        "proximity_to_name": 150,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Zac Smith",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2"
+    ],
+    "positions": [
+      "Councilor, Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly listed under 'Email' near the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 70,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Stated 'began serving in January of 2023' in the biography.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 200,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Kevin Stine",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3"
+    ],
+    "positions": [
+      "council member",
+      "ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kevin.stine@medfordoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly listed under 'Email' and formatted as a link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2015-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'began serving in January 2015'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Garrett West",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+    ],
+    "positions": [
+      "Councilor, Ward 3",
+      "Budget Committee",
+      "Medford Urban Renewal Agency Board",
+      "Medford Urban Renewal Budget Committee"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council@medfordoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from markdown link text.",
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states 'began serving as Ward 3 Councilor in January 2025'.",
+        "proximity_to_name": 150,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Nick Card",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4"
+    ],
+    "positions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number extracted from markdown link text directly associated with the name and labeled 'Telephone'.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page is a specific profile page for the target person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Kevin Keating",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council",
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4"
+    ],
+    "positions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text immediately following name/title.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "541-774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      },
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from markdown link text under 'Telephone'.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/section header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=en-US"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from the link associated with the person's name/header.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the URL of the page dedicated to the person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Juan Quinn",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+    ],
+    "positions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 774-2000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Teléfono' for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "proximity_to_name": 10,
+        "source": "https://www.medfordoregon.gov/Government/Mayor-City-Council?oc_lang=es"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  }
+]
