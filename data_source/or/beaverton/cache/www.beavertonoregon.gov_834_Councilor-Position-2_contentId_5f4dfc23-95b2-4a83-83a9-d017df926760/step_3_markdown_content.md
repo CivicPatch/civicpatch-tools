@@ -1,11 +1,11 @@
-  [Skip to Main Content](https://www.beavertonoregon.gov/834/Councilor-Position-2/)   ![Beaverton, OR - Official Website](images/f37c331bab62ad336d987f8ad9824dd1370c48b4acad4d3393c978772864214e.png)   [![Home Page](images/8de6c92cb9c0e989f1d878fe973f447bbafc281a180c75f533ff2f3ddb31f541.png)](https://www.beavertonoregon.gov/)  Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaoul茅BashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQ始eqchi始RomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu Powered by  [![Google Translate](images/3f3f3a8d0882c4edd13c1755632554f3042dd0f45af91da1e753b94d76c2513f.png)Translate](https://translate.google.com/)   [Facebook](https://www.beavertonoregon.gov/facebook)   [Twitter](https://www.beavertonoregon.gov/twitter)   [Instagram](https://www.beavertonoregon.gov/instagram)   [YouTube](https://www.beavertonoregon.gov/youtube)  Search 
+  [Skip to Main Content](https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760/)   ![Beaverton, OR - Official Website](images/f37c331bab62ad336d987f8ad9824dd1370c48b4acad4d3393c978772864214e.png)   [![Home Page](images/8de6c92cb9c0e989f1d878fe973f447bbafc281a180c75f533ff2f3ddb31f541.png)](https://www.beavertonoregon.gov/)  Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaoul茅BashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQ始eqchi始RomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu Powered by  [![Google Translate](images/3f3f3a8d0882c4edd13c1755632554f3042dd0f45af91da1e753b94d76c2513f.png)Translate](https://translate.google.com/)   [Facebook](https://www.beavertonoregon.gov/facebook)   [Twitter](https://www.beavertonoregon.gov/twitter)   [Instagram](https://www.beavertonoregon.gov/instagram)   [YouTube](https://www.beavertonoregon.gov/youtube)  Search 
 
  1.  [Government](https://www.beavertonoregon.gov/27/Government) 
  1.  [Community](https://www.beavertonoregon.gov/31/Community) 
  1.  [Services](https://www.beavertonoregon.gov/101/Services) 
  1.  [Business](https://www.beavertonoregon.gov/35/Business) 
  1.  [How Do I...](https://www.beavertonoregon.gov/9/How-Do-I) 
-  ![a file](images/ba6afb5733611b4d55eab95b123278ee02d783720e38e8595b8bcd45d7e03583.jpg)  
+  ![a file](images/36291f7fbcd3f69001ca83726c9016dd025edb487dcf18b8800c9a0356ed5fde.jpg)  
 
  1.  [Home](https://www.beavertonoregon.gov/) 
  1.  [Government](https://www.beavertonoregon.gov/27/Government) 
@@ -24,9 +24,41 @@ Councilor Kevin Teater joined the City Council as its newest member in January鈥
 
 I strive to lead and serve in a way that is grounded in my values, the values of our community, and a consistent commitment to curiosity and vision. Beaverton is growing and evolving, and I am excited to help us address some of our biggest opportunities such as local climate action, housing affordability, and racial and cultural equity. I want my leadership to be grounded in community, so reach out anytime!
 
+####   ![photo of a smiling man](https://content.civicplus.com/api/assets/72cf1f40-03f3-426e-996b-c57823a82507?cache=1800)  Kevin Teater 
+
+ Title City Council Position 2 Email 
+
+ [Email City Council](mailto:citymail@BeavertonOregon.gov) 
+
+ [Email Kevin Teater](mailto:kteater@BeavertonOregon.gov) 
+
+ Phone 503-941-6793 Department: City Council 
+
+## Kevin Teater
+
+Biography
+
+### Kevin Teater's Message
+
+Kevin's message
+
+## Address
+
+12725 SW Millikan Way
+
+P.O. Box 4755
+
+Beaverton, OR 97076
+
+## Four-Year-Term
+
+Term Began: January 2023
+
+Term Expires: December 31, 2027
+
 ### Contact Us
 
-####  [![photo of a smiling man](images/faff028a202d515db935cbfae09b909d4b970fbf7a647f091375f13d0880222b.jpg)KevinTeater](https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760) 
+####  [![photo of a smiling man](https://content.civicplus.com/api/assets/72cf1f40-03f3-426e-996b-c57823a82507?cache=1800)KevinTeater](https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760) 
 
  Title City Council Position 2 Email 
 
@@ -37,8 +69,8 @@ I strive to lead and serve in a way that is grounded in my values, the values of
  Phone 503-941-6793 
 
  1.   [About Council Meetings](https://www.beavertonoregon.gov/792/About-Council-Meetings)  
- 1.   [Agendas & Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)  [](https://www.beavertonoregon.gov/834/Councilor-Position-2/)  
-    1.   [Archived Meetings](https://www.beavertonoregon.gov/1220/Archived-Meetings)  [](https://www.beavertonoregon.gov/834/Councilor-Position-2/)  
+ 1.   [Agendas & Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)  [](https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760/)  
+    1.   [Archived Meetings](https://www.beavertonoregon.gov/1220/Archived-Meetings)  [](https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760/)  
        1.   [City Council Meetings 1998](https://www.beavertonoregon.gov/1242/City-Council-Meetings-1998)  
        1.   [City Council Meetings 1999](https://www.beavertonoregon.gov/1241/City-Council-Meetings-1999)  
        1.   [City Council Meetings 2000](https://www.beavertonoregon.gov/1240/City-Council-Meetings-2000)  

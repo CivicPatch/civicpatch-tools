@@ -1,3 +1,4 @@
+require "securerandom"
 require "utils/url_helper"
 require_relative "../utils/image_helper"
 
@@ -137,6 +138,15 @@ module Browser
     ", img_element)
   end
 
+  def self.capture_image_as_browser_screenshot(img_element)
+    data = img_element.screenshot_as(:png)
+    tempfile = Tempfile.new(binmode: true)
+    tempfile.write(data)
+    tempfile.rewind
+
+    tempfile
+  end
+
   def self.save_image_from_data_url(data_url)
     # Strip data URL prefix to get base64 data
     return nil unless data_url.start_with?("data:image/")
@@ -166,15 +176,9 @@ module Browser
 
     absolute_src = Utils::UrlHelper.format_url(Addressable::URI.join(base_url, src).to_s)
 
-    file = download_with_httparty(absolute_src)
-    unless file
-      data_url = capture_image_as_data_url(browser, img_element)
-      if data_url.start_with?("ERROR:")
-        puts "Canvas error for #{src}: #{data_url}"
-        return
-      end
-      file = save_image_from_data_url(data_url)
-    end
+    file = download_image(absolute_src, browser, img_element)
+
+    return if file.nil?
 
     file_type = determine_file_type(file)
 
@@ -196,6 +200,31 @@ module Browser
   rescue StandardError => e
     puts "Error processing image (#{src}): #{e.message}"
     puts e.backtrace
+  end
+
+  def self.download_image(absolute_src, browser, img_element)
+    # Try downloading with HTTParty first
+    file = download_with_httparty(absolute_src)
+    return file if file
+
+    # If HTTParty failed, try canvas data URL approach
+    data_url = capture_image_as_data_url(browser, img_element)
+    if data_url.start_with?("ERROR:")
+      puts "\t\t\t->Canvas error for #{absolute_src}: #{data_url}, re-trying with browser screenshot"
+      file = capture_image_as_browser_screenshot(img_element)
+      puts "\t\t\t\t✅: Browser screenshot captured for #{absolute_src}"
+
+      # If browser screenshot also failed, give up
+      unless file
+        puts "\t\t\t\t❌: Screenshot capture failed for #{absolute_src}, giving up"
+        nil
+      end
+    else
+      file = save_image_from_data_url(data_url)
+      puts "\t\t\t✅: Data URL captured for #{absolute_src}"
+    end
+
+    file
   end
 
   def self.download_with_httparty(absolute_src)
@@ -248,13 +277,13 @@ module Browser
           next # Continue to the next loop iteration
         else
           # Handle other HTTP errors (4xx, 5xx)
-          puts "HTTP request failed for #{encoded_url} with code: #{response.code}"
+          puts "\t->HTTP request failed for #{encoded_url} with code: #{response.code}"
           temp_file.unlink
           return nil
         end
       rescue StandardError => e
         # Handle network errors, timeouts, etc.
-        puts "HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
+        puts "\t->HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
         temp_file.close
         temp_file.unlink
         return nil
