@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Lacey Beaty",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-526-2345",
+    "email": "lbeaty@BeavertonOregon.gov",
+    "website": "https://www.beavertonoregon.gov/185/Mayor",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/185/Mayor"
+    ]
+  },
+  {
+    "name": "Ashley Hartmeier-Prigg",
+    "positions": [
+      "Council Member",
+      "Position 1"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-526-2624",
+    "email": "ahartmeier-Prigg@beavertonoregon.gov",
+    "website": "https://www.beavertonoregon.gov/832/Councilor-Position-1",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/832/Councilor-Position-1"
+    ]
+  },
+  {
+    "name": "Kevin Teater",
+    "positions": [
+      "Council Member",
+      "Position 2",
+      "Councilor, Position 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "kteater@BeavertonOregon.gov",
+    "website": "https://www.beavertonoregon.gov/834/Councilor-Position-2",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/834/Councilor-Position-2"
+    ]
+  },
+  {
+    "name": "Edward Kimmi",
+    "positions": [
+      "Council Member",
+      "Position 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "ekimmi@beavertonoregon.gov",
+    "website": "https://www.beavertonoregon.gov/839/Councilor-Position-3",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/839/Councilor-Position-3"
+    ]
+  },
+  {
+    "name": "Allison Tivnon",
+    "positions": [
+      "Council Member",
+      "Position 4",
+      "Councilor",
+      "Council Member, Position 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-526-2508",
+    "email": "ativnon@beavertonoregon.gov",
+    "website": "https://www.beavertonoregon.gov/848/Councilor-Position-4",
+    "start_date": "2021-01-01",
+    "end_date": "2024-12-31",
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/848/Councilor-Position-4",
+      "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e"
+    ]
+  },
+  {
+    "name": "John Dugger",
+    "positions": [
+      "Council Member",
+      "Position 5",
+      "Councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "jdugger@BeavertonOregon.gov",
+    "website": "https://www.beavertonoregon.gov/849/Councilor-Position-5",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/849/Councilor-Position-5"
+    ]
+  },
+  {
+    "name": "Nadia Hasan",
+    "positions": [
+      "Council Member",
+      "Position 6",
+      "council member",
+      "position 6"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-526-2363",
+    "email": "nhasan@BeavertonOregon.gov",
+    "website": "https://www.beavertonoregon.gov/855/Councilor-Position-6",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/855/Councilor-Position-6"
+    ]
+  }
+]

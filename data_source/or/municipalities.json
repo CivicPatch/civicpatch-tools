@@ -137,10 +137,12 @@
       "phone_number": "(503) 526-2222",
       "website": "https://www.beavertonoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "a9ff20c5f223dd0ca95f37808196cfb7",
+      "meta_updated_at": "2025-04-28",
+      "meta_hash": "0fa11244752c2be21608f5f608400873",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {

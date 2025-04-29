@@ -1,0 +1,536 @@
+[
+  {
+    "name": "Lacey Beaty",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/185/Mayor"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-526-2345",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with the Mayor.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 60,
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "lbeaty@BeavertonOregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the mayor's name.",
+        "proximity_to_name": 15,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "lbeaty@BeavertonOregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly under the person's name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 25,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "lbeaty@beavertonoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section associated with the Mayor.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.beavertonoregon.gov/185/Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link associated with the mayor's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/185/Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link is directly associated with the person's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/185/Mayor",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "This is the main page about the Mayor role on the city website, not a dedicated personal profile page, but the most relevant city URL provided.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states 'Elected as the first female mayor of Beaverton in 2020'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Ashley Hartmeier-Prigg",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/832/Councilor-Position-1"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-526-2624",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed phone number associated with the person's name under 'Contact Us'.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 60,
+        "source": "https://www.beavertonoregon.gov/832/Councilor-Position-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ahartmeier-Prigg@beavertonoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed email address associated with the person's name under 'Contact Us'.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.beavertonoregon.gov/832/Councilor-Position-1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.beavertonoregon.gov/832/Councilor-Position-1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link associated with the councilor's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/832/Councilor-Position-1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current page, which is dedicated to this specific councilor.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 40,
+        "source": "https://www.beavertonoregon.gov/832/Councilor-Position-1"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/832/Councilor-Position-1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link is directly associated with the person's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states 're-elected in 2022', indicating the start of the current term.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.beavertonoregon.gov/832/Councilor-Position-1"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Kevin Teater",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/834/Councilor-Position-2"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 2",
+      "Councilor, Position 2"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kteater@BeavertonOregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed directly under 'Contact Us' section associated with the person's name.",
+        "proximity_to_name": 100,
+        "source": "https://www.beavertonoregon.gov/834/Councilor-Position-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.beavertonoregon.gov/834/Councilor-Position-2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link associated with the councilor's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/834/Councilor-Position-2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link is directly associated with the person's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Edward Kimmi",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/839/Councilor-Position-3"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 3"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ekimmi@beavertonoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct mailto link associated with name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.beavertonoregon.gov/839/Councilor-Position-3"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.beavertonoregon.gov/839/Councilor-Position-3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link associated with the councilor's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/839/Councilor-Position-3",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The current page URL is the profile page for this councilor.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.beavertonoregon.gov/839/Councilor-Position-3"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/839/Councilor-Position-3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link is directly associated with the person's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Inferred from reelection year for a new term.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.beavertonoregon.gov/839/Councilor-Position-3"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Allison Tivnon",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/848/Councilor-Position-4",
+      "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 4",
+      "Councilor",
+      "Council Member, Position 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-526-2508",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Contact Us' section near the person's name and email.",
+        "proximity_to_name": 100,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4"
+      },
+      {
+        "data": "503-526-2508",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under her contact information.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 60,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ativnon@beavertonoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly linked to the person's name.",
+        "proximity_to_name": 50,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4"
+      },
+      {
+        "data": "ativnon@beavertonoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found in a mailto link explicitly labeled for Allison Tivnon.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link associated with the councilor's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the person's name/image under 'Contact Us', appears to be their profile page.",
+        "proximity_to_name": 30,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link is directly associated with the person's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page itself is the profile page for this position and person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began: January 2021'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 200,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2024-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires: December 31, 2024'.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 200,
+        "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e"
+      }
+    ]
+  },
+  {
+    "name": "John Dugger",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/849/Councilor-Position-5"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 5",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jdugger@BeavertonOregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly provided as link text under 'Contact Us' section associated with the person.",
+        "proximity_to_name": 160,
+        "source": "https://www.beavertonoregon.gov/849/Councilor-Position-5"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.beavertonoregon.gov/849/Councilor-Position-5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link associated with the councilor's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/849/Councilor-Position-5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link is directly associated with the person's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-11-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'won his first full term in November of 2022'.",
+        "proximity_to_name": 50,
+        "source": "https://www.beavertonoregon.gov/849/Councilor-Position-5"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Nadia Hasan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/855/Councilor-Position-6"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 6",
+      "council member",
+      "position 6"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-526-2363",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Contact Us section near name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 60,
+        "source": "https://www.beavertonoregon.gov/855/Councilor-Position-6"
+      }
+    ],
+    "emails": [
+      {
+        "data": "nhasan@BeavertonOregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly linked to Nadia Hasan.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.beavertonoregon.gov/855/Councilor-Position-6"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.beavertonoregon.gov/855/Councilor-Position-6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link associated with the councilor's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/855/Councilor-Position-6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website link is directly associated with the person's name in a list.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.beavertonoregon.gov/789/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  }
+]
