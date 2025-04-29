@@ -116,10 +116,12 @@
       "phone_number": "(541) 388-5505",
       "website": "https://www.bendoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "405d70253486db76a9856f44e6bad50e",
+      "meta_updated_at": "2025-04-28",
+      "meta_hash": "1a9fef76246b8fa247c3ce7462dbd398",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
