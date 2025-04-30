@@ -1,4 +1,4 @@
-name: Pull Request - Config Change
+name: [auto] Pull Request - Config Change
 
 on:
   pull_request:

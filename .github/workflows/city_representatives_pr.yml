@@ -1,4 +1,4 @@
-name: Fetch City Representatives
+name: [manual] Fetch City Representatives
 
 on:
   workflow_dispatch:
