@@ -268,4 +268,4 @@ Gresham, OR 97030 USA
 
 Phone: 503-618-3000
 
- © Copyright 2025  ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ © Copyright 2025 Original text Rate this translation Your feedback will be used to help improve Google Translate 

@@ -194,8 +194,6 @@ Explore this peaceful oasis, just a short walk from shopping and restaurants in 
 
  Mayor Travis Stovall 
 
- ![Mayor Travis Stovall](images/47cda7ede73f56918a3ad2706303a6cc6d2800e3d910952a1825e549697fd854.jpg) 
-
 Travis Stovall is Gresham's 28th mayor. Mayor Stovall was sworn into office for a second term on Jan. 3, 2023.
 
  [Read more about Mayor Travis Stovall.](https://www.greshamoregon.gov/link/5e4f4bc3d29a466fa292edf864cae9c9.aspx) 
@@ -204,7 +202,7 @@ Travis Stovall is Gresham's 28th mayor. Mayor Stovall was sworn into office for 
 
  Council Position 1: Kayla Brown 
 
-  ![Kayla Brown](images/a4e0928843453e86c2a556e3e6a13686cf3294eb326706afcef1a3164f3d7854.jpg) Councilor Kayla Brown was elected to a four-year term for Council Position 1 in November 2024 and sworn into office on Jan. 7, 2025.   
+ Councilor Kayla Brown was elected to a four-year term for Council Position 1 in November 2024 and sworn into office on Jan. 7, 2025.   
 
  Read more about [Councilor Kayla Brown.](https://www.greshamoregon.gov/link/4ee1b0b2db5c44ea93bf8ed72300d36c.aspx)     
 
@@ -212,7 +210,7 @@ Travis Stovall is Gresham's 28th mayor. Mayor Stovall was sworn into office for 
 
  Council Position 2: Eddy Morales 
 
- ![Gresham City Councilor Eddy Morales](images/47fc6c9dba9d4daa9e5b0fc7c04916205cab86c44d2159d08faf8b2809bc6d1e.jpg) Councilor Eddy Morales was elected to a four-year term for Council Position 2 in November 2022 and sworn into office on Jan. 3, 2023.
+Councilor Eddy Morales was elected to a four-year term for Council Position 2 in November 2022 and sworn into office on Jan. 3, 2023.
 
  [Read more about Councilor Eddy Morales.](https://www.greshamoregon.gov/link/c8b25674b1694e0da7a690bef592f12b.aspx) 
 
@@ -220,7 +218,7 @@ Travis Stovall is Gresham's 28th mayor. Mayor Stovall was sworn into office for 
 
  Council Position 3: Cathy Keathley 
 
-  ![Cathy Keathley](images/8219efe93511b48e42d7da434c99bea3058666364d151d98c4bce87bd912f1d8.jpg) Councilor Cathy Keathley was elected to a four-year term for Council Position 3 in November 2024 and sworn into office on Jan. 7, 2025.   
+ Councilor Cathy Keathley was elected to a four-year term for Council Position 3 in November 2024 and sworn into office on Jan. 7, 2025.   
 
  Read more about [Councilor Cathy Keathley. ](https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx)   [ ](https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx) 
 
@@ -228,7 +226,7 @@ Travis Stovall is Gresham's 28th mayor. Mayor Stovall was sworn into office for 
 
  Council Position 4: Jerry Hinton, Council President 
 
- ![Gresham City Councilor Jerry Hinton](images/41da72c95fcd578a8f258e5240a5121ddcd3c2f9d44ca73260067c38a38707aa.jpg) Council President Jerry Hinton was elected to a four-year term for Council Position 4 in November 2022 and sworn into office on Jan. 3, 2023.
+Council President Jerry Hinton was elected to a four-year term for Council Position 4 in November 2022 and sworn into office on Jan. 3, 2023.
 
  [Read more about Councilor Jerry Hinton.](https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx) 
 
@@ -236,7 +234,7 @@ Travis Stovall is Gresham's 28th mayor. Mayor Stovall was sworn into office for 
 
  Council Position 5: Sue Piazza 
 
- ![Gresham City Councilor Sue Piazza](images/7c6b021abd384a35994627fc56a350c3bd4c50292802ec645e68ab0126deaa63.jpg)  Councilor Sue Piazza was elected to a four-year term for Council Position 5 in November 2024 and sworn into office on Jan. 7, 2025. 
+ Councilor Sue Piazza was elected to a four-year term for Council Position 5 in November 2024 and sworn into office on Jan. 7, 2025. 
 
  [Read more about Councilor Sue Piazza.](https://www.greshamoregon.gov/link/e1483dd075614f6c89b6be87ac1f8f92.aspx) 
 
@@ -244,7 +242,7 @@ Travis Stovall is Gresham's 28th mayor. Mayor Stovall was sworn into office for 
 
  Council Position 6: Janine Gladfelter 
 
- ![Gresham City Councilor Janine Gladfelter](images/a7f2ca80a61d3f0ae0e1d2dbe50107ec7bb1b045da3f8ac6662d27984bebb337.jpg) Councilor Janine Gladfelter was elected to a four-year term for Council Position 6 in November 2022 and sworn into office on Jan. 3, 2023.
+Councilor Janine Gladfelter was elected to a four-year term for Council Position 6 in November 2022 and sworn into office on Jan. 3, 2023.
 
  [Read more about Councilor Janine Gladfelter.](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx) 
 
@@ -287,4 +285,4 @@ Gresham, OR 97030 USA
 
 Phone: 503-618-3000
 
- © Copyright 2025  ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ © Copyright 2025 Original text Rate this translation Your feedback will be used to help improve Google Translate 
