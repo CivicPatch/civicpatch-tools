@@ -1,0 +1,23 @@
+---
+scrape_sources:
+- https://albanyoregon.gov/council
+scrape_exit_config:
+  people_count: 5
+  key_position: mayor
+people:
+  Carolyn McLeod:
+    other_names: []
+  Dr. Ramycia McGhee:
+    other_names:
+    - Ramycia McGhee
+  Jackie Montague:
+    other_names: []
+  Marilyn Smith:
+    other_names: []
+  Michael Thomson:
+    other_names: []
+  Alex Johnson II:
+    other_names: []
+  Steph Newton-Azorr:
+    other_names: []
+divisions_map:
