@@ -1,0 +1,23 @@
+---
+scrape_sources:
+- https://springfield-or.gov/city/mayor-and-city-council/mayor/
+- https://springfield-or.gov/city/mayor-and-city-council/mayor-council/
+scrape_exit_config:
+  people_count: 6
+  key_position: mayor
+people:
+  Alan Stout:
+    other_names: []
+  Beth Blackwell:
+    other_names: []
+  Kori Rodley:
+    other_names: []
+  Michelle Webber:
+    other_names: []
+  Sean VanGordon:
+    other_names: []
+  Steve Moe:
+    other_names: []
+  Victoria Doyle:
+    other_names: []
+divisions_map:
