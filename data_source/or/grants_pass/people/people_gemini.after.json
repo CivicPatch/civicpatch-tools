@@ -1,0 +1,146 @@
+[
+  {
+    "name": "Clint Scherf",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 450-6000",
+    "email": "cscherf@grantspassoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council"
+    ]
+  },
+  {
+    "name": "Indra Nicholas",
+    "positions": [
+      "Council Member",
+      "Ward 1",
+      "Ward 1 Representative"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 450-6000",
+    "email": "inicholas@grantspassoregon.gov",
+    "website": "https://www.grantspassoregon.gov/directory.aspx?eid=361",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=361",
+      "https://www.grantspassoregon.gov/Directory.aspx?DID=14"
+    ]
+  },
+  {
+    "name": "Rick Riker",
+    "positions": [
+      "Council Member",
+      "Ward 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 479-7333",
+    "email": "rriker@grantspassoregon.gov",
+    "website": "https://www.grantspassoregon.gov/Directory.aspx?eid=101/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=101"
+    ]
+  },
+  {
+    "name": "Victoria Marshall",
+    "positions": [
+      "Council Member",
+      "Ward 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 450-6000",
+    "email": "vmarshall@grantspassoregon.gov",
+    "website": "https://www.grantspassoregon.gov/directory.aspx?eid=363/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=363"
+    ]
+  },
+  {
+    "name": "Erich Schloegl",
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 450-6000",
+    "email": "eschloegl@grantspassoregon.gov",
+    "website": "https://www.grantspassoregon.gov/directory.aspx?eid=360",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=360"
+    ]
+  },
+  {
+    "name": "Seth Benham",
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 450-6000",
+    "email": "sbenham@grantspassoregon.gov",
+    "website": "https://www.grantspassoregon.gov/directory.aspx?eid=365",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=365"
+    ]
+  },
+  {
+    "name": "Joel King",
+    "positions": [
+      "Council Member",
+      "Ward 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 761-7538",
+    "email": "jking@grantspassoregon.gov",
+    "website": "https://www.grantspassoregon.gov/directory.aspx?eid=271",
+    "start_date": "2019-01-02",
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=271"
+    ]
+  },
+  {
+    "name": "Kathleen Krohn",
+    "positions": [
+      "Council Member",
+      "Ward 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 450-6000",
+    "email": "kkrohn@grantspassoregon.gov",
+    "website": "https://www.grantspassoregon.gov/directory.aspx?eid=362",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=362"
+    ]
+  }
+]

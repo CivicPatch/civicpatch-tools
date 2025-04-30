@@ -1,0 +1,35 @@
+---
+scrape_sources:
+- https://www.grantspassoregon.gov/173/City-Council
+- https://www.grantspassoregon.gov/directory.aspx?eid=299
+- https://www.grantspassoregon.gov/directory.aspx?eid=361
+- https://www.grantspassoregon.gov/Directory.aspx?DID=14
+- https://www.grantspassoregon.gov/directory.aspx?eid=101
+- https://www.grantspassoregon.gov/directory.aspx?eid=363
+- https://www.grantspassoregon.gov/directory.aspx?eid=360
+- https://www.grantspassoregon.gov/directory.aspx?eid=365
+- https://www.grantspassoregon.gov/directory.aspx?eid=271
+- https://www.grantspassoregon.gov/directory.aspx?eid=362
+scrape_exit_config:
+  people_count: 8
+  key_position: mayor
+people:
+  Clint Scherf:
+    other_names: []
+  Erich Schloegl:
+    other_names: []
+  Indra Nicholas:
+    other_names: []
+  Joel King:
+    other_names: []
+  Kathleen Krohn:
+    other_names: []
+  Rick Riker:
+    other_names: []
+  Rob Pell:
+    other_names: []
+  Victoria Marshall:
+    other_names: []
+  Seth Benham:
+    other_names: []
+divisions_map:

@@ -294,10 +294,12 @@
       "phone_number": "(541) 450-6000",
       "website": "https://www.grantspassoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "29b10c8b49d8152b0f5c817e0ae44022",
+      "meta_updated_at": "2025-04-30",
+      "meta_hash": "3f35052707c88b7e07536b901830ef20",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {

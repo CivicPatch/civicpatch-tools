@@ -1,0 +1,501 @@
+[
+  {
+    "name": "Rob Pell",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=299"
+    ],
+    "positions": [],
+    "phone_numbers": [
+      {
+        "data": "541-476-7578",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=299"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rpell@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=299",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=299/",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the current page URL, which is a profile page for the person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=299"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Indra Nicholas",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=361",
+      "https://www.grantspassoregon.gov/Directory.aspx?DID=14"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 1",
+      "Ward 1 Representative"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-450-6000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from markdown link text directly associated with the name.",
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=361"
+      },
+      {
+        "data": "541-450-6000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly next to the name in a table, extracted from markdown link text.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/Directory.aspx?DID=14"
+      }
+    ],
+    "emails": [
+      {
+        "data": "inicholas@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "inicholas@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly next to the name in a table.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.grantspassoregon.gov/Directory.aspx?DID=14"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=361",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "https://www.grantspassoregon.gov/Directory.aspx?DID=14",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to the City Council directory page associated with the person.",
+        "proximity_to_name": 30,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=361"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-06",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly labeled 'Sworn In' date.",
+        "proximity_to_name": 100,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=361"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Rick Riker",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=101"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 2",
+      "Council Vice-President"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-479-7333",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly listed next to 'Phone:'. Extracted from markdown link text.",
+        "proximity_to_name": 100,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=101"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rriker@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=101",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "https://www.grantspassoregon.gov/Directory.aspx?eid=101/",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "This is the page URL itself, not a specific personal profile link. No other website was found.",
+        "proximity_to_name": 0,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=101"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Victoria Marshall",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=363"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-450-6000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly listed under 'Phone:' near the name.",
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=363"
+      }
+    ],
+    "emails": [
+      {
+        "data": "vmarshall@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=363",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=363/",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the current page URL which is a profile page for the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=363"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Erich Schloegl",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=360"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-450-6000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Clearly labeled 'Phone' and extracted from markdown link text.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=360"
+      }
+    ],
+    "emails": [
+      {
+        "data": "eschloegl@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=360",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "https://www.grantspassoregon.gov/Directory.aspx?DID=14",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link to the City Council directory page, not a personal profile.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=360"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Seth Benham",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=365"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "5414506000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly labeled 'Phone' and provided as markdown link text.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=365"
+      }
+    ],
+    "emails": [
+      {
+        "data": "sbenham@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=365",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "https://www.grantspassoregon.gov/Directory.aspx?DID=14",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link to the City Council directory page, not a specific personal profile.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=365"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Joel King",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=271"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 4",
+      "Council Member, Ward 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-761-7538",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly associated with the name and labeled.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 75,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=271"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jking@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "jking@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly associated with the name and labeled.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=271"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=271",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019-01-02",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Start date explicitly labeled 'Sworn In' and associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 120,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=271"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "End date explicitly labeled 'Term Ends' and associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=271"
+      }
+    ]
+  },
+  {
+    "name": "Kathleen Krohn",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council",
+      "https://www.grantspassoregon.gov/directory.aspx?eid=362"
+    ],
+    "positions": [
+      "Council Member",
+      "Ward 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-450-6000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number extracted from markdown link text directly associated with the name.",
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=362"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kkrohn@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.grantspassoregon.gov/directory.aspx?eid=362",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'More Information' directly associated with name.",
+        "proximity_to_name": 25,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      },
+      {
+        "data": "https://www.grantspassoregon.gov/Directory.aspx?DID=14",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link provided is for the general City Council directory, not a specific personal profile page.",
+        "proximity_to_name": 30,
+        "source": "https://www.grantspassoregon.gov/directory.aspx?eid=362"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Clint Scherf",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.grantspassoregon.gov/173/City-Council"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-450-6000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under Mayor's contact information.",
+        "proximity_to_name": 50,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cscherf@grantspassoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under name.",
+        "proximity_to_name": 15,
+        "source": "https://www.grantspassoregon.gov/173/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": []
+  }
+]
