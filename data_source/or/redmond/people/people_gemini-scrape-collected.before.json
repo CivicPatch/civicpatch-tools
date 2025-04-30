@@ -1,0 +1,487 @@
+[
+  {
+    "name": "Ed Fitch",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.redmondoregon.gov/government/city-council/city-council",
+      "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio"
+    ],
+    "positions": [
+      "Mayor",
+      "Councilor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-504-3039",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "(541) 923-7710",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Phone number is listed at the bottom of the page as a general city contact, not directly associated with the person's bio.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 500,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ed.fitch@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "Ed.Fitch@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address is listed directly next to the name in a table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit bio link provided next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page itself is the person's official bio page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Clifford Evelyn",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.redmondoregon.gov/government/city-council/city-council",
+      "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio"
+    ],
+    "positions": [
+      "Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-504-3057",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "541-504-3057",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name and email.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Clifford.Evelyn@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "Clifford.Evelyn@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit bio link provided next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page itself is the person's bio page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Shannon Wedding",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.redmondoregon.gov/government/city-council/city-council",
+      "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio"
+    ],
+    "positions": [
+      "Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-504-3064",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "541.923.7710",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number is listed directly next to the name in a table.",
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Shannon.Wedding@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "Shannon.Wedding@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address is listed directly next to the name in a table.",
+        "proximity_to_name": 10,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit bio link provided next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the first link on the page and is explicitly labeled as the councilor's bio.",
+        "proximity_to_name": 0,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Cat Zwicker",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.redmondoregon.gov/government/city-council/city-council",
+      "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker"
+    ],
+    "positions": [
+      "Council Member",
+      "Council member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-504-3032",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "(541) 923-7710",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Main city contact number found in the footer, not directly next to the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 500,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Cat.Zwicker@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "Cat.Zwicker@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit bio link provided next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker/",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "This is the URL of the specific biography page for the person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "John Nielsen",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.redmondoregon.gov/government/city-council/city-council",
+      "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-504-3038",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "541-504-3038",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number is listed directly next to the name and title in a table.",
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock"
+      }
+    ],
+    "emails": [
+      {
+        "data": "John.Nielsen@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "John.Nielsen@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address is listed directly next to the name and title in a table.",
+        "proximity_to_name": 10,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Explicit bio link provided next to name, but the URL path contains a different name ('jon-bullock').",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      },
+      {
+        "data": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL is a bio page for a councilor, although the URL path contains a different name. The content is clearly about John Nielsen.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Kathryn Osborne",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.redmondoregon.gov/government/city-council/city-council"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-504-3037",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Kathryn.Osborne@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.redmondoregon.gov/Admin/Components/Page/EditDesign?navid=324",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Explicit link provided next to name, but the URL appears to be an internal admin link rather than a public bio page.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Jay Patrick",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.redmondoregon.gov/government/city-council/city-council"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-508-8408",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Jay.Patrick@redmondoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.redmondoregon.gov/Admin/Components/Page/EditDesign?navid=323",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Explicit link provided next to name, but the URL appears to be an internal admin link rather than a public bio page.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.redmondoregon.gov/government/city-council/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  }
+]
