@@ -1,0 +1,274 @@
+[
+  {
+    "name": "Frank Bubenik",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "fbubenik@tualatin.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed explicitly and as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2019-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Date 'taking office in January 2019' is explicitly stated for the Mayor role.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Maria Reyes",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "positions": [
+      "Councilor",
+      "Position 1"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mreyes@tualatin.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed explicitly and as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2018-11-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Date 'first elected November 2018' is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Christen Sacco",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "positions": [
+      "Councilor",
+      "Position 2"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "csacco@tualatin.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed explicitly and as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2020-11-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Date 'elected in November 2020' is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Bridget Brooks",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "positions": [
+      "Councilor",
+      "Position 3"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bbrooks@tualatin.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed explicitly and as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2018-11-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Date 'elected in November 2018' is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Cyndy Hillier",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "positions": [
+      "Councilor",
+      "Position 4"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "chillier@tualatin.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed explicitly and as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2020-11-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Date 'elected in November 2020' is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Octavio Gonzalez",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "positions": [
+      "Councilor",
+      "Position 5"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ogonzalez@tualatin.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed explicitly and as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022-11-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Date 'elected to Council in November 2022' is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "end_dates": []
+  },
+  {
+    "name": "Valerie Pratt",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "positions": [
+      "Councilor",
+      "Position 6"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "vpratt@tualatin.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed explicitly and as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2019-08-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Date 'appointed to Council in August 2019' is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+      }
+    ],
+    "end_dates": []
+  }
+]

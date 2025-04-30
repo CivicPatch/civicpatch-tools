@@ -1,0 +1,22 @@
+---
+scrape_sources:
+- https://www.tualatinoregon.gov/citycouncil/meet-your-council
+scrape_exit_config:
+  people_count: 5
+  key_position: mayor
+people:
+  Bridget Brooks:
+    other_names: []
+  Christen Sacco:
+    other_names: []
+  Cyndy Hillier:
+    other_names: []
+  Frank Bubenik:
+    other_names: []
+  Maria Reyes:
+    other_names: []
+  Octavio Gonzalez:
+    other_names: []
+  Valerie Pratt:
+    other_names: []
+divisions_map:
