@@ -1,0 +1,29 @@
+---
+scrape_sources:
+- https://www.tigard-or.gov/your-government/council/meet-the-council
+- https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack
+- https://www.tigard-or.gov/your-government/council/councilor-shaw
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu
+scrape_exit_config:
+  people_count: 5
+  key_position: mayor
+people:
+  Faraz Ghoddusi:
+    other_names: []
+  Heather Robbins:
+    other_names: []
+  Heidi Lueb:
+    other_names: []
+  Jake Schlack:
+    other_names: []
+  Jeanette Shaw:
+    other_names: []
+  Yi-Kang Hu:
+    other_names: []
+  Maureen Wolf:
+    other_names: []
+divisions_map:
