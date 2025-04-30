@@ -28,7 +28,9 @@ namespace :pipeline do
         (c["meta_sources"].blank? || c["meta_sources"].count == 1) # If there's only one source, we can assume it's a state source
     end.first(num_cities.to_i)
 
-    puts cities.map { |c| { "name": c["name"], "gnis": c["gnis"], "county": c["counties"].first } }.to_json
+    puts cities.map { |c|
+      { "name": c["name"].gsub(" ", "_"), "gnis": c["gnis"], "county": c["counties"].first }
+    }.to_json
   end
 
   desc "Scrape city info for a specific city"
