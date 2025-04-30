@@ -4,15 +4,16 @@
     "positions": [
       "mayor"
     ],
-    "image": "images/d59a12e03ae5fa74ba38831fc9a52620475e33e0963784cab308f25d1fecc4e4.jpg",
-    "source_image": "https://content.civicplus.com/api/assets/8f3b9429-373c-42f4-a76f-19dbe2f1cb7a?cache=1800&width=1880&mode=min",
-    "phone_number": "(503) 526-2222",
+    "image": "images/b046fd848cf5c43dc0eda686d6d1ac173a10336fde46ed561b44118de1023130.jpg",
+    "source_image": "https://content.civicplus.com/api/assets/70088868-34d2-461f-adb2-fc968dd85947?cache=1800",
+    "phone_number": "(503) 526-2345",
     "email": "lbeaty@beavertonoregon.gov",
     "website": "https://www.beavertonoregon.gov/185/Mayor",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.beavertonoregon.gov/789/City-Council"
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/185/Mayor"
     ]
   },
   {
@@ -41,7 +42,7 @@
     ],
     "image": "images/faff028a202d515db935cbfae09b909d4b970fbf7a647f091375f13d0880222b.jpg",
     "source_image": "https://content.civicplus.com/api/assets/72cf1f40-03f3-426e-996b-c57823a82507?cache=1800",
-    "phone_number": "(503) 941-6793",
+    "phone_number": "503-941-6793",
     "email": "kteater@BeavertonOregon.gov",
     "website": "https://www.beavertonoregon.gov/834/Councilor-Position-2",
     "start_date": null,

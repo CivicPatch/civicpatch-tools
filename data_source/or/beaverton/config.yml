@@ -8,3 +8,23 @@ scrape_sources:
 - https://www.beavertonoregon.gov/848/Councilor-Position-4
 - https://www.beavertonoregon.gov/849/Councilor-Position-5
 - https://www.beavertonoregon.gov/855/Councilor-Position-6
+scrape_exit_config:
+  people_count: 5
+  key_position: mayor
+people:
+  Allison Tivnon:
+    other_names: []
+  Dr. Edward Kimmi:
+    other_names:
+    - Edward Kimmi
+  Kevin Teater:
+    other_names: []
+  Lacey Beaty:
+    other_names: []
+  Nadia Hasan:
+    other_names: []
+  Ashley Hartmeier-Prigg:
+    other_names: []
+  John Dugger:
+    other_names: []
+divisions_map:

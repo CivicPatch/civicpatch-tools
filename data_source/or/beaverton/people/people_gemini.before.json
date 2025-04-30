@@ -20,7 +20,8 @@
     "name": "Ashley Hartmeier-Prigg",
     "positions": [
       "Council Member",
-      "Position 1"
+      "Position 1",
+      "Councilor"
     ],
     "image": null,
     "source_image": null,
@@ -38,12 +39,13 @@
     "name": "Kevin Teater",
     "positions": [
       "Council Member",
-      "Position 2"
+      "Position 2",
+      "Councilor"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "503-941-6793",
-    "email": null,
+    "email": "kteater@BeavertonOregon.gov",
     "website": "https://www.beavertonoregon.gov/834/Councilor-Position-2",
     "start_date": null,
     "end_date": null,
@@ -76,7 +78,8 @@
     "positions": [
       "Council Member",
       "Position 4",
-      "Councilor"
+      "council member",
+      "position 4"
     ],
     "image": null,
     "source_image": null,
@@ -99,7 +102,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "503-526–2370",
+    "phone_number": "503-526-2370",
     "email": "jdugger@BeavertonOregon.gov",
     "website": "https://www.beavertonoregon.gov/849/Councilor-Position-5",
     "start_date": null,

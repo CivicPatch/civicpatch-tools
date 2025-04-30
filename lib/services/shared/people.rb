@@ -1,5 +1,5 @@
 require "utils/url_helper"
-
+require "core/person_resolver"
 module Services
   module Shared
     class People
@@ -30,26 +30,30 @@ module Services
         merged["positions"] = (Array(person["positions"]) + Array(partial_person["positions"])).uniq
         merged["image"] = partial_person["image"] || person["image"]
         merged["source_image"] = partial_person["source_image"] || person["source_image"]
-        merged["phone_numbers"] += partial_person["phone_numbers"]
-        merged["emails"] += partial_person["emails"]
-        merged["websites"] += partial_person["websites"]
-        merged["start_dates"] += partial_person["start_dates"]
-        merged["end_dates"] += partial_person["end_dates"]
+        merged["phone_numbers"] = (Array(person["phone_numbers"]) + Array(partial_person["phone_numbers"])).uniq
+        merged["emails"] = (Array(person["emails"]) + Array(partial_person["emails"])).uniq
+        merged["websites"] = (Array(person["websites"]) + Array(partial_person["websites"])).uniq
+        merged["start_dates"] = (Array(person["start_dates"]) + Array(partial_person["start_dates"])).uniq
+        merged["end_dates"] = (Array(person["end_dates"]) + Array(partial_person["end_dates"])).uniq
         merged["sources"] = (Array(person["sources"]) + Array(partial_person["sources"])).uniq
 
         merged
       end
 
-      def self.collect_people(people, partial_people)
+      def self.collect_people(people_config, people, partial_people)
+        updated_people_config = people_config.dup
+
         people_by_name = {}
         people.each do |person|
-          people_by_name[person["name"]] = person
+          canonical_name = Core::PersonResolver.get_canonical_name(people_config, person)
+          people_by_name[canonical_name] = person
         end
 
         partial_people.each do |partial_person|
-          name = partial_person["name"]
-          existing_person = Validators::Utils.find_by_name(people, name)
-
+          existing_person, updated_people_config = Core::PersonResolver.find_existing_person(updated_people_config,
+                                                                                             people_by_name.values,
+                                                                                             partial_person)
+          name = Core::PersonResolver.get_canonical_name(updated_people_config, partial_person)
           people_by_name[name] = if existing_person.present?
                                    merge_person(existing_person, partial_person)
                                  else
@@ -57,7 +61,7 @@ module Services
                                  end
         end
 
-        people_by_name.values
+        [people_by_name.values, updated_people_config]
       end
 
       def self.format_website_data_point(website_data_point)

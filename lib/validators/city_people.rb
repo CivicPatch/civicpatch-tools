@@ -11,7 +11,9 @@ module Validators
       @config ||= YAML.load_file(CONFIG_PATH)
     end
 
-    def self.validate_sources(state, gnis)
+    def self.validate_sources(municipality_context)
+      state = municipality_context[:state]
+      gnis = municipality_context[:municipality_entry]["gnis"]
       sources_folder_path = PathHelper.get_people_sources_path(state, gnis)
       source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
 
@@ -45,10 +47,8 @@ module Validators
         sources << source
       end
 
-      compare_results = Validators::Utils.compare_people_across_sources(sources)
-
       {
-        compare_results: compare_results,
+        compare_results: Validators::Utils.compare_people_across_sources(sources),
         merged_sources: Validators::Utils.merge_people_across_sources(sources)
       }
     end

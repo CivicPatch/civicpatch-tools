@@ -5,7 +5,7 @@
  1.  [Services](https://www.beavertonoregon.gov/101/Services) 
  1.  [Business](https://www.beavertonoregon.gov/35/Business) 
  1.  [How Do I...](https://www.beavertonoregon.gov/9/How-Do-I) 
-  ![a file](images/d59a12e03ae5fa74ba38831fc9a52620475e33e0963784cab308f25d1fecc4e4.jpg)  
+  ![a file](images/ba6afb5733611b4d55eab95b123278ee02d783720e38e8595b8bcd45d7e03583.jpg)  
 
  1.  [Home](https://www.beavertonoregon.gov/) 
  1.  [Government](https://www.beavertonoregon.gov/27/Government) 

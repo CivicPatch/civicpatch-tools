@@ -1,51 +1,83 @@
 [
   {
     "name": "Lacey Beaty",
-    "image": "images/d59a12e03ae5fa74ba38831fc9a52620475e33e0963784cab308f25d1fecc4e4.jpg",
-    "source_image": "https://content.civicplus.com/api/assets/8f3b9429-373c-42f4-a76f-19dbe2f1cb7a?cache=1800&width=1880&mode=min",
+    "image": "images/b046fd848cf5c43dc0eda686d6d1ac173a10336fde46ed561b44118de1023130.jpg",
+    "source_image": "https://content.civicplus.com/api/assets/70088868-34d2-461f-adb2-fc968dd85947?cache=1800",
     "sources": [
-      "https://www.beavertonoregon.gov/789/City-Council"
+      "https://www.beavertonoregon.gov/789/City-Council",
+      "https://www.beavertonoregon.gov/185/Mayor"
     ],
     "positions": [
       "mayor"
     ],
     "phone_numbers": [
       {
-        "data": "(503) 526-2222",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed in the city leaders contact section, likely for mayor's office.",
-        "proximity_to_name": 30,
+        "data": "(503) 526-2345",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the contact section for Mayor Lacey Beaty.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
-        "source": "https://www.beavertonoregon.gov/789/City-Council"
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
       }
     ],
     "emails": [
       {
         "data": "lbeaty@beavertonoregon.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email directly associated with Mayor Lacey Beaty in a dedicated contact section.",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Email directly associated with Mayor Lacey Beaty in the Contact your city leaders section.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "lbeaty@beavertonoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly associated with Mayor Lacey Beaty's contact information.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
       }
     ],
     "websites": [
       {
         "data": "https://www.beavertonoregon.gov/185/Mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official mayor page linked directly from mayor's name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Link directly associated with Mayor Lacey Beaty's name in the Meet Your City Council list.",
+        "proximity_to_name": 2,
         "markdown_formatting": {
           "in_list": true
         },
         "source": "https://www.beavertonoregon.gov/789/City-Council"
+      },
+      {
+        "data": "https://www.beavertonoregon.gov/185/Mayor?contentId=b524e210-be65-4950-89dc-01fb6f0c79d8",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked directly to Lacey Beaty's profile image and name on the mayor page.",
+        "proximity_to_name": 2,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
       }
     ],
-    "start_dates": [],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected as first female mayor of Beaverton in 2020, explicitly stated in biography.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.beavertonoregon.gov/185/Mayor"
+      }
+    ],
     "end_dates": []
   },
   {
@@ -64,7 +96,7 @@
       {
         "data": "(503) 526-2624",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under Contact Us section with her name and title.",
+        "llm_confidence_reason": "Phone number listed directly under contact section with name.",
         "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
@@ -75,11 +107,11 @@
     "emails": [
       {
         "data": "ahartmeier-Prigg@beavertonoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with her name and title in Contact Us section.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email explicitly associated with Ashley Hartmeier-Prigg in contact section.",
         "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.beavertonoregon.gov/832/Councilor-Position-1"
       }
@@ -88,8 +120,8 @@
       {
         "data": "https://www.beavertonoregon.gov/832/Councilor-Position-1",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official councilor position page linked directly from name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Link directly associated with Ashley Hartmeier-Prigg's name in the Meet Your City Council list.",
+        "proximity_to_name": 2,
         "markdown_formatting": {
           "in_list": true
         },
@@ -97,11 +129,11 @@
       },
       {
         "data": "https://www.beavertonoregon.gov/832/Councilor-Position-1?contentId=c6638e07-1494-46cd-8c47-26825a183b5a",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is the specific councilor position page with her name linked.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the profile page for Councilor Position 1, directly associated with Ashley Hartmeier-Prigg.",
         "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.beavertonoregon.gov/832/Councilor-Position-1"
       }
@@ -134,7 +166,7 @@
     ],
     "phone_numbers": [
       {
-        "data": "(503) 941-6793",
+        "data": "503-941-6793",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number is listed directly under Kevin Teater's contact section.",
         "proximity_to_name": 15,
@@ -160,8 +192,8 @@
       {
         "data": "https://www.beavertonoregon.gov/834/Councilor-Position-2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official councilor position page linked directly from name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Link directly associated with Kevin Teater's name in the Meet Your City Council list.",
+        "proximity_to_name": 2,
         "markdown_formatting": {
           "in_list": true
         },
@@ -180,9 +212,9 @@
     ],
     "start_dates": [
       {
-        "data": "2025-01-01",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Text states he joined City Council in January; current year assumed 2025 based on context.",
+        "data": "2023-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states he joined City Council in January (assumed January 2023 as current year context).",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -221,8 +253,8 @@
       {
         "data": "https://www.beavertonoregon.gov/839/Councilor-Position-3",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official councilor position page linked directly from name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Link directly associated with Edward Kimmi's name in the Meet Your City Council list.",
+        "proximity_to_name": 2,
         "markdown_formatting": {
           "in_list": true
         },
@@ -271,10 +303,10 @@
       {
         "data": "ativnon@beavertonoregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly labeled with Allison Tivnon's name.",
+        "llm_confidence_reason": "Email explicitly labeled as Allison Tivnon's email in the contact section.",
         "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4"
       }
@@ -283,8 +315,8 @@
       {
         "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official councilor position page linked directly from name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Link directly associated with Allison Tivnon's name in the Meet Your City Council list.",
+        "proximity_to_name": 2,
         "markdown_formatting": {
           "in_list": true
         },
@@ -293,10 +325,10 @@
       {
         "data": "https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link associated with Allison Tivnon's name and image.",
+        "llm_confidence_reason": "URL is a direct profile page linked with Allison Tivnon's name and image.",
         "proximity_to_name": 5,
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
         "source": "https://www.beavertonoregon.gov/848/Councilor-Position-4"
       }
@@ -331,7 +363,7 @@
     "emails": [
       {
         "data": "jdugger@BeavertonOregon.gov",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Email is directly associated with John Dugger's name and contact section.",
         "proximity_to_name": 20,
         "markdown_formatting": {
@@ -344,8 +376,8 @@
       {
         "data": "https://www.beavertonoregon.gov/849/Councilor-Position-5",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official councilor position page linked directly from name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Link directly associated with John Dugger's name in the Meet Your City Council list.",
+        "proximity_to_name": 2,
         "markdown_formatting": {
           "in_list": true
         },
@@ -366,7 +398,7 @@
       {
         "data": "2022-09-01",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Sworn into office in September 2022, interpreted as 2022-09-01.",
+        "llm_confidence_reason": "Sworn into office in September 2022 is explicitly stated.",
         "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
@@ -391,7 +423,7 @@
     "phone_numbers": [
       {
         "data": "(503) 526-2363",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Phone number listed directly under Nadia Hasan's contact section.",
         "proximity_to_name": 10,
         "markdown_formatting": {
@@ -403,7 +435,7 @@
     "emails": [
       {
         "data": "nhasan@BeavertonOregon.gov",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Email address directly associated with Nadia Hasan's name and contact info.",
         "proximity_to_name": 5,
         "markdown_formatting": {
@@ -416,8 +448,8 @@
       {
         "data": "https://www.beavertonoregon.gov/855/Councilor-Position-6",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official councilor position page linked directly from name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Link directly associated with Nadia Hasan's name in the Meet Your City Council list.",
+        "proximity_to_name": 2,
         "markdown_formatting": {
           "in_list": true
         },
@@ -425,7 +457,7 @@
       },
       {
         "data": "https://www.beavertonoregon.gov/855/Councilor-Position-6",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Page URL is the official profile page for Councilor Position 6, Nadia Hasan.",
         "proximity_to_name": 0,
         "markdown_formatting": {

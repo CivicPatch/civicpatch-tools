@@ -6,7 +6,7 @@ module Scrapers
     def self.fetch_with_state_level(municipality_context)
       case municipality_context[:state]
       when "wa"
-        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_officials(municipality_context)
+        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
       when "or"
         Scrapers::Or::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
       else

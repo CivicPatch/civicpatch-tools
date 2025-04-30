@@ -7,8 +7,8 @@
   website: https://www.beavertonoregon.gov/185/Mayor
   start_date:
   end_date:
-  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/d59a12e03ae5fa74ba38831fc9a52620475e33e0963784cab308f25d1fecc4e4.jpg
-  source_image: https://content.civicplus.com/api/assets/8f3b9429-373c-42f4-a76f-19dbe2f1cb7a?cache=1800&width=1880&mode=min
+  image: https://cdn.civicpatch.org/open-data/or/beaverton/images/b046fd848cf5c43dc0eda686d6d1ac173a10336fde46ed561b44118de1023130.jpg
+  source_image: https://content.civicplus.com/api/assets/70088868-34d2-461f-adb2-fc968dd85947?cache=1800
   sources:
   - https://www.beavertonoregon.gov/789/City-Council
   - https://www.beavertonoregon.gov/185/Mayor
@@ -40,12 +40,12 @@
   sources:
   - https://www.beavertonoregon.gov/789/City-Council
   - https://www.beavertonoregon.gov/834/Councilor-Position-2
-- name: Edward Kimmi
+- name: Dr. Edward Kimmi
   positions:
   - Council Member
   - Position 3
   email: ekimmi@beavertonoregon.gov
-  phone_number:
+  phone_number: "(503) 526-2222"
   website: https://www.beavertonoregon.gov/839/Councilor-Position-3
   start_date:
   end_date:

@@ -13,7 +13,6 @@ module Core
       llm_service_string,
       municipality_context,
       request_cache: {},
-      scrape_exit_config: [], # [{position: "mayor", count: 1}, {position: "council member", count: 4}]
       page_fetcher: nil,
       seeded_urls: [] # Urls to scrape first
     )
@@ -25,19 +24,19 @@ module Core
       city_cache_path = PathHelper.get_city_cache_path(state, gnis)
       keyword_groups = Core::CityManager.get_search_keywords_as_array(municipality_context[:government_type])
 
-      puts "#{llm_service_string}: Looking for #{scrape_exit_config}"
+      puts "#{llm_service_string}: Looking for #{municipality_context[:config]["scrape_exit_config"]}"
 
       context = {
         llm_service_string: llm_service_string,
         municipality_context: municipality_context,
         page_fetcher: page_fetcher,
         city_cache_path: city_cache_path,
-        scrape_exit_config: scrape_exit_config,
         request_cache: request_cache
       }
 
       # Initialize combined data hash
-      data = { accumulated_people: [], processed_urls: [], content_dirs: [] }
+      data = { accumulated_people: [], processed_urls: [], content_dirs: [],
+               people_config: municipality_context[:config]["people"] }
 
       %w[seeded search crawler].each do |scrape_with|
         puts "Scraping with #{scrape_with}"
@@ -71,7 +70,7 @@ module Core
       profile_content_dirs, accumulated_people = scrape_profiles(context, data[:accumulated_people],
                                                                  data[:processed_urls])
 
-      Core::PeopleManager.update_people(state, municipality_entry, accumulated_people,
+      Core::PeopleManager.update_people(municipality_context, accumulated_people,
                                         "#{llm_service_string}-scrape-collected.before")
 
       formatted_officials = accumulated_people.map do |official|
@@ -80,7 +79,7 @@ module Core
 
       content_dirs = data[:content_dirs] + profile_content_dirs
 
-      [page_fetcher, content_dirs, formatted_officials]
+      [page_fetcher, content_dirs, formatted_officials, data[:people_config]]
     end
 
     def self.scrape_with_search(context, keyword_terms)
@@ -113,6 +112,7 @@ module Core
       accumulated_people = data[:accumulated_people] || []
       content_dirs = []
       processed_urls = data[:processed_urls] || []
+      people_config = data[:people_config]
 
       urls_to_process.each do |url|
         break if early_exit && !should_continue_scraping?(context, data)
@@ -121,13 +121,15 @@ module Core
         content_dir, people = scrape_url_for_municipal_directory(context, url)
         next if people.blank?
 
-        accumulated_people = Services::Shared::People.collect_people(accumulated_people, people)
+        accumulated_people, people_config = Services::Shared::People.collect_people(people_config,
+                                                                                    accumulated_people, people)
         content_dirs << content_dir
         processed_urls << url
 
         data[:accumulated_people] = accumulated_people
         data[:content_dirs] = content_dirs
         data[:processed_urls] = processed_urls
+        data[:people_config] = people_config
       end
 
       data
@@ -221,7 +223,7 @@ module Core
     def self.should_continue_scraping?(context, data)
       accumulated_officials = data[:accumulated_people]
       num_urls_scraped = data[:processed_urls].count
-      scrape_exit_config = context[:scrape_exit_config]
+      scrape_exit_config = context[:municipality_context][:config]["scrape_exit_config"]
 
       return false if num_urls_scraped >= @@MAX_URLS_TO_SCRAPE
 
@@ -239,15 +241,15 @@ module Core
       puts "#{context[:llm_service_string]}: Officials count: #{valid_officials_count}"
       return true unless found_key_position?(scrape_exit_config, found_positions)
 
-      return true if valid_officials_count < scrape_exit_config[:people_count]
+      return true if valid_officials_count < scrape_exit_config["people_count"]
 
       false
     end
 
     def self.found_key_position?(scrape_exit_config, found_positions)
-      return true if scrape_exit_config[:key_position].blank?
+      return true if scrape_exit_config["key_position"].blank?
 
-      found_positions.flatten.map(&:downcase).include?(scrape_exit_config[:key_position].downcase)
+      found_positions.flatten.map(&:downcase).include?(scrape_exit_config["key_position"].downcase)
     end
   end
 end
