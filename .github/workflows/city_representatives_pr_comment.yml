@@ -47,7 +47,7 @@ jobs:
     permissions:
       contents: read # From reusable workflow
       pull-requests: write # From reusable workflow
-    uses: ./.github/workflows/reusable_pr_comment.yml@main # Using main branch, consider pinning to a SHA
+    uses: ./.github/workflows/reusable_pr_comment.yml # Using main branch, consider pinning to a SHA
     with:
       pr_number: ${{ github.event.pull_request.number }}
       head_sha: ${{ github.event.pull_request.head.sha }}
