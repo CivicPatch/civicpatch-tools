@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Sean VanGordon",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/springfield/images/42e93f74dc22d71e0f8b1f351a5a4d3ced73b880ef861f0372639f88ff28d3b6.jpg",
+    "source_image": "https://springfield-or.gov/wp-content/uploads/2021/01/Councilor_VanGordon_HR-scaled.jpg",
+    "phone_number": "(541) 726-3702",
+    "email": "svangordon@springfield-or.gov",
+    "website": "https://springfield-or.gov/city/mayor-and-city-council/mayor/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+    ]
+  },
+  {
+    "name": "Michelle Webber",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Ward 1"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/springfield/images/a5e9a407c1cd8874c1f469cda4e8796ae7b670a666480d95be322097f4e97a6f.jpg",
+    "source_image": "https://springfield-or.gov/wp-content/uploads/2025/01/Michelle-scaled.jpg",
+    "phone_number": null,
+    "email": "mwebber@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Steve Moe",
+    "positions": [
+      "Council Member",
+      "Ward 2"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/springfield/images/9d54c2ac4e7619d40200b3ef9ad801322d920288daa774f5714087223aaf0a79.jpg",
+    "source_image": "https://springfield-or.gov/wp-content/uploads/2024/04/Councilor_Moe_tn.jpg",
+    "phone_number": null,
+    "email": "smoe@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Kori Rodley",
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/springfield/images/4a936d782c826c7aedf3034abfebe508e1cb286d0771e2aa03268e6282bbdacb.jpg",
+    "source_image": "https://springfield-or.gov/wp-content/uploads/2021/01/Councilor_Rodley_2_square.jpg",
+    "phone_number": null,
+    "email": "krodley@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Beth Blackwell",
+    "positions": [
+      "Council Member",
+      "Ward 4"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/springfield/images/b08aaab313633cdf385b77476fc31e96bd0e403bfc8bb1b09175b3d59c3ed991.jpg",
+    "source_image": "https://springfield-or.gov/wp-content/uploads/2024/04/BethBlackwell150x150.jpg",
+    "phone_number": null,
+    "email": "bblackwell@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Victoria Doyle",
+    "positions": [
+      "Council Member",
+      "Ward 5"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/springfield/images/b85b1c8d2da643c059fae32e5055f564cfcd06ada4f4d59eeca40c6b08385e49.jpg",
+    "source_image": "https://springfield-or.gov/wp-content/uploads/2024/04/City-Council-Head-Shot-e1698963936236.jpg",
+    "phone_number": null,
+    "email": "vdoyle@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Alan Stout",
+    "positions": [
+      "Council Member",
+      "Ward 6"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/springfield/images/db002fdeb9453dec43022703b4999ac264f661fa023f5c742bf7e8718e4f7c10.jpg",
+    "source_image": "https://springfield-or.gov/wp-content/uploads/2025/01/2025-Swearing-In-Ceremony-25-s.jpg",
+    "phone_number": null,
+    "email": "astout@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  }
+]

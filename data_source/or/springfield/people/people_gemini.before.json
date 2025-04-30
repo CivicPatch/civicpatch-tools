@@ -1,0 +1,116 @@
+[
+  {
+    "name": "Sean VanGordon",
+    "positions": [
+      "Mayor",
+      "City Council, Ward 1"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "541.726.3702",
+    "email": "svangordon@springfield-or.gov",
+    "website": "https://springfield-or.gov/city/mayor-and-city-council/mayor/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+    ]
+  },
+  {
+    "name": "Michelle Webber",
+    "positions": [
+      "Councilor, Ward 1",
+      "Council President"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "mwebber@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Steve Moe",
+    "positions": [
+      "Councilor, Ward 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "smoe@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Kori Rodley",
+    "positions": [
+      "Councilor, Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "krodley@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Beth Blackwell",
+    "positions": [
+      "Councilor, Ward 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "bblackwell@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Victoria Doyle",
+    "positions": [
+      "Councilor, Ward 5"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "vdoyle@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  },
+  {
+    "name": "Alan Stout",
+    "positions": [
+      "Councilor, Ward 6"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "astout@springfield-or.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ]
+  }
+]

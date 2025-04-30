@@ -1,0 +1,278 @@
+[
+  {
+    "name": "Sean VanGordon",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+    ],
+    "positions": [
+      "Mayor",
+      "City Council, Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541.726.3702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly listed under 'Contact Us' for the Mayor.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+      }
+    ],
+    "emails": [
+      {
+        "data": "svangordon@springfield-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly listed under 'Contact Us' for the Mayor.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 25,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL of the current page, which is the Mayor's profile.",
+        "proximity_to_name": 0,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Michelle Webber",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ],
+    "positions": [
+      "Councilor, Ward 1",
+      "Council President"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mwebber@springfield-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed as contact for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed near the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ]
+  },
+  {
+    "name": "Steve Moe",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ],
+    "positions": [
+      "Councilor, Ward 2"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "smoe@springfield-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed as contact for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed near the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ]
+  },
+  {
+    "name": "Kori Rodley",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ],
+    "positions": [
+      "Councilor, Ward 3"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "krodley@springfield-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed as contact for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed near the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ]
+  },
+  {
+    "name": "Beth Blackwell",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ],
+    "positions": [
+      "Councilor, Ward 4"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bblackwell@springfield-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed as contact for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed near the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ]
+  },
+  {
+    "name": "Victoria Doyle",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ],
+    "positions": [
+      "Councilor, Ward 5"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "vdoyle@springfield-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed as contact for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed near the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ]
+  },
+  {
+    "name": "Alan Stout",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+    ],
+    "positions": [
+      "Councilor, Ward 6"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "astout@springfield-or.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed as contact for the person.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed near the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      }
+    ]
+  }
+]
