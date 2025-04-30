@@ -116,7 +116,13 @@ namespace :github_pipeline do
 
   def self.generate_comparison(state, gnis)
     # Get the validation results
-    validation_results = Validators::CityPeople.validate_sources(state, gnis)
+    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
+    municipality_context = {
+      state: state,
+      municipality_entry: municipality_entry
+    }
+    municipality_config = Core::ConfigManager.get_config(state, gnis)
+    validation_results = Validators::CityPeople.validate_sources(municipality_context)
     compare_results = validation_results[:compare_results]
     contested_people = compare_results[:contested_people]
     missing_people = compare_results[:missing_people]
@@ -135,7 +141,8 @@ namespace :github_pipeline do
     contested_people.each do |name, fields|
       # Generate the markdown table for the contested person
       merged_person = validation_results[:merged_sources].find { |person| person["name"] == name }
-      formatted_merged_person = Core::PeopleManager.format_people([merged_person], config).first
+      formatted_merged_person = Core::PeopleManager.format_people(municipality_config["people"], [merged_person],
+                                                                  config).first
       contested_people_markdown = GitHub::CityPeople.to_markdown_disagreement_table(fields, formatted_merged_person)
 
       # Add a header for each contested person and append the table
