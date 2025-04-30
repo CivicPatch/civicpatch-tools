@@ -123,4 +123,20 @@ jobs:
           git add .
           git commit -m "Config changes for ${{ env.BRANCH_NAME }}"
           git push
-          
+
+  call-reusable-comment:
+    needs: run-pipeline-city-fetch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/reusable_pr_comment.yml@main # Or pin to SHA
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+      head_sha: ${{ github.event.pull_request.head.sha }}
+      head_ref: ${{ github.head_ref }}
+    secrets:
+      GH_APP_BOT_PIPELINE_APP_ID: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+      GH_APP_BOT_PIPELINE_PRIVATE_KEY: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+      GH_APP_BOT_APPROVE_APP_ID: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
+      GH_APP_BOT_APPROVE_PRIVATE_KEY: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }}
