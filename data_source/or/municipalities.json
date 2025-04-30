@@ -256,10 +256,12 @@
       "phone_number": "(503) 635-0270",
       "website": "https://www.ci.oswego.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "3ec0449f81e240ec1056609528251768",
+      "meta_updated_at": "2025-04-30",
+      "meta_hash": "f87c275e4115374ef114cafa5996f008",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {

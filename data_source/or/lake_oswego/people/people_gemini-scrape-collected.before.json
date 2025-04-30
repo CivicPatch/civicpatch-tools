@@ -1,0 +1,371 @@
+[
+  {
+    "name": "Joe Buck",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.ci.oswego.or.us/citycouncil/mayor-and-council",
+      "https://www.ci.oswego.or.us/citycouncil/mayor-joe-buck"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jbuck@ci.oswego.or.us",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-joe-buck"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/mayor-joe-buck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link clearly labeled 'Read More about Mayor Joe Buck' and associated with the person's photo and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-and-council"
+      },
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/mayor-joe-buck/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the page dedicated to the person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-joe-buck"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Ali Afghan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.ci.oswego.or.us/citycouncil/mayor-and-council",
+      "https://www.ci.oswego.or.us/citycouncil/councilor-ali-afghan"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "aafghan@ci.oswego.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-ali-afghan"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-ali-afghan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link clearly labeled 'Read More about Councilor Ali Afghan' and associated with the person's photo and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-and-council"
+      },
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-ali-afghan/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the profile page for the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-ali-afghan"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Trudy Corrigan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.ci.oswego.or.us/citycouncil/mayor-and-council",
+      "https://www.ci.oswego.or.us/citycouncil/councilor-trudy-corrigan"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tcorrigan@ci.oswego.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed email link associated with the name.",
+        "proximity_to_name": 10,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-trudy-corrigan"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-trudy-corrigan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link clearly labeled 'Read More about Councilor Trudy Corrigan' and associated with the person's photo and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-and-council"
+      },
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-trudy-corrigan/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Primary profile page URL.",
+        "proximity_to_name": 0,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-trudy-corrigan"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Massene Mboup",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.ci.oswego.or.us/citycouncil/mayor-and-council",
+      "https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup"
+    ],
+    "positions": [
+      "Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mmboup@lakeoswego.city",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link clearly labeled 'Read More about Councilor Massene Mboup' and associated with the person's photo and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-and-council"
+      },
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the current page and is specific to the person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated 'Term 2 Began 01-01-2025' near the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated 'Term 2 Expires 12-31-2028' near the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup"
+      }
+    ]
+  },
+  {
+    "name": "Aaron Rapf",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.ci.oswego.or.us/citycouncil/mayor-and-council",
+      "https://www.ci.oswego.or.us/citycouncil/councilor-aaron-rapf"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ARapf@ci.oswego.or.us",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from mailto link text associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-aaron-rapf"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-aaron-rapf",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link clearly labeled 'Read More about Councilor Aaron Rapf' and associated with the person's photo and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-and-council"
+      },
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-aaron-rapf/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is a profile page for the target person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-aaron-rapf"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Rachel Verdick",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.ci.oswego.or.us/citycouncil/mayor-and-council",
+      "https://www.ci.oswego.or.us/citycouncil/councilor-rachel-verdick"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "RVerdick@ci.oswego.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted directly from markdown link text associated with the name.",
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-rachel-verdick"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-rachel-verdick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link clearly labeled 'Read More about Councilor Rachel Verdick' and associated with the person's photo and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-and-council"
+      },
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-rachel-verdick/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the current page is the person's profile page.",
+        "proximity_to_name": 0,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-rachel-verdick"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "John Wendland",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.ci.oswego.or.us/citycouncil/mayor-and-council",
+      "https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland"
+    ],
+    "positions": [
+      "Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jwendland@ci.oswego.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed as a mailto link associated with the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link clearly labeled 'Read More about Councilor John Wendland' and associated with the person's photo and name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.ci.oswego.or.us/citycouncil/mayor-and-council"
+      },
+      {
+        "data": "https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date for the current term is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date for the current term is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland"
+      }
+    ]
+  }
+]
