@@ -1,4 +1,4 @@
-name: [auto] Pull Request - Comment
+name: auto - Pull Request - Comment
 
 on:
   pull_request:
