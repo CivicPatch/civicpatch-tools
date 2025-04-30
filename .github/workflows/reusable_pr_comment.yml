@@ -1,0 +1,111 @@
+name: Reusable PR Comment and Approval
+
+on:
+  workflow_call:
+    inputs:
+      pr_number:
+        description: 'The pull request number'
+        required: true
+        type: number
+      head_sha:
+        description: 'The SHA of the head commit of the PR'
+        required: true
+        type: string
+      head_ref:
+        description: 'The head ref (branch name) of the PR'
+        required: true
+        type: string
+    secrets:
+      GH_APP_BOT_PIPELINE_APP_ID:
+        required: true
+      GH_APP_BOT_PIPELINE_PRIVATE_KEY:
+        required: true
+      GH_APP_BOT_APPROVE_APP_ID:
+        required: true
+      GH_APP_BOT_APPROVE_PRIVATE_KEY:
+        required: true
+
+permissions:
+  contents: read # For checkout
+  pull-requests: write # For commenting and approving
+
+jobs:
+  comment-and-maybe-approve:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.head_sha }} # Checkout the specific commit
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.2'
+          bundler-cache: true
+
+      - name: Generate GitHub App Pipeline Token
+        id: generate-pipeline-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+
+      - name: Generate GitHub App Approve Token
+        id: generate-approve-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }}
+
+      - name: Install dependencies
+        run: |
+          bundle install
+
+      - name: Extract State and GNIS ID from Branch Name
+        id: extract-vars # Added ID to reference outputs
+        run: |
+          BRANCH_NAME="${{ inputs.head_ref }}" # Use input
+          STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
+          GNIS_ID=$(echo "$BRANCH_NAME" | awk -F'-' '{print $(NF-1)}')
+
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT # Use output instead of env
+          echo "STATE=$STATE" >> $GITHUB_OUTPUT
+          echo "GNIS_ID=$GNIS_ID" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR
+        id: comment-step # Added ID to reference approve output
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
+          PR_NUMBER: ${{ inputs.pr_number }} # Use input
+          # Get vars from previous step output
+          STATE: ${{ steps.extract-vars.outputs.STATE }}
+          GNIS_ID: ${{ steps.extract-vars.outputs.GNIS_ID }}
+          BRANCH_NAME: ${{ steps.extract-vars.outputs.BRANCH_NAME }}
+        run: |
+          echo "Running validation..."
+          PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[$STATE,$GNIS_ID,$BRANCH_NAME]")
+          echo "Validation response: $PR_DATA"
+
+          # Parse JSON output
+          APPROVE=$(printf '%b' "$PR_DATA" | jq -r '.approve')
+          SCORE=$(printf '%b' "$PR_DATA" | jq -r '.score')
+          COMMENT=$(printf '%b' "$PR_DATA" | jq -r '.comment')
+
+          echo "$COMMENT"
+
+          # Output approve status for the next step
+          echo "approve=$APPROVE" >> $GITHUB_OUTPUT
+
+          gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
+
+      - name: Approve PR if Validated
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
+          PR_NUMBER: ${{ inputs.pr_number }} # Use input
+        # Use output from comment step
+        if: steps.comment-step.outputs.approve == 'true'
+        run: |
+          echo "Checking if PR should be approved based on previous step..."
+          gh pr review $PR_NUMBER --approve --body "Approved by Bot - agreement score looks good" 
