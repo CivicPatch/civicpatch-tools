@@ -1,3 +1,4 @@
+require "utils/name_helper"
 module Scrapers::Or::MunicipalityOfficials
   class StateLevelScraper
     MUNICIPALITY_DIRECTORY_URL = "https://www.orcities.org/resources/reference/city-directory".freeze
@@ -45,7 +46,7 @@ module Scrapers::Or::MunicipalityOfficials
         next unless cells.length >= 4
 
         officials << {
-          "name" => cells[0].text.strip,
+          "name" => Utils::NameHelper.format_name(cells[0].text.strip),
           "positions" => [cells[1].text.strip],
           "email" => cells[2].text.strip,
           "phone_number" => cells[3].text.strip

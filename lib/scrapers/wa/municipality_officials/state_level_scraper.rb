@@ -8,7 +8,7 @@ module Scrapers::Wa::MunicipalityOfficials
       "#{DIRECTORY_URL}?ci=#{city_initial}"
     end
 
-    def self.get_officials(municipality_context)
+    def self.fetch(municipality_context)
       municipality_entry = municipality_context[:municipality_entry]
 
       puts "Scraping #{municipality_entry["name"]} officials from state source: mrsc"
@@ -81,7 +81,7 @@ module Scrapers::Wa::MunicipalityOfficials
         email = person_div.at_xpath('.//a[starts-with(@href, "mailto:")]')&.text&.strip
 
         officials << {
-          "name" => name,
+          "name" => name.gsub(/\s+/, " ").strip,
           "positions" => title ? [title] : [], # Handle cases where title might be missing
           "email" => email
         }

@@ -1,3 +1,4 @@
+require "securerandom"
 require "utils/url_helper"
 require_relative "../utils/image_helper"
 
@@ -94,6 +95,7 @@ module Browser
   end
 
   def self.download_images(browser, image_dir, base_url)
+    sleep(2) # wait for images to load
     image_elements = browser.find_elements(tag_name: "img")
 
     image_map = {}
@@ -137,6 +139,39 @@ module Browser
     ", img_element)
   end
 
+  def self.capture_image_as_blob(browser, img_element)
+    browser.execute_script("
+      const image = arguments[0];
+      image.setAttribute('crossorigin', 'anonymous');
+      const canvas = document.createElement('canvas');
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(image, 0, 0);
+
+      canvas.toBlob(function(blob) {
+        // Create a download link
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'image.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    ", img_element)
+  end
+
+  def self.capture_image_as_browser_screenshot(img_element)
+    data = img_element.screenshot_as(:png)
+    tempfile = Tempfile.new(binmode: true)
+    tempfile.write(data)
+    tempfile.rewind
+
+    tempfile
+  end
+
   def self.save_image_from_data_url(data_url)
     # Strip data URL prefix to get base64 data
     return nil unless data_url.start_with?("data:image/")
@@ -159,29 +194,23 @@ module Browser
     spinner_patterns = ["loading.gif", "spinner.gif", "ajax-loader.gif", "loader.gif"]
     if spinner_patterns.any? { |spinner| src.downcase.include?(spinner) }
       # Remove the element from the DOM
-      browser.execute_script("arguments[0].remove()", img_element)
+      remove_image_element(browser, img_element)
       puts "Removed spinner image element with src: #{src}" # Optional logging
       return # Don't process this element further
     end
 
     absolute_src = Utils::UrlHelper.format_url(Addressable::URI.join(base_url, src).to_s)
 
-    file = download_with_httparty(absolute_src)
-    unless file
-      data_url = capture_image_as_data_url(browser, img_element)
-      if data_url.start_with?("ERROR:")
-        puts "Canvas error for #{src}: #{data_url}"
-        return
-      end
-      file = save_image_from_data_url(data_url)
-    end
+    file = download_image(absolute_src, browser, img_element)
+
+    raise "File is nil for #{absolute_src}" if file.nil?
 
     file_type = determine_file_type(file)
 
     # Log and return if file type is unknown
     if file_type.nil?
       file.unlink # Clean up the unusable temp file
-      return
+      raise "File type is nil for #{absolute_src}"
     end
 
     filename = generate_filename(src, file_type).to_s
@@ -194,8 +223,40 @@ module Browser
 
     [filename, absolute_src]
   rescue StandardError => e
-    puts "Error processing image (#{src}): #{e.message}"
-    puts e.backtrace
+    puts "\t\t\t\t❌: Error processing image (#{src}): #{e.message}, removing image element"
+    remove_image_element(browser, img_element)
+    nil
+  end
+
+  def self.remove_image_element(browser, img_element)
+    browser.execute_script("arguments[0].remove()", img_element)
+  end
+
+  def self.download_image(absolute_src, browser, img_element)
+    # Try downloading with HTTParty first
+    file = download_with_httparty(absolute_src)
+    return file if file
+
+    # If HTTParty failed, try canvas data URL approach
+    response = capture_image_as_data_url(browser, img_element)
+    if response["status"] == "success"
+      data_url = response["data"]
+      file = save_image_from_data_url(data_url)
+
+      puts "\t\t\t✅: Canvas data URL captured for #{absolute_src}"
+      return file
+    end
+
+    puts "\t\t\t->Canvas error for #{absolute_src}: #{response}, re-trying with browser screenshot"
+
+    file = capture_image_as_browser_screenshot(img_element)
+    if file
+      puts "\t\t\t\t✅: Browser screenshot captured for #{absolute_src}"
+      return file
+    end
+
+    puts "\t\t\t\t❌: Screenshot capture failed for #{absolute_src}, giving up"
+    nil
   end
 
   def self.download_with_httparty(absolute_src)
@@ -248,13 +309,13 @@ module Browser
           next # Continue to the next loop iteration
         else
           # Handle other HTTP errors (4xx, 5xx)
-          puts "HTTP request failed for #{encoded_url} with code: #{response.code}"
+          puts "\t->HTTP request failed for #{encoded_url} with code: #{response.code}"
           temp_file.unlink
           return nil
         end
       rescue StandardError => e
         # Handle network errors, timeouts, etc.
-        puts "HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
+        puts "\t->HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
         temp_file.close
         temp_file.unlink
         return nil
@@ -264,6 +325,61 @@ module Browser
     # If the loop finishes, max redirects were exceeded
     puts "Max redirects (#{max_redirects}) exceeded for original URL: #{initial_url}"
     nil # Return nil explicitly
+  end
+
+  def self.capture_image_as_blob_data_url(browser, img_element)
+    browser.execute_async_script("
+      // Selenium callback function
+      const callback = arguments[arguments.length - 1];
+      const img = arguments[0];
+
+      function readBlobAsDataURL(blob) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = (err) => reject('FileReader failed: ' + err);
+          reader.readAsDataURL(blob);
+        });
+      }
+
+      function canvasToBlob(canvas, type = 'image/png', quality) {
+         return new Promise((resolve, reject) => {
+             canvas.toBlob(blob => {
+                 if (blob) {
+                     resolve(blob);
+                 } else {
+                     // Blob creation fails often due to tainted canvas
+                     reject(new Error('Failed to create blob, canvas might be tainted.'));
+                 }
+             }, type, quality);
+         });
+      }
+
+      // Main async logic
+      async function captureImage() {
+        try {
+          img.setAttribute('crossorigin', 'anonymous');
+
+          // Wait a bit after setting crossOrigin
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth || img.offsetWidth || 300;
+          canvas.height = img.naturalHeight || img.offsetHeight || 150;
+          const ctx = canvas.getContext('2d');
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const blob = await canvasToBlob(canvas, 'image/png');
+          const dataURL = await readBlobAsDataURL(blob);
+          callback({ status: 'success', data: dataURL });
+        } catch (error) {
+          console.error('Image capture error:', error); // Log error in browser console too
+          callback({ status: 'error', message: 'Image capture failed: ' + error.message });
+        }
+      }
+
+      captureImage();
+    ", img_element)
   end
 
   def self.determine_file_type(file)

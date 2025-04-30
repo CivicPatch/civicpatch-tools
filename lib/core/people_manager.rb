@@ -22,17 +22,19 @@ module Core
       content
     end
 
-    def self.normalize_people(people, positions_config)
-      people.map do |person|
-        person["positions"] = Core::PersonManager::Utils
-                              .sort_positions(person["positions"], positions_config)
-      end
-    end
+    def self.format_people(people_config, people, positions_config)
+      people_config ||= {}
 
-    # Without extra positions
-    def self.format_people(people, positions_config)
       people.map do |person|
-        person["name"] = person["name"].squeeze(" ")
+        name = person["name"].squeeze(" ")
+        canonical_name = Core::PersonResolver.get_canonical_name(people_config, person)
+        person["name"] = if canonical_name.present?
+                           canonical_name
+                         else
+                           name
+                         end
+
+        # Without extra positions
         person["positions"] = Core::PersonManager::Utils
                               .sort_positions(person["positions"], positions_config)
                               .map do |position|
@@ -138,34 +140,14 @@ module Core
       similarity >= threshold ? list.find { |p| p["name"] == best_match } : nil
     end
 
-    def self.valid_city_people?(people)
-      council_members = get_council_members_count(people)
-      mayors = get_mayors_count(people)
-
-      council_members > 1 && mayors.positive?
-    end
-
-    # TODO: needs config-driven
-    def self.get_council_members_count(people)
-      positions = people.map { |p| p["positions"] }.flatten.map(&:downcase)
-      positions.count { |position| position.include?("council member") }
-    end
-
-    def self.get_mayors_count(people)
-      positions = people.map { |p| p["positions"] }.flatten.map(&:downcase)
-      positions.count { |position| position.include?("mayor") }
-    end
-
-    def self.has_contact_info?(person)
-      person["email"].present? || person["phone_number"].present? || person["website"].present?
-    end
-
     def self.update_people(
-      state,
-      city_entry,
+      municipality_context,
       new_city_people,
       directory_type = nil
     )
+      state = municipality_context[:state]
+      city_entry = municipality_context[:municipality_entry]
+
       if directory_type.present?
         city_people_path = PathHelper.get_people_candidates_file_path(state, city_entry["gnis"],
                                                                       directory_type)

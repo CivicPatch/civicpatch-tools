@@ -48,7 +48,7 @@
     "phone_number": "(503) 526-2222"
   },
   {
-    "name": "Carla  Saunders",
+    "name": "Carla Saunders",
     "positions": [
       "Law Office Supervisor"
     ],
@@ -112,7 +112,7 @@
     "phone_number": "(503) 526-2222"
   },
   {
-    "name": "Dr. Edward  Kimmi",
+    "name": "Dr. Edward Kimmi",
     "positions": [
       "City Councilor"
     ],
@@ -200,7 +200,7 @@
     "phone_number": "(971) 235-5277"
   },
   {
-    "name": "Jenny  Haruyama",
+    "name": "Jenny Haruyama",
     "positions": [
       "City Manager"
     ],
@@ -240,7 +240,7 @@
     "phone_number": "(503) 526-2222"
   },
   {
-    "name": "Jolene  Vice",
+    "name": "Jolene Vice",
     "positions": [
       "Executive Assistant To City Manager To Jenny Haruyama"
     ],
@@ -256,7 +256,7 @@
     "phone_number": "(503) 526-2222"
   },
   {
-    "name": "Kevin  Teater",
+    "name": "Kevin Teater",
     "positions": [
       "City Councilor"
     ],
@@ -392,12 +392,20 @@
     "phone_number": "(503) 526-2353"
   },
   {
-    "name": "Robin Rojas McIntyre",
+    "name": "Robin McIntyre",
     "positions": [
       "Assistant City Attorney"
     ],
-    "email": "rmcintyre@BeavertonOregon.gov",
-    "phone_number": "(503) 526-2222"
+    "email": "rmcintyre@beavertonoregon.gov",
+    "phone_number": "(503) 526-2353",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "sources": []
   },
   {
     "name": "Scott Winter",
