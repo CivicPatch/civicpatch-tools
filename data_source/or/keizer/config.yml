@@ -11,6 +11,8 @@ scrape_exit_config:
   people_count: 6
   key_position: mayor
 people:
+  Dan Kohler:
+    other_names: ["Daniel R. Kohler"]
   Cathy Clark:
     other_names: []
   Kyle Juran:
