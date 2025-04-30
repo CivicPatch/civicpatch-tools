@@ -1,0 +1,918 @@
+[
+  {
+    "name": "Charles Maughan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan/"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6985",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6985",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to 'Phone Number:'.",
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6985",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly labeled 'Phone Number' next to the name.",
+        "proximity_to_name": 100.0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan/"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charles-maughan/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL of the current page, which is a profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charles-maughan/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary URL for the page dedicated to Charles Maughan.",
+        "proximity_to_name": 0.0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan/"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Jan Napack",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/jan-napack"
+    ],
+    "positions": [
+      "Council Member, Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6491",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6491",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number is explicitly labeled and listed next to the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/jan-napack"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jan-napack",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jan-napack",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jan-napack",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jan-napack/",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The URL of the page is the specific profile page for the person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/jan-napack"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Briae Lewis",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/briae-lewis"
+    ],
+    "positions": [
+      "Council Member, Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6492",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6492",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly labeled 'Phone Number' next to the name.",
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/briae-lewis"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/briae-lewis",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/briae-lewis",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/briae-lewis",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/briae-lewis/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page itself and is a directory listing for the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/briae-lewis"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Jim Moorefield",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/jim-moorefield"
+    ],
+    "positions": [
+      "Council Member, Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6493",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6493",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly labeled and listed directly under the person's name.",
+        "proximity_to_name": 50.0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/jim-moorefield"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jim-moorefield",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jim-moorefield",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jim-moorefield",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/jim-moorefield/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the page dedicated to the person.",
+        "proximity_to_name": 0.0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/jim-moorefield"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Ava Olson",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/ava-olson"
+    ],
+    "positions": [
+      "Council Member, Ward 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6494",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6494",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly labeled and listed directly under the person's name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/ava-olson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/ava-olson",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/ava-olson",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/ava-olson",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/ava-olson/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the page dedicated to Ava Olson.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/ava-olson"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Charlyn Ellis",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/charlyn-ellis"
+    ],
+    "positions": [
+      "Council Member, Ward 5",
+      "Council Vice President"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6495",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6495",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly labeled and listed directly under the person's name.",
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/charlyn-ellis"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charlyn-ellis",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charlyn-ellis",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charlyn-ellis",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/charlyn-ellis/",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL is a directory listing page explicitly linked to the person's name.",
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/charlyn-ellis"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Alison Bowden",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/alison-bowden"
+    ],
+    "positions": [
+      "Council Member, Ward 6"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6496",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6496",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly labeled and listed directly under the person's name.",
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/alison-bowden"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/alison-bowden",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/alison-bowden",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/alison-bowden",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/alison-bowden/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the URL of the page dedicated to the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/alison-bowden"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Paul Shaffer",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/paul-shaffer"
+    ],
+    "positions": [
+      "Council Member, Ward 7",
+      "Council President"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6497",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6497",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly labeled 'Phone Number' next to the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/paul-shaffer"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/paul-shaffer",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/paul-shaffer",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/paul-shaffer",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/paul-shaffer/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page itself, linked to the name and image.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/paul-shaffer"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Carolyn Mayers",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/carolyn-mayers"
+    ],
+    "positions": [
+      "Council Member, Ward 8"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6498",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6498",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly labeled 'Phone Number' on her profile page.",
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/carolyn-mayers"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/carolyn-mayers",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/carolyn-mayers",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/carolyn-mayers",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/carolyn-mayers/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the profile page for the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/carolyn-mayers"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  },
+  {
+    "name": "Tony Cadena",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.corvallisoregon.gov/mc/page/meet-your-councilors",
+      "https://www.corvallisoregon.gov/directory-listing/charles-maughan",
+      "https://www.corvallisoregon.gov/directory-listing/mayor-and-council",
+      "https://www.corvallisoregon.gov/directory-listing/tony-cadena"
+    ],
+    "positions": [
+      "Council Member, Ward 9"
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-766-6499",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly below name and title.",
+        "proximity_to_name": 15,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "541-766-6900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "541-766-6499",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly labeled 'Phone Number:'.",
+        "proximity_to_name": 50,
+        "source": "https://www.corvallisoregon.gov/directory-listing/tony-cadena"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorandcouncil@corvallisoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as contact for the Mayor and Council group.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 150,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/tony-cadena",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "proximity_to_name": 5,
+        "source": "https://www.corvallisoregon.gov/mc/page/meet-your-councilors"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/tony-cadena",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL from the table link.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.corvallisoregon.gov/directory-listing/charles-maughan"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/tony-cadena",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Direct link associated with name in table.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.corvallisoregon.gov/directory-listing/mayor-and-council"
+      },
+      {
+        "data": "https://www.corvallisoregon.gov/directory-listing/tony-cadena/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the profile page for the person.",
+        "proximity_to_name": 0,
+        "source": "https://www.corvallisoregon.gov/directory-listing/tony-cadena"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": []
+  }
+]
