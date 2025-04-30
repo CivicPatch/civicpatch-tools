@@ -354,18 +354,19 @@
   {
     "name": "Schuyler Warren",
     "positions": [
-      "Assistant Community Development Director"
-    ],
-    "email": "schuylerw@tigard-or.gov",
-    "phone_number": "(503) 639-4171"
-  },
-  {
-    "name": "Schuyler Warren",
-    "positions": [
+      "Assistant Community Development Director",
       "Senior Planner"
     ],
     "email": "schuylerw@tigard-or.gov",
-    "phone_number": "(503) 639-4171"
+    "phone_number": "(503) 639-4171",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "sources": []
   },
   {
     "name": "Sean Farrelly",
