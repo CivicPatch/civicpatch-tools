@@ -1,0 +1,26 @@
+---
+scrape_sources:
+- https://www.mcminnvilleoregon.gov/citycouncil
+- https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information
+- https://www.mcminnvilleoregon.gov/citycouncil/
+- https://www.mcminnvilleoregon.gov/citycouncil/page/elections
+- https://www.mcminnvilleoregon.gov/mahc
+scrape_exit_config:
+  people_count: 5
+  key_position: mayor
+people:
+  Chris Chenoweth:
+    other_names: []
+  Dan Tucholsky:
+    other_names: []
+  Jessica Payne:
+    other_names: []
+  Kim Morris:
+    other_names: []
+  Scott Cunningham:
+    other_names: []
+  Zack Geary:
+    other_names: []
+  Sal Peralta:
+    other_names: []
+divisions_map:

@@ -1,0 +1,166 @@
+[
+  {
+    "name": "Kim Morris",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 901-2084",
+    "email": "kim.morris@mcminnvilleoregon.gov",
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information",
+      "https://www.mcminnvilleoregon.gov/citycouncil/"
+    ]
+  },
+  {
+    "name": "Sal Peralta",
+    "positions": [
+      "Council member",
+      "Ward 1",
+      "City Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 437-2833",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
+      "https://www.mcminnvilleoregon.gov/mahc",
+      "https://www.mcminnvilleoregon.gov/citycouncil/"
+    ]
+  },
+  {
+    "name": "Chris Chenoweth",
+    "positions": [],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 287-8671",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/"
+    ]
+  },
+  {
+    "name": "Dan Tucholsky",
+    "positions": [
+      "Councilor",
+      "Ward 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 517-0242",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/"
+    ]
+  },
+  {
+    "name": "Zack Geary",
+    "positions": [
+      "Council member",
+      "Ward 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 560-0617",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
+      "https://www.mcminnvilleoregon.gov/citycouncil/"
+    ]
+  },
+  {
+    "name": "Jessica Payne",
+    "positions": [
+      "Council member",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 517-0957",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
+      "https://www.mcminnvilleoregon.gov/citycouncil/"
+    ]
+  },
+  {
+    "name": "Scott Cunningham",
+    "positions": [
+      "City Council Member",
+      "Vice-Chair"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 517-0609",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil/page/scott-cunningham",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/mahc",
+      "https://www.mcminnvilleoregon.gov/citycouncil/"
+    ]
+  },
+  {
+    "name": "Jeff Towery",
+    "positions": [
+      "City Manager"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 434-7302",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citymanager",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/cityadmin",
+      "https://www.mcminnvilleoregon.gov/citymanager"
+    ]
+  },
+  {
+    "name": "Remy Drabkin",
+    "positions": [
+      "council member",
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/bc-hs/page/homelessness-subcommittee",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/mayors-awards-2023"
+    ]
+  }
+]
