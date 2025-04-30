@@ -1,0 +1,543 @@
+[
+  {
+    "name": "Cathy Clark",
+    "image": "images/205acbad1572e6020df35114ac6a45326cee59839203afb546f7840589e0abb4.jpg",
+    "source_image": "https://www.keizer.org/?action=media.media.read&id=17312&size=medium",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/mayor"
+    ],
+    "positions": [
+      "mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 856-3403",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number labeled as voicemail directly under Cathy's name and email.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ClarkC@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email directly associated with Cathy Clark's name and repeated in text.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL contains 'mayor' and is directly linked to the name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and content clearly dedicated to Mayor Cathy Clark's profile.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term Expires January 2027, interpreted as end of January 2027.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ]
+  },
+  {
+    "name": "Marlene Parsons",
+    "image": "images/dfb04c955bdb282bd9f562600d4e26d1e0adafac04fe8606270d387e7fef0f2c.png",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Marlene%20Parsons.png",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/Council-Position-1"
+    ],
+    "positions": [
+      "council member",
+      "position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 856-3431",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled as 'Voicemail' directly under Marlene Parsons' name and email.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ParsonsM@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link directly associated with Marlene Parsons' name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/Council-Position-1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL contains 'Council-Position-1' and is directly linked to the name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and content clearly dedicated to Council Position 1 held by Marlene Parsons.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2029-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term Expires January 2029, interpreted as end of January 2029.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ]
+  },
+  {
+    "name": "Shaney Starr",
+    "image": "images/8c27b0eb32c6f6c1b4f83b8c0dec5de8b0886ad226ee612ae3aea377518ead00.jpg",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Shaney_Starr_Headshot.cropped.jpg?width=300",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-2"
+    ],
+    "positions": [
+      "council member",
+      "position 2",
+      "council president"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 856-3449",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled as voicemail directly under Shaney Starr's name and email.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "emails": [
+      {
+        "data": "StarrS@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link directly associated with Shaney Starr's name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL contains 'council-position-2' and is directly linked to the name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and content is dedicated to Council Position 2 held by Shaney Starr.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-12-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed to Keizer City Council in December 2021.",
+        "proximity_to_name": 50,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term Expires January 2029, interpreted as end of January 2029.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ]
+  },
+  {
+    "name": "Kyle Juran",
+    "image": "images/8161bea3e915c7cfa11d8747c8e3efa41591b1cdfb532a3c5a71c423405710b1.png",
+    "source_image": "https://www.keizer.org/media/Design%20Files/Logos/logo.png",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-3"
+    ],
+    "positions": [
+      "council member",
+      "position 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 856-3415",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled as Voicemail directly under Kyle Juran's name and email link.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "emails": [
+      {
+        "data": "JuranK@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link directly associated with Kyle Juran's name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL contains 'council-position-3' and is directly linked to the name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-3",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and content clearly dedicated to Council Position 3 held by Kyle Juran.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2029-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term Expires January 2029, interpreted as end of January 2029.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ]
+  },
+  {
+    "name": "Soraida Cross",
+    "image": "images/6560612aab338f2f2f4c3361630102e9e60741249d2868ceac2eb1f77015ab9b.jpg",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Cross.jpeg?width=468",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "http://www.keizer.org/council-position-4"
+    ],
+    "positions": [
+      "council member",
+      "position 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 856-3410",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled as voicemail directly under the person's name and email.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "emails": [
+      {
+        "data": "CrossS@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email link directly associated with the person's name.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "websites": [
+      {
+        "data": "http://www.keizer.org/council-position-4",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL contains 'council-position-4' and is directly linked to the name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "http://www.keizer.org/council-position-4",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and content clearly dedicated to Council Position 4 held by Soraida Cross.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term Expires January 2027, interpreted as end of January 2027.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ]
+  },
+  {
+    "name": "Lore Christopher",
+    "image": "images/b971f7d96f492d41968b0622d2254dba8b0fc232fa0bdbc51ea8278fd6b23f02.png",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Lore%20Christopher.png",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-5"
+    ],
+    "positions": [
+      "council member",
+      "position 5"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 856-3448",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled as voicemail directly associated with Lore Christopher.",
+        "proximity_to_name": 15,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ChristopherL@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly linked to Lore Christopher's name and contact info.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL contains 'council-position-5' and is directly linked to the name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-5",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and content dedicated to Lore Christopher as Council Position 5 member.",
+        "proximity_to_name": 0,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-12-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed December 2024 to fill remainder of term.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term Expires January 2027, interpreted as end of January 2027.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "2027-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term runs through January 2027 as stated in text.",
+        "proximity_to_name": 20,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ]
+  },
+  {
+    "name": "Dan Kohler",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council"
+    ],
+    "positions": [
+      "council member",
+      "position 6"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/Council-Position-6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL contains 'Council-Position-6' and is directly linked to the name.",
+        "proximity_to_name": 1,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-01-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term Expires January 2027, interpreted as end of January 2027.",
+        "proximity_to_name": 10,
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ]
+  },
+  {
+    "name": "Ma'Layah Latty-Farrar",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council"
+    ],
+    "positions": [
+      "youth councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-09-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit start date given as September 1, 2024.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-05-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit end date given as May 31, 2025.",
+        "proximity_to_name": 5,
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "source": "https://www.keizer.org/city-council"
+      }
+    ]
+  }
+]

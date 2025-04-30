@@ -1,0 +1,26 @@
+---
+scrape_sources:
+- https://www.keizer.org/city-council
+- https://www.keizer.org/mayor
+- https://www.keizer.org/council-position-2
+- https://www.keizer.org/Council-Position-1
+- https://www.keizer.org/council-position-3
+- http://www.keizer.org/council-position-4
+- https://www.keizer.org/council-position-5
+scrape_exit_config:
+  people_count: 6
+  key_position: mayor
+people:
+  Cathy Clark:
+    other_names: []
+  Kyle Juran:
+    other_names: []
+  Marlene Parsons:
+    other_names: []
+  Shaney Starr:
+    other_names: []
+  Soraida Cross:
+    other_names: []
+  Lore Christopher:
+    other_names: []
+divisions_map:
