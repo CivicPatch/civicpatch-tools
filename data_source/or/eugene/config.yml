@@ -13,5 +13,11 @@ scrape_sources:
 scrape_exit_config:
   people_count: 7
   key_position: mayor
-people: {}
+people: 
+  Matthew Keating:
+    other_names:
+      - Matt Keating
+  Randy Groves:
+    other_names:
+      - Randall Groves
 divisions_map:
