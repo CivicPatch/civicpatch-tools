@@ -79,8 +79,8 @@ namespace :github_pipeline do
       ## Sources
       #{city_directory.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")}
       ## People
-      | **Name**             | **Positions**                          | **Email**                   | **Phone**         | **Website**                                           | **Image**                                                                                     |
-      |----------------------|----------------------------------------|-----------------------------|-------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------|
+      | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Image**     |
+      |-----------|-------------------|---------------|---------------|---------------|---------------|
       #{city_directory.map do |person|
         image = person["image"]
         email = person["email"]

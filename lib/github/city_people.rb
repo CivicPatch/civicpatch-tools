@@ -89,14 +89,22 @@ module GitHub
       end
     end
 
-    def self.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people, contested_people)
-      action_item_summary = generate_readable_updates_needed_list(merged_people, missing_people, contested_people)
+    def self.generate_suggest_edit_markdown(
+      merged_people, suggest_edit_details, missing_people, contested_people
+    )
+      action_item_summary = generate_readable_updates_needed_list(
+        merged_people, missing_people, contested_people
+      )
       return "" unless action_item_summary.present?
 
       case suggest_edit_details[:type]
       when "email"
+        email = suggest_edit_details[:data]
+        source_url = suggest_edit_details[:source_url]
         <<~MARKDOWN
-          - [ ] (Optional) Email #{suggest_edit_details[:data]} to notify them of changes to their officials directory:
+          - [ ] (Optional) Notify the state source maintaners of any changes as needed
+            - [ ] Verify the state source data at [#{source_url}](#{source_url})
+            - [ ] Email the maintainer(s) at [#{email}](mailto:#{email})
           #{action_item_summary}
         MARKDOWN
       when "url"
@@ -124,15 +132,11 @@ module GitHub
       end
 
       contested_people.each do |contested_person_name, contested_fields|
-        puts "CONTENTED FIELDS"
-        pp contested_fields
         merged_person = merged_people.find { |person| person["name"] == contested_person_name }
 
         next if merged_person.nil?
 
         updates_needed = get_updates_needed(source_to_update, merged_person, contested_fields)
-        puts "UPDATES NEEDED"
-        pp updates_needed
 
         next unless updates_needed.present? && updates_needed.count.positive?
 

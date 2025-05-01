@@ -19,8 +19,9 @@ module Scrapers
       when "wa"
         Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_suggest_edit_details(municipality_context)
       when "or"
+        source_url = Scrapers::Or::MunicipalityOfficials::StateLevelScraper.get_source_url(municipality_context)
         email = "loc@orcities.org"
-        { type: "email", data: email }
+        { type: "email", data: email, source_url: source_url }
       else
         raise "No state-level scraper found for #{municipality_context[:state]}"
       end
