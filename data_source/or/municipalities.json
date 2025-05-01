@@ -183,10 +183,12 @@
       "phone_number": "(541) 726-3700",
       "website": "https://springfield-or.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "be5537306e70e5e3b77653ff5a269ddf",
+      "meta_updated_at": "2025-05-01",
+      "meta_hash": "e754d90bd70bf2e4608e3c37ce2b51d6",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
