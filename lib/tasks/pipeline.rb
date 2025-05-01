@@ -241,7 +241,7 @@ namespace :pipeline do
 
     # Update sources with remote URLs
     people.map do |person|
-      next if person["image"].blank?
+      next person if person["image"].blank?
 
       key = File.join(remote_city_path, "images", File.basename(person["image"]))
       person["image"] = Utils::ImageHelper.get_cdn_url(key)
