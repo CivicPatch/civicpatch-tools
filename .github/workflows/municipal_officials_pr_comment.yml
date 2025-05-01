@@ -21,12 +21,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2 # Only run workflow if latest commit is solely a config.yml change
 
       - name: Check for latest people.yml commit
         id: check-files
         run: |
-          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          CHANGED_FILES=$(git diff --name-only HEAD^)
           PEOPLE_FILES=$(echo "$CHANGED_FILES" | grep -c "people\.yml$" || echo "0")
 
           echo "Changed files: $CHANGED_FILES"
