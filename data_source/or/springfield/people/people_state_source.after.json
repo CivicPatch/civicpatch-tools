@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "svangordon@springfield-or.gov",
-    "phone_number": "(541) 726-3700"
+    "phone_number": "(541) 726-3700",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Joe Pishioneri",
@@ -13,7 +14,8 @@
       "Council President"
     ],
     "email": "jpishioneri@springfield-or.gov",
-    "phone_number": "(541) 726-3610"
+    "phone_number": "(541) 726-3610",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Alan Stout",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "astout@springfield-or.gov",
-    "phone_number": "(541) 726-3700"
+    "phone_number": "(541) 726-3700",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Beth Blackwell",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "bblackwell@springfield-or.gov",
-    "phone_number": "(541) 726-3700"
+    "phone_number": "(541) 726-3700",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kori Rodley",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "krodley@springfield-or.gov",
-    "phone_number": "(541) 726-3700"
+    "phone_number": "(541) 726-3700",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Michelle Webber",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "mwebber@springfield-or.gov",
-    "phone_number": "(541) 726-3700"
+    "phone_number": "(541) 726-3700",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Steve Sigvald Moe",
@@ -53,7 +59,8 @@
       "Council Member"
     ],
     "email": "smoe@springfield-or.gov",
-    "phone_number": "(541) 726-3700"
+    "phone_number": "(541) 726-3700",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Victoria M. Doyle",
@@ -61,6 +68,7 @@
       "Council Member"
     ],
     "email": "vdoyle@springfield-or.gov",
-    "phone_number": "(541) 726-3700"
+    "phone_number": "(541) 726-3700",
+    "updated_at": "2025-05-01"
   }
 ]
