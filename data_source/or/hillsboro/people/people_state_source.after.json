@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "Beach.Pace@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6269"
+    "phone_number": "(503) 681-6269",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Cristian Salgado",
@@ -13,7 +14,8 @@
       "Council Member"
     ],
     "email": "cristian.salgado@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Elizabeth Case",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "elizabeth.case@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kipperlyn Sinclair",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "kipperlyn.sinclair@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Olivia Alcaire",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "olivia.alcaire@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6269"
+    "phone_number": "(503) 681-6269",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rob Harris",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "rob.harris@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Saba Anvery",
@@ -53,6 +59,7 @@
       "Council Member"
     ],
     "email": "saba.anvery@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   }
 ]

@@ -25,9 +25,9 @@
 
  City Council provides community leadership, create policies to guide the City in delivering services and achieving community goals, and encourage citizen awareness and involvement through committees and boards, the Youth Advisory Council and more.   [Recent Meetings](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?type=10)  
 
+ 1.   [City Council - 06 May 2025](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Id=19160) 
  1.   [City Council - 15 Apr 2025](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Id=19153) 
  1.   [City Council - 01 Apr 2025](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Id=19148) 
- 1.   [City Council - 18 Mar 2025](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Id=19141) 
 
 ## Beach Pace
 
@@ -317,16 +317,16 @@ Phone: (503) 681-6219
 
 ## Schedule of Meetings
 
-  [](https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10/)  April 2025  [](https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10/)  
+  [](https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10/)  May 2025  [](https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10/)  
 
 |Sun|Mon|Tue|Wed|Thu|Fri|Sat|
 |---|---|---|---|---|---|---|
-|30|31|[1]()|[2]()|3|4|5|
-|6|7|[8]()|[9]()|10|11|12|
-|13|14|[15]()|[16]()|[17]()|[18]()|19|
-|20|21|[22]()|[23]()|[24]()|25|26|
 |27|28|29|30|1|2|3|
 |4|5|[6]()|[7]()|8|9|10|
+|11|12|[13]()|[14]()|15|16|17|
+|18|19|20|21|22|23|24|
+|25|26|27|28|29|30|31|
+|1|2|3|4|5|6|7|
 
   [Back](https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10/)  
 
@@ -336,8 +336,11 @@ Phone: (503) 681-6219
 
 ## Upcoming Meetings
 
- 1.  City Council - 06 May 2025 
- 1.  Planning and Zoning Hearings Board - 07 May 2025 
+ 1.   [City Council - 06 May 2025](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19160) 
+ 1.   [Planning and Zoning Hearings Board - 07 May 2025](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19161) 
+ 1.  Parks & Recreation Commission Retreat - 13 May 2025 
+ 1.  Hillsboro Arts & Culture Endowment Meeting - 14 May 2025 
+ 1.  Planning Commission - 14 May 2025 
   [More](https://hillsboro-oregon.civicweb.net/Portal/MeetingSchedule.aspx)  
 
 ## Recent Meetings
@@ -475,18 +478,4 @@ Phone: (503) 681-6219
  1.   [Finance Committee - 11 Jun 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19027) 
  1.   [Utilities Commission - 11 Jun 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19028) 
  1.   [City Council - 04 Jun 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19021) 
- 1.   [Transportation Committee - 28 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19020) 
- 1.   [Parks & Recreation Commission - 23 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19016) 
- 1.   [Planning Commission - 22 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19014) 
- 1.   [Hillsboro Arts & Culture Council - 22 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19015) 
- 1.   [Hillsboro Economic Development Council - 21 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19002) 
- 1.   [City Council - 21 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19001) 
- 1.   [Library Board - 16 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19018) 
- 1.   [Historic Landmarks Advisory Committee - 15 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19012) 
- 1.   [Parks & Recreation Commission - 15 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19007) 
- 1.   [Finance Committee - 14 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19006) 
- 1.   [Utilities Commission - 14 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19013) 
- 1.   [Planning Commission - 08 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19008) 
- 1.   [Budget Committee - 08 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=18996) 
- 1.   [City Council - 07 May 2024](https://hillsboro-oregon.civicweb.net/Portal/MeetingInformation.aspx?Org=Cal&id=19000) 
-  [More](https://hillsboro-oregon.civicweb.net/Portal/MeetingSchedule.aspx)   [© iCompass - A Diligent Brand 2025](http://www.icompasstech.com/)   ![iCompass - A Diligent Brand](/images/iCompass_DIL_logo.svg)  City of Hillsboro User name Password Sign In Remember me next time.  [Forgot password?](https://hillsboro-oregon.civicweb.net/user/resetpassword)  
+  [More](https://hillsboro-oregon.civicweb.net/Portal/MeetingSchedule.aspx)   [© iCompass - A Diligent Brand 2025](http://www.icompasstech.com/)  City of Hillsboro User name Password Sign In Remember me next time.  [Forgot password?](https://hillsboro-oregon.civicweb.net/user/resetpassword)  

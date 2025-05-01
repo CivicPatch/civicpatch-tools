@@ -1,7 +1,7 @@
 [
   {
     "name": "Beach Pace",
-    "image": "images/131faccb3a31b55e6634d2bcb334fac5bed9f5fe355f5214c49e27f83e1d6334.jpg",
+    "image": "images/131faccb3a31b55e6634d2bcb334fac5bed9f5fe355f5214c49e27f83e1d6334.png",
     "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38010/638696944449230000",
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
@@ -27,7 +27,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile spotlight page linked under her bio.",
+        "llm_confidence_reason": "Profile spotlight page linked under 'Read more about Mayor Pace'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -35,10 +35,10 @@
         "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
       },
       {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/4300",
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link associated with election announcement for Mayor Beach Pace.",
-        "proximity_to_name": 15,
+        "llm_confidence_reason": "Page is a City Council Spotlight specifically about Mayor Beach Pace.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
@@ -49,7 +49,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit term start date given as '07 Jan 2025'.",
+        "llm_confidence_reason": "Explicit term start date '07 Jan 2025' listed under Mayor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -71,7 +71,7 @@
       {
         "data": "2029-01-02",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit term end date given as '02 Jan 2029'.",
+        "llm_confidence_reason": "Explicit term end date '02 Jan 2029' listed under Mayor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -81,18 +81,19 @@
       {
         "data": "2029-01-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expires in January 2029, inferred end of month.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Term expires in January 2029, interpreted as end of January 2029.",
+        "proximity_to_name": 25,
         "markdown_formatting": {
           "in_list": true
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
       }
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Olivia Alcaire",
-    "image": "images/30ee38c4fd9c8bae5b2e94a6cf3eed54c7e22eea0c54085050b8054a9cc83981.jpg",
+    "image": "images/30ee38c4fd9c8bae5b2e94a6cf3eed54c7e22eea0c54085050b8054a9cc83981.png",
     "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/9114/636233509318630000",
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
@@ -121,7 +122,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile spotlight page linked under her bio.",
+        "llm_confidence_reason": "Profile spotlight page linked under 'Read more about Councilor Alcaire'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -131,7 +132,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page is a City Council Spotlight dedicated to Olivia Alcaire with detailed biography and image.",
+        "llm_confidence_reason": "Page is a City Council Spotlight dedicated to Olivia Alcaire.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -143,7 +144,7 @@
       {
         "data": "2017-02-21",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term start date given as '21 Feb 2017'.",
+        "llm_confidence_reason": "Term start date '21 Feb 2017' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -153,8 +154,8 @@
       {
         "data": "2023-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Second full term began in January 2023 as stated in the text.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Second full term began in January 2023, explicitly stated.",
+        "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
         },
@@ -165,7 +166,7 @@
       {
         "data": "2027-01-05",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term end date given as '05 Jan 2027'.",
+        "llm_confidence_reason": "Term end date '05 Jan 2027' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -175,18 +176,19 @@
       {
         "data": "2027-01-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term will expire in January 2027 as stated in the text.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Term will expire in January 2027, explicitly stated.",
+        "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718"
       }
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kipperlyn Sinclair",
-    "image": "images/d63810f467ab68748d9b0afcb9ab78a66b02c34280d9baec44b7a52022ce5884.jpg",
+    "image": "images/d63810f467ab68748d9b0afcb9ab78a66b02c34280d9baec44b7a52022ce5884.png",
     "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/30813/638067187485170000",
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
@@ -215,7 +217,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile spotlight page linked under her bio.",
+        "llm_confidence_reason": "Profile spotlight page linked under 'Read more about Councilor Sinclair'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -225,7 +227,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page is a city council spotlight specifically about Kipperlyn Sinclair.",
+        "llm_confidence_reason": "Page is a dedicated City Council Spotlight for Kipperlyn Sinclair.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -236,8 +238,8 @@
     "start_dates": [
       {
         "data": "2023-01-03",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term start date given as '03 Jan 2023'.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date '03 Jan 2023' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -250,7 +252,7 @@
         "llm_confidence_reason": "Explicitly stated 'Councilor Sinclair's term began in January 2023'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
       }
@@ -259,7 +261,7 @@
       {
         "data": "2027-01-05",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term end date given as '05 Jan 2027'.",
+        "llm_confidence_reason": "Term end date '05 Jan 2027' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -270,17 +272,18 @@
         "data": "2027-01-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Term expires in January 2027, interpreted as end of January 2027.",
-        "proximity_to_name": 20,
+        "proximity_to_name": 25,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
       }
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Saba Anvery",
-    "image": "images/009b8597d2e236594fe16d8d5ff5cb13358ba7210042a00ccbe934b088386f18.jpg",
+    "image": "images/009b8597d2e236594fe16d8d5ff5cb13358ba7210042a00ccbe934b088386f18.png",
     "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38158/638703103435470000",
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
@@ -309,7 +312,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile spotlight page linked under her bio.",
+        "llm_confidence_reason": "Profile spotlight page linked under 'Read more about Councilor Anvery'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -319,7 +322,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page is a dedicated City Council Spotlight for Saba Anvery, likely her profile or feature page.",
+        "llm_confidence_reason": "Page is a dedicated spotlight for Councilor Saba Anvery, indicating a profile page.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -331,7 +334,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date given as '07 Jan 2025'.",
+        "llm_confidence_reason": "Term start date '07 Jan 2025' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -342,9 +345,9 @@
         "data": "2025-01-07",
         "llm_confidence": 0.99,
         "llm_confidence_reason": "Explicitly stated 'Councilor Anvery’s term began on January 7, 2025'.",
-        "proximity_to_name": 40,
+        "proximity_to_name": 20,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
       }
@@ -352,8 +355,8 @@
     "end_dates": [
       {
         "data": "2029-01-02",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date given as '02 Jan 2029'.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term end date '02 Jan 2029' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -363,18 +366,19 @@
       {
         "data": "2029-01-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expires in January 2029, interpreted as end of January 2029.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Term expiration stated as January 2029; assumed end of month for date completeness.",
+        "proximity_to_name": 25,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
       }
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Elizabeth Case",
-    "image": "images/18dec97665fd4786074cbc58841464c08251630d2be395c15d2448366fc2b326.jpg",
+    "image": "images/18dec97665fd4786074cbc58841464c08251630d2be395c15d2448366fc2b326.png",
     "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38504/638721215883430000",
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
@@ -403,7 +407,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile spotlight page linked under her bio.",
+        "llm_confidence_reason": "Profile spotlight page linked under 'Read more about Councilor Case'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -413,8 +417,8 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page is a City Council Spotlight specifically about Elizabeth Case.",
-        "proximity_to_name": 0,
+        "llm_confidence_reason": "Page is a dedicated spotlight profile for Elizabeth Case.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
@@ -425,7 +429,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date given as '07 Jan 2025'.",
+        "llm_confidence_reason": "Term start date '07 Jan 2025' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -446,8 +450,8 @@
     "end_dates": [
       {
         "data": "2029-01-02",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date given as '02 Jan 2029'.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term end date '02 Jan 2029' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -455,20 +459,21 @@
         "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
       },
       {
-        "data": "2029-01",
+        "data": "2029-01-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration stated as January 2029, interpreted as 2029-01.",
-        "proximity_to_name": 25,
+        "llm_confidence_reason": "Term expires in January 2029, interpreted as end of month.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300"
       }
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rob Harris",
-    "image": "images/38b3bd85ca1d144929202ac45958c5a2f79f556d81b7b1e041b4a52f841a6652.jpg",
+    "image": "images/38b3bd85ca1d144929202ac45958c5a2f79f556d81b7b1e041b4a52f841a6652.png",
     "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38156/638703103429800000",
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
@@ -497,7 +502,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile spotlight page linked under his bio.",
+        "llm_confidence_reason": "Profile spotlight page linked under 'Read more about Councilor Harris'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -507,8 +512,8 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page is a City Council Spotlight specifically about Rob Harris.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Page is a dedicated City Council Spotlight for Rob Harris, likely his profile page.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
@@ -519,7 +524,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date given as '07 Jan 2025'.",
+        "llm_confidence_reason": "Term start date '07 Jan 2025' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -530,9 +535,9 @@
         "data": "2025-01-07",
         "llm_confidence": 0.99,
         "llm_confidence_reason": "Explicitly stated 'Councilor Harris’s term began on January 7, 2025'.",
-        "proximity_to_name": 40,
+        "proximity_to_name": 20,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
       }
@@ -540,8 +545,8 @@
     "end_dates": [
       {
         "data": "2029-01-02",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date given as '02 Jan 2029'.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term end date '02 Jan 2029' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -551,18 +556,19 @@
       {
         "data": "2029-01-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expires in January 2029, interpreted as end of January 2029.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Term expires in January 2029, interpreted as end of month.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
       }
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Cristian Salgado",
-    "image": "images/1823f6dfc9ab1cbb8869389a7498cd783573e8b89ec16dc0c1ebb1596dffb898.jpg",
+    "image": "images/1823f6dfc9ab1cbb8869389a7498cd783573e8b89ec16dc0c1ebb1596dffb898.png",
     "source_image": "https://www.hillsboro-oregon.gov/home/showpublishedimage/38890/638739369852700000",
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
@@ -591,7 +597,7 @@
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile spotlight page linked under his bio.",
+        "llm_confidence_reason": "Profile spotlight page linked under 'Read more about Councilor Salgado'.",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -599,10 +605,10 @@
         "source": "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10"
       },
       {
-        "data": "https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-wards-redistricting",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with Council Ward 1 and city council context; no direct personal profile link found.",
-        "proximity_to_name": 50,
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page is a City Council Spotlight specifically about Cristian Salgado.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
@@ -613,7 +619,7 @@
       {
         "data": "2025-01-21",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date given as '21 Jan 2025'.",
+        "llm_confidence_reason": "Term start date '21 Jan 2025' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -624,7 +630,7 @@
         "data": "2025-01-21",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Sworn into office on January 21, 2025, explicitly stated.",
-        "proximity_to_name": 20,
+        "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
         },
@@ -635,7 +641,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date given as '31 Dec 2026'.",
+        "llm_confidence_reason": "Term end date '31 Dec 2026' listed under Councilor term.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -645,13 +651,14 @@
       {
         "data": "2027-01-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Will fill remainder of term through January 2027, interpreted as end of January.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Will fill remainder of term through January 2027, explicitly stated.",
+        "proximity_to_name": 50,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
       }
-    ]
+    ],
+    "updated_at": "2025-05-01"
   }
 ]

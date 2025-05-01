@@ -13,15 +13,16 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ]
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Olivia Alcaire",
     "positions": [
-      "Council Member",
-      "Position A",
-      "Ward 3"
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
@@ -32,9 +33,52 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718"
-    ]
+    ],
+    "updated_at": "2025-05-01"
+  },
+  {
+    "name": "Cristian Salgado",
+    "positions": [
+      "Council Member",
+      "Position A",
+      "Ward 1"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 681-6219",
+    "email": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
+    ],
+    "updated_at": "2025-05-01"
+  },
+  {
+    "name": "Kipperlyn Sinclair",
+    "positions": [
+      "Council Member",
+      "Position A",
+      "Ward 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 681-6219",
+    "email": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/"
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Elizabeth Case",
@@ -52,9 +96,31 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300"
-    ]
+    ],
+    "updated_at": "2025-05-01"
+  },
+  {
+    "name": "Rob Harris",
+    "positions": [
+      "Council Member",
+      "Position B",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 681-6219",
+    "email": null,
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Saba Anvery",
@@ -67,70 +133,14 @@
     "source_image": null,
     "phone_number": "(503) 681-6219",
     "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
-    ]
-  },
-  {
-    "name": "Cristian Salgado",
-    "positions": [
-      "Council Member",
-      "Ward 1, Position A"
     ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(503) 681-6219",
-    "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
-    ]
-  },
-  {
-    "name": "Kipperlyn Sinclair",
-    "positions": [
-      "Council Member",
-      "Ward 2, Position A"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(503) 681-6219",
-    "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
-    ]
-  },
-  {
-    "name": "Rob Harris",
-    "positions": [
-      "Council Member",
-      "Ward 3, Position B"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(503) 681-6219",
-    "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
-    ]
+    "updated_at": "2025-05-01"
   }
 ]
