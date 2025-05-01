@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "kknudson@eugene-or.gov",
-    "phone_number": "(541) 682-5010"
+    "phone_number": "(541) 682-5010",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Alan Zelenka",
@@ -13,7 +14,8 @@
       "Council Member"
     ],
     "email": "azelenka@eugene-or.gov",
-    "phone_number": "(541) 682-8343"
+    "phone_number": "(541) 682-8343",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Eliza Kashinsky",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "ekashinsky@eugene-or.gov",
-    "phone_number": "(541) 682-5010"
+    "phone_number": "(541) 682-5010",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Greg Evans",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "greg.a.evans@ci.eugene.or.us",
-    "phone_number": "(541) 682-8346"
+    "phone_number": "(541) 682-8346",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jennifer Yeh",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "jyeh@eugene-or.gov",
-    "phone_number": "(541) 682-8344"
+    "phone_number": "(541) 682-8344",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Lyndsie Leech",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "LLeech@eugene-or.gov",
-    "phone_number": "(541) 682-5010"
+    "phone_number": "(541) 682-5010",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Matthew Keating",
@@ -53,7 +59,8 @@
       "Council Member"
     ],
     "email": "mkeating@eugene-or.gov",
-    "phone_number": "(541) 682-5010"
+    "phone_number": "(541) 682-5010",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mike Clark",
@@ -61,7 +68,8 @@
       "Council Member"
     ],
     "email": "mclark@eugene-or.gov",
-    "phone_number": "(541) 682-8345"
+    "phone_number": "(541) 682-8345",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Randall Groves",
@@ -69,6 +77,7 @@
       "Council Member"
     ],
     "email": "rgroves@eugene-or.gov",
-    "phone_number": "(541) 682-5010"
+    "phone_number": "(541) 682-5010",
+    "updated_at": "2025-05-01"
   }
 ]
