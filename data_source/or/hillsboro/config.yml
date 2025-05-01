@@ -5,4 +5,4 @@ scrape_exit_config:
   people_count: 5
   key_position: mayor
 people: {}
-divisions_map:
+divisions_map: "test"
