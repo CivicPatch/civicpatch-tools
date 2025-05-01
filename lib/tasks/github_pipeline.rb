@@ -23,7 +23,7 @@ namespace :github_pipeline do
     city_path = PathHelper.get_data_city_path(state, city_entry["gnis"])
     relative_path = city_path[city_path.rindex("data/#{state}")..]
 
-    directory_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/people.yml"
+    directory_url = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{relative_path}/people.yml"
     puts directory_url
   end
 
@@ -37,7 +37,7 @@ namespace :github_pipeline do
     city_path = PathHelper.get_data_source_city_path(state, city_entry["gnis"])
     relative_path = city_path[city_path.rindex("data_source/#{state}")..]
 
-    config_url = "https://github.com/CivicPatch/open-data/blob/#{branch_name}/#{relative_path}/config.yml"
+    config_url = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{relative_path}/config.yml"
     puts config_url
   end
 
