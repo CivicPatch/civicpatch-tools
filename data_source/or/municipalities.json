@@ -359,10 +359,12 @@
       "phone_number": "(541) 923-7710",
       "website": "https://www.redmondoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "69aaa5f954de1db4990c3c0972bdc2a1",
+      "meta_updated_at": "2025-05-01",
+      "meta_hash": "3da3408c0bcb655f8797b2c71314eade",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
