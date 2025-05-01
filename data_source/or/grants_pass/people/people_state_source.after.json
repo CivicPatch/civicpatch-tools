@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "cscherf@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Brian DeLaGrange",
@@ -13,7 +14,8 @@
       "Council Member"
     ],
     "email": "bdelagrange@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Dwayne Yunker",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "dyunker@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Erich Schloegl",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "eschloegl@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Indra Nicholas",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "inicholas@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Joel King",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "jking@grantspassoregon.gov",
-    "phone_number": "(541) 450-6010"
+    "phone_number": "(541) 450-6010",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kathleen Krohn",
@@ -53,7 +59,8 @@
       "Council Member"
     ],
     "email": "kkrohn@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rick Riker",
@@ -61,7 +68,8 @@
       "Council Member"
     ],
     "email": "rriker@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rob Pell",
@@ -69,7 +77,8 @@
       "Council Member"
     ],
     "email": "rpell@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Victoria Marshall",
@@ -77,6 +86,7 @@
       "Council Member"
     ],
     "email": "vmarshall@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   }
 ]

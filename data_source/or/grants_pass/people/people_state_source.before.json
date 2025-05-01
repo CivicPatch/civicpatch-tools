@@ -5,7 +5,8 @@
       "City Manager"
     ],
     "email": "acubic@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Bradley Clark",
@@ -13,7 +14,8 @@
       "Planning Director"
     ],
     "email": "bclark@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Brian DeLaGrange",
@@ -21,7 +23,8 @@
       "Councilor"
     ],
     "email": "bdelagrange@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Carolyn Jane Nealon",
@@ -29,7 +32,8 @@
       "Planning Technician"
     ],
     "email": "cnealon@grantspassoregon.gov",
-    "phone_number": "(541) 450-6079"
+    "phone_number": "(541) 450-6079",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Clint Scherf",
@@ -37,7 +41,8 @@
       "Mayor"
     ],
     "email": "cscherf@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Craig Kuhnert",
@@ -45,7 +50,8 @@
       "Water Treatment Plant Superintendent"
     ],
     "email": "ckuhnert@grantspassoregon.gov",
-    "phone_number": "(541) 450-6118"
+    "phone_number": "(541) 450-6118",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Dwayne Yunker",
@@ -53,7 +59,8 @@
       "Councilor"
     ],
     "email": "dyunker@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Emily Moreland",
@@ -61,7 +68,8 @@
       "Treatment Plant Specialist II"
     ],
     "email": "emoreland@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Erich Schloegl",
@@ -69,7 +77,8 @@
       "Councilor"
     ],
     "email": "eschloegl@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Gary Brelinski",
@@ -77,7 +86,8 @@
       "Water Restoration Plant Superintendent"
     ],
     "email": "gbrelinski@grantspassoregon.gov",
-    "phone_number": "(541) 450-6122"
+    "phone_number": "(541) 450-6122",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Indra Nicholas",
@@ -85,7 +95,8 @@
       "Councilor"
     ],
     "email": "inicholas@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jason M. Canady",
@@ -93,7 +104,8 @@
       "Public Works Director"
     ],
     "email": "jcanady@grantspassoregon.gov",
-    "phone_number": "(541) 660-6795"
+    "phone_number": "(541) 660-6795",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "JC Rowley",
@@ -101,15 +113,17 @@
       "Finance Director"
     ],
     "email": "jrowley@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Joel  King",
+    "name": "Joel King",
     "positions": [
       "Councilor"
     ],
     "email": "jking@grantspassoregon.gov",
-    "phone_number": "(541) 450-6010"
+    "phone_number": "(541) 450-6010",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Karen Frerk",
@@ -117,7 +131,8 @@
       "City Recorder"
     ],
     "email": "kfrerk@grantspassoregon.gov",
-    "phone_number": "(541) 450-6010"
+    "phone_number": "(541) 450-6010",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kathleen Krohn",
@@ -125,7 +140,8 @@
       "Councilor"
     ],
     "email": "kkrohn@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Ken Sandlin",
@@ -133,7 +149,8 @@
       "Building Official"
     ],
     "email": "ksandlin@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kendra Astry",
@@ -141,7 +158,8 @@
       "Engineering Department Support Technician"
     ],
     "email": "kastry@grantspassoregon.gov",
-    "phone_number": "(541) 450-6039"
+    "phone_number": "(541) 450-6039",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Laure Middleton",
@@ -149,7 +167,8 @@
       "Associate Planner"
     ],
     "email": "lmiddleton@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mandy Hayes",
@@ -157,7 +176,8 @@
       "Human Resources Director"
     ],
     "email": "mhayes@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Marcella Haack",
@@ -165,7 +185,8 @@
       "911 Manager"
     ],
     "email": "mhaack@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mark Bartholomew",
@@ -173,15 +194,17 @@
       "Interim City Attorney"
     ],
     "email": "mbartholomew@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Nancy  Murry",
+    "name": "Nancy Murry",
     "positions": [
       "Department Support Technician"
     ],
     "email": "nmurry@grantspassoregon.gov",
-    "phone_number": "(541) 474-6355"
+    "phone_number": "(541) 474-6355",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rick Riker",
@@ -189,7 +212,8 @@
       "Councilor"
     ],
     "email": "rriker@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rob Pell",
@@ -197,7 +221,8 @@
       "Councilor"
     ],
     "email": "rpell@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Scott Martinez",
@@ -205,7 +230,8 @@
       "Network Administrator"
     ],
     "email": "smartinez@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Stephanie Nuttall",
@@ -213,7 +239,8 @@
       "City Attorney"
     ],
     "email": "snuttall@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Steve Martin",
@@ -221,7 +248,8 @@
       "Systems Administrator"
     ],
     "email": "smartin@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Toni Martin",
@@ -229,7 +257,8 @@
       "Personnel Technician"
     ],
     "email": "tmartin@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Victoria Marshall",
@@ -237,7 +266,8 @@
       "Councilor"
     ],
     "email": "vmarshall@grantspassoregon.gov",
-    "phone_number": "(541) 450-6000"
+    "phone_number": "(541) 450-6000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Wade Elliott",
@@ -245,6 +275,7 @@
       "Assistant Public Works Director"
     ],
     "email": "welliott@grantspassoregon.gov",
-    "phone_number": "(541) 450-6114"
+    "phone_number": "(541) 450-6114",
+    "updated_at": "2025-05-01"
   }
 ]
