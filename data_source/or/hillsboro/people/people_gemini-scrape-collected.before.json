@@ -47,9 +47,9 @@
       },
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the URL provided in the 'See More City Council Spotlights' section for this person.",
-        "proximity_to_name": 1500,
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link associated with the person's name in a list of spotlights, but it is a news article, not a dedicated profile page.",
+        "proximity_to_name": 1000,
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
       }
     ],
@@ -128,8 +128,7 @@
       "Councilor",
       "Ward 2",
       "Position A",
-      "Council Member",
-      "Council Ward 2"
+      "Council Member"
     ],
     "phone_numbers": [
       {
@@ -165,9 +164,9 @@
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
       },
       {
-        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the URL of the article about her, not a dedicated profile page.",
+        "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the URL of the page containing her spotlight, but not a dedicated profile page.",
         "proximity_to_name": 0,
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/"
       }
@@ -417,8 +416,8 @@
       },
       {
         "data": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the URL of the page featuring the spotlight on this person.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Link associated with the person's name, but it is a news article, not a dedicated profile page.",
         "proximity_to_name": 0,
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
       }
@@ -426,8 +425,8 @@
     "start_dates": [
       {
         "data": "2025-01-21",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on January 21, 2025'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated sworn-in date.",
         "proximity_to_name": 150,
         "source": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
       }
