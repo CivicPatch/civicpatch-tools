@@ -10,7 +10,7 @@ module Services
           "source_image" => person["source_image"],
           "sources" => [source]
         }
-        formatted_person["positions"] = person["positions"].present? ? person["positions"] : []
+        formatted_person["positions"] = person["positions"].present? ? person["positions"].split(",").map(&:strip) : []
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
         formatted_person["emails"] =
