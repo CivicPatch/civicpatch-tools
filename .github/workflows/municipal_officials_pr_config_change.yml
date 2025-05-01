@@ -1,4 +1,4 @@
-name: auto - Pull Request - Config Change
+name: auto - Municipal Officials - Pull Request - Config Change
 
 on:
   pull_request:
