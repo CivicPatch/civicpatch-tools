@@ -145,6 +145,9 @@ module Core
       new_city_people,
       directory_type = nil
     )
+      updated_at = Time.now.strftime("%Y-%m-%d")
+      new_city_people = new_city_people.map { |person| add_updated_at(person, updated_at) }
+
       state = municipality_context[:state]
       city_entry = municipality_context[:municipality_entry]
 
@@ -163,6 +166,11 @@ module Core
 
     def self.people_with_names(people)
       people.select { |person| person["name"].present? }
+    end
+
+    def self.add_updated_at(person, updated_at)
+      person["updated_at"] = updated_at
+      person
     end
   end
 end
