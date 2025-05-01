@@ -1,4 +1,4 @@
-name: Reusable PR Comment and Approval
+name: partial - PR Comment and Approval
 
 on:
   workflow_call:
