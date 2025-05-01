@@ -29,6 +29,9 @@ jobs:
           CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
           PEOPLE_FILES=$(echo "$CHANGED_FILES" | grep -c "people\.yml$" || echo "0")
 
+          echo "Changed files: $CHANGED_FILES"
+          echo "People files: $PEOPLE_FILES"
+
           if [[ $PEOPLE_FILES -eq 1 ]]; then
             echo "A people.yml file was changed, continuing"
             echo "should-continue=true" >> $GITHUB_OUTPUT
@@ -41,7 +44,7 @@ jobs:
             echo "should-continue=false" >> $GITHUB_OUTPUT
           fi
 
-  call-reusable-comment:
+  validate-pr:
     needs: validate-changes
     if: needs.validate-changes.outputs.should-continue == 'true'
     permissions:

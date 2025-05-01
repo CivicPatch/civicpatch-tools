@@ -126,7 +126,7 @@ jobs:
           git commit -m "Config changes for ${{ env.BRANCH_NAME }}"
           git push
 
-  call-reusable-comment:
+  validate-pr:
     needs: run-pipeline-city-fetch
     permissions:
       contents: read
