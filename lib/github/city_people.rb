@@ -116,8 +116,6 @@ module GitHub
     end
 
     def self.generate_readable_updates_needed_list(merged_people, missing_people, contested_people)
-      pp contested_people
-
       source_to_update = "state_source"
       not_in_office_list = []
       updates_needed_markdown = ""

@@ -3,13 +3,14 @@ module Scrapers::Or::MunicipalityOfficials
   class StateLevelScraper
     MUNICIPALITY_DIRECTORY_URL = "https://www.orcities.org/resources/reference/city-directory".freeze
 
-    def self.get_source_url(municipality_context)
-      key = municipality_context[:municipality_entry]["name"].downcase.gsub(" ", "-")
+    def self.get_source_url(municipality_entry)
+      key = municipality_entry["name"].downcase.gsub(" ", "-")
       "#{MUNICIPALITY_DIRECTORY_URL}/details/#{key}"
     end
 
     def self.fetch(municipality_context)
-      url = get_source_url(municipality_context)
+      municipality_entry = municipality_context[:municipality_entry]
+      url = get_source_url(municipality_entry)
       # Fetch HTML, interacting to select "All" entries
       response = Browser.fetch_html(url) do |browser, wait|
         # Find the select element for pagination length

@@ -29,8 +29,6 @@ module Scrapers::Wa::MunicipalityOfficials
       city_id = matched_row["CityID"]
       edit_url = "#{EDIT_OFFICIALS_URL}?cityID=#{city_id}"
 
-      puts "Edit URL: #{edit_url}"
-
       { type: "url", data: edit_url }
     end
 
