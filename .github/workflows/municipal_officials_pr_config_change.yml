@@ -51,6 +51,8 @@ jobs:
         run: |
           # Get changed files
           FILES=$(git diff --name-only HEAD^)
+
+          echo "Files changed: $FILES"
           
           # Simple grep checks
           if echo "$FILES" | grep -q "config\.yml" && ! echo "$FILES" | grep -q "people\.yml"; then
