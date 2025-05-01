@@ -117,11 +117,12 @@ namespace :github_pipeline do
   def self.generate_comparison(state, gnis)
     # Get the validation results
     municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
+    municipality_config = Core::ConfigManager.get_config(state, gnis)
     municipality_context = {
       state: state,
-      municipality_entry: municipality_entry
+      municipality_entry: municipality_entry,
+      config: municipality_config
     }
-    municipality_config = Core::ConfigManager.get_config(state, gnis)
     validation_results = Validators::CityPeople.validate_sources(municipality_context)
     compare_results = validation_results[:compare_results]
     contested_people = compare_results[:contested_people]

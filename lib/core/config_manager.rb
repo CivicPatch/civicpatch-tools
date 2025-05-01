@@ -22,7 +22,7 @@ module Core
       saved_config = YAML.load_file(config_file_path) if File.exist?(config_file_path)
 
       if saved_config.present?
-        saved_config.merge(DEFAULT_CONFIG)
+        DEFAULT_CONFIG.merge(saved_config)
       else
         DEFAULT_CONFIG.dup
       end
@@ -33,6 +33,20 @@ module Core
       File.write(config_file_path, config.to_yaml)
 
       config
+    end
+
+    def self.cleanup(state, gnis, config)
+      people_config = config["people"]
+
+      people_config.each do |name, person_config|
+        # remove entries that doen't have any other_names set
+        unless person_config["other_names"].present? && person_config["other_names"].count.positive?
+          people_config.delete(name)
+        end
+      end
+      config["people"] = people_config
+
+      Core::ConfigManager.update_config(state, gnis, config)
     end
   end
 end

@@ -12,18 +12,7 @@ scrape_exit_config:
   people_count: 7
   key_position: mayor
 people:
-  Cathy Keathley:
-    other_names: []
-  Janine Gladfelter:
-    other_names: []
-  Jerry Hinton:
-    other_names: []
-  Kayla Brown:
-    other_names: []
-  Sue Piazza:
-    other_names: []
-  Travis Stovall:
-    other_names: []
   Eddy Morales:
-    other_names: ["Eduardo Morales"]
+    other_names:
+    - Eduardo Morales
 divisions_map:

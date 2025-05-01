@@ -2,14 +2,6 @@ require "text"
 
 module Validators
   class Utils
-    # Weights for different fields based on importance
-    FIELD_WEIGHTS = {
-      name: 0.5,
-      position: 0.4,
-      email: 0.3,
-      phone_number: 0.3,
-      website: 0.1
-    }
     # Sources like MRSC or Secretary of State sites
     # might get outdated throughout the year.
     DISAGREEMENT_THRESHOLD = 0.9
@@ -40,21 +32,6 @@ module Validators
 
       url = normalize_text(url)
       url.gsub("www.", "")
-    end
-
-    def self.find_by_name(people, name)
-      target_parsed = parse_name(name)
-      # Ensure we have both first and last name from the target
-      return nil if target_parsed[:first].to_s.empty? || target_parsed[:last].to_s.empty?
-
-      people.find do |person|
-        next unless person && person["name"] # Skip nil person or person without a name
-
-        person_parsed = parse_name(person["name"])
-
-        # Compare parsed first and last names
-        target_parsed[:first] == person_parsed[:first] && target_parsed[:last] == person_parsed[:last]
-      end
     end
 
     # Compute similarity score based on field type
@@ -133,10 +110,11 @@ module Validators
       total_similarity / total_items.to_f
     end
 
-    def self.compare_people_across_sources(sources)
+    def self.compare_people_across_sources(people_config, sources)
       fields = %w[positions email phone_number website] # Fields to compare
 
-      unique_names = get_unique_names(sources)
+      File.write("people_config.json", people_config.to_json)
+      unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
       total_people = unique_names.count
       total_fields = fields.count
       num_sources = sources.count
@@ -154,7 +132,7 @@ module Validators
       unique_names.each do |name|
         person_records = sources.map do |source|
           {
-            person: find_by_name(source[:people], name),
+            person: Core::PersonResolver.find_by_name(people_config, source[:people], name),
             source_name: source[:source_name],
             confidence_score: source[:confidence_score]
           }
@@ -237,16 +215,16 @@ module Validators
       }
     end
 
-    def self.merge_people_across_sources(sources)
+    def self.merge_people_across_sources(people_config, sources)
       return sources.first[:people] if sources.count == 1
 
       merged = []
 
-      unique_names = get_unique_names(sources)
+      unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
 
       unique_names.each do |name|
         person_records = sources.map do |source|
-          person = find_by_name(source[:people], name)
+          person = Core::PersonResolver.find_by_name(people_config, source[:people], name)
           next unless person
 
           person.merge("confidence_score" => source[:confidence_score], "source_name" => source[:source_name])
@@ -319,33 +297,6 @@ module Validators
       first_name = parts.shift || ""
       # Return downcased names
       { first: first_name.downcase, last: last_name.downcase }
-    end
-
-    def self.get_unique_names(sources)
-      unique_names_map = {}
-
-      sources.each do |source|
-        next unless source && source[:people]
-
-        source[:people].each do |person|
-          next unless person && person["name"]
-
-          full_name = person["name"].to_s.strip
-          next if full_name.empty?
-
-          parsed_name = parse_name(full_name)
-
-          # Skip if we couldn't parse a first or last name
-          next if parsed_name[:first].to_s.empty? || parsed_name[:last].to_s.empty?
-
-          # Create a unique key based on parsed first and last name
-          parsed_key = "#{parsed_name[:first]}|#{parsed_name[:last]}"
-
-          unique_names_map[parsed_key] ||= full_name
-        end
-      end
-
-      unique_names_map.values
     end
   end
 end

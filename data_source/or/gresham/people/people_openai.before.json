@@ -20,14 +20,13 @@
     "name": "Kayla Brown",
     "positions": [
       "council member",
-      "position 1",
-      "councilor"
+      "position 1"
     ],
     "image": "images/22954e29c947c3c87a21dd0a595f32e93b10d7a9e681919cbac367fb582305c8.jpg",
     "source_image": "https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/kaylabrown-portrait.jpg",
     "phone_number": "(503) 618-2871",
     "email": "Kayla.Brown@GreshamOregon.gov",
-    "website": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
+    "website": "https://www.greshamoregon.gov/link/4ee1b0b2db5c44ea93bf8ed72300d36c.aspx",
     "start_date": "2025-01-07",
     "end_date": "2028-12-31",
     "sources": [
@@ -44,9 +43,9 @@
     ],
     "image": "images/fa1b3315bb92e75d67b7d4d8cdf9483624c2aaa00435ae90b69a621e9afc2be6.jpg",
     "source_image": "https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/councilor-morales-portrait.jpg",
-    "phone_number": "503-618-2871",
-    "email": "Eddy.Morales@GreshamOregon.gov",
-    "website": "https://www.greshamoregon.gov/link/c8b25674b1694e0da7a690bef592f12b.aspx",
+    "phone_number": "(503) 618-2871",
+    "email": "Eddy.Morales@greshamoregon.gov",
+    "website": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
     "start_date": "2023-01-03",
     "end_date": "2026-12-31",
     "sources": [
@@ -102,8 +101,8 @@
     "source_image": "https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/councilor-piazza-portrait.jpg",
     "phone_number": "503-618-2871",
     "email": "Sue.Piazza@GreshamOregon.gov",
-    "website": "https://www.greshamoregon.gov/link/e1483dd075614f6c89b6be87ac1f8f92.aspx",
-    "start_date": "2025-01-07",
+    "website": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
+    "start_date": "2025-01-01",
     "end_date": "2028-12-31",
     "sources": [
       "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
@@ -118,7 +117,7 @@
     ],
     "image": "images/c0b79c7d84e67729ea6dc62ba7dd4eb849f76f15d76f4a92386623e4cc9fae86.jpg",
     "source_image": "https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/councilor-gladfelter-portrait.jpg",
-    "phone_number": "503-618-2871",
+    "phone_number": "(503) 618-2871",
     "email": "Janine.Gladfelter@GreshamOregon.gov",
     "website": "https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx",
     "start_date": "2023-01-03",
