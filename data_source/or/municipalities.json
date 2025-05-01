@@ -202,10 +202,12 @@
       "phone_number": "(541) 766-6900",
       "website": "https://www.corvallisoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "05acf53c33cf9039bef1471dabcb068d",
+      "meta_updated_at": "2025-05-01",
+      "meta_hash": "4cdedadeb067b7ad1d4e2d460470d4d1",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
