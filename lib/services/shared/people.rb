@@ -10,7 +10,13 @@ module Services
           "source_image" => person["source_image"],
           "sources" => [source]
         }
-        formatted_person["positions"] = person["positions"].present? ? person["positions"].split(",").map(&:strip) : []
+
+        # Sometimes a position might be in the format "Position A, Position B"
+        # When it should be two positions
+        positions = person["positions"].present? ? person["positions"] : []
+        positions = positions.map { |position| position.split(",").map(&:strip) }.flatten
+
+        formatted_person["positions"] = positions
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
         formatted_person["emails"] =
@@ -27,6 +33,7 @@ module Services
 
       def self.merge_person(person, partial_person)
         merged = person.dup
+
         merged["positions"] = (Array(person["positions"]) + Array(partial_person["positions"])).uniq
         merged["image"] = partial_person["image"] || person["image"]
         merged["source_image"] = partial_person["source_image"] || person["source_image"]
