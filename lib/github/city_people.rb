@@ -103,8 +103,8 @@ module GitHub
         source_url = suggest_edit_details[:source_url]
         <<~MARKDOWN
           - [ ] (Optional) Notify the state source maintaners of any changes as needed
-            - [ ] Verify the state source data at [#{source_url}](#{source_url})
-            - [ ] Email the maintainer(s) at [#{email}](mailto:#{email})
+              - [ ] Verify the state source data at [#{source_url}](#{source_url})
+              - [ ] Email the maintainer(s) at [#{email}](mailto:#{email})
           #{action_item_summary}
         MARKDOWN
       when "url"
