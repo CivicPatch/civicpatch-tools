@@ -118,7 +118,7 @@
      *  [Public Works](https://www.hillsboro-oregon.gov/our-city/departments/public-works) 
      *  [Water](https://www.hillsboro-oregon.gov/our-city/departments/water) 
    *  [Diversity, Equity, and Inclusion](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion) 
-     *  [Arab American Heritage Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/arab-american-heritage-month) 
+     *  [Asian and Pacific Islander Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/asian-and-pacific-islander-month) 
    *  [Event Calendar](https://www.hillsboro-oregon.gov/our-city/event-calendar) 
    *  [Fees & Charges](https://www.hillsboro-oregon.gov/our-city/fees-charges) 
    *  [Get Involved!](https://www.hillsboro-oregon.gov/our-city/get-involved) 
@@ -228,7 +228,7 @@
 
  [Hillsboro voters elected Councilor Rob Harris in November 2024](https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/4300)  to a four-year term representing [Council Ward](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-wards-redistricting) 3, Position B. Councilor Harris’s term began on January 7, 2025 and will expire in January 2029. He is eligible to run for re-election in November 2028.
 
-  ![Rob Harris 2024](images/38b3bd85ca1d144929202ac45958c5a2f79f556d81b7b1e041b4a52f841a6652.jpg) 
+  ![Rob Harris 2024](images/38b3bd85ca1d144929202ac45958c5a2f79f556d81b7b1e041b4a52f841a6652.png) 
 
 ### Community Experience
 
@@ -236,7 +236,7 @@ Councilor Harris and his wife Gail moved to Hillsboro in 1987 when he took a pos
 
 He was very active in the Washington County justice system and established a nonprofit public defense consortia where he served as the executive director until he retired from the practice of law in 2023. He was chair of a task force on the future of public defense and in 2023 was appointed by the Oregon Supreme Court Chief Justice to serve on the Oregon State Public Defense Commission.
 
-  ![Rob Harris and Beach Pace at Hillsboro Pride Party](images/5aefe4ec0333229de611059610020c9cca4655f0f2cee8f2d9eecd779848cbc1.jpg)  
+  ![Rob Harris and Beach Pace at Hillsboro Pride Party](images/5aefe4ec0333229de611059610020c9cca4655f0f2cee8f2d9eecd779848cbc1.png)  
 
 ### Education & Work Experience
 
@@ -244,7 +244,7 @@ Councilor Harris attended Camas Public Schools, Clark Community College, the Uni
 
 He worked briefly in a medium-sized law firm, then as a Deputy District Attorney in Washington County before establishing his own law firm in 1990. He served as the Hillsboro Municipal Court Judge, a Washington County Circuit Court Judge Pro Tem, and as a Hearings Officer in Multnomah, Clackamas, and Washington counties. He also started and operated a small construction company. When he retired, his law firm had grown to include a dozen lawyers and over 20 employees.
 
- ![Rob Harris and family at Hops game](images/8fc57a80729b983a915c9f47d79a2841a46cd0d45885935c96ee77aa36a46c85.jpg) 
+ ![Rob Harris and family at Hops game](images/8fc57a80729b983a915c9f47d79a2841a46cd0d45885935c96ee77aa36a46c85.png) 
 
  
 
@@ -260,7 +260,7 @@ He worked briefly in a medium-sized law firm, then as a Deputy District Attorney
 
 “I will be as transparent as possible in my decision-making and be willing to explain my votes. You may or may not agree with some of my votes, but you will understand why I voted as I did. Hillsboro has grown from 35,000 to 110,000 people since I moved here. That’s a large city. So, I intend to take the time to engage every corner of Hillsboro to help me understand the struggles, concerns, and issues that people all over Hillsboro face.”
 
- ![Rob Harris in front of the Civic Center](images/f0e2b4f6d557927c5f43d6d28de4685d6d2d65ab28954db6d52104f33923006a.jpg)  
+ ![Rob Harris in front of the Civic Center](images/f0e2b4f6d557927c5f43d6d28de4685d6d2d65ab28954db6d52104f33923006a.png)  
 
 ### Fun Facts about Rob
 
@@ -275,7 +275,7 @@ He worked briefly in a medium-sized law firm, then as a Deputy District Attorney
  *  __Favorite quote:__ “Foolish consistency is the hobgoblin of small minds” (Ralph Waldo Emerson). The quote reminds me to ask questions and consider alternatives to “the common wisdom.”
  *  __Favorite community spaces in Hillsboro:__ The Public Library    
 
-  ![Rob Harris outside](images/7eec55e81c75e412d4683ce7b02222e8d50545eb74e13adc93f849c4eb00bb2f.jpg) 
+  ![Rob Harris outside](images/7eec55e81c75e412d4683ce7b02222e8d50545eb74e13adc93f849c4eb00bb2f.png) 
 
 #### See More City Council Spotlights
 
@@ -295,17 +295,17 @@ He worked briefly in a medium-sized law firm, then as a Deputy District Attorney
 
 ## Quicklinks
 
- *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.jpg)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
- *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.jpg)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
- *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.jpg)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
- *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.jpg)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
- *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.jpg)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
+ *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.png)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
+ *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.png)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
+ *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.png)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
+ *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.png)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
+ *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.png)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
 
 Free viewers are required for some of the attached documents.
 
 They can be downloaded by clicking on the icons below.
 
- [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.jpg)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.jpg)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
+ [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.png)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.png)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
 
  1. Search separators:
  1. Search field name:(All)News Title
@@ -349,7 +349,7 @@ Hillsboro, Oregon 97123
  * Hillsboro 2035 updates
  * Creciendo Juntos — Noticias en español
 
-  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.jpg)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.jpg)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.jpg)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.jpg)](https://www.youtube.com/user/CityofHillsboroOR)  
+  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.png)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.png)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.png)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.png)](https://www.youtube.com/user/CityofHillsboroOR)  
 
 Website Design By [Granicus](https://www.granicus.com/) - Connecting People & Government
 

@@ -118,7 +118,7 @@
      *  [Public Works](https://www.hillsboro-oregon.gov/our-city/departments/public-works) 
      *  [Water](https://www.hillsboro-oregon.gov/our-city/departments/water) 
    *  [Diversity, Equity, and Inclusion](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion) 
-     *  [Arab American Heritage Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/arab-american-heritage-month) 
+     *  [Asian and Pacific Islander Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/asian-and-pacific-islander-month) 
    *  [Event Calendar](https://www.hillsboro-oregon.gov/our-city/event-calendar) 
    *  [Fees & Charges](https://www.hillsboro-oregon.gov/our-city/fees-charges) 
    *  [Get Involved!](https://www.hillsboro-oregon.gov/our-city/get-involved) 
@@ -230,13 +230,13 @@ The [Hillsboro City Council appointed Cristian Salgado](https://www.hillsboro-or
 
 Councilor Salgado was sworn into office on January 21, 2025 and will fill out the remainder of Pace's previous City Council term through January 2027. He is eligible to run for election in November 2026 and re-election in November 2030.
 
-  ![Cristian Salgado 2025](images/1823f6dfc9ab1cbb8869389a7498cd783573e8b89ec16dc0c1ebb1596dffb898.jpg) 
+  ![Cristian Salgado 2025](images/1823f6dfc9ab1cbb8869389a7498cd783573e8b89ec16dc0c1ebb1596dffb898.png) 
 
 ### Community Experience
 
 Councilor Salgado's community service includes serving on the board of directors for two nonprofits serving Hillsboro: Bienestar and CREATE Alternative School. He is currently serving on the Board of Directors for Oregon Latinos in Local Government, a League of Oregon Cities program. He has also served other communities he has lived in, including the City of Beaverton where he served on the Diversity Advisory Board. Councilor Salgado also earned a Hispanic Leadership Award from the Hispanic Metropolitan Chamber of Commerce in 2021.   
 
- ![Cristian Salgado and family at balloon ribbon](images/498ee4f75d465e89f4e6d36be61f892235587fa9fd53c6cbdab7261c791d2157.jpg) 
+ ![Cristian Salgado and family at balloon ribbon](images/498ee4f75d465e89f4e6d36be61f892235587fa9fd53c6cbdab7261c791d2157.png) 
 
 ### Education & Work Experience
 
@@ -244,13 +244,13 @@ Councilor Salgado works for Washington County as a Senior Broadband Investment C
 
 After earning his associate’s degree from Lane Community College, he earned a bachelor’s degree from the University of Oregon, and a Master of Business Administration (MBA) from Willamette University.
 
-  ![](images/5d86a018f5890097a8d5f8a287505a7d05696380005321ba1fd9e02c179c15cb.jpg) 
+  ![](images/5d86a018f5890097a8d5f8a287505a7d05696380005321ba1fd9e02c179c15cb.png) 
 
 #### Why do you serve on the Hillsboro City Council?
 
 “I have always had a heart and spirit for volunteerism and investing time in my community. Volunteering on the Hillsboro City Council is another way for me give back to a city that I really enjoy living in. I am passionate about safety in transportation and increasing accessibility to public transportation, that’s why I am excited to serve on the Transporation Committee.”
 
-  ![Cristian Salgado and child on Police motorcycle ](images/2b05b0c0fdacadde27b55a7a5fde49073c309d8061cdec09e520d8822e6b7aac.jpg) 
+  ![Cristian Salgado and child on Police motorcycle ](images/2b05b0c0fdacadde27b55a7a5fde49073c309d8061cdec09e520d8822e6b7aac.png) 
 
  What are your hopes and goals for serving on the Council? 
 
@@ -260,7 +260,7 @@ After earning his associate’s degree from Lane Community College, he earned a 
 
 “I am actively working toward becoming a resonate leader, which means that I want to create and sustain a positive emotional environment in and for the organizations I work and serve. I strive to be emotionally intelligent, offer hope and compassion, create sustainable success, and be able to adapt and innovate in our rapidly changing world.”
 
- ![Cristian Salagado and family at tulips](images/727e7bc3059c23daf2088cadc0b4acfd88adf954c7cf425ee9f2ecbdc58b4579.jpg) 
+ ![Cristian Salagado and family at tulips](images/727e7bc3059c23daf2088cadc0b4acfd88adf954c7cf425ee9f2ecbdc58b4579.png) 
 
 ### Fun Facts about Cristian
 
@@ -279,13 +279,13 @@ After earning his associate’s degree from Lane Community College, he earned a 
  *  __Favorite ways to spend a weekend:__ Hanging out with my wife and son.
  *  __Favorite community spaces in Hillsboro:__ Hidden Creek parks, Hidden Creek Community Center, Brookwood Library and Dawson Creek, Orenco Woods Nature Park, and the Gordon Faber Recreation Complex.
 
- ![Cristian Salgado and family at Hops game ](images/8e8537c82731727a1b3298254569ce39bb25d5d70b1e63f39d7520c902a12684.jpg) 
+ ![Cristian Salgado and family at Hops game ](images/8e8537c82731727a1b3298254569ce39bb25d5d70b1e63f39d7520c902a12684.png) 
 
- ![Cristian Salgado](images/07dab14e67e5afa5f756b56c221a10d15bcc72fe07b364d1e24e6515c4bb4b89.jpg) 
+ ![Cristian Salgado](images/07dab14e67e5afa5f756b56c221a10d15bcc72fe07b364d1e24e6515c4bb4b89.png) 
 
- ![Cristian Salgado and child on track](images/8a3e4f1f536cacd3a55d27f1c27dc191c005850c8619730e27a86490eab72873.jpg) 
+ ![Cristian Salgado and child on track](images/8a3e4f1f536cacd3a55d27f1c27dc191c005850c8619730e27a86490eab72873.png) 
 
- ![Cristian Salgado and family professional portrait](images/37b380c5cd7d2db4a192e9ec7488a6c60a2955baddfc213402777da2d251ec7e.jpg) 
+ ![Cristian Salgado and family professional portrait](images/37b380c5cd7d2db4a192e9ec7488a6c60a2955baddfc213402777da2d251ec7e.png) 
 
 #### See More City Council Spotlights
 
@@ -305,17 +305,17 @@ After earning his associate’s degree from Lane Community College, he earned a 
 
 ## Quicklinks
 
- *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.jpg)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
- *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.jpg)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
- *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.jpg)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
- *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.jpg)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
- *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.jpg)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
+ *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.png)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
+ *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.png)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
+ *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.png)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
+ *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.png)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
+ *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.png)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
 
 Free viewers are required for some of the attached documents.
 
 They can be downloaded by clicking on the icons below.
 
- [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.jpg)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.jpg)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
+ [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.png)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.png)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
 
  1. Search separators:
  1. Search field name:(All)News Title
@@ -359,7 +359,7 @@ Hillsboro, Oregon 97123
  * Hillsboro 2035 updates
  * Creciendo Juntos — Noticias en español
 
-  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.jpg)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.jpg)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.jpg)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.jpg)](https://www.youtube.com/user/CityofHillsboroOR)  
+  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.png)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.png)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.png)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.png)](https://www.youtube.com/user/CityofHillsboroOR)  
 
 Website Design By [Granicus](https://www.granicus.com/) - Connecting People & Government
 

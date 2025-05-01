@@ -13,16 +13,16 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300"
-    ]
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Olivia Alcaire",
     "positions": [
-      "Councilor",
-      "Council Member",
-      "Ward 3",
-      "Position A"
+      "Councilor"
     ],
     "image": null,
     "source_image": null,
@@ -33,48 +33,55 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718"
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kipperlyn Sinclair",
     "positions": [
       "Councilor",
-      "Councilor, Ward 2, Position A"
+      "Ward 2",
+      "Position A",
+      "Council Member",
+      "Council Ward 2"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(503) 681-6219",
     "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
-    ]
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/"
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Saba Anvery",
     "positions": [
       "Councilor",
-      "Council Ward 1",
+      "Council Member",
+      "Ward 1",
       "Position B"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(503) 681-6219",
     "email": null,
-    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300",
+    "website": "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300"
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Elizabeth Case",
@@ -93,15 +100,17 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300"
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rob Harris",
     "positions": [
       "Councilor",
-      "Council Member, Ward 3, Position B"
+      "Ward 3",
+      "Position B"
     ],
     "image": null,
     "source_image": null,
@@ -112,15 +121,17 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718",
       "https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300"
-    ]
+    ],
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Cristian Salgado",
     "positions": [
       "Councilor",
-      "Council Member, Ward 1, Position A"
+      "Council Ward 1",
+      "Position A"
     ],
     "image": null,
     "source_image": null,
@@ -131,8 +142,9 @@
     "end_date": null,
     "sources": [
       "https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300",
-      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300"
-    ]
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300",
+      "https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718"
+    ],
+    "updated_at": "2025-05-01"
   }
 ]

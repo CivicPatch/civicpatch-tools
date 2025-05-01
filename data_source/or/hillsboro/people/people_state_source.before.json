@@ -5,7 +5,8 @@
       "Administrative Support Specialist"
     ],
     "email": "alex.rodriguez@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Allison Bergseng",
@@ -13,7 +14,8 @@
       "Senior Program Manager"
     ],
     "email": "allison.bergseng@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5248"
+    "phone_number": "(503) 681-5248",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Amber Rios",
@@ -21,7 +23,8 @@
       "City Recorder"
     ],
     "email": "amber.rios@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6117"
+    "phone_number": "(503) 681-6117",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Amy Williams",
@@ -29,7 +32,8 @@
       "Building Director"
     ],
     "email": "amy.williams@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5205"
+    "phone_number": "(503) 681-5205",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Andres Mendoza",
@@ -37,7 +41,8 @@
       "GIS & Asset Management Technician"
     ],
     "email": "andres.mendoza@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Andrew Bartlett",
@@ -45,7 +50,8 @@
       "Management Analyst"
     ],
     "email": "Andrew.Bartlett@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5204"
+    "phone_number": "(503) 681-5204",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Anne Thrall-Nash",
@@ -53,7 +59,8 @@
       "Planning Commissioner"
     ],
     "email": "annethrallnash@yahoo.com",
-    "phone_number": "(503) 681-6153"
+    "phone_number": "(503) 681-6153",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Ariel Nelson",
@@ -61,7 +68,8 @@
       "Government Relations Manager"
     ],
     "email": "ariel.nelson@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Aubrey Minear",
@@ -69,7 +77,8 @@
       "Deputy City Recorder"
     ],
     "email": "Aubrey.Minear@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6269"
+    "phone_number": "(503) 681-6269",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Beach Pace",
@@ -77,7 +86,8 @@
       "Mayor"
     ],
     "email": "Beach.Pace@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6269"
+    "phone_number": "(503) 681-6269",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Beatriz Medel",
@@ -85,7 +95,8 @@
       "Bilingual Communications Specialist"
     ],
     "email": "beatriz.medel@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Brian Cisneros Perez",
@@ -93,7 +104,8 @@
       "Building Inspector II"
     ],
     "email": "Brian.cisnerosperez@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Brittany Contreras",
@@ -101,15 +113,17 @@
       "Water Resources Program Coordinator"
     ],
     "email": "brittany.contreras@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Charlie  Shell",
+    "name": "Charlie Shell",
     "positions": [
       "Project Manager"
     ],
     "email": "Charlie.Shell@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6252"
+    "phone_number": "(503) 681-6252",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Chris Hartye",
@@ -117,7 +131,8 @@
       "Senior Project Manager"
     ],
     "email": "Chris.Hartye@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5233"
+    "phone_number": "(503) 681-5233",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Cristian Salgado",
@@ -125,7 +140,8 @@
       "Councilor"
     ],
     "email": "cristian.salgado@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Dacia Bakkum",
@@ -133,7 +149,8 @@
       "Management Analyst"
     ],
     "email": "dacia.bukkum@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6468"
+    "phone_number": "(503) 681-6468",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Dan Dias",
@@ -141,7 +158,8 @@
       "Economic and Community Development Director"
     ],
     "email": "Dan.Dias@Hillsboro-Oregon.gov",
-    "phone_number": "(503) 681-5275"
+    "phone_number": "(503) 681-5275",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Dan Spero",
@@ -149,7 +167,8 @@
       "Procurement Services Manager"
     ],
     "email": "daniel.spero@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Danny Morato",
@@ -157,7 +176,8 @@
       "Supplier Diversity Administrator"
     ],
     "email": "danny.morato@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "David Downey",
@@ -165,7 +185,8 @@
       "Fire Chief"
     ],
     "email": "david.downey@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6173"
+    "phone_number": "(503) 681-6173",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "David Garner",
@@ -173,7 +194,8 @@
       "Safety Officer"
     ],
     "email": "David.garner@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "David Veverka",
@@ -181,7 +203,8 @@
       "Municipal Judge"
     ],
     "email": "David.Veverka@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6459"
+    "phone_number": "(503) 681-6459",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Diana Bracamonte",
@@ -189,7 +212,8 @@
       "Administrative Support Supervisor"
     ],
     "email": "diana.bracamonte@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6147"
+    "phone_number": "(503) 681-6147",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Diana Jackson",
@@ -197,7 +221,8 @@
       "Planning Commissioner"
     ],
     "email": "die.ann.uh.jay@gmail.com",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Doug Ehrich",
@@ -205,7 +230,8 @@
       "Commander"
     ],
     "email": "doug.ehrich@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6752"
+    "phone_number": "(503) 681-6752",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Edma Castillo",
@@ -213,7 +239,8 @@
       "Project Manager"
     ],
     "email": "edma.castillo@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Elizabeth Case",
@@ -221,7 +248,8 @@
       "Councilor"
     ],
     "email": "elizabeth.case@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Eunice Makinde",
@@ -229,7 +257,8 @@
       "DEI Manager"
     ],
     "email": "eunice.makinde@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Gabriel Jones-Gallardo",
@@ -237,7 +266,8 @@
       "Planning Commissioner"
     ],
     "email": "gabrieljonesgallardo@gmail.com",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Gabriela Villegas",
@@ -245,7 +275,8 @@
       "Management Analyst"
     ],
     "email": "gabriela.villegas@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5034"
+    "phone_number": "(503) 681-5034",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Geoffrey Kavulya",
@@ -253,7 +284,8 @@
       "Senior Project Manager"
     ],
     "email": "geoffrey.kavula@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6153"
+    "phone_number": "(503) 681-6153",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Giselle Rivera",
@@ -261,7 +293,8 @@
       "Engineering Technician II"
     ],
     "email": "giselle.rivera@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5240"
+    "phone_number": "(503) 681-5240",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Greg Mont",
@@ -269,7 +302,8 @@
       "Information Services Director"
     ],
     "email": "Greg.Mont@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5401"
+    "phone_number": "(503) 681-5401",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Heather Knapp",
@@ -277,7 +311,8 @@
       "Management Analyst"
     ],
     "email": "heather.knapp@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-1042"
+    "phone_number": "(503) 681-1042",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "James Riley",
@@ -285,7 +320,8 @@
       "Economic Development Manager"
     ],
     "email": "james.riley@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5206"
+    "phone_number": "(503) 681-5206",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jasmin Alvarez",
@@ -293,7 +329,8 @@
       "Administrative Assistant/Facility Supervisor"
     ],
     "email": "jasmin.alvarez@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jay Leroux",
@@ -301,15 +338,17 @@
       "Information Systems Supervisor"
     ],
     "email": "Jay.Leroux@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5420"
+    "phone_number": "(503) 681-5420",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Jeff  Bennett",
+    "name": "Jeff Bennett",
     "positions": [
       "Planning Commission Chair"
     ],
     "email": "jeffbennett52@gmail.com",
-    "phone_number": "(503) 681-6153"
+    "phone_number": "(503) 681-6153",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jessika Ramirez",
@@ -317,7 +356,8 @@
       "Community Development Technician"
     ],
     "email": "jessika.ramirez@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Joe Grillo",
@@ -325,7 +365,8 @@
       "Planning Commissioner"
     ],
     "email": "grillofam1@comcast.net",
-    "phone_number": "(503) 681-6153"
+    "phone_number": "(503) 681-6153",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Justin Low",
@@ -333,7 +374,8 @@
       "Planning Commissioner"
     ],
     "email": "justinsanlow@gmail.com",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Karen Muller",
@@ -341,7 +383,8 @@
       "Assistant Library Director"
     ],
     "email": "Karen.Muller@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6280"
+    "phone_number": "(503) 681-6280",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Karla Antonini",
@@ -349,7 +392,8 @@
       "Project Manager"
     ],
     "email": "karla.antonini@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6181"
+    "phone_number": "(503) 681-6181",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Katie Jensen",
@@ -357,7 +401,8 @@
       "HR Management Analyst"
     ],
     "email": "katie.jensen@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6405"
+    "phone_number": "(503) 681-6405",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kim Basney",
@@ -365,15 +410,17 @@
       "Program and Support Manager"
     ],
     "email": "kim.basney@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6193"
+    "phone_number": "(503) 681-6193",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Kipperlyn  Sinclair",
+    "name": "Kipperlyn Sinclair",
     "positions": [
       "Councilor"
     ],
     "email": "kipperlyn.sinclair@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kirsten Driskill",
@@ -381,7 +428,8 @@
       "Management Analyst"
     ],
     "email": "kirsten.driskill@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5044"
+    "phone_number": "(503) 681-5044",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kiyomi Arbuckle",
@@ -389,7 +437,8 @@
       "Community Services Coordinator"
     ],
     "email": "Kiyomi.Arbuckle@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Krista Snell",
@@ -397,15 +446,17 @@
       "Public Information Officer"
     ],
     "email": "Krista.snell@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5036"
+    "phone_number": "(503) 681-5036",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Lisa  Stultz",
+    "name": "Lisa Stultz",
     "positions": [
       "Administrative Support Specialist"
     ],
     "email": "lisa.stultz@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6113"
+    "phone_number": "(503) 681-6113",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Lorena Ortiz",
@@ -413,7 +464,8 @@
       "Grants Coordinator"
     ],
     "email": "lorena.ortiz@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Luz Daniela Aparicio",
@@ -421,7 +473,8 @@
       "Management Analyst"
     ],
     "email": "lucy.aparicio@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mark Gibson",
@@ -429,7 +482,8 @@
       "Project Manager"
     ],
     "email": "Mark.Gibson@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5201"
+    "phone_number": "(503) 681-5201",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Marlen Rodriguez",
@@ -437,7 +491,8 @@
       "Permit Technician"
     ],
     "email": "marlen.rodriguez@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Martha L. Lavadores",
@@ -445,7 +500,8 @@
       "Library Support Specialist"
     ],
     "email": "lavadores_m09@hotmail.com",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Melissa Gutmann",
@@ -453,7 +509,8 @@
       "Early Childhood Program Lead"
     ],
     "email": "melissa.gutmann@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Michaela Canete",
@@ -461,7 +518,8 @@
       "Policy Analyst"
     ],
     "email": "Michaela.Canete@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Michelle Wareing",
@@ -469,7 +527,8 @@
       "Assistant Finance Director"
     ],
     "email": "michelle.wareing@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mujidat Saaka",
@@ -477,7 +536,8 @@
       "Planning Commissioner"
     ],
     "email": "abim09@yahoo.com",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Nadia Estrada",
@@ -485,7 +545,8 @@
       "Senior Engineering Technician"
     ],
     "email": "Nadia.Estrada@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Negar Niakan",
@@ -493,7 +554,8 @@
       "Senior Program Manager"
     ],
     "email": "negar.niakan@hillsboro-oregon.gov",
-    "phone_number": "(503) 615-6720"
+    "phone_number": "(503) 615-6720",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Niki J. Iverson",
@@ -501,7 +563,8 @@
       "Water Department Director"
     ],
     "email": "Niki.Iverson@hillsboro-oregon.gov",
-    "phone_number": "(503) 615-6770"
+    "phone_number": "(503) 615-6770",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Olivia Alcaire",
@@ -509,7 +572,8 @@
       "Councilor"
     ],
     "email": "olivia.alcaire@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6269"
+    "phone_number": "(503) 681-6269",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Patrick Preston",
@@ -517,7 +581,8 @@
       "Communications Division Manager"
     ],
     "email": "Patrick.Preston@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6218"
+    "phone_number": "(503) 681-6218",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rahim Harji",
@@ -525,7 +590,8 @@
       "Deputy City Manager"
     ],
     "email": "rahim.harji@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6447"
+    "phone_number": "(503) 681-6447",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rob Harris",
@@ -533,7 +599,8 @@
       "Councilor"
     ],
     "email": "rob.harris@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Robby Hammond",
@@ -541,7 +608,8 @@
       "City Manager"
     ],
     "email": "Robby.Hammond@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-5214"
+    "phone_number": "(503) 681-5214",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rocio Jacobo",
@@ -549,7 +617,8 @@
       "Senior Engineering Technician"
     ],
     "email": "rocio.jacobo@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Saba Anvery",
@@ -557,7 +626,8 @@
       "Councilor"
     ],
     "email": "saba.anvery@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Scarlett Garcia Cruz",
@@ -565,7 +635,8 @@
       "Administration Support Specialist"
     ],
     "email": "scarlett.garciacruz@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Sheril Jensen",
@@ -573,7 +644,8 @@
       "Administrative Support Supervisor"
     ],
     "email": "sheril.jensen@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6139"
+    "phone_number": "(503) 681-6139",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Shibuki Hanai",
@@ -581,7 +653,8 @@
       "Management Analyst"
     ],
     "email": "shibuki.hanai@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6464"
+    "phone_number": "(503) 681-6464",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Simone Brooks",
@@ -589,7 +662,8 @@
       "Assistant City Manager"
     ],
     "email": "simone.brooks@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6409"
+    "phone_number": "(503) 681-6409",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Sophia Hobet",
@@ -597,7 +671,8 @@
       "Senior Program Manager"
     ],
     "email": "sophia.hobet@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6736"
+    "phone_number": "(503) 681-6736",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Stephen Davis",
@@ -605,7 +680,8 @@
       "Planning Commissioner"
     ],
     "email": "stephen.davis4@gmail.com",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "SueLing Gandee",
@@ -613,7 +689,8 @@
       "Risk Manager"
     ],
     "email": "SueLing.Gandee@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6108"
+    "phone_number": "(503) 681-6108",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Suzanne Linneen",
@@ -621,7 +698,8 @@
       "Chief Financial Officer"
     ],
     "email": "Suzanne.Linneen@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6404"
+    "phone_number": "(503) 681-6404",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Tammy Walin",
@@ -629,7 +707,8 @@
       "Library Director"
     ],
     "email": "Tammy.wallin@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6100"
+    "phone_number": "(503) 681-6100",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Tina Bailey",
@@ -637,7 +716,8 @@
       "Assistant Public Works Director"
     ],
     "email": "tina.bailey@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6216"
+    "phone_number": "(503) 681-6216",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Tom E. Arnold",
@@ -645,7 +725,8 @@
       "Public Works Director"
     ],
     "email": "Tom.Arnold@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6247"
+    "phone_number": "(503) 681-6247",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Tonya Bilderbeck",
@@ -653,7 +734,8 @@
       "Administrative Support Supervisor"
     ],
     "email": "tonya.bilderbeck@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6703"
+    "phone_number": "(503) 681-6703",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Val Okada",
@@ -661,7 +743,8 @@
       "Business Development Coordinator"
     ],
     "email": "Val.Okada@Hillsboro-Oregon.gov",
-    "phone_number": "(503) 681-6112"
+    "phone_number": "(503) 681-6112",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Zakk Kiley",
@@ -669,6 +752,7 @@
       "Adminstrative Support Specialist"
     ],
     "email": "zakk.kiley@hillsboro-oregon.gov",
-    "phone_number": "(503) 681-6146"
+    "phone_number": "(503) 681-6146",
+    "updated_at": "2025-05-01"
   }
 ]

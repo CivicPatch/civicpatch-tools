@@ -118,7 +118,7 @@
      *  [Public Works](https://www.hillsboro-oregon.gov/our-city/departments/public-works) 
      *  [Water](https://www.hillsboro-oregon.gov/our-city/departments/water) 
    *  [Diversity, Equity, and Inclusion](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion) 
-     *  [Arab American Heritage Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/arab-american-heritage-month) 
+     *  [Asian and Pacific Islander Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/asian-and-pacific-islander-month) 
    *  [Event Calendar](https://www.hillsboro-oregon.gov/our-city/event-calendar) 
    *  [Fees & Charges](https://www.hillsboro-oregon.gov/our-city/fees-charges) 
    *  [Get Involved!](https://www.hillsboro-oregon.gov/our-city/get-involved) 
@@ -228,7 +228,7 @@
 
  [Hillsboro voters elected Councilor Saba Anvery in November 2024](https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/4300) to a four-year term representing [Council Ward 1](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-wards-redistricting) , Position B. Councilor Anvery’s term began on January 7, 2025 and will expire in January 2029. She is eligible to run for re-election in November 2028.
 
- ![Saba Anvery 2024](images/009b8597d2e236594fe16d8d5ff5cb13358ba7210042a00ccbe934b088386f18.jpg) 
+ ![Saba Anvery 2024](images/009b8597d2e236594fe16d8d5ff5cb13358ba7210042a00ccbe934b088386f18.png) 
 
 ### Community Experience
 
@@ -242,19 +242,19 @@ Councilor Anvery has been active in the community, including her service as:
  * Founder of Portland Chapter of Friends of Indus; established in 2022, the chapter hosts a yearly fundraiser to gather donations for the Indus Hospital Network, which offers free healthcare services in Pakistan.
  * Cat Foster Mama with Cat’s Cradle Rescue; fostered 14 kittens and a mama cat since 2020. 
 
- ![Saba Anvery with 5k ribbon](images/a640bcb4302b60accd3db1b810ef93071f139d96230378390bb22799be9f75b8.jpg) 
+ ![Saba Anvery with 5k ribbon](images/a640bcb4302b60accd3db1b810ef93071f139d96230378390bb22799be9f75b8.png) 
 
 ### Education & Work Experience
 
 Councilor Anvery joined Intel in 2005 as a Hardware Design Engineer and is currently an Engineering Manager in Intel Foundry. Prior to this, she worked at Tektronix as a Hardware Design Engineer. Councilor Anvery earned her Master of Business Administration (MBA) from Portland State University (PSU), her Master’s degree in Engineering from Purdue University, and her Bachelor's degree in Electronics Engineering from GIK Institute in Pakistan.
 
- ![Saba Anvery and family outside](images/622909d8a467c5a445fdd883a101f3b10923a84145bbda5bd90b8c06ad275b67.jpg) 
+ ![Saba Anvery and family outside](images/622909d8a467c5a445fdd883a101f3b10923a84145bbda5bd90b8c06ad275b67.png) 
 
 #### Why do you serve on the Hillsboro City Council?
 
 “I believe it is my responsibility to give back to this wonderful city as best as I can. I lived in two other countries before I moved to the US and neither was a democracy. One was a monarchy and the other a brutal military dictatorship. The freedoms, the safety, and the opportunities that are available here are precious and fragile and they depend on ordinary folk taking part in the democratic process.”
 
- ![Saba Anvery at Hidden Creek Community Center](images/4440ea4810d3f47214fdcb148889f71de076a00d83fac59d71d0b386951871f2.jpg) 
+ ![Saba Anvery at Hidden Creek Community Center](images/4440ea4810d3f47214fdcb148889f71de076a00d83fac59d71d0b386951871f2.png) 
 
 #### What are your hopes and goals for serving on the Council?
 
@@ -285,11 +285,11 @@ I am a problem solver. As an engineer and an engineering manager, I have learned
  *  __Favorite ways to spend a weekend:__ Skiing, pottering about in my yard, going on a long hike, and kayaking on Hagg Lake.
  *  __Favorite community spaces in Hillsboro:__ Orenco Station Farmers' Market, Tuesday Night Market, Jackson Bottom Wetlands Preserve, and Hagg Lake.
 
- ![Saba Anvery with colorful lights](images/de0e305ca66c17c95ce2c52a748345ce6de3fffb8bcdbc9fdd60740331a2c4b9.jpg) 
+ ![Saba Anvery with colorful lights](images/de0e305ca66c17c95ce2c52a748345ce6de3fffb8bcdbc9fdd60740331a2c4b9.png) 
 
- ![Saba Anvery in sideways pose](images/5fa5252866166952cdbbf26adb93c02c23d349fd6861c9b980f7ca6bcf21e00c.jpg) 
+ ![Saba Anvery in sideways pose](images/5fa5252866166952cdbbf26adb93c02c23d349fd6861c9b980f7ca6bcf21e00c.png) 
 
- ![Saba Anvery in nature](images/3a58ea4ab56c5953b28c13f7acb72feba391acf955a67db6d9979fcbc2a248ac.jpg) 
+ ![Saba Anvery in nature](images/3a58ea4ab56c5953b28c13f7acb72feba391acf955a67db6d9979fcbc2a248ac.png) 
 
 #### See More City Council Spotlights
 
@@ -311,17 +311,17 @@ I am a problem solver. As an engineer and an engineering manager, I have learned
 
 ## Quicklinks
 
- *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.jpg)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
- *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.jpg)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
- *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.jpg)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
- *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.jpg)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
- *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.jpg)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
+ *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.png)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
+ *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.png)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
+ *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.png)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
+ *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.png)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
+ *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.png)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
 
 Free viewers are required for some of the attached documents.
 
 They can be downloaded by clicking on the icons below.
 
- [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.jpg)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.jpg)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
+ [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.png)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.png)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
 
  1. Search separators:
  1. Search field name:(All)News Title
@@ -365,7 +365,7 @@ Hillsboro, Oregon 97123
  * Hillsboro 2035 updates
  * Creciendo Juntos — Noticias en español
 
-  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.jpg)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.jpg)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.jpg)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.jpg)](https://www.youtube.com/user/CityofHillsboroOR)  
+  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.png)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.png)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.png)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.png)](https://www.youtube.com/user/CityofHillsboroOR)  
 
 Website Design By [Granicus](https://www.granicus.com/) - Connecting People & Government
 

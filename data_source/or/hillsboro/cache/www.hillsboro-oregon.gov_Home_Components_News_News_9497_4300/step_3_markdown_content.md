@@ -118,7 +118,7 @@
      *  [Public Works](https://www.hillsboro-oregon.gov/our-city/departments/public-works) 
      *  [Water](https://www.hillsboro-oregon.gov/our-city/departments/water) 
    *  [Diversity, Equity, and Inclusion](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion) 
-     *  [Arab American Heritage Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/arab-american-heritage-month) 
+     *  [Asian and Pacific Islander Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/asian-and-pacific-islander-month) 
    *  [Event Calendar](https://www.hillsboro-oregon.gov/our-city/event-calendar) 
    *  [Fees & Charges](https://www.hillsboro-oregon.gov/our-city/fees-charges) 
    *  [Get Involved!](https://www.hillsboro-oregon.gov/our-city/get-involved) 
@@ -232,7 +232,7 @@
 
  ____ 
 
- __ ![Beach Pace](images/131faccb3a31b55e6634d2bcb334fac5bed9f5fe355f5214c49e27f83e1d6334.jpg)__ 
+ __ ![Beach Pace](images/131faccb3a31b55e6634d2bcb334fac5bed9f5fe355f5214c49e27f83e1d6334.png)__ 
 
  ____ 
 
@@ -256,7 +256,7 @@ Mayor Pace has lived in Hillsboro since 2012 and has done quite a bit of communi
 
 Mayor Pace graduated from the U.S. Military Academy at West Point and is a U.S. Army veteran. She was stationed in the U.S. and Europe during her time in the military. After her service, she successfully worked in “corporate America” for almost a decade. Since then, she has led social change organizations on the West Coast. In addition to her bachelor's degree in Latin American studies from the U.S. Military Academy at West Point, she also earned a master's degree in public administration from Northern Michigan University.
 
- ![Beach Pace in Washington, DC](images/8ae15170c36e2123e7b3c954e22116eab8d29d0dd853061abf6bfcb4cf8b1f6a.jpg) 
+ ![Beach Pace in Washington, DC](images/8ae15170c36e2123e7b3c954e22116eab8d29d0dd853061abf6bfcb4cf8b1f6a.png) 
 
 #### Why serve on the Hillsboro City Council?
 
@@ -264,7 +264,7 @@ Mayor Pace graduated from the U.S. Military Academy at West Point and is a U.S. 
 
 I’m serving on City Council because I believe it’s important to give back to this wonderful city. I serve to ensure that everyone who contributes to our city is served by it — from those who have benefited from generations of prosperity here, to those who are just starting out, finding their voices, or fighting for a fair chance. It is an honor to serve the community and to serve with my colleagues on the City Council."
 
- ![Beach & Jincy Pace](images/32172f28e0b95cfadc19fb2841101d371eb565409d4e2d7ff256a5f8b058ce96.jpg) 
+ ![Beach & Jincy Pace](images/32172f28e0b95cfadc19fb2841101d371eb565409d4e2d7ff256a5f8b058ce96.png) 
 
 #### What are your hopes and goals for serving on the Council?
 
@@ -274,7 +274,7 @@ I’m serving on City Council because I believe it’s important to give back to
 
 "I believe that having many voices heard before a decision is made, typically, makes for a better outcome. To me, presence and availability are important in this role. I intend to continue to attend events, meet residents, and listen and learn."
 
- ![Beach Pace & Family](images/41427ba40c6c193adfc4d2b34af4e9927f2aedb301866c6629c7b64014745c9e.jpg) 
+ ![Beach Pace & Family](images/41427ba40c6c193adfc4d2b34af4e9927f2aedb301866c6629c7b64014745c9e.png) 
 
 ### Fun Facts about Beach
 
@@ -297,7 +297,7 @@ I’m serving on City Council because I believe it’s important to give back to
  *  __Favorite way to spend a weekend:__ Hiking with my family and my dog
  *  __Favorite community spaces in Hillsboro:__ All of the Parks & Recreation spaces. My 100% favorite is Jackson Bottom Wetlands Preserve.
 
- ![Beach Pace climbing a building](images/d1d0738532f41840060fddbe8817bf911c782472b6a8bbad81438dbb963dabd6.jpg) 
+ ![Beach Pace climbing a building](images/d1d0738532f41840060fddbe8817bf911c782472b6a8bbad81438dbb963dabd6.png) 
 
 #### See More City Council Spotlights
 
@@ -321,17 +321,17 @@ I’m serving on City Council because I believe it’s important to give back to
 
 ## Quicklinks
 
- *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.jpg)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
- *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.jpg)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
- *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.jpg)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
- *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.jpg)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
- *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.jpg)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
+ *  [![Hillsboro H in Circle Icon](images/5d55d96f7f4bb3be752e27b1d5bc2fdd1bc00d7c20df3f44d693c6400572a1b6.png)City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter) 
+ *  [![Email Envelope Icon](images/25298605ce9b5ab34647b7a9f08c78e7cd032bfafc11265df53cd337db29d6a0.png)Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates) 
+ *  [![News Icon_White](images/bb63310673d639932c4e300cc425fff7111a6b928bb9a60f29e4f91bcbad7b29.png)Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters) 
+ *  [![newspaper icon white](images/f5cf49467ad3fb7a5e68bfd7ce0501a74f6fb4afc16d115b4d19205ce1ab7962.png)Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices) 
+ *  [![Speech Bubbles Icon](images/049e04a896658c0b6d98c9a85cfecc3814e31101a446851c988ac0d00dfb460c.png)Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos) 
 
 Free viewers are required for some of the attached documents.
 
 They can be downloaded by clicking on the icons below.
 
- [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.jpg)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.jpg)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
+ [Acrobat Reader![Download Acrobat Reader](images/242b2dc36739351df3f3658aa2ee6428e90ada4b33302d710747ad1025aebcfe.png)](http://get.adobe.com/reader/)  [Windows Media Player![Download Windows Media Player](images/2727e0d06e1e5e64dec1a8288b78babcb1ceb7072061039c37255b9b1ee5e14e.png)](http://windows.microsoft.com/en-us/windows/windows-media-player)   [Word Viewer![Download Word Viewer](images/6bd05cfa2660b1371098c85770413f8ea555d12be11502179f5c2dd973202da3.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [Excel Viewer![Download Excel Viewer](images/18a0a15635a730c3fda553439b4b806ca6735786ebd5daea21bb553eb62a3252.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)  [PowerPoint Viewer![Download PowerPoint Viewer](images/0c00e4f93a27e3194d572d83a3952a4e1222776de4c9737c3b855e73260c87bf.png)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online)   [search]()  [settings]()  
 
  1. Search separators:
  1. Search field name:(All)News Title
@@ -375,7 +375,7 @@ Hillsboro, Oregon 97123
  * Hillsboro 2035 updates
  * Creciendo Juntos — Noticias en español
 
-  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.jpg)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.jpg)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.jpg)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.jpg)](https://www.youtube.com/user/CityofHillsboroOR)  
+  [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.png)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.png)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.png)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.png)](https://www.youtube.com/user/CityofHillsboroOR)  
 
 Website Design By [Granicus](https://www.granicus.com/) - Connecting People & Government
 

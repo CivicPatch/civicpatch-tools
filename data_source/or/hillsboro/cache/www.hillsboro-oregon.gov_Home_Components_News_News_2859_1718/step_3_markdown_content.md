@@ -118,7 +118,7 @@
      *  [Public Works](https://www.hillsboro-oregon.gov/our-city/departments/public-works) 
      *  [Water](https://www.hillsboro-oregon.gov/our-city/departments/water) 
    *  [Diversity, Equity, and Inclusion](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion) 
-     *  [Arab American Heritage Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/arab-american-heritage-month) 
+     *  [Asian and Pacific Islander Month](https://www.hillsboro-oregon.gov/our-city/diversity-equity-and-inclusion/asian-and-pacific-islander-month) 
    *  [Event Calendar](https://www.hillsboro-oregon.gov/our-city/event-calendar) 
    *  [Fees & Charges](https://www.hillsboro-oregon.gov/our-city/fees-charges) 
    *  [Get Involved!](https://www.hillsboro-oregon.gov/our-city/get-involved) 
@@ -249,7 +249,7 @@
 
  __ __
 
- ![Image of Councilor Olivia Alcaire](images/30ee38c4fd9c8bae5b2e94a6cf3eed54c7e22eea0c54085050b8054a9cc83981.jpg)____   __
+ ![Image of Councilor Olivia Alcaire](images/30ee38c4fd9c8bae5b2e94a6cf3eed54c7e22eea0c54085050b8054a9cc83981.png)____   __
 
 ###  __Community Experience____ Councilor Alcaire has lived in Hillsboro since 2001 and has more than 20 years of community service experience that includes working with culturally-specific youth and families in the Portland metro area, and 18 years working in higher education — advising, teaching, and coaching.   She serves on two nonprofit boards: Bienestar of Oregon (since 2011) and Willamette West Habitat for Humanity (since 2018). She has also served as an AmeriCorps Vista Volunteer assisting first-time Spanish speaking mothers in Washington County, and with Columbia Basin tribal members with education and career pathway development. She is the Executive Director for CREATE, a nonprofit located in Cornelius supporting Forest Grove and Cornelius youth and families with high school diploma completion. __
 
@@ -271,7 +271,7 @@ Councilor Alcaire __ __ teaches at Portland Community College. She received her 
 
  ____ 
 
- __ ![Olivia Alcaire reading a book](images/462673ff19850c90f8639219853668a14991bf9774d2ff689ef8671332c38e93.jpg)__ 
+ __ ![Olivia Alcaire reading a book](images/462673ff19850c90f8639219853668a14991bf9774d2ff689ef8671332c38e93.png)__ 
 
  ____  ____ 
 
@@ -310,7 +310,7 @@ Councilor Alcaire __ __ teaches at Portland Community College. She received her 
  *  [Councilor Rob Harris](https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300) 
  *  [ ](https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300)  [Councilor Cristian Salgado](https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300) 
  *  [Councilor Kipperlyn Sinclair](https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718) 
-  [Return to full list >>](https://www.hillsboro-oregon.gov/business/advanced-components/new-advanced-components/news-list)   [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.jpg)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.jpg)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.jpg)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.jpg)](https://www.youtube.com/user/CityofHillsboroOR)  
+  [Return to full list >>](https://www.hillsboro-oregon.gov/business/advanced-components/new-advanced-components/news-list)   [503-681-6100]()  [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA)  [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)   [![footer-fb@2x](images/3645be4517187539b1a892ead566f4aca600564a1eedd084a3d9ac240f74f5be.png)](https://www.facebook.com/CityofHillsboro)  [![footer-tw@2x](images/f1959ef2594ace2cf4817da6e533c06e9673728c49e4bfb841493d6b009dd132.png)](https://twitter.com/cityofhillsboro)  [![footer-ig@2x](images/6c526346075960f602198b14cd2e3d1fefc8ed45e8b241d0a7900924d9dc7d1f.png)](https://www.instagram.com/cityofhillsboro/)  [![footer-yt@2x](images/5ee9f8e0d9b43d0c240c3595b06abc626de126c90f9624e177680f3291ad27d3.png)](https://www.youtube.com/user/CityofHillsboroOR)  
 
 Website Design By [Granicus](https://www.granicus.com/) - Connecting People & Government
 
