@@ -135,7 +135,6 @@ namespace :github_pipeline do
     compare_results = validation_results[:compare_results]
     contested_people = compare_results[:contested_people]
     missing_people = compare_results[:missing_people]
-    suggest_edit_details = Scrapers::MunicipalityOfficials.get_suggest_edit_details(municipality_context)
     score = compare_results[:agreement_score]
     config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
 
@@ -146,12 +145,6 @@ namespace :github_pipeline do
 
     comment += missing_people_comment
     comment += "\n\n---\n\n"
-    if suggest_edit_details.present? # TODO: Move this to the post comment
-      comment += "## Action Items"
-      comment += GitHub::CityPeople.generate_suggest_edit_markdown(suggest_edit_details, missing_people,
-                                                                   contested_people)
-      comment += "\n\n---\n\n"
-    end
 
     # Iterate through each contested person and their contested fields
     contested_people.each do |name, fields|
