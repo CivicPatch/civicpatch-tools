@@ -151,7 +151,8 @@ module GitHub
       <<~MARKDOWN
         <blockquote><details>
         <summary>Click to expand</summary>
-        ```markdown
+
+        ```md
         #{[not_in_office_markdown, updates_needed_markdown].compact.join("\n")}
         ```
         </details></blockquote>
