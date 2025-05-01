@@ -49,8 +49,6 @@ module Validators
         sources << source
       end
 
-      File.write("sources.json", sources.to_json)
-
       {
         compare_results: Validators::Utils.compare_people_across_sources(people_config, sources),
         merged_sources: Validators::Utils.merge_people_across_sources(people_config, sources)

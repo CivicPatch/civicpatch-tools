@@ -113,7 +113,6 @@ module Validators
     def self.compare_people_across_sources(people_config, sources)
       fields = %w[positions email phone_number website] # Fields to compare
 
-      File.write("people_config.json", people_config.to_json)
       unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
       total_people = unique_names.count
       total_fields = fields.count
