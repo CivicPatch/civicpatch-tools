@@ -23,16 +23,17 @@ module Core
         person_name2.include?(person_name1)) && same_last_name?(person_name1, person_name2)
     end
 
-    def self.match_by_name(people_config, haystack_people, needle_person)
+    def self.find_by_name(people_config, haystack_people, needle_person_name)
       haystack_people.each do |haystack_person|
-        return haystack_person if similar_name?(haystack_person["name"], needle_person["name"])
+        return haystack_person if similar_name?(haystack_person["name"], needle_person_name)
 
         next if people_config.nil?
 
-        canonical_name = haystack_person["name"]
+        canonical_name = get_canonical_name(people_config, haystack_person)
         person_config = people_config[canonical_name]
 
-        return haystack_person if name_in_config?({ canonical_name => person_config }, needle_person["name"])
+        return haystack_person if name_in_config?({ canonical_name => person_config },
+                                                  needle_person_name)
       end
 
       nil
@@ -43,7 +44,9 @@ module Core
 
       return true if people_config.keys.any? { |key| similar_name?(key, needle_person_name) } ||
                      people_config.values.any? do |person_config|
-                       people_config["other_names"]&.include?(needle_person_name)
+                       next if person_config.nil?
+
+                       person_config["other_names"]&.include?(needle_person_name)
                      end
 
       false
@@ -70,25 +73,28 @@ module Core
     end
 
     def self.find_existing_person(people_config, people, maybe_new_person)
-      found_person = match_by_name(people_config, people, maybe_new_person) ||
+      found_person = find_by_name(people_config, people, maybe_new_person["name"]) ||
                      match_by_weak_ties(people, maybe_new_person)
 
-      name = get_canonical_name(people_config, maybe_new_person)
-      if people_config[name].present? && maybe_new_person["name"] != name
-        maybe_add_other_name(people_config, name, maybe_new_person)
-      else
-        people_config[name] = { "other_names" => [] }
-      end
+      canonical_name = get_canonical_name(people_config, maybe_new_person)
 
-      [found_person, people_config]
+      updated_people_config = maybe_add_other_name(people_config, canonical_name, maybe_new_person)
+
+      [found_person, updated_people_config]
     end
 
-    def self.maybe_add_other_name(people_config, person_key, maybe_new_person)
-      other_names = people_config[person_key]["other_names"] ||= []
-      return if other_names.include?(maybe_new_person["name"])
+    def self.maybe_add_other_name(people_config, canonical_name, maybe_new_person)
+      person_config = people_config[canonical_name]
 
-      other_names << maybe_new_person["name"]
-      people_config[person_key]["other_names"] = other_names
+      if !person_config.present?
+        people_config[canonical_name] = { "other_names" => [] }
+      elsif !name_in_config?({ canonical_name => person_config }, maybe_new_person["name"])
+        other_names = person_config["other_names"] ||= []
+        other_names << maybe_new_person["name"]
+        people_config[canonical_name]["other_names"] = other_names
+      end
+
+      people_config
     end
   end
 end

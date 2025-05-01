@@ -69,7 +69,8 @@ namespace :pipeline do
 
     people = Core::PeopleManager.get_people(state, gnis)
     remove_unused_cache_folders(state, municipality_entry, people)
-    update_config(state, gnis, municipality_context[:config], people)
+
+    Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
   end
 
   desc "Fetch city officials from state source"
@@ -126,17 +127,11 @@ namespace :pipeline do
 
   def fetch_with_scrape(municipality_context)
     request_cache = {}
-    state = municipality_context[:state]
-    municipality_entry = municipality_context[:municipality_entry]
-    config_file_path = PathHelper.get_municipality_config_path(state, municipality_entry["gnis"])
-    config = { "scrape_sources" => [] }
-    config = YAML.load_file(config_file_path) if File.exist?(config_file_path)
-    config_urls = config["scrape_sources"] ||= []
 
     # OpenAI - LLM call
     page_fetcher, source_urls, source_dirs, people, people_config = process_with_llm(
       municipality_context, "openai",
-      seeded_urls: config_urls,
+      seeded_urls: municipality_context[:config]["scrape_sources"] || [],
       request_cache: request_cache
     )
 
@@ -158,8 +153,6 @@ namespace :pipeline do
 
   def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil,
                        seeded_urls: [], request_cache: {})
-    state = municipality_context[:state]
-    municipality_entry = municipality_context[:municipality_entry]
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
 
     page_fetcher, source_dirs, accumulated_people, people_config = Core::MunicipalScraper.fetch(
@@ -255,20 +248,6 @@ namespace :pipeline do
 
       person
     end
-  end
-
-  def self.update_config(state, gnis, config, people)
-    people_config = config["people"]
-
-    people_config.each do |name, person_config|
-      # remove entries that are not in the people array
-      unless people.any? { |p| Core::PersonResolver.name_in_config?({ name => person_config }, p["name"]) }
-        people_config.delete(name)
-      end
-    end
-    config["people"] = people_config
-
-    Core::ConfigManager.update_config(state, gnis, config)
   end
 
   def self.remove_unused_cache_folders(state, municipality_entry, people)

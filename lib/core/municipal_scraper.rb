@@ -121,8 +121,15 @@ module Core
         content_dir, people = scrape_url_for_municipal_directory(context, url)
         next if people.blank?
 
+        puts "#{context[:llm_service_string]} PEOPLE INIT"
+        pp people_config
+
         accumulated_people, people_config = Services::Shared::People.collect_people(people_config,
                                                                                     accumulated_people, people)
+
+        puts "#{context[:llm_service_string]} UPDATED PEOPLE_CONFIG"
+        pp people_config
+
         content_dirs << content_dir
         processed_urls << url
 
@@ -136,6 +143,7 @@ module Core
     end
 
     def self.scrape_profiles(context, accumulated_people, processed_urls)
+      people_config = context[:municipality_context][:config]["people"]
       content_dirs = []
 
       accumulated_people = accumulated_people.map do |person|
@@ -158,7 +166,7 @@ module Core
 
           next if people.blank?
 
-          person_with_website_data = Validators::Utils.find_by_name(people, person["name"])
+          person_with_website_data = Core::PersonResolver.find_by_name(people_config, people, person["name"])
 
           next if person_with_website_data.blank?
 

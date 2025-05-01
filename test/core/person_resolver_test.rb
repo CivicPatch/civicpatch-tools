@@ -18,15 +18,17 @@ class PersonResolverTest < Minitest::Test
     @person_no_website = { "name" => "No Web Doe", "email" => "noweb@example.com", "website" => nil }
     @person_nil_fields = { "name" => "Nil Doe", "email" => nil, "website" => nil }
     @person_long_name = { "name" => "Jane Elizabeth Doe" }
+    @person_eduardo = { "name" => "Eduardo Morales" }
 
-    @people = [@person1, @person2, @person3, @person_long_name]
+    @people = [@person1, @person2, @person3, @person_long_name, @person_eduardo]
 
     # Config uses the primary name as the key
     @people_config = {
       "Jane Doe" => { "other_names" => ["Janie Doe", "J. Doe"] },
       "John Doe" => { "other_names" => [] },
       "Jane Smith" => { "other_names" => ["J. Smith"] },
-      "Jane Elizabeth Doe" => { "other_names" => [] } # Example for substring test
+      "Jane Elizabeth Doe" => { "other_names" => [] }, # Example for substring test
+      "Eduardo Morales" => { "other_names" => ["Eddy Morales"] }
     }
     @people_config_missing_other_names = {
       "Jane Doe" => {}, # Missing other_names key
@@ -253,5 +255,18 @@ class PersonResolverTest < Minitest::Test
     assert config["Jane Doe"].key?("other_names"), "Config entry for Jane Doe should have an other_names key"
     assert_includes config["Jane Doe"]["other_names"], "Jane",
                     "Config for Jane Doe should now include 'Jane' in other_names after substring match"
+  end
+
+  def test_find_existing_person_connects_other_name_to_primary_name
+    needle = { "name" => "Eddy Morales" } # This name is in Eduardo's other_names
+    expected_person = @person_eduardo
+    config_before = Marshal.load(Marshal.dump(@config_for_update))
+
+    found, config_after = Core::PersonResolver.find_existing_person(@config_for_update, @people, needle)
+
+    assert_equal expected_person, found, "Should find Eduardo Morales using the other name 'Eddy Morales'"
+    # Ensure the config wasn't mutated unnecessarily (Eddy was already there)
+    assert_equal config_before["Eduardo Morales"], config_after["Eduardo Morales"],
+                 "Config for Eduardo Morales should not change when found via existing other_name"
   end
 end

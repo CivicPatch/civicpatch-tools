@@ -13,9 +13,11 @@
     "phone_numbers": [
       {
         "data": "503-618-2584",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly listed under name with 'Phone:' label.",
-        "proximity_to_name": 10,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
         "source": "https://www.greshamoregon.gov/link/5e4f4bc3d29a466fa292edf864cae9c9.aspx"
       }
     ],
@@ -24,15 +26,20 @@
       {
         "data": "https://www.greshamoregon.gov/link/5e4f4bc3d29a466fa292edf864cae9c9.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Read more about' link provided for the person.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Link provided directly below name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       },
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/mayor-travis-stovall/",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the page the information was extracted from, likely the profile page.",
-        "proximity_to_name": 0,
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The current page URL is the specific profile page for the target person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
         "source": "https://www.greshamoregon.gov/link/5e4f4bc3d29a466fa292edf864cae9c9.aspx"
       }
     ],
@@ -40,8 +47,8 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 3, 2023'.",
-        "proximity_to_name": 30,
+        "llm_confidence_reason": "Explicitly stated as sworn-in date.",
+        "proximity_to_name": 50,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       }
     ],
@@ -57,17 +64,17 @@
     ],
     "positions": [
       "Council Member",
-      "Position 1"
+      "Council Position 1"
     ],
     "phone_numbers": [
       {
         "data": "503-618-2871",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Labeled explicitly as phone number.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' and associated with the name.",
         "markdown_formatting": {
           "in_list": false
         },
-        "proximity_to_name": 50,
+        "proximity_to_name": 10,
         "source": "https://www.greshamoregon.gov/link/4ee1b0b2db5c44ea93bf8ed72300d36c.aspx"
       }
     ],
@@ -76,18 +83,21 @@
       {
         "data": "https://www.greshamoregon.gov/link/4ee1b0b2db5c44ea93bf8ed72300d36c.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Read more about' link provided for the person.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Link provided directly below name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 120,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       },
       {
-        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "This is the 'Meet the Council' page URL, not a direct profile URL for Kayla Brown, but the most relevant URL found in the context.",
+        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-kayla-brown/",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "This is the page dedicated to the person, although not explicitly a 'website' field.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "proximity_to_name": 200,
+        "proximity_to_name": 0,
         "source": "https://www.greshamoregon.gov/link/4ee1b0b2db5c44ea93bf8ed72300d36c.aspx"
       }
     ],
@@ -95,8 +105,8 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 7, 2025'.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Explicitly stated as sworn-in date.",
+        "proximity_to_name": 70,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       }
     ],
@@ -112,16 +122,13 @@
     ],
     "positions": [
       "Council Member",
-      "Position 2"
+      "Council Position 2"
     ],
     "phone_numbers": [
       {
         "data": "503-618-2871",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Labeled 'Phone:' directly under the contact heading for the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly labeled 'Phone:' under the contact section for the person.",
         "proximity_to_name": 20,
         "source": "https://www.greshamoregon.gov/link/c8b25674b1694e0da7a690bef592f12b.aspx"
       }
@@ -131,17 +138,17 @@
       {
         "data": "https://www.greshamoregon.gov/link/c8b25674b1694e0da7a690bef592f12b.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Read more about' link provided for the person.",
-        "proximity_to_name": 20,
-        "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
-      },
-      {
-        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-eddy-morales/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the official profile page for the person.",
+        "llm_confidence_reason": "Link provided directly below name and title.",
         "markdown_formatting": {
           "in_list": false
         },
+        "proximity_to_name": 100,
+        "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
+      },
+      {
+        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/Councilor-Eddy-Morales",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is a profile page for the person.",
         "proximity_to_name": 0,
         "source": "https://www.greshamoregon.gov/link/c8b25674b1694e0da7a690bef592f12b.aspx"
       }
@@ -150,8 +157,8 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 3, 2023'.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Explicitly stated as sworn-in date.",
+        "proximity_to_name": 50,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       }
     ],
@@ -167,14 +174,14 @@
     ],
     "positions": [
       "Council Member",
-      "Position 3"
+      "Council Position 3"
     ],
     "phone_numbers": [
       {
         "data": "503-618-2871",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Directly listed under 'Contact' for the person.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Clearly labeled 'Phone' next to the name.",
+        "proximity_to_name": 100.0,
         "source": "https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx"
       }
     ],
@@ -183,15 +190,18 @@
       {
         "data": "https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Read more about' link provided for the person.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Link provided directly below name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 120,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       },
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-cathy-keathley/",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is the page dedicated to the person.",
-        "proximity_to_name": 0,
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page URL for the person.",
+        "proximity_to_name": 0.0,
         "source": "https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx"
       }
     ],
@@ -199,8 +209,8 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 7, 2025'.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Explicitly stated as sworn-in date.",
+        "proximity_to_name": 70,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       }
     ],
@@ -215,18 +225,16 @@
       "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx"
     ],
     "positions": [
-      "Council President",
       "Council Member",
-      "Position 4"
+      "Council Position 4",
+      "Council President"
     ],
     "phone_numbers": [
       {
         "data": "503-618-2871",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Directly labeled 'Phone' under 'Contact' section near name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly labeled as phone number near the name.",
+        "proximity_to_name": 20,
         "source": "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx"
       }
     ],
@@ -235,17 +243,18 @@
       {
         "data": "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Read more about' link provided for the person.",
-        "proximity_to_name": 20,
-        "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
-      },
-      {
-        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/Council-President-Jerry-Hinton/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The current page URL is the profile page for the person.",
+        "llm_confidence_reason": "Link provided directly below name and title.",
         "markdown_formatting": {
           "in_list": false
         },
+        "proximity_to_name": 100,
+        "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
+      },
+      {
+        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "This is the page URL where the information about Jerry Hinton is found, likely serving as his profile page.",
+        "proximity_to_name": 0,
         "source": "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx"
       }
     ],
@@ -253,8 +262,8 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 3, 2023'.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Explicitly stated as sworn-in date.",
+        "proximity_to_name": 50,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       }
     ],
@@ -270,17 +279,17 @@
     ],
     "positions": [
       "Council Member",
-      "Position 5"
+      "Council Position 5"
     ],
     "phone_numbers": [
       {
         "data": "503-618-2871",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly labeled as 'Phone' under the 'Contact' section associated with the name.",
+        "llm_confidence_reason": "Labeled 'Phone' under 'Contact' section near name.",
         "markdown_formatting": {
           "in_list": false
         },
-        "proximity_to_name": 20,
+        "proximity_to_name": 50,
         "source": "https://www.greshamoregon.gov/link/e1483dd075614f6c89b6be87ac1f8f92.aspx"
       }
     ],
@@ -289,18 +298,21 @@
       {
         "data": "https://www.greshamoregon.gov/link/e1483dd075614f6c89b6be87ac1f8f92.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Read more about' link provided for the person.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Link provided directly below name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 120,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       },
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "This is the general 'Meet the Council' page, not a specific profile page for Sue Piazza. No dedicated profile URL found.",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "This is the page URL where the information about Sue Piazza is found.",
         "markdown_formatting": {
           "in_list": false
         },
-        "proximity_to_name": 100,
+        "proximity_to_name": 0,
         "source": "https://www.greshamoregon.gov/link/e1483dd075614f6c89b6be87ac1f8f92.aspx"
       }
     ],
@@ -308,8 +320,8 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 7, 2025'.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Explicitly stated as sworn-in date.",
+        "proximity_to_name": 70,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       }
     ],
@@ -325,14 +337,17 @@
     ],
     "positions": [
       "Council Member",
-      "Position 6"
+      "Council Position 6"
     ],
     "phone_numbers": [
       {
         "data": "503-618-2871",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly listed under 'Contact' section with 'Phone:' label near the name.",
-        "proximity_to_name": 200,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Labeled 'Phone' directly under 'Contact' section associated with the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
         "source": "https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx"
       }
     ],
@@ -341,15 +356,21 @@
       {
         "data": "https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Read more about' link provided for the person.",
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Link provided directly below name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       },
       {
-        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-janine-gladfelter/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The current page URL is the dedicated profile page for the person.",
-        "proximity_to_name": 0,
+        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The URL for the 'Meet the Council' page is provided, which contains the person's profile, but a direct link to her specific profile page is not explicitly listed in the text.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 150,
         "source": "https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx"
       }
     ],
@@ -357,8 +378,8 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 3, 2023'.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Explicitly stated as sworn-in date.",
+        "proximity_to_name": 50,
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       }
     ],

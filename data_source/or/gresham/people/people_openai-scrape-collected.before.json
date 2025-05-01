@@ -38,7 +38,7 @@
       {
         "data": "https://www.greshamoregon.gov/link/5e4f4bc3d29a466fa292edf864cae9c9.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link text explicitly says 'Read more about Mayor Travis Stovall' near the name.",
+        "llm_confidence_reason": "Directly associated with name and title, link labeled 'Read more about Mayor Travis Stovall.'",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -47,8 +47,8 @@
       },
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "No direct personal profile URL found, but the 'Meet the Council' page is the closest relevant official page for the mayor.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is from official city site mayor and council section; no more specific personal page found.",
         "proximity_to_name": 50,
         "markdown_formatting": {
           "in_list": false
@@ -60,7 +60,7 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Mayor Stovall was sworn into office for a second term on Jan. 3, 2023'.",
+        "llm_confidence_reason": "Explicitly stated 'Mayor Stovall was sworn into office for a second term on Jan. 3, 2023.'",
         "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
@@ -70,10 +70,10 @@
       {
         "data": "2023-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term of Office explicitly stated as January 2023 start; sworn in Jan 3, 2023.",
+        "llm_confidence_reason": "Term of Office stated as January 2023 to December 2026; sworn in Jan 3, 2023.",
         "proximity_to_name": 20,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.greshamoregon.gov/link/5e4f4bc3d29a466fa292edf864cae9c9.aspx"
       }
@@ -82,10 +82,10 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term of Office explicitly stated to end December 2026.",
+        "llm_confidence_reason": "Term of Office stated as January 2023 to December 2026.",
         "proximity_to_name": 20,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.greshamoregon.gov/link/5e4f4bc3d29a466fa292edf864cae9c9.aspx"
       }
@@ -101,8 +101,7 @@
     ],
     "positions": [
       "council member",
-      "position 1",
-      "councilor"
+      "position 1"
     ],
     "phone_numbers": [
       {
@@ -120,7 +119,7 @@
       {
         "data": "Kayla.Brown@GreshamOregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with Councilor Kayla Brown's contact info and repeated in biography.",
+        "llm_confidence_reason": "Email address directly associated with Kayla Brown's contact info and repeated in biography.",
         "proximity_to_name": 3,
         "markdown_formatting": {
           "in_list": false
@@ -132,7 +131,7 @@
       {
         "data": "https://www.greshamoregon.gov/link/4ee1b0b2db5c44ea93bf8ed72300d36c.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link text explicitly says 'Read more about Councilor Kayla Brown' near the name.",
+        "llm_confidence_reason": "Directly associated with name and title, link labeled 'Read more about Councilor Kayla Brown.'",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -142,8 +141,8 @@
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "Page URL is from official city site under Mayor and Council section; no direct personal profile URL found but this is the closest relevant page.",
-        "proximity_to_name": 0,
+        "llm_confidence_reason": "No direct personal profile URL found, but this page is the official council member listing including Kayla Brown.",
+        "proximity_to_name": 100,
         "markdown_formatting": {
           "in_list": false
         },
@@ -154,7 +153,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'sworn into office on Jan. 7, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 7, 2025.'",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -164,7 +163,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Sworn into office on Jan. 7, 2025, explicitly stated.",
+        "llm_confidence_reason": "Explicitly stated sworn in date for Position 1 council member.",
         "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
@@ -200,7 +199,7 @@
     ],
     "phone_numbers": [
       {
-        "data": "503-618-2871",
+        "data": "(503) 618-2871",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed directly under 'Councilor Eddy Morales' contact section.",
         "proximity_to_name": 5,
@@ -212,9 +211,9 @@
     ],
     "emails": [
       {
-        "data": "Eddy.Morales@GreshamOregon.gov",
+        "data": "Eddy.Morales@greshamoregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email appears multiple times directly associated with Councilor Eddy Morales.",
+        "llm_confidence_reason": "Email appears multiple times directly associated with Eddy Morales.",
         "proximity_to_name": 3,
         "markdown_formatting": {
           "in_list": false
@@ -226,7 +225,7 @@
       {
         "data": "https://www.greshamoregon.gov/link/c8b25674b1694e0da7a690bef592f12b.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link text explicitly says 'Read more about Councilor Eddy Morales' near the name.",
+        "llm_confidence_reason": "Directly associated with name and title, link labeled 'Read more about Councilor Eddy Morales.'",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -235,9 +234,9 @@
       },
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "No direct personal profile URL found, but this page is the closest official council member listing.",
-        "proximity_to_name": 50,
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Page URL is the council member section where Eddy Morales is profiled; no direct personal page found but this is the closest official profile.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
@@ -248,7 +247,7 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'sworn into office on Jan. 3, 2023'.",
+        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 3, 2023.'",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -258,7 +257,7 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated sworn into office on Jan. 3, 2023 for second term.",
+        "llm_confidence_reason": "Sworn into office on Jan. 3, 2023 for current term.",
         "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
@@ -307,7 +306,7 @@
       {
         "data": "Cathy.Keathley@GreshamOregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address appears multiple times directly associated with Cathy Keathley.",
+        "llm_confidence_reason": "Email address appears twice directly associated with Cathy Keathley.",
         "proximity_to_name": 3,
         "markdown_formatting": {
           "in_list": false
@@ -319,7 +318,7 @@
       {
         "data": "https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link text explicitly says 'Read more about Councilor Cathy Keathley' near the name.",
+        "llm_confidence_reason": "Directly associated with name and title, link labeled 'Read more about Councilor Cathy Keathley.'",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -328,9 +327,9 @@
       },
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Page URL is the main council member listing page; no direct personal profile URL found.",
-        "proximity_to_name": 50,
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "No direct personal profile URL found, but this page is the closest relevant council member page.",
+        "proximity_to_name": 100,
         "markdown_formatting": {
           "in_list": false
         },
@@ -341,7 +340,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'sworn into office on Jan. 7, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 7, 2025.'",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -351,10 +350,10 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated sworn into office on Jan. 7, 2025.",
+        "llm_confidence_reason": "Explicitly stated sworn in date for current term.",
         "proximity_to_name": 40,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx"
       }
@@ -366,7 +365,7 @@
         "llm_confidence_reason": "Term of office stated as January 2025 to December 2028.",
         "proximity_to_name": 10,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.greshamoregon.gov/link/de28f7845bb64b61b40be22f81848ce2.aspx"
       }
@@ -401,8 +400,8 @@
       {
         "data": "Jerry.Hinton@GreshamOregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with Councilor Jerry Hinton and repeated in contact info.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Email address directly associated with Jerry Hinton's contact info and repeated in biography.",
+        "proximity_to_name": 3,
         "markdown_formatting": {
           "in_list": false
         },
@@ -413,7 +412,7 @@
       {
         "data": "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link text explicitly says 'Read more about Councilor Jerry Hinton' near the name.",
+        "llm_confidence_reason": "Directly associated with name and title, link labeled 'Read more about Councilor Jerry Hinton.'",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -423,10 +422,10 @@
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "Page URL is the main council page; no direct personal profile URL found but this is the closest relevant official page.",
+        "llm_confidence_reason": "No direct personal profile URL found, but this is the official council page where he is listed.",
         "proximity_to_name": 100,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx"
       }
@@ -435,7 +434,7 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'sworn into office on Jan. 3, 2023'.",
+        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 3, 2023.'",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -446,9 +445,9 @@
         "data": "2023-01-03",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Sworn into office on Jan. 3, 2023 for current term.",
-        "proximity_to_name": 40,
+        "proximity_to_name": 50,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx"
       }
@@ -458,9 +457,9 @@
         "data": "2026-12-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Term of office stated as January 2023 to December 2026.",
-        "proximity_to_name": 10,
+        "proximity_to_name": 50,
         "markdown_formatting": {
-          "in_list": false
+          "in_list": true
         },
         "source": "https://www.greshamoregon.gov/link/5f3f540fd7c140c7a5e53a2ea9d5ab90.aspx"
       }
@@ -495,8 +494,8 @@
       {
         "data": "Sue.Piazza@GreshamOregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with Sue Piazza's contact info and repeated in the bio section.",
-        "proximity_to_name": 3,
+        "llm_confidence_reason": "Email address directly associated with Sue Piazza's contact information and repeated in biography section.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -507,7 +506,7 @@
       {
         "data": "https://www.greshamoregon.gov/link/e1483dd075614f6c89b6be87ac1f8f92.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link text explicitly says 'Read more about Councilor Sue Piazza' near the name.",
+        "llm_confidence_reason": "Directly associated with name and title, link labeled 'Read more about Councilor Sue Piazza.'",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -517,8 +516,8 @@
       {
         "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "Page URL is the main council member listing page; no direct personal profile URL found but this is the closest stable profile page.",
-        "proximity_to_name": 100,
+        "llm_confidence_reason": "Page URL is from the official city site under 'meet-the-council' which profiles council members including Sue Piazza.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
         },
@@ -529,7 +528,7 @@
       {
         "data": "2025-01-07",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'sworn into office on Jan. 7, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 7, 2025.'",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -537,10 +536,10 @@
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
       },
       {
-        "data": "2025-01-07",
+        "data": "2025-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated sworn into office on Jan. 7, 2025 for second term.",
-        "proximity_to_name": 40,
+        "llm_confidence_reason": "Term of Office stated as January 2025 to December 2028; sworn in January 7, 2025.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": true
         },
@@ -551,8 +550,8 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term of office stated as January 2025 to December 2028.",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Term of Office stated as January 2025 to December 2028.",
+        "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": true
         },
@@ -574,7 +573,7 @@
     ],
     "phone_numbers": [
       {
-        "data": "503-618-2871",
+        "data": "(503) 618-2871",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed directly under 'Councilor Janine Gladfelter' contact section.",
         "proximity_to_name": 5,
@@ -588,7 +587,7 @@
       {
         "data": "Janine.Gladfelter@GreshamOregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with Councilor Janine Gladfelter and repeated twice near her name.",
+        "llm_confidence_reason": "Email appears twice directly associated with Janine Gladfelter's name and contact info.",
         "proximity_to_name": 3,
         "markdown_formatting": {
           "in_list": false
@@ -600,29 +599,19 @@
       {
         "data": "https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link text explicitly says 'Read more about Councilor Janine Gladfelter' near the name.",
+        "llm_confidence_reason": "Directly associated with name and title, link labeled 'Read more about Councilor Janine Gladfelter.'",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
         "source": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/"
-      },
-      {
-        "data": "https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Page URL is from official city site under Mayor and Council section; no direct personal profile URL found but this is the closest relevant page.",
-        "proximity_to_name": 100,
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'sworn into office on Jan. 3, 2023'.",
+        "llm_confidence_reason": "Explicitly stated 'sworn into office on Jan. 3, 2023.'",
         "proximity_to_name": 20,
         "markdown_formatting": {
           "in_list": false
@@ -632,7 +621,7 @@
       {
         "data": "2023-01-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Sworn into office in Position 6 on Jan. 3, 2023, indicating start date.",
+        "llm_confidence_reason": "Sworn into office on Jan. 3, 2023 for Position 6.",
         "proximity_to_name": 40,
         "markdown_formatting": {
           "in_list": false
