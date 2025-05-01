@@ -45,9 +45,8 @@ namespace :github_pipeline do
   task :generate_pr_data, [:state, :gnis, :branch_name] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
-    branch_name = args[:branch_name]
 
-    people_list_comment = generate_people_list_comment(state, gnis, branch_name)
+    people_list_comment = generate_people_list_comment(state, gnis)
     comparison_data = generate_comparison(state, gnis)
 
     data = {
@@ -60,14 +59,23 @@ namespace :github_pipeline do
     puts JSON.generate(data)
   end
 
-  def self.generate_people_list_comment(state, gnis, branch_name)
+  def self.generate_people_list_comment(state, gnis)
     city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
     city = city_entry["name"]
 
     city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
 
+    action_items = GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
+                                                                     contested_people)
+
     <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
+      ## Action Items
+       - [ ] Review & Merge this PR
+         - [ ] (Optional) Make updates to people.yml if needed
+         - [ ] (Optional) Make updates to config.yml if needed
+         - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
+       #{action_items}
       ## Sources
       #{city_directory.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")}
       ## People
@@ -127,6 +135,7 @@ namespace :github_pipeline do
     compare_results = validation_results[:compare_results]
     contested_people = compare_results[:contested_people]
     missing_people = compare_results[:missing_people]
+    suggest_edit_details = Scrapers::MunicipalityOfficials.get_suggest_edit_details(municipality_context)
     score = compare_results[:agreement_score]
     config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
 
@@ -137,6 +146,12 @@ namespace :github_pipeline do
 
     comment += missing_people_comment
     comment += "\n\n---\n\n"
+    if suggest_edit_details.present? # TODO: Move this to the post comment
+      comment += "## Action Items"
+      comment += GitHub::CityPeople.generate_suggest_edit_markdown(suggest_edit_details, missing_people,
+                                                                   contested_people)
+      comment += "\n\n---\n\n"
+    end
 
     # Iterate through each contested person and their contested fields
     contested_people.each do |name, fields|

@@ -142,7 +142,7 @@ jobs:
           CONFIG_LINK=$(bundle exec rake "github_pipeline:get_config_link[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]")
           COMMENT=$(
             cat <<EOF
-          PR opened by the Municipal Scrape workflow.
+          PR opened by the Municipal Officials - Scrape workflow.
           * people.yml - Make changes [here]($CITY_DIRECTORY_LINK) and validation workflows will re-run.
           * config.yml - Make changes [here]($CONFIG_LINK) and the entire pipeline will re-run
             (note: if you want the whole pipeline to re-run, do not make changes to people.yml)

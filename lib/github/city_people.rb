@@ -88,5 +88,85 @@ module GitHub
         source_value.to_s
       end
     end
+
+    def self.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people, contested_people)
+      action_item_summary = generate_readable_updates_needed_list(merged_people, missing_people, contested_people)
+      return "" unless action_item_summary.present?
+
+      case suggest_edit_details[:type]
+      when "email"
+        <<~MARKDOWN
+          - [ ] (Optional) Email #{suggest_edit_details[:data]} to notify them of changes to their officials directory:
+          #{action_item_summary}
+        MARKDOWN
+      when "url"
+        <<~MARKDOWN
+          - [ ] (Optional) Update the state source directory: #{suggest_edit_details[:data]}
+          #{action_item_summary}
+        MARKDOWN
+      end
+    end
+
+    def self.generate_readable_updates_needed_list(merged_people, missing_people, contested_people)
+      pp contested_people
+
+      source_to_update = "state_source"
+      not_in_office_list = []
+      updates_needed_markdown = ""
+
+      missing_people.each_key do |name|
+        not_in_office_list << name unless missing_people[name].include?(source_to_update)
+      end
+      not_in_office_markdown = not_in_office_list.map { |name| "- #{name}" }.join("\n")
+
+      if not_in_office_markdown.present?
+        not_in_office_markdown = "The following officials are no longer in office:\n#{not_in_office_markdown}"
+      end
+
+      contested_people.each do |contested_person_name, contested_fields|
+        puts "CONTENTED FIELDS"
+        pp contested_fields
+        merged_person = merged_people.find { |person| person["name"] == contested_person_name }
+
+        next if merged_person.nil?
+
+        updates_needed = get_updates_needed(source_to_update, merged_person, contested_fields)
+        puts "UPDATES NEEDED"
+        pp updates_needed
+
+        next unless updates_needed.present? && updates_needed.count.positive?
+
+        updates_needed_markdown += "**#{contested_person_name}**\n"
+        updates_needed.each do |update_needed|
+          updates_needed_markdown += "- #{update_needed}\n"
+        end
+      end
+
+      if updates_needed_markdown.present?
+        updates_needed_markdown = "The following officials may need updates to their records:\n#{updates_needed_markdown}"
+      end
+
+      <<~MARKDOWN
+        <blockquote><details>
+        <summary>Click to expand</summary>
+        ```markdown
+        #{[not_in_office_markdown, updates_needed_markdown].compact.join("\n")}
+        ```
+        </details></blockquote>
+      MARKDOWN
+    end
+
+    def self.get_updates_needed(source_to_update, merged_person, contested_fields)
+      updates_needed = []
+
+      contested_fields.each do |field_name, field_data|
+        next if field_data[:values][source_to_update].nil?
+
+        updates_needed << "#{field_name}: #{merged_person[field_name]}" unless values_match?(merged_person[field_name],
+                                                                                             field_data[:values][source_to_update])
+      end
+
+      updates_needed
+    end
   end
 end

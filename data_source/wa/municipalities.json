@@ -188,7 +188,7 @@
         "ocd-division/country:us/state:wa/place:spokane_valley",
         "ocd-division/country:us/state:wa/county:spokane/place:spokane_valley"
       ],
-      "name": "spokane_valley",
+      "name": "spokane valley",
       "counties": [
         "spokane"
       ],
@@ -211,7 +211,7 @@
         "ocd-division/country:us/state:wa/place:federal_way",
         "ocd-division/country:us/state:wa/county:king/place:federal_way"
       ],
-      "name": "federal_way",
+      "name": "federal way",
       "counties": [
         "king"
       ],
@@ -728,7 +728,7 @@
         "ocd-division/country:us/state:wa/place:lake_stevens",
         "ocd-division/country:us/state:wa/county:snohomish/place:lake_stevens"
       ],
-      "name": "lake_stevens",
+      "name": "lake stevens",
       "counties": [
         "snohomish"
       ],
@@ -770,7 +770,7 @@
         "ocd-division/country:us/state:wa/place:mount_vernon",
         "ocd-division/country:us/state:wa/county:skagit/place:mount_vernon"
       ],
-      "name": "mount_vernon",
+      "name": "mount vernon",
       "counties": [
         "skagit"
       ],
@@ -793,7 +793,7 @@
         "ocd-division/country:us/state:wa/place:university_place",
         "ocd-division/country:us/state:wa/county:pierce/place:university_place"
       ],
-      "name": "university_place",
+      "name": "university place",
       "counties": [
         "pierce"
       ],
@@ -816,7 +816,7 @@
         "ocd-division/country:us/state:wa/place:walla_walla",
         "ocd-division/country:us/state:wa/county:walla_walla/place:walla_walla"
       ],
-      "name": "walla_walla",
+      "name": "walla walla",
       "counties": [
         "walla_walla"
       ],
@@ -858,7 +858,7 @@
         "ocd-division/country:us/state:wa/place:des_moines",
         "ocd-division/country:us/state:wa/county:king/place:des_moines"
       ],
-      "name": "des_moines",
+      "name": "des moines",
       "counties": [
         "king"
       ],
@@ -900,7 +900,7 @@
         "ocd-division/country:us/state:wa/place:maple_valley",
         "ocd-division/country:us/state:wa/county:king/place:maple_valley"
       ],
-      "name": "maple_valley",
+      "name": "maple valley",
       "counties": [
         "king"
       ],
@@ -944,7 +944,7 @@
         "ocd-division/country:us/state:wa/place:mercer_island",
         "ocd-division/country:us/state:wa/county:king/place:mercer_island"
       ],
-      "name": "mercer_island",
+      "name": "mercer island",
       "counties": [
         "king"
       ],
@@ -986,7 +986,7 @@
         "ocd-division/country:us/state:wa/place:moses_lake",
         "ocd-division/country:us/state:wa/county:grant/place:moses_lake"
       ],
-      "name": "moses_lake",
+      "name": "moses lake",
       "counties": [
         "grant"
       ],
@@ -1007,7 +1007,7 @@
         "ocd-division/country:us/state:wa/place:bainbridge_island",
         "ocd-division/country:us/state:wa/county:kitsap/place:bainbridge_island"
       ],
-      "name": "bainbridge_island",
+      "name": "bainbridge island",
       "counties": [
         "kitsap"
       ],
@@ -1028,7 +1028,7 @@
         "ocd-division/country:us/state:wa/place:oak_harbor",
         "ocd-division/country:us/state:wa/county:island/place:oak_harbor"
       ],
-      "name": "oak_harbor",
+      "name": "oak harbor",
       "counties": [
         "island"
       ],
@@ -1070,7 +1070,7 @@
         "ocd-division/country:us/state:wa/place:bonney_lake",
         "ocd-division/country:us/state:wa/county:pierce/place:bonney_lake"
       ],
-      "name": "bonney_lake",
+      "name": "bonney lake",
       "counties": [
         "pierce"
       ],
@@ -1133,7 +1133,7 @@
         "ocd-division/country:us/state:wa/place:mountlake_terrace",
         "ocd-division/country:us/state:wa/county:snohomish/place:mountlake_terrace"
       ],
-      "name": "mountlake_terrace",
+      "name": "mountlake terrace",
       "counties": [
         "snohomish"
       ],
@@ -1154,7 +1154,7 @@
         "ocd-division/country:us/state:wa/place:mill_creek",
         "ocd-division/country:us/state:wa/county:snohomish/place:mill_creek"
       ],
-      "name": "mill_creek",
+      "name": "mill creek",
       "counties": [
         "snohomish"
       ],
@@ -1196,7 +1196,7 @@
         "ocd-division/country:us/state:wa/place:battle_ground",
         "ocd-division/country:us/state:wa/county:clark/place:battle_ground"
       ],
-      "name": "battle_ground",
+      "name": "battle ground",
       "counties": [
         "clark"
       ],
@@ -1217,7 +1217,7 @@
         "ocd-division/country:us/state:wa/place:port_angeles",
         "ocd-division/country:us/state:wa/county:clallam/place:port_angeles"
       ],
-      "name": "port_angeles",
+      "name": "port angeles",
       "counties": [
         "clallam"
       ],
@@ -1385,7 +1385,7 @@
         "ocd-division/country:us/state:wa/place:west_richland",
         "ocd-division/country:us/state:wa/county:benton/place:west_richland"
       ],
-      "name": "west_richland",
+      "name": "west richland",
       "counties": [
         "benton"
       ],
@@ -1427,7 +1427,7 @@
         "ocd-division/country:us/state:wa/place:port_orchard",
         "ocd-division/country:us/state:wa/county:kitsap/place:port_orchard"
       ],
-      "name": "port_orchard",
+      "name": "port orchard",
       "counties": [
         "kitsap"
       ],
@@ -1469,7 +1469,7 @@
         "ocd-division/country:us/state:wa/place:east_wenatchee",
         "ocd-division/country:us/state:wa/county:douglas/place:east_wenatchee"
       ],
-      "name": "east_wenatchee",
+      "name": "east wenatchee",
       "counties": [
         "douglas"
       ],
@@ -1511,7 +1511,7 @@
         "ocd-division/country:us/state:wa/place:lake_forest_park",
         "ocd-division/country:us/state:wa/county:king/place:lake_forest_park"
       ],
-      "name": "lake_forest_park",
+      "name": "lake forest park",
       "counties": [
         "king"
       ],
@@ -1681,7 +1681,7 @@
         "ocd-division/country:us/state:wa/place:gig_harbor",
         "ocd-division/country:us/state:wa/county:pierce/place:gig_harbor"
       ],
-      "name": "gig_harbor",
+      "name": "gig harbor",
       "counties": [
         "pierce"
       ],
@@ -1702,7 +1702,7 @@
         "ocd-division/country:us/state:wa/place:liberty_lake",
         "ocd-division/country:us/state:wa/county:spokane/place:liberty_lake"
       ],
-      "name": "liberty_lake",
+      "name": "liberty lake",
       "counties": [
         "spokane"
       ],
@@ -1786,7 +1786,7 @@
         "ocd-division/country:us/state:wa/place:airway_heights",
         "ocd-division/country:us/state:wa/county:spokane/place:airway_heights"
       ],
-      "name": "airway_heights",
+      "name": "airway heights",
       "counties": [
         "spokane"
       ],
@@ -1912,7 +1912,7 @@
         "ocd-division/country:us/state:wa/place:port_townsend",
         "ocd-division/country:us/state:wa/county:jefferson/place:port_townsend"
       ],
-      "name": "port_townsend",
+      "name": "port townsend",
       "counties": [
         "jefferson"
       ],
@@ -1954,7 +1954,7 @@
         "ocd-division/country:us/state:wa/place:college_place",
         "ocd-division/country:us/state:wa/county:walla_walla/place:college_place"
       ],
-      "name": "college_place",
+      "name": "college place",
       "counties": [
         "walla_walla"
       ],
@@ -2229,7 +2229,7 @@
         "ocd-division/country:us/state:wa/place:north_bend",
         "ocd-division/country:us/state:wa/county:king/place:north_bend"
       ],
-      "name": "north_bend",
+      "name": "north bend",
       "counties": [
         "king"
       ],
@@ -2336,7 +2336,7 @@
         "ocd-division/country:us/state:wa/place:normandy_park",
         "ocd-division/country:us/state:wa/county:king/place:normandy_park"
       ],
-      "name": "normandy_park",
+      "name": "normandy park",
       "counties": [
         "king"
       ],
@@ -2378,7 +2378,7 @@
         "ocd-division/country:us/state:wa/place:ocean_shores",
         "ocd-division/country:us/state:wa/county:grays_harbor/place:ocean_shores"
       ],
-      "name": "ocean_shores",
+      "name": "ocean shores",
       "counties": [
         "grays_harbor"
       ],
@@ -2399,7 +2399,7 @@
         "ocd-division/country:us/state:wa/place:union_gap",
         "ocd-division/country:us/state:wa/county:yakima/place:union_gap"
       ],
-      "name": "union_gap",
+      "name": "union gap",
       "counties": [
         "yakima"
       ],
@@ -2590,7 +2590,7 @@
         "ocd-division/country:us/state:wa/place:medical_lake",
         "ocd-division/country:us/state:wa/county:spokane/place:medical_lake"
       ],
-      "name": "medical_lake",
+      "name": "medical lake",
       "counties": [
         "spokane"
       ],
@@ -2632,7 +2632,7 @@
         "ocd-division/country:us/state:wa/place:black_diamond",
         "ocd-division/country:us/state:wa/county:king/place:black_diamond"
       ],
-      "name": "black_diamond",
+      "name": "black diamond",
       "counties": [
         "king"
       ],
@@ -2674,7 +2674,7 @@
         "ocd-division/country:us/state:wa/place:granite_falls",
         "ocd-division/country:us/state:wa/county:snohomish/place:granite_falls"
       ],
-      "name": "granite_falls",
+      "name": "granite falls",
       "counties": [
         "snohomish"
       ],
@@ -2695,7 +2695,7 @@
         "ocd-division/country:us/state:wa/place:deer_park",
         "ocd-division/country:us/state:wa/county:spokane/place:deer_park"
       ],
-      "name": "deer_park",
+      "name": "deer park",
       "counties": [
         "spokane"
       ],
@@ -2800,7 +2800,7 @@
         "ocd-division/country:us/state:wa/place:benton_city",
         "ocd-division/country:us/state:wa/county:benton/place:benton_city"
       ],
-      "name": "benton_city",
+      "name": "benton city",
       "counties": [
         "benton"
       ],
@@ -2863,7 +2863,7 @@
         "ocd-division/country:us/state:wa/place:la_center",
         "ocd-division/country:us/state:wa/county:clark/place:la_center"
       ],
-      "name": "la_center",
+      "name": "la center",
       "counties": [
         "clark"
       ],
@@ -2989,7 +2989,7 @@
         "ocd-division/country:us/state:wa/place:clyde_hill",
         "ocd-division/country:us/state:wa/county:king/place:clyde_hill"
       ],
-      "name": "clyde_hill",
+      "name": "clyde hill",
       "counties": [
         "king"
       ],
@@ -3136,7 +3136,7 @@
         "ocd-division/country:us/state:wa/place:friday_harbor",
         "ocd-division/country:us/state:wa/county:san_juan/place:friday_harbor"
       ],
-      "name": "friday_harbor",
+      "name": "friday harbor",
       "counties": [
         "san_juan"
       ],
@@ -3157,7 +3157,7 @@
         "ocd-division/country:us/state:wa/place:white_salmon",
         "ocd-division/country:us/state:wa/county:klickitat/place:white_salmon"
       ],
-      "name": "white_salmon",
+      "name": "white salmon",
       "counties": [
         "klickitat"
       ],
@@ -3241,7 +3241,7 @@
         "ocd-division/country:us/state:wa/place:castle_rock",
         "ocd-division/country:us/state:wa/county:cowlitz/place:castle_rock"
       ],
-      "name": "castle_rock",
+      "name": "castle rock",
       "counties": [
         "cowlitz"
       ],
@@ -3262,7 +3262,7 @@
         "ocd-division/country:us/state:wa/place:gold_bar",
         "ocd-division/country:us/state:wa/county:snohomish/place:gold_bar"
       ],
-      "name": "gold_bar",
+      "name": "gold bar",
       "counties": [
         "snohomish"
       ],
@@ -3388,7 +3388,7 @@
         "ocd-division/country:us/state:wa/place:cle_elum",
         "ocd-division/country:us/state:wa/county:kittitas/place:cle_elum"
       ],
-      "name": "cle_elum",
+      "name": "cle elum",
       "counties": [
         "kittitas"
       ],
@@ -3619,7 +3619,7 @@
         "ocd-division/country:us/state:wa/place:royal_city",
         "ocd-division/country:us/state:wa/county:grant/place:royal_city"
       ],
-      "name": "royal_city",
+      "name": "royal city",
       "counties": [
         "grant"
       ],
@@ -3661,7 +3661,7 @@
         "ocd-division/country:us/state:wa/place:south_bend",
         "ocd-division/country:us/state:wa/county:pacific/place:south_bend"
       ],
-      "name": "south_bend",
+      "name": "south bend",
       "counties": [
         "pacific"
       ],
@@ -3703,7 +3703,7 @@
         "ocd-division/country:us/state:wa/place:soap_lake",
         "ocd-division/country:us/state:wa/county:grant/place:soap_lake"
       ],
-      "name": "soap_lake",
+      "name": "soap lake",
       "counties": [
         "grant"
       ],
@@ -3724,7 +3724,7 @@
         "ocd-division/country:us/state:wa/place:long_beach",
         "ocd-division/country:us/state:wa/county:pacific/place:long_beach"
       ],
-      "name": "long_beach",
+      "name": "long beach",
       "counties": [
         "pacific"
       ],
@@ -3787,7 +3787,7 @@
         "ocd-division/country:us/state:wa/place:kettle_falls",
         "ocd-division/country:us/state:wa/county:stevens/place:kettle_falls"
       ],
-      "name": "kettle_falls",
+      "name": "kettle falls",
       "counties": [
         "stevens"
       ],
@@ -3934,7 +3934,7 @@
         "ocd-division/country:us/state:wa/place:north_bonneville",
         "ocd-division/country:us/state:wa/county:skamania/place:north_bonneville"
       ],
-      "name": "north_bonneville",
+      "name": "north bonneville",
       "counties": [
         "skamania"
       ],
@@ -4039,7 +4039,7 @@
         "ocd-division/country:us/state:wa/place:rock_island",
         "ocd-division/country:us/state:wa/county:douglas/place:rock_island"
       ],
-      "name": "rock_island",
+      "name": "rock island",
       "counties": [
         "douglas"
       ],
@@ -4062,7 +4062,7 @@
         "ocd-division/country:us/state:wa/county:douglas/place:coulee_dam",
         "ocd-division/country:us/state:wa/county:grant/place:coulee_dam"
       ],
-      "name": "coulee_dam",
+      "name": "coulee dam",
       "counties": [
         "okanogan",
         "douglas",
@@ -4169,7 +4169,7 @@
         "ocd-division/country:us/state:wa/place:yarrow_point",
         "ocd-division/country:us/state:wa/county:king/place:yarrow_point"
       ],
-      "name": "yarrow_point",
+      "name": "yarrow point",
       "counties": [
         "king"
       ],
@@ -4358,7 +4358,7 @@
         "ocd-division/country:us/state:wa/place:grand_coulee",
         "ocd-division/country:us/state:wa/county:grant/place:grand_coulee"
       ],
-      "name": "grand_coulee",
+      "name": "grand coulee",
       "counties": [
         "grant"
       ],
@@ -4379,7 +4379,7 @@
         "ocd-division/country:us/state:wa/place:la_conner",
         "ocd-division/country:us/state:wa/county:skagit/place:la_conner"
       ],
-      "name": "la_conner",
+      "name": "la conner",
       "counties": [
         "skagit"
       ],
@@ -4400,7 +4400,7 @@
         "ocd-division/country:us/state:wa/place:electric_city",
         "ocd-division/country:us/state:wa/county:grant/place:electric_city"
       ],
-      "name": "electric_city",
+      "name": "electric city",
       "counties": [
         "grant"
       ],
@@ -4652,7 +4652,7 @@
         "ocd-division/country:us/state:wa/place:pe_ell",
         "ocd-division/country:us/state:wa/county:lewis/place:pe_ell"
       ],
-      "name": "pe_ell",
+      "name": "pe ell",
       "counties": [
         "lewis"
       ],
@@ -4757,7 +4757,7 @@
         "ocd-division/country:us/state:wa/place:st._john",
         "ocd-division/country:us/state:wa/county:whitman/place:st._john"
       ],
-      "name": "st._john",
+      "name": "st. john",
       "counties": [
         "whitman"
       ],
@@ -4904,7 +4904,7 @@
         "ocd-division/country:us/state:wa/place:south_cle_elum",
         "ocd-division/country:us/state:wa/county:kittitas/place:south_cle_elum"
       ],
-      "name": "south_cle_elum",
+      "name": "south cle elum",
       "counties": [
         "kittitas"
       ],
@@ -4946,7 +4946,7 @@
         "ocd-division/country:us/state:wa/place:coulee_city",
         "ocd-division/country:us/state:wa/county:grant/place:coulee_city"
       ],
-      "name": "coulee_city",
+      "name": "coulee city",
       "counties": [
         "grant"
       ],
@@ -5072,7 +5072,7 @@
         "ocd-division/country:us/state:wa/place:hunts_point",
         "ocd-division/country:us/state:wa/county:king/place:hunts_point"
       ],
-      "name": "hunts_point",
+      "name": "hunts point",
       "counties": [
         "king"
       ],
@@ -5240,7 +5240,7 @@
         "ocd-division/country:us/state:wa/place:south_prairie",
         "ocd-division/country:us/state:wa/county:pierce/place:south_prairie"
       ],
-      "name": "south_prairie",
+      "name": "south prairie",
       "counties": [
         "pierce"
       ],
@@ -5345,7 +5345,7 @@
         "ocd-division/country:us/state:wa/place:beaux_arts_village",
         "ocd-division/country:us/state:wa/county:king/place:beaux_arts_village"
       ],
-      "name": "beaux_arts_village",
+      "name": "beaux arts village",
       "counties": [
         "king"
       ],
@@ -5471,7 +5471,7 @@
         "ocd-division/country:us/state:wa/place:metaline_falls",
         "ocd-division/country:us/state:wa/county:pend_oreille/place:metaline_falls"
       ],
-      "name": "metaline_falls",
+      "name": "metaline falls",
       "counties": [
         "pend_oreille"
       ],
@@ -5492,7 +5492,7 @@
         "ocd-division/country:us/state:wa/place:elmer_city",
         "ocd-division/country:us/state:wa/county:okanogan/place:elmer_city"
       ],
-      "name": "elmer_city",
+      "name": "elmer city",
       "counties": [
         "okanogan"
       ],
@@ -5618,7 +5618,7 @@
         "ocd-division/country:us/state:wa/place:wilson_creek",
         "ocd-division/country:us/state:wa/county:grant/place:wilson_creek"
       ],
-      "name": "wilson_creek",
+      "name": "wilson creek",
       "counties": [
         "grant"
       ],

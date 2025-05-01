@@ -60,6 +60,12 @@ module Validators
         return 1.0 if normalized_value1 == normalized_value2
 
         get_text_similarity(normalized_value1, normalized_value2)
+      when "start_term_date", "end_term_date"
+        if value1 == value2
+          1.0
+        else
+          0.0
+        end
       else
         similarity = get_text_similarity(value1, value2)
         # Apply confidence weighting
@@ -111,7 +117,7 @@ module Validators
     end
 
     def self.compare_people_across_sources(people_config, sources)
-      fields = %w[positions email phone_number website] # Fields to compare
+      fields = %w[positions email phone_number website start_term_date end_term_date] # Fields to compare
 
       unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
       total_people = unique_names.count
@@ -285,17 +291,6 @@ module Validators
       end
 
       hash_counts.keys.select { |key| hash_counts[key] > 1 }
-    end
-
-    # Helper to parse first and last name, ignoring middle parts and case
-    def self.parse_name(full_name)
-      return { first: nil, last: nil } if full_name.nil? || full_name.strip.empty?
-
-      parts = full_name.strip.split(/\s+/)
-      last_name = parts.pop || ""
-      first_name = parts.shift || ""
-      # Return downcased names
-      { first: first_name.downcase, last: last_name.downcase }
     end
   end
 end
