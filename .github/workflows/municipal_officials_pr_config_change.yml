@@ -130,7 +130,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    uses: ./.github/workflows/reusable_pr_comment.yml 
+    uses: ./.github/workflows/partials_mo_pr_comment.yml 
     with:
       pr_number: ${{ github.event.pull_request.number }}
       head_sha: ${{ github.event.pull_request.head.sha }}
