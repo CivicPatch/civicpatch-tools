@@ -58,8 +58,7 @@ namespace :github_pipeline do
     contested_people, missing_people, merged_people, agreement_score = generate_comparison(municipality_context)
     people_list_comment = generate_people_list_comment(municipality_context, merged_people, missing_people,
                                                        contested_people)
-    disagreements_section = generate_disagreements_section(merged_people, missing_people, contested_people,
-                                                           agreement_score)
+    disagreements_section = generate_disagreements_section(merged_people, contested_people, agreement_score)
 
     data = {
       "approve" => disagreements_section["approve"],
@@ -82,6 +81,8 @@ namespace :github_pipeline do
     action_items = GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
                                                                      contested_people)
 
+    missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
+
     <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
       ## Action Items
@@ -90,6 +91,8 @@ namespace :github_pipeline do
          - [ ] (Optional) Make updates to config.yml if needed
          - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
        #{action_items}
+      ## Missing People
+      #{missing_people_comment.present? ? missing_people_comment : "N/A"}
       ## Sources
       #{city_directory.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")}
       ## People
@@ -149,14 +152,9 @@ namespace :github_pipeline do
     [contested_people, missing_people, merged_people, agreement_score]
   end
 
-  def self.generate_disagreements_section(merged_people, missing_people, contested_people, agreement_score)
+  def self.generate_disagreements_section(merged_people, contested_people, agreement_score)
     # Initialize the comment with the agreement score
     comment = "# Agreement Score: #{agreement_score}%\n\n---\n\n"
-
-    missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
-
-    comment += missing_people_comment
-    comment += "\n\n---\n\n"
 
     # Iterate through each contested person and their contested fields
     contested_people.each do |name, fields|
