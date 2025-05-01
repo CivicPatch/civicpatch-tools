@@ -13,5 +13,17 @@ module Scrapers
         raise "No state-level scraper found for #{municipality_context[:state]}"
       end
     end
+
+    def self.get_suggest_edit_details(municipality_context)
+      case municipality_context[:state]
+      when "wa"
+        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_suggest_edit_details(municipality_context)
+      when "or"
+        email = "loc@orcities.org"
+        { type: "email", data: email }
+      else
+        raise "No state-level scraper found for #{municipality_context[:state]}"
+      end
+    end
   end
 end

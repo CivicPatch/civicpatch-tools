@@ -19,6 +19,18 @@ namespace :one_off do
     end
   end
 
+  desc "Fix WA city names"
+  task :fix_wa_city_names do
+    state = "wa"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    updated_municipalities = municipalities.map do |municipality|
+      municipality["name"] = municipality["name"].gsub("_", " ")
+      municipality
+    end
+
+    Core::StateManager.update_municipalities(state, updated_municipalities)
+  end
+
   task :test_source do
     state = "wa"
     municipalities = Core::StateManager.get_state_places(state)["places"]
@@ -136,6 +148,12 @@ namespace :one_off do
     google_gemini = Services::GoogleGemini.new
     response = google_gemini.search_for_candidate_urls(municipality_context)
     puts response
+  end
+
+  task :suggest_edit do
+    state = "wa"
+    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, "2410494")
+    Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_suggest_edit_details(municipality_entry)
   end
 
   def self.format_name(name)

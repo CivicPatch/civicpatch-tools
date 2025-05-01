@@ -16,6 +16,7 @@ rake 'city_scrape:get_places[mi]'
     * [CENSUS_POPULATION_API](https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:43)
   * Codes (fips & gnis codes)
     * [CENSUS_MUNICIPALITIES_CODES](https://www2.census.gov/geo/docs/reference/codes2020/place/st53_wa_place2020.txt)
+* [https://docs.google.com/spreadsheets/d/1QtcMQV85HUxTayyk8mVO5Eqr8bWiNEdGc12RuoWuLpM/edit?gid=646812149#gid=646812149](List of state-level municipal officials)
 ### Washington
 - **State local officials directory (unofficial)**: https://mrsc.org/mrsctools/officials-directory/city.aspx
 ### Oregon
