@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "mayor@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Garrett West",
@@ -13,7 +14,8 @@
       "Council Member"
     ],
     "email": "garrett.west@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jessica Ayres",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "Jessica.Ayres@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "John Quinn",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "john.quinn@medfordoregon.gov",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kevin Keating",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "kevin.keating@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kevin Stine",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "kevin.stine@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mike Kerlinger",
@@ -53,7 +59,8 @@
       "Council Member"
     ],
     "email": "mike.kerlinger@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Nick Card",
@@ -61,7 +68,8 @@
       "Council Member"
     ],
     "email": "Nick.Card@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Zac Smith",
@@ -69,6 +77,7 @@
       "Council Member"
     ],
     "email": "Zac.Smith@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   }
 ]

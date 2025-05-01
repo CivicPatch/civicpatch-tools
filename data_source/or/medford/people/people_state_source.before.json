@@ -5,7 +5,8 @@
       "Emergency Manager"
     ],
     "email": "Aaron.ott@cityofmedford.org",
-    "phone_number": "(541) 774-2322"
+    "phone_number": "(541) 774-2322",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Alena Beltz",
@@ -13,7 +14,8 @@
       "Utilities Engineer"
     ],
     "email": "alena.beltz@cityofmedford.org",
-    "phone_number": "(541) 774-2132"
+    "phone_number": "(541) 774-2132",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Alex Georgevitch",
@@ -21,7 +23,8 @@
       "Deputy Public Works Director/City Engineer"
     ],
     "email": "alex.georgevitch@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Allen Moreland",
@@ -29,7 +32,8 @@
       "Deputy City Attorney"
     ],
     "email": "allen.moreland@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Amanda Kounz",
@@ -37,7 +41,8 @@
       "Financial Support Technician"
     ],
     "email": "amanda.kounz@cityofmedford.org",
-    "phone_number": "(541) 774-2622"
+    "phone_number": "(541) 774-2622",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Barbara Madruga",
@@ -45,7 +50,8 @@
       "Innovation & Technology Director"
     ],
     "email": "barbara.madruga@cityofmedford.org",
-    "phone_number": "(541) 774-2064"
+    "phone_number": "(541) 774-2064",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Ben Lytle",
@@ -53,7 +59,8 @@
       "Police Sergeant"
     ],
     "email": "ben.lytle@cityofmedford.org",
-    "phone_number": "(541) 774-2220"
+    "phone_number": "(541) 774-2220",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Bonnie Barasch",
@@ -61,7 +68,8 @@
       "Human Resources Director"
     ],
     "email": "bonnie.barasch@cityofmedford.org",
-    "phone_number": "(541) 774-2011"
+    "phone_number": "(541) 774-2011",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Bonnie Huard",
@@ -69,7 +77,8 @@
       "Risk Manager"
     ],
     "email": "bonnie.huard@cityofmedford.org",
-    "phone_number": "(541) 774-2039"
+    "phone_number": "(541) 774-2039",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Brad Taylor",
@@ -77,15 +86,17 @@
       "Medford Water General Manager"
     ],
     "email": "brad.taylor@medfordwater.org",
-    "phone_number": "(541) 774-2443"
+    "phone_number": "(541) 774-2443",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Carla  Paladino",
+    "name": "Carla Paladino",
     "positions": [
       "Principal Planner/Long Range Division"
     ],
     "email": "Carla.paladino@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Crystal Palmerton",
@@ -93,7 +104,8 @@
       "Data Systems Specialist"
     ],
     "email": "crystal.palmerton@cityofmedford.org",
-    "phone_number": "(541) 774-2323"
+    "phone_number": "(541) 774-2323",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "David Culbertson",
@@ -101,7 +113,8 @@
       "Planning Commissioner"
     ],
     "email": "planning@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "David Schambach",
@@ -109,7 +122,8 @@
       "Senior Assistant City Attorney"
     ],
     "email": "davidschambach@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "DJ Graham",
@@ -117,7 +131,8 @@
       "Deputy Police Chief"
     ],
     "email": "dj.graham@cityofmedford.org",
-    "phone_number": "(541) 774-2207"
+    "phone_number": "(541) 774-2207",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Dustin Stidham",
@@ -125,7 +140,8 @@
       "Senior Public Works Technician"
     ],
     "email": "dustin.stidham@cityofmedford.org",
-    "phone_number": "(541) 774-2607"
+    "phone_number": "(541) 774-2607",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "EJ McManus",
@@ -133,7 +149,8 @@
       "Planning Commissioner"
     ],
     "email": "planning@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Eric B. Mitton",
@@ -141,7 +158,8 @@
       "City Attorney"
     ],
     "email": "eric.mitton@cityofmedford.org",
-    "phone_number": "(541) 774-2020"
+    "phone_number": "(541) 774-2020",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Eric Thompson",
@@ -149,15 +167,17 @@
       "Fire Chief"
     ],
     "email": "eric.thompson@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Garrett  Ramsey",
+    "name": "Garrett Ramsey",
     "positions": [
       "Attorney"
     ],
     "email": "garrett.ramsey@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Garrett West",
@@ -165,7 +185,8 @@
       "Councilor"
     ],
     "email": "garrett.west@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Ginger Greer",
@@ -173,7 +194,8 @@
       "Municipal Court Judge"
     ],
     "email": "Virginia.greer@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jared Pulver",
@@ -181,7 +203,8 @@
       "Planning Commissioner"
     ],
     "email": "planning@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jeff Theobald",
@@ -189,7 +212,8 @@
       "Purchasing Manager"
     ],
     "email": "jeff.theobald@cityofmedford.org",
-    "phone_number": "(541) 774-2084"
+    "phone_number": "(541) 774-2084",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jeff Thomas",
@@ -197,7 +221,8 @@
       "Planning Commissioner"
     ],
     "email": "planning@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jeffery P. Simas",
@@ -205,7 +230,8 @@
       "Public Works Supervisor"
     ],
     "email": "jeff.simas@cityofmedford.org",
-    "phone_number": "(541) 774-2621"
+    "phone_number": "(541) 774-2621",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jessica Ayres",
@@ -213,7 +239,8 @@
       "Councilor"
     ],
     "email": "Jessica.Ayres@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "JESSICA SCOTT",
@@ -221,7 +248,8 @@
       "Accounting Supervisor"
     ],
     "email": "JESSICA.SCOTT@CITYOFMEDFORD.ORG",
-    "phone_number": "(541) 774-2028"
+    "phone_number": "(541) 774-2028",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Jill Auborn",
@@ -229,7 +257,8 @@
       "Human Resources Manager"
     ],
     "email": "jill.auborn@cityofmedford.org",
-    "phone_number": "(541) 774-2012"
+    "phone_number": "(541) 774-2012",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Joe DeAsentis",
@@ -237,15 +266,17 @@
       "Senior Public Works Technician"
     ],
     "email": "joe.deAsentis@cityofmedford.org",
-    "phone_number": "(541) 774-2625"
+    "phone_number": "(541) 774-2625",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "John  Vial",
+    "name": "John Vial",
     "positions": [
       "Public Works Director"
     ],
     "email": "john.vial@cityofmedford.org",
-    "phone_number": "(541) 774-2101"
+    "phone_number": "(541) 774-2101",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "John Quinn",
@@ -253,7 +284,8 @@
       "Councilor"
     ],
     "email": "john.quinn@medfordoregon.gov",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Justin Ivens",
@@ -261,7 +293,8 @@
       "Police Chief"
     ],
     "email": "justin.ivens@cityofmedford.org",
-    "phone_number": "(541) 774-2200"
+    "phone_number": "(541) 774-2200",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kelly Akin",
@@ -269,7 +302,8 @@
       "Assistant Planning Director"
     ],
     "email": "kelly.akin@cityofmedford.org",
-    "phone_number": "(541) 774-2383"
+    "phone_number": "(541) 774-2383",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kevin Keating",
@@ -277,7 +311,8 @@
       "Councilor"
     ],
     "email": "kevin.keating@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kevin Stine",
@@ -285,7 +320,8 @@
       "Councilor"
     ],
     "email": "kevin.stine@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kimberly Boutiette",
@@ -293,7 +329,8 @@
       "Legal Secretary"
     ],
     "email": "kimberly.boutiette@cityofmedford.org",
-    "phone_number": "(541) 774-2023"
+    "phone_number": "(541) 774-2023",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Kristina Wilson",
@@ -301,15 +338,17 @@
       "Communications & Marketing Manager"
     ],
     "email": "kristina.johnsen@cityofmedford.org",
-    "phone_number": "(541) 774-2087"
+    "phone_number": "(541) 774-2087",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Larry  Beskow",
+    "name": "Larry Beskow",
     "positions": [
       "Planning Commissioner"
     ],
     "email": "planning@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Lorraine Peterson",
@@ -317,7 +356,8 @@
       "Public Works Business Manager"
     ],
     "email": "lorraine.peterson@cityofmedford.org",
-    "phone_number": "(541) 774-2122"
+    "phone_number": "(541) 774-2122",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Luke Anderson",
@@ -325,7 +365,8 @@
       "Public Works Operations Manager"
     ],
     "email": "luke.anderson@cityofmedford.org",
-    "phone_number": "(541) 774-2632"
+    "phone_number": "(541) 774-2632",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mark McKechnie",
@@ -333,7 +374,8 @@
       "Planning Commission"
     ],
     "email": "planning@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Michael Zarosinski",
@@ -341,7 +383,8 @@
       "Mayor"
     ],
     "email": "mayor@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Mike Kerlinger",
@@ -349,7 +392,8 @@
       "Councilor"
     ],
     "email": "mike.kerlinger@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Nick Card",
@@ -357,7 +401,8 @@
       "Councilor"
     ],
     "email": "Nick.Card@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rachel Bennett",
@@ -365,7 +410,8 @@
       "Planning Commissioner"
     ],
     "email": "planning@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Remedy Hovermale",
@@ -373,15 +419,17 @@
       "Payroll Coordinator"
     ],
     "email": "remedy.hovermale@cityofmedford.org",
-    "phone_number": "(541) 774-2097"
+    "phone_number": "(541) 774-2097",
+    "updated_at": "2025-05-01"
   },
   {
-    "name": "Rich  Rosenthal",
+    "name": "Rich Rosenthal",
     "positions": [
       "Parks, Recreation & Facilities Director"
     ],
     "email": "richard.rosenthal@cityofmedford.org",
-    "phone_number": "(541) 774-2483"
+    "phone_number": "(541) 774-2483",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Rob Field",
@@ -389,7 +437,8 @@
       "City Manager"
     ],
     "email": "rob.field@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Ryan Douglas",
@@ -397,7 +446,8 @@
       "Senior Assistant City Attorney"
     ],
     "email": "ryan.douglas@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Ryan Martin",
@@ -405,7 +455,8 @@
       "Chief Financial Officer"
     ],
     "email": "ryan.martin@cityofmedford.org",
-    "phone_number": "(541) 774-2033"
+    "phone_number": "(541) 774-2033",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Sam Barnum",
@@ -413,7 +464,8 @@
       "Building Director"
     ],
     "email": "sam.barnum@cityofmedford.org",
-    "phone_number": "(541) 774-2362"
+    "phone_number": "(541) 774-2362",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Sarah M. Henricksen",
@@ -421,7 +473,8 @@
       "Payroll Coordinator"
     ],
     "email": "sarah.henricksen@cityofmedford.org",
-    "phone_number": "(541) 774-2034"
+    "phone_number": "(541) 774-2034",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Sheila Giorgetti",
@@ -429,7 +482,8 @@
       "Grants Manager"
     ],
     "email": "sheila.giorgetti@cityofmedford.org",
-    "phone_number": "(541) 774-2380"
+    "phone_number": "(541) 774-2380",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Tim Zacha",
@@ -437,7 +491,8 @@
       "Public Works Technician"
     ],
     "email": "tim.zacha@cityofmedford.org",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Trevor Arnold",
@@ -445,7 +500,8 @@
       "Deputy Police Chief"
     ],
     "email": "Trevor.Arnold@cityofmedford.org",
-    "phone_number": "(541) 774-2272"
+    "phone_number": "(541) 774-2272",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Trevor Williams",
@@ -453,7 +509,8 @@
       "Deputy Chief Financial Officer"
     ],
     "email": "trevor.williams@cityofmedford.org",
-    "phone_number": "(541) 774-2038"
+    "phone_number": "(541) 774-2038",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Winnie Shepard",
@@ -461,7 +518,8 @@
       "City Recorder"
     ],
     "email": "winnie.shepard@cityofmedford.org",
-    "phone_number": "(541) 774-2003"
+    "phone_number": "(541) 774-2003",
+    "updated_at": "2025-05-01"
   },
   {
     "name": "Zac Smith",
@@ -469,6 +527,7 @@
       "Councilor"
     ],
     "email": "Zac.Smith@medfordoregon.gov",
-    "phone_number": "(541) 774-2000"
+    "phone_number": "(541) 774-2000",
+    "updated_at": "2025-05-01"
   }
 ]
