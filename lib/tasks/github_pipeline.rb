@@ -46,24 +46,38 @@ namespace :github_pipeline do
     state = args[:state]
     gnis = args[:gnis]
 
-    people_list_comment = generate_people_list_comment(state, gnis)
-    comparison_data = generate_comparison(state, gnis)
+    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
+    municipality_config = Core::ConfigManager.get_config(state, gnis)
+
+    municipality_context = {
+      state: state,
+      municipality_entry: municipality_entry,
+      config: municipality_config
+    }
+
+    contested_people, missing_people, merged_people, agreement_score = generate_comparison(municipality_context)
+    people_list_comment = generate_people_list_comment(municipality_context, merged_people, missing_people,
+                                                       contested_people)
+    disagreements_section = generate_disagreements_section(merged_people, missing_people, contested_people,
+                                                           agreement_score)
 
     data = {
-      "approve" => comparison_data["approve"],
-      "score" => comparison_data["score"],
-      "comment" => [people_list_comment, comparison_data["comment"]]
+      "approve" => disagreements_section["approve"],
+      "comment" => [people_list_comment, disagreements_section["comment"]]
            .join("\n\n***\n\n").to_s.gsub(/\n/, '\n')
     }
 
     puts JSON.generate(data)
   end
 
-  def self.generate_people_list_comment(state, gnis)
-    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
+  def self.generate_people_list_comment(municipality_context, merged_people, missing_people, contested_people)
+    state = municipality_context[:state]
+    city_entry = municipality_context[:municipality_entry]
     city = city_entry["name"]
 
     city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
+
+    suggest_edit_details = Scrapers::MunicipalityOfficials.get_suggest_edit_details(municipality_context)
 
     action_items = GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
                                                                      contested_people)
@@ -122,24 +136,22 @@ namespace :github_pipeline do
     MARKDOWN
   end
 
-  def self.generate_comparison(state, gnis)
-    # Get the validation results
-    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-    municipality_config = Core::ConfigManager.get_config(state, gnis)
-    municipality_context = {
-      state: state,
-      municipality_entry: municipality_entry,
-      config: municipality_config
-    }
+  def self.generate_comparison(municipality_context)
     validation_results = Validators::CityPeople.validate_sources(municipality_context)
+
     compare_results = validation_results[:compare_results]
     contested_people = compare_results[:contested_people]
     missing_people = compare_results[:missing_people]
-    score = compare_results[:agreement_score]
-    config = Core::CityManager.get_positions(Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL)
+    agreement_score = compare_results[:agreement_score]
 
+    merged_people = validation_results[:merged_sources]
+
+    [contested_people, missing_people, merged_people, agreement_score]
+  end
+
+  def self.generate_disagreements_section(merged_people, missing_people, contested_people, agreement_score)
     # Initialize the comment with the agreement score
-    comment = "# Agreement Score: #{score}%\n\n---\n\n"
+    comment = "# Agreement Score: #{agreement_score}%\n\n---\n\n"
 
     missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
 
@@ -149,10 +161,8 @@ namespace :github_pipeline do
     # Iterate through each contested person and their contested fields
     contested_people.each do |name, fields|
       # Generate the markdown table for the contested person
-      merged_person = validation_results[:merged_sources].find { |person| person["name"] == name }
-      formatted_merged_person = Core::PeopleManager.format_people(municipality_config["people"], [merged_person],
-                                                                  config).first
-      contested_people_markdown = GitHub::CityPeople.to_markdown_disagreement_table(fields, formatted_merged_person)
+      merged_person = merged_people.find { |person| person["name"] == name }
+      contested_people_markdown = GitHub::CityPeople.to_markdown_disagreement_table(fields, merged_person)
 
       # Add a header for each contested person and append the table
       comment += "### #{name}\n\n"
@@ -160,8 +170,7 @@ namespace :github_pipeline do
       comment += "\n\n---\n\n" # Add a separator between each person's table
     end
 
-    { "approve" => score >= 0.7,
-      "score" => score,
+    { "approve" => agreement_score >= 0.7,
       "comment" => comment }
   end
 end

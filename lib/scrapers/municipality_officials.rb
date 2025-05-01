@@ -15,11 +15,13 @@ module Scrapers
     end
 
     def self.get_suggest_edit_details(municipality_context)
+      municipality_entry = municipality_context[:municipality_entry]
+
       case municipality_context[:state]
       when "wa"
-        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_suggest_edit_details(municipality_context)
+        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_suggest_edit_details(municipality_entry)
       when "or"
-        source_url = Scrapers::Or::MunicipalityOfficials::StateLevelScraper.get_source_url(municipality_context)
+        source_url = Scrapers::Or::MunicipalityOfficials::StateLevelScraper.get_source_url(municipality_entry)
         email = "loc@orcities.org"
         { type: "email", data: email, source_url: source_url }
       else
