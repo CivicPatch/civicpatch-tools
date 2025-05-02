@@ -105,7 +105,7 @@ namespace :github_pipeline do
         website = person["website"]
         start_term_date = person["start_term_date"].present? ? person["start_term_date"] : "N/A"
         end_term_date = person["end_term_date"].present? ? person["end_term_date"] : "N/A"
-        term_date = "#{start_term_date} - #{end_term_date}"
+        term_date_markdown = "#{start_term_date} - #{end_term_date}"
 
         position_markdown = if person["positions"].present?
                               person["positions"].join(", ")
