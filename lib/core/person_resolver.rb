@@ -1,11 +1,5 @@
 module Core
   class PersonResolver
-    def self.same_last_name?(person_name1, person_name2)
-      name1 = person_name1.split(" ").last.downcase
-      name2 = person_name2.split(" ").last.downcase
-      name1 == name2
-    end
-
     def self.same_email?(person_email1, person_email2)
       return false if person_email1.nil? || person_email2.nil?
 
@@ -18,9 +12,24 @@ module Core
       person_website1.downcase == person_website2.downcase
     end
 
+    def self.parse_name(person_name)
+      parts = person_name.split(" ")
+      first_name = parts.first
+      last_name = parts.last
+
+      [first_name, last_name]
+    end
+
     def self.similar_name?(person_name1, person_name2)
-      (person_name1.include?(person_name2) ||
-        person_name2.include?(person_name1)) && same_last_name?(person_name1, person_name2)
+      # Ignore initials
+      first_name1, last_name1 = parse_name(person_name1)
+      first_name2, last_name2 = parse_name(person_name2)
+
+      # Ignore Prefixed names
+      ((person_name1.include?(person_name2) ||
+        person_name2.include?(person_name1)) && last_name1 == last_name2) ||
+        # Ignore initials
+        (first_name1 == first_name2 && last_name1 == last_name2)
     end
 
     def self.find_by_name(people_config, haystack_people, needle_person_name)
