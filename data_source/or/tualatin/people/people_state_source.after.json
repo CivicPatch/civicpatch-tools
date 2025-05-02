@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "fbubenik@tualatin.gov",
-    "phone_number": "(503) 691-2000"
+    "phone_number": "(503) 691-2000",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Valerie Pratt",
@@ -13,7 +14,8 @@
       "Council President"
     ],
     "email": "vpratt@tualatin.gov",
-    "phone_number": "(503) 692-2000"
+    "phone_number": "(503) 692-2000",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Bridget Brooks",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "bbrooks@tualatin.gov",
-    "phone_number": "(503) 692-2000"
+    "phone_number": "(503) 692-2000",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Christen Sacco",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "csacco@tualatin.gov",
-    "phone_number": "(503) 692-2000"
+    "phone_number": "(503) 692-2000",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Cyndy Hillier",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "chillier@tualatin.gov",
-    "phone_number": "(503) 692-2000"
+    "phone_number": "(503) 692-2000",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Maria Reyes",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "mreyes@tualatin.gov",
-    "phone_number": "(503) 691-3011"
+    "phone_number": "(503) 691-3011",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Octavio Gonzalez",
@@ -53,6 +59,7 @@
       "Council Member"
     ],
     "email": "ogonzalez@tualatin.gov",
-    "phone_number": "(503) 692-2000"
+    "phone_number": "(503) 692-2000",
+    "updated_at": "2025-05-02"
   }
 ]
