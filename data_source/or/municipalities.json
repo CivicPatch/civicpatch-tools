@@ -289,10 +289,12 @@
       "phone_number": "(503) 390-3700",
       "website": "https://www.keizer.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "035493ee736fd9dcf049168d0fcef8a8",
+      "meta_updated_at": "2025-05-02",
+      "meta_hash": "36e6d1143a951431b86f2b28052f59b3",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
