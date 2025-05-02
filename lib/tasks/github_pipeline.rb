@@ -103,8 +103,8 @@ namespace :github_pipeline do
         email = person["email"]
         phone = person["phone_number"]
         website = person["website"]
-        start_term_date = person["start_term_date"].present? ? person["start_term_date"] : "N/A"
-        end_term_date = person["end_term_date"].present? ? person["end_term_date"] : "N/A"
+        start_term_date = person["start_date"].present? ? person["start_date"] : "N/A"
+        end_term_date = person["end_date"].present? ? person["end_date"] : "N/A"
         term_date_markdown = "#{start_term_date} - #{end_term_date}"
 
         position_markdown = if person["positions"].present?
