@@ -1,12 +1,8 @@
- 
-
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
-  [Skip To Main Content](https://www.orcity.org/1772/Mayor-Denyse-McGriff/)  
+ [Skip To Main Content](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)  
 
 Loading
 
-  [Skip to Main Content](https://www.orcity.org/1772/Mayor-Denyse-McGriff/)  
+  [Skip to Main Content](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)  
 
  [Create a Website Account](https://www.orcity.org/MyAccount/ProfileCreate)  - Manage notification subscriptions, save form progress and more.    
 
@@ -23,60 +19,47 @@ Loading
  1.  [Home](https://www.orcity.org/) 
  1.  [Your Government](https://www.orcity.org/27/Your-Government) 
  1.  [Mayor & City Commission](https://www.orcity.org/933/Mayor-City-Commission) 
- 1. Mayor Denyse McGriff
+ 1. Commissioner Scott Wilson
 
-# Mayor Denyse McGriff
+# Commissioner Scott Wilson
 
- Term: January 1, 2023 to December 31, 2026
+ __Commissioner Scott Wilson__ 
 
- [dmcgriff@orcity.org](mailto:dmcgriff@orcity.org) 
+Term: January 1, 2025 to December 31, 2028
 
-Home: 503-656-3912
+ [swilson@orcity.org](mailto:swilson@orcity.org) 
 
- 
-
- _Current City Activities_ 
+Current City Activities
 
  * Urban Renewal Commission
  * Urban Renewal Budget Committee
- * City Budget Committee
- * Enhancement Grant Program Committee
- * Downtown Oregon City Association Board Member
- * OC 2040 Project Advisory Team
- * Oregon City/West Linn Pedestrian and Bicycle Bridge Concept Plan Project Advisory Committee (PAC) lead by ODOT
- * Willamette Falls and Landings Heritage Area (Previously Willamette Falls Heritage Area Coalition)
- * Alternate to Metro Policy Advisory Committee (MPAC)
+ * Budget Committee
+ * Enhancement Grant Committee
 
- _Community Leadership Activities_ 
+Education
 
- * Planning Commission (8 years)
- * McLoughlin Neighborhood Association
- * McLoughlin Memorial Association
- * Oregon Land Conservation and Development Commission, Citizen Involvement Advisory Committee
- * National Trust for Historic Preservation, Board of Advisors (Oregon Representative)
- * Clackamas County Heritage Council
- * American Association University Women (Bend Chapter)
- * 1,000 Friends of Oregon, Restore Oregon, and Bosco-Miligan Foundation
+ * Indiana University – M.A. Social Work
+ * Western Governors University – M.A. Business Administration  
 
- _Education_ 
+ 
 
- * Master of Urban and Regional Planning
- * Master of Science in Political Science
- * Bachelor of Arts in History and Politics & Government
- * Oregon Project Management Certificate Program (OPMA) - State of Oregon
+Work History
 
- _Work History_ 
+ * Program Manager/Youth & Family Therapist at Parrott Creek Child & Family Services 
+  ![Oregon City Commissioner Scott Wilson](images/95db416113991e676053c2a36e4cb175134ec227e7f25275c4ff18709a7c9b5e.jpg)  
 
- * Currently Retired
- * Principal Planner in Oregon City from 1988-1996
- * 32 years of planning and local government experience in Oregon
-  ![Mayor Denyse McGriff recolor resized](images/cf3a4400bcf8e75eb5a9cd3748d7d7ac428cb1663c701fe42b89fb1dc8933f63.jpg)  
-
- 1.   [State of the City](https://www.orcity.org/494/State-of-the-City)  
- 1.   [City Matters Articles](https://www.orcity.org/478/City-Matters-Articles)  [](https://www.orcity.org/1772/Mayor-Denyse-McGriff/)  
-    1.   [City Matters: Fall 2023](https://www.orcity.org/1787/City-Matters-Fall-2023)  
-    1.   [City Matters: Summer 2023](https://www.orcity.org/1788/City-Matters-Summer-2023)  
-    1.   [City Matters: Spring 2023](https://www.orcity.org/1789/City-Matters-Spring-2023)  
+ 1.   [Mayor Denyse McGriff](https://www.orcity.org/1772/Mayor-Denyse-McGriff)  [](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)  
+    1.   [State of the City](https://www.orcity.org/494/State-of-the-City)  
+    1.   [City Matters Articles](https://www.orcity.org/478/City-Matters-Articles)  [](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)  
+       1.   [City Matters: Fall 2023](https://www.orcity.org/1787/City-Matters-Fall-2023)  
+       1.   [City Matters: Summer 2023](https://www.orcity.org/1788/City-Matters-Summer-2023)  
+       1.   [City Matters: Spring 2023](https://www.orcity.org/1789/City-Matters-Spring-2023)  
+ 1.   [Commissioner Rocky Smith Jr](https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr)  
+ 1.   [Commissioner Scott Wilson](https://www.orcity.org/1774/Commissioner-Scott-Wilson)  
+ 1.   [Commissioner Adam Marl](https://www.orcity.org/1775/Commissioner-Adam-Marl)  
+ 1.   [Commissioner Mike Mitchell](https://www.orcity.org/1776/Commissioner-Mike-Mitchell)  
+ 1.   [2023-2025 Goals](https://www.orcity.org/1753/2023-2025-Goals)  
+ 1.   [2025-2027 Goals](https://www.orcity.org/3380/2025-2027-Goals)  
   [Agendas & Minutes](https://www.orcity.org/1709/Agendas-and-Minutes-from-July-2020-to-Cu)   [Jobs](https://www.orcity.org/512/Application-Process)   [Library](https://www.orcity.org/159/Public-Library)   [Utility Bill Pay](https://online-billpay.com/?companyname=OREGON_CITY)   [Parks & Recreation](https://www.orcity.org/158/Parks-Recreation)   [Projects](https://www.orcity.org/projects)  
 
  1.    
@@ -126,4 +109,4 @@ Monday to Friday
 
 Hi I'm Ellee 👋, how can I help?
 
- Original text Rate this translation Your feedback will be used to help improve Google Translate  []()  []()  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Explore your accessibility options 
+ Original text Rate this translation Your feedback will be used to help improve Google Translate  []()  []()  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
