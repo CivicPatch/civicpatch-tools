@@ -2,9 +2,9 @@ require "aws-sdk-s3"
 
 module Services
   class Spaces
-    ENDPOINT = ENV["SPACES_ENDPOINT"]
-    ACCESS_KEY_ID = ENV["SPACES_ACCESS_KEY_ID"]
-    SECRET_KEY = ENV["SPACES_SECRET_KEY"]
+    ENDPOINT = ENV["CLOUDFLARE_R2_ENDPOINT"]
+    ACCESS_KEY_ID = ENV["CLOUDFLARE_R2_ACCESS_KEY_ID"]
+    SECRET_KEY = ENV["CLOUDFLARE_R2_SECRET_ACCESS_KEY"]
 
     def self.client
       @client ||= Aws::S3::Client.new(
