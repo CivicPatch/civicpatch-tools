@@ -19,8 +19,9 @@ class PersonResolverTest < Minitest::Test
     @person_nil_fields = { "name" => "Nil Doe", "email" => nil, "website" => nil }
     @person_long_name = { "name" => "Jane Elizabeth Doe" }
     @person_eduardo = { "name" => "Eduardo Morales" }
+    @person_victoria = { "name" => "Victoria Doyle" }
 
-    @people = [@person1, @person2, @person3, @person_long_name, @person_eduardo]
+    @people = [@person1, @person2, @person3, @person_long_name, @person_eduardo, @person_victoria]
 
     # Config uses the primary name as the key
     @people_config = {
@@ -28,7 +29,8 @@ class PersonResolverTest < Minitest::Test
       "John Doe" => { "other_names" => [] },
       "Jane Smith" => { "other_names" => ["J. Smith"] },
       "Jane Elizabeth Doe" => { "other_names" => [] }, # Example for substring test
-      "Eduardo Morales" => { "other_names" => ["Eddy Morales"] }
+      "Eduardo Morales" => { "other_names" => ["Eddy Morales"] },
+      "Victoria Doyle" => { "other_names" => [] }
     }
     @people_config_missing_other_names = {
       "Jane Doe" => {}, # Missing other_names key
@@ -255,6 +257,18 @@ class PersonResolverTest < Minitest::Test
     assert config["Jane Doe"].key?("other_names"), "Config entry for Jane Doe should have an other_names key"
     assert_includes config["Jane Doe"]["other_names"], "Jane",
                     "Config for Jane Doe should now include 'Jane' in other_names after substring match"
+  end
+
+  def test_find_existing_person_matches_name_with_middle_initial
+    # Needle has a middle initial, haystack does not
+    needle = { "name" => "Victoria M. Doyle" }
+    expected_person = @person_victoria # Should match the existing "Victoria Doyle"
+
+    found, config_after = Core::PersonResolver.find_existing_person(@config_for_update, @people, needle)
+
+    assert_equal expected_person, found,
+                 "Should find '#{expected_person["name"]}' when searching for '#{needle["name"]}'"
+    assert config_after.key?(expected_person["name"]), "Config should retain the key for '#{expected_person["name"]}'"
   end
 
   def test_find_existing_person_connects_other_name_to_primary_name
