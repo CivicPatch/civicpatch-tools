@@ -11,8 +11,7 @@ module Services
         access_key_id: ACCESS_KEY_ID,
         secret_access_key: SECRET_KEY,
         endpoint: ENDPOINT,
-        region: "sfo3",
-        force_path_style: false
+        region: "auto"
       )
     end
 
