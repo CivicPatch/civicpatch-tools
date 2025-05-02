@@ -2,11 +2,11 @@
 
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-  [Skip To Main Content](https://www.orcity.org/1772/Mayor-Denyse-McGriff/)  
+  [Skip To Main Content](https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr/)  
 
 Loading
 
-  [Skip to Main Content](https://www.orcity.org/1772/Mayor-Denyse-McGriff/)  
+  [Skip to Main Content](https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr/)  
 
  [Create a Website Account](https://www.orcity.org/MyAccount/ProfileCreate)  - Manage notification subscriptions, save form progress and more.    
 
@@ -23,60 +23,66 @@ Loading
  1.  [Home](https://www.orcity.org/) 
  1.  [Your Government](https://www.orcity.org/27/Your-Government) 
  1.  [Mayor & City Commission](https://www.orcity.org/933/Mayor-City-Commission) 
- 1. Mayor Denyse McGriff
+ 1. Commissioner Rocky Smith Jr
 
-# Mayor Denyse McGriff
+# Commissioner Rocky Smith Jr
 
- Term: January 1, 2023 to December 31, 2026
+ __Commissioner Rocky Smith, Jr.__ 
 
- [dmcgriff@orcity.org](mailto:dmcgriff@orcity.org) 
+Term: January 1, 2023 to December 31, 2026
 
-Home: 503-656-3912
+ [rsmith@orcity.org](mailto:rsmith@orcity.org) 
+
+Phone: 503-655-1963
 
  
 
  _Current City Activities_ 
 
  * Urban Renewal Commission
- * Urban Renewal Budget Committee
- * City Budget Committee
- * Enhancement Grant Program Committee
- * Downtown Oregon City Association Board Member
- * OC 2040 Project Advisory Team
- * Oregon City/West Linn Pedestrian and Bicycle Bridge Concept Plan Project Advisory Committee (PAC) lead by ODOT
- * Willamette Falls and Landings Heritage Area (Previously Willamette Falls Heritage Area Coalition)
- * Alternate to Metro Policy Advisory Committee (MPAC)
+ * Budget Committee
+ * Enhancement Grant Committee
+ * Clackamas Heritage Partners
+ * Clackamas Water Environment Services Policy Committee
+ * Tourism Stakeholder's Group
+ * South Fork Water Board
 
- _Community Leadership Activities_ 
+ _Community Involvement_ 
 
- * Planning Commission (8 years)
- * McLoughlin Neighborhood Association
- * McLoughlin Memorial Association
- * Oregon Land Conservation and Development Commission, Citizen Involvement Advisory Committee
- * National Trust for Historic Preservation, Board of Advisors (Oregon Representative)
- * Clackamas County Heritage Council
- * American Association University Women (Bend Chapter)
- * 1,000 Friends of Oregon, Restore Oregon, and Bosco-Miligan Foundation
+ * Oregon City, City Commissioner, 2009 - 2016
+ * Oregon City Urban Renewal Commissioner, 2009 - 2016
+ * Oregon City Budget Committee, 2009 - 2016
+ * Oregon City Urban Renewal Budget Committee, 2009 - 2016
+ * South Fork Water Board, 2009 - 2016, Vice Chair 2011
+ * Oregon City Enhancement Grant Committee, 2009 - 2016
+ * Oregon City Civic Improvement Trust, 2009 - 2012
+ * Oregon City Tourism Council, 2006 - 2012
 
  _Education_ 
 
- * Master of Urban and Regional Planning
- * Master of Science in Political Science
- * Bachelor of Arts in History and Politics & Government
- * Oregon Project Management Certificate Program (OPMA) - State of Oregon
+ * Oregon City High School, 1995 Graduate
+ * Clackamas Community College, 1996 - 1998
+ * Pacific Northwest College of Art, BFA, 2000, Graphic Design
+ * George Fox University, MAT, April 2001
 
  _Work History_ 
 
- * Currently Retired
- * Principal Planner in Oregon City from 1988-1996
- * 32 years of planning and local government experience in Oregon
-  ![Mayor Denyse McGriff recolor resized](images/cf3a4400bcf8e75eb5a9cd3748d7d7ac428cb1663c701fe42b89fb1dc8933f63.jpg)  
+ * Art Teacher, Oregon City High School, 2001 - present
+ * Owner - Tour Guide, Northwest Walking Tours, LLC., 2010 - present
+  ![Commissioner Rocky Smith recolor resized](images/996c518081b8399744547b450ac6a89670b7972b13b0341dce878323d93522c5.jpg)  
 
- 1.   [State of the City](https://www.orcity.org/494/State-of-the-City)  
- 1.   [City Matters Articles](https://www.orcity.org/478/City-Matters-Articles)  [](https://www.orcity.org/1772/Mayor-Denyse-McGriff/)  
-    1.   [City Matters: Fall 2023](https://www.orcity.org/1787/City-Matters-Fall-2023)  
-    1.   [City Matters: Summer 2023](https://www.orcity.org/1788/City-Matters-Summer-2023)  
-    1.   [City Matters: Spring 2023](https://www.orcity.org/1789/City-Matters-Spring-2023)  
+ 1.   [Mayor Denyse McGriff](https://www.orcity.org/1772/Mayor-Denyse-McGriff)  [](https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr/)  
+    1.   [State of the City](https://www.orcity.org/494/State-of-the-City)  
+    1.   [City Matters Articles](https://www.orcity.org/478/City-Matters-Articles)  [](https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr/)  
+       1.   [City Matters: Fall 2023](https://www.orcity.org/1787/City-Matters-Fall-2023)  
+       1.   [City Matters: Summer 2023](https://www.orcity.org/1788/City-Matters-Summer-2023)  
+       1.   [City Matters: Spring 2023](https://www.orcity.org/1789/City-Matters-Spring-2023)  
+ 1.   [Commissioner Rocky Smith Jr](https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr)  
+ 1.   [Commissioner Scott Wilson](https://www.orcity.org/1774/Commissioner-Scott-Wilson)  
+ 1.   [Commissioner Adam Marl](https://www.orcity.org/1775/Commissioner-Adam-Marl)  
+ 1.   [Commissioner Mike Mitchell](https://www.orcity.org/1776/Commissioner-Mike-Mitchell)  
+ 1.   [2023-2025 Goals](https://www.orcity.org/1753/2023-2025-Goals)  
+ 1.   [2025-2027 Goals](https://www.orcity.org/3380/2025-2027-Goals)  
   [Agendas & Minutes](https://www.orcity.org/1709/Agendas-and-Minutes-from-July-2020-to-Cu)   [Jobs](https://www.orcity.org/512/Application-Process)   [Library](https://www.orcity.org/159/Public-Library)   [Utility Bill Pay](https://online-billpay.com/?companyname=OREGON_CITY)   [Parks & Recreation](https://www.orcity.org/158/Parks-Recreation)   [Projects](https://www.orcity.org/projects)  
 
  1.    

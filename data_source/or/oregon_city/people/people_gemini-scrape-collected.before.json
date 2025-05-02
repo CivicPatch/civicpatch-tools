@@ -8,13 +8,17 @@
       "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
     ],
     "positions": [
-      "Mayor"
+      "Mayor",
+      "Urban Renewal Commission"
     ],
     "phone_numbers": [
       {
         "data": "503-656-3912",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number labeled 'Home' and listed directly below the email.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly labeled 'Home:' and listed directly under the email.",
+        "markdown_formatting": {
+          "in_list": false
+        },
         "proximity_to_name": 30,
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
@@ -22,8 +26,11 @@
     "emails": [
       {
         "data": "dmcgriff@orcity.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed directly below the name and heading.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address provided as a mailto link directly under the name and title.",
+        "markdown_formatting": {
+          "in_list": false
+        },
         "proximity_to_name": 20,
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
@@ -32,14 +39,20 @@
       {
         "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL is directly linked to the name and title.",
+        "llm_confidence_reason": "URL is directly linked from the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the page itself is the person's profile page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page itself is the profile page for the person.",
+        "markdown_formatting": {
+          "in_list": false
+        },
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
@@ -47,24 +60,24 @@
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 0.98,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Start date explicitly stated as part of the term duration.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "proximity_to_name": 15,
+        "proximity_to_name": 50,
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "End date explicitly stated as part of the term duration.",
         "markdown_formatting": {
-          "in_list": true
+          "in_list": false
         },
-        "proximity_to_name": 15,
+        "proximity_to_name": 50,
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
@@ -84,18 +97,18 @@
     "phone_numbers": [
       {
         "data": "503-406-8165",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Cell phone number is explicitly listed directly below the email address.",
-        "proximity_to_name": 60,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed cell number near the name.",
+        "proximity_to_name": 150,
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
     "emails": [
       {
         "data": "amarl@orcity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly listed directly below the name and term information.",
-        "proximity_to_name": 50,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed email address near the name.",
+        "proximity_to_name": 100,
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
@@ -103,14 +116,17 @@
       {
         "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL is directly linked to the name and title.",
+        "llm_confidence_reason": "URL is directly linked from the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl/",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL of the page is a dedicated profile page for the person.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the specific page dedicated to the person.",
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
@@ -118,18 +134,18 @@
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date is explicitly stated as part of the term information.",
-        "proximity_to_name": 30,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed term start date.",
+        "proximity_to_name": 50,
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as part of the term information.",
-        "proximity_to_name": 30,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed term end date.",
+        "proximity_to_name": 50,
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
@@ -149,18 +165,18 @@
     "phone_numbers": [
       {
         "data": "503-765-5993",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number explicitly listed and labeled 'Home:'.",
-        "proximity_to_name": 100,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under email.",
+        "proximity_to_name": 150,
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
     "emails": [
       {
         "data": "mmitchell@orcity.org",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly listed and linked.",
-        "proximity_to_name": 100,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address listed directly under name and title.",
+        "proximity_to_name": 50,
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
@@ -168,22 +184,26 @@
       {
         "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL is directly linked to the name and title.",
+        "llm_confidence_reason": "URL is directly linked from the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell/",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "The URL of the page is the person's profile page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the URL of the profile page for the person.",
+        "proximity_to_name": 0,
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
     "start_dates": [
       {
         "data": "2019-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Start date explicitly stated as part of the term.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the start date of the term.",
         "proximity_to_name": 100,
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
@@ -191,8 +211,8 @@
     "end_dates": [
       {
         "data": "2024-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "End date explicitly stated as part of the term.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the end date of the term.",
         "proximity_to_name": 100,
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
@@ -210,16 +230,21 @@
     "positions": [
       "Commissioner"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "503-657-0891",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number provided as a link under 'Contact Us' section.",
+        "proximity_to_name": 500.0,
+        "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
+      }
+    ],
     "emails": [
       {
         "data": "swilson@orcity.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is listed directly under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 20,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "proximity_to_name": 50.0,
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
@@ -227,18 +252,18 @@
       {
         "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL is directly linked to the name and title.",
+        "llm_confidence_reason": "URL is directly linked from the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson/",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the specific profile page for the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 0,
+        "llm_confidence_reason": "The URL of the page is the person's profile page.",
+        "proximity_to_name": 0.0,
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
@@ -246,15 +271,20 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date is explicitly stated as the beginning of the term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 15,
+        "llm_confidence_reason": "Start date explicitly stated as part of the term.",
+        "proximity_to_name": 30.0,
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as part of the term.",
+        "proximity_to_name": 30.0,
+        "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
+      }
+    ],
     "updated_at": "2025-05-02"
   },
   {
@@ -271,18 +301,18 @@
     "phone_numbers": [
       {
         "data": "503-655-1963",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly listed next to the name and email.",
-        "proximity_to_name": 60,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number is explicitly listed directly below the email.",
+        "proximity_to_name": 30,
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "emails": [
       {
         "data": "rsmith@orcity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly listed next to the name and term dates.",
-        "proximity_to_name": 50,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address is explicitly listed directly below the name and title.",
+        "proximity_to_name": 20,
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
@@ -290,14 +320,17 @@
       {
         "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL is directly linked to the name and title.",
+        "llm_confidence_reason": "URL is directly linked from the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the page dedicated to the person.",
+        "llm_confidence_reason": "The URL of the page is specific to the person.",
         "proximity_to_name": 0,
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
@@ -305,18 +338,18 @@
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 1.0,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term start date is explicitly stated.",
-        "proximity_to_name": 30,
+        "proximity_to_name": 15,
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 1.0,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term end date is explicitly stated.",
-        "proximity_to_name": 30,
+        "proximity_to_name": 15,
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
