@@ -1,11 +1,12 @@
 [
   {
-    "name": "Adam  Marl",
+    "name": "Adam Marl",
     "positions": [
       "Commission President"
     ],
     "email": "amarl@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Alexandra Rains",
@@ -13,7 +14,8 @@
       "Assistant City Manager"
     ],
     "email": "arains@orcity.org",
-    "phone_number": "(503) 496-1506"
+    "phone_number": "(503) 496-1506",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Amy Lindgren",
@@ -21,7 +23,8 @@
       "Municipal Judge"
     ],
     "email": "alindgren@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Amy Nord",
@@ -29,15 +32,17 @@
       "Senior Accounting Technician"
     ],
     "email": "anord@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
-    "name": "Aquilla  Hurd-Ravich, AICP",
+    "name": "Aquilla Hurd-Ravich, AICP",
     "positions": [
       "Community Development Director"
     ],
     "email": "ahurdravich@orcity.org",
-    "phone_number": "(503) 496-1553"
+    "phone_number": "(503) 496-1553",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Bill Kabeiseman",
@@ -45,7 +50,8 @@
       ""
     ],
     "email": "billkab@batemanseidel.com",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Bob La Salle",
@@ -53,7 +59,8 @@
       "Planning Commissioner"
     ],
     "email": "blasalle@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Dan Hepler",
@@ -61,7 +68,8 @@
       "Fleet Mechanic"
     ],
     "email": "dhepler@orcity.org",
-    "phone_number": "(503) 657-8241"
+    "phone_number": "(503) 657-8241",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Daphne Wuest",
@@ -69,7 +77,8 @@
       "Planning Commissioner"
     ],
     "email": "dwuest@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "David Knoll",
@@ -77,7 +86,8 @@
       "IT Supervisor"
     ],
     "email": "dknoll@orcity.org",
-    "phone_number": "(503) 496-1557"
+    "phone_number": "(503) 496-1557",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Dayna Webb",
@@ -85,7 +95,8 @@
       "Public Works Director"
     ],
     "email": "dwebb@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Denyse C. McGriff",
@@ -93,7 +104,8 @@
       "Mayor"
     ],
     "email": "dmcgriff@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Dirk Schlagenhaufer",
@@ -101,7 +113,8 @@
       "Planning Commissioner"
     ],
     "email": "dschlagenhaufer@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Erin Wilkie",
@@ -109,7 +122,8 @@
       "Deputy Finance Director"
     ],
     "email": "ewilkie@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Frank O'Donnell",
@@ -117,7 +131,8 @@
       "Commissioner"
     ],
     "email": "fodonnell@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Greg Williams",
@@ -125,7 +140,8 @@
       "Library Director"
     ],
     "email": "gwilliams@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Gregory Stoll",
@@ -133,7 +149,8 @@
       "Planning Commissioner"
     ],
     "email": "gstoll@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Jake Ashenberner",
@@ -141,7 +158,8 @@
       "Construction Inspector"
     ],
     "email": "jashenberner@orcity.org",
-    "phone_number": "(503) 657-8241"
+    "phone_number": "(503) 657-8241",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Jakob Wiley",
@@ -149,7 +167,8 @@
       "City Recorder"
     ],
     "email": "jwiley@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "James Graham",
@@ -157,15 +176,16 @@
       "Economic Development Manager"
     ],
     "email": "jgraham@orcity.org",
-    "phone_number": "(503) 657-0891"
-  },
-  {
-    "name": "James N. Graham",
-    "positions": [
-      "Economic Development Manager"
-    ],
-    "email": "jgraham@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "image": null,
+    "source_image": null,
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "sources": [],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Jayson Thornberg",
@@ -173,7 +193,8 @@
       "Transportation Operations Manager"
     ],
     "email": "jthornberg@orcity.org",
-    "phone_number": "(503) 657-8241"
+    "phone_number": "(503) 657-8241",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "John Burrell",
@@ -181,7 +202,8 @@
       "Project Engineer"
     ],
     "email": "jburrell@orcity.org",
-    "phone_number": "(503) 496-1556"
+    "phone_number": "(503) 496-1556",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "John Collins",
@@ -189,7 +211,8 @@
       "Water Superintendent"
     ],
     "email": "johnc@sfwb.com",
-    "phone_number": "(503) 496-1410"
+    "phone_number": "(503) 496-1410",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Jonathan Waverly",
@@ -197,7 +220,8 @@
       "Operations Manager"
     ],
     "email": "jwaverly@orcity.org",
-    "phone_number": "(503) 496-1460"
+    "phone_number": "(503) 496-1460",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Josh Wheeler",
@@ -205,7 +229,8 @@
       "Assistant City Engineer"
     ],
     "email": "jwheeler@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Karla Laws",
@@ -213,7 +238,8 @@
       "Planning Commissioner"
     ],
     "email": "klaws@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Kelly Dilbeck",
@@ -221,7 +247,8 @@
       "Business Manager, Police Department"
     ],
     "email": "kdilbeck@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Kendall Reid",
@@ -229,7 +256,8 @@
       "Parks and Recreation Director"
     ],
     "email": "kendallreid@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Linda Gusdorf",
@@ -237,7 +265,8 @@
       "Administrative Assistant"
     ],
     "email": "lgusdorf@orcity.org",
-    "phone_number": "(503) 657-8241"
+    "phone_number": "(503) 657-8241",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Matt Zook",
@@ -245,7 +274,8 @@
       "Finance Director"
     ],
     "email": "mzook@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Melissa Goss",
@@ -253,7 +283,8 @@
       "Senior Accounting Technician"
     ],
     "email": "mgoss@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Mike Mitchell",
@@ -261,15 +292,17 @@
       "Commissioner"
     ],
     "email": "mmitchell@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
-    "name": "Patrick  Foiles",
+    "name": "Patrick Foiles",
     "positions": [
       "Human Resources Director"
     ],
     "email": "pfoiles@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Patti Gage",
@@ -277,7 +310,8 @@
       "Planning Commissioner"
     ],
     "email": "pgage@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Rocky Smith",
@@ -285,7 +319,8 @@
       "Commissioner"
     ],
     "email": "rsmith@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Shaunna Marie Kaufmann",
@@ -293,7 +328,8 @@
       "Executive Assistant To City Manager"
     ],
     "email": "skaufmann@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Tony Konkol",
@@ -301,7 +337,8 @@
       "City Manager"
     ],
     "email": "tkonkol@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Vance Walker",
@@ -309,6 +346,7 @@
       "Assistant Public Works Director"
     ],
     "email": "vwalker@orcity.org",
-    "phone_number": "(503) 657-0891"
+    "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
   }
 ]
