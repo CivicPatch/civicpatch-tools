@@ -329,10 +329,12 @@
       "phone_number": "(503) 657-0891",
       "website": "https://www.orcity.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "4badcdfd9a7f692b6fc3ef5a67bb2bb1",
+      "meta_updated_at": "2025-05-02",
+      "meta_hash": "a3e375eb53f7780e0fc1f99589baac39",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
