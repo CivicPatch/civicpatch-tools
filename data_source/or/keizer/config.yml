@@ -1,0 +1,14 @@
+---
+scrape_sources:
+- https://www.keizer.org/city-council
+- https://www.keizer.org/mayor
+- https://www.keizer.org/council-position-2
+- https://www.keizer.org/Council-Position-1
+- https://www.keizer.org/council-position-3
+- http://www.keizer.org/council-position-4
+- https://www.keizer.org/council-position-5
+scrape_exit_config:
+  people_count: 6
+  key_position: mayor
+people: {}
+divisions_map:

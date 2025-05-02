@@ -1,0 +1,372 @@
+[
+  {
+    "name": "Cathy Clark",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/mayor"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-856-3403",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed as voicemail next to the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ClarkC@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/mayor",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from the link associated with the name in the table.",
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2015",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year of election as Mayor is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 200,
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Marlene Parsons",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/Council-Position-1"
+    ],
+    "positions": [
+      "Council Member",
+      "Position #1",
+      "Position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-856-3431",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found in markdown link directly associated with the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 25,
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ParsonsM@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found in markdown link directly associated with the name.",
+        "markdown_formatting": {
+          "in_list": true
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/Council-Position-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from the link associated with the name in the table.",
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Shaney Starr",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-2"
+    ],
+    "positions": [
+      "Council Member",
+      "Position #2",
+      "Council President"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-856-3449",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Voicemail number is explicitly linked to the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 15,
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "emails": [
+      {
+        "data": "StarrS@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address is explicitly linked to the person's name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 10,
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from the link associated with the name in the table.",
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-2",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "The URL is the page where the person's information is found, likely their profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-12-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Appointment date to City Council is explicitly stated.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 200,
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Kyle Juran",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-3"
+    ],
+    "positions": [
+      "Council Member",
+      "Position #3",
+      "Position 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-856-3415",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly linked as voicemail directly below the email.",
+        "proximity_to_name": 20,
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "emails": [
+      {
+        "data": "JuranK@KeizerOR.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly linked directly below the name.",
+        "proximity_to_name": 10,
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from the link associated with the name in the table.",
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Soraida Cross",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "http://www.keizer.org/council-position-4"
+    ],
+    "positions": [
+      "Council Member",
+      "Position #4",
+      "Position 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-856-3410",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly linked next to the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 30,
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "emails": [
+      {
+        "data": "CrossS@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly linked next to the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "websites": [
+      {
+        "data": "http://www.keizer.org/council-position-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from the link associated with the name in the table.",
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Lore Christopher",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-5"
+    ],
+    "positions": [
+      "Council Member",
+      "Position #5"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-856-3448",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from link text associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 30,
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ChristopherL@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from mailto link text associated with the name.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 20,
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-5",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from the link associated with the name in the table.",
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-5",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "URL of the page where the information is found, likely her profile page.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-12-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated appointment month and year for current role.",
+        "markdown_formatting": {
+          "in_list": false
+        },
+        "proximity_to_name": 100,
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Dan Kohler",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council"
+    ],
+    "positions": [
+      "Council Member",
+      "Position #6"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/Council-Position-6",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted directly from the link associated with the name in the table.",
+        "proximity_to_name": 0,
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  }
+]

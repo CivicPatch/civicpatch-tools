@@ -1,0 +1,151 @@
+[
+  {
+    "name": "Cathy Clark",
+    "positions": [
+      "mayor"
+    ],
+    "image": "images/205acbad1572e6020df35114ac6a45326cee59839203afb546f7840589e0abb4.jpg",
+    "source_image": "https://www.keizer.org/?action=media.media.read&id=17312&size=medium",
+    "phone_number": "(503) 856-3403",
+    "email": "ClarkC@KeizerOR.gov",
+    "website": "https://www.keizer.org/mayor",
+    "start_date": null,
+    "end_date": "2027-01-31",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/mayor"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Marlene Parsons",
+    "positions": [
+      "council member",
+      "position 1"
+    ],
+    "image": "images/dfb04c955bdb282bd9f562600d4e26d1e0adafac04fe8606270d387e7fef0f2c.png",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Marlene%20Parsons.png",
+    "phone_number": "(503) 856-3431",
+    "email": "ParsonsM@KeizerOR.gov",
+    "website": "https://www.keizer.org/Council-Position-1",
+    "start_date": null,
+    "end_date": "2029-01-31",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/Council-Position-1"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Shaney Starr",
+    "positions": [
+      "council member",
+      "position 2",
+      "council president"
+    ],
+    "image": "images/8c27b0eb32c6f6c1b4f83b8c0dec5de8b0886ad226ee612ae3aea377518ead00.jpg",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Shaney_Starr_Headshot.cropped.jpg?width=300",
+    "phone_number": "(503) 856-3449",
+    "email": "StarrS@KeizerOR.gov",
+    "website": "https://www.keizer.org/council-position-2",
+    "start_date": null,
+    "end_date": "2029-01-31",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-2"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Kyle Juran",
+    "positions": [
+      "council member",
+      "position 3"
+    ],
+    "image": "images/8161bea3e915c7cfa11d8747c8e3efa41591b1cdfb532a3c5a71c423405710b1.png",
+    "source_image": "https://www.keizer.org/media/Design%20Files/Logos/logo.png",
+    "phone_number": "(503) 856-3415",
+    "email": "JuranK@KeizerOR.gov",
+    "website": "https://www.keizer.org/council-position-3",
+    "start_date": null,
+    "end_date": "2029-01-31",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-3"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Soraida Cross",
+    "positions": [
+      "council member",
+      "position 4"
+    ],
+    "image": "images/6560612aab338f2f2f4c3361630102e9e60741249d2868ceac2eb1f77015ab9b.jpg",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Cross.jpeg?width=468",
+    "phone_number": "(503) 856-3410",
+    "email": "CrossS@KeizerOR.gov",
+    "website": "http://www.keizer.org/council-position-4",
+    "start_date": null,
+    "end_date": "2027-01-31",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "http://www.keizer.org/council-position-4"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Lore Christopher",
+    "positions": [
+      "council member",
+      "position 5"
+    ],
+    "image": "images/b971f7d96f492d41968b0622d2254dba8b0fc232fa0bdbc51ea8278fd6b23f02.png",
+    "source_image": "https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Lore%20Christopher.png",
+    "phone_number": "(503) 856-3448",
+    "email": "ChristopherL@KeizerOR.gov",
+    "website": "https://www.keizer.org/council-position-5",
+    "start_date": null,
+    "end_date": "2027-01-31",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-5"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Dan Kohler",
+    "positions": [
+      "council member",
+      "position 6"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.keizer.org/Council-Position-6",
+    "start_date": null,
+    "end_date": "2027-01-31",
+    "sources": [
+      "https://www.keizer.org/city-council"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Ma'Layah Latty-Farrar",
+    "positions": [
+      "youth councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2024-09-01",
+    "end_date": "2025-05-31",
+    "sources": [
+      "https://www.keizer.org/city-council"
+    ],
+    "updated_at": "2025-05-02"
+  }
+]

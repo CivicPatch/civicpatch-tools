@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "clarkc@keizeror.gov",
-    "phone_number": "(503) 390-3700"
+    "phone_number": "(503) 390-3700",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Daniel R. Kohler",
@@ -13,7 +14,8 @@
       "Council Member"
     ],
     "email": "kohlerd@keizeror.gov",
-    "phone_number": "(503) 559-6300"
+    "phone_number": "(503) 559-6300",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Kyle Juran",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "jurank@keizeror.gov",
-    "phone_number": "(503) 390-3700"
+    "phone_number": "(503) 390-3700",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Laura Reid",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "reidl@keizeror.gov",
-    "phone_number": "(503) 390-3700"
+    "phone_number": "(503) 390-3700",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Marlene Parsons",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "narly45@msn.com",
-    "phone_number": "(503) 390-3700"
+    "phone_number": "(503) 390-3700",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Robert Husseman",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "davist@keizeror.gov",
-    "phone_number": "(503) 390-3700"
+    "phone_number": "(503) 390-3700",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Shaney Starr",
@@ -53,7 +59,8 @@
       "Council Member"
     ],
     "email": "Starrs@keizeror.gov",
-    "phone_number": "(503) 390-3700"
+    "phone_number": "(503) 390-3700",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Soraida Cross",
@@ -61,6 +68,7 @@
       "Council Member"
     ],
     "email": "davist@keizeror.gov",
-    "phone_number": "(503) 390-3700"
+    "phone_number": "(503) 390-3700",
+    "updated_at": "2025-05-02"
   }
 ]
