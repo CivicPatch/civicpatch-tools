@@ -96,13 +96,16 @@ namespace :github_pipeline do
       ## Sources
       #{city_directory.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")}
       ## People
-      | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Image**     |
-      |-----------|-------------------|---------------|---------------|---------------|---------------|
+      | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Term Dates** | **Image**     |
+      |-----------|-------------------|---------------|---------------|---------------|----------------|---------------|
       #{city_directory.map do |person|
         image = person["image"]
         email = person["email"]
         phone = person["phone_number"]
         website = person["website"]
+        start_term_date = person["start_term_date"].present? ? person["start_term_date"] : "N/A"
+        end_term_date = person["end_term_date"].present? ? person["end_term_date"] : "N/A"
+        term_date = "#{start_term_date} - #{end_term_date}"
 
         position_markdown = if person["positions"].present?
                               person["positions"].join(", ")
@@ -134,7 +137,7 @@ namespace :github_pipeline do
                              "N/A"
                            end
 
-        "**#{person["name"]}**| #{position_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{image_markdown}"
+        "**#{person["name"]}**| #{position_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{term_date_markdown} | #{image_markdown}"
       end.join("\n")}
     MARKDOWN
   end
