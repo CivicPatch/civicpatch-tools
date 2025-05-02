@@ -5,5 +5,8 @@ scrape_sources:
 scrape_exit_config:
   people_count: 6
   key_position: mayor
-people: {}
+people: 
+  Victoria Doyle:
+    other_names:
+      - Victoria M. Doyle
 divisions_map:
