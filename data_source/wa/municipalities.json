@@ -151,7 +151,14 @@
       "gnis": "1512198",
       "type": "First-class city",
       "population": 110629,
-      "government_type": "Mayor-Council"
+      "government_type": "Mayor-Council",
+      "meta_updated_at": "2025-04-17",
+      "meta_hash": "0f15376d36a1963e0330d302af7347db",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "ocd_ids": [
