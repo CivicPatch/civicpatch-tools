@@ -20,8 +20,7 @@
   {
     "name": "Adam Marl",
     "positions": [
-      "council member",
-      "Commissioner"
+      "commissioner"
     ],
     "image": "images/f7ac574487389ed707b5d516d17500f55ca16e63d4b8100ef310b0d792cce875.jpg",
     "source_image": "https://www.orcity.org/ImageRepository/Document?documentID=11641",
@@ -39,8 +38,7 @@
   {
     "name": "Michael Mitchell",
     "positions": [
-      "council member",
-      "Commissioner"
+      "commissioner"
     ],
     "image": "images/a1caef97de3970b12c7025476b399108654135f95970127bf63037957481fceb.jpg",
     "source_image": "https://www.orcity.org/ImageRepository/Document?documentID=15099",
@@ -58,7 +56,6 @@
   {
     "name": "Scott Wilson",
     "positions": [
-      "council member",
       "commissioner"
     ],
     "image": "images/95db416113991e676053c2a36e4cb175134ec227e7f25275c4ff18709a7c9b5e.jpg",
@@ -77,7 +74,7 @@
   {
     "name": "Rocky Smith, Jr.",
     "positions": [
-      "council member"
+      "commissioner"
     ],
     "image": null,
     "source_image": null,

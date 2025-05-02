@@ -15,7 +15,7 @@
         "data": "503-656-3912",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Phone number listed directly under the mayor's name and email.",
-        "proximity_to_name": 10,
+        "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
         },
@@ -37,9 +37,9 @@
     "websites": [
       {
         "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the name and position.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Link directly associated with the name and title Mayor.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": true
         },
@@ -48,7 +48,7 @@
       {
         "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is a dedicated mayor profile page.",
+        "llm_confidence_reason": "Page URL is the mayor's official profile page.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -59,9 +59,9 @@
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Term start date explicitly stated as January 1, 2023.",
-        "proximity_to_name": 8,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -73,7 +73,7 @@
         "data": "2026-12-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Term expires: December 31, 2026' near the name.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": true
         },
@@ -81,9 +81,9 @@
       },
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
-        "proximity_to_name": 8,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -101,14 +101,13 @@
       "https://www.orcity.org/1775/Commissioner-Adam-Marl"
     ],
     "positions": [
-      "council member",
-      "Commissioner"
+      "commissioner"
     ],
     "phone_numbers": [
       {
         "data": "(503) 406-8165",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under Commissioner Adam Marl's name and contact section.",
+        "llm_confidence_reason": "Phone number listed directly under the name and email of Adam Marl.",
         "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
@@ -120,7 +119,7 @@
       {
         "data": "amarl@orcity.org",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with Commissioner Adam Marl's name.",
+        "llm_confidence_reason": "Email address directly associated with Adam Marl's name and title.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -131,9 +130,9 @@
     "websites": [
       {
         "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the name and position.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Link directly associated with the name and title Commissioner.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": true
         },
@@ -142,7 +141,7 @@
       {
         "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the official profile page for Commissioner Adam Marl.",
+        "llm_confidence_reason": "Page URL and link clearly dedicated to Commissioner Adam Marl.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -153,8 +152,8 @@
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2023.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicit term start date given as January 1, 2023.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -167,7 +166,7 @@
         "data": "2026-12-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Term expires: December 31, 2026' near the name.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": true
         },
@@ -175,8 +174,8 @@
       },
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicit term end date given as December 31, 2026.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -195,15 +194,14 @@
       "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
     ],
     "positions": [
-      "council member",
-      "Commissioner"
+      "commissioner"
     ],
     "phone_numbers": [
       {
         "data": "503-765-5993",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the person's name and email.",
-        "proximity_to_name": 10,
+        "llm_confidence_reason": "Phone number listed directly under the name and email of Michael Mitchell.",
+        "proximity_to_name": 15,
         "markdown_formatting": {
           "in_list": false
         },
@@ -214,7 +212,7 @@
       {
         "data": "mmitchell@orcity.org",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the person's name and title.",
+        "llm_confidence_reason": "Email address directly associated with Michael Mitchell's name and title.",
         "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
@@ -225,9 +223,9 @@
     "websites": [
       {
         "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the name and position.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Link directly associated with the name and title Commissioner.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": true
         },
@@ -236,7 +234,7 @@
       {
         "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the official profile page for Commissioner Michael Mitchell.",
+        "llm_confidence_reason": "Page URL and link clearly dedicated to Commissioner Michael Mitchell.",
         "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": false
@@ -249,7 +247,7 @@
         "data": "2019-01-01",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Term start date explicitly stated as January 1, 2019.",
-        "proximity_to_name": 15,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -261,7 +259,7 @@
         "data": "2028-12-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Term expires: December 31, 2028' near the name.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": true
         },
@@ -271,7 +269,7 @@
         "data": "2024-12-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Term end date explicitly stated as December 31, 2024.",
-        "proximity_to_name": 15,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -289,16 +287,15 @@
       "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
     ],
     "positions": [
-      "council member",
       "commissioner"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "swilson@orcity.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email is directly under the name and term information, clearly associated with Scott Wilson.",
-        "proximity_to_name": 10,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is directly under the name and title, clearly associated with Scott Wilson.",
+        "proximity_to_name": 5,
         "markdown_formatting": {
           "in_list": false
         },
@@ -308,9 +305,9 @@
     "websites": [
       {
         "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the name and position.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Link directly associated with the name and title Commissioner.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": true
         },
@@ -320,9 +317,9 @@
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2025 near the name.",
-        "proximity_to_name": 5,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicit term start date given as January 1, 2025.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -334,7 +331,7 @@
         "data": "2028-12-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Term expires: December 31, 2028' near the name.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": true
         },
@@ -342,9 +339,9 @@
       },
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2028 near the name.",
-        "proximity_to_name": 5,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicit term end date given as December 31, 2028.",
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": false
         },
@@ -361,16 +358,16 @@
       "https://www.orcity.org/933/Mayor-City-Commission"
     ],
     "positions": [
-      "council member"
+      "commissioner"
     ],
     "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with the name and position.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Link directly associated with the name and title Commissioner.",
+        "proximity_to_name": 0,
         "markdown_formatting": {
           "in_list": true
         },
@@ -383,7 +380,7 @@
         "data": "2026-12-31",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Term expires: December 31, 2026' near the name.",
-        "proximity_to_name": 5,
+        "proximity_to_name": 10,
         "markdown_formatting": {
           "in_list": true
         },
