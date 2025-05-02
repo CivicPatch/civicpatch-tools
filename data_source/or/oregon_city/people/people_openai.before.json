@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Denyse McGriff",
+    "positions": [
+      "mayor"
+    ],
+    "image": "images/cf3a4400bcf8e75eb5a9cd3748d7d7ac428cb1663c701fe42b89fb1dc8933f63.jpg",
+    "source_image": "https://www.orcity.org/ImageRepository/Document?documentID=11642",
+    "phone_number": "503-656-3912",
+    "email": "dmcgriff@orcity.org",
+    "website": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.orcity.org/933/Mayor-City-Commission",
+      "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Adam Marl",
+    "positions": [
+      "council member",
+      "Commissioner"
+    ],
+    "image": "images/f7ac574487389ed707b5d516d17500f55ca16e63d4b8100ef310b0d792cce875.jpg",
+    "source_image": "https://www.orcity.org/ImageRepository/Document?documentID=11641",
+    "phone_number": "(503) 406-8165",
+    "email": "amarl@orcity.org",
+    "website": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.orcity.org/933/Mayor-City-Commission",
+      "https://www.orcity.org/1775/Commissioner-Adam-Marl"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Michael Mitchell",
+    "positions": [
+      "council member",
+      "Commissioner"
+    ],
+    "image": "images/a1caef97de3970b12c7025476b399108654135f95970127bf63037957481fceb.jpg",
+    "source_image": "https://www.orcity.org/ImageRepository/Document?documentID=15099",
+    "phone_number": "503-765-5993",
+    "email": "mmitchell@orcity.org",
+    "website": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.orcity.org/933/Mayor-City-Commission",
+      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Scott Wilson",
+    "positions": [
+      "council member",
+      "commissioner"
+    ],
+    "image": "images/95db416113991e676053c2a36e4cb175134ec227e7f25275c4ff18709a7c9b5e.jpg",
+    "source_image": "https://www.orcity.org/ImageRepository/Document?documentID=15004",
+    "phone_number": null,
+    "email": "swilson@orcity.org",
+    "website": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.orcity.org/933/Mayor-City-Commission",
+      "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Rocky Smith, Jr.",
+    "positions": [
+      "council member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.orcity.org/933/Mayor-City-Commission"
+    ],
+    "updated_at": "2025-05-02"
+  }
+]
