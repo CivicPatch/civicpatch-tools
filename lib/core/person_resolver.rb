@@ -62,8 +62,10 @@ module Core
     end
 
     def self.match_by_weak_ties(haystack_people, needle_person)
+      _, needle_last_name = parse_name(needle_person["name"])
       haystack_people.each do |haystack_person|
-        return haystack_person if same_last_name?(haystack_person["name"], needle_person["name"]) &&
+        _, haystack_last_name = parse_name(haystack_person["name"])
+        return haystack_person if haystack_last_name.downcase == needle_last_name.downcase &&
                                   (same_email?(haystack_person["email"], needle_person["email"]) ||
                                   same_website?(haystack_person["website"], needle_person["website"]))
       end
