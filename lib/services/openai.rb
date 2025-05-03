@@ -77,11 +77,11 @@ module Services
         - name: Full name only (not titles)
         - positions: [array of strings]
         - image: String, URL from markdown image: (starting with "images/")
-        - phone_number: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
-        - email: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
-        - website: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
-        - start_date: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
-        - end_date: {data, llm_confidence, llm_confidence_reason, proximity_to_name, markdown_formatting: {in_list}}
+        - phone_number: {data, llm_confidence, llm_confidence_reason }
+        - email: {data, llm_confidence, llm_confidence_reason }
+        - website: {data, llm_confidence, llm_confidence_reason }
+        - start_date: {data, llm_confidence, llm_confidence_reason }
+        - end_date: {data, llm_confidence, llm_confidence_reason }
 
         Format example:
         {
@@ -90,24 +90,23 @@ module Services
               "name": "John Doe",
               "positions": ["Mayor", "Council Member"],
               "image": "images/john-doe.jpg",
-              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact.", "proximity_to_name": 50, "markdown_formatting": {"in_list": true}},
-              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name.", "proximity_to_name": 10, "markdown_formatting": {"in_list": false}},
-              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header", "markdown_formatting": {"in_list": true}},
-              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}},
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
+              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact."},
+              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name."},
+              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header"},
+              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."},
+              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."}
             }, {
               "name": "Jane Smith",
-              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()", "markdown_formatting": {"in_list": false}},
-              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name.", "markdown_formatting": {"in_list": false}},
+              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
+              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name."},
               "positions": ["Council President"],
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
+              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
             }
           ]
         }
 
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
-        - For "proximity_to_name": Word count distance between info and person's name
         - Extract only person-specific information, not general contact info
         - Image selection:
           - Find the image URL most closely associated with the person, preferably
@@ -115,7 +114,7 @@ module Services
           - Prioritize portraits or headshots. IGNORE logos, icons, banners,
             or images with alt text like "Loading", "Logo", "Icon", "Search", "Banner".
           - Check the image's alt text (e.g., `![Alt text](image.jpg)`) for clues#{" "}
-            like the person's name, but prioritize proximity and portrait style.
+            like the person's name, but prioritize proximity and portrait style to the person's name.
         - DO NOT extract contact information if you are less than 90% confident it belongs directly to the person.
         - Omit missing fields except for "name"
         - For positions:#{" "}

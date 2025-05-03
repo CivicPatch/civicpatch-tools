@@ -1,4 +1,8 @@
- [Skip To Main Content](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)  
+ 
+
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+  [Skip To Main Content](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)  
 
 Loading
 
@@ -109,4 +113,4 @@ Monday to Friday
 
 Hi I'm Ellee 👋, how can I help?
 
- Original text Rate this translation Your feedback will be used to help improve Google Translate  []()  []()  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+ Original text Rate this translation Your feedback will be used to help improve Google Translate  []()  []()  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Explore your accessibility options 

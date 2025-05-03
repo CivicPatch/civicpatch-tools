@@ -50,3 +50,5 @@ gem "marcel", "~> 1.0"
 gem "pp", "~> 0.6.2"
 
 gem "aws-sdk-s3", "~> 1.184"
+
+gem "namae", "~> 1.2"

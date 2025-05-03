@@ -174,22 +174,7 @@ module Services
         frequency = value_counts[data_point["data"]] || 0
         frequency_score = [frequency / 3.0, 1.0].min
 
-        # Proximity scoring (inverted: lower is better)
-        max_expected_proximity = 200.0 # Adjust as needed
-        raw_proximity = data_point["proximity_to_name"] || max_expected_proximity # Default to worst if missing
-        normalized_proximity = [(raw_proximity.to_f / max_expected_proximity), 1.0].min # Scale 0-1, cap at 1
-        normalized_proximity = [normalized_proximity, 0.0].max # Ensure it's not negative
-        proximity_score = 1.0 - normalized_proximity # Invert (0 proximity -> 1.0 score)
-
-        # Formatting score
-        formatting_score = if data_point["markdown_formatting"] && data_point["markdown_formatting"]["in_list"]
-                             0.8
-                           else
-                             0.2
-                           end
-
-        # Adjusted scoring with higher weight for proximity
-        (frequency_score * 0.3) + (confidence_score * 0.1) + (formatting_score * 0.2) + (proximity_score * 0.4)
+        (frequency_score * 0.7) + (confidence_score * 0.3)
       end
 
       # Helper to count occurrences of each value

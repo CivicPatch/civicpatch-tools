@@ -170,6 +170,11 @@ class PersonResolverTest < Minitest::Test
     assert_nil Core::PersonResolver.match_by_weak_ties(@people, needle)
   end
 
+  def test_match_by_weak_ties_email_and_last_name
+    needle = { "name" => "J. Doe", "email" => "jane.doe@example.com", "website" => "https://jane.example.com" }
+    assert_equal @person1, Core::PersonResolver.match_by_weak_ties(@people, needle)
+  end
+
   def test_match_by_weak_ties_different_last_names
     needle = { "name" => "J. Smith", "email" => "jane.doe@example.com", "website" => "https://jane.example.com" }
     assert_nil Core::PersonResolver.match_by_weak_ties(@people, needle)

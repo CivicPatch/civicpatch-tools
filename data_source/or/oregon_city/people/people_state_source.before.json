@@ -177,6 +177,15 @@
     ],
     "email": "jgraham@orcity.org",
     "phone_number": "(503) 657-0891",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "James Graham",
+    "positions": [
+      "Economic Development Manager"
+    ],
+    "email": "jgraham@orcity.org",
+    "phone_number": "(503) 657-0891",
     "image": null,
     "source_image": null,
     "phone_numbers": [],

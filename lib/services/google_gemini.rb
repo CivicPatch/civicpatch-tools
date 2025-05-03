@@ -67,7 +67,7 @@ module Services
         headers: {
           "Content-Type" => "application/json"
         },
-        timeout: 60
+        timeout: 180
       }
 
       response = nil
@@ -120,7 +120,7 @@ module Services
         puts "Response: #{response.message}"
         nil
       end
-    rescue StandardError => e
+    rescue Net::ReadTimeout => e
       puts e.message
       puts e.backtrace
       if retry_attempts < MAX_RETRIES # Check if MAX_RETRIES is defined

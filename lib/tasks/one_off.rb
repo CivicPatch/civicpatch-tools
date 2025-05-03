@@ -1,5 +1,6 @@
 require "services/spaces"
 require "utils/folder_helper"
+require "core/config_manager"
 
 namespace :one_off do
   desc "Scrape city offficials from a state-level source"
@@ -154,6 +155,20 @@ namespace :one_off do
     state = "wa"
     municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, "2410494")
     Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_suggest_edit_details(municipality_entry)
+  end
+
+  task :weak_ties do
+    state = "or"
+    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, "2411332")
+    config = Core::ConfigManager.get_config(state, municipality_entry["gnis"])
+    municipality_context = {
+      state: state,
+      municipality_entry: municipality_entry,
+      config: config
+    }
+
+    results = Validators::CityPeople.validate_sources(municipality_context)
+    pp results
   end
 
   def self.format_name(name)

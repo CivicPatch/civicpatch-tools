@@ -6,9 +6,7 @@ module Services
         properties: {
           data: { type: :string },
           llm_confidence: { type: :number },
-          llm_confidence_reason: { type: :string },
-          proximity_to_name: { type: :number },
-          markdown_formatting: { type: :object, properties: { in_list: { type: :boolean } } }
+          llm_confidence_reason: { type: :string }
         }
       }
       GEMINI_PERSON_SCHEMA = {

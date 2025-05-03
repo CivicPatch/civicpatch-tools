@@ -1,8 +1,9 @@
 [
   {
-    "name": "Denyse C. McGriff",
+    "name": "Denyse McGriff",
     "positions": [
-      "Mayor"
+      "Mayor",
+      "Commissioner"
     ],
     "image": null,
     "source_image": null,
@@ -26,7 +27,7 @@
     "source_image": null,
     "phone_number": "(503) 406-8165",
     "email": "amarl@orcity.org",
-    "website": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+    "website": "https://www.orcity.org/1775/Commissioner-Adam-Marl/",
     "start_date": "2023-01-01",
     "end_date": "2026-12-31",
     "sources": [
@@ -54,7 +55,7 @@
     "updated_at": "2025-05-02"
   },
   {
-    "name": "Rocky Smith, Jr.",
+    "name": "Rocky Smith",
     "positions": [
       "Commissioner"
     ],
@@ -78,7 +79,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(503) 657-0891",
+    "phone_number": null,
     "email": "swilson@orcity.org",
     "website": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
     "start_date": "2025-01-01",
