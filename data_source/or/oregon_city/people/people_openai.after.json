@@ -27,7 +27,7 @@
     "phone_number": "(503) 406-8165",
     "email": "amarl@orcity.org",
     "website": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
-    "start_date": null,
+    "start_date": "2023-01-01",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
@@ -45,8 +45,8 @@
     "phone_number": "(503) 765-5993",
     "email": "mmitchell@orcity.org",
     "website": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
-    "start_date": null,
-    "end_date": "2028-12-31",
+    "start_date": "2019-01-01",
+    "end_date": "2024-12-31",
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
@@ -63,7 +63,7 @@
     "phone_number": "(503) 655-1963",
     "email": "rsmith@orcity.org",
     "website": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
-    "start_date": null,
+    "start_date": "2023-01-01",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
@@ -81,7 +81,7 @@
     "phone_number": null,
     "email": "swilson@orcity.org",
     "website": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
-    "start_date": null,
+    "start_date": "2025-01-01",
     "end_date": "2028-12-31",
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",

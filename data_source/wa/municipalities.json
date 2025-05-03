@@ -83,8 +83,8 @@
       "type": "First-class city",
       "population": 190915,
       "government_type": "Council-Manager",
-      "meta_updated_at": "2025-04-16",
-      "meta_hash": "b0525ccad9816a613a9cf086788fe227",
+      "meta_updated_at": "2025-05-02",
+      "meta_hash": "40965ce889d4723c79323125047055f7",
       "meta_sources": [
         "state_source",
         "gemini",
@@ -106,8 +106,8 @@
       "type": "Code city",
       "population": 151854,
       "government_type": "Council-Manager",
-      "meta_updated_at": "2025-04-16",
-      "meta_hash": "a047aad6a18c6c4c6f9131123538f5e9",
+      "meta_updated_at": "2025-05-02",
+      "meta_hash": "35240742cc2cd7fef7cda5261a7fce5e",
       "meta_sources": [
         "state_source",
         "gemini",
@@ -669,11 +669,11 @@
       "type": "Code city",
       "population": 40051,
       "government_type": "Mayor-Council",
-      "meta_updated_at": "2025-04-20",
-      "meta_hash": "580cc03740451ebd4c3c4f6960bbab9e",
+      "meta_updated_at": "2025-05-02",
+      "meta_hash": "fe66df3b91b7e78b992ceb25fc9ef4c5",
       "meta_sources": [
         "state_source",
-        "emini",
+        "gemini",
         "openai"
       ]
     },

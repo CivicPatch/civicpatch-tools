@@ -1,17 +1,17 @@
-  ![Loading](images/ebbd79500aac10483c2dba9e1116a1fdc453e6fee87f857317ef0c92e9b7015b.gif) 
+ 
 
 Loading
 
-  [Skip to Main Content](https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor/#cc401f6bce-4a75-46d9-ab1c-8c7f5f17ae7e)   [![Issaquah WA Home page](images/c13fddc41b3d630f9de93f13df2f24acaf01e453f168f8f49d1ae51f6f408def.png)](https://www.issaquahwa.gov)  
+  [Skip to Main Content](https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor/)   [![Issaquah WA Home page](images/c13fddc41b3d630f9de93f13df2f24acaf01e453f168f8f49d1ae51f6f408def.png)](https://www.issaquahwa.gov/)  
 
  1.  [Your Government](https://www.issaquahwa.gov/27/Your-Government) 
  1.  [Our Residents](https://www.issaquahwa.gov/8/Our-Residents) 
  1.  [For Visitors](https://www.issaquahwa.gov/31/For-Visitors) 
  1.  [Doing Business](https://www.issaquahwa.gov/35/Doing-Business) 
  1.  [I Want To](https://www.issaquahwa.gov/9/I-Want-To) 
-  [![Search](images//ImageRepository/Document?documentID=9703)](https://www.issaquahwa.gov/Search/Results) Search  ![](images/e3d818f8de200323e88418333319d9122b4732a15f10283c76c06b72bdaadad1.jpg)  
+  [](https://www.issaquahwa.gov/Search/Results) Search  ![](images/e3d818f8de200323e88418333319d9122b4732a15f10283c76c06b72bdaadad1.jpg)  
 
- 1.  [Home](https://www.issaquahwa.gov) 
+ 1.  [Home](https://www.issaquahwa.gov/) 
  1.  [Your Government](https://www.issaquahwa.gov/27/Your-Government) 
  1.  [Officials](https://www.issaquahwa.gov/314/Officials) 
  1.  [City Council](https://www.issaquahwa.gov/316/City-Council) 
@@ -77,6 +77,11 @@ Local:
 
  1.    
 
+####  [City Mourns Passing of WA Sen. Bill Ramos](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6082)    
+
+ We join the broader Washington community in mourning the passing of State Senator Bill Ramos. [Read on...](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6082)  
+ 1.    
+
 ####  [Newsy Items: April 21 City Council Agenda](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6081)    
 
  City Council will meet on Monday, April 21. [Read on...](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6081)  
@@ -85,11 +90,6 @@ Local:
 ####  [Former Issaquah Mayor AJ Culver Passes Away at 92](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6071)    
 
  The City of Issaquah mourns the loss of a devoted public servant, former Mayor AJ Culver, who passed away on April 9, 2025 at the age of 92. [Read on...](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6071)  
- 1.    
-
-####  [Newsy Items: April 7 City Council Agenda](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6063)    
-
- City Council met on Monday, April 7. [Read on...](https://www.issaquahwa.gov/CivicAlerts.aspx?AID=6063)  
  /CivicAlerts.aspx 
 
 ### Contact Us
@@ -159,8 +159,8 @@ Issaquah, WA 98027
 
  1.    
 
- [![Issaquah WA Home page](images/3e89b1f7674e695a6137a006ac114dd22d949e645a675ce335d37040777ee9b4.png)](https://www.issaquahwa.gov)    
+ [![Issaquah WA Home page](images/3e89b1f7674e695a6137a006ac114dd22d949e645a675ce335d37040777ee9b4.png)](https://www.issaquahwa.gov/)    
 
-  [![Facebook](images//ImageRepository/Document?documentID=9689)](https://www.facebook.com/cityofissaquah)   [![Instagram](images//ImageRepository/Document?documentID=9690)](https://www.instagram.com/cityofissaquah/)   [![Nextdoor](images//ImageRepository/Document?documentID=9692)](https://nextdoor.com/agency-detail/wa/issaquah/city-of-issaquah/)   [![X](images//ImageRepository/Document?documentID=9699)](https://twitter.com/cityofissaquah)   [![YouTube](images//ImageRepository/Document?documentID=9700)](https://www.youtube.com/cityofissaquah)  Government Websites by [CivicPlus®](https://connect.civicplus.com/referral)  Loading Loading Do Not Show Again Close Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu Powered by  [![Google Translate](images/3f3f3a8d0882c4edd13c1755632554f3042dd0f45af91da1e753b94d76c2513f.png)Translate](https://translate.google.com)  
+  [](https://www.facebook.com/cityofissaquah)   [](https://www.instagram.com/cityofissaquah/)   [](https://nextdoor.com/agency-detail/wa/issaquah/city-of-issaquah/)   [](https://twitter.com/cityofissaquah)   [](https://www.youtube.com/cityofissaquah)  Government Websites by [CivicPlus®](https://connect.civicplus.com/referral)  Loading Loading Do Not Show Again Close Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu Powered by  [![Google Translate](images/3f3f3a8d0882c4edd13c1755632554f3042dd0f45af91da1e753b94d76c2513f.png)Translate](https://translate.google.com/)  
 
-  ![](images/https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate  []()  []()  
+ Original text Rate this translation Your feedback will be used to help improve Google Translate  []()  []()  

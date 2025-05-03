@@ -137,6 +137,7 @@ module Core
     end
 
     def self.scrape_profiles(context, accumulated_people, processed_urls)
+      profile_processed_urls = processed_urls.dup
       people_config = context[:municipality_context][:config]["people"]
       content_dirs = []
 
@@ -149,9 +150,10 @@ module Core
 
         unique_websites.each do |original_url|
           next if original_url.blank?
-          next if processed_urls.include?(original_url)
+          next if profile_processed_urls.include?(original_url)
 
           puts "Fetching from #{original_url} for #{person["name"]}"
+          profile_processed_urls << original_url
           url_content_dir, people = scrape_url_for_municipal_directory(
             context,
             original_url,

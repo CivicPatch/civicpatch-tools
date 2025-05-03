@@ -50,8 +50,6 @@ module Core
     end
 
     def self.find_by_name(people_config, haystack_people, needle_person_name)
-      puts "People config now looks like this"
-      pp people_config
       haystack_people.each do |haystack_person|
         return haystack_person if similar_name?(haystack_person["name"], needle_person_name)
 

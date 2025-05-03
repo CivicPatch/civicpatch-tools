@@ -2,21 +2,30 @@
   {
     "name": "Lynne Robinson",
     "image": null,
+    "source_image": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+    ],
+    "positions": [
+      "Mayor",
+      "Council Member",
+      "Position 6",
+      "Councilmember"
+    ],
     "phone_numbers": [
       {
         "data": "425-452-7810",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "proximity_to_name": 50,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name under 'City Council'.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
       }
     ],
     "emails": [
       {
         "data": "lrobinson@bellevuewa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 50,
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name under 'City Council'.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
       }
     ],
@@ -24,58 +33,67 @@
       {
         "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+        "llm_confidence_reason": "Linked from name in list and table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
       },
       {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 35,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "1/6/20-12/31/25",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "proximity_to_name": 35,
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson/",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The URL of the page is a dedicated profile page for the target person.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
       }
     ],
-    "positions": [
-      "Mayor",
-      "Councilmember"
+    "start_dates": [
+      {
+        "data": "2014-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Council term start date listed in table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
+      },
+      {
+        "data": "2014-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start date '1/1/14' is explicitly listed for the Councilmember role, which is the earliest active role listed.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "End date '12/31/25' is explicitly listed for both Mayor and Councilmember roles.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+      }
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Mo Malakoutian",
     "image": null,
+    "source_image": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian"
+    ],
+    "positions": [
+      "Deputy Mayor",
+      "Council Member",
+      "Position 3",
+      "Councilmember"
+    ],
     "phone_numbers": [
       {
         "data": "425-452-7810",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "proximity_to_name": 5.000000000000001e-06,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and contact information, extracted from markdown link text.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian"
       }
     ],
     "emails": [
       {
         "data": "mmalakoutian@bellevuewa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5.000000000000001e-06,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name and contact information.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian"
       }
     ],
@@ -83,160 +101,58 @@
       {
         "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+        "llm_confidence_reason": "Linked from name in list and table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
       },
       {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name/photo",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 35,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "1/1/24-12/31/27",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under title.",
-        "proximity_to_name": 0.8,
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is the person's profile page.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian"
       }
     ],
-    "positions": [
-      "Deputy Mayor",
-      "Councilmember",
-      "Planning Commission Liaison",
-      "Youth Link Board Liaison"
-    ],
-    "sources": []
-  },
-  {
-    "name": "Dave Hamilton",
-    "image": null,
-    "phone_numbers": [
+    "start_dates": [
       {
-        "data": "425-452-7810",
+        "data": "2024-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "proximity_to_name": 50,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
-      }
-    ],
-    "emails": [
-      {
-        "data": "dhamilton@bellevuewa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 50,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+        "llm_confidence_reason": "Council term start date listed in table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
       },
       {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton",
+        "data": "2024-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 35,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
+        "llm_confidence_reason": "Start date '1/1/24' is listed next to 'Councilmember' role.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "1/2/24-12/31/27",
+        "data": "2027-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "proximity_to_name": 35,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
+        "llm_confidence_reason": "End date '12/31/27' is listed next to 'Councilmember' role.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Cascade Water Alliance Board",
-      "Cascade Water Alliance Finance and Management Committee",
-      "Cascade Water Alliance Resource Management Committee",
-      "Puget Sound Regional Council Growth Management Policy Board",
-      "Puget Sound Regional Council Transportation Policy Board",
-      "Sound Cities Association Public Issues Committee",
-      "Fire Pension Board",
-      "Bellevue Library Advisory Board Liaison",
-      "Parks & Community Services Board Liaison",
-      "Probation Advisory Board"
-    ],
-    "sources": []
-  },
-  {
-    "name": "Conrad Lee",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 35,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
-      }
-    ],
-    "term_dates": [],
-    "positions": [
-      "Councilmember"
-    ],
-    "sources": []
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Jared Nieuwenhuis",
     "image": null,
+    "source_image": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 4",
+      "Councilmember"
+    ],
     "phone_numbers": [
       {
         "data": "425-452-7810",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under City Council contact information.",
-        "proximity_to_name": 50,
+        "llm_confidence_reason": "Phone number listed explicitly for the person.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
       }
     ],
@@ -244,8 +160,7 @@
       {
         "data": "jnieuwenhuis@bellevuewa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under City Council contact information.",
-        "proximity_to_name": 50,
+        "llm_confidence_reason": "Email address listed explicitly for the person.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
       }
     ],
@@ -253,153 +168,264 @@
       {
         "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+        "llm_confidence_reason": "Linked from name in list and table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
       },
       {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis",
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 35,
+        "llm_confidence_reason": "Primary profile URL for the person.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2018-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date listed in table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
+      },
+      {
+        "data": "2018-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term start date.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term end date.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
+      }
+    ],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Conrad Lee",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-452-7810",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found directly associated with the name and 'City Council' section.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Linked from name in list and table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
+      },
+      {
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL is the specific profile page for the target person.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/conrad-lee"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1994-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date listed in table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Dave Hamilton",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 7",
+      "Councilmember"
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-452-7810",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
       }
     ],
-    "term_dates": [
+    "emails": [
       {
-        "data": "1/1/18-12/31/25",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under name.",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
+        "data": "dhamilton@bellevuewa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
       }
     ],
-    "positions": [
-      "Councilmember"
+    "websites": [
+      {
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Linked from name in list and table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
+      },
+      {
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The current page URL is the profile page for the person.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
+      }
     ],
-    "sources": []
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date listed in table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
+      },
+      {
+        "data": "2024-01-02",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Start date explicitly stated next to the position title and in the text.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "End date explicitly stated next to the position title.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
+      }
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "John Stokes",
     "image": null,
-    "phone_numbers": [],
+    "source_image": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes/"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-452-7810",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found directly next to name and 'Telephone' label.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes/"
+      }
+    ],
     "emails": [],
     "websites": [
       {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes",
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
+        "llm_confidence_reason": "Linked from name in list and table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
       },
       {
         "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 35,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes"
+        "llm_confidence_reason": "Current page URL is the profile page for the person.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes/"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "1/1/12-12/31/27",
+        "data": "2012-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed directly under the councilmember's image.",
-        "proximity_to_name": 50,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes"
-      },
-      {
-        "data": "1/1/12-12/31/27",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed directly under the councilmember's image.",
-        "proximity_to_name": 50,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/john-stokes"
+        "llm_confidence_reason": "Term start date listed in table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Mayor",
-      "Arts Commission Liaison",
-      "Bellevue School Board Liaison",
-      "Issaquah School Board Liaison"
-    ],
-    "sources": []
+    "end_dates": [],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Claire Sumadiwirya",
     "image": null,
-    "phone_numbers": [],
-    "emails": [],
+    "source_image": null,
+    "sources": [
+      "https://bellevuewa.gov/city-government/city-council/councilmembers",
+      "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 5",
+      "Councilmember"
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-452-7810",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name under 'City Council' contact information.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
+      }
+    ],
+    "emails": [
+      {
+        "data": "csumadiwirya@bellevuewa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name under 'City Council' contact information.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
+      }
+    ],
     "websites": [
       {
         "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 10,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson"
+        "llm_confidence_reason": "Linked from name in list and table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
       },
       {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 5,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis"
-      },
-      {
-        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "proximity_to_name": 35,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/dave-hamilton"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "through the certification of the November 2025 general election. If elected, she will serve through Zahn’s original term date of Dec. 31, 2027.",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly stated in the text.",
-        "proximity_to_name": 1000000000000.0,
-        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
-      },
-      {
-        "data": "through the certification of the November 2025 general election. If elected, she will serve through Zahn’s original term date of Dec. 31, 2027.",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly stated in the text.",
-        "proximity_to_name": 1000000000000.0,
+        "data": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya/",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "This is the specific profile page for Claire Sumadiwirya.",
         "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
       }
     ],
-    "positions": [
-      "Councilmember"
+    "start_dates": [
+      {
+        "data": "2025-04-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date listed in table.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers"
+      },
+      {
+        "data": "2025-04-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she was 'appointed in April 2025' and lists the term as '4/1/25-11/25/25'.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025-11-25",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she will serve 'through the certification of the November 2025 general election' and lists the term as '4/1/25-11/25/25'.",
+        "source": "https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya"
+      }
+    ],
+    "updated_at": "2025-05-02"
   }
 ]

@@ -1,340 +1,210 @@
 [
   {
-    "name": "Sarah Dollar",
-    "image": null,
-    "positions": [
-      "Assistant To City Council"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Sree Thirunagari",
-    "image": null,
-    "positions": [
-      "Building Official"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Natasha Ramras",
-    "image": null,
-    "positions": [
-      "Chief Financial Officer"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Jonathan  Young",
-    "image": null,
-    "positions": [
-      "City Attorney"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Lon Pluckhahn",
-    "image": null,
-    "positions": [
-      "City Manager"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Laura Shepard",
-    "image": null,
-    "positions": [
-      "Communications Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Chad Eiken",
-    "image": null,
-    "positions": [
-      "Community Development Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Sarah J. Fox",
-    "image": null,
-    "positions": [
-      "Council Member"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Bart Hansen",
-    "image": null,
-    "positions": [
-      "Council Member"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Kim Harless",
-    "image": null,
-    "positions": [
-      "Council Member"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Erik Paulsen",
-    "image": null,
-    "positions": [
-      "Council Member"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Diana Perez",
-    "image": null,
-    "positions": [
-      "Council Member"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Ty Stober",
-    "image": null,
-    "positions": [
-      "Councilmember (mpt)"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Lisa Brandl",
-    "image": null,
-    "positions": [
-      "Deputy City Manager"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Teresa Brum",
-    "image": null,
-    "positions": [
-      "Deputy Economic Development Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Alicia  Sojourner",
-    "image": null,
-    "positions": [
-      "Diversity/equity/inclusion Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Patrick Quinton",
-    "image": null,
-    "positions": [
-      "Economic Development/economic Prosperity/housing Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Amanda Delapena",
-    "image": null,
-    "positions": [
-      "Executive Assistant To City Manager/mayor"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Brennan Blue",
-    "image": null,
-    "positions": [
-      "Fire Chief"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Geraldene Moyle",
-    "image": null,
-    "positions": [
-      "General Services Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "Patrick Gilbride",
-    "image": null,
-    "positions": [
-      "Information Services Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
-    "name": "David Perlick",
-    "image": null,
-    "positions": [
-      "Interim Parks/recreation/cultural Services Director"
-    ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
-  },
-  {
     "name": "Anne McEnerny-Ogle",
-    "image": null,
     "positions": [
       "Mayor"
     ],
+    "email": "anne.mcenerny-ogle@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Sarah J. Fox",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "sarah.fox@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Bart Hansen",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "bart.hansen@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Kim Harless",
+    "positions": [
+      "Councilmember"
+    ],
     "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Erik Paulsen",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Erik.Paulsen@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Diana Perez",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Ty Stober",
+    "positions": [
+      "Councilmember (MPT)"
+    ],
+    "email": null,
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Sarah Dollar",
+    "positions": [
+      "Assistant to City Council"
+    ],
+    "email": "Sarah.Dollar@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Sree Thirunagari",
+    "positions": [
+      "Building Official"
+    ],
+    "email": "sree@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Natasha Ramras",
+    "positions": [
+      "Chief Financial Officer"
+    ],
+    "email": "natasha.ramras@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Jonathan Young",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "vanlaw@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Lon Pluckhahn",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "Lon.Pluckhahn@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Laura Shepard",
+    "positions": [
+      "Communications Director"
+    ],
+    "email": "Laura.Shepard@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Chad Eiken",
+    "positions": [
+      "Community Development Director"
+    ],
+    "email": "chad.eiken@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Lisa Brandl",
+    "positions": [
+      "Deputy City Manager"
+    ],
+    "email": "lisa.brandl@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Teresa Brum",
+    "positions": [
+      "Deputy Economic Development Director"
+    ],
+    "email": "teresa.brum@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Alicia Sojourner",
+    "positions": [
+      "Diversity/Equity/Inclusion Director"
+    ],
+    "email": "alicia.sojourner@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Patrick Quinton",
+    "positions": [
+      "Economic Development/Economic Prosperity/Housing Director"
+    ],
+    "email": "patrick.quinton@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Amanda Delapena",
+    "positions": [
+      "Executive Assistant to City Manager/Mayor"
+    ],
+    "email": "amanda.delapena@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Brennan Blue",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "brennan.blue@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Geraldene Moyle",
+    "positions": [
+      "General Services Director"
+    ],
+    "email": "geraldene.moyle@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Patrick Gilbride",
+    "positions": [
+      "Information Services Director"
+    ],
+    "email": "patrick.gilbride@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "David Perlick",
+    "positions": [
+      "Interim Parks/Recreation/Cultural Services Director"
+    ],
+    "email": "david.perlick@cityofvancouver.us",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Tim Buck",
-    "image": null,
     "positions": [
-      "Operations/maintenance Manager"
+      "Operations/Maintenance Manager"
     ],
     "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Troy Price",
-    "image": null,
     "positions": [
       "Police Chief"
     ],
     "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Aaron Lande",
-    "image": null,
     "positions": [
-      "Program/policy Development Manager"
+      "Program/Policy Development Manager"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "aaron.lande@cityofvancouver.us",
+    "updated_at": "2025-05-02"
   }
 ]

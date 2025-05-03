@@ -132,8 +132,8 @@
     "phone_numbers": [
       {
         "data": "503-765-5993",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under contact information.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number is listed directly under the person's name.",
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
@@ -141,7 +141,7 @@
       {
         "data": "mmitchell@orcity.org",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under name and title.",
+        "llm_confidence_reason": "Email address is listed directly under the person's name.",
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
@@ -155,7 +155,7 @@
       {
         "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL of the person's specific profile page.",
+        "llm_confidence_reason": "URL of the page dedicated to the person.",
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
@@ -163,7 +163,7 @@
       {
         "data": "2019-01-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'Term: January 1, 2019 to ...'.",
+        "llm_confidence_reason": "Explicitly stated as the start date of the term.",
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
@@ -171,7 +171,7 @@
       {
         "data": "2024-12-31",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'Term: ... to December 31, 2024'.",
+        "llm_confidence_reason": "Explicitly stated as the end date of the term.",
         "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
       }
     ],
