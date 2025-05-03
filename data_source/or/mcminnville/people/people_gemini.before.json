@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Kim Morris",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 901-2084",
+    "email": "kim.morris@mcminnvilleoregon.gov",
+    "website": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Sal Peralta",
+    "positions": [
+      "Councilor",
+      "Ward 1"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 437-2833",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Chris Chenoweth",
+    "positions": [],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 287-8671",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Dan Tucholsky",
+    "positions": [],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 517-0242",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Zack Geary",
+    "positions": [
+      "Councilor",
+      "Ward 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 560-0617",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Jessica Payne",
+    "positions": [
+      "Councilor",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 517-0957",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Scott Cunningham",
+    "positions": [],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(971) 517-0609",
+    "email": null,
+    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil"
+    ],
+    "updated_at": "2025-05-03"
+  }
+]

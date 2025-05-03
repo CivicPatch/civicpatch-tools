@@ -1,0 +1,239 @@
+[
+  {
+    "name": "Kim Morris",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 901-2084",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "Coming Soon",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text explicitly states 'Coming Soon' for the phone number associated with the Mayor.",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kim.morris@mcminnvilleoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found directly associated with the name and title.",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific personal profile page found; linking to the general City Council page.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided under 'View Full Contact Details' for the Mayor.",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Sal Peralta",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections"
+    ],
+    "positions": [
+      "Councilor",
+      "Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 437-2833",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific personal profile page found; linking to the general City Council page.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Chris Chenoweth",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil"
+    ],
+    "positions": [],
+    "phone_numbers": [
+      {
+        "data": "(971) 287-8671",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific personal profile page found; linking to the general City Council page.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Dan Tucholsky",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil"
+    ],
+    "positions": [],
+    "phone_numbers": [
+      {
+        "data": "(971) 517-0242",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific personal profile page found; linking to the general City Council page.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Zack Geary",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections"
+    ],
+    "positions": [
+      "Councilor",
+      "Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 560-0617",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific personal profile page found; linking to the general City Council page.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Jessica Payne",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections"
+    ],
+    "positions": [
+      "Councilor",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 517-0957",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific personal profile page found; linking to the general City Council page.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Scott Cunningham",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil"
+    ],
+    "positions": [],
+    "phone_numbers": [
+      {
+        "data": "(971) 517-0609",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific personal profile page found; linking to the general City Council page.",
+        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-03"
+  }
+]
