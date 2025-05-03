@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "kim.morris@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Chris Chenoweth",
@@ -13,7 +14,8 @@
       "Council Member"
     ],
     "email": "Chris.Chenoweth@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Dan Tucholsky",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "daniel.tucholsky@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Jessica Payne",
@@ -29,7 +32,8 @@
       "Council Member"
     ],
     "email": "Jessica.Payne@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Salvador Peralta",
@@ -37,7 +41,8 @@
       "Council Member"
     ],
     "email": "sal.peralta@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Scott Cunningham",
@@ -45,7 +50,8 @@
       "Council Member"
     ],
     "email": "scott.cunningham@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Zack Geary",
@@ -53,6 +59,7 @@
       "Council Member"
     ],
     "email": "zack.geary@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   }
 ]

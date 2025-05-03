@@ -350,10 +350,12 @@
       "phone_number": "(503) 434-7302",
       "website": "https://www.mcminnvilleoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "27c81a7400bfcbdcfa5b0a9cc9dba5c5",
+      "meta_updated_at": "2025-05-03",
+      "meta_hash": "00fe9219a1ed12b715f9bd50fceb0edf",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {

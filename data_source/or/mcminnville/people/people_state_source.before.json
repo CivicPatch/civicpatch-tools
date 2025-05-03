@@ -5,7 +5,8 @@
       "Library Circulation Supervisor"
     ],
     "email": "adam.carlson@mcminnvilleoregon.gov",
-    "phone_number": "(503) 435-5555"
+    "phone_number": "(503) 435-5555",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Alice Darnton",
@@ -13,7 +14,8 @@
       "Library Reference Services Supervisor"
     ],
     "email": "alice.darnton@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Amy Miles",
@@ -21,7 +23,8 @@
       "Management Support Specialist"
     ],
     "email": "amy.miles@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Andrew Castro",
@@ -29,7 +32,8 @@
       "GIS/CAD Specialist"
     ],
     "email": "andrew.castro@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Arnold Pool",
@@ -37,7 +41,8 @@
       "Municipal Judge"
     ],
     "email": "arnold.poole@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Chris Chenoweth",
@@ -45,7 +50,8 @@
       "Councilor"
     ],
     "email": "Chris.Chenoweth@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Chris Secrist",
@@ -53,7 +59,8 @@
       "Payroll Accountant"
     ],
     "email": "chris.secrist@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7301"
+    "phone_number": "(503) 434-7301",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Claudia Cisneros",
@@ -61,7 +68,8 @@
       "City Recorder"
     ],
     "email": "claudia.cisneros@mcminnvilleoregon.gov",
-    "phone_number": "(503) 435-5702"
+    "phone_number": "(503) 435-5702",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Courtney Terry",
@@ -69,7 +77,8 @@
       "Library Reference Supervisor"
     ],
     "email": "Courtney.terry@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Crystal Wooldridge",
@@ -77,7 +86,8 @@
       "Financial Services Analyst"
     ],
     "email": "crystal.wooldridge@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-2342"
+    "phone_number": "(503) 434-2342",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Dan Tucholsky",
@@ -85,15 +95,8 @@
       "Councilor"
     ],
     "email": "daniel.tucholsky@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
-  },
-  {
-    "name": "Daniel  Ruiz",
-    "positions": [
-      "Deputy City Recorder/Executive Assistant"
-    ],
-    "email": "Daniel.Ruiz@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "David Ligtenberg",
@@ -101,7 +104,8 @@
       "City Attorney"
     ],
     "email": "David.Ligtenberg@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7303"
+    "phone_number": "(503) 434-7303",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Heather Richards",
@@ -109,7 +113,8 @@
       "Planning Director"
     ],
     "email": "Heather.Richards@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Janiell Cavan",
@@ -117,7 +122,8 @@
       "PW Operations Support Specialists"
     ],
     "email": "janiell.cavan@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Jeff Gooden",
@@ -125,7 +131,8 @@
       "Engineering Technician & Inspector"
     ],
     "email": "jeff.gooden@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Jeff Towery",
@@ -133,7 +140,8 @@
       "City Manager"
     ],
     "email": "jeff.towery@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7302"
+    "phone_number": "(503) 434-7302",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Jenny Berg",
@@ -141,7 +149,8 @@
       "Library Director"
     ],
     "email": "jenny.berg@mcminnvilleoregon.gov",
-    "phone_number": "(503) 435-5555"
+    "phone_number": "(503) 435-5555",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Jenny James",
@@ -149,7 +158,8 @@
       "Administrative Specialist"
     ],
     "email": "Jenny.James@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Jessica Payne",
@@ -157,7 +167,8 @@
       "Councilor"
     ],
     "email": "Jessica.Payne@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Katie Noyd",
@@ -165,7 +176,8 @@
       "Recreation Program Supervisor"
     ],
     "email": "katie.noyd@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7428"
+    "phone_number": "(503) 434-7428",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Kim Morris",
@@ -173,7 +185,8 @@
       "Mayor"
     ],
     "email": "kim.morris@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Kimbre Chapman",
@@ -181,7 +194,8 @@
       "Library Children's Services Supervisor"
     ],
     "email": "kimbre.chapman@mcminnvilleoregon.gov",
-    "phone_number": "(503) 435-5555"
+    "phone_number": "(503) 435-5555",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Kris Quinlan",
@@ -189,7 +203,8 @@
       "PW Mechanic"
     ],
     "email": "kristopher.quinlan@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Leland Koester",
@@ -197,7 +212,8 @@
       "Wastewater Manager"
     ],
     "email": "leland.koester@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Lori Morgan",
@@ -205,7 +221,8 @@
       "Information Systems"
     ],
     "email": "Lori.Morgan@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Megan Simmons",
@@ -213,7 +230,8 @@
       "Information Systems"
     ],
     "email": "Megan.Simmons@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Noelle Amaya",
@@ -221,7 +239,8 @@
       "Community & Engagement Manager"
     ],
     "email": "noelle.amaya@mcminnvilleoregon.gov",
-    "phone_number": "(503) 435-0402"
+    "phone_number": "(503) 435-0402",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Patti Buffett",
@@ -229,15 +248,17 @@
       "Office Specialist II"
     ],
     "email": "patti.buffett@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
-    "name": "Ronda  Gretzon",
+    "name": "Ronda Gretzon",
     "positions": [
       "Senior Accountant"
     ],
     "email": "Ronda.Gretzon@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7301"
+    "phone_number": "(503) 434-7301",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Salvador Peralta",
@@ -245,7 +266,8 @@
       "Councilor"
     ],
     "email": "sal.peralta@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Scott Burke",
@@ -253,7 +275,8 @@
       "Information Systems Director"
     ],
     "email": "scott.burke@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7385"
+    "phone_number": "(503) 434-7385",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Scott Cunningham",
@@ -261,7 +284,8 @@
       "Councilor"
     ],
     "email": "scott.cunningham@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Sean Roberts",
@@ -269,7 +293,8 @@
       "Information Systems Analyst"
     ],
     "email": "sean.roberts@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Shannon Erskine",
@@ -277,7 +302,8 @@
       "City Prosecutor"
     ],
     "email": "shannon.erskine@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-2329"
+    "phone_number": "(503) 434-2329",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Steve Covey",
@@ -285,15 +311,17 @@
       "Environmental Services Supervisor"
     ],
     "email": "steve.covey@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7313"
+    "phone_number": "(503) 434-7313",
+    "updated_at": "2025-05-03"
   },
   {
-    "name": "Susan  Muir",
+    "name": "Susan Muir",
     "positions": [
       "Parks and Recreation Director"
     ],
     "email": "susan.muir@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7359"
+    "phone_number": "(503) 434-7359",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Tom Schauer",
@@ -301,7 +329,8 @@
       "Senior Planner"
     ],
     "email": "Tom.Schauer@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Vicki Hedges",
@@ -309,7 +338,8 @@
       "Human Resources Manager"
     ],
     "email": "vicki.hedges@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   },
   {
     "name": "Zack Geary",
@@ -317,6 +347,7 @@
       "Councilor"
     ],
     "email": "zack.geary@mcminnvilleoregon.gov",
-    "phone_number": "(503) 434-7405"
+    "phone_number": "(503) 434-7405",
+    "updated_at": "2025-05-03"
   }
 ]
