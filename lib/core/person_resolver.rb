@@ -1,38 +1,57 @@
+require "namae"
+
 module Core
   class PersonResolver
-    def self.same_email?(person_email1, person_email2)
-      return false if person_email1.nil? || person_email2.nil?
+    def self.same_email?(person1, person2)
+      emails1 = person1["email"].present? ? [person1["email"]] : person1["emails"]&.map { |email| email["data"] }
+      emails2 = person2["email"].present? ? [person2["email"]] : person2["emails"]&.map { |email| email["data"] }
 
-      person_email1.downcase == person_email2.downcase
+      emails1.any? { |email| emails2.any? { |e| e&.downcase == email&.downcase } }
     end
 
-    def self.same_website?(person_website1, person_website2)
-      return false if person_website1.nil? || person_website2.nil?
+    def self.same_website?(person1, person2)
+      websites1 = if person1["website"].present?
+                    [person1["website"]]
+                  else
+                    person1["websites"]&.map do |website|
+                      website["data"]
+                    end
+                  end
+      websites2 = if person2["website"].present?
+                    [person2["website"]]
+                  else
+                    person2["websites"]&.map do |website|
+                      website["data"]
+                    end
+                  end
 
-      person_website1.downcase == person_website2.downcase
+      websites1.any? { |website| websites2.any? { |w| w&.downcase == website&.downcase } }
     end
 
     def self.parse_name(person_name)
-      parts = person_name.split(" ")
-      first_name = parts.first
-      last_name = parts.last
+      name = Namae.parse(person_name).first
 
-      [first_name, last_name]
+      given_name = name.given
+      last_name = name.family
+
+      [given_name, last_name]
     end
 
     def self.similar_name?(person_name1, person_name2)
       # Ignore initials
-      first_name1, last_name1 = parse_name(person_name1)
-      first_name2, last_name2 = parse_name(person_name2)
+      given_name1, last_name1 = parse_name(person_name1)
+      given_name2, last_name2 = parse_name(person_name2)
 
       # Ignore Prefixed names
-      ((person_name1.include?(person_name2) ||
-        person_name2.include?(person_name1)) && last_name1 == last_name2) ||
+      ((person_name1&.downcase&.include?(person_name2&.downcase) ||
+        person_name2&.downcase&.include?(person_name1&.downcase)) && last_name1&.downcase == last_name2&.downcase) ||
         # Ignore initials
-        (first_name1 == first_name2 && last_name1 == last_name2)
+        (given_name1&.downcase == given_name2&.downcase && last_name1&.downcase == last_name2&.downcase)
     end
 
     def self.find_by_name(people_config, haystack_people, needle_person_name)
+      puts "People config now looks like this"
+      pp people_config
       haystack_people.each do |haystack_person|
         return haystack_person if similar_name?(haystack_person["name"], needle_person_name)
 
@@ -66,8 +85,8 @@ module Core
       haystack_people.each do |haystack_person|
         _, haystack_last_name = parse_name(haystack_person["name"])
         return haystack_person if haystack_last_name.downcase == needle_last_name.downcase &&
-                                  (same_email?(haystack_person["email"], needle_person["email"]) ||
-                                  same_website?(haystack_person["website"], needle_person["website"]))
+                                  (same_email?(haystack_person, needle_person) ||
+                                  same_website?(haystack_person, needle_person))
       end
 
       nil
@@ -84,7 +103,8 @@ module Core
     end
 
     def self.find_existing_person(people_config, people, maybe_new_person)
-      found_person = find_by_name(people_config, people, maybe_new_person["name"]) ||
+      updated_people_config = people_config.dup
+      found_person = find_by_name(updated_people_config, people, maybe_new_person["name"]) ||
                      match_by_weak_ties(people, maybe_new_person)
 
       canonical_name = get_canonical_name(people_config, maybe_new_person)

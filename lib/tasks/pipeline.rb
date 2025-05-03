@@ -70,7 +70,7 @@ namespace :pipeline do
     people = Core::PeopleManager.get_people(state, gnis)
     remove_unused_cache_folders(state, municipality_entry, people)
 
-    Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
+    # Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
   end
 
   desc "Fetch city officials from state source"

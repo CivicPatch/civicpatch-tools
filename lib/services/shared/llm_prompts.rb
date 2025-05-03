@@ -8,52 +8,43 @@ module Services
         position_examples = Core::CityManager.get_position_examples(government_type)
         current_date = Date.today.strftime("%Y-%m-%d")
 
-        content_type = if person_name.present?
-                         "First, determine if the content contains information about the target person."
-                       else
-                         "First, determine if the content contains a directory of elected officials."
-                       end
-
-        # NOTE: omitting proximity_to_name from the response because there is a bug in the LLM
         %(
         You are an expert data extractor.
 
-        #{content_type}
-        If not, return an empty array.
+        First, determine if the content contains relevant information about the target city/person. If not, return an empty JSON array `[]`.
 
-        #{person_name.present? ? "Target Person: #{person_name}" : ""}
+        Target Person (if applicable): #{person_name}
         Target City: #{city_name}, #{state}
-        Target Municipal Roles: #{positions.join(", ")}
-        Associated divisions: #{divisions.join(",")}
-        Examples: #{position_examples}
+        Target Municipal Roles: #{positions.join(", ")} (Examples: #{position_examples})
+        Associated Divisions: #{divisions.join(", ")}
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
-        - phone_number: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
-        - email: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
-        - website: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
+        - phone_number: {data, llm_confidence, llm_confidence_reason, }
+        - email: {data, llm_confidence, llm_confidence_reason, }
+        - website: {data, llm_confidence, llm_confidence_reason, }
         - positions: [array of strings]
-        - start_date: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
-        - end_date: {data, llm_confidence, llm_confidence_reason, markdown_formatting: {in_list}}
+        - start_date: {data, llm_confidence, llm_confidence_reason, }
+        - end_date: {data, llm_confidence, llm_confidence_reason, }
 
         Format example:
         {
           "people": [
             {
               "name": "John Doe",
-              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact.", "proximity_to_name": 50, "markdown_formatting": {"in_list": true}},
-              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name.", "proximity_to_name": 10, "markdown_formatting": {"in_list": false}},
-              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header", "markdown_formatting": {"in_list": true}},
+              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact."},
+              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name."},
+              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header"},
               "positions": ["Mayor", "Council Member"],
-              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}},
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header.", "proximity_to_name": 35, "markdown_formatting": {"in_list": true}}
+              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."},
+              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."}
             },
             {
               "name": "Jane Smith",
-              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()", "markdown_formatting": {"in_list": false}},
-              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name.", "markdown_formatting": {"in_list": false}},
+              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
+              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name."},
               "positions": ["Council President"],
-              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'", "markdown_formatting": {"in_list": true}}
+              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
             }
           ]
         }
@@ -119,8 +110,7 @@ module Services
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us' that appear structurally close (e.g., immediately following section) to a specific person's name or section should be associated with that person unless the text clearly indicates otherwise (e.g., 'General City Contact').
         - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record
 
-        FINAL CHECK: If you see a phrase like "Term Expires December 31, 2025" for a person (e.g., Jay Arnold),
-        you MUST include end_date in their entry. Do not skip any dates that appear with a person's information.
+        **MANDATORY DATE CHECK**: Before finalizing, verify: If the text clearly stated a term start or end date/year(s) for a person (like "Term Expires 2025" or "Term: 2023-2026"), did you populate `start_date` and/or `end_date`? Do not leave these fields null if the information was present.
 
         Here is the content:
         #{content}
