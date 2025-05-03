@@ -1,6 +1,6 @@
- [Skip to main content](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian#main-content)  Bellevue home 
+ [Skip to main content](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian/)  Bellevue home 
 
- *  [Bellevue Home](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian) 
+ *  [Bellevue Home](https://bellevuewa.gov/) 
  *  [City Government](https://bellevuewa.gov/city-government)  
    *  [Boards, Commissions and Committees](https://bellevuewa.gov/city-government/boards-commissions-and-committees) 
    *  [City Code, Resolutions and Ordinances](https://bellevuewa.gov/city-government/departments/development/codes-and-guidelines) 
@@ -58,27 +58,26 @@
    *  [Permits, Parking and Utilities](https://bellevuewa.gov/resident-resources/permits-parking-utilities) 
    *  [Volunteering](https://bellevuewa.gov/volunteering) 
    *  [Local Service Agencies](https://bellevuewa.gov/city-government/departments/parks/community-services/human-services/local-service-agencies)  
-  [City of Bellevue, WA](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  [City Council](https://bellevuewa.gov/city-government/city-council)   ** Go!  **  Language  [English](https://bellevuewa.gov)  [Español](https://bellevuewa.gov/es/welcome)  [简体中文](https://bellevuewa.gov/zh-hans/welcome)  [繁體中文](https://bellevuewa.gov/zh-hant/welcome)  [日本語](https://bellevuewa.gov/ja/welcome)  [한국어](https://bellevuewa.gov/ko/welcome)  [Pусский](https://bellevuewa.gov/ru/welcome)  [Tiếng Việt](https://bellevuewa.gov/vi/welcome)   **  Menu 
+  [City of Bellevue, WA](https://bellevuewa.gov/)  [City Council](https://bellevuewa.gov/city-government/city-council)   ** Go!  **  Language  [English](https://bellevuewa.gov/)  [Español](https://bellevuewa.gov/es/welcome)  [简体中文](https://bellevuewa.gov/zh-hans/welcome)  [繁體中文](https://bellevuewa.gov/zh-hant/welcome)  [日本語](https://bellevuewa.gov/ja/welcome)  [한국어](https://bellevuewa.gov/ko/welcome)  [Pусский](https://bellevuewa.gov/ru/welcome)  [Tiếng Việt](https://bellevuewa.gov/vi/welcome)   **  Menu 
 
 #  Deputy Mayor Mo Malakoutian 
 
 ## Breadcrumb
 
- 1.  [Home](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian) 
+ 1.  [Home](https://bellevuewa.gov/) 
  1.  [City Government](https://bellevuewa.gov/city-government) 
  1.  [City Council](https://bellevuewa.gov/city-government/city-council) 
  1.  [Councilmembers](https://bellevuewa.gov/city-government/city-council/councilmembers) 
- 1. Deputy Mayor Mo Malakoutian
-  ![Council header image](images/dcdf985af77eac8fb6722d90f57e1e9c6bf533c4ab6b0e77fe032ae805679706.JPG)  How may I help you? 
+  ![Council header image](images/dcdf985af77eac8fb6722d90f57e1e9c6bf533c4ab6b0e77fe032ae805679706.jpg)  How may I help you? 
 
 ### How may I help you?
 
 This is an artificial-intelligence (AI) chatbot designed to provide general information about various city topics. If you are having an emergency of any kind, please call 911 immediately. The chatbot is still learning about all of our services and may occasionally provide an incorrect answer.
 
  ×  [Give Feedback](https://bellevuewa.gov/mybellevue-chatbot-feedback)  
- [**](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian) 
- [**](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian) 
- [**](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)   [](https://www.facebook.com/sharer/sharer.php?u=https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian&title=%20Deputy%20Mayor%20Mo%20Malakoutian)  [](https://twitter.com/intent/tweet?text=%20Deputy%20Mayor%20Mo%20Malakoutian+https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  [](https://www.linkedin.com/sharing/share-offsite/?url=https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  [](mailto:?subject=%20Deputy%20Mayor%20Mo%20Malakoutian&body=https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  [](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  Expand Menu 
+ [**](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian/) 
+ [**](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian/) 
+ [**](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian/)   [](https://www.facebook.com/sharer/sharer.php?u=https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian&title=%20Deputy%20Mayor%20Mo%20Malakoutian)  [](https://twitter.com/intent/tweet?text=%20Deputy%20Mayor%20Mo%20Malakoutian+https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  [](https://www.linkedin.com/sharing/share-offsite/?url=https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  [](mailto:?subject=%20Deputy%20Mayor%20Mo%20Malakoutian&body=https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian)  [](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian/)  Expand Menu 
 
 ##  [Councilmembers](https://bellevuewa.gov/city-government/city-council/councilmembers) 
 
@@ -145,9 +144,9 @@ Bellevue, WA 98009
 
 ### Reasonable Accommodation
 
-For alternate formats, interpreters, or reasonable modification requests please phone at least 48 hours in advance [425-452-7810]() (voice) or email [mmalakoutian@bellevuewa.gov](mailto:mmalakoutian@bellevuewa.gov). For complaints regarding modifications, contact the City of Bellevue ADA, Title VI, and Equal Opportunity Officer at [ADATitleVI@bellevuewa.gov](mailto:ADATitleVI@bellevuewa.gov).
+For alternate formats, interpreters, or reasonable modification requests please phone at least 48 hours in advance [425-452-6800]() (voice) or email [servicefirst@bellevuewa.gov](mailto:servicefirst@bellevuewa.gov?subject=%20Deputy%20Mayor%20Mo%20Malakoutian%20Webpage). For complaints regarding modifications, contact the City of Bellevue ADA, Title VI, and Equal Opportunity Officer at [ADATitleVI@bellevuewa.gov](mailto:ADATitleVI@bellevuewa.gov).
 
-###  [![City of Bellevue seal](images/74377e5d32a2f09fb052c62fc131e8fe6e7ef0f8d8aa4c99e59572a83e4e4122.png)City of Bellevue, WA](https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian) 
+###  [![City of Bellevue seal](images/74377e5d32a2f09fb052c62fc131e8fe6e7ef0f8d8aa4c99e59572a83e4e4122.png)City of Bellevue, WA](https://bellevuewa.gov/) 
 
  *  ** 450 110th Avenue NE
  * Bellevue, WA 98004
@@ -159,13 +158,13 @@ For alternate formats, interpreters, or reasonable modification requests please 
 
 ## Footer Menu Contacts
 
- *  [MyBellevue Customer Assistance](https://bellevuewa.gov/city-government/departments/civic-services/mybellevue/customer-assistance) 
+ *  [MyBellevue Customer Assistance](https://bellevuewa.gov/city-government/departments/civic-services/mybellevue/customer-assistance/) 
  *  [**Careers](https://www.governmentjobs.com/careers/bellevuewa) 
  *  [**ADA/Title VI Notices](https://bellevuewa.gov/resident-resources/adatitle-vi-resources) 
 
 ## Languages
 
- *  [English](https://bellevuewa.gov) 
+ *  [English](https://bellevuewa.gov/) 
  *  [Español](https://bellevuewa.gov/es/welcome) 
  *  [简体中文](https://bellevuewa.gov/zh-hans/welcome) 
  *  [繁體中文](https://bellevuewa.gov/zh-hant/welcome) 
@@ -195,7 +194,7 @@ For alternate formats, interpreters, or reasonable modification requests please 
 ## Social Media
 
  *  [**](https://www.facebook.com/bellevuewashington) 
- *  [**](https://www.instagram.com/cityofbellevuewa) 
+ *  [**](https://www.instagram.com/cityofbellevuewa/) 
  *  [**](https://twitter.com/bellevuewa) 
  *  [**](https://www.youtube.com/channel/UCW22suSoHWumwarCbu3NkOg) 
 

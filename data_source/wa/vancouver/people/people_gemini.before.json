@@ -5,47 +5,58 @@
       "Mayor"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
-    "term_date": "2022 through 2025",
+    "source_image": null,
+    "phone_number": "360-487-8629",
+    "email": "council@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+    "start_date": "2022",
+    "end_date": "2025",
     "sources": [
       "https://www.cityofvancouver.us/departments/mayor-city-council",
-      "https://cityofvancouver.us/departments/mayor-city-council"
-    ]
+      "https://www.cityofvancouver.us/departments/mayor-city-council/"
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Kim D. Harless",
     "positions": [
       "Council Member",
-      "Council Seat 1"
+      "Council Seat 1",
+      "Councilmember",
+      "Seat 1"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
-    "term_date": "2022 through 2025",
+    "source_image": null,
+    "phone_number": "360-487-8600",
+    "email": "council@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+    "start_date": "2022",
+    "end_date": "2025",
     "sources": [
       "https://www.cityofvancouver.us/departments/mayor-city-council",
-      "https://cityofvancouver.us/departments/mayor-city-council"
-    ]
+      "https://www.cityofvancouver.us/departments/mayor-city-council/"
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Erik Paulsen",
     "positions": [
-      "Mayor Pro Tem",
+      "Council Member",
       "Council Seat 2",
-      "Council Member"
+      "Mayor Pro Tem"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
-    "term_date": "2021 through 2025",
+    "source_image": null,
+    "phone_number": "360-487-8600",
+    "email": "council@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+    "start_date": "2021",
+    "end_date": "2025",
     "sources": [
       "https://www.cityofvancouver.us/departments/mayor-city-council",
-      "https://cityofvancouver.us/departments/mayor-city-council"
-    ]
+      "https://www.cityofvancouver.us/departments/mayor-city-council/"
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Diana H. Perez",
@@ -54,30 +65,37 @@
       "Council Seat 3"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
-    "term_date": "2022 through 2025",
+    "source_image": null,
+    "phone_number": "360-487-8600",
+    "email": "council@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+    "start_date": "2022",
+    "end_date": "2025",
     "sources": [
       "https://www.cityofvancouver.us/departments/mayor-city-council",
-      "https://cityofvancouver.us/departments/mayor-city-council"
-    ]
+      "https://www.cityofvancouver.us/departments/mayor-city-council/"
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Bart Hansen",
     "positions": [
       "Council Member",
-      "Council Seat 4"
+      "Council Seat 4",
+      "Seat 4"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofvancouver.us/departments/mayor-city-council#advgb-tabs-tab1",
-    "term_date": "2024 through 2027",
+    "source_image": null,
+    "phone_number": "360-487-8600",
+    "email": "council@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+    "start_date": "2024",
+    "end_date": "2027",
     "sources": [
       "https://www.cityofvancouver.us/departments/mayor-city-council",
-      "https://cityofvancouver.us/departments/mayor-city-council"
-    ]
+      "https://www.cityofvancouver.us/departments/mayor-city-council/"
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Ty Stober",
@@ -86,27 +104,36 @@
       "Council Seat 5"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofvancouver.us/departments/mayor-city-council",
-    "term_date": "2024 through 2027",
+    "source_image": null,
+    "phone_number": "360-487-8600",
+    "email": "council@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+    "start_date": "2024",
+    "end_date": "2027",
     "sources": [
-      "https://cityofvancouver.us/departments/mayor-city-council"
-    ]
+      "https://www.cityofvancouver.us/departments/mayor-city-council",
+      "https://www.cityofvancouver.us/departments/mayor-city-council/"
+    ],
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Sarah J. Fox",
     "positions": [
       "Council Member",
-      "Council Seat 6"
+      "Council Seat 6",
+      "Seat 6"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofvancouver.us/departments/mayor-city-council",
-    "term_date": "2024 through 2027",
+    "source_image": null,
+    "phone_number": "360-487-8600",
+    "email": "council@cityofvancouver.us",
+    "website": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+    "start_date": "2024",
+    "end_date": "2027",
     "sources": [
-      "https://cityofvancouver.us/departments/mayor-city-council"
-    ]
+      "https://www.cityofvancouver.us/departments/mayor-city-council",
+      "https://www.cityofvancouver.us/departments/mayor-city-council/"
+    ],
+    "updated_at": "2025-05-02"
   }
 ]

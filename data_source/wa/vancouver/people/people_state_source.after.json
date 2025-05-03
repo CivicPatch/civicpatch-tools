@@ -1,80 +1,58 @@
 [
   {
     "name": "Anne McEnerny-Ogle",
-    "image": null,
     "positions": [
       "Mayor"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "anne.mcenerny-ogle@cityofvancouver.us",
+    "updated_at": "2025-05-02"
+  },
+  {
+    "name": "Bart Hansen",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "bart.hansen@cityofvancouver.us",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Diana Perez",
-    "image": null,
     "positions": [
       "Council Member"
     ],
     "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Erik Paulsen",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "Erik.Paulsen@cityofvancouver.us",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Kim Harless",
-    "image": null,
     "positions": [
       "Council Member"
     ],
     "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Sarah J. Fox",
-    "image": null,
     "positions": [
       "Council Member"
     ],
-    "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "email": "sarah.fox@cityofvancouver.us",
+    "updated_at": "2025-05-02"
   },
   {
     "name": "Ty Stober",
-    "image": null,
     "positions": [
       "Council Member"
     ],
     "email": null,
-    "phone_number": null,
-    "website": null,
-    "sources": null,
-    "start_term_date": null,
-    "end_term_date": null
+    "updated_at": "2025-05-02"
   }
 ]

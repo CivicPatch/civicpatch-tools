@@ -13,6 +13,8 @@ require_relative "../services/spaces"
 require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
 
+MINIMUM_PEOPLE_COUNT = 3
+
 namespace :pipeline do
   desc "Pick cities from queue"
   task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args| # bug -- this is a list of city names, which is not a unique identifier
@@ -56,7 +58,8 @@ namespace :pipeline do
     # Sometimes state source can lag behind the city source
     #  -- there may be more members listed than are
     # available on the city website
-    scrape_exit_config = { "people_count" => state_source_people.count - 2,
+    people_count = [state_source_people.count - MINIMUM_PEOPLE_COUNT, MINIMUM_PEOPLE_COUNT].max
+    scrape_exit_config = { "people_count" => people_count,
                            "key_position" => "mayor" }
     municipality_context[:config]["scrape_exit_config"] = scrape_exit_config
     municipality_context[:config]["people"] = people_config

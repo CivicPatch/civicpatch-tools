@@ -28,7 +28,7 @@ module Services
       return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(government_type, content, page_url,
-                                                                         person_name)
+                                                                         person_name, municipality_entry, state)
 
       messages = [
         { role: "system", content: system_instructions },
@@ -49,7 +49,8 @@ module Services
       end
     end
 
-    def generate_city_info_prompt(government_type, content, page_url, person_name = "")
+    def generate_city_info_prompt(government_type, content, page_url, person_name = "", municipality_entry = {},
+                                  state = "")
       positions = Core::CityManager.get_position_roles(government_type)
       divisions = Core::CityManager.get_position_divisions(government_type)
       position_examples = Core::CityManager.get_position_examples(government_type)
@@ -61,102 +62,87 @@ module Services
                        "First, determine if the content contains a directory of elected officials."
                      end
 
-      # System instructions: approximately 340
       system_instructions = <<~INSTRUCTIONS
-        You are an expert data extractor.
+        You are an expert data extractor focused on accuracy.
 
-        #{content_type}#{" "}
-        If not, return an empty array.
+        #{content_type} If not, return an empty JSON array `[]`.
 
-        #{person_name.present? ? "Target Person: #{person_name}" : ""}
+        Target Person (if applicable): #{person_name}
+        Target City: #{municipality_entry["name"] || "Unknown City"}, #{state || "Unknown State"}
         Key roles: #{positions.join(", ")}
         Associated divisions: #{divisions.join(",")}
         Examples: #{position_examples}
 
-        Return a JSON object with people, each having:
-        - name: Full name only (not titles)
-        - positions: [array of strings]
-        - image: String, URL from markdown image: (starting with "images/")
-        - phone_number: {data, llm_confidence, llm_confidence_reason }
-        - email: {data, llm_confidence, llm_confidence_reason }
-        - website: {data, llm_confidence, llm_confidence_reason }
-        - start_date: {data, llm_confidence, llm_confidence_reason }
-        - end_date: {data, llm_confidence, llm_confidence_reason }
+        Return a JSON object with a key "people" containing an array. Each object represents one person and MUST include ALL fields (name, positions, image, phone_number, email, website, start_date, end_date), populating with extracted data or null.
 
-        Format example:
+        Output Field Definitions & Structure:
+        - name: (String) Full name only (no titles).
+        - positions: (Array of Strings) Active municipal roles matching targets. Include division/district.
+        - image: (String or null) URL of the person's portrait/headshot (usually starts 'images/').
+        - phone_number: (Object or null) {data: "Formatted Number", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
+        - email: (Object or null) {data: "email@example.com", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
+        - website: (Object or null) {data: "http(s)://...", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
+        - start_date: (Object or null) {data: "YYYY" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
+        - end_date: (Object or null) {data: "YYYY" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
+
+        Example Format: # Shows desired output for common patterns
         {
           "people": [
             {
-              "name": "John Doe",
-              "positions": ["Mayor", "Council Member"],
-              "image": "images/john-doe.jpg",
-              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact."},
-              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name."},
-              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header"},
-              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."},
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."}
+              "name": "Denyse McGriff",
+              "positions": ["Mayor"],
+              "image": "images/cf3a4400bcf8e75eb5a9cd3748d7d7ac428cb1663c701fe42b89fb1dc8933f63.jpg",
+              "phone_number": {"data": "503-656-3912", "llm_confidence": 0.95, "llm_confidence_reason": "Found number labeled 'Home:' near name."},
+              "email": {"data": "dmcgriff@orcity.org", "llm_confidence": 0.98, "llm_confidence_reason": "Extracted from mailto link text near name."},
+              "website": {"data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff", "llm_confidence": 0.9, "llm_confidence_reason": "Primary page URL."},
+              "start_date": {"data": "2023-01-01", "llm_confidence": 0.99,"llm_confidence_reason": "Extracted start date from 'Term: January 1, 2023 to ...'"},
+              "end_date": {"data": "2026-12-31", "llm_confidence": 0.99, "llm_confidence_reason": "Extracted end date from 'Term: ... to December 31, 2026'"}
             }, {
-              "name": "Jane Smith",
-              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
-              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name."},
-              "positions": ["Council President"],
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
+              "name": "Adam Marl",
+              "positions": ["Commissioner"],
+              "image": "images/f7ac574487389ed707b5d516d17500f55ca16e63d4b8100ef310b0d792cce875.jpg",
+              "phone_number": {"data": "503-406-8165", "llm_confidence": 0.95, "llm_confidence_reason": "Found number labeled 'Cell:' near name."},
+              "email": {"data": "amarl@orcity.org", "llm_confidence": 0.98, "llm_confidence_reason": "Extracted from mailto link text near name."},
+              "website": {"data": "https://www.orcity.org/1775/Commissioner-Adam-Marl", "llm_confidence": 0.9, "llm_confidence_reason": "Primary page URL."},
+              "start_date": {"data": "2023-01-01", "llm_confidence": 0.99,"llm_confidence_reason": "Extracted start date from 'Term: January 1, 2023 to ...'"},
+              "end_date": {"data": "2026-12-31", "llm_confidence": 0.99, "llm_confidence_reason": "Extracted end date from 'Term: ... to December 31, 2026'"}
             }
           ]
         }
 
-        Guidelines:
-        - For "llm_confidence": Use 0-1 scale with reason for your confidence
-        - Extract only person-specific information, not general contact info
-        - Image selection:
-          - Find the image URL most closely associated with the person, preferably
-            appearing immediately near or directly following the person's name or biography heading in the text.
-          - Prioritize portraits or headshots. IGNORE logos, icons, banners,
-            or images with alt text like "Loading", "Logo", "Icon", "Search", "Banner".
-          - Check the image's alt text (e.g., `![Alt text](image.jpg)`) for clues#{" "}
-            like the person's name, but prioritize proximity and portrait style to the person's name.
-        - DO NOT extract contact information if you are less than 90% confident it belongs directly to the person.
-        - Omit missing fields except for "name"
-        - For positions:#{" "}
-          - Include only active roles (today is #{current_date}).
-          - Include both roles and divisions, where available.
-        - Name extraction: Extract full names ONLY, not titles
-          - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
-          - Titles belong in positions array, not in names
-        - Website extraction:
-          - Goal: Find the primary, stable profile or biography page for the person.
-          - Prioritize person-specific pages over landing pages (e.g., `/council/john-doe` over `/council/`).
-          - Consider links associated with names/photos
-          - Prefer deeper paths and "/about" pages when available
-        - For email, phone_number, start_date and end_date extraction:
-          - Only extract contact information if it is CLEARLY for the specific person or their office.
-          - If contact information is more than 30 words away from the person's name, DO NOT include it unless:
-            - It appears in a section that is clearly dedicated to that person's contact information.
-        - For phone_number:
-          - Format: (123) 456-7890 or null
-          - If there are multiple phone numbers, extract the primary one.
-        - start_date and end_date extraction:
-          - Format: YYYY, YYYY-MM-DD or null
-          - IMPORTANT: Carefully search for explicit start dates and end dates using these common patterns:
-            - Start date patterns: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:'
-            - Also look for these start date variations: 'Elected in', 'Took Office', 'Started', 'Since', 'Beginning', 'Commenced', 'Assumed Office', 'Joined Council', 'Began Service'
-            - End date patterns: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Next Election:'
-          - Additional start date examples:
-            - "Term Began: 2024" → start_date: "2024"
-            - "Elected in November 2022" → start_date: "2022-11-01"
-            - "Took office January 2023" → start_date: "2023-01-01"
-            - "Serving since 2021" → start_date: "2021-01-01"
-          - Examples of complete date extraction:
-            - "Elected: January 2023" → start_date: "2023-01-01"
-            - "Term expires December 2026" → end_date: "2026-12-31"
-            - "Term: 2024-2028" → start_date: "2024-01-01", end_date: "2028-12-31"
-            - "Elected 2020, Term expires 2024" → start_date: "2020-01-01", end_date: "2024-12-31"#{" "}
-          - If ONLY a year is given for the *entire term* (e.g., 'Term: 2024'), set start_date to YYYY-01-01 and end_date to YYYY-12-31.
-          - If only a start year is given (e.g., 'Elected 2023'), set start_date (using YYYY) and set end_date to null.
-          - If only an end year is given (e.g., 'Term Expires 2027'), set end_date (using YYYY) and set start_date to null.
-          - CRITICAL: If a start or end date is not explicitly mentioned or derivable *only* from the year rules above,
-            do not include it in the response.
-          - If multiple terms are listed, extract only the current or most recent term.
+        Extraction Guidelines:
+        - General: Today is #{current_date}. Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field's data.
+        - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in 'positions'.
+        - Positions: Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive). EXCLUDE judicial, most admin staff, non-municipal.
+        - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start 'images/'.
+        - Contact Details (Phone/Email/Website):
+          - Associate details logically if near the person's name/section.
+          - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
+          - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
+          - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
+          - `email` data should ONLY contain email addresses.
+        - Term Dates (`start_date`, `end_date`):
+          - **PRIORITY 1: Specific Term Formats (Mandatory Application)**:
+            - Check FIRST if the text contains patterns starting with "Term:". This often indicates **both** start and end dates.
+            - If `Term: [Date1] to [Date2]` (e.g., "Term: January 1, 2023 to December 31, 2026") is found, you MUST extract Date1 into `start_date.data` AND Date2 into `end_date.data`. Do not miss the start date in this case. BOTH DATES MUST BE EXTRACTED WHEN THIS PATTERN IS FOUND.
+            - IMPORTANT: When a "Term:" line includes both start and end dates separated by "to", ALWAYS extract BOTH dates - converting them to proper ISO format (e.g., "January 1, 2023" becomes "2023-01-01").
+            - If `Term: YYYY-YYYY` (e.g., "Term: 2024-2028") is found, extract first YYYY as `start_date.data` (formatted YYYY-01-01) and second YYYY as `end_date.data` (formatted YYYY-12-31).
+          - **PRIORITY 2: Keyword Search**: If the specific "Term:" formats above are not found, THEN look for keywords indicating start/end dates:
+            - `start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service' # Added missing keywords
+            - `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:'
+            - Extract the date following these keywords into the appropriate field (`start_date` or `end_date`).
+          - **Date Formatting**: Format extracted dates as YYYY or YYYY-MM-DD. Use YYYY-MM-01 if only month/year known.
+          - **Reliability**: Prioritize dates found using the PRIORITY 1 rules or clear PRIORITY 2 keywords. If association/meaning is ambiguous, note in reason, lower confidence, but still attempt extraction if plausible. Do not omit clearly stated dates matching defined rules.
+          - **IMPORTANT**: Only populate start_date and end_date fields when actual dates appear in the source content. If no start date or end date is mentioned for a person, set the corresponding field to null.
+          - **Validation for Term Dates**:
+            - When a line with format "Term: X to Y" appears, this represents both start_date (X) and end_date (Y)
+            - For ANY person where end_date exists but start_date is null, check if there was a "Term:" line
+            - If you find a pattern like "Term: Date1 to Date2" but only extracted one date, verify both dates are extracted
+            - After creating your initial JSON response, review each person to ensure term dates are consistent with the source content
+            - If you see "Term: January 1, 2023 to December 31, 2026" in the source, both dates must be extracted
+        - Association & Uniqueness: Associate details carefully. Ensure only ONE entry per unique person.
+
+        **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting, particularly ensuring that date extraction follows the rules above.
       INSTRUCTIONS
 
       content = <<~CONTENT
