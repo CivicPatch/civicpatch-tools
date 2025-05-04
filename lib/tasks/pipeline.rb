@@ -16,21 +16,16 @@ require_relative "../scrapers/municipality_officials"
 
 namespace :pipeline do
   desc "Pick cities from queue"
-  task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args| # bug -- this is a list of city names, which is not a unique identifier
+  task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args|
     state = args[:state]
     num_cities = args[:num_cities]
     gnis_to_ignore = args[:gnis_to_ignore].present? ? args[:gnis_to_ignore].split(" ") : []
 
-    state_places = Core::StateManager.get_municipalities(state)
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    municipalities_to_scrape = municipalities.select { |c| should_scrape?(gnis_to_ignore, c) }.first(num_cities.to_i)
 
-    cities = state_places["municipalities"].select do |c|
-      !gnis_to_ignore.include?(c["gnis"]) &&
-        c["website"].present? &&
-        (c["meta_sources"].blank? || c["meta_sources"].count == 1) # If there's only one source, we can assume it's a state source
-    end.first(num_cities.to_i)
-
-    puts cities.map { |c|
-      { "name": c["name"].gsub(" ", "_"), "gnis": c["gnis"], "county": c["counties"].first }
+    puts municipalities_to_scrape.map { |m|
+      { "name": m["name"].gsub(" ", "_"), "gnis": m["gnis"], "county": m["counties"].first }
     }.to_json
   end
 
@@ -43,40 +38,35 @@ namespace :pipeline do
 
     prepare_directories(state, municipality_context[:municipality_entry])
 
-    source_directory_list_config, people_config = fetch_with_state_source(municipality_context) # State-level city directory source
-    municipality_context = Core::ContextManager.update_context_config(municipality_context,
-                                                                      source_directory_list: source_directory_list_config,
-                                                                      people: people_config)
+    source_directory_list_config, people_config = fetch_with_state_source(municipality_context)
+    municipality_context = Core::ContextManager
+                           .update_context_config(municipality_context,
+                                                  source_directory_list: source_directory_list_config,
+                                                  people: people_config)
 
     people_config = fetch_with_scrape(municipality_context)
-    municipality_context = Core::ContextManager.update_context_config(municipality_context,
-                                                                      people: people_config)
+    municipality_context = Core::ContextManager
+                           .update_context_config(municipality_context,
+                                                  people: people_config)
 
-    scrape_sources = aggregate_sources(municipality_context, sources: %w[state_source gemini openai])
-    municipality_context = Core::ContextManager.update_context_config(municipality_context,
-                                                                      scrape_sources: scrape_sources)
+    scrape_sources = aggregate_sources(municipality_context,
+                                       sources: %w[state_source gemini openai])
+    municipality_context = Core::ContextManager
+                           .update_context_config(municipality_context,
+                                                  scrape_sources: scrape_sources)
 
-    people = Core::PeopleManager.get_people(state, gnis)
-    remove_unused_cache_folders(municipality_context, people)
-
-    Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
+    cleanup(municipality_context)
   end
 
   desc "Fetch city officials from state source"
   task :fetch_from_state, [:state] do |_t, args|
     state = args[:state]
-    config = Core::ConfigManager.get_config(state, gnis)
 
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     municipalities.each do |municipality_entry|
-      municipality_context = {
-        config: config,
-        state: state,
-        municipality_entry: municipality_entry,
-        government_type: Scrapers::Municipalities.get_government_type(state, municipality_entry)
-      }
-      fetch_with_state_source(municipality_context)
-      aggregate_sources(municipality_context, sources: %w[state_source])
+      context = Core::ContextManager.get_context(state, municipality_entry["gnis"])
+      fetch_with_state_source(context)
+      aggregate_sources(context, sources: %w[state_source])
     end
   end
 
@@ -95,17 +85,17 @@ namespace :pipeline do
     people_config = municipality_context[:config]["people"]
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
 
-    source_directory_list_config = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
+    source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
-    if source_directory_list_config["type"] == "directory_list"
-      people = source_directory_list_config["people"]
+    if source_directory_list["type"] == "directory_list"
+      people = source_directory_list["people"]
       people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
       formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
                                                            positions_config)
-      source_directory_list_config["people"] = formatted_people
+      source_directory_list["people"] = formatted_people
     end
 
-    [source_directory_list_config, people_config]
+    [source_directory_list, people_config]
   end
 
   def fetch_with_scrape(municipality_context)
@@ -233,9 +223,11 @@ namespace :pipeline do
     end
   end
 
-  def self.remove_unused_cache_folders(municipality_context, people)
+  def self.cleanup(municipality_context)
     gnis = municipality_context[:municipality_entry]["gnis"]
-    cache_dir = PathHelper.get_city_cache_path(municipality_context[:state], gnis)
+    people = Core::PeopleManager.get_people(municipality_context[:state], gnis)
+    state = municipality_context[:state]
+    cache_dir = PathHelper.get_city_cache_path(state, gnis)
     cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
     # Get list of src files in use
@@ -250,5 +242,16 @@ namespace :pipeline do
         FileUtils.rm_rf(cache_folder)
       end
     end
+
+    Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
+  end
+
+  private
+
+  def self.should_scrape?(gnis_to_ignore, municipality_entry)
+    !gnis_to_ignore.include?(municipality_entry["gnis"]) &&
+      municipality_entry["website"].present? &&
+      # If there's only one source, it hasn't been scraped yet
+      (municipality_entry["meta_sources"].blank? || municipality_entry["meta_sources"].count == 1)
   end
 end

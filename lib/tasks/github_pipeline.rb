@@ -9,6 +9,7 @@
 # Main tasks:
 # - github_pipeline:get_pr_comment[state,gnis,branch_name]# Generate markdown for PR
 
+require_relative "../core/context_manager"
 require_relative "../validators/city_people"
 require_relative "../github/city_people"
 
@@ -46,18 +47,10 @@ namespace :github_pipeline do
     state = args[:state]
     gnis = args[:gnis]
 
-    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-    municipality_config = Core::ConfigManager.get_config(state, gnis)
+    context = Core::ContextManager.get_context(state, gnis)
 
-    municipality_context = {
-      state: state,
-      municipality_entry: municipality_entry,
-      config: municipality_config
-    }
-
-    contested_people, missing_people, merged_people, agreement_score = generate_comparison(municipality_context)
-    people_list_comment = generate_people_list_comment(municipality_context, merged_people, missing_people,
-                                                       contested_people)
+    contested_people, missing_people, merged_people, agreement_score = generate_comparison(context)
+    people_list_comment = generate_people_list_comment(context, merged_people, missing_people, contested_people)
     disagreements_section = generate_disagreements_section(merged_people, contested_people, agreement_score)
 
     data = {

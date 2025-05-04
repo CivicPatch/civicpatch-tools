@@ -103,8 +103,12 @@ module Services
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - For positions:
-          - **CRITICAL**: Extract ONLY roles matching or functionally equivalent to the
-            **Target Municipal Roles** and **Examples** provided
+          - **CRITICAL**: Extract ONLY roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
+            **Target Municipal Roles** and **Examples** provided.
+          - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
+            (e.g., "Youth Councilor", "Student Representative"),
+            or non-voting unless they are explicitly listed in the Target Municipal Roles.
+            Focus on the primary elected/appointed governing body members.
           - Include only active roles (today is #{current_date}).
           - Include both the role and any associated division (e.g., "Council Member, District 3").
         - Name extraction: Extract full names ONLY, not titles
