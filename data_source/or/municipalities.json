@@ -164,10 +164,12 @@
       "phone_number": "(541) 774-2000",
       "website": "https://www.medfordoregon.gov/Home",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "06ec4bd5312a7a5214640f4b4c25060a",
+      "meta_updated_at": "2025-05-04",
+      "meta_hash": "e1d67b50f13b3d6a586f355be3735605",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
