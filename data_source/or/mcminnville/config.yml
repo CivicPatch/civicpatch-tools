@@ -1,8 +1,33 @@
 ---
 scrape_sources:
 - https://www.mcminnvilleoregon.gov/citycouncil
+- https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information
+- https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123
+- https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/
+- https://www.mcminnvilleoregon.gov/citycouncil/page/elections
 source_directory_list:
   type: directory_list
-  people: []
+  people:
+  - name: Kim Morris
+    positions:
+    - Mayor
+  - name: Chris Chenoweth
+    positions:
+    - Council Member
+  - name: Dan Tucholsky
+    positions:
+    - Council Member
+  - name: Jessica Payne
+    positions:
+    - Council Member
+  - name: Salvador Peralta
+    positions:
+    - Council Member
+  - name: Scott Cunningham
+    positions:
+    - Council Member
+  - name: Zack Geary
+    positions:
+    - Council Member
   key_position: mayor
 people: {}
