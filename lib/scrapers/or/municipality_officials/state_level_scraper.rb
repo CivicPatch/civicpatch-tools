@@ -10,9 +10,9 @@ module Scrapers::Or::MunicipalityOfficials
 
     def self.fetch(municipality_context)
       municipality_entry = municipality_context[:municipality_entry]
-      url = get_source_url(municipality_entry)
+      source_url = get_source_url(municipality_entry)
       # Fetch HTML, interacting to select "All" entries
-      response = Browser.fetch_html(url) do |browser, wait|
+      response = Browser.fetch_html(source_url) do |browser, wait|
         # Find the select element for pagination length
         select_element = wait.until do
           browser.find_element(css: "select[name='dtCityContacts_length']")
@@ -26,12 +26,12 @@ module Scrapers::Or::MunicipalityOfficials
         # A more robust wait might look for staleness or specific element changes
         # Example: wait for the first row of the table body to be present again
         wait.until { browser.find_element(css: "#dtCityContacts tbody tr") }
-      rescue Selenium::WebDriver::Error::TimeoutError, Selenium::WebDriver::Error::NoSuchElementError => e
-        puts "Could not find or interact with pagination elements for #{url}: #{e.message}"
-        # Decide whether to proceed with potentially incomplete data or raise an error
       end
       # Ensure response is not nil before parsing
-      response ? parse_html(response) : []
+      parse_html(response)
+    rescue StandardError => e
+      puts "Could not fetch directory list: #{e}"
+      []
     end
 
     def self.parse_html(html)

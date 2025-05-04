@@ -3,10 +3,10 @@ require "namae"
 module Core
   class PersonResolver
     def self.same_email?(person1, person2)
-      emails1 = person1["email"].present? ? [person1["email"]] : person1["emails"]&.map { |email| email["data"] }
-      emails2 = person2["email"].present? ? [person2["email"]] : person2["emails"]&.map { |email| email["data"] }
+      emails1 = person1["email"].present? ? [person1["email"]] : person1["emails"]&.map { |email| email["data"] } || []
+      emails2 = person2["email"].present? ? [person2["email"]] : person2["emails"]&.map { |email| email["data"] } || []
 
-      emails1.any? { |email| emails2.any? { |e| e&.downcase == email&.downcase } }
+      emails1.compact.any? { |email| emails2.compact.any? { |e| e.downcase == email.downcase } }
     end
 
     def self.same_website?(person1, person2)
@@ -15,17 +15,17 @@ module Core
                   else
                     person1["websites"]&.map do |website|
                       website["data"]
-                    end
+                    end || []
                   end
       websites2 = if person2["website"].present?
                     [person2["website"]]
                   else
                     person2["websites"]&.map do |website|
                       website["data"]
-                    end
+                    end || []
                   end
 
-      websites1.any? { |website| websites2.any? { |w| w&.downcase == website&.downcase } }
+      websites1.compact.any? { |website| websites2.compact.any? { |w| w.downcase == website.downcase } }
     end
 
     def self.parse_name(person_name)

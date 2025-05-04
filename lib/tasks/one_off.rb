@@ -171,6 +171,21 @@ namespace :one_off do
     pp results
   end
 
+  task :google_gemini_search do
+    state = "or"
+    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, "2412103")
+    config = Core::ConfigManager.get_config(state, municipality_entry["gnis"])
+    municipality_context = {
+      state: state,
+      municipality_entry: municipality_entry,
+      config: config
+    }
+
+    google_gemini = Services::GoogleGemini.new
+    response = google_gemini.search_for_people(municipality_context)
+    pp response
+  end
+
   def self.format_name(name)
     # Split the name by space separated by _
     # Capitalize the first letter of each word

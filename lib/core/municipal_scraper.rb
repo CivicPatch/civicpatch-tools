@@ -7,7 +7,8 @@ require "resolvers/search_resolver"
 
 module Core
   class MunicipalScraper
-    @@MAX_URLS_TO_SCRAPE = 30
+    MAX_URLS_TO_SCRAPE = 30
+    MIN_PEOPLE_TO_FIND = 3
 
     def self.fetch(
       llm_service_string,
@@ -227,9 +228,9 @@ module Core
     def self.should_continue_scraping?(context, data)
       accumulated_officials = data[:accumulated_people]
       num_urls_scraped = data[:processed_urls].count
-      scrape_exit_config = context[:municipality_context][:config]["scrape_exit_config"]
+      source_directory_list_config = context[:municipality_context][:config]["source_directory_list"]
 
-      return false if num_urls_scraped >= @@MAX_URLS_TO_SCRAPE
+      return false if num_urls_scraped >= MAX_URLS_TO_SCRAPE
 
       valid_officials_count = accumulated_officials.count do |official|
         # TODO: should only check if the positions are relevant
@@ -240,20 +241,24 @@ module Core
         official["positions"]
       end
 
-      puts "#{context[:llm_service_string]}: Scrape exit config: #{scrape_exit_config}"
+      puts "#{context[:llm_service_string]}: Source directory list config: #{source_directory_list_config}"
       puts "#{context[:llm_service_string]}: People found: #{found_positions}"
       puts "#{context[:llm_service_string]}: Officials count: #{valid_officials_count}"
-      return true unless found_key_position?(scrape_exit_config, found_positions)
+      return true unless found_key_position?(source_directory_list_config, found_positions)
 
-      return true if valid_officials_count < scrape_exit_config["people_count"]
+      # Sometimes state source can lag behind the city source
+      #  -- there may be more members listed than are
+      # available on the city website
+      people_to_find = [source_directory_list_config["people"].count - 2, MIN_PEOPLE_TO_FIND].max
+      return true if valid_officials_count < people_to_find
 
       false
     end
 
-    def self.found_key_position?(scrape_exit_config, found_positions)
-      return true if scrape_exit_config["key_position"].blank?
+    def self.found_key_position?(source_directory_list_config, found_positions)
+      return true if source_directory_list_config["key_position"].blank?
 
-      found_positions.flatten.map(&:downcase).include?(scrape_exit_config["key_position"].downcase)
+      found_positions.flatten.map(&:downcase).include?(source_directory_list_config["key_position"].downcase)
     end
   end
 end

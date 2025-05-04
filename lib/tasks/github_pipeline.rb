@@ -76,7 +76,7 @@ namespace :github_pipeline do
 
     city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
 
-    suggest_edit_details = Scrapers::MunicipalityOfficials.get_suggest_edit_details(municipality_context)
+    suggest_edit_details = Scrapers::MunicipalityOfficials.get_edit_detail(municipality_context)
 
     action_items = GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
                                                                      contested_people)

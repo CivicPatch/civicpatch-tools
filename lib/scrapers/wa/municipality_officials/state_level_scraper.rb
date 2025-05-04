@@ -11,7 +11,7 @@ module Scrapers::Wa::MunicipalityOfficials
       "#{DIRECTORY_URL}?ci=#{city_initial}"
     end
 
-    def self.get_suggest_edit_details(municipality_entry)
+    def self.get_edit_detail(municipality_entry)
       # response = HTTParty.get(CITY_AND_TOWN_PROFILES_URL)
       # html_doc = Nokogiri::HTML(response.body)
       # current_date = Time.now.strftime("%Y-%m-%d")
@@ -51,6 +51,9 @@ module Scrapers::Wa::MunicipalityOfficials
       html_string = @@html_cache[municipality_entry["name"]]
 
       parse_officials(municipality_entry, html_string)
+    rescue StandardError => e
+      puts "Error fetching officials for #{municipality_entry["name"]}: #{e}"
+      []
     end
 
     def self.parse_officials(municipality_entry, html_string)
@@ -90,8 +93,9 @@ module Scrapers::Wa::MunicipalityOfficials
       end
 
       unless parent_div
-        puts "ERROR: Could not find parent div for municipality '#{municipality_name}' after checking #{candidate_divs.count} candidates."
-        return []
+        raise "ERROR: Could not find parent div for municipality '#{municipality_name}' after checking #{
+            candidate_divs.count
+          } candidates."
       end
 
       # Select direct children divs of parent_div that contain a <strong> tag
