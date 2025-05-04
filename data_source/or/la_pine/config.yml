@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Jeannine Earls
+    positions:
+    - Mayor
+    email: jearls@lapineoregon.gov
+    phone_number: "(541) 536-1432"
+  - name: Janis Curtis-Thompson
+    positions:
+    - Council Member
+    email: jcurtisthompson@lapineoregon.gov
+    phone_number: "(541) 536-1432"
+  - name: Karen Morse
+    positions:
+    - Council Member
+    email: kmorse@lapineoregon.gov
+    phone_number: "(541) 536-1432"
+  - name: Mike Sheilds
+    positions:
+    - Council Member
+    email: mshields@lapineoregon.gov
+    phone_number: "(541) 536-1432"
+  - name: Mike Shields
+    positions:
+    - Council Member
+    email: mshields@lapineoregon.gov
+    phone_number: "(541) 536-1432"
+  key_position: mayor
+people: {}

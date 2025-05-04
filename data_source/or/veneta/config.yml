@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Robbie McCoy
+    positions:
+    - Mayor
+    email: rmccoy@ci.veneta.or.us
+    phone_number: "(541) 935-2191"
+  - name: Alexa A. Benson
+    positions:
+    - Council Member
+    email: abenson@ci.veneta.or.us
+    phone_number: "(541) 935-2191"
+  - name: Alexa Bensen
+    positions:
+    - Council Member
+    email: abenson@ci.veneta.or.us
+    phone_number: "(541) 935-2191"
+  - name: David Voltz
+    positions:
+    - Council Member
+    email: dvoltz@venetaoregon.gov
+    phone_number: "(541) 935-2191"
+  - name: Pat Coy
+    positions:
+    - Council Member
+    email: pcoy@ci.veneta.or.us
+    phone_number: "(541) 935-2191"
+  key_position: mayor
+people: {}

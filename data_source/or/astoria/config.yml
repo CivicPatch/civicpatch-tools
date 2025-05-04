@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Sean Fitzpatrick
+    positions:
+    - Mayor
+    email: sfitzpatrick@astoria.gov
+    phone_number: "(503) 298-2409"
+  - name: Andrea Mazzarella
+    positions:
+    - Council Member
+    email: amazzarella@astoria.gov
+    phone_number: "(503) 298-2409"
+  - name: Andy J. Davis
+    positions:
+    - Council Member
+    email: adavis@astoria.gov
+    phone_number: "(503) 298-2409"
+  - name: Elisabeth Adams
+    positions:
+    - Council Member
+    email: eadams@astoria.gov
+    phone_number: "(503) 298-2409"
+  - name: Vance Lump
+    positions:
+    - Council Member
+    email: vlump@astoria.gov
+    phone_number: "(503) 298-2409"
+  key_position: mayor
+people: {}

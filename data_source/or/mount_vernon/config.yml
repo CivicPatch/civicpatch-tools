@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Kenny Delano
+    positions:
+    - Mayor
+    email: kennyfse@ortelco.net
+    phone_number: "(541) 932-4688"
+  - name: Justin Deming
+    positions:
+    - Council President
+    email: cmtvdemingj@ortelco.net
+    phone_number: "(541) 932-4688"
+  - name: Flora Cheadle
+    positions:
+    - Council Member
+    email: fcheadle@ortelco.net
+    phone_number: "(541) 932-4688"
+  - name: Judi Bennett
+    positions:
+    - Council Member
+    email: cmtvbennettj@ortelco.net
+    phone_number: "(541) 932-4688"
+  - name: Rhonda Sorenson
+    positions:
+    - Council Member
+    email: rhondab@ortelco.net
+    phone_number: "(541) 932-4688"
+  key_position: mayor
+people: {}

@@ -31,18 +31,25 @@ module Core
     end
 
     def self.parse_name(person_name)
+      # TODO: there can be bugs with this
+      # Example: "David (Narh) Amanor" => []
+      # Example: "Abigail Elder => []"
       name = Namae.parse(person_name).first
 
-      given_name = name.given
-      last_name = name.family
+      given_name = name&.given
+      last_name = name&.family
 
       [given_name, last_name]
     end
 
     def self.similar_name?(person_name1, person_name2)
+      return true if person_name1 == person_name2
+
       # Ignore initials
       given_name1, last_name1 = parse_name(person_name1)
       given_name2, last_name2 = parse_name(person_name2)
+
+      return false if given_name1.blank? || last_name1.blank? || given_name2.blank? || last_name2.blank?
 
       # Ignore Prefixed names
       ((person_name1&.downcase&.include?(person_name2&.downcase) ||
@@ -84,6 +91,9 @@ module Core
       _, needle_last_name = parse_name(needle_person["name"])
       haystack_people.each do |haystack_person|
         _, haystack_last_name = parse_name(haystack_person["name"])
+        next if haystack_last_name.blank? # TODO: namae sometimes can't handle different formats of names
+        next if needle_last_name.blank?
+
         return haystack_person if haystack_last_name.downcase == needle_last_name.downcase &&
                                   (same_email?(haystack_person, needle_person) ||
                                   same_website?(haystack_person, needle_person))

@@ -13,8 +13,64 @@ scrape_sources:
 - https://www.corvallisoregon.gov/directory-listing/alison-bowden
 - https://www.corvallisoregon.gov/directory-listing/carolyn-mayers
 - https://www.corvallisoregon.gov/directory-listing/tony-cadena
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Charles Maughan
+    positions:
+    - Mayor
+    email: charles.maughan@corvallisoregon.gov
+    phone_number: "(541) 766-6985"
+  - name: Ava Olson
+    positions:
+    - Council Member
+    email: ava.olson@corvallisoregon.gov
+    phone_number: "(541) 766-6900"
+  - name: Jan Napack
+    positions:
+    - Council Member
+    - Ward 1
+    email: jan.napack@corvallisoregon.gov
+    phone_number: "(541) 766-6491"
+  - name: Briae Lewis
+    positions:
+    - Council Member
+    - Ward 2 City Councilor
+    email: briae.lewis@corvallisoregon.gov
+    phone_number: "(541) 766-6900"
+  - name: Jim Moorefield
+    positions:
+    - Council Member
+    - Ward 3
+    email: jim.moorefield@corvallisoregon.gov
+    phone_number: "(541) 766-6900"
+  - name: Charlyn Ellis
+    positions:
+    - Council Member
+    - Ward 5
+    email: charlyn.ellis@corvallisoregon.gov
+    phone_number: "(541) 766-6495"
+  - name: Paul Shaffer
+    positions:
+    - Council Member
+    - Ward 7
+    email: paul.shaffer@corvallisoregon.gov
+    phone_number: "(541) 766-6497"
+  - name: Alison Bowden
+    positions:
+    - Council Member
+    - Ward 7 Councilor
+    email: alison.bowden@corvallisoregon.gov
+    phone_number: "(541) 766-6900"
+  - name: Tony Cadena
+    positions:
+    - Council Member
+    - Ward 9
+    email: tony.cadena@corvallisoregon.gov
+    phone_number: "(541) 766-6494"
+  key_position: mayor
+people: {}
 scrape_exit_config:
   people_count: 7
   key_position: mayor
-people: {}
 divisions_map:

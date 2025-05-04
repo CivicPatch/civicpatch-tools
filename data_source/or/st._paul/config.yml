@@ -1,0 +1,37 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Martin Waldo
+    positions:
+    - Mayor
+    email: mwaldo@stpaultel.com
+    phone_number: "(503) 633-4971"
+  - name: Peggy Sellers
+    positions:
+    - Council President
+    email: psellers2@stpaultel.com
+    phone_number: "(503) 633-4971"
+  - name: Erika Gabbard
+    positions:
+    - Council Member
+    email: ''
+    phone_number: "(503) 633-4971"
+  - name: Ethan Smith
+    positions:
+    - Council Member
+    email: efsmith@stpaultel.com
+    phone_number: "(503) 633-4971"
+  - name: Mike Dolan
+    positions:
+    - Council Member
+    email: mdolan@stpaultel.com
+    phone_number: "(503) 633-4971"
+  - name: Tracy Fleck
+    positions:
+    - Council Member
+    email: tfleck@stpaultel.com
+    phone_number: "(503) 633-4971"
+  key_position: mayor
+people: {}

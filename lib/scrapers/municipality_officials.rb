@@ -18,7 +18,7 @@ module Scrapers
       if people.blank?
         city_name = municipality_context[:municipality_entry]["name"]
         state = municipality_context[:state]
-        puts "No people people found for #{city_name}, #{state}"
+        puts "No people found for #{city_name}, #{state}"
         with_search_fallback(municipality_context)
       else
         {
@@ -47,7 +47,8 @@ module Scrapers
 
     private_class_method def self.with_search_fallback(municipality_context)
       gemini = Services::GoogleGemini.new
-      people = gemini.search_for_people(municipality_context)
+      response = gemini.search_for_people(municipality_context)
+      people = response["people"]
       {
         "type" => "directory_list_fallback",
         "people" => people,

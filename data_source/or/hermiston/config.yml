@@ -1,0 +1,60 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Doug Primmer
+    positions:
+    - Mayor
+    email: dprimmer@hermiston.gov
+    phone_number: "(541) 567-5521"
+  - name: Allen Hayward
+    positions:
+    - Council Member
+    email: ahayward@hermiston.gov
+    phone_number: "(541) 567-5521"
+    image:
+    source_image:
+    phone_numbers: []
+    emails: []
+    websites: []
+    start_dates: []
+    end_dates: []
+    sources: []
+  - name: David P. McCarthy
+    positions:
+    - Council Member
+    email: dmccarthy@hermiston.gov
+    phone_number: "(541) 567-5521"
+  - name: Jackie Linton
+    positions:
+    - Council Member
+    email: jlinton@hermiston.gov
+    phone_number: "(541) 567-5521"
+  - name: Jackie Myers
+    positions:
+    - Council Member
+    email: jmyers@hermiston.gov
+    phone_number: "(541) 567-5521"
+  - name: Jeff Kelso
+    positions:
+    - Council Member
+    email: jkelso@hermiston.gov
+    phone_number: "(541) 567-5521"
+  - name: Josh Roberts
+    positions:
+    - Council Member
+    email: jroberts@hermiston.gov
+    phone_number: "(541) 567-5521"
+  - name: Maria Duron
+    positions:
+    - Council Member
+    email: mduron@hermiston.gov
+    phone_number: "(541) 567-5521"
+  - name: Roy Barron
+    positions:
+    - Council Member
+    email: rbarron@hermiston.gov
+    phone_number: "(541) 567-5521"
+  key_position: mayor
+people: {}

@@ -1,0 +1,42 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Rodney Cross
+    positions:
+    - Mayor
+    email: rod.cross@cityoftoledo.org
+    phone_number: "(541) 336-2247"
+  - name: Kim Anne Bush
+    positions:
+    - Council President
+    email: kim.bush@cityoftoledo.org
+    phone_number: "(541) 336-2247"
+  - name: Frank Silvia, III
+    positions:
+    - Council Member
+    email: frank.silvia@cityoftoledo.org
+    phone_number: "(541) 336-2247"
+  - name: Jackie Burns
+    positions:
+    - Council Member
+    email: jackie.burns@cityoftoledo.org
+    phone_number: "(541) 336-2247"
+  - name: Jackie Kauffman
+    positions:
+    - Council Member
+    email: jackie.kauffman@cityoftoledo.org
+    phone_number: "(541) 336-2247"
+  - name: Stu Strom
+    positions:
+    - Council Member
+    email: stu.strom@cityoftoledo.org
+    phone_number: "(541) 336-2247"
+  - name: Tracy Mix
+    positions:
+    - Council Member
+    email: tracy.mix@cityoftoledo.org
+    phone_number: "(541) 336-2247"
+  key_position: mayor
+people: {}

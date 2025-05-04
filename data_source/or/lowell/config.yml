@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Don Bennett
+    positions:
+    - Mayor
+    email: dbennett@ci.lowell.or.us
+    phone_number: "(541) 937-2157"
+  - name: Gail Harris
+    positions:
+    - Council President
+    email: gharris@ci.lowell.or.us
+    phone_number: "(541) 937-2157"
+  - name: Jimmy Murray
+    positions:
+    - Council Member
+    email: JMurray@ci.lowell.or.us
+    phone_number: "(541) 937-2157"
+  - name: Maureen Weathers
+    positions:
+    - Council Member
+    email: mweathers@ci.lowell.or.us
+    phone_number: "(541) 937-2157"
+  - name: Tim Stratis
+    positions:
+    - Council Member
+    email: tstratis@ci.lowell.or.us
+    phone_number: "(541) 937-2157"
+  key_position: mayor
+people: {}

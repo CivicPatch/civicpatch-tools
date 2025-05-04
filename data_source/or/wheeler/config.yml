@@ -1,0 +1,37 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Denise Donohue
+    positions:
+    - Mayor
+    email: optimalcoachingservices@gmail.com
+    phone_number: "(503) 368-5767"
+  - name: Karen Matthews
+    positions:
+    - Council President
+    email: wheelercouncilmatthews@gmail.com
+    phone_number: "(503) 368-5767"
+  - name: Deanne Ragnell
+    positions:
+    - Council Member
+    email: deanne.ragnell@gmail.com
+    phone_number: "(503) 368-5767"
+  - name: Gordon Taylor
+    positions:
+    - Council Member
+    email: taylorgordon003@gmail.com
+    phone_number: "(503) 368-5767"
+  - name: Heidi Stacks
+    positions:
+    - Council Member
+    email: beachsidehs@gmail.com
+    phone_number: "(503) 368-5767"
+  - name: Mary S. Leverette
+    positions:
+    - Council Member
+    email: ml2@comcast.net
+    phone_number: "(503) 368-5767"
+  key_position: mayor
+people: {}

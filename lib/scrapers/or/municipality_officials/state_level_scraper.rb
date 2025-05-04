@@ -8,7 +8,14 @@ module Scrapers
         MUNICIPALITY_DIRECTORY_URL = "https://www.orcities.org/resources/reference/city-directory"
 
         def self.get_source_url(municipality_entry)
-          key = municipality_entry["name"].downcase.gsub(" ", "-")
+          municipality_name = municipality_entry["name"]
+          municipality_name = if municipality_name.start_with?("Mount ")
+                                municipality_name.gsub("Mount ",
+                                                       "Mt ")
+                              else
+                                municipality_name
+                              end
+          key = municipality_name.downcase.gsub(" ", "-")
           "#{MUNICIPALITY_DIRECTORY_URL}/details/#{key}"
         end
 

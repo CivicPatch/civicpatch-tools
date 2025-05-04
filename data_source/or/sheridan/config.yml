@@ -1,0 +1,37 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Cale George
+    positions:
+    - Mayor
+    email: cgeorge@cityofsheridanor.com
+    phone_number: "(503) 843-2347"
+  - name: Denny McElroy
+    positions:
+    - Council Member
+    email: dmcelroy@cityofsheridanor.com
+    phone_number: "(503) 843-2347"
+  - name: Ian Houston
+    positions:
+    - Council Member
+    email: ihouston@cityofsheridanor.com
+    phone_number: "(503) 843-2347"
+  - name: James R. Buckles
+    positions:
+    - Council Member
+    email: jbuckles@cityofsheridanor.com
+    phone_number: "(503) 843-2347"
+  - name: Liz Hodgins
+    positions:
+    - Council Member
+    email: lhodgins@cityofsheridanor.com
+    phone_number: "(503) 843-2347"
+  - name: Lucy Hebert
+    positions:
+    - Council Member
+    email: lhebert@cityofsheridanor.com
+    phone_number: "(503) 843-2347"
+  key_position: mayor
+people: {}
