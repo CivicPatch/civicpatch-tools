@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Services
   module Shared
     class ResponseSchemas
@@ -8,7 +10,7 @@ module Services
           llm_confidence: { type: :number },
           llm_confidence_reason: { type: :string }
         }
-      }
+      }.freeze
       GEMINI_PERSON_SCHEMA = {
         type: :object,
         properties: {

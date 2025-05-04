@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GitHub
   class CityPeople
     def self.to_markdown_missing_people_table(missing_people)

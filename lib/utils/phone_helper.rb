@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Utils
   class PhoneHelper
     def self.format_phone_number(phone) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity

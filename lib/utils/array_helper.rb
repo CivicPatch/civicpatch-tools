@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Utils
   module ArrayHelper
     def self.interleave_arrays(arrays)

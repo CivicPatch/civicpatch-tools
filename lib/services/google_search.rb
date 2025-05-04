@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Services
   class GoogleSearch
-    GOOGLE_SEARCH_ENDPOINT = "https://www.googleapis.com/customsearch/v1".freeze
+    GOOGLE_SEARCH_ENDPOINT = "https://www.googleapis.com/customsearch/v1"
 
     def self.set_keys
       @api_key = ENV["GOOGLE_SEARCH_API_KEY"]

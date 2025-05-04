@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "core/city_manager"
 require "utils/costs_helper"
 require "pp"
@@ -8,10 +10,10 @@ module Services
   class GoogleGemini
     MAX_RETRIES = 5
     # MODEL = "gemini-2.5-pro-exp-03-25".freeze
-    MODEL = "gemini-2.5-flash-preview-04-17".freeze
+    MODEL = "gemini-2.5-flash-preview-04-17"
     # MODEL = "gemini-2.0-flash".freeze
     # MODEL = "gemini-1.5-pro".freeze
-    BASE_URI = "https://generativelanguage.googleapis.com".freeze
+    BASE_URI = "https://generativelanguage.googleapis.com"
     BASE_SLEEP = 5
 
     def initialize
@@ -130,7 +132,7 @@ module Services
           JSON.parse(cleaned_json_output)
         rescue StandardError
           nil
-        end # Use JSON.parse
+        end
 
         puts "Failed to parse JSON response from Gemini: #{json_output}" if parsed_response.nil?
 

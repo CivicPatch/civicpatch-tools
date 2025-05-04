@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "path_helper"
 
 module Core

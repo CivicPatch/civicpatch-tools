@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "zaru"
 require "amatch"
 require "utils/url_helper"

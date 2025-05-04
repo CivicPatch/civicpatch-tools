@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "services/google_search"
 require "services/brave"
 require "utils/array_helper"

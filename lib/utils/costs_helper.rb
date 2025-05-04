@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Utils
   class CostsHelper
     def self.log_llm_cost(

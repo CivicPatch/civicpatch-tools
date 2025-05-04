@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "core/browser"
 require "utils/phone_helper"
 require "utils/url_helper"
@@ -5,7 +7,7 @@ require "utils/url_helper"
 module Scrapers
   module Or
     class Municipalities
-      WEBSITE_SOURCE_URL = "https://sos.oregon.gov/blue-book/Pages/local/cities.aspx".freeze
+      WEBSITE_SOURCE_URL = "https://sos.oregon.gov/blue-book/Pages/local/cities.aspx"
       STATE_SOURCE_URL = "https://www.orcities.org/resources/reference/city-directory"
       STATE_SOURCE_MUNICIPAL_URL = "https://www.orcities.org/resources/reference/city-directory/details"
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "securerandom"
 require "utils/url_helper"
 require_relative "../utils/image_helper"

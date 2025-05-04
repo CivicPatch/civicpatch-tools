@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Services
   class Census
     STATE_TO_STATEFP = {
