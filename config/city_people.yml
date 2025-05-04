@@ -12,15 +12,14 @@ government_types:
       - role: council vice president
       - role: council manager
       - role: deputy council manager
-      - role: council member
       - role: commisioner
+      - role: council member
         aliases:
           - councilmember
           - councilwoman
           - councilman
           - councilor
           - councillor
-          - commissioner
         divisions:
           - citywide
           - at-large
