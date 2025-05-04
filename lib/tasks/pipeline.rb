@@ -97,24 +97,18 @@ namespace :pipeline do
   end
 
   def fetch_with_state_source(municipality_context)
-    people_config = municipality_context[:config]["people"]
     puts "#{municipality_context[:state]} - #{municipality_context[:municipality_entry]["name"]} - Fetching with state source"
+    people_config = municipality_context[:config]["people"]
     positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
-    data_source_dir = PathHelper.get_data_source_city_path(municipality_context[:state],
-                                                           municipality_context[:municipality_entry]["gnis"])
 
     source_directory_list_config = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
     if source_directory_list_config["type"] == "directory_list"
       people = source_directory_list_config["people"]
       people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
-
-      FileUtils.mkdir_p(data_source_dir) unless Dir.exist?(data_source_dir)
-      Core::PeopleManager.update_people(municipality_context, people_with_canoncial_names, "state_source.before")
       formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
                                                            positions_config)
-      source_directory_list_config["people"] = formatted_people.map { |person| person.slice("name", "positions") }
-      Core::PeopleManager.update_people(municipality_context, formatted_people, "state_source.after")
+      source_directory_list_config["people"] = formatted_people
     end
 
     [source_directory_list_config, people_config]

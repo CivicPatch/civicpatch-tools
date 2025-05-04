@@ -13,7 +13,7 @@
       {
         "data": "(971) 901-2084",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -21,7 +21,7 @@
       {
         "data": "Kim.Morris@mcminnvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -30,7 +30,7 @@
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term expires: 12/31/2028' near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
@@ -52,7 +52,7 @@
       {
         "data": "(503) 437-2833",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -60,7 +60,7 @@
       {
         "data": "Sal.Peralta@mcminnvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -69,7 +69,7 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term expires: 12/31/2026' near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
@@ -91,7 +91,7 @@
       {
         "data": "(971) 287-8671",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -99,7 +99,7 @@
       {
         "data": "Chris.Chenoweth@mcminnvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -108,7 +108,7 @@
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term expires: 12/31/2028' near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
@@ -130,7 +130,7 @@
       {
         "data": "(971) 517-0242",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -138,7 +138,7 @@
       {
         "data": "Daniel.Tucholsky@mcminnvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -147,7 +147,7 @@
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term expires: 12/31/2028' near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
@@ -169,7 +169,7 @@
       {
         "data": "(503) 560-0617",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -177,7 +177,7 @@
       {
         "data": "Zack.Geary@mcminnvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -186,7 +186,7 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term expires: 12/31/2026' near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
@@ -208,7 +208,7 @@
       {
         "data": "(971) 517-0957",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -216,7 +216,7 @@
       {
         "data": "Jessica.Payne@mcminnvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -225,7 +225,7 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term expires: 12/31/2026' near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
@@ -247,7 +247,7 @@
       {
         "data": "(971) 517-0609",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -255,7 +255,7 @@
       {
         "data": "Scott.Cunningham@mcminnvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
@@ -264,7 +264,7 @@
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term expires: 12/31/2028' near name.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }

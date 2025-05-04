@@ -6,29 +6,29 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "Coming Soon",
-    "email": "kim.morris@mcminnvilleoregon.gov",
-    "website": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/",
+    "phone_number": "(971) 901-2084",
+    "email": "Kim.Morris@mcminnvilleoregon.gov",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2028-12-31",
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil",
-      "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123",
-      "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/"
+      "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
     "updated_at": "2025-05-04"
   },
   {
     "name": "Sal Peralta",
-    "positions": [],
+    "positions": [
+      "Council President",
+      "Ward 1"
+    ],
     "image": null,
     "source_image": null,
     "phone_number": "(503) 437-2833",
-    "email": null,
-    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "email": "Sal.Peralta@mcminnvilleoregon.gov",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2026-12-31",
     "sources": [
       "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
@@ -37,116 +37,90 @@
   {
     "name": "Chris Chenoweth",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Ward 1"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(971) 287-8671",
-    "email": null,
-    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "email": "Chris.Chenoweth@mcminnvilleoregon.gov",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2028-12-31",
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
+      "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
     "updated_at": "2025-05-04"
   },
   {
     "name": "Dan Tucholsky",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(971) 517-0242",
-    "email": null,
-    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "email": "Daniel.Tucholsky@mcminnvilleoregon.gov",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2028-12-31",
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
+      "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
     "updated_at": "2025-05-04"
   },
   {
     "name": "Zack Geary",
     "positions": [
-      "Councilor",
-      "Ward 2",
-      "Council Member"
+      "Council Member",
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(503) 560-0617",
-    "email": null,
-    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "email": "Zack.Geary@mcminnvilleoregon.gov",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2026-12-31",
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
+      "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
     "updated_at": "2025-05-04"
   },
   {
     "name": "Jessica Payne",
     "positions": [
-      "Councilor",
-      "Ward 3",
-      "Council Member"
+      "Council Member",
+      "Ward 3"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(971) 517-0957",
-    "email": null,
-    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
+    "email": "Jessica.Payne@mcminnvilleoregon.gov",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2026-12-31",
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
+      "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
     "updated_at": "2025-05-04"
   },
   {
     "name": "Scott Cunningham",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Ward 3"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(971) 517-0609",
-    "email": null,
-    "website": "https://www.mcminnvilleoregon.gov/citycouncil",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
-    ],
-    "updated_at": "2025-05-04"
-  },
-  {
-    "name": "Salvador Peralta",
-    "positions": [
-      "Councilor",
-      "Ward 1",
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
+    "email": "Scott.Cunningham@mcminnvilleoregon.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2028-12-31",
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
-      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
+      "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
     "updated_at": "2025-05-04"
   }
