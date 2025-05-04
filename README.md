@@ -19,6 +19,7 @@ rake 'city_scrape:get_places[mi]'
 * [https://docs.google.com/spreadsheets/d/1QtcMQV85HUxTayyk8mVO5Eqr8bWiNEdGc12RuoWuLpM/edit?gid=646812149#gid=646812149](List of state-level municipal officials)
 ### Washington
 - **State local officials directory (unofficial)**: https://mrsc.org/mrsctools/officials-directory/city.aspx
+  - Contains city council members
 ### Oregon
 - **State local officials directory (unofficial)**: https://www.orcities.org/resources/reference/city-directory
 ### California
@@ -27,6 +28,20 @@ rake 'city_scrape:get_places[mi]'
 ### Idaho (TBD)
 - **State local officials directory (unofficial)**:
   - https://idahocities.org/store/ListProducts.aspx?catid=440197 (not scrapeable -- must be a member)
+### New Hampshire
+- Combo of
+  - [Community Profiles](https://www.nhes.nh.gov/elmi/products/cp/)
+    - TIL -- what are Selectmen???
+    - Gives you government type, website, general email, general phone #
+    - More data than below
+  - [List of municipalities](https://www.nheconomy.com/office-of-planning-and-development/what-we-do/state-data-center-(census-data)/municipalities,-counties-and-regions)
+    - Contains websites & counties, easier to scrape
+  - For officials -- do a google search
+### Michigan
+- For townships: https://michigantownships.org/find-a-township#aftersearch
+  - Contains city council members!
+  - This looks SUPER well maintained; haven't verified data
+- For cities/etc -- do a google search
   
 ### FIPS examples
 * https://www2.census.gov/geo/docs/reference/codes2020/place/st41_or_place2020.txt

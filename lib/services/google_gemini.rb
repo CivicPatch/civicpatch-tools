@@ -1,7 +1,7 @@
 require "core/city_manager"
 require "utils/costs_helper"
 require "pp"
-require_relative "shared/llm_prompts"
+require_relative "shared/gemini_prompts"
 require "utils/name_helper"
 
 module Services
@@ -18,6 +18,21 @@ module Services
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
     end
 
+    def search_for_people(municipality_context)
+      state = municipality_context[:state]
+      municipality_entry = municipality_context[:municipality_entry]
+
+      prompt = Services::Shared::GeminiPrompts
+               .gemini_generate_search_for_people_prompt(state, municipality_entry)
+
+      request_origin = "#{state}_#{municipality_entry["name"]}_gemini_#{MODEL}_search_for_people"
+      response = run_prompt(prompt, request_origin, with_search: true)
+
+      return nil if response.blank?
+
+      response
+    end
+
     def extract_city_people(municipality_context, content_file, url, person_name = "")
       state = municipality_context[:state]
       municipality_entry = municipality_context[:municipality_entry]
@@ -27,11 +42,12 @@ module Services
       # TODO: check if input is too long
       # return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
-      prompt = Services::Shared::LlmPrompts
+      prompt = Services::Shared::GeminiPrompts
                .gemini_generate_municipal_directory_prompt(state, municipality_entry, government_type, content, person_name)
 
-      request_origin = "#{state}_#{municipality_entry["name"]}_gemini_#{MODEL}_municipality_scrape"
-      response = run_prompt(prompt, request_origin, Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
+      request_origin = "#{state}_#{municipality_entry["name"]}_gemini_#{MODEL}_extract_city_people"
+      response = run_prompt(prompt, request_origin,
+                            response_schema: Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
 
       return nil if response.blank?
 
@@ -45,7 +61,7 @@ module Services
       end
     end
 
-    def run_prompt(prompt, request_origin, response_schema)
+    def run_prompt(prompt, request_origin, response_schema: nil, with_search: false)
       retry_attempts = 0
       url = "#{BASE_URI}/v1beta/models/#{MODEL}:generateContent?key=#{@api_key}"
 
@@ -56,14 +72,19 @@ module Services
           }]
         }],
         generationConfig: {
-          temperature: 0,
-          responseMimeType: "application/json",
-          responseSchema: response_schema
+          temperature: 0
         }
-      }.to_json
+      }
+
+      if with_search
+        payload[:tools] = { googleSearch: {} }
+      else
+        payload[:generationConfig][:responseMimeType] = "application/json"
+        payload[:generationConfig][:responseSchema] = response_schema
+      end
 
       options = {
-        body: payload,
+        body: payload.to_json,
         headers: {
           "Content-Type" => "application/json"
         },

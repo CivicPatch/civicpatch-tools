@@ -1,6 +1,40 @@
 module Services
   module Shared
-    class LlmPrompts
+    class GeminiPrompts
+      def self.gemini_generate_search_for_people_prompt(state, municipality_entry)
+        city_name = municipality_entry["name"]
+
+        %(
+        Provide the current elected Mayor and City Council Members for the specified city,
+        formatting the response as a JSON object.
+
+        City: #{city_name}, #{state}
+        City Website (Optional, for context): #{municipality_entry["website"]}
+
+        Instructions:
+
+        First, determine the total number of elected officials on the City Council for #{city_name}.
+        This total number includes the Mayor.
+
+        Create a JSON object with a single top-level key "people". The value of "people" must be an array.
+
+        This array must contain exactly the total number of elected officials determined in step 1.
+
+        Within the array, include one entry for the Mayor and the remaining entries for "Council Member" positions.
+
+        For each entry in the array, provide the current elected official's name
+        only if you are highly certain based on your training data or search results.
+
+        If you are not highly certain of the current name for any specific position,
+        or if the information might be outdated or incomplete, set the 'name' field to null for that entry.
+
+        Each object in the array must have two keys:
+        {
+          "name": The official's name (string) or null.
+          "positions": The position held (array of strings), which should be either "Mayor" or "Council Member" (or equivalent).
+        })
+      end
+
       def self.gemini_generate_municipal_directory_prompt(state, city_entry, government_type, content, person_name = "")
         city_name = city_entry["name"]
         positions = Core::CityManager.get_position_roles(government_type)

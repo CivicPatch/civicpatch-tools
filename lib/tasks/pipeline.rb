@@ -13,8 +13,6 @@ require_relative "../services/spaces"
 require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
 
-MINIMUM_PEOPLE_COUNT = 3
-
 namespace :pipeline do
   desc "Pick cities from queue"
   task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args| # bug -- this is a list of city names, which is not a unique identifier
@@ -52,16 +50,10 @@ namespace :pipeline do
 
     prepare_directories(state, municipality_entry)
 
-    state_source_people, people_config = fetch_with_state_source(municipality_context) # State-level city directory source
+    source_directory_list_config, people_config = fetch_with_state_source(municipality_context) # State-level city directory source
     # TODO: require all municipalities to have a mayor until we discover otherwise
 
-    # Sometimes state source can lag behind the city source
-    #  -- there may be more members listed than are
-    # available on the city website
-    people_count = [state_source_people.count - MINIMUM_PEOPLE_COUNT, MINIMUM_PEOPLE_COUNT].max
-    scrape_exit_config = { "people_count" => people_count,
-                           "key_position" => "mayor" }
-    municipality_context[:config]["scrape_exit_config"] = scrape_exit_config
+    municipality_context[:config]["source_directory_list"] = source_directory_list_config
     municipality_context[:config]["people"] = people_config
 
     people_config = fetch_with_scrape(municipality_context)
@@ -73,7 +65,7 @@ namespace :pipeline do
     people = Core::PeopleManager.get_people(state, gnis)
     remove_unused_cache_folders(state, municipality_entry, people)
 
-    # Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
+    Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
   end
 
   desc "Fetch city officials from state source"
@@ -111,21 +103,21 @@ namespace :pipeline do
     data_source_dir = PathHelper.get_data_source_city_path(municipality_context[:state],
                                                            municipality_context[:municipality_entry]["gnis"])
 
-    # This call can fail if the state source is down (e.g. MRSC.org for WA)
-    begin
-      people = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
+    source_directory_list_config = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
+
+    if source_directory_list_config["type"] == "directory_list"
+      people = source_directory_list_config["people"]
       people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
 
       FileUtils.mkdir_p(data_source_dir) unless Dir.exist?(data_source_dir)
       Core::PeopleManager.update_people(municipality_context, people_with_canoncial_names, "state_source.before")
-      formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names, positions_config)
+      formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
+                                                           positions_config)
+      source_directory_list_config["people"] = formatted_people.map { |person| person.slice("name", "positions") }
       Core::PeopleManager.update_people(municipality_context, formatted_people, "state_source.after")
-
-      [formatted_people, people_config]
-    rescue StandardError => e
-      puts "Error pulling from state source: #{e}"
-      puts "Backtrace: #{e.backtrace}"
     end
+
+    [source_directory_list_config, people_config]
   end
 
   def fetch_with_scrape(municipality_context)

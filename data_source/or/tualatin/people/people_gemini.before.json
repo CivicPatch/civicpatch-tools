@@ -2,10 +2,11 @@
   {
     "name": "Frank Bubenik",
     "positions": [
-      "mayor"
+      "Mayor",
+      "City Council"
     ],
-    "image": "images/859affbf66eb7797d3e1429fe670189cd10d971ca824d5e54ebd66674104362d.jpg",
-    "source_image": "https://www.tualatinoregon.gov/sites/default/files/resize/imageattachments/wysiwyg/webtuccouncilh230109_31a-145x181.jpg",
+    "image": null,
+    "source_image": null,
     "phone_number": null,
     "email": "fbubenik@tualatin.gov",
     "website": null,
@@ -17,13 +18,13 @@
     "updated_at": "2025-05-03"
   },
   {
-    "name": "Maria Antonieta Reyes",
+    "name": "Maria Reyes",
     "positions": [
-      "council member",
-      "position 1"
+      "Councilor",
+      "Position 1"
     ],
-    "image": "images/704fe5c8de899ecba884acd472abddf6edbb15118f72314116105fe774aab19e.jpg",
-    "source_image": "https://www.tualatinoregon.gov/sites/default/files/resize/imageattachments/wysiwyg/webtuccouncilh230109_34a-145x181.jpg",
+    "image": null,
+    "source_image": null,
     "phone_number": null,
     "email": "mreyes@tualatin.gov",
     "website": null,
@@ -37,11 +38,11 @@
   {
     "name": "Christen Sacco",
     "positions": [
-      "council member",
-      "position 2"
+      "Councilor",
+      "Position 2"
     ],
-    "image": "images/65cf4f9eb2d11d4a3783c0491dc6a79280ac1df08707aaa175a99feae17dd535.jpg",
-    "source_image": "https://www.tualatinoregon.gov/sites/default/files/resize/imageattachments/wysiwyg/webtuccouncilh230109_07a-145x181.jpg",
+    "image": null,
+    "source_image": null,
     "phone_number": null,
     "email": "csacco@tualatin.gov",
     "website": null,
@@ -55,11 +56,11 @@
   {
     "name": "Bridget Brooks",
     "positions": [
-      "council member",
-      "position 3"
+      "Councilor",
+      "Position 3"
     ],
-    "image": "images/1a96dee755d7ae23f13228ac4414984472dc9f5016d7be4a967a5c066b13d7ae.jpg",
-    "source_image": "https://www.tualatinoregon.gov/sites/default/files/webtuc190114_04a.jpg",
+    "image": null,
+    "source_image": null,
     "phone_number": null,
     "email": "bbrooks@tualatin.gov",
     "website": null,
@@ -73,11 +74,11 @@
   {
     "name": "Cyndy Hillier",
     "positions": [
-      "council member",
-      "position 4"
+      "Councilor",
+      "Position 4"
     ],
-    "image": "images/5f9de968a5c70798710a18200f1a4ca8f757de2220636e03ccca9ef6420d0f6a.jpg",
-    "source_image": "https://www.tualatinoregon.gov/sites/default/files/resize/imageattachments/wysiwyg/webtuccouncilh230109_16a-145x181.jpg",
+    "image": null,
+    "source_image": null,
     "phone_number": null,
     "email": "chillier@tualatin.gov",
     "website": null,
@@ -91,11 +92,11 @@
   {
     "name": "Octavio Gonzalez",
     "positions": [
-      "council member",
-      "position 5"
+      "Councilor",
+      "Position 5"
     ],
-    "image": "images/e16a5f119f6dddafb46f55a99b8c29cc37cbbfdd0f7ddc26a118e0214eec5a9b.jpg",
-    "source_image": "https://www.tualatinoregon.gov/sites/default/files/resize/imageattachments/wysiwyg/webtuccouncilh230109_23a-145x181.jpg",
+    "image": null,
+    "source_image": null,
     "phone_number": null,
     "email": "ogonzalez@tualatin.gov",
     "website": null,
@@ -109,14 +110,49 @@
   {
     "name": "Valerie Pratt",
     "positions": [
-      "council member",
-      "position 6"
+      "Councilor",
+      "Position 6"
     ],
-    "image": "images/fa3b33c6ebe8dd45f55d85ead5bcab875ae59832e4bf32bf0ddd734555b0389b.jpg",
-    "source_image": "https://www.tualatinoregon.gov/sites/default/files/resize/imageattachments/wysiwyg/webtuccouncilh230109_19a-145x181.jpg",
+    "image": null,
+    "source_image": null,
     "phone_number": null,
     "email": "vpratt@tualatin.gov",
     "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Sherilyn Lombos",
+    "positions": [
+      "City Manager"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-691-3010",
+    "email": "slombos@tualatin.gov",
+    "website": "https://www.tualatinoregon.gov/administration/city-managers-message",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.tualatinoregon.gov/citycouncil/meet-your-council",
+      "https://www.tualatinoregon.gov/administration"
+    ],
+    "updated_at": "2025-05-03"
+  },
+  {
+    "name": "Megan George",
+    "positions": [
+      "Deputy City Manager"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-691-3065",
+    "email": null,
+    "website": "https://www.tualatinoregon.gov/administration",
     "start_date": null,
     "end_date": null,
     "sources": [

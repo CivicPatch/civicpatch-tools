@@ -1,0 +1,29 @@
+---
+scrape_sources:
+- https://www.tualatinoregon.gov/citycouncil/meet-your-council
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Frank Bubenik
+    positions:
+    - Mayor
+  - name: Valerie Pratt
+    positions:
+    - Council President
+  - name: Bridget Brooks
+    positions:
+    - Council Member
+  - name: Christen Sacco
+    positions:
+    - Council Member
+  - name: Cyndy Hillier
+    positions:
+    - Council Member
+  - name: Maria Reyes
+    positions:
+    - Council Member
+  - name: Octavio Gonzalez
+    positions:
+    - Council Member
+  key_position: mayor
+people: {}

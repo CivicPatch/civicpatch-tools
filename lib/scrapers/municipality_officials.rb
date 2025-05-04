@@ -6,20 +6,34 @@ module Scrapers
     def self.fetch_with_state_level(municipality_context)
       case municipality_context[:state]
       when "wa"
-        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
+        people = Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
       when "or"
-        Scrapers::Or::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
+        people = Scrapers::Or::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
       else
         raise "No state-level scraper found for #{municipality_context[:state]}"
       end
+
+      if people.blank?
+        city_name = municipality_context[:municipality_entry]["name"]
+        state = municipality_context[:state]
+        puts "No people people found for #{city_name}, #{state}"
+        with_search_fallback(municipality_context)
+      else
+        {
+          "type" => "directory_list",
+          "people" => people,
+          "key_position" => "mayor"
+        }
+      end
     end
 
-    def self.get_suggest_edit_details(municipality_context)
+    def self.get_edit_detail(municipality_context)
+      state = municipality_context[:state]
       municipality_entry = municipality_context[:municipality_entry]
 
-      case municipality_context[:state]
+      case state
       when "wa"
-        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_suggest_edit_details(municipality_entry)
+        Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.get_edit_detail(municipality_entry)
       when "or"
         source_url = Scrapers::Or::MunicipalityOfficials::StateLevelScraper.get_source_url(municipality_entry)
         email = "loc@orcities.org"
@@ -27,6 +41,16 @@ module Scrapers
       else
         raise "No state-level scraper found for #{municipality_context[:state]}"
       end
+    end
+
+    private_class_method def self.with_search_fallback(municipality_context)
+      gemini = Services::GoogleGemini.new
+      people = gemini.search_for_people(municipality_context)
+      {
+        "type" => "directory_list_fallback",
+        "people" => people,
+        "key_position" => "mayor"
+      }
     end
   end
 end
