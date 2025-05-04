@@ -1,0 +1,45 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Charles Rostocil
+    positions:
+    - Mayor
+    email: charles.rostocil@cityofhubbard.org
+    phone_number: "(503) 981-9633"
+  - name: James Audritsh
+    positions:
+    - Council President
+    email: jaudritsh@cityofhubbard.org
+    phone_number: "(503) 981-9633"
+  - name: James Yonally
+    positions:
+    - Council Member
+    email: jyonally@cityofhubbard.org
+    phone_number: "(503) 981-9633"
+  - name: James Yonally
+    positions:
+    - Council Member
+    email: jyonally@cityofhubbard.org
+    phone_number: "(503) 981-9633"
+    image:
+    source_image:
+    phone_numbers: []
+    emails: []
+    websites: []
+    start_dates: []
+    end_dates: []
+    sources: []
+  - name: Joseph D. Steininger
+    positions:
+    - Council Member
+    email: Jsteininger@cityofhubbard.org
+    phone_number: "(503) 981-9633"
+  - name: Tyler Thomas
+    positions:
+    - Council Member
+    email: tthomas@cityofhubbard.org
+    phone_number: "(503) 981-9633"
+  key_position: mayor
+people: {}

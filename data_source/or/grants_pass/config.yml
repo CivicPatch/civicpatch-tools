@@ -10,8 +10,62 @@ scrape_sources:
 - https://www.grantspassoregon.gov/directory.aspx?eid=365
 - https://www.grantspassoregon.gov/directory.aspx?eid=271
 - https://www.grantspassoregon.gov/directory.aspx?eid=362
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Clint Scherf
+    positions:
+    - Mayor
+    email: cscherf@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Brian DeLaGrange
+    positions:
+    - Council Member
+    email: bdelagrange@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Dwayne Yunker
+    positions:
+    - Council Member
+    email: dyunker@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Erich Schloegl
+    positions:
+    - Council Member
+    email: eschloegl@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Indra Nicholas
+    positions:
+    - Council Member
+    email: inicholas@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Joel King
+    positions:
+    - Council Member
+    email: jking@grantspassoregon.gov
+    phone_number: "(541) 450-6010"
+  - name: Kathleen Krohn
+    positions:
+    - Council Member
+    email: kkrohn@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Rick Riker
+    positions:
+    - Council Member
+    email: rriker@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Rob Pell
+    positions:
+    - Council Member
+    email: rpell@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  - name: Victoria Marshall
+    positions:
+    - Council Member
+    email: vmarshall@grantspassoregon.gov
+    phone_number: "(541) 450-6000"
+  key_position: mayor
+people: {}
 scrape_exit_config:
   people_count: 8
   key_position: mayor
-people: {}
 divisions_map:

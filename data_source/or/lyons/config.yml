@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Mike Wagner
+    positions:
+    - Mayor
+    email: M.Wagner@cityoflyons.org
+    phone_number: "(503) 859-2167"
+  - name: Amy Thrasher
+    positions:
+    - Council Member
+    email: a.thrasher@cityoflyons.org
+    phone_number: "(503) 859-2167"
+  - name: Diane Diane Hyde
+    positions:
+    - Council Member
+    email: D.Hyde@cityoflyons.org
+    phone_number: "(503) 859-2167"
+  - name: Eric Gjonnes
+    positions:
+    - Council Member
+    email: e.gjonnes@cityoflyons.org
+    phone_number: "(503) 859-2167"
+  - name: Jessica Ritchie
+    positions:
+    - Council Member
+    email: J.Ritchie@cityoflyons.org
+    phone_number: "(503) 859-2167"
+  key_position: mayor
+people: {}

@@ -1,0 +1,27 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: William Currier
+    positions:
+    - Mayor
+    email: bill.currier@adairvillage.org
+    phone_number: "(541) 207-1245"
+  - name: Bret Ray
+    positions:
+    - Council Member
+    email: bret.ray@adairvillage.org
+    phone_number: "(541) 745-5507"
+  - name: Dawson Officer
+    positions:
+    - Council Member
+    email: dawson.officer@adairvillage.org
+    phone_number: "(541) 745-5508"
+  - name: John P. Wilson
+    positions:
+    - Council Member
+    email: johnpwilsonii@gmail.com
+    phone_number: "(541) 745-5507"
+  key_position: mayor
+people: {}

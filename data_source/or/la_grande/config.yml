@@ -1,0 +1,42 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Justin Rock
+    positions:
+    - Mayor
+    email: jrock@cityoflagrande.org
+    phone_number: "(541) 962-1309"
+  - name: Corrine Dutto
+    positions:
+    - Council Member
+    email: cdutto@cityoflagrande.org
+    phone_number: "(541) 962-1309"
+  - name: Denise Wheeler
+    positions:
+    - Council Member
+    email: dwheeler@cityoflagrande.org
+    phone_number: "(541) 962-1309"
+  - name: Dr. David Glabe
+    positions:
+    - Council Member
+    email: DGlabe@cityoflagrande.org
+    phone_number: "(541) 962-1309"
+  - name: Mary Ann Miesner
+    positions:
+    - Council Member
+    email: mmiesner@cityoflagrande.org
+    phone_number: "(541) 962-1309"
+  - name: Molly King
+    positions:
+    - Council Member
+    email: mking@cityoflagrande.org
+    phone_number: "(541) 962-1309"
+  - name: Rikki Jo Hickey
+    positions:
+    - Council Member
+    email: Rhickey@cityoflagrande.org
+    phone_number: "(541) 962-1309"
+  key_position: mayor
+people: {}

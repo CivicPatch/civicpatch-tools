@@ -55,18 +55,27 @@ namespace :pipeline do
                            .update_context_config(municipality_context,
                                                   scrape_sources: scrape_sources)
 
-    cleanup(municipality_context)
+    finalize(municipality_context)
   end
 
   desc "Fetch city officials from state source"
   task :fetch_from_state, [:state] do |_t, args|
+    # Use with caution, expensive call that should be run
+    # only once per initial state setup to scaffold data
     state = args[:state]
 
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     municipalities.each do |municipality_entry|
       context = Core::ContextManager.get_context(state, municipality_entry["gnis"])
-      fetch_with_state_source(context)
-      aggregate_sources(context, sources: %w[state_source])
+      next unless municipality_entry["website"].present?
+      next unless context[:config]["source_directory_list"]["type"] == "directory_list_fallback"
+
+      source_directory_list, people_config = fetch_with_state_source(context)
+      # aggregate_sources(context, sources: %w[state_source])
+      context = Core::ContextManager.update_context_config(context,
+                                                           source_directory_list: source_directory_list,
+                                                           people: people_config)
+      finalize(context)
     end
   end
 
@@ -223,27 +232,30 @@ namespace :pipeline do
     end
   end
 
-  def self.cleanup(municipality_context)
+  def self.finalize(municipality_context)
     gnis = municipality_context[:municipality_entry]["gnis"]
     people = Core::PeopleManager.get_people(municipality_context[:state], gnis)
     state = municipality_context[:state]
     cache_dir = PathHelper.get_city_cache_path(state, gnis)
-    cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
-    # Get list of src files in use
-    source_urls = people.flat_map do |person|
-      person["sources"]
-        .map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
-    end.uniq
+    if Dir.exist?(cache_dir)
+      cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
-    cache_folders.each do |cache_folder|
-      unless source_urls.any? { |source_url| cache_folder.include?(source_url) }
-        puts "Removing #{cache_folder} from cache"
-        FileUtils.rm_rf(cache_folder)
+      # Get list of src files in use
+      source_urls = people.flat_map do |person|
+        person["sources"]
+          &.map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
+      end.uniq
+
+      cache_folders.each do |cache_folder|
+        unless source_urls.any? { |source_url| cache_folder.include?(source_url) }
+          puts "Removing #{cache_folder} from cache"
+          FileUtils.rm_rf(cache_folder)
+        end
       end
     end
 
-    Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
+    Core::ConfigManager.finalize_config(state, gnis, municipality_context[:config])
   end
 
   private

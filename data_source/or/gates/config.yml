@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Donald Mann
+    positions:
+    - Mayor
+    email: councilor.mann@gmail.com
+    phone_number: "(503) 897-2669"
+  - name: Emily Scofield
+    positions:
+    - Council Member
+    email: councilor.scofield@gmail.com
+    phone_number: "(503) 897-2669"
+  - name: Gary Crum
+    positions:
+    - Council Member
+    email: councilor.garycrum@gmail.com
+    phone_number: "(503) 897-2669"
+  - name: SANDI HEWARD
+    positions:
+    - Council Member
+    email: councilor.heward@gmail.com
+    phone_number: "(503) 897-2669"
+  - name: Tonya Chamberlain
+    positions:
+    - Council Member
+    email: gatesstreets@gmail.com
+    phone_number: "(503) 897-2669"
+  key_position: mayor
+people: {}

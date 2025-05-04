@@ -30,14 +30,16 @@ module Core
       end
     end
 
-    def self.update_config(state, gnis, config)
+    def self.update_config(state, gnis, config, **updates)
+      updated_config = config.dup
+      updated_config = updated_config.merge(updates.stringify_keys)
       config_file_path = config_path(state, gnis)
-      File.write(config_file_path, config.to_yaml)
+      File.write(config_file_path, updated_config.to_yaml)
 
       config
     end
 
-    def self.cleanup(state, gnis, config)
+    def self.finalize_config(state, gnis, config)
       people_config = config["people"]
 
       people_config.each do |name, person_config|

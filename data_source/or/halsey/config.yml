@@ -1,0 +1,37 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Jerry Lachenbruch
+    positions:
+    - Mayor
+    email: mayor@halseyor.gov
+    phone_number: "(541) 369-2522"
+  - name: Jerry Gillson
+    positions:
+    - Council Member
+    email: jerry@halseyor.gov
+    phone_number: "(541) 369-2522"
+  - name: John Miller
+    positions:
+    - Council Member
+    email: john@halseyor.gov
+    phone_number: "(541) 369-2522"
+  - name: Michelle Isom
+    positions:
+    - Council Member
+    email: michelle@halseyor.gov
+    phone_number: "(541) 369-2522"
+  - name: Scott LaCoste
+    positions:
+    - Council Member
+    email: scott@halseyor.gov
+    phone_number: "(541) 369-2522"
+  - name: Stacy Strauss
+    positions:
+    - Council Member
+    email: Stacy@HalseyOr.gov
+    phone_number: "(541) 369-2522"
+  key_position: mayor
+people: {}

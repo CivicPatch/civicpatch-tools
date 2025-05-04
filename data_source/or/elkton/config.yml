@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Daniel Burke
+    positions:
+    - Mayor
+    email: cityofelkton@rconnects.com
+    phone_number: "(541) 584-2547"
+  - name: Daniel Shepherd
+    positions:
+    - Council Member
+    email: shepdanr@icloud.com
+    phone_number: "(541) 584-2547"
+  - name: Kim Moore
+    positions:
+    - Council Member
+    email: kimarlo@live.com
+    phone_number: "(541) 584-2547"
+  - name: Ryan Fall
+    positions:
+    - Council Member
+    email: rtfall@me.com
+    phone_number: "(541) 584-2547"
+  - name: Sandra Galli
+    positions:
+    - Council Member
+    email: buffalogardens@gmail.com
+    phone_number: "(541) 584-2547"
+  key_position: mayor
+people: {}

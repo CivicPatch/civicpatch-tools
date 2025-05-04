@@ -1,0 +1,32 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list
+  people:
+  - name: Marsha Kirk
+    positions:
+    - Mayor
+    email: mkirk@cityofbanks.org
+    phone_number: "(503) 324-5112"
+  - name: Peter C. Edison
+    positions:
+    - Council President
+    email: pedison@cityofbanks.org
+    phone_number: "(503) 324-5112"
+  - name: Marilyn McCalister
+    positions:
+    - Council Member
+    email: mmccalister@cityofbanks.org
+    phone_number: "(503) 324-5112"
+  - name: Niki Walters
+    positions:
+    - Council Member
+    email: NWALTERS@CITYOFBANKS.ORG
+    phone_number: "(503) 324-5112"
+  - name: Pearcia Bogroff
+    positions:
+    - Council Member
+    email: pbogroff@cityofbanks.org
+    phone_number: "(503) 324-5112"
+  key_position: mayor
+people: {}
