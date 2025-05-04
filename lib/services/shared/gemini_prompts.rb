@@ -35,20 +35,35 @@ module Services
         })
       end
 
-      def self.gemini_generate_municipal_directory_prompt(state, city_entry, government_type, content, person_name = "")
-        city_name = city_entry["name"]
+      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "")
+        state = municipality_context[:state]
+        municipality_name = municipality_context[:municipality_entry]["name"]
+        government_type = municipality_context[:government_type]
         positions = Core::CityManager.get_position_roles(government_type)
         divisions = Core::CityManager.get_position_divisions(government_type)
         position_examples = Core::CityManager.get_position_examples(government_type)
         current_date = Date.today.strftime("%Y-%m-%d")
+        maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
+          person&.dig("name")
+        end
+
+        target_text = if person_name.present?
+                        person_name
+                      else
+                        %(the council members (including the mayor) of the target municipality.
+                        If the content includes information about the following people, they are
+                        very likely to be on the council:
+                        #{maybe_target_people.join(", ")}
+                        )
+                      end
 
         %(
         You are an expert data extractor.
 
-        First, determine if the content contains relevant information about the target city/person. If not, return an empty JSON array `[]`.
+        First, determine if the content contains relevant information about #{target_text}.
+        If not, return an empty JSON array `[]`.
 
-        Target Person (if applicable): #{person_name}
-        Target City: #{city_name}, #{state}
+        Target Municipality: #{municipality_name}, #{state}
         Target Municipal Roles: #{positions.join(", ")} (Examples: #{position_examples})
         Associated Divisions: #{divisions.join(", ")}
 
@@ -88,12 +103,6 @@ module Services
         - For positions:
           - **CRITICAL**: Extract ONLY roles matching or functionally equivalent to the
             **Target Municipal Roles** and **Examples** provided
-            (e.g., Mayor, Council Member, City Manager, Alderman).
-            Focus on municipal legislative and executive positions.
-          - **EXCLUDE** judicial roles (Judge, Magistrate), administrative roles
-            (Clerk, Treasurer, Assessor, Recorder unless listed in Target Municipal Roles),
-            county/state/federal officials unless they also hold a key municipal role, and
-            appointed (non-elected) staff unless specifically targeted.
           - Include only active roles (today is #{current_date}).
           - Include both the role and any associated division (e.g., "Council Member, District 3").
         - Name extraction: Extract full names ONLY, not titles
@@ -111,7 +120,8 @@ module Services
           - CRITICAL: The value for "website" MUST be a standard web URL.
           - ONLY include URLs starting with "http://" or "https://".
           - EXCLUDE all other types of links like "mailto:", "tel:", "ftp:", etc.
-          - Prefer shorter, cleaner URLs over ones with many complex query parameters unless clearly necessary for the specific person's profile page.
+          - Prefer shorter, cleaner URLs over ones with many complex query parameters unless clearly necessary
+            for the specific person's profile page.
         - Email extraction:
           - Extract email addresses found directly in the text.
           - Also extract emails formatted as Markdown link *text*,
@@ -141,10 +151,16 @@ module Services
             - "Next election: November 2024" → end_date: {"data": "2024-11-01"}
         - Today is #{current_date}. Ensure that only active positions are included, and
           exclude any positions that are not currently held or are no longer active.
-        - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us' that appear structurally close (e.g., immediately following section) to a specific person's name or section should be associated with that person unless the text clearly indicates otherwise (e.g., 'General City Contact').
-        - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record
+        - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'
+          that appear structurally close (e.g., immediately following section) to a specific person's name or section
+          should be associated with that person unless the text clearly indicates otherwise (e.g., 'General City Contact').
+        - Ensure only ONE entry exists per unique person's name.
+          Merge all extracted details for the same person into a single record
 
-        **MANDATORY DATE CHECK**: Before finalizing, verify: If the text clearly stated a term start or end date/year(s) for a person (like "Term Expires 2025" or "Term: 2023-2026"), did you populate `start_date` and/or `end_date`? Do not leave these fields null if the information was present.
+        **MANDATORY DATE CHECK**: Before finalizing, verify: If the text clearly stated a term start or end
+        date/year(s) for a person (like "Term Expires 2025" or "Term: 2023-2026"),
+        did you populate `start_date` and/or `end_date`?
+        Do not leave these fields null if the information was present.
 
         Here is the content:
         #{content}

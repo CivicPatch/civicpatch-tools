@@ -21,14 +21,13 @@ module Services
     def extract_city_people(municipality_context, content_file, page_url, person_name = "")
       state = municipality_context[:state]
       municipality_entry = municipality_context[:municipality_entry]
-      government_type = municipality_context[:government_type]
 
       content = File.read(content_file)
 
       return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
-      system_instructions, user_instructions = generate_city_info_prompt(government_type, content, page_url,
-                                                                         person_name, municipality_entry, state)
+      system_instructions, user_instructions = generate_city_info_prompt(municipality_context, content, page_url,
+                                                                         person_name)
 
       messages = [
         { role: "system", content: system_instructions },
@@ -49,17 +48,26 @@ module Services
       end
     end
 
-    def generate_city_info_prompt(government_type, content, page_url, person_name = "", municipality_entry = {},
-                                  state = "")
+    def generate_city_info_prompt(municipality_context, content, page_url, person_name = "")
+      state = municipality_context[:state]
+      government_type = municipality_context[:government_type]
       positions = Core::CityManager.get_position_roles(government_type)
       divisions = Core::CityManager.get_position_divisions(government_type)
       position_examples = Core::CityManager.get_position_examples(government_type)
+      municipality_entry = municipality_context[:municipality_entry]
       current_date = Date.today.strftime("%Y-%m-%d")
+      maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
+        person&.dig("name")
+      end
 
       content_type = if person_name.present?
                        "First, determine if the content contains information about the target person."
                      else
-                       "First, determine if the content contains a directory of elected officials."
+                       %(First, determine if the content contains information about the council members
+                         of the target municipality. If the content includes information about the following people,
+                         they are very likely to be on the council:
+                         #{maybe_target_people.join(", ")}
+                         )
                      end
 
       system_instructions = <<~INSTRUCTIONS
@@ -68,7 +76,7 @@ module Services
         #{content_type} If not, return an empty JSON array `[]`.
 
         Target Person (if applicable): #{person_name}
-        Target City: #{municipality_entry["name"] || "Unknown City"}, #{state || "Unknown State"}
+        Target Municipality: #{municipality_entry["name"]}, #{state}
         Key roles: #{positions.join(", ")}
         Associated divisions: #{divisions.join(",")}
         Examples: #{position_examples}
