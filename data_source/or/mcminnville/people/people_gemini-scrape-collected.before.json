@@ -4,39 +4,65 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil"
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123",
+      "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/"
     ],
     "positions": [
-      "Mayor",
-      "Commissioner on the McMinnville Water & Light Commission"
+      "Mayor"
     ],
     "phone_numbers": [
       {
         "data": "(971) 901-2084",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "Coming Soon",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Text explicitly states 'Coming Soon' for the phone number.",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
+      },
+      {
+        "data": "Coming Soon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Coming Soon' next to 'Phone:'",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/"
       }
     ],
     "emails": [
       {
-        "data": "Kim.Morris@mcminnvilleoregon.gov",
+        "data": "kim.morris@mcminnvilleoregon.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+        "llm_confidence_reason": "Email address extracted directly from markdown link text.",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
       }
     ],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "websites": [
       {
-        "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the main council page, no specific profile page found.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL is a specific contact page for the Mayor.",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information"
+      },
+      {
+        "data": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the URL of the page dedicated to the Mayor's contact information.",
+        "source": "https://www.mcminnvilleoregon.gov/mayor/custom-contact-page/mayor-contact-information/"
       }
     ],
-    "updated_at": "2025-05-03"
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Sal Peralta",
@@ -45,238 +71,212 @@
     "sources": [
       "https://www.mcminnvilleoregon.gov/citycouncil"
     ],
-    "positions": [
-      "Council President",
-      "Ward 1"
-    ],
+    "positions": [],
     "phone_numbers": [
       {
         "data": "(503) 437-2833",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "emails": [
+    "emails": [],
+    "websites": [
       {
-        "data": "Sal.Peralta@mcminnvilleoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address extracted from markdown link text directly associated with the name.",
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the main council page, no specific profile page found.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
-      }
-    ],
-    "updated_at": "2025-05-03"
+    "end_dates": [],
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Chris Chenoweth",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil"
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
     ],
     "positions": [
-      "Councilor",
-      "Ward 1"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "(971) 287-8671",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "emails": [
+    "emails": [],
+    "websites": [
       {
-        "data": "Chris.Chenoweth@mcminnvilleoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the main council page, no specific profile page found.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
-      }
-    ],
-    "updated_at": "2025-05-03"
+    "end_dates": [],
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Dan Tucholsky",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil"
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
     ],
     "positions": [
-      "Councilor",
-      "Ward 2"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "(971) 517-0242",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "emails": [
+    "emails": [],
+    "websites": [
       {
-        "data": "Daniel.Tucholsky@mcminnvilleoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the main council page, no specific profile page found.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
-      }
-    ],
-    "updated_at": "2025-05-03"
+    "end_dates": [],
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Zack Geary",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil"
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
     ],
     "positions": [
-      "City Councilor",
-      "Ward 2"
+      "Councilor",
+      "Ward 2",
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "(503) 560-0617",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "emails": [
+    "emails": [],
+    "websites": [
       {
-        "data": "Zack.Geary@mcminnvilleoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the main council page, no specific profile page found.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
-      }
-    ],
-    "updated_at": "2025-05-03"
+    "end_dates": [],
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Jessica Payne",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil"
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
     ],
     "positions": [
       "Councilor",
-      "Ward 3"
+      "Ward 3",
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "(971) 517-0957",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "emails": [
+    "emails": [],
+    "websites": [
       {
-        "data": "Jessica.Payne@mcminnvilleoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the main council page, no specific profile page found.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
-      }
-    ],
-    "updated_at": "2025-05-03"
+    "end_dates": [],
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Scott Cunningham",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.mcminnvilleoregon.gov/citycouncil"
+      "https://www.mcminnvilleoregon.gov/citycouncil",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
     ],
     "positions": [
-      "Councilor",
-      "Ward 3"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "(971) 517-0609",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
-    "emails": [
+    "emails": [],
+    "websites": [
       {
-        "data": "Scott.Cunningham@mcminnvilleoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "data": "https://www.mcminnvilleoregon.gov/citycouncil",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the main council page, no specific profile page found.",
         "source": "https://www.mcminnvilleoregon.gov/citycouncil"
       }
     ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-04"
+  },
+  {
+    "name": "Salvador Peralta",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/elections",
+      "https://www.mcminnvilleoregon.gov/citycouncil/page/city-council-meeting-123"
+    ],
+    "positions": [
+      "Councilor",
+      "Ward 1",
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [],
-    "start_dates": [
-      {
-        "data": "2024",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Year of election mentioned in the text.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "source": "https://www.mcminnvilleoregon.gov/citycouncil"
-      }
-    ],
-    "updated_at": "2025-05-03"
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-04"
   }
 ]
