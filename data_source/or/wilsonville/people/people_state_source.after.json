@@ -5,7 +5,8 @@
       "Mayor"
     ],
     "email": "oneil@wilsonvilleoregon.gov",
-    "phone_number": "(503) 682-1011"
+    "phone_number": "(503) 682-1011",
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Adam Justin Cunningham",
@@ -13,7 +14,8 @@
       "Council Member"
     ],
     "email": "cunningham@wilsonvilleoregon.gov",
-    "phone_number": "(503) 682-1011"
+    "phone_number": "(503) 682-1011",
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Caroline Berry",
@@ -21,7 +23,8 @@
       "Council Member"
     ],
     "email": "berry@wilsonvilleoregon.gov",
-    "phone_number": "(503) 682-1011"
+    "phone_number": "(503) 682-1011",
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Katie Dunwell",
@@ -29,6 +32,7 @@
       "Council Member"
     ],
     "email": "dunwell@wilsonvilleoregon.gov",
-    "phone_number": "(503) 682-1011"
+    "phone_number": "(503) 682-1011",
+    "updated_at": "2025-05-04"
   }
 ]
