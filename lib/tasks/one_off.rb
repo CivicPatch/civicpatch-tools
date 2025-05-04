@@ -173,6 +173,14 @@ namespace :one_off do
     pp results
   end
 
+  task :remove_all_state_source_files do
+    # Get all files under data/<state>/<cities>/people.yml
+    file_path = "data_source/or/**/people/people_state_source.*.json"
+    Dir.glob(file_path).each do |file|
+      File.delete(file)
+    end
+  end
+
   task :google_gemini_search do
     state = "or"
     municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, "2412103")
