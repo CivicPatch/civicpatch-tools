@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "services/spaces"
 require "utils/folder_helper"
 require "core/config_manager"
@@ -69,7 +71,7 @@ namespace :one_off do
     #  "gif" => "image/gif",
     #  "webp" => "image/webp"
     # }
-    images = Dir.glob("data/**/**/images/*")
+    Dir.glob("data/**/**/images/*")
 
     # images.each do |image_path|
     #  puts image_path

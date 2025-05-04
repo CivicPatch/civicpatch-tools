@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "wa/municipality_officials/state_level_scraper"
 require_relative "or/municipality_officials/state_level_scraper"
 

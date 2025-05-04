@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require_relative "../path_helper"
 
 module Core
   class CityManager
     CONFIG_PATH = PathHelper.project_path(File.join("config", "city_people.yml"))
-    GOVERNMENT_TYPE_MAYOR_COUNCIL = "mayor_council".freeze
+    GOVERNMENT_TYPE_MAYOR_COUNCIL = "mayor_council"
 
     def self.config
       @config ||= YAML.load_file(CONFIG_PATH)

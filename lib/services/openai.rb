@@ -190,7 +190,7 @@ module Services
       rescue StandardError
         nil
       end
-    rescue Faraday::TooManyRequestsError => e
+    rescue Faraday::TooManyRequestsError
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
         puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"

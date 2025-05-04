@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Core
   module PersonManager
     class Utils

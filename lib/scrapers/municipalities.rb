@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "services/census"
 require_relative "wa/municipalities"
 require_relative "or/municipalities"
 
 module Scrapers
   class Municipalities
-    CENSUS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:".freeze
-    CENSUS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place".freeze
+    CENSUS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:"
+    CENSUS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place"
 
     def self.get_scraper(state)
       case state

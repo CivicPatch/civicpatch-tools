@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "utils/url_helper"
 
 module Services
@@ -22,7 +24,7 @@ module Services
       parse_municipalities_from_table(state, table_rows, table_data_config)
     end
 
-    def self.parse_cities_from_table(state, table_rows, row_data_config)
+    def self.parse_cities_from_table(state, table_rows, _row_data_config)
       places = []
       table_rows.css("tr").each do |city_row|
         puts city_row

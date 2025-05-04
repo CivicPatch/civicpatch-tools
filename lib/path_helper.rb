@@ -47,7 +47,8 @@ module PathHelper
     File.join(city_path, "people")
   end
 
-  def self.get_people_candidates_file_path(state, gnis, directory_type) # source, gemini, scrape
+  # source, gemini, scrape
+  def self.get_people_candidates_file_path(state, gnis, directory_type)
     people_folder_path = get_people_sources_path(state, gnis)
     FileUtils.mkdir_p(people_folder_path)
     File.join(people_folder_path, "people_#{directory_type}.json")

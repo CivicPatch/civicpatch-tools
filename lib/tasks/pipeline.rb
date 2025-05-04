@@ -38,32 +38,25 @@ namespace :pipeline do
     state = args[:state]
     gnis = args[:gnis]
 
-    config = Core::ConfigManager.get_config(state, gnis)
+    municipality_context = Core::ContextManager.get_context(state, gnis)
 
-    municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-    municipality_context = {
-      config: config,
-      state: state,
-      municipality_entry: municipality_entry,
-      government_type: Scrapers::Municipalities.get_government_type(state, municipality_entry)
-    }
-
-    prepare_directories(state, municipality_entry)
+    prepare_directories(state, municipality_context[:municipality_entry])
 
     source_directory_list_config, people_config = fetch_with_state_source(municipality_context) # State-level city directory source
-    # TODO: require all municipalities to have a mayor until we discover otherwise
-
-    municipality_context[:config]["source_directory_list"] = source_directory_list_config
-    municipality_context[:config]["people"] = people_config
+    municipality_context = Core::ContextManager.update_context_config(municipality_context,
+                                                                      source_directory_list: source_directory_list_config,
+                                                                      people: people_config)
 
     people_config = fetch_with_scrape(municipality_context)
-    municipality_context[:config]["people"] = people_config
+    municipality_context = Core::ContextManager.update_context_config(municipality_context,
+                                                                      people: people_config)
 
     scrape_sources = aggregate_sources(municipality_context, sources: %w[state_source gemini openai])
-    municipality_context[:config]["scrape_sources"] = scrape_sources
+    municipality_context = Core::ContextManager.update_context_config(municipality_context,
+                                                                      scrape_sources: scrape_sources)
 
     people = Core::PeopleManager.get_people(state, gnis)
-    remove_unused_cache_folders(state, municipality_entry, people)
+    remove_unused_cache_folders(municipality_context, people)
 
     Core::ConfigManager.cleanup(state, gnis, municipality_context[:config])
   end
@@ -239,9 +232,9 @@ namespace :pipeline do
     end
   end
 
-  def self.remove_unused_cache_folders(state, municipality_entry, people)
-    gnis = municipality_entry["gnis"]
-    cache_dir = PathHelper.get_city_cache_path(state, gnis)
+  def self.remove_unused_cache_folders(municipality_context, people)
+    gnis = municipality_context[:municipality_entry]["gnis"]
+    cache_dir = PathHelper.get_city_cache_path(municipality_context[:state], gnis)
     cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
     # Get list of src files in use

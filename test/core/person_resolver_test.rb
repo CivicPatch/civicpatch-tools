@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # test/core/person_resolver_test.rb
 require "test_helper"
 require "minitest/autorun"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "utils/url_helper"
 require "core/person_resolver"
 module Services

@@ -4,7 +4,7 @@ require_relative "../../common"
 
 module Scrapers
   module Us
-    module Mi 
+    module Mi
       class Directory
         def self.fetch_places
           title = "List_of_municipalities_in_Michigan"

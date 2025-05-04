@@ -52,3 +52,7 @@ gem "pp", "~> 0.6.2"
 gem "aws-sdk-s3", "~> 1.185"
 
 gem "namae", "~> 1.2"
+
+gem "rubocop-minitest", "~> 0.38.0"
+
+gem "rubocop-rake", "~> 0.7.1"

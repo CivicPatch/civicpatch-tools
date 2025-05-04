@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Core
   class StateManager
     def self.get_state_path(state)
