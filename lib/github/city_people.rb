@@ -121,7 +121,7 @@ module GitHub
       updates_needed_markdown = ""
 
       missing_people.each_key do |name|
-        not_in_office_list << name unless missing_people[name].include?(source_to_update)
+        not_in_office_list << name if missing_people[name].include?(source_to_update)
       end
       not_in_office_markdown = not_in_office_list.map { |name| "- #{name}" }.join("\n")
 
@@ -163,10 +163,19 @@ module GitHub
       updates_needed = []
 
       contested_fields.each do |field_name, field_data|
-        next if field_data[:values][source_to_update].nil?
+        source_value = field_data[:values][source_to_update]
+        next if source_value.nil?
 
-        updates_needed << "#{field_name}: #{merged_person[field_name]}" unless values_match?(merged_person[field_name],
-                                                                                             field_data[:values][source_to_update])
+        next if values_match?(merged_person[field_name],
+                              source_value)
+
+        updates_needed << "#{
+          field_name
+        }: was: #{
+          source_value
+        }, now: #{
+          merged_person[field_name]
+        }"
       end
 
       updates_needed
