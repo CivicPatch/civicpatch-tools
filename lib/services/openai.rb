@@ -118,6 +118,15 @@ module Services
               "website": {"data": "https://www.orcity.org/1775/Commissioner-Adam-Marl", "llm_confidence": 0.9, "llm_confidence_reason": "Primary page URL."},
               "start_date": {"data": "2023-01-01", "llm_confidence": 0.99,"llm_confidence_reason": "Extracted start date from 'Term: January 1, 2023 to ...'"},
               "end_date": {"data": "2026-12-31", "llm_confidence": 0.99, "llm_confidence_reason": "Extracted end date from 'Term: ... to December 31, 2026'"}
+            }, {
+              "name": "Example Person",
+              "positions": ["Council Member"],
+              "image": null,
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": {"data": "2026-12", "llm_confidence": 0.97, "llm_confidence_reason": "Extracted from 'Term Expires December 2026'"}
             }
           ]
         }
@@ -134,21 +143,25 @@ module Services
           - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
           - `email` data should ONLY contain email addresses.
         - Term Dates (`start_date`, `end_date`):
-          - **Allowed Formats**: Only extract dates that appear in the source text using one of these exact formats: `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
-          - **Exact Extraction**: Extract the date string *exactly as found*. **DO NOT** add default months or days (like '-01', '-31', '-01-01', '-12-31') if they are not explicitly present in the source date string.
+          - **Allowed Output Formats**: The final `data` field MUST contain null or a string matching exactly `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
+          - **Input Recognition & Conversion**:
+            - Recognize dates in the source text that appear as `YYYY`, `YYYY-MM`, `YYYY-MM-DD`, or common textual formats like `Month YYYY` (e.g., "December 2026", "Jan 2025").
+            - If the source date already matches an allowed output format (`YYYY`, `YYYY-MM`, `YYYY-MM-DD`), extract it *exactly as found*.
+            - If the source date matches a `Month YYYY` format, you **MUST convert** it to the strict `YYYY-MM` format for the output (e.g., "December 2026" becomes "2026-12", "Jan 2025" becomes "2025-01"). Use numerical months (01-12).
+            - **DO NOT** add default days (like '-01', '-31') if they are not explicitly present in the source AND required by the `YYYY-MM-DD` format. Do not add default months if only `YYYY` is present.
           - **PRIORITY 1: Specific Term Formats**:
             - Check FIRST for patterns starting with "Term:".
-            - If `Term: [Date1] to [Date2]` is found (e.g., "Term: January 1, 2023 to December 31, 2026", "Term: Jan 2023 to Dec 2026", "Term: 2023 to 2026"), extract Date1 and Date2. Format the extracted dates precisely as YYYY, YYYY-MM, or YYYY-MM-DD based *only* on the information present in the source text for each date. Extract BOTH dates if the pattern provides them.
+            - If `Term: [Date1] to [Date2]` is found, extract Date1 and Date2. Apply the Input Recognition & Conversion rules above to each date individually based on how it appears in the source. Extract BOTH dates if the pattern provides them.
             - If `Term: YYYY-YYYY` (e.g., "Term: 2024-2028") is found, extract the first YYYY string into `start_date.data` and the second YYYY string into `end_date.data`.
           - **PRIORITY 2: Keyword Search**: If specific "Term:" formats are not found, THEN look for keywords:
             - `start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service'
             - `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:'
-            - Extract the date string following these keywords ONLY if it matches one of the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD). Extract it exactly as found.
-          - **Null If Not Found/Matched**: If no date is mentioned for a person, or if a mentioned date does not match the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD), set the corresponding field (`start_date` or `end_date`) to null. Do not attempt to parse or reformat dates like "Spring 2024" or "December".
-          - **Validation**: After creating the JSON, review each person's `start_date` and `end_date` to ensure the `data` field strictly contains null or a string in YYYY, YYYY-MM, or YYYY-MM-DD format, extracted directly from the source. Ensure no default months/days were added.
+            - Extract the date string following these keywords. Apply the Input Recognition & Conversion rules above to the extracted string. Output only if the result matches an allowed output format.
+          - **Null If Not Found/Matched/Convertible**: If no date is mentioned, or if a mentioned date cannot be reliably recognized and converted into one of the allowed output formats (YYYY, YYYY-MM, YYYY-MM-DD), set the corresponding field (`start_date` or `end_date`) to null. Do not attempt to parse ambiguous text like "Spring 2024".
+          - **Validation**: After creating the JSON, review each person's `start_date` and `end_date` to ensure the `data` field strictly contains null or a string matching YYYY, YYYY-MM, or YYYY-MM-DD, reflecting the conversion rule for `Month YYYY` formats.
         - Association & Uniqueness: Associate details carefully. Ensure only ONE entry per unique person.
 
-        **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting.
+        **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting, paying close attention to the date extraction and conversion rules.
       INSTRUCTIONS
 
       content = <<~CONTENT
