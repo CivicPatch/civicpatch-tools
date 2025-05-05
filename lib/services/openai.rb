@@ -94,8 +94,8 @@ module Services
         - phone_number: (Object or null) {data: "Formatted Number", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
         - email: (Object or null) {data: "email@example.com", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
         - website: (Object or null) {data: "http(s)://...", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
-        - start_date: (Object or null) {data: "YYYY" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
-        - end_date: (Object or null) {data: "YYYY" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
+        - start_date: (Object or null) {data: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
+        - end_date: (Object or null) {data: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
 
         Example Format: # Shows desired output for common patterns
         {
@@ -134,27 +134,21 @@ module Services
           - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
           - `email` data should ONLY contain email addresses.
         - Term Dates (`start_date`, `end_date`):
-          - **PRIORITY 1: Specific Term Formats (Mandatory Application)**:
-            - Check FIRST if the text contains patterns starting with "Term:". This often indicates **both** start and end dates.
-            - If `Term: [Date1] to [Date2]` (e.g., "Term: January 1, 2023 to December 31, 2026") is found, you MUST extract Date1 into `start_date.data` AND Date2 into `end_date.data`. Do not miss the start date in this case. BOTH DATES MUST BE EXTRACTED WHEN THIS PATTERN IS FOUND.
-            - IMPORTANT: When a "Term:" line includes both start and end dates separated by "to", ALWAYS extract BOTH dates - converting them to proper ISO format (e.g., "January 1, 2023" becomes "2023-01-01").
-            - If `Term: YYYY-YYYY` (e.g., "Term: 2024-2028") is found, extract first YYYY as `start_date.data` (formatted YYYY-01-01) and second YYYY as `end_date.data` (formatted YYYY-12-31).
-          - **PRIORITY 2: Keyword Search**: If the specific "Term:" formats above are not found, THEN look for keywords indicating start/end dates:
-            - `start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service' # Added missing keywords
+          - **Allowed Formats**: Only extract dates that appear in the source text using one of these exact formats: `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
+          - **Exact Extraction**: Extract the date string *exactly as found*. **DO NOT** add default months or days (like '-01', '-31', '-01-01', '-12-31') if they are not explicitly present in the source date string.
+          - **PRIORITY 1: Specific Term Formats**:
+            - Check FIRST for patterns starting with "Term:".
+            - If `Term: [Date1] to [Date2]` is found (e.g., "Term: January 1, 2023 to December 31, 2026", "Term: Jan 2023 to Dec 2026", "Term: 2023 to 2026"), extract Date1 and Date2. Format the extracted dates precisely as YYYY, YYYY-MM, or YYYY-MM-DD based *only* on the information present in the source text for each date. Extract BOTH dates if the pattern provides them.
+            - If `Term: YYYY-YYYY` (e.g., "Term: 2024-2028") is found, extract the first YYYY string into `start_date.data` and the second YYYY string into `end_date.data`.
+          - **PRIORITY 2: Keyword Search**: If specific "Term:" formats are not found, THEN look for keywords:
+            - `start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service'
             - `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:'
-            - Extract the date following these keywords into the appropriate field (`start_date` or `end_date`).
-          - **Date Formatting**: Format extracted dates as YYYY or YYYY-MM-DD. Use YYYY-MM-01 if only month/year known.
-          - **Reliability**: Prioritize dates found using the PRIORITY 1 rules or clear PRIORITY 2 keywords. If association/meaning is ambiguous, note in reason, lower confidence, but still attempt extraction if plausible. Do not omit clearly stated dates matching defined rules.
-          - **IMPORTANT**: Only populate start_date and end_date fields when actual dates appear in the source content. If no start date or end date is mentioned for a person, set the corresponding field to null.
-          - **Validation for Term Dates**:
-            - When a line with format "Term: X to Y" appears, this represents both start_date (X) and end_date (Y)
-            - For ANY person where end_date exists but start_date is null, check if there was a "Term:" line
-            - If you find a pattern like "Term: Date1 to Date2" but only extracted one date, verify both dates are extracted
-            - After creating your initial JSON response, review each person to ensure term dates are consistent with the source content
-            - If you see "Term: January 1, 2023 to December 31, 2026" in the source, both dates must be extracted
+            - Extract the date string following these keywords ONLY if it matches one of the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD). Extract it exactly as found.
+          - **Null If Not Found/Matched**: If no date is mentioned for a person, or if a mentioned date does not match the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD), set the corresponding field (`start_date` or `end_date`) to null. Do not attempt to parse or reformat dates like "Spring 2024" or "December".
+          - **Validation**: After creating the JSON, review each person's `start_date` and `end_date` to ensure the `data` field strictly contains null or a string in YYYY, YYYY-MM, or YYYY-MM-DD format, extracted directly from the source. Ensure no default months/days were added.
         - Association & Uniqueness: Associate details carefully. Ensure only ONE entry per unique person.
 
-        **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting, particularly ensuring that date extraction follows the rules above.
+        **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting.
       INSTRUCTIONS
 
       content = <<~CONTENT

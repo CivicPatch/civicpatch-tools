@@ -7,14 +7,15 @@
       "https://www.woodburn-or.gov/citycouncil"
     ],
     "positions": [
-      "Mayor"
+      "Mayor",
+      "Council Member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "frank.lonergan@ci.woodburn.or.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address listed directly in the table next to the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Email' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -22,9 +23,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date listed directly in the table next to the name.",
+        "data": "2026-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -45,8 +46,8 @@
     "emails": [
       {
         "data": "mark.wilk@ci.woodburn.or.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address listed directly in the table next to the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Email' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -54,9 +55,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2028-12-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date listed directly in the table next to the name.",
+        "data": "2028-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -77,8 +78,8 @@
     "emails": [
       {
         "data": "Jennifer.Cantu@ci.woodburn.or.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address listed directly in the table next to the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Email' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -86,9 +87,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date listed directly in the table next to the name.",
+        "data": "2026-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -109,8 +110,8 @@
     "emails": [
       {
         "data": "sharon.schaub@ci.woodburn.or.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address listed directly in the table next to the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Email' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -118,9 +119,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date listed directly in the table next to the name.",
+        "data": "2026-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -141,8 +142,8 @@
     "emails": [
       {
         "data": "marybeth.cornwell@ci.woodburn.or.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address listed directly in the table next to the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Email' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -150,9 +151,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date listed directly in the table next to the name.",
+        "data": "2026-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -173,8 +174,8 @@
     "emails": [
       {
         "data": "alma.grijalva@ci.woodburn.or.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address listed directly in the table next to the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Email' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -182,9 +183,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2028-12-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date listed directly in the table next to the name.",
+        "data": "2028-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Found in table under 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
