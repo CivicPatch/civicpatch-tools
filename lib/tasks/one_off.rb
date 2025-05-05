@@ -196,6 +196,31 @@ namespace :one_off do
     pp response
   end
 
+  task :to_csv do
+    # Get all files under data/<state>/<cities>/people.yml
+    states_to_name = {
+      "wa" => "Washington",
+      "or" => "Oregon"
+    }
+    file_path = "data/**/people.yml"
+    csv_file_path = "data/people.csv"
+    csv_file = File.open(csv_file_path, "w")
+    csv_file.puts %w[state_name state_abbrev city_name name positions image source_image email phone_number website start_date
+                     end_date].join(",")
+    Dir.glob(file_path).each do |file|
+      # find state from data/<state>/<cities>/people.yml
+      state_abbrev = file.split("/").second
+      state_name = states_to_name[state_abbrev]
+      city_name = file.split("/").third
+      people = YAML.load_file(file)
+      people.each do |person|
+        csv_file.puts [state_name, state_abbrev, city_name, person["name"], person["positions"].join("|"), person["image"], person["source_image"],
+                       person["email"], person["phone_number"], person["website"], person["start_date"], person["end_date"]].join(",")
+      end
+    end
+    csv_file.close
+  end
+
   def self.format_name(name)
     # Split the name by space separated by _
     # Capitalize the first letter of each word
