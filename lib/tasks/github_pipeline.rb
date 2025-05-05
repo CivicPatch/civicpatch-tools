@@ -65,6 +65,7 @@ namespace :github_pipeline do
   def self.generate_people_list_comment(municipality_context, merged_people, missing_people, contested_people)
     state = municipality_context[:state]
     city_entry = municipality_context[:municipality_entry]
+    all_sources = city_entry["sources"]
     city = city_entry["name"]
 
     city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
@@ -74,7 +75,7 @@ namespace :github_pipeline do
     action_items = GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
                                                                      contested_people)
 
-    missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
+    missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(all_sources, missing_people)
 
     <<~MARKDOWN
       # #{city.capitalize}, #{state.upcase}
