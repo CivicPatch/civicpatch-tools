@@ -175,7 +175,7 @@ namespace :one_off do
 
   task :remove_all_state_source_files do
     # Get all files under data/<state>/<cities>/people.yml
-    file_path = "data_source/or/**/people/people_state_source.*.json"
+    file_path = "data_source/wa/**/people/people_state_source.*.json"
     Dir.glob(file_path).each do |file|
       File.delete(file)
     end
