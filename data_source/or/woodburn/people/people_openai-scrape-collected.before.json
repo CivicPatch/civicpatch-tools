@@ -13,32 +13,32 @@
       {
         "data": "(503) 982-5228",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "Phone number listed under City Hall contact, likely main contact for Mayor and Council.",
+        "llm_confidence_reason": "Phone number listed under City Hall contact info, likely main contact for Mayor and Council.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
     "emails": [
       {
         "data": "frank.lonergan@ci.woodburn.or.us",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
     "websites": [
       {
         "data": "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mayor page URL linked in content.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled 'Mayor' in navigation.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires December 2026, interpreted as end of year.",
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires listed as December 2026; extracted year only.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -59,8 +59,8 @@
     "emails": [
       {
         "data": "mark.wilk@ci.woodburn.or.us",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -68,9 +68,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires December 2028, interpreted as end of year.",
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires listed as December 2028; extracted year only.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -91,8 +91,8 @@
     "emails": [
       {
         "data": "Jennifer.Cantu@ci.woodburn.or.us",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -100,9 +100,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires December 2026, interpreted as end of year.",
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires listed as December 2026; extracted year only.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -123,8 +123,8 @@
     "emails": [
       {
         "data": "sharon.schaub@ci.woodburn.or.us",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -132,9 +132,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires December 2026, interpreted as end of year.",
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires listed as December 2026; extracted year only.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -155,8 +155,8 @@
     "emails": [
       {
         "data": "marybeth.cornwell@ci.woodburn.or.us",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -164,9 +164,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires December 2026, interpreted as end of year.",
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires listed as December 2026; extracted year only.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -187,8 +187,8 @@
     "emails": [
       {
         "data": "alma.grijalva@ci.woodburn.or.us",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -196,9 +196,9 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires December 2028, interpreted as end of year.",
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires listed as December 2028; extracted year only.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],

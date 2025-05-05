@@ -135,26 +135,22 @@ module Services
             Extract the email address shown in the brackets.
           - Place extracted emails ONLY in the "email" field, NEVER in the "website" field.
         - start_date and end_date extraction:
-          - Format: YYYY, YYYY-MM-DD or null
-          - SEARCH FOR END DATES using these patterns:
-            - "Term Expires:"
-            - "Term Ends:"
-            - "Serving Until:"
-            - "Until:"
-            - "Next Election:"
-            - "End of Term:"
-            - "Through"
-            - "Expires"
-            - "Ending"
-          - Date format rules:
-            - Years only: use YYYY format (e.g., "2025")
-            - Month and year: use YYYY-MM-01 format
-            - Complete dates: use YYYY-MM-DD format
-          - EXAMPLES - end dates (CRITICAL TO EXTRACT):
+          - Format: YYYY, YYYY-MM, YYYY-MM-DD or null
+          - **Allowed Formats**: Only extract dates that appear in the source text using one of these exact formats: `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
+          - **Exact Extraction**: Extract the date string *exactly as found*. **DO NOT** add default months or days (like '-01', '-31', '-01-01', '-12-31') if they are not explicitly present in the source date string.
+          - **Keyword Search**: Look for keywords indicating start/end dates:
+            - `start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service'
+            - `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:'
+            - Extract the date string following these keywords ONLY if it matches one of the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD). Extract it exactly as found.
+          - **Handling "Term: X to Y"**: If you find a pattern like `Term: [Date1] to [Date2]`, extract Date1 and Date2. Format each extracted date precisely as YYYY, YYYY-MM, or YYYY-MM-DD based *only* on the information present in the source text for that specific date part. Extract BOTH dates if the pattern provides them. If the pattern is `Term: YYYY-YYYY`, extract first YYYY to `start_date` and second YYYY to `end_date`.
+          - **EXAMPLES - date extraction (CRITICAL TO EXTRACT EXACTLY)**:
             - "Term expires December 31, 2026" → end_date: {"data": "2026-12-31"}
-            - "Term expires December 2026" → end_date: {"data": "2026-12-01"}
+            - "Term expires December 2026" → end_date: {"data": "2026-12"}
             - "Serving through 2025" → end_date: {"data": "2025"}
-            - "Next election: November 2024" → end_date: {"data": "2024-11-01"}
+            - "Next election: November 2024" → end_date: {"data": "2024-11"}
+            - "Term: January 1, 2023 to December 31, 2026" → start_date: {"data": "2023-01-01"}, end_date: {"data": "2026-12-31"}
+            - "Term: 2023 to 2026" → start_date: {"data": "2023"}, end_date: {"data": "2026"}
+          - **Null If Not Found/Matched**: If no date is mentioned for a person, or if a mentioned date does not match the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD), set the corresponding field (`start_date` or `end_date`) to null. Do not attempt to parse or reformat dates like "Spring 2024".
         - Today is #{current_date}. Ensure that only active positions are included, and
           exclude any positions that are not currently held or are no longer active.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'
@@ -164,9 +160,9 @@ module Services
           Merge all extracted details for the same person into a single record
 
         **MANDATORY DATE CHECK**: Before finalizing, verify: If the text clearly stated a term start or end
-        date/year(s) for a person (like "Term Expires 2025" or "Term: 2023-2026"),
-        did you populate `start_date` and/or `end_date`?
-        Do not leave these fields null if the information was present.
+        date/year(s) for a person (like "Term Expires 2025", "Term: 2023-2026", "Elected: 2024-01"),
+        did you populate `start_date` and/or `end_date` with the string exactly matching one of the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD)?
+        Do not leave these fields null if the information was present AND matched an allowed format. Ensure no default days/months were added.
 
         Here is the content:
         #{content}
