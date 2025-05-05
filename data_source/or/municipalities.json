@@ -474,10 +474,12 @@
       "phone_number": "(503) 982-5228",
       "website": "https://www.woodburn-or.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "960f3079e89f05b8f3035075ba5dec23",
+      "meta_updated_at": "2025-05-04",
+      "meta_hash": "69475055fe3886a1c0d66f8ddb0228b5",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
