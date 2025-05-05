@@ -119,7 +119,6 @@ module Validators
     end
 
     def self.compare_people_across_sources(people_config, sources)
-      pp sources
       fields = %w[positions email phone_number website start_term_date end_term_date] # Fields to compare
 
       unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
