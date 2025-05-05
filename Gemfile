@@ -25,7 +25,7 @@ gem "markitdown"
 
 gem "capybara", "~> 3.40"
 
-gem "selenium-webdriver", "~> 4.31"
+gem "selenium-webdriver", "~> 4.32"
 
 gem "awesome_print", "~> 1.9"
 
