@@ -2,7 +2,7 @@
 
 module GitHub
   class CityPeople
-    def self.to_markdown_missing_people_table(missing_people)
+    def self.to_markdown_missing_people_table(all_sources, missing_people)
       return "" if missing_people.nil? || missing_people.empty?
 
       headers = ["Name", "Missing From"]
@@ -10,7 +10,8 @@ module GitHub
       markdown = "### Missing People\n\n"
 
       missing_people.each do |name, sources|
-        table << [name, sources.join(", ")]
+        missing_from_sources = all_sources - sources
+        table << [name, missing_from_sources.join(", ")]
       end
 
       markdown += "| #{headers.join(" | ")} |"
