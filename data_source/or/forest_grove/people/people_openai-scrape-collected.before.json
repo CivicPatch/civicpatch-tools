@@ -1,0 +1,319 @@
+[
+  {
+    "name": "Malynda Wenzl",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council/"
+    ],
+    "positions": [
+      "Mayor",
+      "mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main council page with her profile linked.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      },
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the profile page for Mayor Malynda Wenzl on the official Forest Grove site.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed start at beginning of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2022-11-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Elected Mayor in November 2022; exact day not specified, assumed start of month.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      },
+      {
+        "data": "2022-11-01",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Elected Mayor in November 2022; assumed start date as November 1, 2022 (approximate).",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council/"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed end at end of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Angel Falconer",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main council page with her profile linked.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2025-2029', assumed start at beginning of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2025-2029', assumed end at end of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Donna Gustafson",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main council page with her profile linked.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2025-2029', assumed start at beginning of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2020-11-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Elected November 2020; exact day not specified, assumed start of month.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2025-2029', assumed end at end of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Michael Marshall",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main council page with his profile linked.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed start at beginning of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2022-11-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Elected November 2022; exact day not specified, assumed start of month.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed end at end of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Karen Martinez",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main council page with her profile linked.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed start at beginning of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2022-11-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Elected November 2022; exact day not specified, assumed start of month.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed end at end of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Brian Schimmel",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main council page with his profile linked.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2025-2029', assumed start at beginning of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2025-2029', assumed end at end of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Mariana Valenzuela",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the main council page with her profile linked.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed start at beginning of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2020",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Appointed in 2020, then elected in November 2022; earliest known start date used.",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Current Term: 2022-2026', assumed end at end of year.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  }
+]
