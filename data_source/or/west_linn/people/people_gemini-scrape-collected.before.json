@@ -1,0 +1,257 @@
+[
+  {
+    "name": "Rory Bialostosky",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-657-0331 Opt #2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared phone number listed for contacting City Council.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-568-3571",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly labeled as 'Cell' phone number for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@westlinnoregon.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared email address listed for contacting all council members.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link from name/photo to profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is the person's profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Mary Baumgardner",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+    ],
+    "positions": [
+      "Council President"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-657-0331 Opt #2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared phone number listed for contacting City Council.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-568-3566",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly labeled as 'Cell' phone number.",
+        "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@westlinnoregon.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared email address listed for contacting all council members.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link from name/photo to profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the current page is the person's profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Leo Groner",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-657-0331 Opt #2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared phone number listed for contacting City Council.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-568-2804",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly labeled as 'Cell' phone number.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@westlinnoregon.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared email address listed for contacting all council members.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link from name/photo to profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the person's profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Carol Bryck",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-657-0331 Opt #2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared phone number listed for contacting City Council.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-568-3419",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly labeled 'Cell' and listed directly under the person's name.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@westlinnoregon.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared email address listed for contacting all council members.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link from name/photo to profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the current page, which is the person's official profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Kevin Bonnington",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-657-0331 Opt #2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared phone number listed for contacting City Council.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-568-2781",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly labeled as 'Cell'.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@westlinnoregon.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Shared email address listed for contacting all council members.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link from name/photo to profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the specific profile page URL for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-05"
+  }
+]

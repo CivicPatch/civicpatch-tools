@@ -416,10 +416,12 @@
       "phone_number": "(503) 657-0331",
       "website": "https://westlinnoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "0050d421e08707a51268610035252690",
+      "meta_updated_at": "2025-05-04",
+      "meta_hash": "5694c6ef60940947dee1d573a11d84f7",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
