@@ -6,16 +6,16 @@
     ],
     "image": "https://cdn.civicpatch.org/open-data/or/tigard/images/5e0999ddebca4a98c44dd9bf228ef1d16e968d89a01306fb53cdc8a04d5cc560.png",
     "source_image": "https://www.tigard-or.gov/home/showpublishedimage/2396/638723807447000000",
-    "phone_number": null,
+    "phone_number": "(503) 639-4171",
     "email": "heidil@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
-    "start_date": null,
+    "start_date": "2025-01-01",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Maureen Wolf",
@@ -27,13 +27,13 @@
     "phone_number": null,
     "email": "maureen.wolf@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
-    "start_date": null,
+    "start_date": "2025-01-01",
     "end_date": "2028-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Faraz Ghoddusi",
@@ -45,13 +45,13 @@
     "phone_number": null,
     "email": "faraz.ghoddusi@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
-    "start_date": null,
+    "start_date": "2025-01-01",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Heather Robbins",
@@ -63,13 +63,13 @@
     "phone_number": null,
     "email": "heather.robbins@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
-    "start_date": null,
+    "start_date": "2025-01-01",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Jake Schlack",
@@ -81,13 +81,13 @@
     "phone_number": null,
     "email": "jake.schlack@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
-    "start_date": "2024-07-01",
+    "start_date": "2025-01-01",
     "end_date": "2028-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Jeanette Shaw",
@@ -99,13 +99,13 @@
     "phone_number": null,
     "email": "jeanettes@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
-    "start_date": "2020",
+    "start_date": "2025-01-01",
     "end_date": "2028-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/councilor-shaw"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Yi-Kang Hu",
@@ -123,6 +123,6 @@
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   }
 ]

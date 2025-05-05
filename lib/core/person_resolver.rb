@@ -55,6 +55,8 @@ module Core
       ((person_name1&.downcase&.include?(person_name2&.downcase) ||
         person_name2&.downcase&.include?(person_name1&.downcase)) && last_name1&.downcase == last_name2&.downcase) ||
         # Ignore initials
+        ((given_name1.downcase&.include?(given_name2&.downcase) ||
+          given_name2.downcase&.include?(given_name1.downcase)) && last_name1&.downcase == last_name2&.downcase) ||
         (given_name1&.downcase == given_name2&.downcase && last_name1&.downcase == last_name2&.downcase)
     end
 

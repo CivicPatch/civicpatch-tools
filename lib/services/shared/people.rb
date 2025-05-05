@@ -149,19 +149,12 @@ module Services
         }
       end
 
-      # We are more interested in end dates
       def self.pick_best_term_dates(start_dates, end_dates)
-        return nil if end_dates.blank?
-
+        best_start_date = pick_best_data_point(start_dates)
         best_end_date = pick_best_data_point(end_dates)
 
-        return nil if best_end_date.blank?
-
-        best_source = best_end_date["source"]
-        start_date = (start_dates.find { |dp| dp["source"] == best_source } if start_dates.present?)
-
         {
-          "start_date" => start_date,
+          "start_date" => best_start_date,
           "end_date" => best_end_date
         }
       end

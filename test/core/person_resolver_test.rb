@@ -47,48 +47,48 @@ class PersonResolverTest < Minitest::Test
 
   def test_same_email_matching
     person1_same_email = @person1.dup # Ensure email field exists and matches
-    assert Core::PersonResolver.same_email?(@person1["email"], person1_same_email["email"])
+    assert Core::PersonResolver.same_email?(@person1, person1_same_email)
   end
 
   def test_same_email_matching_case_insensitive
-    assert Core::PersonResolver.same_email?(@person1["email"], @person1_alt_case["email"])
+    assert Core::PersonResolver.same_email?(@person1, @person1_alt_case)
   end
 
   def test_same_email_different
-    assert_equal false, Core::PersonResolver.same_email?(@person1["email"], @person2["email"])
+    assert_equal false, Core::PersonResolver.same_email?(@person1, @person2)
   end
 
   def test_same_email_one_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_email?(@person1["email"], @person_no_email["email"])
+    assert_equal false, Core::PersonResolver.same_email?(@person1, @person_no_email)
   end
 
   def test_same_email_both_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_email?(@person_nil_fields["email"], @person_nil_fields["email"])
+    assert_equal false, Core::PersonResolver.same_email?(@person_nil_fields, @person_nil_fields)
   end
 
   def test_same_website_matching
     person1_same_website = @person1.dup
-    assert Core::PersonResolver.same_website?(@person1["website"], person1_same_website["website"])
+    assert Core::PersonResolver.same_website?(@person1, person1_same_website)
   end
 
   def test_same_website_matching_case_insensitive
-    assert Core::PersonResolver.same_website?(@person1["website"], @person1_alt_case["website"])
+    assert Core::PersonResolver.same_website?(@person1, @person1_alt_case)
   end
 
   def test_same_website_different
-    assert_equal false, Core::PersonResolver.same_website?(@person1["website"], @person2["website"])
+    assert_equal false, Core::PersonResolver.same_website?(@person1, @person2)
   end
 
   def test_same_website_one_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_website?(@person1["website"], @person_no_website["website"])
+    assert_equal false, Core::PersonResolver.same_website?(@person1, @person_no_website)
   end
 
   def test_same_website_both_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_website?(@person_nil_fields["website"], @person_nil_fields["website"])
+    assert_equal false, Core::PersonResolver.same_website?(@person_nil_fields, @person_nil_fields)
   end
 
   # --- .name_in_config? Test (Updated Signature) ---

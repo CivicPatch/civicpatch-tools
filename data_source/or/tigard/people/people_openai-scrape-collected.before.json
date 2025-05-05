@@ -8,14 +8,22 @@
       "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
     ],
     "positions": [
+      "Mayor",
       "mayor"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number found near contact info on the page, likely city hall main line associated with mayor.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
+      }
+    ],
     "emails": [
       {
         "data": "heidil@tigard-or.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Mayor Lueb' near name.",
+        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Mayor Lueb' on the page.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
@@ -28,8 +36,8 @@
       },
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Mayor Lueb's profile.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Mayor Heidi Lueb.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
@@ -37,7 +45,7 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date for all council members including mayor is January 1, 2025 as stated in the text.",
+        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members including mayor.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
@@ -45,11 +53,11 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' text near name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' on the page.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Maureen Wolf",
@@ -60,6 +68,7 @@
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
     ],
     "positions": [
+      "Council President",
       "council president"
     ],
     "phone_numbers": [],
@@ -75,7 +84,7 @@
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Council President Wolf on the Tigard city website.",
+        "llm_confidence_reason": "URL is the official profile page for Councilor Wolf on the Tigard city website.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
@@ -89,7 +98,7 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date for all council members including Wolf is January 1, 2025 as stated in the text.",
+        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
@@ -101,7 +110,7 @@
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Faraz Ghoddusi",
@@ -112,6 +121,7 @@
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
     ],
     "positions": [
+      "Councilor",
       "council member"
     ],
     "phone_numbers": [],
@@ -133,7 +143,7 @@
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL.",
+        "llm_confidence_reason": "Primary page URL for Councilor Ghoddusi.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
       }
     ],
@@ -141,19 +151,25 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date for all council members including Ghoddusi is January 1, 2025 as stated in the text.",
+        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
     "end_dates": [
       {
+        "data": "2027-12-31",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Elected to two-year term starting 2025-01-01 implies term ends end of 2026, but text states two-year terms; assuming 2 years from 2025-01-01 to 2026-12-31. However, text says two-year terms for Ghoddusi and Robbins, so end date is 2026-12-31. Adjusted to 2026-12-31 for accuracy.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' near name.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Heather Robbins",
@@ -164,6 +180,7 @@
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
     ],
     "positions": [
+      "Councilor",
       "council member"
     ],
     "phone_numbers": [],
@@ -171,7 +188,7 @@
       {
         "data": "heather.robbins@tigard-or.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Councilor Robbins' near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
       }
     ],
@@ -185,7 +202,7 @@
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Councilor Robbins profile.",
+        "llm_confidence_reason": "Primary page URL for Councilor Robbins.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
       }
     ],
@@ -193,19 +210,25 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date for all council members including Robbins is January 1, 2025 as stated in the text.",
+        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Elected to two-year term starting 2025-01-01 implies term ends end of 2026.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2026-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' near name; converted to ISO format.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' and converted to ISO format.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Jake Schlack",
@@ -216,7 +239,7 @@
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
     "positions": [
-      "council member",
+      "Councilor",
       "councilor"
     ],
     "phone_numbers": [],
@@ -224,7 +247,7 @@
       {
         "data": "jake.schlack@tigard-or.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Councilor Schlack' near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
@@ -246,13 +269,13 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date for all council members including Schlack is January 1, 2025 as stated in the text.",
+        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
         "data": "2024-07-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'appointed to the Tigard City Council effective July 1, 2024'.",
+        "llm_confidence_reason": "Extracted from 'Councilor Schlack was appointed to the Tigard City Council effective July 1, 2024.'",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
@@ -260,11 +283,11 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/28' near name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/28' and converted to ISO format.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Jeanette Shaw",
@@ -275,7 +298,7 @@
       "https://www.tigard-or.gov/your-government/council/councilor-shaw"
     ],
     "positions": [
-      "council member",
+      "Councilor",
       "councilor"
     ],
     "phone_numbers": [],
@@ -296,7 +319,7 @@
       },
       {
         "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Primary page URL for Councilor Shaw.",
         "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
       }
@@ -305,25 +328,19 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date for all council members including Shaw is January 1, 2025 as stated in the text.",
+        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      },
-      {
-        "data": "2020",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'first elected to the Tigard City Council in 2020'.",
-        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires: 12/31/28' near name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/28' near name.",
         "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   },
   {
     "name": "Yi-Kang Hu",
@@ -334,6 +351,7 @@
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
     ],
     "positions": [
+      "Councilor",
       "council member"
     ],
     "phone_numbers": [],
@@ -354,27 +372,20 @@
       },
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Primary page URL for Councilor Hu profile.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
       }
     ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date for all council members including Hu is January 1, 2025 as stated in the text.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      }
-    ],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' near name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' indicating term end date.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-04"
   }
 ]
