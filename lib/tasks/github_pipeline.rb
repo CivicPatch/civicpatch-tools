@@ -65,7 +65,7 @@ namespace :github_pipeline do
   def self.generate_people_list_comment(municipality_context, merged_people, missing_people, contested_people)
     state = municipality_context[:state]
     city_entry = municipality_context[:municipality_entry]
-    all_sources = city_entry["sources"]
+    all_sources = city_entry["meta_sources"]
     city = city_entry["name"]
 
     city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
