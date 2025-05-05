@@ -68,10 +68,10 @@ namespace :pipeline do
     municipalities.each do |municipality_entry|
       context = Core::ContextManager.get_context(state, municipality_entry["gnis"])
       next unless municipality_entry["website"].present?
-      next unless context[:config]["source_directory_list"]["type"] == "directory_list_fallback"
+      next unless context[:config]["source_directory_list"]["type"] == "directory_list_default"
 
       source_directory_list, people_config = fetch_with_state_source(context)
-      # aggregate_sources(context, sources: %w[state_source])
+      aggregate_sources(context, sources: %w[state_source])
       context = Core::ContextManager.update_context_config(context,
                                                            source_directory_list: source_directory_list,
                                                            people: people_config)
@@ -96,13 +96,11 @@ namespace :pipeline do
 
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
-    if source_directory_list["type"] == "directory_list"
-      people = source_directory_list["people"]
-      people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
-      formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
-                                                           positions_config)
-      source_directory_list["people"] = formatted_people
-    end
+    people = source_directory_list["people"]
+    people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
+    formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
+                                                         positions_config)
+    source_directory_list["people"] = formatted_people
 
     [source_directory_list, people_config]
   end
