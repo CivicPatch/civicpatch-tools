@@ -147,18 +147,24 @@ module GitHub
       end
 
       if updates_needed_markdown.present?
-        updates_needed_markdown = "The following officials may need updates to their records:\n#{updates_needed_markdown}"
+        updates_needed_markdown = "The following officials may need updates to their records:\n#{
+          updates_needed_markdown
+        }"
       end
 
-      <<~MARKDOWN
-        <blockquote><details>
-        <summary>Click to expand</summary>
+      if not_in_office_markdown.present? || updates_needed_markdown.present?
+        <<~MARKDOWN
+          <blockquote><details>
+          <summary>Click to expand</summary>
 
-        ```md
-        #{[not_in_office_markdown, updates_needed_markdown].compact.join("\n")}
-        ```
-        </details></blockquote>
-      MARKDOWN
+          ```md
+          #{[not_in_office_markdown, updates_needed_markdown].compact.join("\n")}
+          ```
+          </details></blockquote>
+        MARKDOWN
+      else
+        ""
+      end
     end
 
     def self.get_updates_needed(source_to_update, merged_person, contested_fields)
