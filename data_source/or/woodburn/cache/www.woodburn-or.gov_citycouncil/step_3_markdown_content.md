@@ -230,8 +230,6 @@ Column 1
 
 # Mayor and City Council
 
-  [![City Logo](images/7dbf0fc7eb5b259a453eca6fd681226bf28c14e9046e9c7bef73e8795a567b87.png)](https://www.woodburn-or.gov/sites/default/files/styles/gallery500/public/imageattachments/citycouncil/page/98/city_of_woodburn_logo_png.png?itok=HBAhpMsT)  
-
 The City of Woodburn is a Council-Manager form of government operating pursuant to a  __ [City Charter](https://www.woodburn-or.gov/citycouncil/page/city-charter)__.
 
 This type of government consists of:
@@ -257,9 +255,9 @@ View the Council Ward Map by [__clicking here__](https://woodburn.maps.arcgis.co
 |__Name__|__Ward__|__Email__|__Term Expires__|
 |---|---|---|---|
 |![](images/2aad5f3734b489668bdd9a5efff5c14188f31233fcf0dd8032c134ab811d6f4f.png)Frank Lonergan|Mayor|__ [frank.lonergan@ci.woodburn.or.us](mailto:frank.lonergan@ci.woodburn.or.us)__|December 2026|
-|![](images/9bb99d998b98b10c0d96544139ec20bcd061b1885f8c3ca97835ee814029779f.png)Lilial Brizuela|Ward I|__ [lilia.brizuela@ci.woodburn.or.us](mailto:lilia.brizuela@ci.woodburn.or.us)__|December 2028|
+|VACANT|Ward I| |December 2028|
 |![](images/e1878e8d8805c5947c7eefb7da25243a8c7edf51810b84a0794cedac6365c64a.png)Mark Wilk|Ward II|__ [mark.wilk@ci.woodburn.or.us](mailto:mark.wilk@ci.woodburn.or.us)__|December 2028|
-|  ![](images/dd631d2ca0bdf465e13a02ac0fc5da23b3d61b8164bbb09a10ce5cf7b0d418e8.png)Jen Cantu|Ward III|__ [](mailto:mark.wilk@ci.woodburn.or.us)  [Jennifer.Cantu@ci.woodburn.or.us](mailto:Jennifer.Cantu@ci.woodburn.or.us)__|December 2026|
+|  ![](images/dd631d2ca0bdf465e13a02ac0fc5da23b3d61b8164bbb09a10ce5cf7b0d418e8.png)Jen Cantu|Ward III|__ [Jennifer.Cantu@ci.woodburn.or.us](mailto:Jennifer.Cantu@ci.woodburn.or.us)__|December 2026|
 |![](images/c4eba1fd0bf8250ddca556f4b8f6c38cf95442c7de6cca9111a8522d44cc94aa.png)Sharon Schaub|Ward IV|__ [sharon.schaub@ci.woodburn.or.us](mailto:sharon.schaub@ci.woodburn.or.us)__|December 2026|
 |![](images/e5c60a41306e337c4be394f8b52cc08c4c237d0a81604ae56d2bb82a411fe928.png)Mary Beth Cornwell|Ward V|__ [marybeth.cornwell@ci.woodburn.or.us](mailto:marybeth.cornwell@ci.woodburn.or.us)__|December 2026|
 |![](images/5da8bc740d1869bd0422df1c0278302220fad8fd16e40bd6901409f10e5d0b07.png)Alma Grijalva|Ward VI|__ [alma.grijalva@ci.woodburn.or.us](mailto:alma.grijalva@ci.woodburn.or.us)__|December 2028|
@@ -268,7 +266,7 @@ View the Council Ward Map by [__clicking here__](https://woodburn.maps.arcgis.co
 
        
 
- *  [![Printer-friendly version](images/c6dbe0798297b868a9834f0f63e4890f4ac0f00ba13dfd14ec3dce7b7d8ff91d.png)](https://www.woodburn-or.gov/print/98) 
+ * 
   [City Council](https://www.woodburn-or.gov/citycouncil)  
 
  *  [Agendas & Minutes](https://www.woodburn-or.gov/meetings?field_microsite_tid_1=27) 
@@ -286,7 +284,7 @@ Woodburn, Oregon 97071
 
  __Phone: __ (503) 982-5228
 
-  [View Full Contact Details](https://www.woodburn-or.gov/citycouncil/custom-contact-page/city-council-contact-information)   [![facebook](images/e3d02f499f9dfdf42c6492b919fe52b719bf7bbbf09f1de0d6e3b4b1ade125b5.png)](https://www.facebook.com/cityofwoodburn/)   [![twitter](images/f649d6bb1f7d7e8023344d459319d23134e6043767b84d5df800ed992203b138.png)](https://twitter.com/CityofWoodburn)   [![Youtbue](images/822b533dbc0c6c31bde220be77ea1b20a08bda335449378a955a3bc22a8b0e74.png)](https://www.youtube.com/user/cityofwoodburn/)  
+  [View Full Contact Details](https://www.woodburn-or.gov/citycouncil/custom-contact-page/city-council-contact-information)  
 
  *  [Sitemap](https://www.woodburn-or.gov/sitemap) 
  *  [Accessibility](https://www.woodburn-or.gov/hr/page/accessibility-forms) 
@@ -299,4 +297,4 @@ Woodburn, Oregon 97071
 
  [Back to Top](https://www.woodburn-or.gov/citycouncil/) 
 
- Original text Rate this translation Your feedback will be used to help improve Google Translate  ![placeholder](images/35809d2b977aca68d8a115152538f52b30f911ddd54da1be88d6658a5bc8b33c.png)   [](https://www.woodburn-or.gov/citycouncil/)  [](https://www.woodburn-or.gov/citycouncil/)   [](https://www.woodburn-or.gov/citycouncil/)   [](https://www.woodburn-or.gov/citycouncil/)  [](https://www.woodburn-or.gov/citycouncil/)   [](https://www.woodburn-or.gov/citycouncil/)  [](https://www.woodburn-or.gov/citycouncil/)  [](https://www.woodburn-or.gov/citycouncil/)  [](https://www.woodburn-or.gov/citycouncil/)  [](https://www.woodburn-or.gov/citycouncil/)  
+ Original text Rate this translation Your feedback will be used to help improve Google Translate  ![placeholder](images/35809d2b977aca68d8a115152538f52b30f911ddd54da1be88d6658a5bc8b33c.png)  

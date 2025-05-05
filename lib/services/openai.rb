@@ -63,10 +63,14 @@ module Services
       content_type = if person_name.present?
                        "First, determine if the content contains information about the target person."
                      else
-                       %(First, determine if the content contains information about the council members
-                         of the target municipality. If the content includes information about the following people,
-                         they are very likely to be on the council:
-                         #{maybe_target_people.join(", ")}
+                       %(Your primary task is to identify and extract information for ALL council members
+                         of the target municipality found within the provided content.
+                         As a helpful guide, the following people might be council members based on previous data:
+                         [#{maybe_target_people.join(", ")}].
+                         Use this list to aid identification, but DO NOT limit your search to only these names.
+                         Extract information for EVERY relevant person you find in the content, regardless
+                         of whether they were on the provided list.
+                         If the content does not appear to contain council member information, return an empty JSON array `[]`.
                          )
                      end
 

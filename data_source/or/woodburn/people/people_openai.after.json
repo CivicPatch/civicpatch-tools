@@ -17,24 +17,6 @@
     "updated_at": "2025-05-05"
   },
   {
-    "name": "Lilia Brizuela",
-    "positions": [
-      "Council Member",
-      "Ward I"
-    ],
-    "image": "https://cdn.civicpatch.org/open-data/or/woodburn/images/9bb99d998b98b10c0d96544139ec20bcd061b1885f8c3ca97835ee814029779f.png",
-    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_1_-_brizuela_1-200x300.png",
-    "phone_number": null,
-    "email": "lilia.brizuela@ci.woodburn.or.us",
-    "website": null,
-    "start_date": null,
-    "end_date": "2028-12-31",
-    "sources": [
-      "https://www.woodburn-or.gov/citycouncil"
-    ],
-    "updated_at": "2025-05-05"
-  },
-  {
     "name": "Mark Wilk",
     "positions": [
       "Council Member",
@@ -47,6 +29,24 @@
     "website": null,
     "start_date": null,
     "end_date": "2028-12-31",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil"
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Jen Cantu",
+    "positions": [
+      "Council Member",
+      "Ward Iii"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/or/woodburn/images/dd631d2ca0bdf465e13a02ac0fc5da23b3d61b8164bbb09a10ce5cf7b0d418e8.png",
+    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_3_-_cantu-200x300.png",
+    "phone_number": null,
+    "email": "Jennifer.Cantu@ci.woodburn.or.us",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],

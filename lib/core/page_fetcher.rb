@@ -40,6 +40,7 @@ module Core
       # remove empty links
       nokogiri_doc.css("a").each do |link|
         link.remove if link.get_attribute("href").blank?
+        link.remove if link.text.blank?
       end
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_parsed_html.html")),

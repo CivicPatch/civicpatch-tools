@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "./utils"
+require_relative "../core/people_resolver"
 
 module Validators
   # List of elected officials for the city (municipality/place)
@@ -51,7 +52,7 @@ module Validators
       end
 
       {
-        compare_results: Validators::Utils.compare_people_across_sources(people_config, sources),
+        compare_results: Core::PeopleResolver.compare_people_across_sources(people_config, sources),
         merged_sources: Validators::Utils.merge_people_across_sources(people_config, sources)
       }
     end
