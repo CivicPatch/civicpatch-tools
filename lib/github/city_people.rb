@@ -123,7 +123,7 @@ module GitHub
       updates_needed_markdown = ""
 
       missing_people.each_key do |name|
-        not_in_office_list << name if missing_people[name].include?(source_to_update)
+        not_in_office_list << name unless missing_people[name].include?(source_to_update)
       end
       not_in_office_markdown = not_in_office_list.map { |name| "- #{name}" }.join("\n")
 
