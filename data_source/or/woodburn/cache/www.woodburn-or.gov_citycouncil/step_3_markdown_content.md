@@ -4,7 +4,7 @@
 
  [выбрать язык](https://www.woodburn-or.gov/citycouncil/) 
 
- *  [Government]()    
+ *    
 
 Column 1  
 
@@ -33,7 +33,7 @@ Column 3
    *  __ [Public Notices](https://www.woodburn-or.gov/public-notices)__ 
    *  __ [Public Records](https://www.woodburn-or.gov/city-recorder/page/public-records)__ 
    *  [__Vision, Missions and Goals__](https://www.woodburn-or.gov/citycouncil/page/council-vision-mission-goals)  
- *  [Our Community]()    
+ *    
 
 Column 1  
 
@@ -58,7 +58,7 @@ Column 3
    *  [__Woodburn Family Resource Center__](https://www.woodburn-or.gov/community-services/page/woodburn-family-resource-center) 
    *  __ [Woodburn Public Library](https://www.woodburn-or.gov/library)__ 
    *  __ [Woodburn School District](http://www.woodburnsd.org/)__  
- *  [Doing Business]()    
+ *    
 
 Column 1 __​__   
 
@@ -91,7 +91,7 @@ Column 3
 
    *  __Taxes__ 
    *  [Transient Occupancy Tax](https://www.woodburn-or.gov/finance/page/transient-occupancy-tax)  
- *  [Departments & Services]()    
+ *    
 
 Column 1  
 
@@ -150,7 +150,7 @@ Column 4
    *  [Public Records Request](https://www.woodburn-or.gov/administration/page/public-records-request-form) 
    *  [Street Maintenance](https://www.woodburn-or.gov/street) 
    *  [Transit](https://www.woodburn-or.gov/transit)  
- *  [How Do I]()    
+ *    
 
 Column 1  
 
@@ -226,7 +226,7 @@ Column 1
    *  [Fiesta Mexicana](https://www.woodburn-or.gov/community-services/page/woodburn-fiesta-mexicana) 
    *  [Upcoming Events](https://www.woodburn-or.gov/calendar) 
    *  [__Send us a Question__](https://www.woodburn-or.gov/administration/webform/contact-city)  
- Search form Search Website  []()  
+ Search form Search Website 
 
 # Mayor and City Council
 

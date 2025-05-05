@@ -37,9 +37,13 @@ module Core
 
       parsed_html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
       nokogiri_doc = Nokogiri::HTML(parsed_html)
+      # remove empty links
+      nokogiri_doc.css("a").each do |link|
+        link.remove if link.get_attribute("href").blank?
+      end
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_parsed_html.html")),
-                 parsed_html)
+                 nokogiri_doc.to_html)
 
       markdown_content = Markitdown.from_nokogiri(nokogiri_doc)
       markdown_content_file_path = PathHelper.project_path(File.join(destination_dir.to_s,

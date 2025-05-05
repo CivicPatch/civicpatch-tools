@@ -13,7 +13,7 @@
       {
         "data": "(503) 982-5228",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "City Hall phone number listed on page, no direct personal number found, likely main contact.",
+        "llm_confidence_reason": "General City Hall phone number listed on page; no direct personal number found.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -38,7 +38,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date December 2026 converted to ISO format.",
+        "llm_confidence_reason": "Term Expires date given as December 2026; end date set to last day of year.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -70,7 +70,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date December 2028 converted to ISO format.",
+        "llm_confidence_reason": "Term Expires date given as December 2028; end date set to last day of year.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -102,7 +102,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date December 2028 converted to ISO format.",
+        "llm_confidence_reason": "Term Expires date given as December 2028; end date set to last day of year.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -134,7 +134,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date December 2026 converted to ISO format.",
+        "llm_confidence_reason": "Term Expires date given as December 2026; end date set to last day of year.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -166,7 +166,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date December 2026 converted to ISO format.",
+        "llm_confidence_reason": "Term Expires date given as December 2026; end date set to last day of year.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -198,7 +198,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date December 2028 converted to ISO format.",
+        "llm_confidence_reason": "Term Expires date given as December 2028; end date set to last day of year.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
