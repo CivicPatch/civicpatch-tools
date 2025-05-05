@@ -1,0 +1,207 @@
+[
+  {
+    "name": "Frank Lonergan",
+    "image": "images/2aad5f3734b489668bdd9a5efff5c14188f31233fcf0dd8032c134ab811d6f4f.png",
+    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/mayor_lonergan-200x300.png",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 982-5228",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "City Hall phone number listed on page, no direct personal number found, likely main contact.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "emails": [
+      {
+        "data": "frank.lonergan@ci.woodburn.or.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Mayor page URL linked on site.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expires date December 2026 converted to ISO format.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Lilia Brizuela",
+    "image": "images/9bb99d998b98b10c0d96544139ec20bcd061b1885f8c3ca97835ee814029779f.png",
+    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_1_-_brizuela_1-200x300.png",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil"
+    ],
+    "positions": [
+      "council member",
+      "ward I"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "lilia.brizuela@ci.woodburn.or.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expires date December 2028 converted to ISO format.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Mark Wilk",
+    "image": "images/e1878e8d8805c5947c7eefb7da25243a8c7edf51810b84a0794cedac6365c64a.png",
+    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_2_-_wilk-200x300.png",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil"
+    ],
+    "positions": [
+      "council member",
+      "ward II"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mark.wilk@ci.woodburn.or.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expires date December 2028 converted to ISO format.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Sharon Schaub",
+    "image": "images/c4eba1fd0bf8250ddca556f4b8f6c38cf95442c7de6cca9111a8522d44cc94aa.png",
+    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_4_-_schaub-200x300.png",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil"
+    ],
+    "positions": [
+      "council member",
+      "ward IV"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "sharon.schaub@ci.woodburn.or.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expires date December 2026 converted to ISO format.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Mary Beth Cornwell",
+    "image": "images/e5c60a41306e337c4be394f8b52cc08c4c237d0a81604ae56d2bb82a411fe928.png",
+    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_5_-_cornwell-200x300.png",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil"
+    ],
+    "positions": [
+      "council member",
+      "ward V"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "marybeth.cornwell@ci.woodburn.or.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expires date December 2026 converted to ISO format.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  },
+  {
+    "name": "Alma Grijalva",
+    "image": "images/5da8bc740d1869bd0422df1c0278302220fad8fd16e40bd6901409f10e5d0b07.png",
+    "source_image": "https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_6_-_grijalva-200x300.png",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil"
+    ],
+    "positions": [
+      "council member",
+      "ward VI"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "alma.grijalva@ci.woodburn.or.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expires date December 2028 converted to ISO format.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-05-05"
+  }
+]
