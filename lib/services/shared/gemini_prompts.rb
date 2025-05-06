@@ -113,6 +113,7 @@ module Services
             Focus on the primary elected/appointed governing body members.
           - Include only active roles (today is #{current_date}).
           - Include both the role and any associated division (e.g., "Council Member, District 3").
+          - **Avoid Redundant Phrasing in Positions**: If similar terms describing the same core role (e.g., "Council Member," "Councilor") are found associated with the same division (like Ward, District, Seat), extract only the most complete or primary term used in the source text. Do not concatenate these similar terms for a single position. For instance, for "Ward 3 Councilor," prefer "Councilor, Ward 3" or "Council Member, Ward 3" (if "Council Member" is the standard term for that role type), but not "Council Member, Ward 3 Councilor."
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names

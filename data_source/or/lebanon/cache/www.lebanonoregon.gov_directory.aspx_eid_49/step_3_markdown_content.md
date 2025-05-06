@@ -13,7 +13,7 @@ Loading
  1.  [Doing Business](https://www.lebanonoregon.gov/35/Doing-Business) 
  1.  [Government](https://www.lebanonoregon.gov/27/Government) 
  1.  [City Services](https://www.lebanonoregon.gov/9/City-Services) 
- Search  ![](images/83c9eed9c78852e4b2ce07bdf718725a820d02e753df3ca14321b21ae5f5744e.jpg)  
+ Search  ![](images/aa67db5aa9b42b45cf47df25e45169fb75a981b1784f7e96fb884082e64c776d.jpg)  
 
  1.  [Home](https://www.lebanonoregon.gov/) 
  1. Staff Directory

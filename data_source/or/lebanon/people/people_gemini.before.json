@@ -20,15 +20,16 @@
   {
     "name": "Dominic Conti",
     "positions": [
-      "Ward 1 Councilor"
+      "Councilor",
+      "Ward 1"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "541-258-4989",
-    "email": null,
+    "email": "dominic.conti@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2025-01-08",
+    "end_date": "2028-12-31",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=56"
@@ -38,8 +39,8 @@
   {
     "name": "Carl Mann",
     "positions": [
-      "Ward 1 Councilor",
-      "Councilor Ward 1"
+      "Councilor",
+      "Ward 1"
     ],
     "image": null,
     "source_image": null,
@@ -57,9 +58,9 @@
   {
     "name": "David McClain",
     "positions": [
-      "Ward 2 Councilor",
-      "Council Member",
-      "Ward 2"
+      "Councilor",
+      "Ward 2",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
@@ -77,12 +78,13 @@
   {
     "name": "Dave Workman",
     "positions": [
-      "Ward 2 Councilor"
+      "Councilor",
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "541-258-4982",
-    "email": null,
+    "email": "city.recorder@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=49",
     "start_date": null,
     "end_date": null,
@@ -95,12 +97,13 @@
   {
     "name": "Jeremy Salvage",
     "positions": [
-      "Ward 3 Councilor"
+      "Councilor",
+      "Ward 3"
     ],
     "image": null,
     "source_image": null,
     "phone_number": null,
-    "email": null,
+    "email": "city.recorder@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=50",
     "start_date": null,
     "end_date": null,
@@ -112,10 +115,10 @@
   {
     "name": "Michelle Steinhebel",
     "positions": [
-      "Ward 3 - Council President",
-      "Council President",
+      "Councilor",
       "Ward 3",
-      "Council Member"
+      "Council President",
+      "City Council"
     ],
     "image": null,
     "source_image": null,

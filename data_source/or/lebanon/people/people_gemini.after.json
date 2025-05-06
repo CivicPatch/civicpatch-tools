@@ -22,8 +22,7 @@
     "positions": [
       "Council President",
       "Council Member",
-      "Ward 3",
-      "Ward 3 - Council President"
+      "Ward 3"
     ],
     "image": null,
     "source_image": null,
@@ -42,8 +41,7 @@
     "name": "Carl Mann",
     "positions": [
       "Council Member",
-      "Ward 1",
-      "Ward 1 Councilor"
+      "Ward 1"
     ],
     "image": null,
     "source_image": null,
@@ -62,15 +60,15 @@
     "name": "Dominic Conti",
     "positions": [
       "Council Member",
-      "Ward 1 Councilor"
+      "Ward 1"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(541) 258-4989",
-    "email": null,
+    "email": "dominic.conti@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2025-01-08",
+    "end_date": "2028-12-31",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=56"
@@ -81,12 +79,12 @@
     "name": "Dave Workman",
     "positions": [
       "Council Member",
-      "Ward 2 Councilor"
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
     "phone_number": "(541) 258-4982",
-    "email": null,
+    "email": "city.recorder@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=49",
     "start_date": null,
     "end_date": null,
@@ -100,8 +98,7 @@
     "name": "David McClain",
     "positions": [
       "Council Member",
-      "Ward 2",
-      "Ward 2 Councilor"
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
@@ -120,12 +117,12 @@
     "name": "Jeremy Salvage",
     "positions": [
       "Council Member",
-      "Ward 3 Councilor"
+      "Ward 3"
     ],
     "image": null,
     "source_image": null,
     "phone_number": null,
-    "email": null,
+    "email": "city.recorder@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=50",
     "start_date": null,
     "end_date": null,
