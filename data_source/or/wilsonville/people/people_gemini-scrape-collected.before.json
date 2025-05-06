@@ -1,0 +1,421 @@
+[
+  {
+    "name": "Shawn O'Neil",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.wilsonvilleoregon.gov/citycouncil",
+      "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-570-1504",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This phone number is listed under a 'Contact' section but is explicitly for the City Manager, not the Mayor. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-570-1501",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to name and labeled 'Phone Number'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cosgrove@wilsonvilleoregon.gov",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This email is listed under a 'Contact' section but is explicitly for the City Manager, not the Mayor. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "oneil@wilsonvilleoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to name and labeled 'Email'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link associated with the person's name and title under the 'Members' section.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the profile page for the person.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term start date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2025-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly listed as 'January, 2025'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term end date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2028-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly listed as 'December, 2028'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Caroline Berry",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.wilsonvilleoregon.gov/citycouncil",
+      "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
+    ],
+    "positions": [
+      "Council President",
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-570-1504",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This phone number is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-545-4218",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cosgrove@wilsonvilleoregon.gov",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This email is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "berry@wilsonvilleoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link associated with the person's name and title under the 'Members' section.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry/",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The URL is the source page for this person's information.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term start date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2023-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start date 'January, 2023' explicitly listed in 'Term Date'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term end date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2026-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End date 'December, 2026' explicitly listed in 'Term Date'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Katie Dunwell",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.wilsonvilleoregon.gov/citycouncil",
+      "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
+    ],
+    "positions": [
+      "Council Member",
+      "council member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-570-1504",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This phone number is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "971-804-3034",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number directly listed next to name and position.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cosgrove@wilsonvilleoregon.gov",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This email is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "dunwell@wilsonvilleoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly listed next to name and position.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link associated with the person's name and title under the 'Members' section.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the specific profile page for the person.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term start date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2023-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term start date explicitly stated in 'Term Date' field.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term end date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2026-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end date explicitly stated in 'Term Date' field.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Anne Shevlin",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.wilsonvilleoregon.gov/citycouncil",
+      "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
+    ],
+    "positions": [
+      "Council Member",
+      "council member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-570-1504",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This phone number is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "503-570-1501",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated next to 'Phone Number:'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cosgrove@wilsonvilleoregon.gov",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This email is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "shevlin@wilsonvilleoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated next to 'Email:' and as mailto link text.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link associated with the person's name and title under the 'Members' section.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page itself is the profile page for the person.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term start date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2025-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated after 'Term Date:' and matches YYYY-MM format.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term end date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2028-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated after 'Term Date:' and matches YYYY-MM format.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Adam Cunningham",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.wilsonvilleoregon.gov/citycouncil",
+      "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
+    ],
+    "positions": [
+      "Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-570-1504",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This phone number is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "971-917-4340",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cosgrove@wilsonvilleoregon.gov",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "This email is listed under a 'Contact' section but is explicitly for the City Manager, not a Council member. Low confidence it belongs to this person.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "cunningham@wilsonvilleoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed and linked.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link associated with the person's name and title under the 'Members' section.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham/",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The current page URL is the profile page for the person.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term start date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2025-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start date 'January, 2025' explicitly listed as part of 'Term Date'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-05-05",
+        "llm_confidence": 0.05,
+        "llm_confidence_reason": "The date 05/05/2025 is listed for an upcoming meeting, not a term end date. Low confidence.",
+        "source": "https://www.wilsonvilleoregon.gov/citycouncil"
+      },
+      {
+        "data": "2028-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End date 'December, 2028' explicitly listed as part of 'Term Date'.",
+        "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  }
+]
