@@ -83,7 +83,26 @@ module Core
           rest = rest.delete_prefix(prefix)
         end
 
+        rest = division_rest_to_number(rest)
+
         [division, rest].join(" ").split.join(" ")
+      end
+
+      # NOTE: Assume no one is going to use non-numeric characters
+      # when numbers go higher than 10
+      def self.division_rest_to_number(division_rest_string)
+        number_words_in_english = %w[one two three four five six seven eight nine ten]
+        number_words_in_roman = %w[I II III IV V VI VII VIII IX X]
+
+        if number_words_in_english.include?(division_rest_string)
+          return number_words_in_english.index(division_rest_string) + 1
+        end
+
+        if number_words_in_roman.include?(division_rest_string)
+          return number_words_in_roman.index(division_rest_string) + 1
+        end
+
+        division_rest_string
       end
 
       def self.sort_positions(positions, positions_config)
