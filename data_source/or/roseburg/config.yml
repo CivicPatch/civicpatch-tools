@@ -1,5 +1,6 @@
 ---
-scrape_sources: []
+scrape_sources:
+- https://www.cityofroseburg.org/your-government/mayor-council
 source_directory_list:
   type: directory_list
   people:
