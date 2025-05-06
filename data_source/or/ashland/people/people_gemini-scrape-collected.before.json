@@ -1,0 +1,250 @@
+[
+  {
+    "name": "Tonya Graham",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://ashlandoregon.gov/379/City-Council",
+      "https://ashlandoregon.gov/379/City-Council/"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tonya.graham@council.ashlandoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly associated with the name.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      },
+      {
+        "data": "tonya.graham@council.ashlandoregon.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://ashlandoregon.gov/379/City-Council/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://ashlandoregon.gov/379/City-Council/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page found, using the general City Council page.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected start date in November 2024.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      },
+      {
+        "data": "2023-02",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated 'appointed Mayor in February 2023', which appears to be the start of her current tenure.",
+        "source": "https://ashlandoregon.gov/379/City-Council/"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'term ending December 2028'.",
+        "source": "https://ashlandoregon.gov/379/City-Council/"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Dylan Bloom",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://ashlandoregon.gov/379/City-Council"
+    ],
+    "positions": [
+      "City Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dylan.bloom@council.ashlandoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly associated with the name.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://ashlandoregon.gov/379/City-Council/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page found, using the general City Council page.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected start date in November 2024.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Jeff Dahle",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://ashlandoregon.gov/379/City-Council"
+    ],
+    "positions": [
+      "City Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jeff.dahle@council.ashlandoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly associated with the name.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://ashlandoregon.gov/379/City-Council/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page found, using the general City Council page.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected start date in November 2024.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Gina DuQuenne",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://ashlandoregon.gov/379/City-Council"
+    ],
+    "positions": [
+      "City Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "gina.duquenne@council.ashlandoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly associated with the name.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://ashlandoregon.gov/379/City-Council/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page found, using the general City Council page.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated reelected start date in November 2024.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Eric Hansen",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://ashlandoregon.gov/379/City-Council"
+    ],
+    "positions": [
+      "City Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "eric.hansen@council.ashlandoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly associated with the name.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://ashlandoregon.gov/379/City-Council/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page found, using the general City Council page.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected start date in November 2022.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Bob Kaplan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://ashlandoregon.gov/379/City-Council"
+    ],
+    "positions": [
+      "City Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bob.kaplan@council.ashlandoregon.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address directly associated with the name.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://ashlandoregon.gov/379/City-Council/",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page found, using the general City Council page.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected start date in November 2022.",
+        "source": "https://ashlandoregon.gov/379/City-Council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  }
+]
