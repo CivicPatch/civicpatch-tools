@@ -105,6 +105,7 @@ module Services
         - For positions:
           - **CRITICAL**: Extract ONLY roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
             **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
+          - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased, or their position is otherwise noted as vacant (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their position, even if a future term date is also mentioned. The statement of resignation or vacancy takes precedence over listed term dates for determining current active status.
           - **Check for Past Dates**: Before extracting a specific position title (e.g., "Council President", "Chair"), examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012", "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past** and is not the person's current role, **DO NOT extract that specific position title.** Focus only on roles the person currently holds according to the text.
           - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
             (e.g., "Youth Councilor", "Student Representative"),
@@ -145,8 +146,12 @@ module Services
             - If the source text explicitly provides a date as `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`, output that exact string.
             - If the source text explicitly provides a date as `Month YYYY` (e.g., "January 2027"), convert it to `YYYY-MM` (e.g., "2027-01").
             - If the source text provides an explicit date in any other format, treat it as not found and output null.
+          - **Identifying the Correct Start Date (if multiple 'elected' dates)**:
+            - If multiple "elected" or "reelected" dates are mentioned for a person, use the date associated with the **most recent** election/re-election for the `start_date`.
+            - Example: "elected in November 2020 and was reelected in November 2024" → `start_date` should be based on "November 2024".
           - **Locating Dates**:
-            - Use keywords (`start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service', `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:') and patterns (`Term: [Date1] to [Date2]`, `Term: YYYY-YYYY`) to find potential explicit date strings **that are clearly associated with the specific person being processed.**
+            - Use keywords (`start_date` keywords: 'Elected:', 'Elected in', 'Appointed:', 'Term Began:', 'Sworn In:', 'Serving Since:', 'First Elected:', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service', `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Term ending', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:') and patterns (`Term: [Date1] to [Date2]`, `Term: YYYY-YYYY`) to find potential explicit date strings **that are clearly associated with the specific person being processed.**
+            - When multiple `start_date` keywords like "elected" or "reelected" are found, apply the "Identifying the Correct Start Date" rule above.
             - When extracting from tables, ensure the date string is found **within the same row or entry** as the person's name.
             - Apply the formatting rules above ONLY to explicitly found and correctly associated dates. Extract both dates for `Term: ... to ...` pattern if both are explicit and associated with the current person.
           - **Key Examples**:
@@ -155,6 +160,9 @@ module Services
             - "Term: Jan 2023 to Dec 31, 2026" -> `start_date`: {"data": "2023-01"}, `end_date`: {"data": "2026-12-31"}
             - "Elected last year" -> `start_date`: null
             - "Term began on the usual date" -> `start_date`: null
+            - "elected in Nov 2020, reelected Nov 2024" -> `start_date`: {"data": "2024-11"}
+            - "term ending December 2028" -> `end_date`: {"data": "2028-12"}
+            - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." -> (This person should NOT be in the output, or if forced to output, all their fields like positions and dates should be null/empty, with a reason citing the resignation).
           - **Final Check**: Was the output date explicitly written in the text (or directly convertible via the Month YYYY rule) **and clearly associated with the correct individual**? If not, it MUST be null. No exceptions for inference or misattribution.
         - Today is #{current_date}. Context only, do not use for date calculation.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'

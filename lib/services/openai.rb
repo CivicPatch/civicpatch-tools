@@ -135,6 +135,7 @@ module Services
         - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in 'positions'.
         - Positions:
           - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
+          - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased, or their position is otherwise noted as vacant (e.g., "applications being accepted for this seat")**, DO NOT include them as a current office holder or extract their position. The statement of resignation or vacancy takes precedence over any listed future term dates when determining current active status. For example, if a person was "Elected Nov 2024 for term ending Dec 2028" but then "Resigned April 15", they should NOT be included in the output as an active member.
           - **Include specific division, district, or position identifier if present.**
             - If the source uses numeric identifiers like "#1", "No. 2", or similar for a role (e.g., in a table column named "Position" or "District"), interpret this as a position number.
             - **Prefer the term "Position X" (e.g., "Position 1", "Position 2") when a numeric identifier is used, unless the source text clearly and consistently uses a different term like "Seat X" or "Ward X" for those numbered roles on the same page.**
@@ -157,10 +158,14 @@ module Services
             - If the source date matches `MM/DD/YYYY` (e.g., "01/31/2025"), convert it to `YYYY-MM-DD` (e.g., "2025-01-31").
             - Use numerical months (01-12) for conversions.
             - **DO NOT** add default days (like '-01', '-31') if they are not explicitly present in the source and required by the `YYYY-MM-DD` format. Do not add default months if only `YYYY` is present.
-          - **Identifying the Correct Term**:
-            - If multiple terms or election dates are mentioned for a person (e.g., initial election and subsequent re-elections), prioritize extracting the `start_date` for the **most recent term that is currently active or the next term set to begin as of #{current_date}**.
-            - Look for phrases like "re-elected to term beginning...", "current term started...", "next term begins..." to identify the relevant active/upcoming term.
-            - If a person was "elected in YYYY1, re-elected in YYYY2, and re-elected again in YYYY3", and YYYY3 is the latest and applies to the current/next term, YYYY3 (and its corresponding month/day if available and convertible) should be the basis for the `start_date`.
+          - **Identifying the Correct Term's Start Date**:
+            - When multiple dates or events (e.g., appointment, election, term beginning) are mentioned for the start of a council member's service:
+              - **PRIORITY 1 for Start Date**: If an **"elected" date** (e.g., "elected in November 2024", "elected [Month YYYY]") is explicitly stated for the current or upcoming term, that "elected" date should be used as the `start_date`.
+              - **PRIORITY 2 for Start Date**: If no "elected" date is available for the current/upcoming term, but an "appointed" date is, use the "appointed" date.
+              - **PRIORITY 3 for Start Date**: If neither "elected" nor "appointed" dates are specified for the current/upcoming term, use the date when the term officially "began" or "started" (e.g., "term beginning January 2025").
+            - Ensure the chosen `start_date` corresponds to the **most recent term that is currently active or the next term set to begin as of #{current_date}**, following the priority above.
+            - This also means if a resignation has occurred, the term is no longer considered active or upcoming for that individual.
+            - Example: If text says "appointed June 2023, elected November 2023 for term starting January 2024", the `start_date` should be based on "elected November 2023" (converted to YYYY-MM).
           - **PRIORITY 1: Specific Term Formats**:
             - Check FIRST for patterns starting with "Term:".
             - If `Term: [Date1] to [Date2]` is found, extract Date1 and Date2. Apply the Input Recognition & Conversion rules above to each date individually based on how it appears in the source. Extract BOTH dates if the pattern provides them.
@@ -168,11 +173,11 @@ module Services
           - **PRIORITY 2: Keyword Search**: If specific "Term:" formats are not found, THEN look for keywords:
             - `start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service'
             - `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:'
-            - Extract the date string following these keywords. Apply the Input Recognition & Conversion rules (and Correct Term identification) above to the extracted string. Output only if the result matches an allowed output format.
+            - Extract the date string following these keywords. Apply Input Recognition & Conversion rules. When multiple `start_date` keywords match, use the "Identifying the Correct Term's Start Date" logic above to choose.
           - **Null If Not Found/Matched/Convertible**: If no date is mentioned, or if a mentioned date cannot be reliably recognized and converted into one of the allowed output formats (YYYY, YYYY-MM, YYYY-MM-DD), set the corresponding field (`start_date` or `end_date`) to null. Do not attempt to parse ambiguous text like "Spring 2024".
           - **Validation**: After creating the JSON, review each person's `start_date` and `end_date`.
             - Ensure the `data` field strictly contains null or a string matching YYYY, YYYY-MM, or YYYY-MM-DD, reflecting defined conversion rules.
-            - **Verify that if multiple term start dates were mentioned, the extracted `start_date` corresponds to the most recent active or upcoming term.**
+            - Verify that if multiple start events (elected, appointed, term began) were mentioned, the `start_date` reflects the "elected" date if available for the current/upcoming term, otherwise following the specified priority.
         - Association & Uniqueness: Associate details carefully. Ensure only ONE entry per unique person.
 
         **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting, paying close attention to the date extraction, conversion, and term identification rules.

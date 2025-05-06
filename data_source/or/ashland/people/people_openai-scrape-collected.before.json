@@ -21,17 +21,17 @@
     "websites": [],
     "start_dates": [
       {
-        "data": "2023-02",
+        "data": "2024-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed Mayor in February 2023, earliest start date for current term.",
+        "llm_confidence_reason": "Elected in November 2024 converted to 2024-11.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term ending December 2028 explicitly stated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term ending December 2028 converted to 2028-12.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
@@ -59,17 +59,17 @@
     "websites": [],
     "start_dates": [
       {
-        "data": "2023-03",
+        "data": "2024-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed to City Council in March 2023, earliest start date for current term.",
+        "llm_confidence_reason": "Elected in November 2024 converted to 2024-11.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term ending December 2028 explicitly stated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term ending December 2028 converted to 2028-12.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
@@ -97,17 +97,17 @@
     "websites": [],
     "start_dates": [
       {
-        "data": "2023-03",
+        "data": "2024-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed to City Council in March 2023, earliest start date for current term.",
+        "llm_confidence_reason": "Elected in November 2024 converted to 2024-11.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term ending December 2026 explicitly stated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term ending December 2026 converted to 2026-12.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
@@ -115,8 +115,8 @@
   },
   {
     "name": "Gina DuQuenne",
-    "image": "images/0f20d0baa64c0f6dac94541eb79f6adab79034a3b1e2dfc538418145b66e30c2.jpg",
-    "source_image": "https://ashlandoregon.gov/ImageRepository/Document?documentID=879",
+    "image": "images/516ed68fa927662cc108cf74e229e0b15cf43c136e5fe2d6f7a7ddc9d9d45ce5.jpg",
+    "source_image": "https://ashlandoregon.gov/ImageRepository/Document?documentID=878",
     "sources": [
       "https://ashlandoregon.gov/379/City-Council"
     ],
@@ -136,16 +136,16 @@
     "start_dates": [
       {
         "data": "2024-11",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Reelected in November 2024, start date assumed as month of election.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Reelected in November 2024 converted to 2024-11.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term ending December 2028 explicitly stated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term ending December 2028 converted to 2028-12.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
@@ -153,8 +153,8 @@
   },
   {
     "name": "Eric Hansen",
-    "image": "images/431e32a19adf230edc167780686bae0a25160755ec8ed44fa4fa9ec91de5c00d.jpg",
-    "source_image": "https://ashlandoregon.gov/ImageRepository/Document?documentID=877",
+    "image": "images/0f20d0baa64c0f6dac94541eb79f6adab79034a3b1e2dfc538418145b66e30c2.jpg",
+    "source_image": "https://ashlandoregon.gov/ImageRepository/Document?documentID=879",
     "sources": [
       "https://ashlandoregon.gov/379/City-Council"
     ],
@@ -174,16 +174,16 @@
     "start_dates": [
       {
         "data": "2022-11",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Elected in November 2022, start date assumed as month of election.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected in November 2022 converted to 2022-11.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term ending December 2026 explicitly stated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term ending December 2026 converted to 2026-12.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
@@ -191,8 +191,8 @@
   },
   {
     "name": "Bob Kaplan",
-    "image": "images/ee8c11a105cd73b9bc548e8097c82cc4cf863b2c4bf8b094d5fa9269ff928cc9.jpg",
-    "source_image": "https://ashlandoregon.gov/ImageRepository/Document?documentID=2898",
+    "image": "images/431e32a19adf230edc167780686bae0a25160755ec8ed44fa4fa9ec91de5c00d.jpg",
+    "source_image": "https://ashlandoregon.gov/ImageRepository/Document?documentID=877",
     "sources": [
       "https://ashlandoregon.gov/379/City-Council"
     ],
@@ -212,47 +212,16 @@
     "start_dates": [
       {
         "data": "2022-11",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Elected in November 2022, start date assumed as month of election.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected in November 2022 converted to 2022-11.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term ending December 2026 explicitly stated.",
-        "source": "https://ashlandoregon.gov/379/City-Council"
-      }
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Doug Knauer",
-    "image": "images/ee8c11a105cd73b9bc548e8097c82cc4cf863b2c4bf8b094d5fa9269ff928cc9.jpg",
-    "source_image": "https://ashlandoregon.gov/ImageRepository/Document?documentID=2898",
-    "sources": [
-      "https://ashlandoregon.gov/379/City-Council"
-    ],
-    "positions": [
-      "City Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [
-      {
-        "data": "2024-11",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Elected in November 2024, start date assumed as month of election.",
-        "source": "https://ashlandoregon.gov/379/City-Council"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2028-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term ending December 2028 explicitly stated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term ending December 2026 converted to 2026-12.",
         "source": "https://ashlandoregon.gov/379/City-Council"
       }
     ],
