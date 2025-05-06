@@ -17,9 +17,9 @@ namespace :sheets do
       send_csv_to_sheets_and_clear(spreadsheet_id, "Cost LLMs", PathHelper.project_path("cost_llms.csv"))
     end
 
-    if File.exist?(PathHelper.project_path("cost_search_engines.csv"))
+    if File.exist?(PathHelper.project_path("cost_search_engine.csv"))
       send_csv_to_sheets_and_clear(spreadsheet_id, "Cost Search Engines",
-                                   PathHelper.project_path("cost_search_engines.csv"))
+                                   PathHelper.project_path("cost_search_engine.csv"))
     end
   end
 
