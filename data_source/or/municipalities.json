@@ -585,10 +585,12 @@
       "phone_number": "(541) 488-6002",
       "website": "https://ashlandoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "e0b462ab9c4ae7497c6dea63e010fa53",
+      "meta_updated_at": "2025-05-06",
+      "meta_hash": "053660eae3c6a07134a9c6d85281d0ba",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {

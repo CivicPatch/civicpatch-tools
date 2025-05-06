@@ -1,5 +1,7 @@
 ---
-scrape_sources: []
+scrape_sources:
+- https://ashlandoregon.gov/379/City-Council
+- https://ashlandoregon.gov/379/City-Council/
 source_directory_list:
   type: directory_list
   people:
