@@ -624,10 +624,12 @@
       "phone_number": "(503) 625-5522",
       "website": "https://www.sherwoodoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "6fd49701c45475db55ca25103304f4fe",
+      "meta_updated_at": "2025-05-06",
+      "meta_hash": "5479d0327cd2b79b0a69ae1933960f77",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {

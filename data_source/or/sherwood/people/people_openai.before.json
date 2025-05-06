@@ -1,0 +1,266 @@
+[
+  {
+    "name": "Jean Simson",
+    "positions": [
+      "Chair",
+      "Position 6"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "simsonj@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Rick Woidyla",
+    "positions": [
+      "Vice Chair",
+      "Position 7"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "woidylar@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2027-06",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Jay Walmsley",
+    "positions": [
+      "Member",
+      "Position 1"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-06",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Daniel Bantz",
+    "positions": [
+      "Member",
+      "Position 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "bantzd@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Joe Tillotson",
+    "positions": [
+      "Member",
+      "Position 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-06",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Tyler Barns",
+    "positions": [
+      "Member",
+      "Position 5"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "barnst@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Justin Kai",
+    "positions": [
+      "Member",
+      "Position 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "kaij@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Taylor Giles",
+    "positions": [
+      "Council Liaison",
+      "Board Member"
+    ],
+    "image": "images/582caca9e422b4623d43f197126c73a9d0cea8cbac8eb1cb11ea83ac0bd90e3f.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/ura/image/43216/phototaylor_giles_2022.jpg?itok=8azocYsS",
+    "phone_number": null,
+    "email": "gilest@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2027-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members",
+      "https://www.sherwoodoregon.gov/ura/page/members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Tim Rosener",
+    "positions": [
+      "Board Chair"
+    ],
+    "image": "images/fdd1bca8a203276a85bca6408e9e2fbe7ea9400217b1f173cad4a006786a32e5.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/ura/image/43201/photo_tim_rosener.jpg?itok=bjLbanQj",
+    "phone_number": null,
+    "email": "rosenert@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/ura/page/members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Kim Young",
+    "positions": [
+      "Board Member"
+    ],
+    "image": "images/0cd7a73929e8cc37c0391bc93dc7d3a50b64a402ca78fd94b5cf9f5cc3d50569.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/ura/image/43206/photo_kim_young_2019.jpg?itok=1xnV5f-G",
+    "phone_number": null,
+    "email": "youngk@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/ura/page/members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Renee Brouse",
+    "positions": [
+      "Board Member"
+    ],
+    "image": "images/1a67d9ad811552a9775032b8deb883b3d113de68ecdeb3e8c09a3b7f75788e93.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/ura/image/43211/photo_renee_brouse_2019.jpg?itok=-rIQv5aR",
+    "phone_number": null,
+    "email": "brouser@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/ura/page/members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Keith Mays",
+    "positions": [
+      "Board Member"
+    ],
+    "image": "images/9b5a7b0274c53ba97974367860cd44af75ebb2fe5c4b38674e7315f11e2c4810.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/ura/image/43221/photo_keith_mays.jpg?itok=9S6-SdCG",
+    "phone_number": null,
+    "email": "maysk@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2027-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/ura/page/members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Doug Scott",
+    "positions": [
+      "Board Member"
+    ],
+    "image": "images/ac76e3a015313bd4e4f741e4d53196890bd7948221137d92a7b14ba016a78284.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/ura/image/43226/photo_doug_scott_2019.jpg?itok=gbBxRNxP",
+    "phone_number": null,
+    "email": "scottd@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2027-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/ura/page/members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Dan Standke",
+    "positions": [
+      "Board Member"
+    ],
+    "image": "images/7e26cb6a4319286370615fe5ca7ff3dc34af34f352ac3d1221f97135ab11afa8.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/ura/image/43231/photo_daniel_standke_2023.jpg?itok=3ALjhykW",
+    "phone_number": null,
+    "email": "standked@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/ura/page/members"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Marjorie Evelyn Stewart",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "images/e76dbb83bae8b65e6561ae9417a3633ed071b59b9ade60085cefb60d7aab5828.jpg",
+    "source_image": "https://www.sherwoodoregon.gov/sites/g/files/vyhlif12071/files/styles/full_node_primary/public/media/communityservice/image/69596/marjorie_stewart.jpg?itok=dnWx4xXQ",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "1978",
+    "end_date": "1980",
+    "sources": [
+      "https://www.sherwoodoregon.gov/communityservice/page/history-marjorie-stewart-community-center"
+    ],
+    "updated_at": "2025-05-06"
+  }
+]
