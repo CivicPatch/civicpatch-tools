@@ -568,10 +568,12 @@
       "phone_number": "(541) 883-5316",
       "website": "https://www.klamathfalls.city",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "d340cce6c4b0705b5cacd8857bc4c3d3",
+      "meta_updated_at": "2025-05-06",
+      "meta_hash": "7865d4ac86bb2c939688a0651fec8925",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
