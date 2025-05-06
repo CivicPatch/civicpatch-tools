@@ -18,7 +18,7 @@ Loading
  1.  [Experience Ashland](https://ashlandoregon.gov/101/Experience-Ashland) 
  1.  [Government](https://ashlandoregon.gov/27/Government) 
  1.  [I Want To...](https://ashlandoregon.gov/9/I-Want-To) 
-  ![](images/ca951af64523b1d6caad672fe589f514b60a396a5899519d8fa3d2d7b0c865af.jpg)  
+  ![](images/39b9bc30ad00310ba59f153729dc6ba663888a86aa9d047bade50963df0ec74e.jpg)  
 
  1.  [Home](https://ashlandoregon.gov/) 
  1.  [Government](https://ashlandoregon.gov/27/Government) 
