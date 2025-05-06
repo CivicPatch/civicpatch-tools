@@ -8,8 +8,7 @@
       "https://www.keizer.org/mayor"
     ],
     "positions": [
-      "Mayor",
-      "mayor"
+      "Mayor"
     ],
     "phone_numbers": [],
     "emails": [
@@ -24,13 +23,13 @@
       {
         "data": "https://www.keizer.org/mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and mayor position.",
+        "llm_confidence_reason": "Extracted from link associated with name in council table.",
         "source": "https://www.keizer.org/city-council"
       },
       {
         "data": "https://www.keizer.org/mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for mayor's office.",
+        "llm_confidence_reason": "Primary page URL for the mayor's profile.",
         "source": "https://www.keizer.org/mayor"
       }
     ],
@@ -46,11 +45,11 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires January 2027' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Converted 'January 2027' from 'Term Expires' column to YYYY-MM format.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   },
   {
     "name": "Marlene Parsons",
@@ -62,14 +61,13 @@
     ],
     "positions": [
       "Council Member",
-      "seat 1",
-      "council member"
+      "Position 1"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "ParsonsM@KeizerOR.gov",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.keizer.org/Council-Position-1"
       }
@@ -78,7 +76,7 @@
       {
         "data": "https://www.keizer.org/Council-Position-1",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and council position 1.",
+        "llm_confidence_reason": "Extracted from link associated with name in council table.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -87,11 +85,11 @@
       {
         "data": "2029-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires January 2029' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Converted 'January 2029' from 'Term Expires' column to YYYY-MM format.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   },
   {
     "name": "Shaney Starr",
@@ -103,9 +101,8 @@
     ],
     "positions": [
       "Council Member",
-      "seat 2",
-      "council member",
-      "council president"
+      "Position 2",
+      "Council President"
     ],
     "phone_numbers": [],
     "emails": [
@@ -120,15 +117,21 @@
       {
         "data": "https://www.keizer.org/council-position-2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and council position 2.",
+        "llm_confidence_reason": "Extracted from link associated with name in council table.",
         "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Council Position 2 where Shaney Starr is featured.",
+        "source": "https://www.keizer.org/council-position-2"
       }
     ],
     "start_dates": [
       {
         "data": "2021-12",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted appointment date 'appointed to the Keizer City Council in December 2021' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Appointed to Keizer City Council in December 2021; converted 'December 2021' to '2021-12'.",
         "source": "https://www.keizer.org/council-position-2"
       }
     ],
@@ -136,31 +139,29 @@
       {
         "data": "2029-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires January 2029' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Converted 'January 2029' from 'Term Expires' column to YYYY-MM format.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   },
   {
     "name": "Kyle Juran",
-    "image": "images/8161bea3e915c7cfa11d8747c8e3efa41591b1cdfb532a3c5a71c423405710b1.png",
-    "source_image": "https://www.keizer.org/media/Design%20Files/Logos/logo.png",
+    "image": null,
+    "source_image": null,
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-3"
     ],
     "positions": [
       "Council Member",
-      "seat 3",
-      "council member",
-      "position 3"
+      "Position 3"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "JuranK@KeizerOR.gov",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.keizer.org/council-position-3"
       }
@@ -169,8 +170,14 @@
       {
         "data": "https://www.keizer.org/council-position-3",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and council position 3.",
+        "llm_confidence_reason": "Extracted from link associated with name in council table.",
         "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-3",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the profile page for Council Position 3.",
+        "source": "https://www.keizer.org/council-position-3"
       }
     ],
     "start_dates": [],
@@ -178,11 +185,11 @@
       {
         "data": "2029-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires January 2029' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Converted 'January 2029' from 'Term Expires' column to YYYY-MM format.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   },
   {
     "name": "Soraida Cross",
@@ -194,9 +201,7 @@
     ],
     "positions": [
       "Council Member",
-      "seat 4",
-      "council member",
-      "position 4"
+      "Position 4"
     ],
     "phone_numbers": [],
     "emails": [
@@ -211,7 +216,7 @@
       {
         "data": "http://www.keizer.org/council-position-4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and council position 4.",
+        "llm_confidence_reason": "Extracted from link associated with name in council table.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -220,11 +225,11 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires January 2027' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Converted 'January 2027' from 'Term Expires' column to YYYY-MM format.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   },
   {
     "name": "Lore Christopher",
@@ -236,9 +241,7 @@
     ],
     "positions": [
       "Council Member",
-      "seat 5",
-      "council member",
-      "position 5"
+      "Position 5"
     ],
     "phone_numbers": [],
     "emails": [
@@ -253,7 +256,7 @@
       {
         "data": "https://www.keizer.org/council-position-5",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and council position 5.",
+        "llm_confidence_reason": "Extracted from link associated with name in council table.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -261,7 +264,7 @@
       {
         "data": "2024-12",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed to City Council in December 2024 as stated in text.",
+        "llm_confidence_reason": "Appointed December 2024 stated in text, converted to YYYY-MM format.",
         "source": "https://www.keizer.org/council-position-5"
       }
     ],
@@ -269,17 +272,17 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires January 2027' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Converted 'January 2027' from 'Term Expires' column to YYYY-MM format.",
         "source": "https://www.keizer.org/city-council"
       },
       {
         "data": "2027-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term runs through January 2027 as stated in text.",
+        "llm_confidence_reason": "Term runs through January 2027 stated in text, converted to YYYY-MM format.",
         "source": "https://www.keizer.org/council-position-5"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   },
   {
     "name": "Dan Kohler",
@@ -291,9 +294,7 @@
     ],
     "positions": [
       "Council Member",
-      "seat 6",
-      "council member",
-      "position 6"
+      "Position 6"
     ],
     "phone_numbers": [],
     "emails": [
@@ -308,8 +309,14 @@
       {
         "data": "https://www.keizer.org/Council-Position-6",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and council position 6.",
+        "llm_confidence_reason": "Extracted from link associated with name in council table.",
         "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-6",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL corresponds to Council Position 6 for Daniel R. Kohler.",
+        "source": "https://www.keizer.org/Council-Position-6"
       }
     ],
     "start_dates": [],
@@ -317,11 +324,11 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires January 2027' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Converted 'January 2027' from 'Term Expires' column to YYYY-MM format.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   },
   {
     "name": "Ma'Layah Latty-Farrar",
@@ -340,7 +347,7 @@
       {
         "data": "2024-09-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from term dates '(September 1, 2024 - May 31, 2025)' and converted to YYYY-MM-DD format.",
+        "llm_confidence_reason": "Extracted and converted start date from '( September 1, 2024 - May 31, 2025)'",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -348,10 +355,10 @@
       {
         "data": "2025-05-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from term dates '(September 1, 2024 - May 31, 2025)' and converted to YYYY-MM-DD format.",
+        "llm_confidence_reason": "Extracted and converted end date from '( September 1, 2024 - May 31, 2025)'",
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-05-06"
   }
 ]

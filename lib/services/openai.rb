@@ -88,7 +88,7 @@ module Services
 
         Output Field Definitions & Structure:
         - name: (String) Full name only (no titles).
-        - positions: (Array of Strings) Active municipal roles matching targets. Include division/district.
+        - positions: (Array of Strings) Active municipal roles. Include specific division/district/position number (e.g., "Council Member, Position 1").
         - image: (String or null) URL of the person's portrait/headshot (usually starts 'images/').
         - phone_number: (Object or null) {data: "Formatted Number", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
         - email: (Object or null) {data: "email@example.com", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
@@ -133,7 +133,13 @@ module Services
         Extraction Guidelines:
         - General: Today is #{current_date}. Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field's data.
         - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in 'positions'.
-        - Positions: Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive). EXCLUDE judicial, most admin staff, non-municipal.
+        - Positions:
+          - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
+          - **Include specific division, district, or position identifier if present.**
+            - If the source uses numeric identifiers like "#1", "No. 2", or similar for a role (e.g., in a table column named "Position" or "District"), interpret this as a position number.
+            - **Prefer the term "Position X" (e.g., "Position 1", "Position 2") when a numeric identifier is used, unless the source text clearly and consistently uses a different term like "Seat X" or "Ward X" for those numbered roles on the same page.**
+            - Combine with the main role, e.g., "Council Member, Position 1".
+          - EXCLUDE judicial, most admin staff, non-municipal.
         - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start 'images/'.
         - Contact Details (Phone/Email/Website):
           - Associate details logically if near the person's name/section.
