@@ -1,6 +1,6 @@
 ---
 scrape_sources:
-- https://www.sherwoodoregon.gov/citycouncil
+- https://www.sherwoodoregon.gov/citycouncil/page/council-members-0
 source_directory_list:
   type: directory_list
   people:
