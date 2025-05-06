@@ -1,8 +1,6 @@
 ---
 scrape_sources:
-- https://www.sherwoodoregon.gov/ura/page/members
-- https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city
-- https://www.sherwoodoregon.gov/pc/page/planning-commission-members
+- https://www.sherwoodoregon.gov/citycouncil
 source_directory_list:
   type: directory_list
   people:
