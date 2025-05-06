@@ -7,7 +7,7 @@ Loading
  [Create a Website Account](https://www.forestgrove-or.gov/MyAccount/ProfileCreate)  - Manage notification subscriptions, save form progress and more.    
 
  *  [Website Sign In](https://www.forestgrove-or.gov/MyAccount) 
- Search 
+  ![OR Forest Grove Homepage](images/2935bc75c836bbf3003089c39117b5a10ddf2b1e805532c29fb7c95873c2996a.png)  Search 
 
  1.  [Government](https://www.forestgrove-or.gov/27/Government) 
  1.  [Departments](https://www.forestgrove-or.gov/101/Departments) 
@@ -95,7 +95,7 @@ Stay connected to your city! What's Growing On is our monthly e-newsletter fille
 
 #### Mariah S. Woods   
 
- City Recorder  [Email Mariah S. Woods](mailto:mwoods@forestgrove-or.gov)  Phone:    
+ City Recorder  [Email Mariah S. Woods](mailto:mwoods@forestgrove-or.gov)  Phone:503-992-3235    
 
  1.    
 
@@ -115,7 +115,7 @@ Stay connected to your city! What's Growing On is our monthly e-newsletter fille
 
  Forest Grove , OR 97116    
 
- Phone:    
+ Phone:503-992-3200    
 
  1.   [Agendas and Minutes](https://forestgroveor.portal.civicclerk.com/?category_id=26)  
  1.   [City Council Goals and Values](https://www.forestgrove-or.gov/490/City-Council-Goals-and-Values)  
@@ -136,7 +136,7 @@ P.O. Box 326
 
 Forest Grove, OR 97116   
 
-Phone:   
+Phone:503-992-3200   
 
 ###  [Quick Links](https://www.forestgrove-or.gov/QuickLinks.aspx?CID=15) 
 
