@@ -442,10 +442,12 @@
       "phone_number": "(503) 682-1011",
       "website": "https://www.wilsonvilleoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "e5bc7e877b0e0d842b17969f56f37f52",
+      "meta_updated_at": "2025-05-05",
+      "meta_hash": "cc3dec1a656b12f344aa4a1f20f38c7c",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
