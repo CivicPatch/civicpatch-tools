@@ -22,7 +22,7 @@
     "start_dates": [
       {
         "data": "2019-01",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Elected to serve as Mayor beginning January 2019.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
@@ -31,7 +31,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expires 12/31/2026.",
+        "llm_confidence_reason": "Term expires 12/31/2026 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
@@ -45,7 +45,8 @@
       "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
     "positions": [
-      "Council Position 3"
+      "Council Member",
+      "Position 3"
     ],
     "phone_numbers": [],
     "emails": [
@@ -60,7 +61,7 @@
     "start_dates": [
       {
         "data": "2014",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.85,
         "llm_confidence_reason": "First elected to City Council in 2014.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
@@ -69,7 +70,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expires 12/31/2026.",
+        "llm_confidence_reason": "Term expires 12/31/2026 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
@@ -84,7 +85,8 @@
     ],
     "positions": [
       "Council President",
-      "Council Position 1"
+      "Council Member",
+      "Position 1"
     ],
     "phone_numbers": [],
     "emails": [
@@ -108,7 +110,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expires 12/31/2026.",
+        "llm_confidence_reason": "Term expires 12/31/2026 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
@@ -122,7 +124,8 @@
       "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
     "positions": [
-      "Council Position 2"
+      "Council Member",
+      "Position 2"
     ],
     "phone_numbers": [],
     "emails": [
@@ -146,7 +149,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expires 12/31/2028.",
+        "llm_confidence_reason": "Term expires 12/31/2028 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
@@ -160,7 +163,8 @@
       "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
     "positions": [
-      "Council Position 4"
+      "Council Member",
+      "Position 4"
     ],
     "phone_numbers": [],
     "emails": [
@@ -184,7 +188,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expires 12/31/2028.",
+        "llm_confidence_reason": "Term expires 12/31/2028 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
