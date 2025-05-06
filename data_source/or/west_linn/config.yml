@@ -1,6 +1,11 @@
 ---
 scrape_sources:
 - https://westlinnoregon.gov/citycouncil
+- https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky
+- https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner
+- https://westlinnoregon.gov/citycouncil/councilor-carol-bryck
+- https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington
+- https://westlinnoregon.gov/citycouncil/councilor-leo-groner
 source_directory_list:
   type: directory_list
   people:
