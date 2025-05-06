@@ -1,0 +1,204 @@
+[
+  {
+    "name": "Tom Ellis",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/",
+      "https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tome@happyvalleyor.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly listed under the person's name.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      },
+      {
+        "data": "info@happyvalleyor.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city email, not specifically tied to the mayor.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link labeled 'Mayor’s Message' is associated with the Mayor section.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 're-elected to serve beginning January 2023'.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Brett Sherman",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 3"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bretts@happyvalleyor.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly listed under the person's name.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.happyvalleyor.gov/council-corner/",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link labeled 'Council Corner' is associated with the Council section, but not specific to this person.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 're-elected beginning January 2023'.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Joshua Callahan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Position 1"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "joshc@happyvalleyor.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly listed under the person's name.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.happyvalleyor.gov/council-corner/",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link labeled 'Council Corner' is associated with the Council section, but not specific to this person.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'elected to City Council beginning January 2023'.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "David Golobay",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 2"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "davidg@happyvalleyor.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly listed under the person's name.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.happyvalleyor.gov/council-corner/",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link labeled 'Council Corner' is associated with the Council section, but not specific to this person.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 're-elected to terms beginning January 2025'.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Glenn Wachter",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "positions": [
+      "Council Member",
+      "Position 4"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "glennw@happyvalleyor.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly listed under the person's name.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.happyvalleyor.gov/council-corner/",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Link labeled 'Council Corner' is associated with the Council section, but not specific to this person.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'elected to City Council beginning January 2025'.",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-06"
+  }
+]

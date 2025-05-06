@@ -520,10 +520,12 @@
       "phone_number": "(503) 783-3800",
       "website": "https://www.happyvalleyor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "bb1e7c0ea05081ce36bdee65f2c670df",
+      "meta_updated_at": "2025-05-05",
+      "meta_hash": "71ee0752b5b3f4e5b15576e72dbeb956",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
