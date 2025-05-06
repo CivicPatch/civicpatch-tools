@@ -737,10 +737,12 @@
       "phone_number": "(541) 966-0201",
       "website": "https://www.pendletonor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "e18da1dfe903318a176b6534872439c4",
+      "meta_updated_at": "2025-05-06",
+      "meta_hash": "7f85f95e7de04f5061d7a0c1193dfd38",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
