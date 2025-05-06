@@ -10,14 +10,7 @@
     "positions": [
       "Mayor"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "No personal phone number listed for Cathy Clark; only a general city hall number is provided.",
-        "source": "https://www.keizer.org/mayor"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "ClarkC@KeizerOR.gov",
@@ -42,14 +35,7 @@
         "source": "https://www.keizer.org/mayor"
       }
     ],
-    "end_dates": [
-      {
-        "data": "null",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "No end date found for the current Mayor position.",
-        "source": "https://www.keizer.org/mayor"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -65,14 +51,7 @@
       "Position 1",
       "Council Position 1"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "No phone number found for this person.",
-        "source": "https://www.keizer.org/Council-Position-1"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "ParsonsM@KeizerOR.gov",
@@ -95,14 +74,7 @@
         "source": "https://www.keizer.org/Council-Position-1"
       }
     ],
-    "start_dates": [
-      {
-        "data": "null",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "No start date found in the allowed format.",
-        "source": "https://www.keizer.org/Council-Position-1"
-      }
-    ],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2025-05-06",
@@ -126,14 +98,7 @@
       "Position 2",
       "Council President"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "No personal phone number listed, only a general city contact number.",
-        "source": "https://www.keizer.org/council-position-2"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "StarrS@KeizerOR.gov",
@@ -164,14 +129,7 @@
         "source": "https://www.keizer.org/council-position-2"
       }
     ],
-    "end_dates": [
-      {
-        "data": "null",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "No end date mentioned for the current roles.",
-        "source": "https://www.keizer.org/council-position-2"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -188,12 +146,7 @@
       "council member",
       "position 3"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "source": "https://www.keizer.org/council-position-3"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "JuranK@KeizerOR.gov",
@@ -216,18 +169,8 @@
         "source": "https://www.keizer.org/council-position-3"
       }
     ],
-    "start_dates": [
-      {
-        "data": "null",
-        "source": "https://www.keizer.org/council-position-3"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "null",
-        "source": "https://www.keizer.org/council-position-3"
-      }
-    ],
+    "start_dates": [],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -243,12 +186,7 @@
       "Position 4",
       "Council Position 4"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "source": "http://www.keizer.org/council-position-4"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "CrossS@KeizerOR.gov",
@@ -265,18 +203,8 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "start_dates": [
-      {
-        "data": "null",
-        "source": "http://www.keizer.org/council-position-4"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "null",
-        "source": "http://www.keizer.org/council-position-4"
-      }
-    ],
+    "start_dates": [],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -292,12 +220,7 @@
       "Position 5",
       "position 5"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "source": "https://www.keizer.org/council-position-5"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "ChristopherL@KeizerOR.gov",
@@ -350,14 +273,7 @@
       "Council Member",
       "Position 6"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "Only a general City Hall phone number was listed, not specific to this person.",
-        "source": "https://www.keizer.org/Council-Position-6"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "KohlerD@KeizerOR.gov",
@@ -380,22 +296,8 @@
         "source": "https://www.keizer.org/Council-Position-6"
       }
     ],
-    "start_dates": [
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "No start date found in the text.",
-        "source": "https://www.keizer.org/Council-Position-6"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "No end date found in the text.",
-        "source": "https://www.keizer.org/Council-Position-6"
-      }
-    ],
+    "start_dates": [],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   }
 ]

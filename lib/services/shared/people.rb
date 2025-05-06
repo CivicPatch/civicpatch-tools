@@ -99,7 +99,9 @@ module Services
       end
 
       def self.data_point?(data_point)
-        data_point.present? && data_point["data"].present? && data_point["data"].to_s.strip.present?
+        data_point.present? && data_point["data"].present? &&
+          data_point["data"].to_s.strip.present? &&
+          data_point["data"] != "null"
       end
 
       def self.profile_data_points_present?(person)

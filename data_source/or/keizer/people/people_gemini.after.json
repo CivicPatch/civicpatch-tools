@@ -10,7 +10,7 @@
     "email": "ClarkC@KeizerOR.gov",
     "website": "https://www.keizer.org/mayor",
     "start_date": "2015",
-    "end_date": "null",
+    "end_date": null,
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/mayor"
@@ -30,7 +30,7 @@
     "email": "StarrS@KeizerOR.gov",
     "website": "https://www.keizer.org/council-position-2",
     "start_date": "2021-12",
-    "end_date": "null",
+    "end_date": null,
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-2"
@@ -48,7 +48,7 @@
     "phone_number": null,
     "email": "ParsonsM@KeizerOR.gov",
     "website": "https://www.keizer.org/Council-Position-1",
-    "start_date": "null",
+    "start_date": null,
     "end_date": "2025-05-06",
     "sources": [
       "https://www.keizer.org/city-council",
@@ -67,8 +67,8 @@
     "phone_number": null,
     "email": "JuranK@KeizerOR.gov",
     "website": "https://www.keizer.org/council-position-3",
-    "start_date": "null",
-    "end_date": "null",
+    "start_date": null,
+    "end_date": null,
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-3"
@@ -86,8 +86,8 @@
     "phone_number": null,
     "email": "CrossS@KeizerOR.gov",
     "website": "http://www.keizer.org/council-position-4",
-    "start_date": "null",
-    "end_date": "null",
+    "start_date": null,
+    "end_date": null,
     "sources": [
       "https://www.keizer.org/city-council",
       "http://www.keizer.org/council-position-4"
@@ -124,8 +124,8 @@
     "phone_number": null,
     "email": "KohlerD@KeizerOR.gov",
     "website": "https://www.keizer.org/Council-Position-6",
-    "start_date": "null",
-    "end_date": "null",
+    "start_date": null,
+    "end_date": null,
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/Council-Position-6"
