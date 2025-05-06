@@ -1,0 +1,136 @@
+[
+  {
+    "name": "Cathy Clark",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "null",
+    "email": "ClarkC@KeizerOR.gov",
+    "website": "https://www.keizer.org/mayor",
+    "start_date": "2015",
+    "end_date": "null",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/mayor"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Marlene Parsons",
+    "positions": [
+      "position 1",
+      "Council Member",
+      "Position 1"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "null",
+    "email": "ParsonsM@KeizerOR.gov",
+    "website": "https://www.keizer.org/Council-Position-1",
+    "start_date": "null",
+    "end_date": "2025",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/Council-Position-1"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Shaney Starr",
+    "positions": [
+      "position 2",
+      "Council Member",
+      "Council President"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "null",
+    "email": "StarrS@KeizerOR.gov",
+    "website": "https://www.keizer.org/council-position-2",
+    "start_date": "2021-12",
+    "end_date": "null",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-2"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Kyle Juran",
+    "positions": [
+      "position 3",
+      "council member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "null",
+    "email": "JuranK@KeizerOR.gov",
+    "website": "https://www.keizer.org/council-position-3",
+    "start_date": "null",
+    "end_date": "null",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-3"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Soraida Cross",
+    "positions": [
+      "position 4",
+      "council member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(503) 390-3700",
+    "email": "CrossS@KeizerOR.gov",
+    "website": "http://www.keizer.org/council-position-4",
+    "start_date": "2023",
+    "end_date": "2026",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "http://www.keizer.org/council-position-4"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Lore Christopher",
+    "positions": [
+      "position 5",
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "ChristopherL@KeizerOR.gov",
+    "website": "https://www.keizer.org/council-position-5",
+    "start_date": "2024-12",
+    "end_date": "2027-01",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-5"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Dan Kohler",
+    "positions": [
+      "position 6",
+      "council member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "null",
+    "email": "KohlerD@KeizerOR.gov",
+    "website": "https://www.keizer.org/Council-Position-6",
+    "start_date": "null",
+    "end_date": "null",
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/Council-Position-6"
+    ],
+    "updated_at": "2025-05-06"
+  }
+]
