@@ -7,6 +7,8 @@ require_relative "../utils/image_helper"
 module Browser
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 2  # Base sleep time for exponential backoff
+  EXCLUDE_IMAGE_URLS = ["tile.openstreetmap.org"]
+  EXCLUDE_IMAGE_PATTERNS = ["spinner.gif", "loading.gif", "ajax-loader.gif", "loader.gif"]
 
   def self.start
     options = Selenium::WebDriver::Chrome::Options.new
@@ -193,11 +195,17 @@ module Browser
     return if src.nil? || src.empty?
 
     # Pre-processing: Skip common spinner images
-    spinner_patterns = ["loading.gif", "spinner.gif", "ajax-loader.gif", "loader.gif"]
-    if spinner_patterns.any? { |spinner| src.downcase.include?(spinner) }
+    if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
       # Remove the element from the DOM
       remove_image_element(browser, img_element)
       puts "Removed spinner image element with src: #{src}" # Optional logging
+      return # Don't process this element further
+    end
+
+    if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
+      # Remove the element from the DOM
+      remove_image_element(browser, img_element)
+      puts "Removed excluded image element with src: #{src}" # Optional logging
       return # Don't process this element further
     end
 

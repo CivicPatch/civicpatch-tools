@@ -1,21 +1,20 @@
 [
   {
     "name": "Shawn O'Neil",
-    "image": "images/cef0508420b776f3f8f46a444c71e8016726d14d671b2f528d63e3e2415bd2a2.png",
-    "source_image": "http://tile.openstreetmap.org/14/2605/5874.png",
+    "image": "images/a11972f7c1428ba5ce0b2e037159b4c9d0f2d8fb4ae9ad749ca8a0f9deff93ec.jpg",
+    "source_image": "https://www.wilsonvilleoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/129292/04._shawn_cropped.jpg?itok=LqEj4YC4",
     "sources": [
       "https://www.wilsonvilleoregon.gov/citycouncil",
       "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
     ],
     "positions": [
-      "Mayor",
-      "mayor"
+      "Mayor"
     ],
     "phone_numbers": [
       {
         "data": "503-570-1501",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number explicitly labeled near name and position.",
+        "llm_confidence_reason": "Phone number labeled 'Phone Number:' directly associated with Shawn O'Neil.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
       }
     ],
@@ -23,7 +22,7 @@
       {
         "data": "oneil@wilsonvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name and position.",
+        "llm_confidence_reason": "Email extracted from mailto link text near Shawn O'Neil's name.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
       }
     ],
@@ -31,13 +30,13 @@
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly linked to Shawn O'Neil with mayor title.",
+        "llm_confidence_reason": "Extracted from the link text near the name in the Members section.",
         "source": "https://www.wilsonvilleoregon.gov/citycouncil"
       },
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence_reason": "Primary profile page URL for Shawn O'Neil.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
       }
     ],
@@ -45,7 +44,7 @@
       {
         "data": "2025-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Date: January, 2025 to December, 2028' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Term start date extracted from 'Term Date: January, 2025 to December, 2028' and converted to YYYY-MM format.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
       }
     ],
@@ -53,7 +52,7 @@
       {
         "data": "2028-12",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Date: January, 2025 to December, 2028' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Term end date extracted from 'Term Date: January, 2025 to December, 2028' and converted to YYYY-MM format.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil"
       }
     ],
@@ -61,21 +60,20 @@
   },
   {
     "name": "Caroline Berry",
-    "image": "images/cef0508420b776f3f8f46a444c71e8016726d14d671b2f528d63e3e2415bd2a2.png",
-    "source_image": "http://tile.openstreetmap.org/14/2605/5874.png",
+    "image": "images/70e574eb7a7f5057c6934fc299f92e4e7efd40fc9d0164cd609afa248410e73e.jpg",
+    "source_image": "https://www.wilsonvilleoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/125894/berry_4x5.jpg?itok=Mio9gtrJ",
     "sources": [
       "https://www.wilsonvilleoregon.gov/citycouncil",
       "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
     ],
     "positions": [
-      "Council President",
-      "council president"
+      "Council President"
     ],
     "phone_numbers": [
       {
         "data": "503-545-4218",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled near name and position.",
+        "llm_confidence_reason": "Phone number explicitly labeled near name and position.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
       }
     ],
@@ -83,7 +81,7 @@
       {
         "data": "berry@wilsonvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near name and position.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
       }
     ],
@@ -91,13 +89,13 @@
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly linked to Caroline Berry with council president title.",
+        "llm_confidence_reason": "Extracted from the link text near the name in the Members section.",
         "source": "https://www.wilsonvilleoregon.gov/citycouncil"
       },
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Caroline Berry.",
+        "llm_confidence_reason": "Page URL is the profile page for Caroline Berry.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
       }
     ],
@@ -105,7 +103,7 @@
       {
         "data": "2023-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Date: January, 2023 to December, 2026' and converted month-year format.",
+        "llm_confidence_reason": "Term start date extracted from 'Term Date: January, 2023 to December, 2026' and converted to YYYY-MM format.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
       }
     ],
@@ -113,7 +111,7 @@
       {
         "data": "2026-12",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Date: January, 2023 to December, 2026' and converted month-year format.",
+        "llm_confidence_reason": "Term end date extracted from 'Term Date: January, 2023 to December, 2026' and converted to YYYY-MM format.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry"
       }
     ],
@@ -121,8 +119,8 @@
   },
   {
     "name": "Katie Dunwell",
-    "image": "images/cef0508420b776f3f8f46a444c71e8016726d14d671b2f528d63e3e2415bd2a2.png",
-    "source_image": "http://tile.openstreetmap.org/14/2605/5874.png",
+    "image": "images/7451c52db5e25d0669ad337f0e77cc3e7c011a1e3ef30740e2500ad8b9843f4c.png",
+    "source_image": "https://www.wilsonvilleoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/125895/_k4a9588.png?itok=WPNNKAab",
     "sources": [
       "https://www.wilsonvilleoregon.gov/citycouncil",
       "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
@@ -142,7 +140,7 @@
       {
         "data": "dunwell@wilsonvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name and position.",
+        "llm_confidence_reason": "Email extracted from mailto link text near name.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
       }
     ],
@@ -150,13 +148,13 @@
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly linked to Katie Dunwell with councilor title.",
+        "llm_confidence_reason": "Extracted from the link text near the name in the Members section.",
         "source": "https://www.wilsonvilleoregon.gov/citycouncil"
       },
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence_reason": "Page URL is the profile page for Katie Dunwell.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
       }
     ],
@@ -164,7 +162,7 @@
       {
         "data": "2023-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term start date 'January, 2023' converted to '2023-01'.",
+        "llm_confidence_reason": "Term start date given as 'January, 2023' converted to '2023-01'.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
       }
     ],
@@ -172,7 +170,7 @@
       {
         "data": "2026-12",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date 'December, 2026' converted to '2026-12'.",
+        "llm_confidence_reason": "Term end date given as 'December, 2026' converted to '2026-12'.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell"
       }
     ],
@@ -180,8 +178,8 @@
   },
   {
     "name": "Anne Shevlin",
-    "image": "images/e4b32e5396f7cb35c4da4e0e712865e6e5ee198d15432d3b987c8ea4092e983c.png",
-    "source_image": "https://www.wilsonvilleoregon.gov/sites/default/files/styles/full_node_primary_extra_wide/public/imageattachments/citycouncil/page/98/2025_council2.png?itok=k581XIVL",
+    "image": "images/7d89e38d768b8d1f1b0751ec5dd60f3847086d5b94f92af41a69ad54f7c3085e.jpg",
+    "source_image": "https://www.wilsonvilleoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/129291/03._anne_cropped.jpg?itok=vYCW0q77",
     "sources": [
       "https://www.wilsonvilleoregon.gov/citycouncil",
       "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
@@ -192,8 +190,8 @@
     "phone_numbers": [
       {
         "data": "503-570-1501",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed near name and position.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone Number:' near name and position.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
       }
     ],
@@ -201,7 +199,7 @@
       {
         "data": "shevlin@wilsonvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near name and position.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
       }
     ],
@@ -209,12 +207,12 @@
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly linked to Anne Shevlin with councilor title.",
+        "llm_confidence_reason": "Extracted from the link text near the name in the Members section.",
         "source": "https://www.wilsonvilleoregon.gov/citycouncil"
       },
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Page URL is the profile page for Anne Shevlin.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
       }
@@ -222,16 +220,16 @@
     "start_dates": [
       {
         "data": "2025-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date 'January, 2025' converted to '2025-01' from 'Term Date: January, 2025 to December, 2028'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term start date extracted from 'Term Date: January, 2025 to December, 2028' and converted to YYYY-MM format.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term end date 'December, 2028' converted to '2028-12' from 'Term Date: January, 2025 to December, 2028'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end date extracted from 'Term Date: January, 2025 to December, 2028' and converted to YYYY-MM format.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin"
       }
     ],
@@ -239,8 +237,8 @@
   },
   {
     "name": "Adam Cunningham",
-    "image": "images/cef0508420b776f3f8f46a444c71e8016726d14d671b2f528d63e3e2415bd2a2.png",
-    "source_image": "http://tile.openstreetmap.org/14/2605/5874.png",
+    "image": "images/7eda2ac942334ba09ef2403d13f3ae13bb8f1baa358f5978ac7b69111828e19a.jpg",
+    "source_image": "https://www.wilsonvilleoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/129290/02._adam_cropped.jpg?itok=nveWUyHt",
     "sources": [
       "https://www.wilsonvilleoregon.gov/citycouncil",
       "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
@@ -251,8 +249,8 @@
     "phone_numbers": [
       {
         "data": "971-917-4340",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled near name and position.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly labeled near name and position.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
       }
     ],
@@ -260,7 +258,7 @@
       {
         "data": "cunningham@wilsonvilleoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link near name and position.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
       }
     ],
@@ -268,29 +266,29 @@
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly linked to Adam Cunningham with councilor title.",
+        "llm_confidence_reason": "Extracted from the link text near the name in the Members section.",
         "source": "https://www.wilsonvilleoregon.gov/citycouncil"
       },
       {
         "data": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence_reason": "Page URL is the profile page for Adam Cunningham.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Converted 'January, 2025' from term date to YYYY-MM format.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term start date given as 'January, 2025' converted to '2025-01'.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Converted 'December, 2028' from term date to YYYY-MM format.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end date given as 'December, 2028' converted to '2028-12'.",
         "source": "https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham"
       }
     ],
