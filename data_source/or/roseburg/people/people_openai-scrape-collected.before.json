@@ -12,8 +12,8 @@
     "phone_numbers": [
       {
         "data": "(541) 673-9973",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -21,7 +21,7 @@
       {
         "data": "lrich@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -29,7 +29,7 @@
       {
         "data": "https://www.cityofroseburg.org/your-government/mayor-council",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "Primary page URL for Mayor and Council.",
+        "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -38,7 +38,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -59,8 +59,8 @@
     "phone_numbers": [
       {
         "data": "541-236-4879",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -68,17 +68,24 @@
       {
         "data": "kwilliams@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -100,17 +107,24 @@
       {
         "data": "jtate@roseburgor.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -131,8 +145,8 @@
     "phone_numbers": [
       {
         "data": "(541) 430-4054",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -140,17 +154,24 @@
       {
         "data": "azielinski@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -171,8 +192,8 @@
     "phone_numbers": [
       {
         "data": "(541) 784-6858",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -180,17 +201,24 @@
       {
         "data": "sbriggs@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -211,8 +239,8 @@
     "phone_numbers": [
       {
         "data": "(541) 817-9324",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -220,17 +248,24 @@
       {
         "data": "tmichalek@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -251,8 +286,8 @@
     "phone_numbers": [
       {
         "data": "(541) 643-1748",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -260,17 +295,24 @@
       {
         "data": "eporter@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -291,8 +333,8 @@
     "phone_numbers": [
       {
         "data": "(541) 788-1900",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -300,17 +342,24 @@
       {
         "data": "zweiss@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2028' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -331,8 +380,8 @@
     "phone_numbers": [
       {
         "data": "(541) 670-3188",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found labeled 'Phone:' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
@@ -340,17 +389,24 @@
       {
         "data": "rmsmith@roseburgor.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly adjacent to name.",
+        "llm_confidence_reason": "Email extracted from text near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.cityofroseburg.org/your-government/mayor-council",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Primary page URL for council members.",
+        "source": "https://www.cityofroseburg.org/your-government/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' next to name.",
+        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/2026' near name.",
         "source": "https://www.cityofroseburg.org/your-government/mayor-council"
       }
     ],

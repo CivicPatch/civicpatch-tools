@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Core
   class PeopleResolver
     DISAGREEMENT_THRESHOLD = 0.9

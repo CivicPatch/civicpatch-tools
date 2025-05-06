@@ -17,46 +17,10 @@
     "updated_at": "2025-05-06"
   },
   {
-    "name": "Ruth Smith",
-    "positions": [
-      "Council Member",
-      "Ward Four"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(541) 670-3188",
-    "email": "rmsmith@roseburgor.gov",
-    "website": null,
-    "start_date": null,
-    "end_date": "2026-12-31",
-    "sources": [
-      "https://www.cityofroseburg.org/your-government/mayor-council"
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Zack R. Weiss",
-    "positions": [
-      "Council Member",
-      "Ward Four"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(541) 788-1900",
-    "email": "zweiss@roseburgor.gov",
-    "website": null,
-    "start_date": null,
-    "end_date": "2028-12-31",
-    "sources": [
-      "https://www.cityofroseburg.org/your-government/mayor-council"
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
     "name": "Jason Tate",
     "positions": [
       "Council Member",
-      "Ward One"
+      "Ward 1"
     ],
     "image": null,
     "source_image": null,
@@ -74,7 +38,7 @@
     "name": "Katie Williams",
     "positions": [
       "Council Member",
-      "Ward One"
+      "Ward 1"
     ],
     "image": null,
     "source_image": null,
@@ -89,46 +53,10 @@
     "updated_at": "2025-05-06"
   },
   {
-    "name": "Ellen Porter",
-    "positions": [
-      "Council Member",
-      "Ward Three"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(541) 643-1748",
-    "email": "eporter@roseburgor.gov",
-    "website": null,
-    "start_date": null,
-    "end_date": "2026-12-31",
-    "sources": [
-      "https://www.cityofroseburg.org/your-government/mayor-council"
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Tom Michalek",
-    "positions": [
-      "Council Member",
-      "Ward Three"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(541) 817-9324",
-    "email": "tmichalek@roseburgor.gov",
-    "website": null,
-    "start_date": null,
-    "end_date": "2028-12-31",
-    "sources": [
-      "https://www.cityofroseburg.org/your-government/mayor-council"
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
     "name": "Andrea Zielinski",
     "positions": [
       "Council Member",
-      "Ward Two"
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
@@ -146,7 +74,7 @@
     "name": "Shelley Briggs Loosley",
     "positions": [
       "Council Member",
-      "Ward Two"
+      "Ward 2"
     ],
     "image": null,
     "source_image": null,
@@ -155,6 +83,78 @@
     "website": null,
     "start_date": null,
     "end_date": "2026-12-31",
+    "sources": [
+      "https://www.cityofroseburg.org/your-government/mayor-council"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Ellen Porter",
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 643-1748",
+    "email": "eporter@roseburgor.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.cityofroseburg.org/your-government/mayor-council"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Tom Michalek",
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 817-9324",
+    "email": "tmichalek@roseburgor.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.cityofroseburg.org/your-government/mayor-council"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Ruth Smith",
+    "positions": [
+      "Council Member",
+      "Ward 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 670-3188",
+    "email": "rmsmith@roseburgor.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.cityofroseburg.org/your-government/mayor-council"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Zack R. Weiss",
+    "positions": [
+      "Council Member",
+      "Ward 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(541) 788-1900",
+    "email": "zweiss@roseburgor.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-31",
     "sources": [
       "https://www.cityofroseburg.org/your-government/mayor-council"
     ],
