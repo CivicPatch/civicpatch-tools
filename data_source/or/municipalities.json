@@ -503,10 +503,12 @@
       "phone_number": "(503) 538-9421",
       "website": "https://www.newbergoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "d1d242dd5f27d6eaf9f7bd7ca684b979",
+      "meta_updated_at": "2025-05-05",
+      "meta_hash": "51c2ae2e19704c0e1da1bd411a25e43a",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
