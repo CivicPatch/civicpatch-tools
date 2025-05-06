@@ -4,14 +4,13 @@
   - Mayor
   email: tome@happyvalleyor.gov
   phone_number: "(503) 783-3800"
-  website: https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/
+  website:
   start_date: 2023-01
   end_date: '2026-12-31'
   image:
   source_image:
   sources:
   - https://www.happyvalleyor.gov/city-hall/city-council/
-  - https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/
   updated_at: '2025-05-06'
 - name: Josh Callahan
   positions:
@@ -20,7 +19,7 @@
   - Position 1
   email: joshc@happyvalleyor.gov
   phone_number: "(503) 783-3800"
-  website: https://www.happyvalleyor.gov/council-corner/
+  website:
   start_date: 2023-01
   end_date: '2026-12-31'
   image:
@@ -34,7 +33,7 @@
   - Position 2
   email: davidg@happyvalleyor.gov
   phone_number: "(503) 783-3800"
-  website: https://www.happyvalleyor.gov/council-corner/
+  website:
   start_date: 2025-01
   end_date: '2028-12-31'
   image:
@@ -48,7 +47,7 @@
   - Position 3
   email: bretts@happyvalleyor.gov
   phone_number: "(503) 783-3800"
-  website: https://www.happyvalleyor.gov/council-corner/
+  website:
   start_date: 2023-01
   end_date: '2026-12-31'
   image:
@@ -62,7 +61,7 @@
   - Position 4
   email: glennw@happyvalleyor.gov
   phone_number: "(503) 783-3800"
-  website: https://www.happyvalleyor.gov/council-corner/
+  website:
   start_date: 2025-01
   end_date: '2028-12-31'
   image:

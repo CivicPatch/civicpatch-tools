@@ -5,7 +5,7 @@
  *  [Community](https://www.happyvalleyor.gov/community/) 
  *  [How Do I](https://www.happyvalleyor.gov/city-hall/city-council/) 
  *  [Search](https://www.happyvalleyor.gov/city-hall/city-council/) 
- Dark 
+ Light 
 
 ## City Hall
 
@@ -443,10 +443,11 @@ Effective, efficient, and readily available services
    *  [Report a Concern](https://www.happyvalleyor.gov/report-your-concern/) 
    *  [Make a Court Payment](https://www.happyvalleyor.gov/services/municipal-court/payment-options/) 
    *  [Sign Up for Notifications](https://www.happyvalleyor.gov/signup-for-notifications/)  
+  **  **  **  
 
 ####  [16000 SE Misty Drive, Happy Valley, OR 97086](https://goo.gl/maps/oHkkn2f4bb7YfrDz6) 
 
-####  |  [info@happyvalleyor.gov](mailto:info@happyvalleyor.gov) 
+#### (503) 783-3800 |  [info@happyvalleyor.gov](mailto:info@happyvalleyor.gov) 
 
  © 2025 Happy Valley, OR
 

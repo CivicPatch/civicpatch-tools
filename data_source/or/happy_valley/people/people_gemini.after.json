@@ -8,12 +8,11 @@
     "source_image": null,
     "phone_number": null,
     "email": "tome@happyvalleyor.gov",
-    "website": "https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/",
+    "website": null,
     "start_date": "2023-01",
-    "end_date": null,
+    "end_date": "2026-12-31",
     "sources": [
-      "https://www.happyvalleyor.gov/city-hall/city-council/",
-      "https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/"
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
     "updated_at": "2025-05-06"
   },
@@ -28,9 +27,9 @@
     "source_image": null,
     "phone_number": null,
     "email": "joshc@happyvalleyor.gov",
-    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "website": null,
     "start_date": "2023-01",
-    "end_date": null,
+    "end_date": "2026-12-31",
     "sources": [
       "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
@@ -46,9 +45,9 @@
     "source_image": null,
     "phone_number": null,
     "email": "davidg@happyvalleyor.gov",
-    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "website": null,
     "start_date": "2025-01",
-    "end_date": null,
+    "end_date": "2028-12-31",
     "sources": [
       "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
@@ -64,9 +63,9 @@
     "source_image": null,
     "phone_number": null,
     "email": "bretts@happyvalleyor.gov",
-    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "website": null,
     "start_date": "2023-01",
-    "end_date": null,
+    "end_date": "2026-12-31",
     "sources": [
       "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
@@ -82,9 +81,9 @@
     "source_image": null,
     "phone_number": null,
     "email": "glennw@happyvalleyor.gov",
-    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "website": null,
     "start_date": "2025-01",
-    "end_date": null,
+    "end_date": "2028-12-31",
     "sources": [
       "https://www.happyvalleyor.gov/city-hall/city-council/"
     ],
