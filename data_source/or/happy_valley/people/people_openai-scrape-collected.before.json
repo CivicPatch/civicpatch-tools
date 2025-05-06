@@ -21,16 +21,16 @@
     "websites": [],
     "start_dates": [
       {
-        "data": "2019-01",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Elected to serve as Mayor beginning January 2019.",
+        "data": "2023-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Re-elected to serve beginning January 2023, indicating current term start.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term expires 12/31/2026 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
@@ -60,16 +60,16 @@
     "websites": [],
     "start_dates": [
       {
-        "data": "2014",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "First elected to City Council in 2014.",
+        "data": "2023-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Re-elected beginning January 2023, indicating current term start.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term expires 12/31/2026 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
@@ -102,14 +102,14 @@
       {
         "data": "2023-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected to City Council beginning January 2023.",
+        "llm_confidence_reason": "Elected to City Council beginning January 2023, current term start.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term expires 12/31/2026 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
@@ -139,16 +139,16 @@
     "websites": [],
     "start_dates": [
       {
-        "data": "2017-01",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Elected to City Council beginning January 2017.",
+        "data": "2025-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Re-elected to term beginning January 2025, most recent active term start.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term expires 12/31/2028 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
@@ -180,14 +180,14 @@
       {
         "data": "2025-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected to City Council beginning January 2025.",
+        "llm_confidence_reason": "Elected to City Council beginning January 2025, current term start.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term expires 12/31/2028 explicitly stated.",
         "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
       }
