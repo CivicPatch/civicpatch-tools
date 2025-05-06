@@ -1,5 +1,10 @@
 ---
-scrape_sources: []
+scrape_sources:
+- https://www.forestgrove-or.gov/365/City-Council
+- https://www.forestgrove-or.gov/611/Meet-the-Council
+- https://www.forestgrove-or.gov/611/Meet-the-Council/
+- https://www.forestgrove-or.gov/491
+- https://www.forestgrove-or.gov/
 source_directory_list:
   type: directory_list
   people:
