@@ -1,39 +1,35 @@
 [
   {
-    "name": "Keith Mays",
-    "positions": [
-      "Mayor",
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "maysk@sherwoodoregon.gov",
-    "website": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members",
-      "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
     "name": "Tim Rosener",
     "positions": [
-      "Council President",
-      "Council Member"
+      "Mayor"
     ],
     "image": null,
     "source_image": null,
     "phone_number": null,
     "email": "rosenert@sherwoodoregon.gov",
-    "website": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027-01",
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members",
-      "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Kim Young",
+    "positions": [
+      "Council President"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "youngk@sherwoodoregon.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2029-01",
+    "sources": [
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "updated_at": "2025-05-06"
   },
@@ -48,9 +44,9 @@
     "email": "standked@sherwoodoregon.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2029-01",
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "updated_at": "2025-05-06"
   },
@@ -65,27 +61,26 @@
     "email": "scottd@sherwoodoregon.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027-01",
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "updated_at": "2025-05-06"
   },
   {
-    "name": "Kim Young",
+    "name": "Keith Mays",
     "positions": [
       "Council Member"
     ],
     "image": null,
     "source_image": null,
     "phone_number": null,
-    "email": "youngk@sherwoodoregon.gov",
-    "website": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0",
+    "email": "maysk@sherwoodoregon.gov",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027-01",
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members",
-      "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "updated_at": "2025-05-06"
   },
@@ -100,9 +95,9 @@
     "email": "brouser@sherwoodoregon.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2029-01",
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "updated_at": "2025-05-06"
   },
@@ -117,10 +112,9 @@
     "email": "gilest@sherwoodoregon.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027-01",
     "sources": [
-      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members",
-      "https://www.sherwoodoregon.gov/ura/page/members"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "updated_at": "2025-05-06"
   }

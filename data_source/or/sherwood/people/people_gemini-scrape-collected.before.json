@@ -1,68 +1,33 @@
 [
   {
-    "name": "Taylor Giles",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.sherwoodoregon.gov/pc/page/planning-commission-members",
-      "https://www.sherwoodoregon.gov/ura/page/members"
-    ],
-    "positions": [
-      "Council Liaison",
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "gilest@sherwoodoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly linked to the name in a table.",
-        "source": "https://www.sherwoodoregon.gov/pc/page/planning-commission-members"
-      },
-      {
-        "data": "gilest@sherwoodoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.sherwoodoregon.gov/ura/page/members"
-      }
-    ],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
-  },
-  {
     "name": "Tim Rosener",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members",
-      "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "positions": [
-      "Council Member",
-      "Board Chair",
-      "Council President"
+      "Mayor"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "rosenert@sherwoodoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.sherwoodoregon.gov/ura/page/members"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General council members page linked in breadcrumb and navigation, likely place for individual profiles.",
-        "source": "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+      }
+    ],
     "updated_at": "2025-05-06"
   },
   {
@@ -70,31 +35,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members",
-      "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "positions": [
-      "Council Member"
+      "Council President"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "youngk@sherwoodoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.sherwoodoregon.gov/ura/page/members"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General council members page linked in breadcrumb and navigation, likely place for individual profiles.",
-        "source": "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2029-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date 'expires January 2029' explicitly stated.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+      }
+    ],
     "updated_at": "2025-05-06"
   },
   {
@@ -102,23 +66,61 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "positions": [
-      "Council Member"
+      "Councilor"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "brouser@sherwoodoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.sherwoodoregon.gov/ura/page/members"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2029-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date 'expires January 2029' explicitly stated.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Taylor Giles",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "gilest@sherwoodoregon.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+      }
+    ],
     "updated_at": "2025-05-06"
   },
   {
@@ -126,32 +128,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members",
-      "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "positions": [
-      "Council Member",
-      "Mayor"
+      "Councilor"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "maysk@sherwoodoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.sherwoodoregon.gov/ura/page/members"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General council members page linked in breadcrumb and navigation, likely place for individual profiles.",
-        "source": "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+      }
+    ],
     "updated_at": "2025-05-06"
   },
   {
@@ -159,23 +159,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "positions": [
-      "Council Member"
+      "Councilor"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "scottd@sherwoodoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.sherwoodoregon.gov/ura/page/members"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+      }
+    ],
     "updated_at": "2025-05-06"
   },
   {
@@ -183,70 +190,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.sherwoodoregon.gov/ura/page/members"
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
     "positions": [
-      "Council Member"
+      "Councilor"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "standked@sherwoodoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.sherwoodoregon.gov/ura/page/members"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Sally Robinson",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.sherwoodoregon.gov/planning/page/sherwood-west-cac-members"
-    ],
-    "positions": [
-      "City Council",
-      "President"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Russell Griffin",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
-    ],
-    "positions": [],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "end_dates": [
       {
-        "data": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General council members page linked in breadcrumb and navigation, likely place for individual profiles.",
-        "source": "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
+        "data": "2029-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date 'expires January 2029' explicitly stated.",
+        "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "start_dates": [
-      {
-        "data": "2017-10",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'appointment to the City Council in October of 2017'.",
-        "source": "https://www.sherwoodoregon.gov/citycouncil/page/sherwood-city-councilor-russell-griffin-announced-his-resignation-sherwood-city"
-      }
-    ],
-    "end_dates": [],
     "updated_at": "2025-05-06"
   }
 ]
