@@ -4,7 +4,7 @@
 
 503-657-0331
 
- *    
+ *  Community   
 
 Column 1  
 
@@ -36,7 +36,7 @@ Column 3
    *  [__Volunteer Opportunities__](https://westlinnoregon.gov/volunteer) 
    *  [__Neighborhoods__](https://westlinnoregon.gov/neighborhoods) 
    *  [__Contact the City__](https://westlinnoregon.gov/YourGOV)  
- *    
+ *  Business   
 
 Column 1  
 
@@ -66,7 +66,7 @@ Column 3
    *  [Home Occupation Permit](https://westlinnoregon.gov/planning/home-occupation-application) 
    *  [Food Trucks](https://westlinnoregon.gov/planning/food-carts) 
    *  [Special Event Permit](https://westlinnoregon.gov/publicworks/12-special-event-permits)  
- *    
+ *  Departments   
 
 Column 1  
 
@@ -102,7 +102,7 @@ Column 3
    *  [Hours of Operation](https://westlinnoregon.gov/communications/city-hours-operation) 
    *  [Report a Concern](https://westlinnoregon.gov/YourGOV) 
    *  [Staff Directory](https://westlinnoregon.gov/communications/staff-directory-1)  
- *    
+ *  How Do I...   
 
 Column 1  
 
@@ -174,6 +174,8 @@ Column 3
 
 # Councilor Kevin Bonnington
 
+  ![Kevin Bonnington portrait](images/335a3f049a9361dcc21c7036c3fb59cef4d3552fccf74c7b969bc9115b11c609.png)  
+
  __Cell:__ 503-568-2781
 
  __Email:__  [kbonnington@westlinnoregon.gov](mailto:kbonnington@westlinnoregon.gov) 
@@ -188,7 +190,7 @@ In middle school, he participated in fundraising for the design of the Skatepark
 
  His interests range from building custom liquid cooled computers that have been featured by Intel and other tech companies, 3D printing, working on his own cars, playing and maintaining guitars, the occasional adult Lego set, really anything that can become a DIY project with the potential to cause a great deal of frustration. He has never been married and has no children but hopes to address that sooner rather than later. He has two dogs, a Cheweenie officially named "Angel" that he refuses to call anything but "Dog", along with an elderly Pug named Dug.  
 
- * 
+ *  ![Printer-friendly version](images/d74c7e003f971ef17505b741a594a9e5a8b6cf7e5cd73cc10e7fcb6a677ce7cb.png) 
 
  *   [Meetings, Agendas & Minutes](https://westlinnoregon.gov/meetings) 
    *  [Community Comments](https://westlinnoregon.gov/citycouncil/community-comments) 
@@ -274,9 +276,9 @@ Email: [citycouncil@westlinnoregon.gov](mailto:citycouncil@westlinnoregon.gov)
 
 ## Upcoming Events
 
- *   [City Council Work Session](https://westlinnoregon.gov/citycouncil/city-council-work-session-236)  05/05/2025 - 1:00pm 
  *   [State of the City](https://westlinnoregon.gov/citycouncil/state-city-3)  05/06/2025 - 6:00pm 
  *   [Potential Quorum Notice](https://westlinnoregon.gov/citycouncil/potential-quorum-notice)  05/06/2025 - 6:00pm 
+ *   [City Council Executive Session](https://westlinnoregon.gov/citycouncil/city-council-executive-session-80)  05/08/2025 - 9:00am 
  *   [Meet Up with Mary](https://westlinnoregon.gov/citycouncil/meet-mary-3)  05/08/2025 - 4:00pm 
  *   [Memorial Day - City Offices Closed](https://westlinnoregon.gov/communications/memorial-day-city-offices-closed-3)  05/26/2025 (All day) 
  *   [Meet Up with Mary](https://westlinnoregon.gov/citycouncil/meet-mary-4)  05/29/2025 - 4:00pm 

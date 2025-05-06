@@ -4,7 +4,7 @@
 
 503-657-0331
 
- *    
+ *  Community   
 
 Column 1  
 
@@ -36,7 +36,7 @@ Column 3
    *  [__Volunteer Opportunities__](https://westlinnoregon.gov/volunteer) 
    *  [__Neighborhoods__](https://westlinnoregon.gov/neighborhoods) 
    *  [__Contact the City__](https://westlinnoregon.gov/YourGOV)  
- *    
+ *  Business   
 
 Column 1  
 
@@ -66,7 +66,7 @@ Column 3
    *  [Home Occupation Permit](https://westlinnoregon.gov/planning/home-occupation-application) 
    *  [Food Trucks](https://westlinnoregon.gov/planning/food-carts) 
    *  [Special Event Permit](https://westlinnoregon.gov/publicworks/12-special-event-permits)  
- *    
+ *  Departments   
 
 Column 1  
 
@@ -102,7 +102,7 @@ Column 3
    *  [Hours of Operation](https://westlinnoregon.gov/communications/city-hours-operation) 
    *  [Report a Concern](https://westlinnoregon.gov/YourGOV) 
    *  [Staff Directory](https://westlinnoregon.gov/communications/staff-directory-1)  
- *    
+ *  How Do I...   
 
 Column 1  
 
@@ -174,6 +174,8 @@ Column 3
 
 # Council President Mary Baumgardner
 
+  ![Mary headshot](images/3abbdd5f6864f04e11cae4bb60b76d26131c45ff12c1487e055d53d61a34903d.jpg)  
+
  __Cell:__ 503-568-3566
 
  __Email:__  [mbaumgardner@westlinnoregon.gov](mailto:mbaumgardner@westlinnoregon.gov) 
@@ -190,7 +192,7 @@ Column 3
 
  
 
- * 
+ *  ![Printer-friendly version](images/d74c7e003f971ef17505b741a594a9e5a8b6cf7e5cd73cc10e7fcb6a677ce7cb.png) 
 
  *   [Meetings, Agendas & Minutes](https://westlinnoregon.gov/meetings) 
    *  [Community Comments](https://westlinnoregon.gov/citycouncil/community-comments) 
@@ -276,9 +278,9 @@ Email: [citycouncil@westlinnoregon.gov](mailto:citycouncil@westlinnoregon.gov)
 
 ## Upcoming Events
 
- *   [City Council Work Session](https://westlinnoregon.gov/citycouncil/city-council-work-session-236)  05/05/2025 - 1:00pm 
  *   [State of the City](https://westlinnoregon.gov/citycouncil/state-city-3)  05/06/2025 - 6:00pm 
  *   [Potential Quorum Notice](https://westlinnoregon.gov/citycouncil/potential-quorum-notice)  05/06/2025 - 6:00pm 
+ *   [City Council Executive Session](https://westlinnoregon.gov/citycouncil/city-council-executive-session-80)  05/08/2025 - 9:00am 
  *   [Meet Up with Mary](https://westlinnoregon.gov/citycouncil/meet-mary-3)  05/08/2025 - 4:00pm 
  *   [Memorial Day - City Offices Closed](https://westlinnoregon.gov/communications/memorial-day-city-offices-closed-3)  05/26/2025 (All day) 
  *   [Meet Up with Mary](https://westlinnoregon.gov/citycouncil/meet-mary-4)  05/29/2025 - 4:00pm 
