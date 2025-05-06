@@ -37,7 +37,7 @@
   phone_number: "(503) 390-3700"
   website: https://www.keizer.org/Council-Position-1
   start_date:
-  end_date: '2025-05-06'
+  end_date: 2029-01
   image: https://cdn.civicpatch.org/open-data/or/keizer/images/dfb04c955bdb282bd9f562600d4e26d1e0adafac04fe8606270d387e7fef0f2c.png
   source_image: https://www.keizer.org/media/Council%20&%20Boards/City%20Council/Marlene%20Parsons.png
   sources:
@@ -53,8 +53,8 @@
   website: https://www.keizer.org/council-position-3
   start_date:
   end_date: 2029-01
-  image:
-  source_image:
+  image: https://cdn.civicpatch.org/open-data/or/keizer/images/8161bea3e915c7cfa11d8747c8e3efa41591b1cdfb532a3c5a71c423405710b1.png
+  source_image: https://www.keizer.org/media/Design%20Files/Logos/logo.png
   sources:
   - https://www.keizer.org/city-council
   - https://www.keizer.org/council-position-3
@@ -79,7 +79,7 @@
   - Council Member
   - Position 5
   email: ChristopherL@KeizerOR.gov
-  phone_number:
+  phone_number: "(503) 390-3700"
   website: https://www.keizer.org/council-position-5
   start_date: 2024-12
   end_date: 2027-01

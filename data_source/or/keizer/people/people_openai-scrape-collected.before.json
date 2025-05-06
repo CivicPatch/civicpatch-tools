@@ -29,7 +29,7 @@
       {
         "data": "https://www.keizer.org/mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the mayor's profile.",
+        "llm_confidence_reason": "Primary page URL for the mayor.",
         "source": "https://www.keizer.org/mayor"
       }
     ],
@@ -45,7 +45,7 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' and converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' converted to YYYY-MM.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -67,7 +67,7 @@
     "emails": [
       {
         "data": "ParsonsM@KeizerOR.gov",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.keizer.org/Council-Position-1"
       }
@@ -85,7 +85,7 @@
       {
         "data": "2029-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2029' and converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2029' converted to YYYY-MM.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -123,7 +123,7 @@
       {
         "data": "https://www.keizer.org/council-position-2",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Council Position 2.",
+        "llm_confidence_reason": "Primary page URL for Council Position 2 where Shaney Starr is listed.",
         "source": "https://www.keizer.org/council-position-2"
       }
     ],
@@ -139,7 +139,7 @@
       {
         "data": "2029-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2029' and converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2029' converted to YYYY-MM.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -147,8 +147,8 @@
   },
   {
     "name": "Kyle Juran",
-    "image": null,
-    "source_image": null,
+    "image": "images/8161bea3e915c7cfa11d8747c8e3efa41591b1cdfb532a3c5a71c423405710b1.png",
+    "source_image": "https://www.keizer.org/media/Design%20Files/Logos/logo.png",
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-3"
@@ -161,7 +161,7 @@
     "emails": [
       {
         "data": "JuranK@KeizerOR.gov",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.keizer.org/council-position-3"
       }
@@ -179,7 +179,7 @@
       {
         "data": "2029-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2029' and converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2029' converted to YYYY-MM.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -219,7 +219,7 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' and converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' converted to YYYY-MM.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -258,7 +258,7 @@
       {
         "data": "2024-12",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed in December 2024 as stated in text, converted 'December of 2024' to '2024-12'.",
+        "llm_confidence_reason": "Appointed December 2024 stated in text, converted to YYYY-MM format.",
         "source": "https://www.keizer.org/council-position-5"
       }
     ],
@@ -266,13 +266,13 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' and converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' converted to YYYY-MM.",
         "source": "https://www.keizer.org/city-council"
       },
       {
         "data": "2027-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term runs through January 2027, converted 'January 2027' to '2027-01'.",
+        "llm_confidence_reason": "Term runs through January 2027 stated in text, converted to YYYY-MM format.",
         "source": "https://www.keizer.org/council-position-5"
       }
     ],
@@ -305,12 +305,6 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "URL linked from name with position 6.",
         "source": "https://www.keizer.org/city-council"
-      },
-      {
-        "data": "https://www.keizer.org/council-position-6",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Council Position 6 held by Daniel R. Kohler.",
-        "source": "https://www.keizer.org/Council-Position-6"
       }
     ],
     "start_dates": [],
@@ -318,7 +312,7 @@
       {
         "data": "2027-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' and converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expires' column 'January 2027' converted to YYYY-MM.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -341,7 +335,7 @@
       {
         "data": "2024-09-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from date range '(September 1, 2024 - May 31, 2025)' and converted to YYYY-MM-DD.",
+        "llm_confidence_reason": "Extracted from date range '(September 1, 2024 - May 31, 2025)' converted to YYYY-MM-DD.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -349,7 +343,7 @@
       {
         "data": "2025-05-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from date range '(September 1, 2024 - May 31, 2025)' and converted to YYYY-MM-DD.",
+        "llm_confidence_reason": "Extracted from date range '(September 1, 2024 - May 31, 2025)' converted to YYYY-MM-DD.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
