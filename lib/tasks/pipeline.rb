@@ -92,7 +92,7 @@ namespace :pipeline do
   def fetch_with_state_source(municipality_context)
     puts "#{municipality_context[:state]} - #{municipality_context[:municipality_entry]["name"]} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
-    positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
+    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
@@ -133,7 +133,7 @@ namespace :pipeline do
 
   def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil,
                        seeded_urls: [], request_cache: {})
-    positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
+    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
     page_fetcher, source_dirs, accumulated_people, people_config = Core::MunicipalScraper.fetch(
       llm_service_string,
@@ -155,7 +155,7 @@ namespace :pipeline do
   def aggregate_sources(municipality_context, sources: [])
     state = municipality_context[:state]
     municipality_entry = municipality_context[:municipality_entry]
-    positions_config = Core::CityManager.get_positions(municipality_context[:government_type])
+    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
     people_config = municipality_context[:config]["people"]
     validated_result = Validators::CityPeople.validate_sources(municipality_context)
 

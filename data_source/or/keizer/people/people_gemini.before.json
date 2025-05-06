@@ -2,15 +2,16 @@
   {
     "name": "Cathy Clark",
     "positions": [
-      "Mayor"
+      "Mayor",
+      "mayor"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 390-3700",
     "email": "ClarkC@KeizerOR.gov",
     "website": "https://www.keizer.org/mayor",
     "start_date": "2015",
-    "end_date": null,
+    "end_date": "2027-01",
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/mayor"
@@ -21,16 +22,15 @@
     "name": "Marlene Parsons",
     "positions": [
       "Council Member",
-      "Position 1",
-      "Council Position 1"
+      "Position 1"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 390-3700",
     "email": "ParsonsM@KeizerOR.gov",
     "website": "https://www.keizer.org/Council-Position-1",
     "start_date": null,
-    "end_date": "2025-05-06",
+    "end_date": "2029-01",
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/Council-Position-1"
@@ -42,15 +42,16 @@
     "positions": [
       "Council Member",
       "Position 2",
+      "council member",
       "Council President"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 390-3700",
     "email": "StarrS@KeizerOR.gov",
     "website": "https://www.keizer.org/council-position-2",
     "start_date": "2021-12",
-    "end_date": null,
+    "end_date": "2029-01",
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-2"
@@ -67,11 +68,11 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 390-3700",
     "email": "JuranK@KeizerOR.gov",
     "website": "https://www.keizer.org/council-position-3",
     "start_date": null,
-    "end_date": null,
+    "end_date": "2029-01",
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-3"
@@ -83,15 +84,15 @@
     "positions": [
       "Council Member",
       "Position 4",
-      "Council Position 4"
+      "council member position 4"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 390-3700",
     "email": "CrossS@KeizerOR.gov",
     "website": "http://www.keizer.org/council-position-4",
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027-01",
     "sources": [
       "https://www.keizer.org/city-council",
       "http://www.keizer.org/council-position-4"
@@ -103,11 +104,12 @@
     "positions": [
       "Council Member",
       "Position 5",
+      "council member",
       "position 5"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 390-3700",
     "email": "ChristopherL@KeizerOR.gov",
     "website": "https://www.keizer.org/council-position-5",
     "start_date": "2024-12",
@@ -126,11 +128,11 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 390-3700",
     "email": "KohlerD@KeizerOR.gov",
     "website": "https://www.keizer.org/Council-Position-6",
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027-01",
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/Council-Position-6"

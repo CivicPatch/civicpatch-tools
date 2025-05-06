@@ -36,6 +36,8 @@ government_types:
       * mayor position 7 -> ["mayor", "position 7"]
       * position 8 at-large -> ["position 8", "at-large"]
       * position no 8 -> ["position 8"]
+    exclude_positions:
+      - youth councilor
     search_keywords:
       council members:
         - meet the council

@@ -25,12 +25,17 @@ module Core
         divisions_map
       end
 
-      def self.normalize_positions(positions, positions_config)
+      def self.normalize_positions(positions, government_types_config)
+        positions_config = government_types_config["positions"]
         alias_map = generate_alias_map(positions_config)
         divisions_map = generate_divisions_map(positions_config)
+        excluded_positions = government_types_config["exclude_positions"] || []
 
         positions.flat_map do |position|
           normalized_position = position.downcase.strip
+
+          # Check if the normalized position EXACTLY matches any excluded position
+          next [] if excluded_positions.include?(normalized_position)
 
           ## Try to find divisions
           matching_division = divisions_map.keys.find { |k, _v| normalized_position.include?(k) }
@@ -82,25 +87,8 @@ module Core
       end
 
       def self.sort_positions(positions, positions_config)
-        # Create a hash that maps roles to their index
-        role_order = positions_config.each_with_index.to_h do |role_config, index|
-          [role_config["role"].downcase, index]
-        end
-
-        divisions_list = positions_config.flat_map { |role_config| role_config["divisions"] }.compact
-
-        normalized_positions = normalize_positions(positions, positions_config)
-        normalized_positions.sort_by do |position|
-          # Normalize the position using your existing method
-          division_match = divisions_list.find { |division| position.include?(division) }
-
-          # Sort by role order, division order, and position alphabetically
-          [
-            role_order[position] || Float::INFINITY,
-            division_match ? 0 : 1,
-            position
-          ]
-        end
+        normalized = normalize_positions(positions, positions_config)
+        apply_sort_order(normalized, positions_config["positions"])
       end
 
       def self.find_divisions(positions, positions_config)
@@ -132,7 +120,8 @@ module Core
         role_matches
       end
 
-      def self.sort_people(people, positions_config)
+      def self.sort_people(people, government_types_config)
+        positions_config = government_types_config["positions"]
         # Map role names to their order based on the provided config
         role_order = positions_config.each_with_index.to_h do |role_config, index|
           [role_config["role"].downcase, index]
@@ -166,6 +155,25 @@ module Core
 
           [role_index, division_combo, name]
         end.map { |data| data[:person] }
+      end
+
+      private_class_method def self.apply_sort_order(normalized_positions, positions_config)
+        # Create role_order hash
+        role_order = positions_config.each_with_index.to_h do |role_config, index|
+          [role_config["role"].downcase, index]
+        end
+        # Get divisions_list
+        divisions_list = positions_config.flat_map { |role_config| role_config["divisions"] }.compact
+
+        # Apply the sort_by logic
+        normalized_positions.sort_by do |position|
+          division_match = divisions_list.find { |division| position.include?(division) }
+          [
+            role_order[position] || Float::INFINITY,
+            division_match ? 0 : 1,
+            position
+          ]
+        end
       end
     end
   end

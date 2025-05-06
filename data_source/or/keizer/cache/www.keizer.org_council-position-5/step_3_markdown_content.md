@@ -1,4 +1,4 @@
-  [May is Asian Pacific Heritage, Jewish American Heritage & Older Americans Month](https://www.keizer.org/events/62162/)   [Keizer, OregonPride, Spirit and Volunteerism](https://www.keizer.org/)  Search  **   ![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)   [Select Language![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)​![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)▼](https://www.keizer.org/council-position-5/)  
+  [May is Asian American, Native Hawai'ian, & Pacific Islander Heritage](https://www.keizer.org/events/62162/)   [Keizer, OregonPride, Spirit and Volunteerism](https://www.keizer.org/)  Search  **   ![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)   [Select Language![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)​![](images/ab5314affea2908d9d1d48192927b2287dcc1864718987803c26fba0d5b54a47.gif)▼](https://www.keizer.org/council-position-5/)  
 
  *  [Home](https://www.keizer.org/) 
  *  [Address / Phone / Hours](https://www.keizer.org/contact-us) 

@@ -104,7 +104,8 @@ module Services
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - For positions:
           - **CRITICAL**: Extract ONLY roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
-            **Target Municipal Roles** and **Examples** provided.
+            **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
+          - **Check for Past Dates**: Before extracting a specific position title (e.g., "Council President", "Chair"), examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012", "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past** and is not the person's current role, **DO NOT extract that specific position title.** Focus only on roles the person currently holds according to the text.
           - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
             (e.g., "Youth Councilor", "Student Representative"),
             or non-voting unless they are explicitly listed in the Target Municipal Roles.
@@ -135,34 +136,33 @@ module Services
             Extract the email address shown in the brackets.
           - Place extracted emails ONLY in the "email" field, NEVER in the "website" field.
         - start_date and end_date extraction:
-          - Format: YYYY, YYYY-MM, YYYY-MM-DD or null
-          - **Allowed Formats**: Only extract dates that appear in the source text using one of these exact formats: `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
-          - **Exact Extraction**: Extract the date string *exactly as found*. **DO NOT** add default months or days (like '-01', '-31', '-01-01', '-12-31') if they are not explicitly present in the source date string.
-          - **Keyword Search**: Look for keywords indicating start/end dates:
-            - `start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service'
-            - `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:'
-            - Extract the date string following these keywords ONLY if it matches one of the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD). Extract it exactly as found.
-          - **Handling "Term: X to Y"**: If you find a pattern like `Term: [Date1] to [Date2]`, extract Date1 and Date2. Format each extracted date precisely as YYYY, YYYY-MM, or YYYY-MM-DD based *only* on the information present in the source text for that specific date part. Extract BOTH dates if the pattern provides them. If the pattern is `Term: YYYY-YYYY`, extract first YYYY to `start_date` and second YYYY to `end_date`.
-          - **EXAMPLES - date extraction (CRITICAL TO EXTRACT EXACTLY)**:
-            - "Term expires December 31, 2026" → end_date: {"data": "2026-12-31"}
-            - "Term expires December 2026" → end_date: {"data": "2026-12"}
-            - "Serving through 2025" → end_date: {"data": "2025"}
-            - "Next election: November 2024" → end_date: {"data": "2024-11"}
-            - "Term: January 1, 2023 to December 31, 2026" → start_date: {"data": "2023-01-01"}, end_date: {"data": "2026-12-31"}
-            - "Term: 2023 to 2026" → start_date: {"data": "2023"}, end_date: {"data": "2026"}
-          - **Null If Not Found/Matched**: If no date is mentioned for a person, or if a mentioned date does not match the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD), set the corresponding field (`start_date` or `end_date`) to null. Do not attempt to parse or reformat dates like "Spring 2024".
-        - Today is #{current_date}. Ensure that only active positions are included, and
-          exclude any positions that are not currently held or are no longer active.
+          - **Default to Null**: The `data` field for `start_date` and `end_date` MUST be null by default. Only populate it if you find an EXPLICIT date string in the text that meets the criteria below.
+          - **Prohibited Actions**:
+            - **DO NOT infer, assume, or calculate dates** based on context, patterns, "common practice", "typical term start", "recently", the current date (`#{current_date}`), or any other non-explicit information. **Confidence reasoning like "Common term start date..." is specifically forbidden if the date wasn't explicitly written.** Output MUST be null in such cases.
+            - Do not add default days or months unless performing the specific `Month YYYY` -> `YYYY-MM` conversion.
+          - **Allowed Extraction & Formatting (Only if explicit date found)**:
+            - Allowed output formats: `YYYY`, `YYYY-MM`, `YYYY-MM-DD`.
+            - If the source text explicitly provides a date as `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`, output that exact string.
+            - If the source text explicitly provides a date as `Month YYYY` (e.g., "January 2027"), convert it to `YYYY-MM` (e.g., "2027-01").
+            - If the source text provides an explicit date in any other format, treat it as not found and output null.
+          - **Locating Dates**:
+            - Use keywords (`start_date` keywords: 'Term Began:', 'Elected:', 'Sworn In:', 'Appointed:', 'Serving Since:', 'First Elected:', 'Elected in', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service', `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:') and patterns (`Term: [Date1] to [Date2]`, `Term: YYYY-YYYY`) to find potential explicit date strings **that are clearly associated with the specific person being processed.**
+            - When extracting from tables, ensure the date string is found **within the same row or entry** as the person's name.
+            - Apply the formatting rules above ONLY to explicitly found and correctly associated dates. Extract both dates for `Term: ... to ...` pattern if both are explicit and associated with the current person.
+          - **Key Examples**:
+            - "Term Expires January 2027" -> `end_date`: {"data": "2027-01"}
+            - "Serving through 2025" -> `end_date`: {"data": "2025"}
+            - "Term: Jan 2023 to Dec 31, 2026" -> `start_date`: {"data": "2023-01"}, `end_date`: {"data": "2026-12-31"}
+            - "Elected last year" -> `start_date`: null
+            - "Term began on the usual date" -> `start_date`: null
+          - **Final Check**: Was the output date explicitly written in the text (or directly convertible via the Month YYYY rule) **and clearly associated with the correct individual**? If not, it MUST be null. No exceptions for inference or misattribution.
+        - Today is #{current_date}. Context only, do not use for date calculation.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'
           that appear structurally close (e.g., immediately following section) to a specific person's name or section
           should be associated with that person unless the text clearly indicates otherwise (e.g., 'General City Contact').
+          **When processing tabular data, ensure all extracted fields for a single person (name, positions, dates, etc.) are sourced from data within that person's specific row or clearly delineated section. Do not carry over or associate data from adjacent rows or different individuals.**
         - Ensure only ONE entry exists per unique person's name.
           Merge all extracted details for the same person into a single record
-
-        **MANDATORY DATE CHECK**: Before finalizing, verify: If the text clearly stated a term start or end
-        date/year(s) for a person (like "Term Expires 2025", "Term: 2023-2026", "Elected: 2024-01"),
-        did you populate `start_date` and/or `end_date` with the string exactly matching one of the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD)?
-        Do not leave these fields null if the information was present AND matched an allowed format. Ensure no default days/months were added.
 
         Here is the content (in markdown):
         #{content}
