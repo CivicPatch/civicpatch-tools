@@ -1,0 +1,97 @@
+[
+  {
+    "name": "Rory Bialostosky",
+    "positions": [
+      "Mayor",
+      "mayor"
+    ],
+    "image": "images/144f429ba64536ad0bb02b8f1f5c5b114cecd095579b00017b1b625efee5a823.png",
+    "source_image": "https://westlinnoregon.gov/sites/all/themes/aha_compass/logo.png",
+    "phone_number": "503-568-3571",
+    "email": "rbialostosky@westlinnoregon.gov",
+    "website": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+    "start_date": "2023-06-20",
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Mary Baumgardner",
+    "positions": [
+      "Council President",
+      "council president"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-568-3566",
+    "email": "mbaumgardner@westlinnoregon.gov",
+    "website": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
+    "start_date": "2021-01-01",
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Leo Groner",
+    "positions": [
+      "Councilor",
+      "council member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-568-2804",
+    "email": "lgroner@westlinnoregon.gov",
+    "website": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+    "start_date": "2023-03-14",
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Carol Bryck",
+    "positions": [
+      "Councilor",
+      "council member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "503-568-3419",
+    "email": "cbryck@westlinnoregon.gov",
+    "website": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
+    "start_date": "2023-08-28",
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Kevin Bonnington",
+    "positions": [
+      "Councilor",
+      "council member"
+    ],
+    "image": "images/144f429ba64536ad0bb02b8f1f5c5b114cecd095579b00017b1b625efee5a823.png",
+    "source_image": "https://westlinnoregon.gov/sites/all/themes/aha_compass/logo.png",
+    "phone_number": "503-568-2781",
+    "email": "kbonnington@westlinnoregon.gov",
+    "website": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
+    "start_date": "2024-03-11",
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
+    ],
+    "updated_at": "2025-05-06"
+  }
+]
