@@ -6,10 +6,10 @@ require "utils/array_helper"
 
 module Resolvers
   class SearchResolver
-    SEARCH_SERVICES = [
-      Services::GoogleSearch,
-      Services::Brave
-    ].freeze
+    SEARCH_SERVICES = {
+      "google" => Services::GoogleSearch,
+      "brave" => Services::Brave
+    }.freeze
 
     def self.municipal_search(municipality_context, keyword_terms)
       urls_by_keywords = keyword_terms.map do |keyword_term|
@@ -21,13 +21,15 @@ module Resolvers
     end
 
     def self.do_municipal_search(municipality_context, query_keywords)
-      SEARCH_SERVICES.each do |search_service|
-        puts "Searching with #{search_service.name} for #{query_keywords}"
+      SEARCH_SERVICES.each do |search_engine_name, search_service|
+        puts "Searching with #{search_engine_name} for #{query_keywords}"
         results = search_service.municipal_search(municipality_context, query_keywords)
-        puts "Search successful with #{search_service.name}."
+        Utils::CostsHelper.log_search_engine_call(municipality_context[:state],
+                                                  municipality_context[:municipality_entry]["name"], search_engine_name)
+        puts "Search successful with #{search_engine_name}."
         return results # Return results immediately on success
       rescue StandardError => e
-        puts "Error with #{search_service.name}: #{e.message}. Trying next service..."
+        puts "Error with #{search_engine_name}: #{e.message}. Trying next service..."
         next
       end
 

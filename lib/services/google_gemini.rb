@@ -27,8 +27,7 @@ module Services
       prompt = Services::Shared::GeminiPrompts
                .gemini_generate_search_for_people_prompt(state, municipality_entry)
 
-      request_origin = "#{state}_#{municipality_entry["name"]}_gemini_#{MODEL}_search_for_people"
-      response = run_prompt(prompt, request_origin, with_search: true)
+      response = run_prompt(prompt, state, municipality_entry["name"], with_search: true)
 
       return nil if response.blank?
 
@@ -46,8 +45,7 @@ module Services
       prompt = Services::Shared::GeminiPrompts
                .gemini_generate_municipal_directory_prompt(municipality_context, content, person_name)
 
-      request_origin = "#{state}_#{municipality_name}_gemini_#{MODEL}_extract_city_people"
-      response = run_prompt(prompt, request_origin,
+      response = run_prompt(prompt, state, municipality_name,
                             response_schema: Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
 
       return nil if response.blank?
@@ -62,7 +60,7 @@ module Services
       end
     end
 
-    def run_prompt(prompt, request_origin, response_schema: nil, with_search: false)
+    def run_prompt(prompt, state, municipality_name, response_schema: nil, with_search: false)
       retry_attempts = 0
       url = "#{BASE_URI}/v1beta/models/#{MODEL}:generateContent?key=#{@api_key}"
 
@@ -114,11 +112,13 @@ module Services
         thoughts_token_num = usage["thoughtsTokenCount"].to_i # Diff models might not support thoughts
 
         Utils::CostsHelper.log_llm_cost(
-          request_origin,
+          state,
+          municipality_name,
           "google_gemini",
           input_tokens_num,
           candidates_token_num + thoughts_token_num,
-          MODEL
+          MODEL,
+          with_search: with_search
         )
 
         # TODO: needs more robustness

@@ -11,11 +11,16 @@ namespace :sheets do
     OOB_URI = "urn:ietf:wg:oauth:2.0:oob"
     APPLICATION_NAME = "CSV to Google Sheets"
     SCOPE = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
-    spreadsheet_id = ENV["GOOGLE_SHEETS_SPREADSHEET_ID"] # Spreadsheet ID from environment variable
-    sheet_name = "Costs"
-    csv_file_path = PathHelper.project_path("costs.csv")
+    spreadsheet_id = ENV["GOOGLE_SHEETS_SPREADSHEET_ID"]
 
-    send_csv_to_sheets_and_clear(spreadsheet_id, sheet_name, csv_file_path)
+    if File.exist?(PathHelper.project_path("cost_llms.csv"))
+      send_csv_to_sheets_and_clear(spreadsheet_id, "Cost LLMs", PathHelper.project_path("cost_llms.csv"))
+    end
+
+    if File.exist?(PathHelper.project_path("cost_search_engines.csv"))
+      send_csv_to_sheets_and_clear(spreadsheet_id, "Cost Search Engines",
+                                   PathHelper.project_path("cost_search_engines.csv"))
+    end
   end
 
   private
@@ -57,7 +62,7 @@ namespace :sheets do
     result = service.append_spreadsheet_value(spreadsheet_id, range_name, body, value_input_option: "RAW",
                                                                                 insert_data_option: "INSERT_ROWS")
 
-    puts "#{result.updates.updated_cells} cells appended."
+    puts "#{result.updates.updated_cells} cells appended from #{csv_file_path}."
     File.open(csv_file_path, "w") { |file| file.truncate(0) } # Clears the csv
     result
   rescue Google::Apis::ClientError => e
