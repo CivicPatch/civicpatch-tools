@@ -1,6 +1,6 @@
   [Skip to main content](https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham/)   [![Home](images/2cb0036bc5e62ba5a931d272a5207af35941997177ac339d967cb280cf09a38d.png)Starter Site State](https://www.wilsonvilleoregon.gov/)  
 
- *  ![phone icon](images/6414af080cca7068ebc338cdb3712a43e2ef6bc4406fa32f73f46b9eea873e5d.png) 
+ *  ![phone icon](images/6414af080cca7068ebc338cdb3712a43e2ef6bc4406fa32f73f46b9eea873e5d.png) 503-682-1011
  *  ![contact icon](images/9fe62118f70d35269f2d3fec144a05dae81717f38030dbc3e28bfbb1862f224f.png)  [Contact](https://www.wilsonvilleoregon.gov/contact) 
  *  ![mail icon](images/6991441cf134fd22b97b21e31f3716ef37fe0f49aed873f71588194475eed9e1.png)  [Subscribe](https://www.wilsonvilleoregon.gov/subscribe) 
  *  ![translate icon](images/fb5d7a5c47bdac65d6f45a065774de180eda0e143aaf758b09e224d5e70a9a82.png) Translate 
@@ -115,12 +115,12 @@
    *  [Yoruba](https://translate.google.com/translate?hl=en&sl=en&u=https://www.ci.wilsonville.or.us/directory-listing/adam-cunningham/&tl=yo) 
    *  [Zulu](https://translate.google.com/translate?hl=en&sl=en&u=https://www.ci.wilsonville.or.us/directory-listing/adam-cunningham/&tl=zu)  
 
- * 
- * 
- * 
- * 
+ *  ![Community Engagement](images/350f94c08998c9162b2d6dec1eb3dc436c6f82f618281109c8d0d413b06209d8.png) 
+ *  ![Facebook](images/6864b6b2e654ec03f373c7a16c0af58f0ba90c6b4102d8c19d6af78b295cff26.png) 
+ *  ![Twitter](images/f4b88d1e6c0538bdf5ed744ab5e83d5404b998a4477191742e6eb8f733effdb9.png) 
+ *  ![Youtube](images/5e206833a1eafc0d40f73bfb1091811f1b038ac2690edef6a44687f209a3d2a0.png) 
 
- *    
+ *  Residents   
 
 Column 1  
 
@@ -191,7 +191,7 @@ Column 4
    *  [Backflow Program](https://www.wilsonvilleoregon.gov/publicworks/page/backflow-prevention) 
    *  [Garbage and Recycling Services](https://www.wilsonvilleoregon.gov/residents/page/garbage-and-recycling-services) 
    *  [Other Local Utilities](https://www.wilsonvilleoregon.gov/residents/page/local-utility-services)  
- *    
+ *  Government   
 
 Column 1  
 
@@ -255,7 +255,7 @@ Column 4
    *  [SMART Transit](https://www.wilsonvilleoregon.gov/transit) 
    *  [Urban Renewal](https://www.wilsonvilleoregon.gov/renewal) 
    *  [Utility Billing](https://www.wilsonvilleoregon.gov/utility-billing)  
- *    
+ *  Business   
 
 Column 1  
 
@@ -306,7 +306,7 @@ Column 4
    *  [Where to Eat](https://explorewilsonville.com/eat-drink/) 
    *  [Where to Stay](https://explorewilsonville.com/stay/) 
    *  __ [Zoning Map](https://www.wilsonvilleoregon.gov/planning/page/zoning-map)__  
- *    
+ *  Resources   
 
 Column 1  
 
@@ -391,7 +391,7 @@ Column 4
 
 # Adam Cunningham
 
- Position:  Councilor Term Date:  January, 2025 to December, 2028 Phone Number:  971-917-4340 Email:   [cunningham@wilsonvilleoregon.gov](mailto:cunningham@wilsonvilleoregon.gov)  
+  ![Adam Cunningham](images/7eda2ac942334ba09ef2403d13f3ae13bb8f1baa358f5978ac7b69111828e19a.jpg)  Position:  Councilor Term Date:  January, 2025 to December, 2028 Phone Number:  971-917-4340 Email:   [cunningham@wilsonvilleoregon.gov](mailto:cunningham@wilsonvilleoregon.gov)  
 
  Adam Cunningham was elected to the Wilsonville City Council in 2024. 
 
@@ -406,11 +406,11 @@ Column 4
  * Washington County Coordinating Committee (WCCC) - Alternate
  * Willamette Intake Facilities Commission Board of TVWD - Alternate
  * Regional Water Providers Consortium Board
- City Hall 29799 SW Town Center Loop E Wilsonville, OR 97070 See map: [Google Maps](http://maps.google.com/?q=29799+SW+Town+Center+Loop+E,+Wilsonville,+OR,+97070,+us)   ![](images/cef0508420b776f3f8f46a444c71e8016726d14d671b2f528d63e3e2415bd2a2.png)  ![](images/48f7ce70acb5c2d3bead7f238b10f6e2f8091fce6ba5770a2cb837950a616734.png)  ![](images/970fa818cc7c57163ccae694bbc8b75ff760abb2f2cb1796f54429c802b05612.png)  ![](images/d592565714dc1ebb97576a46c6bac9353121bd1396656d1b627a14df0e916d14.png)  ![](images/33593cde9cb9f48493f16854f6b95c3f92586dce53d8e026557811f53a99d638.png)  ![](images/9e47097093cdbc877c58514643b729a1bb1ac0133ffac6fac95d569163990175.png)  ![](images/9cc419c416e3ea15268a42570ebce3bd47fa9b5de1607f59d983c3f930309aa7.png)  ![](images/54f2cb4dab5e80adeb97cf6bd6bc75c57c4887e3975ff7dadf571dd2c002ecf8.png)   ![](images/ae0bd4e0a0493699b74fbeb3cc4521fd80f8e6085a804de3fe6ebdb2e5eb3388.png)   ![](images/4831408690878efc073c9da95a618f82e033d04ae02ee96cba7ceb32c85d0583.png)   ![](images/8d14c9c945304e0a2d48201a50f6529a39e5fe19ced422521bde31e9219c9c55.png)   ![](images/b5dd8aef422a3755008ed4f59cc529b15eb6df02ca6652ae1fd2a8e0aabebec8.png)   ![](images/d706cfc298f766c775a53f386445f5d89299e4d6e83eeec7f4e0a7ce556296af.png)   ![](images/e0965bc50569d2728c1f423a5651ac3cf45835e5839d6c22b2f622eadcb7c03a.png)   ![](images/56ca1f38b3fdd6a20fb963ce2a6cf8c367e63564eb4bf09eaec1d28d01f3fd9e.png)  Base Layer OSM Mapnik
+ City Hall 29799 SW Town Center Loop E Wilsonville, OR 97070 See map: [Google Maps](http://maps.google.com/?q=29799+SW+Town+Center+Loop+E,+Wilsonville,+OR,+97070,+us)   ![](images/ae0bd4e0a0493699b74fbeb3cc4521fd80f8e6085a804de3fe6ebdb2e5eb3388.png)   ![](images/4831408690878efc073c9da95a618f82e033d04ae02ee96cba7ceb32c85d0583.png)   ![](images/8d14c9c945304e0a2d48201a50f6529a39e5fe19ced422521bde31e9219c9c55.png)   ![](images/b5dd8aef422a3755008ed4f59cc529b15eb6df02ca6652ae1fd2a8e0aabebec8.png)   ![](images/d706cfc298f766c775a53f386445f5d89299e4d6e83eeec7f4e0a7ce556296af.png)   ![](images/e0965bc50569d2728c1f423a5651ac3cf45835e5839d6c22b2f622eadcb7c03a.png)   ![](images/56ca1f38b3fdd6a20fb963ce2a6cf8c367e63564eb4bf09eaec1d28d01f3fd9e.png)  Base Layer OSM Mapnik
 
  Overlays  ![](images/9e7997c1fee4614210afae00bbc80824f1a00d9f63751c116eb6c46f7f859b2b.png)   ![](images/d76b392b3c316478cc005ad35bd414003238cf9e578d72e86371f0cd3a7d9d06.png)  © [CCBYSA](http://creativecommons.org/licenses/by-sa/2.0/)  [© OpenStreetMap contributors](http://www.openstreetmap.org/copyright)  
 
- * 
+ *  ![Printer-friendly version](images/6d8a0275c3f95fea5b539e6e1eb3c87872840e16283455bdaceedf31a5d4780d.png) 
 
 City Council|Contact|Position|
 |---|---|
