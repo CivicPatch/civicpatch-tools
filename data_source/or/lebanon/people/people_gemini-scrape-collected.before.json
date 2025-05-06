@@ -20,9 +20,15 @@
     ],
     "emails": [
       {
+        "data": "city.recorder@lebanonoregon.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city recorder email, not explicitly tied to the mayor.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
         "data": "ken.jackola@lebanonoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided in a mailto link associated with the name.",
+        "llm_confidence_reason": "Email address extracted directly from mailto link text associated with the name.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
@@ -30,13 +36,13 @@
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=45",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Direct link provided next to the name.",
+        "llm_confidence_reason": "Direct link provided next to name.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       },
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=45/",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL extracted from the skip link, which likely points to this specific profile page.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "URL is the current page URL, which is a directory entry for the person, but not a dedicated profile page.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
@@ -44,7 +50,7 @@
       {
         "data": "2025-01-08",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicit start date 'January 8, 2025' found in the 'Term' section.",
+        "llm_confidence_reason": "Start date 'January 8, 2025' explicitly stated under 'Term' section.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
@@ -52,7 +58,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicit end date 'December 31, 2026' found in the 'Term' section.",
+        "llm_confidence_reason": "End date 'December 31, 2026' explicitly stated under 'Term' section.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
@@ -67,33 +73,55 @@
       "https://www.lebanonoregon.gov/directory.aspx?eid=56"
     ],
     "positions": [
-      "Ward 1 Councilor"
+      "Councilor",
+      "Ward 1"
     ],
     "phone_numbers": [
       {
         "data": "541-258-4989",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "city.recorder@lebanonoregon.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city recorder email, not explicitly tied to this councilor.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "dominic.conti@lebanonoregon.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Direct link provided next to the name.",
+        "llm_confidence_reason": "Direct link provided next to name.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
-      },
+      }
+    ],
+    "start_dates": [
       {
-        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the person's directory entry, but not a dedicated profile page.",
+        "data": "2025-01-08",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly listed as the start date of the term.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly listed as the end date of the term.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
+      }
+    ],
     "updated_at": "2025-05-06"
   },
   {
@@ -105,8 +133,8 @@
       "https://www.lebanonoregon.gov/directory.aspx?eid=47"
     ],
     "positions": [
-      "Ward 1 Councilor",
-      "Councilor Ward 1"
+      "Councilor",
+      "Ward 1"
     ],
     "phone_numbers": [
       {
@@ -118,9 +146,15 @@
     ],
     "emails": [
       {
+        "data": "city.recorder@lebanonoregon.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city recorder email, not explicitly tied to this councilor.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
         "data": "carl.mann@lebanonoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided in markdown link text.",
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
@@ -128,21 +162,15 @@
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=47",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Direct link provided next to the name.",
+        "llm_confidence_reason": "Direct link provided next to name.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
-      },
-      {
-        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=47",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the specific directory page for Carl Mann, although not a dedicated 'about' or 'bio' page.",
-        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicit start date 'January 11, 2023' found under 'Term'.",
+        "llm_confidence_reason": "Explicit start date provided for the term.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
@@ -150,7 +178,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicit end date 'December 31, 2026' found under 'Term'.",
+        "llm_confidence_reason": "Explicit end date provided for the term.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
@@ -165,23 +193,29 @@
       "https://www.lebanonoregon.gov/directory.aspx?eid=55"
     ],
     "positions": [
-      "Ward 2 Councilor",
-      "Council Member",
-      "Ward 2"
+      "Councilor",
+      "Ward 2",
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "541-258-4988",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under the name and title.",
+        "llm_confidence_reason": "Extracted directly from the 'Phone' field associated with the name.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
     "emails": [
       {
+        "data": "city.recorder@lebanonoregon.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city recorder email, not explicitly tied to this councilor.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
         "data": "david.mcclain@lebanonoregon.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address extracted directly from mailto link text associated with the name.",
+        "llm_confidence_reason": "Extracted directly from mailto link text associated with the name.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
@@ -189,13 +223,13 @@
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=55",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Direct link provided next to the name.",
+        "llm_confidence_reason": "Direct link provided next to name.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       },
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=55/",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL extracted from the 'Skip to Main Content' link which appears to point to this specific directory entry.",
+        "llm_confidence_reason": "This is the URL of the specific page about David McClain.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
@@ -203,7 +237,7 @@
       {
         "data": "2025-01-08",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly stated in the 'Term' section.",
+        "llm_confidence_reason": "Extracted directly from the 'Term' field.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
@@ -211,7 +245,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly stated in the 'Term' section.",
+        "llm_confidence_reason": "Extracted directly from the 'Term' field.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
@@ -226,28 +260,36 @@
       "https://www.lebanonoregon.gov/directory.aspx?eid=49"
     ],
     "positions": [
-      "Ward 2 Councilor"
+      "Councilor",
+      "Ward 2"
     ],
     "phone_numbers": [
       {
         "data": "541-258-4982",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Phone:'",
+        "llm_confidence_reason": "Directly listed next to 'Phone:'",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "city.recorder@lebanonoregon.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city recorder email, not explicitly tied to this councilor.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=49",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Direct link provided next to the name.",
+        "llm_confidence_reason": "Direct link provided next to name.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       },
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=49",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the URL of the page containing the information, likely the person's profile page.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the page URL for Dave Workman's profile, but not a dedicated personal website.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
@@ -263,15 +305,23 @@
       "https://www.lebanonoregon.gov/366/Mayor-City-Council"
     ],
     "positions": [
-      "Ward 3 Councilor"
+      "Councilor",
+      "Ward 3"
     ],
     "phone_numbers": [],
-    "emails": [],
+    "emails": [
+      {
+        "data": "city.recorder@lebanonoregon.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city recorder email, not explicitly tied to this councilor.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=50",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Direct link provided next to the name.",
+        "llm_confidence_reason": "Direct link provided next to name.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       }
     ],
@@ -288,10 +338,10 @@
       "https://www.lebanonoregon.gov/directory.aspx?eid=51"
     ],
     "positions": [
-      "Ward 3 - Council President",
-      "Council President",
+      "Councilor",
       "Ward 3",
-      "Council Member"
+      "Council President",
+      "City Council"
     ],
     "phone_numbers": [
       {
@@ -303,6 +353,12 @@
     ],
     "emails": [
       {
+        "data": "city.recorder@lebanonoregon.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city recorder email, not explicitly tied to this councilor.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
         "data": "michelle.steinhebel@lebanonoregon.gov",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
@@ -313,13 +369,13 @@
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=51",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Direct link provided next to the name.",
+        "llm_confidence_reason": "Direct link provided next to name.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       },
       {
-        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=51",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the current page URL, which is the person's profile page. URL was not in text, but inferred from context.",
+        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=51/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL appears to be the individual's profile page.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
@@ -327,7 +383,7 @@
       {
         "data": "2023-01-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as the start date of the term.",
+        "llm_confidence_reason": "Explicit start date provided in 'Term' section.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
@@ -335,7 +391,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as the end date of the term.",
+        "llm_confidence_reason": "Explicit end date provided in 'Term' section.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],

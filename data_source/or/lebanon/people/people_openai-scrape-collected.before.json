@@ -43,7 +43,7 @@
     "start_dates": [
       {
         "data": "2025-01-08",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Extracted from 'Term: January 8, 2025 to December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
@@ -51,7 +51,7 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Extracted from 'Term: January 8, 2025 to December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
@@ -73,8 +73,8 @@
     "phone_numbers": [
       {
         "data": "541-258-4989",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name and title.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
@@ -94,25 +94,25 @@
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       },
       {
-        "data": "https://www.lebanonoregon.gov/Directory.aspx?eid=56",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for the person's profile.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-08",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to ISO format.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to ISO format.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
@@ -134,7 +134,7 @@
       {
         "data": "541-258-4986",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
@@ -236,7 +236,8 @@
     ],
     "positions": [
       "Council Member",
-      "Ward 2"
+      "Ward 2",
+      "ward 2"
     ],
     "phone_numbers": [
       {
@@ -266,7 +267,7 @@
       {
         "data": "2023-01-11",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to ISO format.",
+        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
@@ -274,7 +275,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to ISO format.",
+        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
@@ -321,7 +322,7 @@
       {
         "data": "2022-06-08",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term June 8, 2022 to December 31, 2024' and converted to ISO format.",
+        "llm_confidence_reason": "Extracted from 'Term: June 8, 2022 to December 31, 2024' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=50"
       }
     ],
@@ -329,7 +330,7 @@
       {
         "data": "2024-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term June 8, 2022 to December 31, 2024' and converted to ISO format.",
+        "llm_confidence_reason": "Extracted from 'Term: June 8, 2022 to December 31, 2024' and converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=50"
       }
     ],
@@ -351,7 +352,7 @@
     "phone_numbers": [
       {
         "data": "541-258-4983",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
@@ -372,25 +373,25 @@
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       },
       {
-        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=51",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the profile page for Michelle Steinhebel.",
+        "data": "https://www.lebanonoregon.gov/Directory.aspx?DID=36",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "URL labeled 'City Council' near name, likely profile page.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-11",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to ISO format.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to ISO format.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' converted to YYYY-MM-DD.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],

@@ -13,7 +13,7 @@ Loading
  1.  [Doing Business](https://www.lebanonoregon.gov/35/Doing-Business) 
  1.  [Government](https://www.lebanonoregon.gov/27/Government) 
  1.  [City Services](https://www.lebanonoregon.gov/9/City-Services) 
- Search  ![](images/83c9eed9c78852e4b2ce07bdf718725a820d02e753df3ca14321b21ae5f5744e.jpg)  
+ Search  ![](images/90e5f6b429cba8fd396913f66da83f13faafb7b6c5e4f679df29802deeaa2fa1.jpg)  
 
  1.   [City Ward Map](https://www.lebanonoregon.gov/397/City-Ward-Map)  
  1.   [Understanding City Council Meetings](https://www.lebanonoregon.gov/399/Understanding-City-Council-Meetings)  
