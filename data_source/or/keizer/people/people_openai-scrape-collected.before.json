@@ -24,13 +24,13 @@
       {
         "data": "https://www.keizer.org/mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and mayor position on city council page.",
+        "llm_confidence_reason": "URL labeled with name and mayor position.",
         "source": "https://www.keizer.org/city-council"
       },
       {
         "data": "https://www.keizer.org/mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for mayor's profile.",
+        "llm_confidence_reason": "Primary page URL for mayor's office.",
         "source": "https://www.keizer.org/mayor"
       }
     ],
@@ -50,7 +50,7 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Marlene Parsons",
@@ -78,7 +78,7 @@
       {
         "data": "https://www.keizer.org/Council-Position-1",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and seat 1 position on city council page.",
+        "llm_confidence_reason": "URL labeled with name and council position 1.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -91,7 +91,7 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Shaney Starr",
@@ -120,7 +120,7 @@
       {
         "data": "https://www.keizer.org/council-position-2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and seat 2 position on city council page.",
+        "llm_confidence_reason": "URL labeled with name and council position 2.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -128,7 +128,7 @@
       {
         "data": "2021-12",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed to Keizer City Council in December 2021; converted 'December 2021' to '2021-12'.",
+        "llm_confidence_reason": "Extracted appointment date 'appointed to the Keizer City Council in December 2021' and converted to YYYY-MM format.",
         "source": "https://www.keizer.org/council-position-2"
       }
     ],
@@ -140,12 +140,12 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Kyle Juran",
-    "image": null,
-    "source_image": null,
+    "image": "images/8161bea3e915c7cfa11d8747c8e3efa41591b1cdfb532a3c5a71c423405710b1.png",
+    "source_image": "https://www.keizer.org/media/Design%20Files/Logos/logo.png",
     "sources": [
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-3"
@@ -169,7 +169,7 @@
       {
         "data": "https://www.keizer.org/council-position-3",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and seat 3 position on city council page.",
+        "llm_confidence_reason": "URL labeled with name and council position 3.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -182,7 +182,7 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Soraida Cross",
@@ -211,7 +211,7 @@
       {
         "data": "http://www.keizer.org/council-position-4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and seat 4 position on city council page.",
+        "llm_confidence_reason": "URL labeled with name and council position 4.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -224,7 +224,7 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Lore Christopher",
@@ -245,7 +245,7 @@
       {
         "data": "ChristopherL@KeizerOR.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly provided near the name and role.",
+        "llm_confidence_reason": "Extracted from mailto link text near name and repeated in contact info.",
         "source": "https://www.keizer.org/council-position-5"
       }
     ],
@@ -253,7 +253,7 @@
       {
         "data": "https://www.keizer.org/council-position-5",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and seat 5 position on city council page.",
+        "llm_confidence_reason": "URL labeled with name and council position 5.",
         "source": "https://www.keizer.org/city-council"
       }
     ],
@@ -261,7 +261,7 @@
       {
         "data": "2024-12",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed in December 2024 as stated in text.",
+        "llm_confidence_reason": "Appointed to City Council in December 2024 as stated in text.",
         "source": "https://www.keizer.org/council-position-5"
       }
     ],
@@ -279,7 +279,7 @@
         "source": "https://www.keizer.org/council-position-5"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Dan Kohler",
@@ -308,14 +308,8 @@
       {
         "data": "https://www.keizer.org/Council-Position-6",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL labeled with name and seat 6 position on city council page.",
+        "llm_confidence_reason": "URL labeled with name and council position 6.",
         "source": "https://www.keizer.org/city-council"
-      },
-      {
-        "data": "https://www.keizer.org/council-position-6",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Council Position 6.",
-        "source": "https://www.keizer.org/Council-Position-6"
       }
     ],
     "start_dates": [],
@@ -327,7 +321,7 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Ma'Layah Latty-Farrar",
@@ -358,6 +352,6 @@
         "source": "https://www.keizer.org/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   }
 ]

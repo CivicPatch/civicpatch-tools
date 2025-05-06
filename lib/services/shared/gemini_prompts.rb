@@ -164,7 +164,7 @@ module Services
         did you populate `start_date` and/or `end_date` with the string exactly matching one of the allowed formats (YYYY, YYYY-MM, YYYY-MM-DD)?
         Do not leave these fields null if the information was present AND matched an allowed format. Ensure no default days/months were added.
 
-        Here is the content:
+        Here is the content (in markdown):
         #{content}
        )
       end

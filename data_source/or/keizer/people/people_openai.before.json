@@ -16,7 +16,7 @@
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/mayor"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Marlene Parsons",
@@ -36,7 +36,7 @@
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/Council-Position-1"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Shaney Starr",
@@ -57,7 +57,7 @@
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-2"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Kyle Juran",
@@ -67,8 +67,8 @@
       "council member",
       "position 3"
     ],
-    "image": null,
-    "source_image": null,
+    "image": "images/8161bea3e915c7cfa11d8747c8e3efa41591b1cdfb532a3c5a71c423405710b1.png",
+    "source_image": "https://www.keizer.org/media/Design%20Files/Logos/logo.png",
     "phone_number": null,
     "email": "JuranK@KeizerOR.gov",
     "website": "https://www.keizer.org/council-position-3",
@@ -78,7 +78,7 @@
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-3"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Soraida Cross",
@@ -99,7 +99,7 @@
       "https://www.keizer.org/city-council",
       "http://www.keizer.org/council-position-4"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Lore Christopher",
@@ -120,7 +120,7 @@
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/council-position-5"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Dan Kohler",
@@ -141,7 +141,7 @@
       "https://www.keizer.org/city-council",
       "https://www.keizer.org/Council-Position-6"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   },
   {
     "name": "Ma'Layah Latty-Farrar",
@@ -158,6 +158,6 @@
     "sources": [
       "https://www.keizer.org/city-council"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-05"
   }
 ]
