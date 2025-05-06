@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Tom Ellis",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "tome@happyvalleyor.gov",
+    "website": "https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/",
+    "start_date": "2023-01",
+    "end_date": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/",
+      "https://www.happyvalleyor.gov/city-hall/city-council/a-message-from-the-mayor/"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Josh Callahan",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Position 1"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "joshc@happyvalleyor.gov",
+    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "start_date": "2023-01",
+    "end_date": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "David Golobay",
+    "positions": [
+      "Council Member",
+      "Position 2"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "davidg@happyvalleyor.gov",
+    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "start_date": "2025-01",
+    "end_date": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Brett Sherman",
+    "positions": [
+      "Council Member",
+      "Position 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "bretts@happyvalleyor.gov",
+    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "start_date": "2023-01",
+    "end_date": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Glenn Wachter",
+    "positions": [
+      "Council Member",
+      "Position 4"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "glennw@happyvalleyor.gov",
+    "website": "https://www.happyvalleyor.gov/council-corner/",
+    "start_date": "2025-01",
+    "end_date": null,
+    "sources": [
+      "https://www.happyvalleyor.gov/city-hall/city-council/"
+    ],
+    "updated_at": "2025-05-06"
+  }
+]
