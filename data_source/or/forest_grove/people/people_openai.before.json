@@ -2,8 +2,7 @@
   {
     "name": "Malynda Wenzl",
     "positions": [
-      "Mayor",
-      "mayor"
+      "Mayor"
     ],
     "image": null,
     "source_image": null,
@@ -22,7 +21,8 @@
   {
     "name": "Angel Falconer",
     "positions": [
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
@@ -40,7 +40,8 @@
   {
     "name": "Donna Gustafson",
     "positions": [
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
@@ -58,7 +59,8 @@
   {
     "name": "Michael Marshall",
     "positions": [
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
@@ -76,7 +78,8 @@
   {
     "name": "Karen Martinez",
     "positions": [
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
@@ -94,7 +97,8 @@
   {
     "name": "Brian Schimmel",
     "positions": [
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
@@ -112,7 +116,8 @@
   {
     "name": "Mariana Valenzuela",
     "positions": [
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,

@@ -5,42 +5,26 @@
     "source_image": null,
     "sources": [
       "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council/",
-      "https://www.forestgrove-or.gov/491"
+      "https://www.forestgrove-or.gov/611/Meet-the-Council"
     ],
     "positions": [
       "Mayor"
     ],
-    "phone_numbers": [
-      {
-        "data": "503-992-3200",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This phone number is for City Hall, not the individual.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mwoods@forestgrove-or.gov",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This email is listed for the City Recorder, not the Mayor or Council members.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is a general 'Meet the Council' page link, not a specific profile page for this person.",
-        "source": "https://www.forestgrove-or.gov/491"
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       },
       {
@@ -48,40 +32,9 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'elected Mayor in November of 2022'.",
         "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected Mayor in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council/"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'elected Mayor in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2023",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific start date for this person. Assuming a 2023 start based on typical election cycles is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2026",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific end date for this person. Assuming a 2023 start based on typical election cycles and adding 4 years is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -89,87 +42,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council/",
-      "https://www.forestgrove-or.gov/",
-      "https://www.forestgrove-or.gov/491"
+      "https://www.forestgrove-or.gov/365/City-Council"
     ],
     "positions": [
-      "Council Member",
-      "Councilor",
-      "City Councilor"
+      "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "Phone number not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "503-992-3200",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This phone number is for City Hall, not the individual.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mwoods@forestgrove-or.gov",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This email is listed for the City Recorder, not the Mayor or Council members.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is a general 'Meet the Council' page link, not a specific profile page for this person.",
-        "source": "https://www.forestgrove-or.gov/491"
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2025-2029'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2025-2029'",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "Start date not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "2023",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific start date for this person. Assuming a 2023 start based on typical election cycles is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2029",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2025-2029'.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "End date not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific end date for this person. Assuming a 2023 start based on typical election cycles and adding 4 years is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -177,105 +73,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council/",
-      "https://www.forestgrove-or.gov/",
-      "https://www.forestgrove-or.gov/491"
+      "https://www.forestgrove-or.gov/365/City-Council"
     ],
     "positions": [
-      "Council Member",
-      "Councilor",
-      "City Councilor"
+      "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "Phone number not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "503-992-3200",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This phone number is for City Hall, not the individual.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mwoods@forestgrove-or.gov",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This email is listed for the City Recorder, not the Mayor or Council members.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is a general 'Meet the Council' page link, not a specific profile page for this person.",
-        "source": "https://www.forestgrove-or.gov/491"
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2025-2029'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2025-2029'",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2020-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected to Forest Grove City Council in November 0f 2020'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2020-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected to Forest Grove City Council in November 0f 2020'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council/"
-      },
-      {
-        "data": "2020-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'elected to Forest Grove City Council in November 0f 2020'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "Start date not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "2023",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific start date for this person. Assuming a 2023 start based on typical election cycles is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2029",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2025-2029'.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "End date not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific end date for this person. Assuming a 2023 start based on typical election cycles and adding 4 years is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -283,85 +104,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council/",
-      "https://www.forestgrove-or.gov/491"
+      "https://www.forestgrove-or.gov/365/City-Council"
     ],
     "positions": [
-      "Council Member",
-      "Councilor"
+      "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "503-992-3200",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This phone number is for City Hall, not the individual.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mwoods@forestgrove-or.gov",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This email is listed for the City Recorder, not the Mayor or Council members.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is a general 'Meet the Council' page link, not a specific profile page for this person.",
-        "source": "https://www.forestgrove-or.gov/491"
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Elected to the City Council in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Elected to the City Council in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council/"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Was elected to the City Council in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2023",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific start date for this person. Assuming a 2023 start based on typical election cycles is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2026",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific end date for this person. Assuming a 2023 start based on typical election cycles and adding 4 years is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -369,85 +135,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council/",
-      "https://www.forestgrove-or.gov/491"
+      "https://www.forestgrove-or.gov/365/City-Council"
     ],
     "positions": [
-      "Council Member",
-      "Councilor"
+      "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "503-992-3200",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This phone number is for City Hall, not the individual.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mwoods@forestgrove-or.gov",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This email is listed for the City Recorder, not the Mayor or Council members.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is a general 'Meet the Council' page link, not a specific profile page for this person.",
-        "source": "https://www.forestgrove-or.gov/491"
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected to the City Council in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected to the City Council in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council/"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'elected to the City Council in November of 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2023",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific start date for this person. Assuming a 2023 start based on typical election cycles is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2026",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific end date for this person. Assuming a 2023 start based on typical election cycles and adding 4 years is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -455,87 +166,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council/",
-      "https://www.forestgrove-or.gov/",
-      "https://www.forestgrove-or.gov/491"
+      "https://www.forestgrove-or.gov/365/City-Council"
     ],
     "positions": [
-      "Council Member",
-      "Councilor",
-      "City Councilor"
+      "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "Phone number not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "503-992-3200",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This phone number is for City Hall, not the individual.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mwoods@forestgrove-or.gov",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This email is listed for the City Recorder, not the Mayor or Council members.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is a general 'Meet the Council' page link, not a specific profile page for this person.",
-        "source": "https://www.forestgrove-or.gov/491"
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2025-2029'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2025-2029'",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "Start date not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "2023",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific start date for this person. Assuming a 2023 start based on typical election cycles is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2029",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2025-2029'.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "null",
-        "llm_confidence": 0.0,
-        "llm_confidence_reason": "End date not found in text.",
-        "source": "https://www.forestgrove-or.gov/"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific end date for this person. Assuming a 2023 start based on typical election cycles and adding 4 years is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   },
   {
@@ -543,85 +197,30 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council/",
-      "https://www.forestgrove-or.gov/491"
+      "https://www.forestgrove-or.gov/365/City-Council"
     ],
     "positions": [
-      "Council Member",
-      "Councilor"
+      "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "503-992-3200",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This phone number is for City Hall, not the individual.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mwoods@forestgrove-or.gov",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "This email is listed for the City Recorder, not the Mayor or Council members.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is a general 'Meet the Council' page link, not a specific profile page for this person.",
-        "source": "https://www.forestgrove-or.gov/491"
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected to the council in November 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected to the council in November 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council/"
-      },
-      {
-        "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'elected to the council in November 2022'.",
-        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
-      },
-      {
-        "data": "2023",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific start date for this person. Assuming a 2023 start based on typical election cycles is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2026",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from 'Current Term: 2022-2026'.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "The text mentions four-year terms but provides no specific end date for this person. Assuming a 2023 start based on typical election cycles and adding 4 years is speculative.",
-        "source": "https://www.forestgrove-or.gov/491"
-      }
-    ],
+    "end_dates": [],
     "updated_at": "2025-05-06"
   }
 ]

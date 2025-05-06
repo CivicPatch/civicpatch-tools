@@ -5,7 +5,7 @@
   email: mwenzl@forestgrove-or.gov
   phone_number: "(503) 992-3234"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
-  start_date: 2022-11
+  start_date: '2022'
   end_date: '2026'
   image:
   source_image:
@@ -13,7 +13,6 @@
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  - https://www.forestgrove-or.gov/491
   updated_at: '2025-05-06'
 - name: Angelene Falconer
   positions:
@@ -28,9 +27,6 @@
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  - https://www.forestgrove-or.gov/
-  - https://www.forestgrove-or.gov/491
   updated_at: '2025-05-06'
 - name: Brian Schimmel
   positions:
@@ -45,9 +41,6 @@
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  - https://www.forestgrove-or.gov/
-  - https://www.forestgrove-or.gov/491
   updated_at: '2025-05-06'
 - name: Donna Gustafson
   positions:
@@ -55,16 +48,13 @@
   email: dgustafson@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
-  start_date: 2020-11
+  start_date: '2025'
   end_date: '2029'
   image:
   source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  - https://www.forestgrove-or.gov/
-  - https://www.forestgrove-or.gov/491
   updated_at: '2025-05-06'
 - name: Karen R. Martinez
   positions:
@@ -72,15 +62,13 @@
   email: Kmartinez@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
-  start_date: 2022-11
+  start_date: '2022'
   end_date: '2026'
   image:
   source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  - https://www.forestgrove-or.gov/491
   updated_at: '2025-05-06'
 - name: Mariana Valenzuela
   positions:
@@ -88,15 +76,13 @@
   email: mvalenzuela@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
-  start_date: 2022-11
+  start_date: '2022'
   end_date: '2026'
   image:
   source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  - https://www.forestgrove-or.gov/491
   updated_at: '2025-05-06'
 - name: Michael Marshall
   positions:
@@ -104,13 +90,11 @@
   email: mmarshall@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
-  start_date: 2022-11
+  start_date: '2022'
   end_date: '2026'
   image:
   source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  - https://www.forestgrove-or.gov/491
   updated_at: '2025-05-06'
