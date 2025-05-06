@@ -10,7 +10,7 @@ module Utils
     }.freeze
 
     def self.get_timestamp
-      Time.now.in_time_zone("America/Los_Angeles").strftime("%Y-%m-%d %H:%M:%S")
+      Time.now.in_time_zone("America/Los_Angeles").strftime("%Y-%m-%d")
     end
 
     # def self.log_images_cost(state, municipality_name, image_size_in_mb)
@@ -31,7 +31,7 @@ module Utils
              else
                0.000
              end
-      row = [timestamp, state, municipality_name, search_engine, cost]
+      row = [timestamp, state, municipality_name, search_engine, cost].join(",")
       File.write("cost_search_engine.csv", "#{row}\n", mode: "a")
     end
 
