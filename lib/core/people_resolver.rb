@@ -143,10 +143,15 @@ module Core
     end
 
     def self.get_array_similarity(array1, array2)
-      return 1.0 if (array1 - array2).empty? || (array2 - array1).empty?
+      intersection_size = (array1 & array2).size
 
-      # Normalize similarity based on the size of both arrays
-      total_similarity / total_items.to_f
+      union_size = (array1 | array2).size
+
+      if union_size.zero?
+        1.0
+      else
+        intersection_size.to_f / union_size
+      end
     end
 
     def self.get_text_similarity(value1, value2)
