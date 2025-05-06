@@ -547,10 +547,12 @@
       "phone_number": "(541) 492-6700",
       "website": "https://www.cityofroseburg.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "8c8cfb2fa40c977f6e634133b906cd69",
+      "meta_updated_at": "2025-05-06",
+      "meta_hash": "13e6c4f517ec1317c0695ade866e6194",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
