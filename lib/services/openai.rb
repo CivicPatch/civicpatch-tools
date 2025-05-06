@@ -169,7 +169,7 @@ module Services
 
       user_instructions = <<~USER
         The page URL is: #{page_url}
-        Here is the content:
+        Here is the content (in markdown):
         #{content}
       USER
 
