@@ -35,24 +35,31 @@ module Core
 
       File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_1_original_html.html")), html)
 
-      parsed_html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
-      nokogiri_doc = Nokogiri::HTML(parsed_html)
-      # remove empty links
-      nokogiri_doc.css("a").each do |link|
-        link.remove if link.get_attribute("href").blank?
-        link.remove if link.text.blank?
-      end
+      sanitized_doc = sanitize_html(html)
 
-      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_parsed_html.html")),
-                 nokogiri_doc.to_html)
+      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_sanitized_html.html")),
+                 sanitized_doc.to_html)
 
-      markdown_content = Markitdown.from_nokogiri(nokogiri_doc)
+      markdown_content = Markitdown.from_nokogiri(sanitized_doc)
       markdown_content_file_path = PathHelper.project_path(File.join(destination_dir.to_s,
                                                                      "step_3_markdown_content.md"))
       File.write(markdown_content_file_path, markdown_content)
       content_file_path = PathHelper.project_path(markdown_content_file_path)
 
       [content_file_path, image_map]
+    end
+
+    def sanitize_html(html)
+      sanitized_html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
+      nokogiri_doc = Nokogiri::HTML(sanitized_html)
+      nokogiri_doc.css("script, style").remove
+      nokogiri_doc.css("a").each do |link|
+        next unless link.get_attribute("href").blank? || link.text.blank?
+
+        link.replace(link.children)
+      end
+
+      nokogiri_doc
     end
   end
 end

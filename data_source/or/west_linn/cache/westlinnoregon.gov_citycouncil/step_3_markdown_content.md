@@ -4,7 +4,7 @@
 
 503-657-0331
 
- *    
+ *  Community   
 
 Column 1  
 
@@ -36,7 +36,7 @@ Column 3
    *  [__Volunteer Opportunities__](https://westlinnoregon.gov/volunteer) 
    *  [__Neighborhoods__](https://westlinnoregon.gov/neighborhoods) 
    *  [__Contact the City__](https://westlinnoregon.gov/YourGOV)  
- *    
+ *  Business   
 
 Column 1  
 
@@ -66,7 +66,7 @@ Column 3
    *  [Home Occupation Permit](https://westlinnoregon.gov/planning/home-occupation-application) 
    *  [Food Trucks](https://westlinnoregon.gov/planning/food-carts) 
    *  [Special Event Permit](https://westlinnoregon.gov/publicworks/12-special-event-permits)  
- *    
+ *  Departments   
 
 Column 1  
 
@@ -102,7 +102,7 @@ Column 3
    *  [Hours of Operation](https://westlinnoregon.gov/communications/city-hours-operation) 
    *  [Report a Concern](https://westlinnoregon.gov/YourGOV) 
    *  [Staff Directory](https://westlinnoregon.gov/communications/staff-directory-1)  
- *    
+ *  How Do I...   
 
 Column 1  
 
@@ -178,13 +178,13 @@ Column 3
 
 ##  Key Topics 
 
-  [Mayor Rory Bialostosky](https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky)   [Council President Mary Baumgardner](https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner)   [Councilor Leo Groner](https://westlinnoregon.gov/citycouncil/councilor-leo-groner)   [Councilor Carol Bryck](https://westlinnoregon.gov/citycouncil/councilor-carol-bryck)   [Councilor Kevin Bonnington](https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington)   [Contact City Council](https://westlinnoregon.gov/citycouncil/contact-city-council)   [Current Community Advisory Group Openings & Application](https://westlinnoregon.gov/citycouncil/current-community-advisory-group-openings-application)  
+  ![Rory](images/8d76cab82662ee39e71e09ab03b3152ee7229a7270f002d8506b208c5225561f.jpg)   [Mayor Rory Bialostosky](https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky)   ![Mary headshot](images/85b0128577eaa1d49a920ab54bfcc379f23122268b316a653b088d94c218a632.jpg)   [Council President Mary Baumgardner](https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner)   ![Leo (Lou) Groner](images/81e8081f34aba71a85a664e998ad5ec8dbd0549a1f426ff464a5d7e7ad1d0898.png)   [Councilor Leo Groner](https://westlinnoregon.gov/citycouncil/councilor-leo-groner)   ![Councilor Carol Bryck](images/d448585a4d2e9a7afc751fb5f4854d4e06643d4abe88cd3f1090db55d340eb6c.png)   [Councilor Carol Bryck](https://westlinnoregon.gov/citycouncil/councilor-carol-bryck)   ![Kevin Bonnington portrait](images/4217fa1f1d789cc0e9e5b0ef21ce10aa6f96c638cb3087c6e5f9347dd22e6697.png)   [Councilor Kevin Bonnington](https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington)   [Contact City Council](https://westlinnoregon.gov/citycouncil/contact-city-council)   ![CAGs](images/fdf5a61fc81986c33a2c948589061053e7b54bdba5a6f9d04d9d59b022fc9c96.png)   [Current Community Advisory Group Openings & Application](https://westlinnoregon.gov/citycouncil/current-community-advisory-group-openings-application)  
 
 #### Supporting Documents
 
   ![PDF icon](images/c25d6afb2fbaf6c72a613910c1d6e8e93171ed663bd8d3f7a365fdc52796bc92.png)  [Council Handbook - updated 2024](https://westlinnoregon.gov/sites/default/files/fileattachments/city_council/page/76/council_handbook_2024.pdf)  (782 KB) 
 
- * 
+ *  ![Printer-friendly version](images/d74c7e003f971ef17505b741a594a9e5a8b6cf7e5cd73cc10e7fcb6a677ce7cb.png) 
 
  *   [Meetings, Agendas & Minutes](https://westlinnoregon.gov/meetings) 
    *  [Community Comments](https://westlinnoregon.gov/citycouncil/community-comments) 
@@ -270,9 +270,9 @@ Email: [citycouncil@westlinnoregon.gov](mailto:citycouncil@westlinnoregon.gov)
 
 ## Upcoming Events
 
- *   [City Council Work Session](https://westlinnoregon.gov/citycouncil/city-council-work-session-236)  05/05/2025 - 1:00pm 
  *   [State of the City](https://westlinnoregon.gov/citycouncil/state-city-3)  05/06/2025 - 6:00pm 
  *   [Potential Quorum Notice](https://westlinnoregon.gov/citycouncil/potential-quorum-notice)  05/06/2025 - 6:00pm 
+ *   [City Council Executive Session](https://westlinnoregon.gov/citycouncil/city-council-executive-session-80)  05/08/2025 - 9:00am 
  *   [Meet Up with Mary](https://westlinnoregon.gov/citycouncil/meet-mary-3)  05/08/2025 - 4:00pm 
  *   [Memorial Day - City Offices Closed](https://westlinnoregon.gov/communications/memorial-day-city-offices-closed-3)  05/26/2025 (All day) 
  *   [Meet Up with Mary](https://westlinnoregon.gov/citycouncil/meet-mary-4)  05/29/2025 - 4:00pm 

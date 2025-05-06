@@ -1,21 +1,20 @@
 [
   {
     "name": "Rory Bialostosky",
-    "image": null,
-    "source_image": null,
+    "image": "images/7072fb1fb3ae69edc474e37dcabc768ae153b8a7b9cdfa14299db053549b79cd.jpg",
+    "source_image": "https://westlinnoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/55489/rory_retouched.jpg?itok=GEA4zygq",
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
       "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
     ],
     "positions": [
-      "Mayor",
-      "mayor"
+      "Mayor"
     ],
     "phone_numbers": [
       {
         "data": "503-568-3571",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Cell:' directly near name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Cell:' directly near the name and image.",
         "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
       }
     ],
@@ -23,7 +22,7 @@
       {
         "data": "rbialostosky@westlinnoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near the name.",
         "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
       }
     ],
@@ -31,13 +30,13 @@
       {
         "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly named for Mayor Rory Bialostosky on city council page.",
+        "llm_confidence_reason": "URL explicitly labeled as Mayor Rory Bialostosky's page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
         "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence_reason": "Primary page URL dedicated to Rory Bialostosky as Mayor.",
         "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
       }
     ],
@@ -61,21 +60,20 @@
   },
   {
     "name": "Mary Baumgardner",
-    "image": null,
-    "source_image": null,
+    "image": "images/3abbdd5f6864f04e11cae4bb60b76d26131c45ff12c1487e055d53d61a34903d.jpg",
+    "source_image": "https://westlinnoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/52188/maryvpheadshot.jpeg?itok=5wDsf_x6",
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
       "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
     ],
     "positions": [
-      "Council President",
-      "council president"
+      "Council President"
     ],
     "phone_numbers": [
       {
         "data": "503-568-3566",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Cell:' directly associated with Mary Baumgardner.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Cell:' directly near Mary Baumgardner's name and image.",
         "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
       }
     ],
@@ -91,7 +89,7 @@
       {
         "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly named for Council President Mary Baumgardner on city council page.",
+        "llm_confidence_reason": "URL explicitly labeled as Council President Mary Baumgardner's page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
@@ -121,21 +119,20 @@
   },
   {
     "name": "Leo Groner",
-    "image": null,
-    "source_image": null,
+    "image": "images/0677fb050771558d6bb0fa27c9ab5b3fc96de886d0428606cf57d36cd1d1579d.png",
+    "source_image": "https://westlinnoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/55489/groner_headshot.png?itok=ary9l-Td",
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
       "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
     ],
     "positions": [
-      "Councilor",
-      "council member"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "503-568-2804",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Cell:' directly associated with Leo Groner.",
+        "llm_confidence_reason": "Phone number labeled 'Cell:' directly near name and image.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
       }
     ],
@@ -143,7 +140,7 @@
       {
         "data": "lgroner@westlinnoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near Leo Groner's name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near name.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
       }
     ],
@@ -151,13 +148,13 @@
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly named for Councilor Leo Groner on city council page.",
+        "llm_confidence_reason": "URL explicitly labeled as Councilor Leo Groner's page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Leo Groner's councilor profile.",
+        "llm_confidence_reason": "Page URL is the profile page for Leo Groner.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
       }
     ],
@@ -165,7 +162,7 @@
       {
         "data": "2023-03-14",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Council Term: March 14, 2023 - December 31, 2026' with exact date format.",
+        "llm_confidence_reason": "Extracted from 'Council Term: March 14, 2023 - December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
       }
     ],
@@ -173,7 +170,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Council Term: March 14, 2023 - December 31, 2026' with exact date format.",
+        "llm_confidence_reason": "Extracted from 'Council Term: March 14, 2023 - December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
       }
     ],
@@ -181,21 +178,20 @@
   },
   {
     "name": "Carol Bryck",
-    "image": null,
-    "source_image": null,
+    "image": "images/b87f5ca0bfa003b9576b6a5cc66d450628646f6d6e9f636f15140e12914b246b.png",
+    "source_image": "https://westlinnoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/55837/carol_bryck_headshot.png?itok=MFIro4Oz",
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
       "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
     ],
     "positions": [
-      "Councilor",
-      "council member"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "503-568-3419",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Cell:' directly near the name.",
+        "llm_confidence_reason": "Phone number labeled 'Cell:' directly associated with Carol Bryck.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
@@ -203,7 +199,7 @@
       {
         "data": "cbryck@westlinnoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near the name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near Carol Bryck's name.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
@@ -211,7 +207,7 @@
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly named for Councilor Carol Bryck on city council page.",
+        "llm_confidence_reason": "URL explicitly labeled as Councilor Carol Bryck's page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
@@ -225,7 +221,7 @@
       {
         "data": "2023-08-28",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Council Term: August 28, 2023 (appointed interim)' with exact date format.",
+        "llm_confidence_reason": "Extracted from 'Council Term: August 28, 2023 (appointed interim)'. Converted to YYYY-MM-DD.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
@@ -233,7 +229,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'December 18, 2023 to December 31, 2028' term end date converted to YYYY-MM-DD.",
+        "llm_confidence_reason": "Extracted from 'Council Term: ... December 31, 2028'. Converted to YYYY-MM-DD.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
@@ -241,15 +237,14 @@
   },
   {
     "name": "Kevin Bonnington",
-    "image": null,
-    "source_image": null,
+    "image": "images/335a3f049a9361dcc21c7036c3fb59cef4d3552fccf74c7b969bc9115b11c609.png",
+    "source_image": "https://westlinnoregon.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/56255/kevin_bonnington_retouched.png?itok=-pf7gD2j",
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
       "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
     ],
     "positions": [
-      "Councilor",
-      "council member"
+      "Council Member"
     ],
     "phone_numbers": [
       {
@@ -271,20 +266,20 @@
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL explicitly named for Councilor Kevin Bonnington on city council page.",
+        "llm_confidence_reason": "URL explicitly labeled as Councilor Kevin Bonnington's page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the councilor.",
+        "llm_confidence_reason": "Primary profile page URL for Kevin Bonnington.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
       }
     ],
     "start_dates": [
       {
         "data": "2024-03-11",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Extracted from 'Council Term: March 11, 2024 - December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
       }
@@ -292,7 +287,7 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Extracted from 'Council Term: March 11, 2024 - December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
       }
