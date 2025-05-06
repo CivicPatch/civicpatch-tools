@@ -33,8 +33,7 @@ module Services
         { role: "system", content: system_instructions },
         { role: "user", content: user_instructions }
       ]
-      request_origin = "#{state}_#{municipality_entry["name"]}_city_scrape"
-      response = run_prompt(messages, request_origin)
+      response = run_prompt(messages, state, municipality_entry["name"])
 
       return nil if response.blank?
 
@@ -179,7 +178,7 @@ module Services
 
     private
 
-    def run_prompt(messages, request_origin)
+    def run_prompt(messages, state, municipality_name)
       retry_attempts = 0
       response = @client.chat(
         parameters: {
@@ -192,7 +191,7 @@ module Services
 
       input_tokens_num = response.dig("usage", "prompt_tokens")
       output_tokens_num = response.dig("usage", "completion_tokens")
-      Utils::CostsHelper.log_llm_cost(request_origin, "openai", input_tokens_num, output_tokens_num, MODEL)
+      Utils::CostsHelper.log_llm_cost(state, municipality_name, "openai", input_tokens_num, output_tokens_num, MODEL)
 
       json_output = response.dig("choices", 0, "message", "content")
 
