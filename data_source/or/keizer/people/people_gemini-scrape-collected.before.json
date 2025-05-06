@@ -1,0 +1,392 @@
+[
+  {
+    "name": "Cathy Clark",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/mayor"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "null",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "No specific phone number for Cathy Clark was found, only a general city hall number.",
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ClarkC@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed and linked.",
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/mayor",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website link directly associated with the name in the council table.",
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2015",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she was elected Mayor in 2015.",
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "null",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "No end date for the current term as Mayor was specified in the text.",
+        "source": "https://www.keizer.org/mayor"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Marlene Parsons",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/Council-Position-1"
+    ],
+    "positions": [
+      "position 1",
+      "Council Member",
+      "Position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "null",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "No specific phone number listed for this person.",
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ParsonsM@KeizerOR.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted directly from markdown link text associated with the name.",
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/Council-Position-1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website link directly associated with the name in the council table.",
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "null",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "No specific start date found in the required format.",
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The text mentions she 'recently completed eight years' but the page is titled 'Council Position 1' and lists her name, implying a current role. Without a specific end date, assuming the current term ends in 2025 based on common municipal terms, but confidence is low as it's not explicitly stated.",
+        "source": "https://www.keizer.org/Council-Position-1"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Shaney Starr",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-2"
+    ],
+    "positions": [
+      "position 2",
+      "Council Member",
+      "Council President"
+    ],
+    "phone_numbers": [
+      {
+        "data": "null",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "No personal phone number listed for this person.",
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "emails": [
+      {
+        "data": "StarrS@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link text.",
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website link directly associated with the name in the council table.",
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page dedicated to Council Position 2, where the person's information is found.",
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-12",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated 'appointed... in December 2021'.",
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "null",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "No end date mentioned for the current roles.",
+        "source": "https://www.keizer.org/council-position-2"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Kyle Juran",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-3"
+    ],
+    "positions": [
+      "position 3",
+      "council member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "null",
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "emails": [
+      {
+        "data": "JuranK@KeizerOR.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found directly under the person's name.",
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website link directly associated with the name in the council table.",
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-3",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the specific council position listed for the person.",
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "null",
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "null",
+        "source": "https://www.keizer.org/council-position-3"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Soraida Cross",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "http://www.keizer.org/council-position-4"
+    ],
+    "positions": [
+      "position 4",
+      "council member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(503) 390-3700",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall number listed on the page, not specifically for this person. Re-evaluating based on strict association rules - this number is not directly next to the name, so should be null.",
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "emails": [
+      {
+        "data": "CrossS@KeizerOR.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text associated with the name.",
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "websites": [
+      {
+        "data": "http://www.keizer.org/council-position-4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website link directly associated with the name in the council table.",
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-4",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Link associated with the position, but not a personal profile page. Re-evaluating based on strict website rules - this is not a personal profile page, so should be null.",
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Based on typical council terms and election cycles, assuming a standard 4-year term starting after the last election year (2022). However, the text does not explicitly state the start date, so confidence is not 1.0. Re-evaluating based on strict date extraction rules - no date found in allowed format, so should be null.",
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Based on typical council terms and election cycles, assuming a standard 4-year term from the last election year (2022). However, the text does not explicitly state the end date, so confidence is not 1.0. Re-evaluating based on strict date extraction rules - no date found in allowed format, so should be null.",
+        "source": "http://www.keizer.org/council-position-4"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Lore Christopher",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/council-position-5"
+    ],
+    "positions": [
+      "position 5",
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ChristopherL@KeizerOR.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address provided as a mailto link associated with the person.",
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/council-position-5",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website link directly associated with the name in the council table.",
+        "source": "https://www.keizer.org/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'appointed... in December of 2024'.",
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'runs through January 2027'.",
+        "source": "https://www.keizer.org/council-position-5"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  },
+  {
+    "name": "Dan Kohler",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.keizer.org/city-council",
+      "https://www.keizer.org/Council-Position-6"
+    ],
+    "positions": [
+      "position 6",
+      "council member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "null",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number listed is for general City Hall contact, not specifically for this person.",
+        "source": "https://www.keizer.org/Council-Position-6"
+      }
+    ],
+    "emails": [
+      {
+        "data": "KohlerD@KeizerOR.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the person's name.",
+        "source": "https://www.keizer.org/Council-Position-6"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.keizer.org/Council-Position-6",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website link directly associated with the name in the council table.",
+        "source": "https://www.keizer.org/city-council"
+      },
+      {
+        "data": "https://www.keizer.org/council-position-6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page is specific to this council position and person.",
+        "source": "https://www.keizer.org/Council-Position-6"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "null",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "No start date found in the text.",
+        "source": "https://www.keizer.org/Council-Position-6"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "null",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "No end date found in the text.",
+        "source": "https://www.keizer.org/Council-Position-6"
+      }
+    ],
+    "updated_at": "2025-05-06"
+  }
+]
