@@ -1,5 +1,13 @@
 ---
-scrape_sources: []
+scrape_sources:
+- https://www.canbyoregon.gov/citycouncil/page/meet-your-mayor-city-council
+- https://www.canbyoregon.gov/directory-listing/brian-hodson
+- https://www.canbyoregon.gov/directory-listing/traci-hensley
+- https://www.canbyoregon.gov/directory-listing/daniel-stearns
+- https://www.canbyoregon.gov/directory-listing/herman-maldonado
+- https://www.canbyoregon.gov/directory-listing/james-davis
+- https://www.canbyoregon.gov/directory-listing/jason-padden
+- https://www.canbyoregon.gov/directory-listing/paul-waterman-0
 source_directory_list:
   type: directory_list
   people:
