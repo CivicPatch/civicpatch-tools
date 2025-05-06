@@ -461,10 +461,12 @@
       "phone_number": "(503) 992-3200",
       "website": "https://www.forestgrove-or.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "4f6c0fc93bd7319177c590ff89d82dd1",
+      "meta_updated_at": "2025-05-05",
+      "meta_hash": "4c124b280009e2fe97f95b246b2e942c",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
