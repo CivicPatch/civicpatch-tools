@@ -4,23 +4,68 @@
   - Mayor
   email: rbialostosky@westlinnoregon.gov
   phone_number: "(503) 568-3571"
+  website: https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky/
+  start_date: '2023-06-20'
+  end_date: '2028-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/west_linn/images/144f429ba64536ad0bb02b8f1f5c5b114cecd095579b00017b1b625efee5a823.png
+  source_image: https://westlinnoregon.gov/sites/all/themes/aha_compass/logo.png
+  sources:
+  - https://westlinnoregon.gov/citycouncil
+  - https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky
+  updated_at: '2025-05-06'
 - name: Mary Alice Baumgardner
   positions:
   - Council President
   email: mbaumgardner@westlinnoregon.gov
   phone_number: "(503) 568-3566"
+  website: https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner/
+  start_date: '2021-01-01'
+  end_date: '2028-12-31'
+  image:
+  source_image:
+  sources:
+  - https://westlinnoregon.gov/citycouncil
+  - https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner
+  updated_at: '2025-05-06'
 - name: Carol Bryck
   positions:
   - Council Member
   email: cbryck@westlinnoregon.gov
   phone_number: "(503) 568-3419"
+  website: https://westlinnoregon.gov/citycouncil/councilor-carol-bryck
+  start_date: '2023-08-28'
+  end_date: '2028-12-31'
+  image:
+  source_image:
+  sources:
+  - https://westlinnoregon.gov/citycouncil
+  - https://westlinnoregon.gov/citycouncil/councilor-carol-bryck
+  updated_at: '2025-05-06'
 - name: Kevin Bonnington
   positions:
   - Council Member
   email: kbonnington@westlinnoregon.gov
-  phone_number: "(503) 657-0331"
+  phone_number: "(503) 568-2781"
+  website: https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington/
+  start_date: '2024-03-11'
+  end_date: '2026-12-31'
+  image: https://cdn.civicpatch.org/open-data/or/west_linn/images/144f429ba64536ad0bb02b8f1f5c5b114cecd095579b00017b1b625efee5a823.png
+  source_image: https://westlinnoregon.gov/sites/all/themes/aha_compass/logo.png
+  sources:
+  - https://westlinnoregon.gov/citycouncil
+  - https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington
+  updated_at: '2025-05-06'
 - name: LEO H. GRONER
   positions:
   - Council Member
   email: lgroner@westlinnoregon.gov
   phone_number: "(503) 568-2804"
+  website: https://westlinnoregon.gov/citycouncil/councilor-leo-groner
+  start_date: '2023-03-14'
+  end_date: '2026-12-31'
+  image:
+  source_image:
+  sources:
+  - https://westlinnoregon.gov/citycouncil
+  - https://westlinnoregon.gov/citycouncil/councilor-leo-groner
+  updated_at: '2025-05-06'
