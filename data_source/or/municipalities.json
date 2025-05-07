@@ -779,10 +779,12 @@
       "phone_number": "(503) 665-5175",
       "website": "https://www.troutdaleoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "dcc6a49e6add4a3d49ff31dabb503c9b",
+      "meta_updated_at": "2025-05-07",
+      "meta_hash": "35f6517feec5323407c5dab98acdc074",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
