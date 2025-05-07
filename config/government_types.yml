@@ -96,6 +96,8 @@ government_types:
         - about
   aldermen:
     positions:
+      - role: president board of aldermen
+      - role: vice president board of aldermen
       - role: mayor # Optional, not always present
       - role: mayor pro tempore
         aliases: 
