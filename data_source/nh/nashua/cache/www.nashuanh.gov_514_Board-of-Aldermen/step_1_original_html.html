@@ -1,0 +1,4124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en" class="js no-flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths wf-muli-n3-active wf-muli-n4-active wf-muli-i4-active wf-muli-n7-active wf-active has-webFonts">
+<head>
+
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+<!-- Google Tag Manager for GA4 -->
+				<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Heebo:100,300,500,700,800,900,regular|Lora:700,700italic,italic,regular|Rubik:300,300italic,500,500italic,700,700italic,900,900italic,italic,regular|" media="all">
+<script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-EJPBBGNXJ8&amp;l=cpDataLayerGA4&amp;cx=c&amp;gtm=45He5561v867875367za200&amp;tag_exp=101509157~103101750~103101752~103116026~103200004~103231718~103231720~103233427~103251618~103251620~103252644~103252646~103284320~103284322~103301114~103301116"></script><script src="/Assets/Mystique/Shared/Scripts/webfontloader/webfont.js" type="text/javascript" async=""></script><script src="/Assets/Scripts/RWD/MediaFramework.js"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-K73C5PS&amp;l=cpDataLayerGA4"></script><script>(function(w,d,s,l,i){w.GAMeasurementID='G-EJPBBGNXJ8';w[l]=w[l]||[];w[l].push({'gtm.start':
+				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+				})(window,document,'script','cpDataLayerGA4','GTM-K73C5PS');</script>
+				<!-- End Google Tag Manager for GA4 -->
+				<script type="text/javascript">
+					var enableTelemetry = 'false'
+					var aiConfig = {
+					instrumentationKey: '1cde048e-3185-4906-aa46-c92a7312b60f'						
+					}
+					var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c.queue.push(function () { c[a].apply(c, b) }) } } var c = { config: a }, d = document, e = window; setTimeout(function () { var b = d.createElement('script'); b.src = a.url || 'https://az416426.vo.msecnd.net/scripts/a/ai.0.js', d.getElementsByTagName('script')[0].parentNode.appendChild(b) }); try { c.cookie = d.cookie } catch (a) { } c.queue = []; for (var f = ['Event', 'Exception', 'Metric', 'PageView', 'Trace', 'Dependency']; f.length;)b('track' + f.pop()); if (b('setAuthenticatedUserContext'), b('clearAuthenticatedUserContext'), b('startTrackEvent'), b('stopTrackEvent'), b('startTrackPage'), b('stopTrackPage'), b('flush'), !a.disableExceptionTracking) { f = 'onerror', b('_' + f); var g = e[f]; e[f] = function (a, b, d, e, h) { var i = g && g(a, b, d, e, h); return !0 !== i && c['_' + f](a, b, d, e, h), i } } return c }(aiConfig);
+					window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length;
+					// Add telemetry initializer
+					appInsights.queue.push(function() {
+						appInsights.context.addTelemetryInitializer(function(envelope) {
+							var telemetryItem = envelope.data.baseData;
+							// To check the telemetry item’s type:
+							if (!false)
+							{
+								//If the telemetry is not enabled, we still want to capture Google map custom event, so only allow that
+								if (envelope.name.indexOf('.Event') == -1)
+									return false;
+							}
+						});
+					});						
+					appInsights.trackPageView();
+				</script>
+	<script>
+		function populateAntiForgery(token) {
+			var input = document.createElement("input");
+			input.name = "__RequestVerificationToken";
+			input.type = "hidden";
+			input.value = token;
+			var absPat = /^https?:\/\/|^\/\//i;
+			var forms = document.getElementsByTagName("form");
+			for (var i = 0; i < forms.length; i++) {
+				if (forms[i].method == "post" &&
+					!forms[i].querySelector('[name="__RequestVerificationToken"]') &&
+					!absPat.test(forms[i].getAttribute("action"))) {
+					forms[i].appendChild(input.cloneNode());
+				}
+			}
+		}
+
+		function getAntiForgeryToken(callback, error) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/antiforgery");
+			xhr.addEventListener("load", function() {
+				try {
+					if (this.status !== 200) {
+						throw Error("Invalid status. Could not retrieve antiforgery token.");
+		}
+					var obj = JSON.parse(this.responseText);
+					callback(obj.token);
+				} catch (e) {
+					typeof error === "function" && error(e);
+				}
+			});
+			xhr.send();
+		}
+
+		getAntiForgeryToken(function(token) {
+			if (document.readyState === "complete"
+				|| document.readyState === "loaded" 
+				|| document.readyState === "interactive") {
+				populateAntiForgery(token);
+				return;
+			}
+			document.addEventListener("DOMContentLoaded", function() {
+				populateAntiForgery(token);
+			}, false);
+		}, console.error);
+			</script>
+			
+
+	<script type="text/javascript">
+		window.departmentHeader = {};
+		window.pageSectionTracker = {};
+		window.isResponsiveEnabled = true;
+		window.isRemoveSetHeights= false;
+		if (window.isRemoveSetHeights) {
+			document.documentElement.className += ' removeSetHeights';
+		}
+		window.mainMenuMediaQuery = 'screen and (max-width: 40em)';
+		window.isMobileBrowserIncludingTablets = false;
+		window.fixedResponsiveMenu = false;
+		window.fullWidthResponsiveMenu = false;
+		window.responsiveMenuHeight = '';
+		window.responsiveMenuFontSize = '';
+		(function () {
+			window.setSizeCookie = function () {
+				document.cookie = "dpi=" + window.devicePixelRatio + "; path=/";
+				document.cookie = "viewportWidth=" + window.innerWidth + "; path=/";
+				document.cookie = "viewportHeight=" + window.innerHeight + "; path=/";
+				if (screen && screen.width && screen.height) {
+					document.cookie = "screenWidth=" + screen.width + "; path=/";
+					document.cookie = "screenHeight=" + screen.height + "; path=/";
+				}
+				document.cookie = "responsiveGhost=1; path=/";
+			};
+
+			setSizeCookie();
+		}());
+	</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--Begin requested script 232931 -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-H4G1FGDZTS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H4G1FGDZTS');
+</script>
+<!--End requested script 232931 -->
+	<meta name="category0" content="Home">
+<meta name="category1" content="Government">
+<meta name="category2" content="City Officials">
+<meta name="category3" content="Boards, Committees, and Commissions">
+<meta name="category4" content="Board of Aldermen">
+
+	
+	<meta name="theme-color" content="#0b406e">
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+		<title>Board of Aldermen | Nashua, NH</title>
+
+		<meta name="description" content="The Board of Aldermen is the governing body of the City of Nashua and as such is the policy-making entity of the City, except where otherwise expressed in the City Charter.">
+			<script src="/Assets/Scripts/jQuery/jquery-2.2.4.min.js"></script><script src="https://az416426.vo.msecnd.net/scripts/a/ai.0.js"></script>
+	<script src="/Assets/Scripts/jQuery/jQuery-migrate-1.4.1.js" type="text/javascript"></script>
+	
+
+	<!--[if IE 6]><script language="JavaScript" type="text/javascript"> var isie6 = true; </script><![endif]-->
+	<!--[if IE 7]><script language="JavaScript" type="text/javascript"> var isie7 = true; </script><![endif]-->
+	<!--[if IE 8]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<!--[if IE 9]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<script type="text/javascript"><!--
+	var intCountryCode = 840;
+	var externalSiteDialogHeight = '390px';
+	var order = '';
+//--></script>
+	
+	<link href="/2045813088.css" rel="stylesheet" type="text/css">	<link href="/521957047.css" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" type="text/css" href="/Assets/Styles/Print.css" media="print">
+	<script type="text/javascript">
+		window.Pages = window.Pages || {};
+		// FrontEnd RWD initialization
+		window.Pages.rwdReady = $.Deferred();
+		window.Pages.toolBarDeferred = $.Deferred();
+		window.Pages.rwdSetupComplete = $.Deferred();
+		window.Pages.megaMenuLoaded = $.Deferred();
+		window.Pages.angularToolbarComplete = $.Deferred();
+		window.Pages.frontEndToolbarComplete = $.Deferred();
+	</script>
+	<!--CPHeadContent-->
+	<script src="/-1611158179.js" type="text/javascript"></script>
+	
+	
+	
+	
+
+
+
+
+	<!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="/App_Themes/ie8.css"><![endif]-->
+	<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/App_Themes/ie7.css"><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/App_Themes/ie6.css"><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="/Scripts/html5.js"></script><![endif]-->
+
+	<script type="text/javascript">
+		setEditorVariables(false, 840);
+		function getPrintPreviewType() { return 0; } function printPreview() {pPreview(getPrintPreviewType()); }
+	</script>
+	<script src="/Assets/Scripts/AlpineJS/3.14.1/alpine.min.js" type="text/javascript" defer></script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,700" media="all">
+<style>      .htmx-indicator{opacity:0}      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}      </style>
+</head>
+<body class="wide withFeatureColumn cpTextResizeOn doneLoading">
+<div id="divAjaxProgress" style="position: fixed; inset: 0px; text-align: center; border: 1px solid rgb(102, 102, 102); z-index: 90000000; height: 428px; width: 767px; display: none;">
+<div id="divAjaxShade" style="position: fixed; inset: 0px; background: rgb(255, 255, 255); opacity: 0.5; height: 426px; width: 765px;"></div>
+<div id="divAjaxImgProgress" class="loading" style="position: relative; top: 213px; display: none;"><p>Loading</p></div>
+</div>
+
+    <script>jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});</script>
+
+    <div id="fb-root"></div>
+<div id="skipToContentLinks">
+<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" target="_self" class="skipToContentLink">Skip to Main Content</a>
+</div>
+    <form id="frmReferenceFormForTelerikEditorDialogs"></form>
+
+        <input type="hidden" id="GoogleMapsKey" value="AIzaSyDWUuE-ifkbhxblF920N8MjpBdTg1Wt784">
+
+
+
+    <input type="hidden" id="cpcDomain" value="https://cp-civicplusuniversity2.civicplus.com">
+    <input type="hidden" id="hdnStructureID" value="6">
+    <input type="hidden" id="hdnContentCollectionID" value="43eece6d-d456-47db-b58b-0aef6bdce766">
+    <input type="hidden" id="hdnWorkingCopyID" value="00000000-0000-0000-0000-000000000000">
+    <input type="hidden" id="hdnThemeID" value="17">
+    <input type="hidden" id="pageIsFrontEnd" value="true">
+    <input type="hidden" id="pageModuleID">
+    <input type="hidden" id="pagePageID" value="514">
+
+            <img id="imgLogoPrintPreview" src="images/decb89773383ca6bb485663d24e0c4d26ccfe01433ab28e61c18e1ae857e9c3f.jpg" alt="Nashua, NH">
+    <div id="stickyPlaceholder"></div>
+    <div id="outer-wrap" class="outer-wrap">
+        <div id="inner-wrap" class="inner-wrap">
+                <div id="divToolbars" class="cpToolbars newCP mui-fixed" style="overflow: visible;">
+                    
+
+
+
+<!-- Begin Signed Out Bar -->
+<div class="cpToolbar user public" style="z-index: 1;">
+    <div class="inner selfClear">
+        <p class="dropdown"><a href="https://www.nashuanh.gov/MyAccount/ProfileCreate" role="link" class="myConnections" id="signedOutToolbarCreateProfileButton">Create a Website Account</a> <span class="welcomeMessage" style="display: none;">- Manage notification subscriptions, save form progress and more.   </span></p>
+        <ul class="nav secondary">
+	        <li><a href="https://www.nashuanh.gov/MyAccount" role="link" class="button" id="loggedOutToolbarSignInButton"><span>Website Sign In</span></a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#signedOutToolbarCreateProfileButton').keypress(function (e) { if (e.which === 0) return; $(this).click(); });
+        $('#signedOutToolbarCreateProfileButton').click(function (event) {
+        	event.preventDefault();
+        	window.location.href = '/MyAccount/ProfileCreate?from=url&url=/&dn=' + window.location.origin;
+        });
+
+			
+				$('#loggedOutToolbarSignInButton').click(function (event) {
+					event.preventDefault();
+					window.location.href = '/MyAccount/?from=url&url=' + encodeURIComponent(window.location.href.replace(window.location.origin, '')) + '&dn=' + window.location.host;
+				});
+			
+
+		if ('False' == 'True') {
+            $('#loggedOutToolbarSignInButton').hide();
+		}
+    })
+</script>
+<!-- End Signed Out Bar -->
+
+                </div>
+            <div id="bodyWrapper" style="padding-top: 35px;">
+                <div id="mainNavHolderMobile" class="mainNavHolderMobile"></div>
+                
+<div data-cprole="structuralContainer" id="bodyContainerTS">
+<!-- Header Container --><header data-cprole="structuralContainer" id="headerContainerTS">
+<div class="siteWrap3">
+<div data-cprole="banner" id="bannerLogoTS" class="bannerLogoTS empty">
+
+
+
+
+				<a id="bannerLogoTS-60" style="			display: block; text-align: center;
+" class="bannerObject" href="https://www.nashuanh.gov/" target="_self"><img alt="Home page" class="bannerObject" height="80" src="images/3b7735b1737648ceeeb97a3f9aabfeb4bf484fe87d012fd1aa76c71071aacf92.png" width="300"></a>
+</div>
+<div data-cprole="contentContainer" id="searchTS">	<div id="cc2c1daf3f-4c1d-4abd-a79a-53e219b9bdcc" data-containerid="2c1daf3f-4c1d-4abd-a79a-53e219b9bdcc" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="0e7cb4eb-2013-4750-ab09-4f84cd16a061">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last id3e8661bc-be07-42d2-b50a-127e6b71cd69" style="height: 50px;" data-widgetcontainerid="3e8661bc-be07-42d2-b50a-127e6b71cd69">
+	
+<div data-widget-id="a3628600-0cd5-4d8a-9944-d02f4104e456" data-widget-controller-path="/Layout/WidgetSearch">
+	
+	<script defer type="text/javascript" src="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.js"></script>
+	<script defer src="/Areas/Layout/Assets/Scripts/Search.js" type="text/javascript"></script>
+	<script defer type="text/javascript">
+
+		$(document).ready(function () {
+			try {
+				$(".widgetSearchButton.widgetSearchButtona3628600-0cd5-4d8a-9944-d02f4104e456").click(function (e) {
+				e.preventDefault();
+					if (false||$("#ysnSearchOnlyDepta3628600-0cd5-4d8a-9944-d02f4104e456").is(':checked'))
+					{
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), Number(0));
+					}
+					else {
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), 0);
+					}
+			});
+			$("#searchFielda3628600-0cd5-4d8a-9944-d02f4104e456").keypress(function (e) {
+				if (window.clipboardData) {
+					if (e.keyCode === 13) {
+						if ($("#ysnSearchOnlyDepta3628600-0cd5-4d8a-9944-d02f4104e456").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				} else {
+					if (e.which === 13) {
+						if ($("#ysnSearchOnlyDepta3628600-0cd5-4d8a-9944-d02f4104e456").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				}
+				return true;
+			});
+
+				if (true) {
+					var currentRequest = null;
+					var $searchField = $("#searchFielda3628600-0cd5-4d8a-9944-d02f4104e456").autocomplete({
+						source: function (request, response) {
+							currentRequest = $.ajax({
+								url: '/Search/AutoComplete' + ($("#ysnSearchOnlyDepta3628600-0cd5-4d8a-9944-d02f4104e456").is(':checked') || false? '?departmentId=0' : ''),
+								dataType: "json",
+								timeout: 10000,
+								beforeSend: function () {
+									if (currentRequest != null) {
+										currentRequest.abort();
+									}
+								},
+								data:
+								{
+									term: request.term,
+								},
+								success: function (data) {
+									response(data);
+									$('.autoCompleteError').remove();
+								},
+								error: function (xmlhttprequest, textstatus, message) {
+									if (textstatus === "timeout") {
+										if ($("#searchFielda3628600-0cd5-4d8a-9944-d02f4104e456").siblings('.autoCompleteError').length == 0)
+											$('<span class="autoCompleteError"><p class="alert error">Search autocomplete is currently not responding. Please try again later.</p></span>').insertAfter($("#searchFielda3628600-0cd5-4d8a-9944-d02f4104e456"));
+									}
+								}
+							});
+						},
+						html: true,
+						delay: 500,
+						select: function (event, ui) {
+							$(this).val(ui.item.value);
+							$(this).next().click();
+						}
+					});
+
+					$searchField.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $("<li class=\"itemList\"></li>")
+							.data("ui-autocomplete-item", item)
+							.append("<a>" + item.label + "</a>")
+							.appendTo(ul);
+					};
+}
+}
+			catch(e) {} //we're going to eat this error. Autocomplete won't work but we dont wan't to break anything else on the page.
+		});
+	</script>
+
+	<section id="widgetPreviewSearch" class="widget widgetSearch skin66 widgetOptionSet36" style="display: block;" aria-label="Search">
+				<!-- For the button right and inside -->
+		<div class="widgetBody buttonRightInside">
+			<input class="widgetSearchBox widgetSearchBoxa3628600-0cd5-4d8a-9944-d02f4104e456 ui-autocomplete-input" cp5ph="true" id="searchFielda3628600-0cd5-4d8a-9944-d02f4104e456" name="searchField" onchange="searchBtnApplyQuery();" placeholder="Search..." title="Search..." type="text" value="" autocomplete="off">
+						<a href="https://www.nashuanh.gov/Search/Results" id="btnSearchIcon" class="widgetSearchButton widgetSearchButtona3628600-0cd5-4d8a-9944-d02f4104e456" role="button"><img alt="Search" class="imageHover" data-hover="/ImageRepository/Document?documentID=17269" data-image="/ImageRepository/Document?documentID=17268" src="images/a0c6babd7c3ff33ee2fbb6a9ece5d7e5d8a0b0a7dbe1ed29287747cc7a477ac0.png"></a>
+
+			<label class="searchLabel" for="searchFielda3628600-0cd5-4d8a-9944-d02f4104e456">Search</label>
+		</div>
+
+	</section>
+
+
+<style scoped="">
+	  
+		.widgetSearch ::-webkit-input-placeholder {
+		color: #fff;
+	  }
+		.widgetSearch :-moz-placeholder { /* Firefox 18- */
+	   color: #fff;
+	}
+		.widgetSearch ::-moz-placeholder {  /* Firefox 19+ */
+	   color: #fff;
+	}
+	.widgetSearch :-ms-input-placeholder {
+	   color: #fff;
+	}
+	
+
+	.widgetSearch .widgetBody .widgetSearchBoxa3628600-0cd5-4d8a-9944-d02f4104e456
+	{
+		color: #ffffff;
+		background: linear-gradient( to top, rgb(22,70,111) 0%, rgb(8,48,82) 100%);
+height: 50px;
+padding-left: 1.5em;
+font-family: Rubik;
+font-style: italic;
+font-weight: 500;
+font-size: 14px;
+border: 0 none;
+	}
+	.widgetSearch .widgetBody .widgetSearchButtona3628600-0cd5-4d8a-9944-d02f4104e456
+	{
+		padding: 10px 6px;
+	}
+	.widgetSearch .widgetSearch-onlyDepta3628600-0cd5-4d8a-9944-d02f4104e456
+	{
+		display: inline-block;
+		color: #333;
+		
+		
+		 padding-top: 10px;
+	}
+	#ysnSearchOnlyDepta3628600-0cd5-4d8a-9944-d02f4104e456
+	{
+		position: relative;
+		top: .125em;
+	}
+
+</style>
+
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.css">
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.theme.min.css">
+
+
+
+<script type="text/javascript">
+	//Updates search icons href to have the correct queryString
+	function searchBtnApplyQuery() {
+		document.getElementById("btnSearchIcon").href = "/Search?searchPhrase=" + document.getElementById("searchFielda3628600-0cd5-4d8a-9944-d02f4104e456").value;
+	}
+	</script>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+<div data-cprole="contentContainer" id="socialsTS">	<div id="cc9a8e2f78-7bc4-41c3-a2e3-76a741e1cde3" data-containerid="9a8e2f78-7bc4-41c3-a2e3-76a741e1cde3" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="1">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="3ca606c8-0552-4c60-a666-67f567cd2898">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last id7a8bdd1c-80d0-440b-9733-74581f4bdc48" style="height: 38px;" data-widgetcontainerid="7a8bdd1c-80d0-440b-9733-74581f4bdc48">
+	
+<div data-widget-id="bb2bef9f-5817-46f1-ba1f-748dbfc59552" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidgetbb2bef9f-5817-46f1-ba1f-748dbfc59552" class="widget widgetGraphicLinks skin72 widgetOptionSet37 wide" data-elementqueryclasses='{"wide-narrow":"min-width:1em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid3 ">	
+			<div class="row autoWidths center wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/79/Social-Networking" target="_self" class="fancyButton fancyButton534 ">
+		<span>
+			<span><span class="text"> </span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton534.fancyButton:link,.fancyButton534.fancyButton:visited, .fancyButton534div.fancyButton{
+	width: 28px;
+	padding-top: 5px;
+	background-image: url('/ImageRepository/Document?documentID=17270');
+	background-repeat: no-repeat;
+	background-position: center center;
+margin: 0 auto;
+position: relative;
+
+}
+
+.fancyButton534::after {
+
+content: "";
+
+position: absolute;
+
+bottom: -4px;
+
+left: 50%;
+
+width: 0;
+
+height: 2px;
+
+background: #0b406e;
+
+transform: translate(-50%, 0);
+
+transition: all .3s ease-in-out;
+
+}
+
+.fancyButton534:hover::after,
+
+.fancyButton534:focus::after,
+
+.fancyButton534:active::after,
+
+.fancyButton534.hover::after {
+
+width: 70%;}
+.fancyButton534.fancyButton:hover,.fancyButton534.fancyButton:focus,.fancyButton534.fancyButton:active,.fancyButton534.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.fancyButton534.fancyButton:link > span,.fancyButton534.fancyButton:visited > span, .fancyButton534div.fancyButton > span{
+}
+.fancyButton534.fancyButton:hover > span,.fancyButton534.fancyButton:focus > span,.fancyButton534.fancyButton:active > span,.fancyButton534.fancyButton.hover > span{
+}
+.fancyButton534.fancyButton .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton534.fancyButton:hover .text,.fancyButton534.fancyButton:focus .text,.fancyButton534.fancyButton:active .text,.fancyButton534.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/79/Social-Networking" target="_self" class="fancyButton fancyButton535 ">
+		<span>
+			<span><span class="text"> </span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton535.fancyButton:link,.fancyButton535.fancyButton:visited, .fancyButton535div.fancyButton{
+	width: 28px;
+	padding-top: 5px;
+	background-image: url('/ImageRepository/Document?documentID=17272');
+	background-repeat: no-repeat;
+	background-position: center center;
+margin: 0 auto;
+position: relative;
+
+}
+
+.fancyButton535::after {
+
+content: "";
+
+position: absolute;
+
+bottom: -4px;
+
+left: 50%;
+
+width: 0;
+
+height: 2px;
+
+background: #0b406e;
+
+transform: translate(-50%, 0);
+
+transition: all .3s ease-in-out;
+
+}
+
+.fancyButton535:hover::after,
+
+.fancyButton535:focus::after,
+
+.fancyButton535:active::after,
+
+.fancyButton535.hover::after {
+
+width: 70%;}
+.fancyButton535.fancyButton:hover,.fancyButton535.fancyButton:focus,.fancyButton535.fancyButton:active,.fancyButton535.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.fancyButton535.fancyButton:link > span,.fancyButton535.fancyButton:visited > span, .fancyButton535div.fancyButton > span{
+}
+.fancyButton535.fancyButton:hover > span,.fancyButton535.fancyButton:focus > span,.fancyButton535.fancyButton:active > span,.fancyButton535.fancyButton.hover > span{
+}
+.fancyButton535.fancyButton .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton535.fancyButton:hover .text,.fancyButton535.fancyButton:focus .text,.fancyButton535.fancyButton:active .text,.fancyButton535.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/79/Social-Networking" target="_self" class="fancyButton fancyButton536 ">
+		<span>
+			<span><span class="text"> </span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton536.fancyButton:link,.fancyButton536.fancyButton:visited, .fancyButton536div.fancyButton{
+	width: 28px;
+	padding-top: 5px;
+	background-image: url('/ImageRepository/Document?documentID=17273');
+	background-repeat: no-repeat;
+	background-position: center center;
+margin: 0 auto;
+position: relative;
+
+}
+
+.fancyButton536::after {
+
+content: "";
+
+position: absolute;
+
+bottom: -4px;
+
+left: 50%;
+
+width: 0;
+
+height: 2px;
+
+background: #0b406e;
+
+transform: translate(-50%, 0);
+
+transition: all .3s ease-in-out;
+
+}
+
+.fancyButton536:hover::after,
+
+.fancyButton536:focus::after,
+
+.fancyButton536:active::after,
+
+.fancyButton536.hover::after {
+
+width: 70%;}
+.fancyButton536.fancyButton:hover,.fancyButton536.fancyButton:focus,.fancyButton536.fancyButton:active,.fancyButton536.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.fancyButton536.fancyButton:link > span,.fancyButton536.fancyButton:visited > span, .fancyButton536div.fancyButton > span{
+}
+.fancyButton536.fancyButton:hover > span,.fancyButton536.fancyButton:focus > span,.fancyButton536.fancyButton:active > span,.fancyButton536.fancyButton.hover > span{
+}
+.fancyButton536.fancyButton .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton536.fancyButton:hover .text,.fancyButton536.fancyButton:focus .text,.fancyButton536.fancyButton:active .text,.fancyButton536.fancyButton.hover .text{
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+<nav data-cprole="nav" id="mainNav" class="siteNav mainNav" role="navigation">
+<ol id="mainNavMenu" data-parent="1" class="rootNavMenu" role="menu">
+<!--
+--><li id="MainItem101" class="topMenuItem" role="none" data-pageid="101" data-displaymegamenu="True" style="width: 22.8571%;">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavServices" class="navMainItem mainNavItem mainNavItem1" href="https://www.nashuanh.gov/101/Services" target="_self">   Services </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem31" class="topMenuItem" role="none" data-pageid="31" data-displaymegamenu="True" style="width: 25.8503%;">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavCommunity" class="navMainItem mainNavItem mainNavItem2" href="https://www.nashuanh.gov/31/Community" target="_self">   Community </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem27" class="topMenuItem" role="none" data-pageid="27" data-displaymegamenu="True" style="width: 26.6667%;">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavGovernment" class="navMainItem mainNavItem mainNavItem3" href="https://www.nashuanh.gov/27/Government" target="_self">   Government </a>			<!--
+			--><!--
+			-->
+</li>
+<!----><li id="MainItem9" class="topMenuItem" role="none" data-pageid="9" data-displaymegamenu="True" style="width: 24.6259%;">
+<!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavIWantTo" class="navMainItem mainNavItem mainNavItem4" href="https://www.nashuanh.gov/9/I-Want-To" target="_self">   I Want To... </a>			<!--
+			--><!--
+			-->
+</li>
+<!---->
+</ol>
+
+
+	<script type="text/javascript">
+		(function () {
+			function setupMenu() {
+				const menuID = 'mainNavMenu';
+				const menuType = MAIN_MENU;
+
+				//setup menu manager properties for main menu
+				if (!menuManager.mobileMainNav && true)
+					menuManager.adjustMainItemsWidth('#' + menuID);
+				menuManager.isMainMenuEditable = false;
+				menuManager.mainMenuMaxSubMenuLevels = 4;
+				menuManager.setMOMMode(2, menuType);
+
+				//Init main menu
+				const setupDraggable = menuManager.isMainMenuEditable;
+				const urlToGetHiddenMenus = '/Pages/MenuMain/HiddenMainSubMenus?pageID=1&moduleID=&themeID=17&menuContainerID=mainNav';
+
+				menuManager.setupMenu(menuID, 'mainNav', menuType, setupDraggable, urlToGetHiddenMenus);
+				menuManager.mainMenuInit = true;
+				menuManager.mainMenuTextResizer = false;
+				if (1.00 > 0)
+					menuManager.mainMenuTextResizerRatio = 1.00;
+				if (window.isResponsiveEnabled)
+					menuManager.mainMenuReady.resolve();
+
+			}
+
+			if (document.readyState === "complete"
+				|| document.readyState === "loaded"
+				|| document.readyState === "interactive") {
+				setupMenu();
+				return;
+			}
+
+			document.addEventListener("DOMContentLoaded", setupMenu);
+		})();
+	</script>
+
+
+<aside data-cprole="megaMenu" id="megaMenu" class="megaMenu" style="display: none;"><input type="hidden" id="megaMenuPopupDirection" value="0"><input type="hidden" id="megaMenuWidthReference" value="1"></aside></nav>
+</div>
+</header><!-- Banner --><div data-cprole="structuralContainer" id="bannerContainerTS">
+<div data-cprole="contentContainer" id="bannerSlideshowTS">	<div id="cc892284b7-df16-46ee-ba5b-fe72b86734cc" data-containerid="892284b7-df16-46ee-ba5b-fe72b86734cc" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="e8dec59b-e109-4f07-947e-88715e43210b">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last idb1db1292-e146-4e5a-848f-384b9568c063" style="height: 83px;" data-widgetcontainerid="b1db1292-e146-4e5a-848f-384b9568c063">
+	
+
+	<div class="widget slideShow  skin71" role="region" aria-label="Slideshow" id="slideshowd06f02d5-e12f-4a1b-a6d3-a795331bda0c" aria-haspopup="false" data-widgetid="d06f02d5-e12f-4a1b-a6d3-a795331bda0c">
+		<input type="hidden" class="slideTiming" value="15">
+		<input type="hidden" class="transitionTiming" value="3">
+	<input type="hidden" class="hdnSlideshowUniqueID" value="2300">
+		<div id="divSlideshow2300" class="cpSlideshow widgetBody cpSlideshowJS2300 wide">
+			<link href="/Assets/Styles/PausePlay/PausePlay.css" rel="stylesheet">
+<script src="/-358974846.js" type="text/javascript"></script>
+	<div class="cpWindow cpWindowJS2300 ">
+		<ol class="semanticList cpSlider fade cpSliderJS2300" style="width: 300%;">
+					<li class="showing" id="2300_13712" data-index="0" style="left: 0%; width: 33.3333%;">
+
+
+							<img src="images/d57c2e6cba831d7874daf8fb8fc1739256289d6256fd1d97155806cc1a88b3fa.jpg" class="" alt="Aerial view of City Hall and downtown main street" title="Aerial view of City Hall and downtown main street" data-delayed-image="" style="height: auto;">
+
+										</li>
+					<li class="" id="2300_13713" data-index="1" aria-hidden="true" style="opacity: 0; left: -33.3333%; width: 33.3333%;">
+
+
+							<img src="images/7d1d0ac83cfee403a5bb1c4cf77a2946f4a6915c292596694cd25d13016a69a6.jpg" class="" alt="Aerial view of Clock Tower and Main Street" title="Aerial view of Clock Tower and Main Street" data-delayed-image="" style="height: auto;">
+
+										</li>
+					<li class="" id="2300_13714" data-index="2" aria-hidden="true" style="opacity: 0; left: -66.6667%; width: 33.3333%;">
+
+
+							<img src="images/0d3a80bf8f884d5cbf0a44779f5648a7f28f3cdc759216e7845461005f7811fd.jpg" class="" alt="Aerial view of north main street bridge and the Nashua River" title="Aerial view of north main street bridge and the Nashua River" data-delayed-image="" style="height: auto;">
+
+										</li>
+		</ol>
+
+
+	</div>
+	<div aria-live="polite" aria-atomic="true" class="liveRegionJS2300 visuallyhidden"></div>
+	<script type="text/javascript">
+		// <!--
+		var $1 = typeof $ == 'undefined' ? window.parent.$ : $;
+		$1(document).ready(function () {
+			new Slideshow().generate('2300','3','15',false,false,0);
+			$('#ssPlay-btn-2300').addClass('isHidden');
+		});
+		var $pages = typeof window.Pages == 'undefined' ? window.parent.Pages : window.Pages;
+		$1.when($pages.rwdReady).done(function () {
+			var divSlideshowID = 'divSlideshow2300';
+			var mediaQuerySize = 25;
+			if (mediaQuerySize == 0)
+				mediaQuerySize = 25; //default for not widget slide show
+			var mediaElementQuery = '#' + divSlideshowID + ':media(this-min-width:' + mediaQuerySize + 'em)';
+			var $cpMedia = typeof window.cpMedia == 'undefined' ? window.parent.cpMedia : window.cpMedia;
+			var $divSlideShow = $('#' + divSlideshowID);
+			var $arrows = $divSlideShow.find('a.arrow');
+			var $arrowsNew = $divSlideShow.find('a.arrowNew');
+			var $divExternalSlideshow = $('.bannerSlideshowControlsNew').last();
+			var $overlays = $(document.getElementsByName('captionOverlay_2300'));
+
+			if(window.isMobileBrowserIncludingTablets){
+				$overlays.each(function (overlay) {
+					$(overlay).removeClass('overlay')
+				});
+			}
+
+			$cpMedia.unregister(mediaElementQuery)
+				.register(mediaElementQuery,
+				{
+				deferSetup: false,
+				setup: function () {
+					cpMedia.diag('$(element).removeClass("wide"), mediaQuery: ' + mediaElementQuery);
+					$divSlideShow.removeClass('wide').addClass('narrow');
+						if ($divExternalSlideshow.length > 0) {
+							$divExternalSlideshow.hide();
+						}
+					if ($arrows.length > 0) {
+						$arrows.hide();
+						if (typeof ($$) !== 'undefined') {
+								$$('#' + divSlideshowID)
+									.on('swipeRight',
+										function (e, a) {
+								$arrows.filter('.prev').click();
+							});
+								$$('#' + divSlideshowID)
+									.on('swipeLeft',
+										function (e) {
+								$arrows.filter('.next').click();
+							});
+						}
+					}
+						if ($arrowsNew.length > 0) {
+
+							if (!(false && !window.isMobileBrowserIncludingTablets)) {
+							$arrowsNew.hide();
+							}
+							if (typeof ($$) !== 'undefined') {
+								$$('#' + divSlideshowID)
+									.on('swipeRight',
+										function (e, a) {
+											$arrowsNew.filter('.prev').click();
+										});
+								$$('#' + divSlideshowID)
+									.on('swipeLeft',
+										function (e) {
+											$arrowsNew.filter('.next').click();
+										});
+							}
+						}
+						if ($overlays.length > 0 && window.isMobileBrowserIncludingTablets) {
+							if (2 == 1) {
+								$overlays.hide();
+							} else if (2 == 2) {
+								$overlays.removeClass('overlay');
+							}
+						}
+				},
+				match: function () {
+					cpMedia.diag('$(element).addClass("wide"), mediaQuery: ' + mediaElementQuery);
+					$divSlideShow.addClass('wide').removeClass('narrow');
+					if ($divExternalSlideshow.length > 0 && !$divExternalSlideshow.hasClass('none')) {
+						$divExternalSlideshow.show();
+					}
+					if ($arrows.length > 0) {
+						$arrows.show();
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).off('swipeRight');
+							$$('#' + divSlideshowID).off('swipeLeft');
+						}
+					}
+					if ($arrowsNew.length > 0) {
+						$arrowsNew.show();
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).off('swipeRight');
+							$$('#' + divSlideshowID).off('swipeLeft');
+						}
+					}
+					if ($overlays.length > 0) {
+						if (2 == 1) {
+							$overlays.show();
+					} else if (2 == 2 && !window.isMobileBrowserIncludingTablets) {
+							$overlays.addClass('overlay');
+						}
+					}
+				},
+				unmatch: function () {
+					cpMedia.diag('$(element).removeClass("wide"), mediaQuery: ' + mediaElementQuery);
+					$divSlideShow.removeClass('wide').addClass('narrow');
+					if ($divExternalSlideshow.length > 0) {
+						$divExternalSlideshow.hide();
+					}
+					if ($arrows.length > 0) {
+						$arrows.hide();
+
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).on('swipeRight', function (e) {
+								$arrows.filter('.prev').click();
+							});
+							$$('#' + divSlideshowID).on('swipeLeft', function (e) {
+								$arrows.filter('.next').click();
+							});
+						}
+					}
+					if ($arrowsNew.length > 0) {
+						if (typeof ($$) !== 'undefined') {
+							$$('#' + divSlideshowID).on('swipeRight', function (e) {
+								$arrowsNew.filter('.prev').click();
+							});
+							$$('#' + divSlideshowID).on('swipeLeft', function (e) {
+								$arrowsNew.filter('.next').click();
+							});
+						}
+					}
+					if ($overlays.length > 0 && window.isMobileBrowserIncludingTablets) {
+						if (2 == 1) {
+							$overlays.hide();
+						} else if (2 == 2) {
+							$overlays.removeClass('overlay');
+						}
+					}
+				}
+			});
+		});
+		// -->
+	</script>
+
+
+		</div>	
+
+<script type="text/javascript">
+	(function () {
+		const widgetHandlers = function (e) {
+			$('.slideshowOptions.nonEmpty').unbind('click').click(function (e) {
+				var $this = $(this);
+				// If the parent is a slider we need to tweak our "this" reference to refer to the options handle. 
+				// This came about, because we needed to use slider images to trigger options. - JE
+				if ($this.parent().hasClass('cpSlider')) {
+					$this = $this.closest('.widget.slideShow').siblings('.handle.options');
+				}
+
+				//Set values for global variables for slideshow.
+				if ($this.attr('data-widgetID').length !== 0) {
+					parentID_Slideshow = 'slideshow' + $this.attr('data-widgetID');
+				}
+				callbackfnSlideshowSave = null;
+				var pageID = ContentCollectionInstance.PageID;
+				var moduleID = ContentCollectionInstance.ModuleID;
+				var qs = '?pageID=' + pageID + '&moduleID=' + moduleID;
+				//Set slideshow widgetID
+				ContentCollectionInstance.SlideshowWidgetID = $this.siblings('.widgetID').val();
+				$popUp_Slideshow = openCpModal({
+					title: 'Slideshow',
+					className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+					isFrontEnd: false,
+					useIframe: false,
+					draggable: true,
+					url: '/Slideshow/SlideshowConfiguration/' + $this.siblings('.slideShow').find('.hdnSlideshowUniqueID').val() + qs
+				});
+			});
+
+			$('.slideshowOptions.empty').unbind('click').click(function (e) {
+				var $this = $(this);
+				parentID_Slideshow = $this.parents('.slideShow').attr('id');
+				var pageID = ContentCollectionInstance.PageID;
+				var moduleID = ContentCollectionInstance.ModuleID;
+				var qs = '?pageID=' + pageID + '&moduleID=' + moduleID;
+				ContentCollectionInstance.SlideshowWidgetID = $(this).parents('.slideShow').attr('data-widgetID');
+				$popUp_Slideshow = openCpModal({
+					title: 'Slideshow',
+					className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+					isFrontEnd: false,
+					useIframe: false,
+					draggable: true,
+					url: '/Slideshow/SlideshowConfiguration/' + $(this).next('.hdnSlideshowUniqueID').val() + qs
+				});
+			});
+		};
+
+		if (document.readyState === "complete"
+			|| document.readyState === "loaded"
+			|| document.readyState === "interactive") {
+			widgetHandlers();
+			return;
+		}
+
+		document.addEventListener("DOMContentLoaded", widgetHandlers);
+	})();
+</script>
+	</div>
+
+
+<script type="text/javascript">
+	function SlideshowWidgetCallback(widgetID, response) {
+		if (window.ContentCollectionInstance.IsWorkingCopy) {
+			//Remove this field since the partial view adds it back.
+			$('#slideshow' + widgetID).find('.hdnSlideshowUniqueID').remove();
+			if ($('#slideshow' + widgetID).find('.cpSlideshow').length > 0)
+				$('#slideshow' + widgetID).find('.cpSlideshow').replaceWith(response);
+			else
+				$('#slideshow' + widgetID).find('.slideshowOptions.empty.placeholder').replaceWith(response);
+
+			contentUpdated();
+		}
+		else {
+			ContentCollectionInstance.reloadContent();
+		}
+
+		$('.slideshowOptions.nonEmpty').unbind('click').click(function (e) {
+			var $this = $(this);
+			// If the parent is a slider we need to tweak our "this" reference to refer to the options handle. 
+			// This came about, because we needed to use slider images to trigger options. - JE
+			if ($this.parent().hasClass('cpSlider')) {
+				$this = $this.closest('.widget.slideShow').siblings('.handle.options');
+			}
+
+			//Set values for global variables for slideshow.
+			if ($this.attr('data-widgetID').length !== 0) {
+				parentID_Slideshow = 'slideshow' + $this.attr('data-widgetID');
+			}
+			callbackfnSlideshowSave = null;
+			var pageID = ContentCollectionInstance.PageID;
+			var moduleID = ContentCollectionInstance.ModuleID;
+			var qs = '?pageID=' + pageID + '&moduleID=' + moduleID;
+			//Set slideshow widgetID
+			ContentCollectionInstance.SlideshowWidgetID = $this.siblings('.widgetID').val();
+			$popUp_Slideshow = openCpModal({
+				title: 'Slideshow',
+				className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+				isFrontEnd: false,
+				useIframe: false,
+				draggable: true,
+				url: '/Slideshow/SlideshowConfiguration/' + $this.siblings('.slideShow').find('.hdnSlideshowUniqueID').val() + qs
+			});
+		});
+
+		$('.slideshowOptions.empty').unbind('click').click(function (e) {
+			var $this = $(this);
+			parentID_Slideshow = $this.parents('.slideShow').attr('id');
+			var pageID = ContentCollectionInstance.PageID;
+			var moduleID = ContentCollectionInstance.ModuleID;
+			var qs = '?pageID=' + pageID + '&moduleID=' + moduleID;
+			ContentCollectionInstance.SlideshowWidgetID = $(this).parents('.slideShow').attr('data-widgetID');
+			$popUp_Slideshow = openCpModal({
+				title: 'Slideshow',
+				className: 'newCP adminWrap cpPopOver admin modalSlideshow',
+				isFrontEnd: false,
+				useIframe: false,
+				draggable: true,
+				url: '/Slideshow/SlideshowConfiguration/' + $(this).next('.hdnSlideshowUniqueID').val() + qs
+			});
+		});
+	}
+
+	(function (){
+		const widgetHandlers = function () {
+			var hasEditRights = false;
+			if (window.File && window.FileList && window.FileReader && hasEditRights) {
+				var SlideshowWidget = 3;
+				makeWidgetAreaDroppable('d06f02d5-e12f-4a1b-a6d3-a795331bda0c', $('#slideshow' + 'd06f02d5-e12f-4a1b-a6d3-a795331bda0c'), SlideshowWidget, true, SlideshowWidgetCallback);
+			}
+
+			if(hasEditRights)
+				browserVersionNotCompatibleWithDragDropTextUpdate($('#slideshowPlaceholder' + 'd06f02d5-e12f-4a1b-a6d3-a795331bda0c'), 'Click to start adding images.');
+		};
+
+		if (document.readyState === "complete"
+			|| document.readyState === "loaded"
+			|| document.readyState === "interactive") {
+			widgetHandlers();
+			return;
+		}
+
+		document.addEventListener("DOMContentLoaded", widgetHandlers);		
+	})();
+</script>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div>
+</div>
+<!-- Content container --><div data-cprole="structuralContainer" id="mainContainerTS">
+<div class="siteWrap"><div data-cprole="structuralContainer" id="mainWrapTS" class="mainWrap" role="main">
+<div data-cprole="structuralContainer" id="outerContentWrapTS" class="outerContentWrap">
+<div data-cprole="structuralContainer" id="contentWrapTS" class="contentWrap">
+<div data-cprole="breadCrumbs" id="breadCrumbs" class="breadCrumbContainer">		<ol class="semanticList breadCrumbs">
+			<li><a class="breadCrumb" href="https://www.nashuanh.gov/">Home</a></li>
+<li><a class="breadCrumb" href="https://www.nashuanh.gov/27/Government">Government</a></li>
+<li><a class="breadCrumb" href="https://www.nashuanh.gov/804/City-Officials">City Officials</a></li>
+<li><a class="breadCrumb" href="https://www.nashuanh.gov/513/Boards-Committees-and-Commissions">Boards, Committees, and Commissions</a></li>
+<li id="currentBCPage" data-pageid="514">Board of Aldermen</li>
+		</ol>
+
+	   
+    
+</div>
+<div data-cprole="mainContentContainer" id="moduleContent">
+	
+	<div id="page" class="moduleContentNew">
+		
+
+	<input id="hdnPageID" name="hdnPageID" type="hidden" value="514">
+	<input id="hdnParentID" name="hdnParentID" type="hidden" value="513">
+	<input id="hdnVersionID" name="hdnVersionID" type="hidden" value="19063">
+	<input id="pageMenuTitle" name="pageMenuTitle" type="hidden" value="Board of Aldermen">
+	<input id="pageShowFeatureColumn" name="pageShowFeatureColumn" type="hidden" value="True">
+	<input id="hdnIsLayoutPage" name="hdnIsLayoutPage" type="hidden" value="False">
+	<input id="hdnPageStatus" name="hdnPageStatus" type="hidden" value="Published">
+
+				<h1 id="versionHeadLine" class="headline">
+
+Board of Aldermen		</h1>
+	
+		<div id="cc27ff4834-0536-4012-b432-efcc47229aae" data-containerid="27ff4834-0536-4012-b432-efcc47229aae" class="pageContent cpGrid cpGrid24">
+			
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="5d23f68c-e01f-45c7-8ba5-b48946cb8954">
+				
+	<div class="row nest first wide">
+
+	
+	<div class="inner col col24 first last id057b71d6-fda1-4a27-95d4-cc5157e515ff" style="height: 851px;" data-widgetcontainerid="057b71d6-fda1-4a27-95d4-cc5157e515ff">
+	
+<div class="widget editor pageStyles wide" id="divEditored07efb9-bad6-48a7-a047-dff5f6788886" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1">Agendas &amp; Minutes</h2>
+<p>The Legislative Office prepares weekly agendas for the Board of Aldermen and its 6 standing committees which are posted by 5 p.m. on the Friday prior to the meeting, and which are made available to the general public through the City Clerk's Office. Agendas are available prior to the meetings. Minutes are posted pursuant to RSA 91-A:2, II. <a class="Hyperlink" href="https://www.nashuanh.gov/AgendaCenter/Board-of-Aldermen-4" target="_self"></a><br><a class="Hyperlink" href="https://nashuanh.portal.civicclerk.com/">View Most Recent Agendas and Minutes</a></p>
+<h2 class="subhead1">Meetings</h2>
+<ul>
+<li><span style="font-size: 13px;">7:30 p.m.</span></li>
+<li><span style="font-size: 13px;">2nd and 4th Tuesday of the month<span style="font-size: 13px;">, except during the months of July and August when the regular meetings are held only on the second Tuesday</span></span></li>
+<li><span style="font-size: 13px;">Aldermanic Chambers <br> 2nd floor of City Hall<br> 229 Main Street<br> Nashua, NH 03061-2019<br></span></li>
+</ul>
+<p>For more information, call the City Clerk at 603-589-3010. The public is welcome to make remarks at appropriate times during Board of Aldermen meetings.</p>
+<p>Meetings are televised on the Nashua Municipal Government Cable Channel 16, <a class="Hyperlink" href="https://www.nashuanh.gov/318/CTV---Nashua-Community-Television" target="_self" title="Nashua Community Television">video streaming is available online on the GTV webpage</a>, as well as Roku, and Apple TV – search for “Nashua Community Television”. Past meetings are available to view online too.</p>
+<h3 class="subhead2">Special Meetings</h3>
+<p>In addition to the mayor's powers to call special meetings under RSA 45:10, the President of the Board may also call special meetings for limited purposes prescribed under NRO 5-7 by a vote or the signature of at least 8 members.</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'ed07efb9-bad6-48a7-a047-dff5f6788886'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest wide">
+
+	
+	<div class="inner col col24 first last id874fb2a0-c828-45f6-b83c-0c2aaa98c4e4" style="height: 123px;" data-widgetcontainerid="874fb2a0-c828-45f6-b83c-0c2aaa98c4e4">
+	
+
+
+
+	<section class="widget widgetRelatedDocuments skin66 wide" id="widgetRelDocdf6f4ea6-8998-4780-b841-dad9a1a736c4" data-widgetid="df6f4ea6-8998-4780-b841-dad9a1a736c4" data-sections='[{"Title":"","DocumentIDs":",","FolderIds":"2577,","SortedDocumentIds":""}]' data-columncount="1" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="headerdf6f4ea6-8998-4780-b841-dad9a1a736c4">
+			<div id="divRelatedDocuments_df6f4ea6-8998-4780-b841-dad9a1a736c4" class="relatedDocuments">
+				<header class="widgetHeader" id="headerdf6f4ea6-8998-4780-b841-dad9a1a736c4"><div><h3>Related Documents</h3></div></header>
+		<div class="widgetBody cpGrid cpGrid1">
+			
+<div class="row sortableWidgetTitle wide">
+        <div class="relatedDocumentsSection selfClear" data-documentids="," data-folderids="2577," data-sorteddocumentids="">
+        
+	<div class=" first last">
+		<ol class="semanticList bullets" style="min-height:8px;">
+					<li class="widgetItem" data-documentid="29116">
+<a target="_blank" href="https://www.nashuanh.gov/DocumentCenter/View/29116/2024-2025-Public-Directory" class="fileType pdf" aria-label="2024-2025 Public Directory Opens in new window" rel="noopener">2024-2025 Public Directory</a>
+					</li>
+					<li class="widgetItem" data-documentid="17256">
+<a target="_blank" href="https://www.nashuanh.gov/DocumentCenter/View/17256/Aldermanic-Committees-Assignments-2024-2025-PDF" class="fileType pdf" aria-label="Aldermanic Committees Assignments 2024-2025 (PDF) Opens in new window" rel="noopener">Aldermanic Committees Assignments 2024-2025 (PDF)</a>
+					</li>
+
+		</ol>
+	</div>
+                    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Remove section heading when it is empty and live edit is off.
+        if ('false' === 'false') {
+            var jqh4Selector = $('#widgetRelDoc' + 'df6f4ea6-8998-4780-b841-dad9a1a736c4').find('div.widgetBody div.row div.relatedDocumentsSection h4.widgetTitle');
+    		if (jqh4Selector.val() == "") {
+    			jqh4Selector
+                    .filter(function () {
+                        return $.trim($(this).text()) === ''
+                    })
+                    .remove();
+            }
+        }
+    });
+</script>
+		</div>
+
+</div>
+
+	</section>
+
+
+<script type="text/javascript">
+    var documentsToInsert = [];
+    var foldersToInsert = [];
+
+    $(document).ready(function () {
+        var hasEditRights = false;        
+        if (window.File && window.FileList && window.FileReader && hasEditRights) {
+            var RelatedDocumentsWidget = 5;
+            makeWidgetAreaDroppable('df6f4ea6-8998-4780-b841-dad9a1a736c4', $('#widgetRelDoc' + 'df6f4ea6-8998-4780-b841-dad9a1a736c4'), RelatedDocumentsWidget, true, RelatedDocumentsCallback);
+        }
+
+		if(hasEditRights)
+    		browserVersionNotCompatibleWithDragDropTextUpdate($('#addFile' + 'df6f4ea6-8998-4780-b841-dad9a1a736c4'), 'Add a new file');
+    });
+
+    function RelatedDocumentsCallback(widgetID, response)
+    {
+        if (window.ContentCollectionInstance.IsWorkingCopy) {
+        	$('#widgetRelDoc' + widgetID).replaceWith(response);            
+            contentUpdated();
+            attachRelatedDocumentsHandlers();            
+        }
+        else {
+            ContentCollectionInstance.reloadContent();
+        }      
+    }
+</script>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest wide">
+
+	
+	<div class="inner col col24 first last id8a7c636e-33b1-4308-bf0c-1cb2600efe01" style="height: 365px;" data-widgetcontainerid="8a7c636e-33b1-4308-bf0c-1cb2600efe01">
+	
+    <div data-widget-id="d59f040e-5499-4c64-a09e-84d8dd99cdc4" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdvd59f040e-5499-4c64-a09e-84d8dd99cdc4" class="widget widgetInfoAdvanced skin66 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="headerd59f040e-5499-4c64-a09e-84d8dd99cdc4">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<h2 class="subhead1">General Inquiries</h2>
+<p id="isPasted">For general inquiries regarding meeting agendas and minutes, please contact the Primary Contact listed top-right on this page. </p>
+<p>The City of Nashua endeavors to post minutes as soon as possible per requirements. If they are not displayed on the website, please contact the Primary Contact.</p>
+<p>Digital Notices of upcoming meetings are traditionally posted on the City website calendar and in the Agenda Center. Physical notices are traditionally posted on the City Hall bulletin board, back door/Elm street, and the Nashua Public Library bulletin, unless otherwise noted.</p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdvd59f040e-5499-4c64-a09e-84d8dd99cdc4 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+
+	
+	<div class="inner col col24 first last ida134a793-75e5-489f-b2ee-1e30ab0a42e9" style="height: 444px;" data-widgetcontainerid="a134a793-75e5-489f-b2ee-1e30ab0a42e9">
+	
+<div class="widget editor pageStyles wide" id="divEditorec96accd-9dc7-46c3-8526-c6d86964d42c" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/8c7661cef18cfb61addf7ef628cefa655a4324467e6790047a64657848afd4ef.jpg" class="fr-fil fr-dib" alt="2024 January Aldermen group photo #117A"></p>
+<style>
+	.boadirectory {
+		scroll-behavior: smooth; display: block; overflow-y: scroll;
+	}
+
+</style>
+<h2 class="subhead1 boadirectory" id="boadirectory">DIRECTORY:</h2>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'ec96accd-9dc7-46c3-8526-c6d86964d42c'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="a0b2d5df-e8cc-47f6-a0e0-eaa3bc1db1cc">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last id4fa68713-b593-41e7-9e09-346b22b5e057" style="height: 1219px;" data-widgetcontainerid="4fa68713-b593-41e7-9e09-346b22b5e057">
+	
+
+	<div id="divTabbedd47ba185-ca4e-402f-aee8-d32b12252c8d" class="widget widgetTabbed skin66 leftTabs wide" data-widgetid="d47ba185-ca4e-402f-aee8-d32b12252c8d" role="tablist">
+		<ol class="tabbedWidget cpTabs left " style="width: 42%; display: block;">
+			<!--
+					--><li class="active">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_0" aria-selected="true"><span class="tabName editable" data-sequence="0" data-tabname="About the Board" contenteditable="false">About the Board</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_1" aria-selected="false"><span class="tabName editable" data-sequence="1" data-tabname="Ben Clemons" contenteditable="false">Ben Clemons</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_2" aria-selected="false"><span class="tabName editable" data-sequence="2" data-tabname="Richard A. Dowd" contenteditable="false">Richard A. Dowd</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_3" aria-selected="false"><span class="tabName editable" data-sequence="3" data-tabname="TYLER GOUVEIA" contenteditable="false">TYLER GOUVEIA</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_4" aria-selected="false"><span class="tabName editable" data-sequence="4" data-tabname="Ernest A. Jette" contenteditable="false">Ernest A. Jette</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_5" aria-selected="false"><span class="tabName editable" data-sequence="5" data-tabname="Shoshanna Kelly" contenteditable="false">Shoshanna Kelly</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_6" aria-selected="false"><span class="tabName editable" data-sequence="6" data-tabname="Patricia Klee" contenteditable="false">Patricia Klee</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_7" aria-selected="false"><span class="tabName editable" data-sequence="7" data-tabname="Thomas Lopez" contenteditable="false">Thomas Lopez</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_8" aria-selected="false"><span class="tabName editable" data-sequence="8" data-tabname="MELBOURNE MORAN, JR." contenteditable="false">MELBOURNE MORAN, JR.</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_9" aria-selected="false"><span class="tabName editable" data-sequence="9" data-tabname="Michael B. O'Brien, Sr." contenteditable="false">Michael B. O'Brien, Sr.</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_10" aria-selected="false"><span class="tabName editable" data-sequence="10" data-tabname="Tim Sennott" contenteditable="false">Tim Sennott</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_11" aria-selected="false"><span class="tabName editable" data-sequence="11" data-tabname="JOHN SULLIVAN" contenteditable="false">JOHN SULLIVAN</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_12" aria-selected="false"><span class="tabName editable" data-sequence="12" data-tabname="DEREK THIBEAULT" contenteditable="false">DEREK THIBEAULT</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_13" aria-selected="false"><span class="tabName editable" data-sequence="13" data-tabname="Chris Thibodeau" contenteditable="false">Chris Thibodeau</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_14" aria-selected="false"><span class="tabName editable" data-sequence="14" data-tabname="GLORIA TIMMONS" contenteditable="false">GLORIA TIMMONS</span></a>
+</li>
+<!--
+					--><li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_15" aria-selected="false"><span class="tabName editable" data-sequence="15" data-tabname="Lori Wilshire" contenteditable="false">Lori Wilshire</span></a>
+</li>
+<!--
+					-->
+		</ol>
+
+		<div class="cpTabPanels">
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="active">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_0" aria-selected="true"><span class="tabName editable" data-sequence="0" data-tabname="About the Board" contenteditable="false">About the Board</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel showing" style="display: block;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_0" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditorca3f9d96-40d2-46df-99ef-55bbad93fd70" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1">About the Board</h2>
+<p>The Board of Aldermen is the governing body of the City of Nashua and as such is the policy-making entity of the City, except where otherwise expressed in the City Charter. The Board of Aldermen consists of 9 ward aldermen elected for a term of 2 years at every municipal election and 6 at-large aldermen elected for a term of 4 years, 3 of which are elected at each municipal election.</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'ca3f9d96-40d2-46df-99ef-55bbad93fd70'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_1" aria-selected="false"><span class="tabName editable" data-sequence="1" data-tabname="Ben Clemons" contenteditable="false">Ben Clemons</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_1" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor72302a42-ac86-45d9-b20d-1128db00874c" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/39ae6a5fe75882130899b3574351ecafc13b040817bd9f2111f6d54b87843bab.jpg" alt="Ben Clemons" title="Ben Clemons" class="fr-fic fr-dii"></p>
+<p><br></p>
+<p> Name:   BEN CLEMONS</p>
+<p>Street:   188 ASH STREET</p>
+<p>City:   NASHUA     State:   NH      ZIP:   03060</p>
+<p><br></p>
+<p>Home Phone:   603-305-9969</p>
+<p>Email:    <a href="mailto:CLEMONSB@NASHUANH.GOV" target="_self" class="Hyperlink">CLEMONSB@NASHUANH.GOV</a></p>
+<p>Name of Business:    ALDERMAN-AT-LARGE</p>
+<p>Business Phone:    603-589-3030</p>
+<p>Comment:    </p>
+<p><br></p>
+<p>Board or Commission Name:    BOARD OF ALDERMEN</p>
+<p>Term Length:    4</p>
+<p>Special Designation:    ALDERMAN-AT-LARGE</p>
+<p>Appointment By:    Elected</p>
+<p>Original Appointment Date:    March 12 2019</p>
+<p>Oath Administered:    Jan 9 2024</p>
+<p>End of Term:    Dec 31 2027</p>
+<p>How Established:    Charter</p>
+<p>Special Reference 1:    40</p>
+<p>Special Reference 2:    </p>
+<p>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '72302a42-ac86-45d9-b20d-1128db00874c'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_2" aria-selected="false"><span class="tabName editable" data-sequence="2" data-tabname="Richard A. Dowd" contenteditable="false">Richard A. Dowd</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_2" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor79b29d16-fa75-44dd-82ea-539549fd3e1c" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img title="Ald. Dowd" alt="Ald. Dowd" src="images/4f08e7625a5d5455a2207c62fd5a7bc511053e8286a14f7bd7aee3c8587baf5b.jpg" class="fr-fic fr-dii"></p>
+<p><br></p>
+<p>Name:   RICHARD A. DOWD</p>
+<p>Street:   8 ASCOT PARK</p>
+<p>City:   NASHUA     State:   NH      ZIP:   03063</p>
+<p><br></p>
+<p>Home Phone:    603-598-3528</p>
+<p>Email:    <a href="mailto:DOWDR@NASHUANH.GOV" target="_self" class="Hyperlink">DOWDR@NASHUANH.GOV</a></p>
+<p>Name of Business:    ALDERMAN WARD TWO</p>
+<p>Business Phone:    603-589-3030</p>
+<p>Comment:    </p>
+<p><br></p>
+<p>Board or Commission Name:    BOARD OF ALDERMEN</p>
+<p>Term Length:    2</p>
+<p>Special Designation:    ALDERMAN WARD TWO</p>
+<p>Appointment By:    Elected</p>
+<p>Original Appointment Date:    Jan 8 2012</p>
+<p>Oath Administered:    Jan 9 2024</p>
+<p>End of Term:    Dec 31 2025</p>
+<p>How Established:    Charter</p>
+<p>Special Reference 1:    40</p>
+<p>Special Reference 2:    </p>
+<p>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '79b29d16-fa75-44dd-82ea-539549fd3e1c'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_3" aria-selected="false"><span class="tabName editable" data-sequence="3" data-tabname="TYLER GOUVEIA" contenteditable="false">TYLER GOUVEIA</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_3" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor862d60da-6034-4d2e-9e0f-c1b620624df4" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/8867f61c836ec40d4ae7c4a71cd619b07fc223b85d587fd28ab5edd9bc64d69c.jpg" class="fr-fil fr-dib" alt="Tyler Gouveia"></p>
+<p>Name:   TYLER GOUVEIA<br>Street:   11 BARTEMUS TRAIL, UNIT 102<br>City:   NASHUA     State:   NH      ZIP:   03063<br><br>Home Phone:    603-809-1786<br>Email: <a href="mailto:GOUVEIAT@NASHUANH.GOV">GOUVEIAT@NASHUANH.GOV</a><br>Name of Business:    ALDERMAN WARD ONE<br>Business Phone:    603-589-3030<br>Comment:    <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:    2<br>Special Designation:  ALDERMAN WARD ONE<br>Appointment By:  Elected<br>Original Appointment Date: Nov 2 2021  <br>Oath Administered:   Jan 9 2024<br>End of Term:    Dec 31 2025<br>How Established:   Charter<br>Special Reference 1:    40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '862d60da-6034-4d2e-9e0f-c1b620624df4'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_4" aria-selected="false"><span class="tabName editable" data-sequence="4" data-tabname="Ernest A. Jette" contenteditable="false">Ernest A. Jette</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_4" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditorca4f4966-2f25-4fac-91b6-6b8a6a42bde8" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img class="fr-dib fr-fil" alt="Ernie Jette" src="images/59bcf2121983750b288c4048c7ea7a27a9c00e50b9b9369a5e24826232c93a4b.gif"></p>
+<p>Name:   ERNEST A. JETTE<br>Street:   15 FOXGLOVE COURT<br>City:   NASHUA     State:   NH      ZIP:   03062<br><br>Home Phone:    603-883-3459<br>Email: <a href="mailto:JETTEE@NASHUANH.GOV">JETTEE@NASHUANH.GOV</a><br>Name of Business:    ALDERMAN WARD FIVE<br>Business Phone:    603-589-3030<br>Comment:    <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:   2<br>Special Designation:  ALDERMAN WARD FIVE<br>Appointment By:  Elected<br>Original Appointment Date: Jan 7 2018    <br>Oath Administered:   Jan 9 2024<br>End of Term:   Dec 31 2025<br>How Established:   Charter<br>Special Reference 1:    40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'ca4f4966-2f25-4fac-91b6-6b8a6a42bde8'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_5" aria-selected="false"><span class="tabName editable" data-sequence="5" data-tabname="Shoshanna Kelly" contenteditable="false">Shoshanna Kelly</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_5" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor8d449451-0a41-4ac8-9d1a-4bdf2ffea0de" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img class="fr-dib fr-fil" src="images/c17ae5d61471ccf3e224280b1475da30e9d44a3cbbe8c7cd8b7812e9300d239e.gif" alt="Shoshanna Kelly"></p>
+<p>Name:   SHOSHANNA KELLY<br>Street:   18 RENE DRIVE<br>City:   NASHUA     State:   NH      ZIP:   03062<br><br>Home Phone:   603-589-3030<br>Email:    <a href="mailto:KELLYS@NASHUANH.GOV">KELLYS@NASHUANH.GOV</a><br>Name of Business:    ALDERWOMAN-AT-LARGE<br>Business Phone:    603-589-3030<br>Comment:    <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:  4  <br>Special Designation:  ALDERWOMAN-AT-LARGE<br>Appointment By:  Elected<br>Original Appointment Date:  Jan 7 2018  <br>Oath Administered:   Jan 9 2022<br>End of Term:   Dec 31 2025<br>How Established:   Charter<br>Special Reference 1:    40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '8d449451-0a41-4ac8-9d1a-4bdf2ffea0de'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_6" aria-selected="false"><span class="tabName editable" data-sequence="6" data-tabname="Patricia Klee" contenteditable="false">Patricia Klee</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_6" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor5e93680d-c530-4908-b365-8e11b9a45848" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img class="fr-dib fr-fil" alt="Trish Klee" src="images/ec2dd8be93b6f5afa8aade57116da77ef42efc5fc4fc75ee29997ff2c6546832.gif"></p>
+<p>Name:   PATRICIA KLEE<br>Street:   9 MAYWOOD DRIVE<br>City:   NASHUA     State:   NH      ZIP:   03064<br><br>Home Phone:    603-966-0979<br>Email: <a href="mailto:KLEEP@NASHUANH.GOV">KLEEP@NASHUANH.GOV</a><br>Name of Business:    ALDERMAN WARD THREE<br>Business Phone:    603-589-3030<br>Comment:    <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:  2  <br>Special Designation:  ALDERMAN WARD THREE<br>Appointment By:  Elected<br>Original Appointment Date:  Jan 7 2018  <br>Oath Administered:  Jan 9 2024    <br>End of Term:   Dec 31 2025</p>
+<p>How Established:   Charter<br>Special Reference 1:   40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '5e93680d-c530-4908-b365-8e11b9a45848'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_7" aria-selected="false"><span class="tabName editable" data-sequence="7" data-tabname="Thomas Lopez" contenteditable="false">Thomas Lopez</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_7" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor4a5f0ac6-be75-4feb-b0ba-00db483ec111" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img title="Tom Lopez" alt="Tom Lopez" src="images/f363cb2c7976f0ae4c1c64c8b32af289a86d3c92addff4b2e7f56fea6049c3f5.jpg" class="fr-fic fr-dii"></p>
+<p><br></p>
+<p>Name:   THOMAS LOPEZ</p>
+<p>Street:   57 PALM STREET</p>
+<p>City:   NASHUA     State:   NH      ZIP:   03060</p>
+<p><br></p>
+<p> Office Phone:    603-589-3030</p>
+<p>Email:    <a href="mailto:LOPEZT@NASHUANH.GOV" target="_self" class="Hyperlink">LOPEZT@NASHUANH.GOV</a></p>
+<p>Name of Business:    ALDERMAN WARD FOUR</p>
+<p>Comment:    </p>
+<p><br></p>
+<p>Board or Commission Name:    BOARD OF ALDERMEN</p>
+<p>Term Length:    2</p>
+<p>Special Designation:    ALDERMAN WARD FOUR</p>
+<p>Appointment By:    Elected</p>
+<p>Original Appointment Date:    Jan 10 2016</p>
+<p>Oath Administered:    Jan 9 2024</p>
+<p>End of Term:    Dec 31 2025</p>
+<p>How Established:    Charter</p>
+<p>Special Reference 1:    40</p>
+<p>Special Reference 2:    </p>
+<p>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '4a5f0ac6-be75-4feb-b0ba-00db483ec111'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_8" aria-selected="false"><span class="tabName editable" data-sequence="8" data-tabname="MELBOURNE MORAN, JR." contenteditable="false">MELBOURNE MORAN, JR.</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_8" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditorc019302b-dab4-456f-b60d-fa3d5453ea31" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/3629fd185e08d533f4731016623b1c1d4fd089a5f7af27732427cbd0c80c61f4.jpg" class="fr-fil fr-dib" alt="Melbourne Moran Jr"></p>
+<p>Name:   MELBOURNE MORAN, JR.<br>Street:   15 Lamb Road<br>City:   NASHUA     State:   NH      ZIP:   03062<br><br>Home Phone:    1-978-483-0182<br>Email: <a href="mailto:MORANM@NASHUANH.GOV">MORANM@NASHUANH.GOV</a><br>Name of Business:    ALDERMAN-AT-LARGE<br>Business Phone:    603-589-3030<br>Comment:    <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:   4<br>Special Designation:  ALDERMAN-AT-LARGE<br>Appointment By:  Elected<br>Original Appointment Date:  Nov 2 2021 <br>Oath Administered:  Jan 9 2022  <br>End of Term:   Dec 31 2025<br>How Established:   Charter<br>Special Reference 1:  40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'c019302b-dab4-456f-b60d-fa3d5453ea31'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_9" aria-selected="false"><span class="tabName editable" data-sequence="9" data-tabname="Michael B. O'Brien, Sr." contenteditable="false">Michael B. O'Brien, Sr.</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_9" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditorf56945e1-e853-4474-8d4e-12e85fa9f250" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img title="Ald. O'Brien" alt="Ald. O'Brien" src="images/5d392f3889025af60b633b0d8e4a1cb59cd6d4ec4f77c25dbff8f3e6399e4baa.jpg" class="fr-fic fr-dii"></p>
+<p><br></p>
+<p>Name:   MICHAEL B. O'BRIEN, SR</p>
+<p>Street:   4 WOODFIELD STREET</p>
+<p>City:   NASHUA     State:   NH      ZIP:   03062</p>
+<p><br></p>
+<p>Home Phone:    603-888-8051</p>
+<p>Email:    <a href="mailto:OBRIENM@NASHUANH.GOV" target="_self" class="Hyperlink">OBRIENM@NASHUANH.GOV</a></p>
+<p>Name of Business:    <span style="background-color: rgba(255, 255, 255, 0.93);">VICE PRESIDENT BOARD OF ALDERMEN</span></p>
+<p>Comment:    </p>
+<p><br></p>
+<p>Board or Commission Name:    BOARD OF ALDERMEN</p>
+<p>Term Length:    4</p>
+<p>Special Designation:   <span style="background-color: rgba(255, 255, 255, 0.93);">VICE PRESIDENT BOARD OF ALDERMEN</span></p>
+<p>Appointment By:    Elected</p>
+<p>Original Appointment Date:    Jan 10 2016</p>
+<p>Oath Administered:    Jan 9 2024</p>
+<p>End of Term:    Dec 31 2027</p>
+<p>How Established:    Charter</p>
+<p>Special Reference 1:    40</p>
+<p>Special Reference 2:    </p>
+<p>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'f56945e1-e853-4474-8d4e-12e85fa9f250'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_10" aria-selected="false"><span class="tabName editable" data-sequence="10" data-tabname="Tim Sennott" contenteditable="false">Tim Sennott</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_10" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor32c80e55-ce86-4a13-b079-0e48b78d8b18" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/ac98d2417c0768821437258c99190cf6c4e609001d707fcfc9473627d6730b78.jpg" class="fr-fil fr-dib" alt="Tim Sennott web photo"></p>
+<p><br></p>
+<p>Name:   Tim Sennott</p>
+<p>Street:   62 Underhill Street</p>
+<p>City:    Nashua    State:   NH      ZIP:   03060</p>
+<p><br></p>
+<p>Home Phone:  603-347-8971</p>
+<p>Email:  <a href="mailto:SENNOTTT@NASHUANH.GOV">SENNOTTT@NASHUANH.GOV</a> </p>
+<p>Name of Business:    ALDERMAN WARD SEVEN</p>
+<p>Business Phone:   603-589-3030</p>
+<p>Comment:    </p>
+<p><br></p>
+<p>Board or Commission Name:    BOARD OF ALDERMEN</p>
+<p>Term Length:    2</p>
+<p>Special Designation:    ALDERMAN WARD SEVEN</p>
+<p>Appointment By:    Nominated</p>
+<p>Original Appointment Date:   November 14, 2023</p>
+<p>Oath Administered:    January 9, 2024</p>
+<p>End of Term:    Dec 31 2025</p>
+<p>How Established:    Charter</p>
+<p>Special Reference 1:    40</p>
+<p>Special Reference 2:    </p>
+<p>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '32c80e55-ce86-4a13-b079-0e48b78d8b18'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_11" aria-selected="false"><span class="tabName editable" data-sequence="11" data-tabname="JOHN SULLIVAN" contenteditable="false">JOHN SULLIVAN</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_11" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditorce08f384-46ce-4f06-838c-7f259ee31adf" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/ded24585481c7fdac8b296a1005791557220cb328a4a3062a57dd2892e19670c.jpg" class="fr-fil fr-dib" alt="John Sullivan"></p>
+<p>Name:  JOHN SULLIVAN<br>Street:   30 HOLBROOK DRIVE<br>City:   NASHUA     State:   NH      ZIP:   03062<br><br>Home Phone:    603-365-7785<br>Email: <a href="mailto:SULLIVANJ@NASHUANH.GOV">SULLIVANJ@NASHUANH.GOV</a><br>Name of Business:    ALDERMAN WARD NINE<br>Business Phone:    589-3030<br>Comment:    <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:  2<br>Special Designation:    ALDERMAN WARD NINE<br>Appointment By:  Elected<br>Original Appointment Date:  Nov 2 2021   <br>Oath Administered:  Jan 9 2024<br>End of Term:  Dec 31 2025<br>How Established:   Charter<br>Special Reference 1:   40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'ce08f384-46ce-4f06-838c-7f259ee31adf'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_12" aria-selected="false"><span class="tabName editable" data-sequence="12" data-tabname="DEREK THIBEAULT" contenteditable="false">DEREK THIBEAULT</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_12" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor0a2aa4e2-eae9-427e-b364-99cb11c8d2c0" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/257cfbb13595b3c58ba604d2c5951f2d30800a9aa6d85d86e92602ea2947e174.jpg" alt="Derek Thibeault" title="Derek Thibeault" class="fr-fic fr-dii"></p>
+<p><br></p>
+<p> Name:   DEREK THIBEAULT</p>
+<p>Street:   9 EMERSON ROAD</p>
+<p>City:   NASHUA     State:   NH      ZIP:   03062</p>
+<p><br></p>
+<p>Home Phone:    603-305-8046</p>
+<p>Email:    <a href="mailto:THIBEAULTD@NASHUANH.GOV" target="_self" class="Hyperlink">THIBEAULTD@NASHUANH.GOV</a></p>
+<p>Name of Business:    ALDERMAN WARD EIGHT</p>
+<p>Business Phone:    603-589-3030</p>
+<p>Comment:    </p>
+<p><br></p>
+<p>Board or Commission Name:    BOARD OF ALDERMEN</p>
+<p>Term Length:    2</p>
+<p>Special Designation:    ALDERMAN WARD EIGHT</p>
+<p>Appointment By:    Elected</p>
+<p>Original Appointment Date:    Nov 2 2021</p>
+<p>Oath Administered:    Jan 9 2024</p>
+<p>End of Term:    Dec 31 2025</p>
+<p>How Established:    Charter</p>
+<p>Special Reference 1:    40</p>
+<p>Special Reference 2:    </p>
+<p>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '0a2aa4e2-eae9-427e-b364-99cb11c8d2c0'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_13" aria-selected="false"><span class="tabName editable" data-sequence="13" data-tabname="Chris Thibodeau" contenteditable="false">Chris Thibodeau</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_13" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditor5053ccf0-461a-40fe-8d88-898fb0853164" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/f3dfe4751e22087186e71f461bfe92bc4deab1da912a014357f78acb2f33811b.jpg" class="fr-fil fr-dib" alt="Chris Thibodeau web photo"></p>
+<p>Name:   CHRIS THIBODEAU<br>Street:  71 Blossom Street<br>City:   NASHUA     State:   NH      ZIP:   03060<br><br>Home Phone:    603-565-0594<br>Email: <a href="mailto:COMEAUA@NASHUANH.GOV"></a> <a href="mailto:%20THIBODEAUCH@NASHUANH.GOV">THIBODEAUCH@NASHUANH.GOV</a> </p>
+<p>Name of Business:    ALDERMAN WARD SIX<br>Business Phone:    603-589-3030<br>Comment:    <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:   2<br>Special Designation:  ALDERMAN WARD SIX<br>Appointment By:  Elected<br>Original Appointment Date:  Nov 7 2023 <br>Oath Administered:   Jan 9 2024<br>End of Term:   Dec 31 2025<br>How Established:   Charter<br>Special Reference 1:    40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '5053ccf0-461a-40fe-8d88-898fb0853164'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_14" aria-selected="false"><span class="tabName editable" data-sequence="14" data-tabname="GLORIA TIMMONS" contenteditable="false">GLORIA TIMMONS</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_14" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditoraa4c62a8-a5b2-4010-8527-324d19b9d1f4" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img src="images/305063618260fa6875b8f065ea0bc5f9c59c9d240fe27098fb9caa5c07997a7d.jpg" class="fr-fil fr-dib" alt="Gloria Timmons"></p>
+<p>Name:   GLORIA TIMMONS<br>Street:  3 ROEDEAN DRIVE<br>City:   NASHUA     State:   NH      ZIP:  03063<br><br>Home Phone:    603-521-7988<br>Email: <a href="mailto:TIMMONSG@NASHUANH.GOV">TIMMONSG@NASHUANH.GOV</a><br>Name of Business:  <br>Business Phone:   603-589-3030<br>Comment:  <br><br>Board or Commission Name:    BOARD OF ALDERMEN<br>Term Length:  4  <br>Special Designation:    ALDERWOMAN-AT-LARGE<br>Appointment By:    ELECTED<br>Original Appointment Date:    Nov 2 2021<br>Oath Administered:    Jan 9 2022<br>End of Term:    Dec 31, 2025<br>How Established:    Charter<br>Special Reference 1:    40<br>Special Reference 2:    <br>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'aa4c62a8-a5b2-4010-8527-324d19b9d1f4'));
+	});
+</script>
+</div>
+				</div>
+					<ol class="tabbedWidgetNarrow cpTabs " style="display: none;">
+						<li class="">	<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="tabButton" role="tab" aria-controls="#tabd47ba185-ca4e-402f-aee8-d32b12252c8d_15" aria-selected="false"><span class="tabName editable" data-sequence="15" data-tabname="Lori Wilshire" contenteditable="false">Lori Wilshire</span></a>
+</li>
+					</ol>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_15" role="tabpanel">
+
+<div class="widget editor pageStyles narrow" id="divEditord39aa173-1412-4d08-8232-c1758ae9bcea" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}'>
+	    <div class="fr-view">
+
+
+        <p><img title="Ald. Wilshire" alt="Ald. Wilshire" src="images/3e14b2162d6e8491e8006368a3c864ad88b5de188b62ecc5b8438a05d90055d7.jpg" class="fr-fic fr-dii"></p>
+<p><br></p>
+<p>Name:   LORI WILSHIRE</p>
+<p>Street:   39 PINE HILL AVENUE</p>
+<p>City:   NASHUA     State:   NH      ZIP:   03064</p>
+<p><br></p>
+<p>Home Phone:    603-809-4203</p>
+<p>Email:    <a href="mailto:WILSHIREL@NASHUANH.GOV" target="_self" class="Hyperlink">WILSHIREL@NASHUANH.GOV</a></p>
+<p>Name of Business:    PRESIDENT BOARD OF ALDERMEN</p>
+<p>Business Phone:    603-589-3030</p>
+<p>Comment:  </p>
+<p><br></p>
+<p>Board or Commission Name:    BOARD OF ALDERMEN</p>
+<p>Term Length:    4</p>
+<p>Special Designation:   PRESIDENT BOARD OF ALDERMEN</p>
+<p>Appointment By:    Elected</p>
+<p>Original Appointment Date:    Jan 6 2008</p>
+<p>Oath Administered:    Jan 9 2024</p>
+<p>End of Term:    Dec 31 2027</p>
+<p>How Established:    Charter</p>
+<p>Special Reference 1:    40</p>
+<p>Special Reference 2:    </p>
+<p>Special Requirements:</p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + 'd39aa173-1412-4d08-8232-c1758ae9bcea'));
+	});
+</script>
+</div>
+				</div>
+				<div class="tabbedWidget cpTabPanel " style="display: none;" id="tabd47ba185-ca4e-402f-aee8-d32b12252c8d_16" role="tabpanel">
+							<ol class="cpForm selfClear">
+								<li class="left">
+									<label for="txtTabName">Tab Name</label>
+								</li>
+							</ol>
+				</div>
+					</div>
+	</div>
+	<script type="text/javascript">
+		
+		$.when(window.Pages.rwdReady).done(function () {
+			var tabbedWidgetID = 'divTabbedd47ba185-ca4e-402f-aee8-d32b12252c8d';
+			var mediaQuerySize = 25;
+			if (mediaQuerySize > 0) {
+				var mediaElementQuery = '#' + tabbedWidgetID + ':media(this-min-width:' + mediaQuerySize + 'em)';
+				var $tabbedWidget = $('#' + tabbedWidgetID);
+				window.cpMedia.unregister(mediaElementQuery).register(mediaElementQuery, {
+					deferSetup: false,
+					setup: function () {
+						var liveEditEnabled = $.cookie("enableLiveEdit") === "true";
+						if (!liveEditEnabled) {
+							$tabbedWidget.addClass('narrow').removeClass('wide');
+							cpMedia.diag('$(element).addClass("narrow"), mediaQuery: ' + mediaElementQuery);
+							$tabbedWidget.find('.tabbedWidget.cpTabs').hide();
+							$tabbedWidget.find('.tabbedWidgetNarrow.cpTabs').show();
+							$tabbedWidget.data("tabHeightSet", false);
+						}
+					},
+					match: function () {
+						$tabbedWidget.addClass('wide').removeClass('narrow');
+						cpMedia.diag('$(element).removeClass("narrow"), mediaQuery: ' + mediaElementQuery);
+						$tabbedWidget.find('.tabbedWidget.cpTabs').show();
+						$tabbedWidget.find('.tabbedWidgetNarrow.cpTabs').hide();
+
+						if($tabbedWidget.data("tabHeightSet") == false)
+						{
+							$tabbedWidget.data("tabHeightSet", true);
+
+							var tabbedWidgetID = 'divTabbedd47ba185-ca4e-402f-aee8-d32b12252c8d';
+							setTabbedWidgetsTabHeight(tabbedWidgetID);
+						}
+						$('.cpTabPanels').unbind('click');
+					},
+					unmatch: function () {
+						var liveEditEnabled = $.cookie("enableLiveEdit") === "true";
+						if (!liveEditEnabled) {
+							$tabbedWidget.addClass('narrow').removeClass('wide');
+							cpMedia.diag('$(element).addClass("narrow"), mediaQuery: ' + mediaElementQuery);
+							$tabbedWidget.find('.tabbedWidget.cpTabs').hide();
+							$tabbedWidget.find('.tabbedWidgetNarrow.cpTabs').show();
+						}
+						$('.cpTabPanels').click(function() {
+							this.scrollIntoView();
+						});
+					}
+				});
+			}
+		});	
+		
+		//Used for when page is initially loaded
+		if($('#divTabbedd47ba185-ca4e-402f-aee8-d32b12252c8d').hasClass('narrow'))
+		{
+			$('.cpTabPanels').click(function() {
+				this.scrollIntoView();
+			});
+		}
+		
+
+		//If responsive not enabled, execute this after a timeout
+		if(!isResponsiveEnabled)
+		{
+			window.setTimeout(function(){
+				var tabbedWidgetID = 'divTabbedd47ba185-ca4e-402f-aee8-d32b12252c8d';
+				typeof setTabbedWidgetsTabHeight === "function" && setTabbedWidgetsTabHeight(tabbedWidgetID);
+			}, 1500);
+		}
+
+		function reinitCarousels() {
+			if (window.carouselsToInit) {
+				for (var i = 0; i < window.carouselsToInit.length; i++) {
+					carouselsToInit[i]();
+				}
+			}
+		}
+		function sizeTabbedContent(element){
+			if(window.Pages){
+				if(window.Pages.onResizeHandlers){
+					var setTabbedInterval = setInterval(function () {
+						window.Pages.onResizeHandlers.forEach(function(car){car();});
+					}, 25)
+
+
+					setTimeout(function () {
+						clearInterval(setTabbedInterval);
+						if ($.cookie("enableLiveEdit") === "true") {
+							setInterval(function () {
+								window.Pages.onResizeHandlers.forEach(function(car){car();});
+							}, 2000);
+						}
+					}, 2500);
+					element.onclick="window.setTimeout(function(){reinitCarousels();},2);"
+				}
+			}
+		}
+
+		function adjustTab(e) {
+			e.preventDefault();
+			window.setTimeout(function(){
+				reinitCarousels();
+			}, 2);
+			sizeTabbedContent(this);
+		}
+
+		var tabButtons = document.querySelectorAll("#divTabbedd47ba185-ca4e-402f-aee8-d32b12252c8d .tabButton");
+
+		tabButtons.forEach(function (tabButton) {
+			tabButton.addEventListener("click", adjustTab);
+		});
+
+	</script>
+
+
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+		</div>
+
+	</div>
+
+	
+	<div class="newCP">
+
+	</div>
+</div>
+</div>
+<aside data-cprole="contentContainer" id="featureColumn" class="secondaryContent" style="display: block;">	<div id="cc69ee5b58-b2af-4813-90c0-3b8746c5a85f" data-containerid="69ee5b58-b2af-4813-90c0-3b8746c5a85f" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="42f31ab1-89bf-4c68-9127-213ad1a44820">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last id25b1e114-9144-4b4b-8983-662da637a543" style="height: 533px;" data-widgetcontainerid="25b1e114-9144-4b4b-8983-662da637a543">
+	
+
+
+
+
+
+
+
+
+<div data-widget-id="2562d340-5989-4d01-82f7-275bd800c03f" data-modulewidgettype="cityDirectory" data-widget-controller-path="/CityDirectory/Widget">
+	<div id="cityDirectoryWidget2562d340-5989-4d01-82f7-275bd800c03f" class="widget widgetStaffDirectory skin67 wide">
+			<div class="widgetHeader">
+					<h3><a style="" href="https://www.nashuanh.gov/Directory.aspx">Primary Contact</a></h3>
+							</div>
+						<ol class="semanticList">
+			<li class="widgetItem h-card">
+
+
+				<h4 class="widgetTitle field p-name">
+					Donna L.  Graham
+					
+				</h4>
+				<div class="field p-job-title"></div>
+						<div class="field u-email"><a href="mailto:grahamd@NashuaNH.gov">Email </a></div>
+
+
+					<div class="field p-tel">Phone: <a href="tel:6035893030">603-589-3030</a>
+</div>
+
+
+
+				<br>
+			</li>
+		<li class="widgetItem h-card">
+
+				<h4 class="widgetTitle field p-name">Board of Aldermen</h4>
+
+					<div class="field u-email"><a href="mailto:boa@nashuanh.gov">Email</a></div>
+					<br>
+
+
+				<div class="field h-adr">
+					<strong>Physical Address</strong>
+					<br>
+					<span class="p-street-address">229 Main Street</span><br>
+					<span class="locality">Nashua</span>, <span class="p-region">NH</span> <span class="p-postal-code">03061</span>
+
+				</div>
+				<br>
+
+
+				<div class="field h-adr">
+					<strong>Mailing Address</strong><br>
+					<span class="p-post-office-box">P.O. Box 2019 </span><br>
+					<span class="locality">Nashua</span>, <span class="p-region">NH</span> <span class="p-postal-code">03061</span>
+				</div>
+				<br>
+
+				<div class="field p-tel">Phone: <a href="tel:6035893030">603-589-3030</a>
+</div>
+							<div class="field">Fax: 603-589-3039</div>
+										<br>
+
+
+
+		</li>
+									</ol>
+	</div>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="d770f34f-a266-4da0-acaa-a50e3fb02d1a">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last id254204c0-eb4c-4817-971c-5d4180b18fa2" style="height: 354px;" data-widgetcontainerid="254204c0-eb4c-4817-971c-5d4180b18fa2">
+	
+<div data-widget-id="965ce713-0d10-4bcb-8e9c-a291d018de7e" data-widget-controller-path="/Calendar/Widget">
+	<script src="/Areas/Calendar/Assets/Scripts/Calendar.js"></script>
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="widgetCalendar965ce713-0d10-4bcb-8e9c-a291d018de7e" class="widget widgetCalendar skin67 widgetOptionSet3 wide" data-modulewidgettype="calendar" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn">
+		<div class="widgetHeader ">
+			<div class="">
+							<h3 id="calendarHeader965ce713-0d10-4bcb-8e9c-a291d018de7e"><a style="" href="https://www.nashuanh.gov/calendar.aspx">Calendar</a></h3>
+
+			</div>
+					</div>
+	<div class="widgetBody cpGrid cpGrid1  ">
+				<div class="calendarInnerWrapper">
+					
+
+
+
+
+
+
+
+<div class="row   wide" style="">
+	
+
+<script src="/Scripts/jquery.urlToLink.min.js"></script>
+<input type="hidden" value='["2025-05-07"]' name="day-list">
+
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+
+
+
+
+
+
+
+
+
+
+<li class="widgetItem  " data-event-i-d="12370">
+
+
+		<h4 class="widgetTitle">Wed, May 7  </h4>
+		<div style="" class="widgetDesc">
+					<strong><a href="https://www.nashuanh.gov/Calendar.aspx?EID=12370">Joint Meeting - Committee on Infrastructure and Police Commission</a></strong>
+
+		</div>
+	</li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="widgetItem  " data-event-i-d="12547">
+
+
+		<h4 class="widgetTitle">Wed, May 7  </h4>
+		<div style="" class="widgetDesc">
+					<strong><a href="https://www.nashuanh.gov/Calendar.aspx?EID=12547">Committee on Infrastructure - 5/7/25</a></strong>
+
+		</div>
+	</li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="widgetItem  " data-event-i-d="11869">
+
+
+		<h4 class="widgetTitle">Wed, May 7  </h4>
+		<div style="" class="widgetDesc">
+					<strong><a href="https://www.nashuanh.gov/Calendar.aspx?EID=11869">Finance Committee</a></strong>
+
+		</div>
+	</li>
+					</ol>
+				</div>
+
+</div>
+									</div>
+					<a id="calendarViewAll965ce713-0d10-4bcb-8e9c-a291d018de7e" class="widgetViewAll alignLeft" style="" href="https://www.nashuanh.gov/calendar.aspx" aria-labelledby="calendarHeader965ce713-0d10-4bcb-8e9c-a291d018de7e calendarViewAll965ce713-0d10-4bcb-8e9c-a291d018de7e">View All</a>
+					</div>
+	<div class="widgetFooter">
+		
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/Calendar.aspx</div>
+	</div>
+</div>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</aside>
+</div>
+<div data-cprole="structuralContainer" id="siteSidebarTS" class="siteSidebar">
+<aside data-cprole="contentContainer" id="sidebarContainer1TS">	<div id="cc667d2036-4d3d-4921-b736-5100512def01" data-containerid="667d2036-4d3d-4921-b736-5100512def01" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><nav data-cprole="nav" id="secondaryNav" class="siteNav secondaryNav">
+
+
+
+
+
+	<ol role="menu" id="secondaryMenusecondaryNav" data-parent="514" class="rootNavMenu accordionNav arrowIndicator">
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem527" data-pageid="527">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/DocumentCenter/Index/2577" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Committee Membership (PDF)</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem530" data-pageid="530">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/quicklinks.aspx?CID=30" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Legislation</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem523" data-pageid="523">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/DocumentCenter/View/3836" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Ward Map</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem853" data-pageid="853">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Budget-Review-Committee-15" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Budget Review Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem857" data-pageid="857">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Committee-on-Infrastructure-34" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Committee on Infrastructure</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem854" data-pageid="854">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Finance-Committee-32" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Finance Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem855" data-pageid="855">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Human-Affairs-Committee-33" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Human Affairs Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem858" data-pageid="858">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Joint-Special-School-Building-Committee-37" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Joint Special School Building Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem884" data-pageid="884">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Pennichuck-Water-Special-Committee-40" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Pennichuck Water Special Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem859" data-pageid="859">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/PersonnelAdministrative-Affairs-Committe-36" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Personnel/Administrative Affairs Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem860" data-pageid="860">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Planning-Economic-Development-Committee-35" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Planning &amp; Economic Development Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem883" data-pageid="883">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/School-Construction-Projects-Committee-39" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">School Construction Projects Committee</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem868" data-pageid="868">
+		<div class="accordionNavItem">
+			<a href="https://www.nashuanh.gov/AgendaCenter/Substandard-Living-Conditions-Special-Co-38" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Substandard Living Conditions Special Committee</a>
+		</div>
+			</li>
+
+	</ol>
+
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			//setup menu manager properties for secondary menu
+			menuManager.isSideMenuEditable = false;
+			menuManager.sideMenuMaxSubMenuLevels = 4;
+			menuManager.sideMenuHasCustomLinks = false;
+		});
+	</script>
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			$('*[id^="SideItem"]').each(function () {
+				var ids = $('[id="' + this.id + '"]');
+				if (ids.length > 1)
+					$.each(ids, function (index, value) {
+						value.id = value.id + '_' + index;
+					});
+			});
+
+			$('.hasAccordionChildren .openAccordionNav').click(function (e) {
+				e.preventDefault();
+				showHideAccordionMenuForSecondaryNav($(this));
+			});
+
+			$("#secondaryNav .grippy").each(function () {
+				menuManager.setupDraggableElement($(this), SIDE_MENU, '#secondaryNav');
+			});
+
+			$("#secondaryNav li").each(function () {
+				menuManager.setupDroppableAccordionElement($(this), SIDE_MENU);
+			});
+		});
+	</script>
+
+
+
+</nav><aside data-cprole="contentContainer" id="sidebarContainer2TS">	<div id="cc66f1c99e-8fdd-42de-8db9-ee7b54159792" data-containerid="66f1c99e-8fdd-42de-8db9-ee7b54159792" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div>
+</div></div>
+</div>
+<!-- GBs --><div data-cprole="structuralContainer" id="gbsContainerTS">
+<div class="siteWrap3"><div data-cprole="contentContainer" id="gbsTS">	<div id="cc228805f9-75bf-4aac-a232-d311be20bc4a" data-containerid="228805f9-75bf-4aac-a232-d311be20bc4a" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="50">
+				                
+
+		<div class="row outer">
+<!--
+--><div class="outer col col8 first" style="height: auto;" data-widgetcontainerid="9c9fa549-caec-4ca8-a5db-6d385824481a">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col8 first last id0163b6f2-f4da-4a0c-80f0-3bedc4b70b0d" style="height: 221px;" data-widgetcontainerid="0163b6f2-f4da-4a0c-80f0-3bedc4b70b0d">
+	
+<div data-widget-id="cc693bf8-91df-4b78-8585-b60fd1c21e70" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidgetcc693bf8-91df-4b78-8585-b60fd1c21e70" class="widget widgetGraphicLinks skin69 widgetOptionSet40 wide" data-elementqueryclasses='{"wide-narrow":"min-width:27em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/131/Online-Payments" target="_self" class="fancyButton fancyButton554 ">
+		<span>
+			<span><span class="text">Pay Bills</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton554.fancyButton:link,.fancyButton554.fancyButton:visited, .fancyButton554div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17291');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton554>span {
+height: 100px;
+}
+
+.fancyButton554>span>span {
+height: 100px;}
+.fancyButton554.fancyButton:hover,.fancyButton554.fancyButton:focus,.fancyButton554.fancyButton:active,.fancyButton554.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17292');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton554.fancyButton:link > span,.fancyButton554.fancyButton:visited > span, .fancyButton554div.fancyButton > span{
+}
+.fancyButton554.fancyButton:hover > span,.fancyButton554.fancyButton:focus > span,.fancyButton554.fancyButton:active > span,.fancyButton554.fancyButton.hover > span{
+}
+.fancyButton554.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton554.fancyButton:hover .text,.fancyButton554.fancyButton:focus .text,.fancyButton554.fancyButton:active .text,.fancyButton554.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/alertcenter.aspx" target="_self" class="fancyButton fancyButton555 ">
+		<span>
+			<span><span class="text">Alerts &amp;<br>Notifications</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton555.fancyButton:link,.fancyButton555.fancyButton:visited, .fancyButton555div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17283');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton555>span {
+height: 100px;
+}
+
+.fancyButton555>span>span {
+height: 100px;}
+.fancyButton555.fancyButton:hover,.fancyButton555.fancyButton:focus,.fancyButton555.fancyButton:active,.fancyButton555.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17284');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton555.fancyButton:link > span,.fancyButton555.fancyButton:visited > span, .fancyButton555div.fancyButton > span{
+}
+.fancyButton555.fancyButton:hover > span,.fancyButton555.fancyButton:focus > span,.fancyButton555.fancyButton:active > span,.fancyButton555.fancyButton.hover > span{
+}
+.fancyButton555.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton555.fancyButton:hover .text,.fancyButton555.fancyButton:focus .text,.fancyButton555.fancyButton:active .text,.fancyButton555.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/404/Motor-Vehicle-Registration" target="_self" class="fancyButton fancyButton556 ">
+		<span>
+			<span><span class="text">Motor Vehicle</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton556.fancyButton:link,.fancyButton556.fancyButton:visited, .fancyButton556div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17301');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton556>span {
+height: 100px;
+}
+
+.fancyButton556>span>span {
+height: 100px;}
+.fancyButton556.fancyButton:hover,.fancyButton556.fancyButton:focus,.fancyButton556.fancyButton:active,.fancyButton556.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17302');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton556.fancyButton:link > span,.fancyButton556.fancyButton:visited > span, .fancyButton556div.fancyButton > span{
+}
+.fancyButton556.fancyButton:hover > span,.fancyButton556.fancyButton:focus > span,.fancyButton556.fancyButton:active > span,.fancyButton556.fancyButton.hover > span{
+}
+.fancyButton556.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton556.fancyButton:hover .text,.fancyButton556.fancyButton:focus .text,.fancyButton556.fancyButton:active .text,.fancyButton556.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/civicalerts.aspx?CID=10" target="_self" class="fancyButton fancyButton552 ">
+		<span>
+			<span><span class="text">Road Work<br>News</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton552.fancyButton:link,.fancyButton552.fancyButton:visited, .fancyButton552div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17297');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+min-height: 100px;
+}
+
+.fancyButton552>span {
+min-height: 100px;
+}
+
+.fancyButton552>span>span {
+height: 95px;}
+.fancyButton552.fancyButton:hover,.fancyButton552.fancyButton:focus,.fancyButton552.fancyButton:active,.fancyButton552.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17298');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton552.fancyButton:link > span,.fancyButton552.fancyButton:visited > span, .fancyButton552div.fancyButton > span{
+}
+.fancyButton552.fancyButton:hover > span,.fancyButton552.fancyButton:focus > span,.fancyButton552.fancyButton:active > span,.fancyButton552.fancyButton.hover > span{
+}
+.fancyButton552.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton552.fancyButton:hover .text,.fancyButton552.fancyButton:focus .text,.fancyButton552.fancyButton:active .text,.fancyButton552.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8" style="height: auto;" data-widgetcontainerid="9c0c583b-c2e5-4d61-8aae-c583044ee38d">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col8 first last id9a612a3d-8d05-4657-904b-3ce275cc1232" style="height: 221px;" data-widgetcontainerid="9a612a3d-8d05-4657-904b-3ce275cc1232">
+	
+<div data-widget-id="fd3e4f02-eac3-48c9-ba44-496b9ba8b3cb" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidgetfd3e4f02-eac3-48c9-ba44-496b9ba8b3cb" class="widget widgetGraphicLinks skin69 widgetOptionSet40 wide" data-elementqueryclasses='{"wide-narrow":"min-width:27em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/698/Maps" target="_self" class="fancyButton fancyButton557 ">
+		<span>
+			<span><span class="text">Maps / GIS</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton557.fancyButton:link,.fancyButton557.fancyButton:visited, .fancyButton557div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17289');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton557>span {
+height: 100px;
+}
+
+.fancyButton557>span>span {
+height: 100px;}
+.fancyButton557.fancyButton:hover,.fancyButton557.fancyButton:focus,.fancyButton557.fancyButton:active,.fancyButton557.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17290');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton557.fancyButton:link > span,.fancyButton557.fancyButton:visited > span, .fancyButton557div.fancyButton > span{
+}
+.fancyButton557.fancyButton:hover > span,.fancyButton557.fancyButton:focus > span,.fancyButton557.fancyButton:active > span,.fancyButton557.fancyButton.hover > span{
+}
+.fancyButton557.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton557.fancyButton:hover .text,.fancyButton557.fancyButton:focus .text,.fancyButton557.fancyButton:active .text,.fancyButton557.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://nashuanh.portal.civicclerk.com/" target="_self" class="fancyButton fancyButton558 ">
+		<span>
+			<span><span class="text">Agendas<br>&amp; Minutes<br>Portal</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton558.fancyButton:link,.fancyButton558.fancyButton:visited, .fancyButton558div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17281');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton558>span {
+height: 100px;
+}
+
+.fancyButton558>span>span {
+height: 100px;}
+.fancyButton558.fancyButton:hover,.fancyButton558.fancyButton:focus,.fancyButton558.fancyButton:active,.fancyButton558.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17282');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton558.fancyButton:link > span,.fancyButton558.fancyButton:visited > span, .fancyButton558div.fancyButton > span{
+}
+.fancyButton558.fancyButton:hover > span,.fancyButton558.fancyButton:focus > span,.fancyButton558.fancyButton:active > span,.fancyButton558.fancyButton.hover > span{
+}
+.fancyButton558.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton558.fancyButton:hover .text,.fancyButton558.fancyButton:focus .text,.fancyButton558.fancyButton:active .text,.fancyButton558.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/150/Assessing-Department" target="_self" class="fancyButton fancyButton559 ">
+		<span>
+			<span><span class="text">Assessing<br>Values &amp; Taxes</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton559.fancyButton:link,.fancyButton559.fancyButton:visited, .fancyButton559div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17293');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton559>span {
+height: 100px;
+}
+
+.fancyButton559>span>span {
+height: 100px;}
+.fancyButton559.fancyButton:hover,.fancyButton559.fancyButton:focus,.fancyButton559.fancyButton:active,.fancyButton559.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17294');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton559.fancyButton:link > span,.fancyButton559.fancyButton:visited > span, .fancyButton559div.fancyButton > span{
+}
+.fancyButton559.fancyButton:hover > span,.fancyButton559.fancyButton:focus > span,.fancyButton559.fancyButton:active > span,.fancyButton559.fancyButton.hover > span{
+}
+.fancyButton559.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton559.fancyButton:hover .text,.fancyButton559.fancyButton:focus .text,.fancyButton559.fancyButton:active .text,.fancyButton559.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/241/Vital-Records" target="_self" class="fancyButton fancyButton560 ">
+		<span>
+			<span><span class="text">City Clerk <br>Vital Records</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton560.fancyButton:link,.fancyButton560.fancyButton:visited, .fancyButton560div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17303');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton560>span {
+height: 100px;
+}
+
+.fancyButton560>span>span {
+height: 100px;}
+.fancyButton560.fancyButton:hover,.fancyButton560.fancyButton:focus,.fancyButton560.fancyButton:active,.fancyButton560.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17304');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton560.fancyButton:link > span,.fancyButton560.fancyButton:visited > span, .fancyButton560div.fancyButton > span{
+}
+.fancyButton560.fancyButton:hover > span,.fancyButton560.fancyButton:focus > span,.fancyButton560.fancyButton:active > span,.fancyButton560.fancyButton.hover > span{
+}
+.fancyButton560.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton560.fancyButton:hover .text,.fancyButton560.fancyButton:focus .text,.fancyButton560.fancyButton:active .text,.fancyButton560.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col8 last" style="height: auto;" data-widgetcontainerid="2f0e32fb-1e6e-42f2-bd76-cc8f1413f285">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col8 first last id29d5906a-0aa0-4138-9791-96c0000d2545" style="height: 221px;" data-widgetcontainerid="29d5906a-0aa0-4138-9791-96c0000d2545">
+	
+<div data-widget-id="7a2f901d-76c1-4299-a839-d0079a414be5" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget7a2f901d-76c1-4299-a839-d0079a414be5" class="widget widgetGraphicLinks skin69 widgetOptionSet40 wide" data-elementqueryclasses='{"wide-narrow":"min-width:27em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row wide">
+<!--
+--><div class="col col1 first "><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/436/Trash-Recycling-Schedule" target="_self" class="fancyButton fancyButton562 ">
+		<span>
+			<span><span class="text">Trash &amp;<br>Recycling</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton562.fancyButton:link,.fancyButton562.fancyButton:visited, .fancyButton562div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17299');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton562>span {
+height: 100px;
+}
+
+.fancyButton562>span>span {
+height: 100px;}
+.fancyButton562.fancyButton:hover,.fancyButton562.fancyButton:focus,.fancyButton562.fancyButton:active,.fancyButton562.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17300');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton562.fancyButton:link > span,.fancyButton562.fancyButton:visited > span, .fancyButton562div.fancyButton > span{
+}
+.fancyButton562.fancyButton:hover > span,.fancyButton562.fancyButton:focus > span,.fancyButton562.fancyButton:active > span,.fancyButton562.fancyButton.hover > span{
+}
+.fancyButton562.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton562.fancyButton:hover .text,.fancyButton562.fancyButton:focus .text,.fancyButton562.fancyButton:active .text,.fancyButton562.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/460/City-Financial-Reports" target="_self" class="fancyButton fancyButton561 ">
+		<span>
+			<span><span class="text">Budget &amp;<br>Financial<br>Reports</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton561.fancyButton:link,.fancyButton561.fancyButton:visited, .fancyButton561div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17285');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton561>span {
+height: 100px;
+}
+
+.fancyButton561>span>span {
+height: 100px;}
+.fancyButton561.fancyButton:hover,.fancyButton561.fancyButton:focus,.fancyButton561.fancyButton:active,.fancyButton561.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17286');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton561.fancyButton:link > span,.fancyButton561.fancyButton:visited > span, .fancyButton561div.fancyButton > span{
+}
+.fancyButton561.fancyButton:hover > span,.fancyButton561.fancyButton:focus > span,.fancyButton561.fancyButton:active > span,.fancyButton561.fancyButton.hover > span{
+}
+.fancyButton561.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton561.fancyButton:hover .text,.fancyButton561.fancyButton:focus .text,.fancyButton561.fancyButton:active .text,.fancyButton561.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!----><div class="col col1  last"><div class="semanticList">
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/1660/Record-and-Service-Requests" target="_self" class="fancyButton fancyButton563 ">
+		<span>
+			<span><span class="text">Public Record &amp; Service Requests</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton563.fancyButton:link,.fancyButton563.fancyButton:visited, .fancyButton563div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17295');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton563>span {
+height: 100px;
+}
+
+.fancyButton563>span>span {
+height: 100px;}
+.fancyButton563.fancyButton:hover,.fancyButton563.fancyButton:focus,.fancyButton563.fancyButton:active,.fancyButton563.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17296');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton563.fancyButton:link > span,.fancyButton563.fancyButton:visited > span, .fancyButton563div.fancyButton > span{
+}
+.fancyButton563.fancyButton:hover > span,.fancyButton563.fancyButton:focus > span,.fancyButton563.fancyButton:active > span,.fancyButton563.fancyButton.hover > span{
+}
+.fancyButton563.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton563.fancyButton:hover .text,.fancyButton563.fancyButton:focus .text,.fancyButton563.fancyButton:active .text,.fancyButton563.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.nashuanh.gov/456/Routes-Schedules" target="_self" class="fancyButton fancyButton564 ">
+		<span>
+			<span><span class="text">Bus Routes<br>&amp; Schedules</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton564.fancyButton:link,.fancyButton564.fancyButton:visited, .fancyButton564div.fancyButton{
+	width: 240px;
+	background-image: url('/ImageRepository/Document?documentID=17287');
+	background-repeat: no-repeat;
+	background-position: left center;
+transition: all .3s ease-in-out;
+height: 100px;
+}
+
+.fancyButton564>span {
+height: 100px;
+}
+
+.fancyButton564>span>span {
+height: 100px;}
+.fancyButton564.fancyButton:hover,.fancyButton564.fancyButton:focus,.fancyButton564.fancyButton:active,.fancyButton564.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=17288');
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.fancyButton564.fancyButton:link > span,.fancyButton564.fancyButton:visited > span, .fancyButton564div.fancyButton > span{
+}
+.fancyButton564.fancyButton:hover > span,.fancyButton564.fancyButton:focus > span,.fancyButton564.fancyButton:active > span,.fancyButton564.fancyButton.hover > span{
+}
+.fancyButton564.fancyButton .text{
+	color: #ffffff;
+	font-family: "Heebo";
+	text-align: left;
+	padding-left: 100px;
+	font-style: normal;
+	text-decoration: none;
+	padding-left: 100px;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+.fancyButton564.fancyButton:hover .text,.fancyButton564.fancyButton:focus .text,.fancyButton564.fancyButton:active .text,.fancyButton564.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: left top;
+
+
+}
+</style>
+
+ </div>
+<!--
+-->
+</div></div>
+<!--			-->
+</div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+<!-- Calendar/Carousel --><!-- <div data-cpRole="structuralContainer" id="homeContainer1">
+    <div class="siteWrap">
+      <div data-cpRole="contentContainer" id="homeContent1a"></div>
+    </div>
+  </div> --><!-- Footer --><footer data-cprole="structuralContainer" id="footerContainerTS">
+<div class="siteWrap"><div data-cprole="contentContainer" id="footerTS">	<div id="ccc55976c9-303e-4c25-9339-6c096dc3fba3" data-containerid="c55976c9-303e-4c25-9339-6c096dc3fba3" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="50">
+				                
+
+		<div class="row outer">
+<!--
+--><div class="outer col col5 first" style="height: auto;" data-widgetcontainerid="02d5dbf7-2c70-4363-afde-6a9bafed746c">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col5 first last id98964761-93d1-4e25-be29-140269b17b89" style="height: 263px;" data-widgetcontainerid="98964761-93d1-4e25-be29-140269b17b89">
+	
+    <div data-widget-id="0628995a-6cba-41de-a666-3b33fa3dc8cf" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdv0628995a-6cba-41de-a666-3b33fa3dc8cf" class="widget widgetInfoAdvanced skin68 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="header0628995a-6cba-41de-a666-3b33fa3dc8cf">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<a href="https://www.nashuanh.gov/" target="_self" title="Site ID" class="Hyperlink"><img src="images/eee5b834de2881b51a4fa46cd03ad87806ab1c64cd69f4039728910b4717ea42.png" alt="www.nashuanh.gov" title="Home"></a>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv0628995a-6cba-41de-a666-3b33fa3dc8cf .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col2" style="height: auto;" data-widgetcontainerid="ccc5bb0e-49dd-4fd7-9f28-e682a1c1c356">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col2 first last iddaa36060-7e0c-40d6-93c0-87d108d40c2d" style="height: 15px;" data-widgetcontainerid="daa36060-7e0c-40d6-93c0-87d108d40c2d">
+	
+
+<div class="widget widgetSpacer" id="e2f7eb23-a559-4ed4-be01-b3c55488f915" style="height: auto;"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col6" style="height: auto;" data-widgetcontainerid="3bdbcdf6-71e0-40b3-a583-8df0ce28f687">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col6 first last id2db7a170-0211-42dc-9ae5-d4f93ace3f96" style="height: 229px;" data-widgetcontainerid="2db7a170-0211-42dc-9ae5-d4f93ace3f96">
+	
+    <div data-widget-id="2a8fe167-0d0f-4ed8-8d9d-d6df95402739" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdv2a8fe167-0d0f-4ed8-8d9d-d6df95402739" class="widget widgetInfoAdvanced skin68 widgetOptionSet5 wide" data-modulewidgettype="infoAdv" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="header2a8fe167-0d0f-4ed8-8d9d-d6df95402739">
+			<header class="widgetHeader" id="header2a8fe167-0d0f-4ed8-8d9d-d6df95402739">
+		<div class="">
+					<h3>Contact Us</h3>
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row wide">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>229 Main Street<br>Nashua, NH 03060</p>
+<p><a href="https://www.nashuanh.gov/27/Government"><strong>City Government</strong></a><strong><!--
+Hours</strong>
+	<br> Monday through Friday
+	<br> 8 am to 5 pm
+	<br>--> <br> <a class="Hyperlink" href="https://www.google.com/maps/place/Nashua,+NH/@42.7528691,-71.5317298,13z/data=!3m1!4b1!4m5!3m4!1s0x89e3b0e42dfabf85:0xb6660811428bea55!8m2!3d42.7653662!4d-71.467566">Directions to City Hall</a> <br> <a class="Hyperlink" title="Sign-up to our Emergency Alerts System" href="https://nashuanh.genasys.com/portal/en">Emergency Alert System</a></strong></p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv2a8fe167-0d0f-4ed8-8d9d-d6df95402739 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script>
+</div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col7" style="height: auto;" data-widgetcontainerid="71f62b1d-b087-42c5-9348-3ec553354760">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col7 first last idf404c58b-82e0-4e8c-9ea0-b162abc5daf8" style="height: 217px;" data-widgetcontainerid="f404c58b-82e0-4e8c-9ea0-b162abc5daf8">
+	
+	<div data-widget-id="714f2219-f636-409b-a292-284d0c8be14d" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklink714f2219-f636-409b-a292-284d0c8be14d" class="widget widgetQuickLinks skin68 widgetOptionSet39 wide" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeader714f2219-f636-409b-a292-284d0c8be14d">
+			<header class="widgetHeader" id="quickLinksHeader714f2219-f636-409b-a292-284d0c8be14d">
+		<div class="">
+					<h3><a style="" href="https://www.nashuanh.gov/QuickLinks.aspx?CID=100">Quick Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  wide">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/804/City-Officials" target="_self">City Officials</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/195/Elections" target="_self">Elections</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/1561/Career-Opportunities" target="_self">Career Opportunities</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/1511/ADA" target="_self">ADA Services</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/quicklinks.aspx?CID=30" target="_self">Ordinances &amp; Resolutions</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!----><div class="outer col col4 last" style="height: auto;" data-widgetcontainerid="0c48e10f-305f-4581-93a4-ca6cf3a562ab">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col4 first last id6f3d92a7-d4c0-460b-917a-9fde53fd6628" style="height: 278px;" data-widgetcontainerid="6f3d92a7-d4c0-460b-917a-9fde53fd6628">
+	
+	<div data-widget-id="a139c41a-8e23-41d6-99ae-54e3a9f10492" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinka139c41a-8e23-41d6-99ae-54e3a9f10492" class="widget widgetQuickLinks skin68 widgetOptionSet39 wide" data-modulewidgettype="quickLinks" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeadera139c41a-8e23-41d6-99ae-54e3a9f10492">
+			<header class="widgetHeader" id="quickLinksHeadera139c41a-8e23-41d6-99ae-54e3a9f10492">
+		<div class="">
+					<h3><a style="" href="https://www.nashuanh.gov/QuickLinks.aspx?CID=101">Helpful Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  wide">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/" target="_self">Home</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/sitemap" target="_self">Site Map</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/directory.aspx" target="_self">Contact Us</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/accessibility" target="_self">Accessibility</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://mail.nashuanh.gov/owa" target="_self">Employee Email Access</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://employee.nashuanh.gov/lawson/portal/" target="_self">Employee Self Service</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.nashuanh.gov/privacy" target="_self">Privacy Policy</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</footer><!-- Powered By --><div data-cprole="structuralContainer" id="poweredByContainerTS">
+<div class="siteWrap"><div data-cprole="contentContainer" id="poweredByTS">	<div id="ccbf6715db-4d3c-43f2-b807-4d33002d7c2c" data-containerid="bf6715db-4d3c-43f2-b807-4d33002d7c2c" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide">
+<!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="45f1aee8-675f-4904-b6d4-813ff89ec1e4">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last idd78f492c-a3c0-41d4-a854-c600de1b6351" style="height: 34px;" data-widgetcontainerid="d78f492c-a3c0-41d4-a854-c600de1b6351">
+	
+ 
+	<div data-widget-id="f5f0f233-3245-4adc-a55e-d20096bc6f13" data-modulename="customHtml" id="widgetCustomHtmlf5f0f233-3245-4adc-a55e-d20096bc6f13" class="widget widgetCustomHtml skin68 narrow">
+	<div class="widgetBody pageStyles" id="widgetBodyf5f0f233-3245-4adc-a55e-d20096bc6f13">
+		<div id="customHtmlf5f0f233-3245-4adc-a55e-d20096bc6f13"><div>
+<style>
+  /* CP icon */
+  .cpBylineIconTS {
+    color: #fff;
+  }
+  /* CP Text */
+  .cpBylineTextTS,
+  .cpBylineTextTS a:link {
+    color: #fff;
+font-weight: 700;
+  }
+
+  .cpBylineTS {
+    text-align: center;
+  }
+  
+  .cpBylineIconTS {
+    fill: currentColor;
+    width: 39px;
+    height: 26px;
+    display: inline;
+    vertical-align: middle;
+  }
+</style>
+
+<div class="widgetItem cpBylineTS">
+  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100" class="cpBylineIconTS">
+    <path class="c" d="M73.4,23.2h-19v16.7h19c2.8,0,5,2.2,5,5c0,2.8-2.2,5-5,5h-19v28.4h5.5l11.3-11.7h2.2c11.9,0,21.6-9.7,21.6-21.6C95,33,85.3,23.2,73.4,23.2"></path>
+    <path class="p" d="M45.8,66.5H26.6C14.7,66.5,5,56.8,5,44.9C5,33,14.7,23.2,26.6,23.2h19.1v16.7H26.6c-2.8,0-5,2.2-5,5c0,2.8,2.2,5,5,5h19.1V66.5z"></path>
+  </svg>
+  <span class="cpBylineTextTS">Government Websites by <a href="https://connect.civicplus.com/referral">CivicPlus®</a></span>
+</div>
+</div></div>
+	</div>
+	</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div>
+<!-- outer column --><!--		-->
+</div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+<a href="https://www.nashuanh.gov/514/Board-of-Aldermen/" class="translateWidget" title="Enable Google Translate" style="background-color: #FFF;border-color: #9b9b9b #d5d5d5 transparent #d5d5d5;border-style: solid;border-width: 1px 1px 0 1px;bottom: 0px;color: #000;cursor: pointer;font-size: .9em;padding: 2px 6px 3px 4px;position: fixed;right: 20px;z-index: 5;"><img alt="Google Translate Icon" src="images/58aedfc8405a8016153aae8b06cd7e02dc2979a81b2866c1ad31ab113f036ccf.gif" style="box-sizing: content-box !important;height:19px;margin: -2px 0 0 -2px;padding-right: 5px;width:19px;">Enable Google Translate</a>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+<link href="/745732998.css" rel="stylesheet" type="text/css">
+
+<div tabindex="0"></div>
+<div id="SplashMessageWrapper" class="cp-Splash-wrapper">
+	<div role="dialog" aria-labelledby="cp-Splash-title" aria-describedby="editorContentDesc" aria-modal="true" tabindex="-1" id="SplashMessage" class="hidden cp-Splash cp-Splash--modal is-open">
+		<div class="cp-Splash-header">
+			<span class="cp-Splash-title" id="cp-Splash-title">Loading</span>
+			<button class="cp-Splash-Btn cp-Splash-close" aria-label="Close this modal" title="Close this window">
+				<svg id="iconClose" viewbox="0 0 25 25">
+					<polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon>
+				</svg>
+			</button>
+		</div>
+		<div class="cp-Splash-body">
+			<div class="cp-Splash-Prose editorContent fr-view fr-element" id="editorContentDesc">
+				<!-- Content from the Froala Editor will go here. -->
+				Loading
+			</div>
+		</div>
+		<div class="cp-Splash-footer">
+			<button class="cp-Splash-Btn cp-Splash-Btn--NoShow">Do Not Show Again</button>
+			<button class="cp-Splash-Btn cp-Splash-Btn--Close">Close</button>
+		</div>
+	</div>
+</div>
+<div tabindex="0"></div>
+
+<script src="/Assets/Scripts/APIClient.js"></script>
+<script src="/Assets/Mystique/Shared/Scripts/Moment/Moment.min.js"></script>
+<script src="/Assets/Scripts/SplashModal/SplashModalRender.js"></script>
+<script>
+
+		$(document).ready(function () {
+			var filter = {
+				targetId: '514',
+				targetType: 1
+			}
+
+			new SplashModalRender().triggerRender(filter);
+		});
+</script>
+
+    
+	
+	
+	
+	
+
+
+
+	
+
+
+
+
+
+
+    <script src="/548031264.js" type="text/javascript"></script>
+    <!-- Google -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+  ga('create', 'UA-646651-1', 'auto');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+ 
+</script>
+<!-- End Google -->
+
+<!-- Google Translate -->
+<script type="text/javascript">
+	var translateActiveCookie = getCookieValue('translateActive');
+
+	if (translateActiveCookie == 'true') {
+		enableGoogleTranslate();
+	} else {
+		var button = '<a href="#translate" class="translateWidget" title="Enable Google Translate" style="background-color: #FFF;border-color: #9b9b9b #d5d5d5 transparent #d5d5d5;border-style: solid;border-width: 1px 1px 0 1px;bottom: 0px;color: #000;cursor: pointer;font-size: .9em;padding: 2px 6px 3px 4px;position: fixed;right: 20px;z-index: 5;">';
+		button += '<img alt="Google Translate Icon" src="/Assets/Images/GoogleTranslate.gif" style="box-sizing: content-box !important;height:19px;margin: -2px 0 0 -2px;padding-right: 5px;width:19px;">Enable Google Translate</a>';
+		$('div[data-cprole="structuralContainer"]').last().after(button);
+	}
+
+	function googleTranslateElementInit() {
+  		new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+	}
+
+	function enableGoogleTranslate() {
+		$('#google_translate_element').show();
+		var sz = document.createElement('script'); sz.type = 'text/javascript'; sz.async = true;
+		sz.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sz, s);
+		$('div[data-cprole="structuralContainer"]').last().after('<div id="google_translate_element" style="position: fixed; bottom: 0px; right: 20px; z-index: 5;"></div>');
+	        document.cookie = "translateActive=true; expires=12/31/2999; path=/";
+	}
+
+	$('a.translateWidget').unbind('click').click(function (e) {
+		$(this).hide();
+		enableGoogleTranslate();
+		return false;
+	});
+</script><!-- End Translate -->
+	
+<!-- Facebook adjust -->
+
+<style>
+  .facebook-container {
+    text-align: center;
+  }
+</style>
+
+<script>
+  // If you do not want to maintain aspect ratio: set to zero
+  const aspectRatio = 1.4;
+  const selector = ".facebook-container";
+  const minWidth = 220;
+  const maxWidth = 500; // Facebook widget will not expand past 500
+  const minHeight = 450;
+  const maxHeight = 450;
+  const widthRegexp = /(width=)([0-9]+)/;
+  const heightRegexp = /(height=)([0-9]+)/;
+
+  let width = 0;
+  let height = 0;
+
+  function clamp(num, min, max) {
+    return Math.min(Math.max(num, min), max);
+  }
+
+  function adjust() {
+    const container = $(selector);
+    const frame = $(selector + " > iframe");
+    if (frame === undefined || frame.length === 0) {
+      console.warn("No facebook widget found...");
+    } else {
+      const rawSrc = frame.attr("src");
+      const containerWidth = container.width();
+      if (containerWidth === 0) {
+        const parents = container.parents();
+        for (let i = 0; i < parents.length; i++) {
+          const parent = $(parents[i]);
+          if (parent.css("display") === "none") {
+            let mobileTab = parent.siblings();
+            mobileTab = mobileTab[mobileTab.length - 1];
+            if (!mobileTab) return;
+            // Get .cpTabPanels
+            let desktopTab = parent.parent();
+            // Get .cpTabs
+            desktopTab = desktopTab.siblings();
+            desktopTab = desktopTab[desktopTab.length - 1];
+            // Get the matching tab (from the mobile tab text)
+            desktopTab = $(desktopTab).children();
+            desktopTab = desktopTab.filter((j, elem) => $(elem).text().trim() === $(mobileTab).text().trim())[0];
+            if (!desktopTab) return;
+
+            const desktopHandler = () => { adjust(); desktopTab.removeEventListener("click", desktopHandler); }
+            const mobileHandler = () => { adjust(); mobileTab.removeEventListener("click", mobileHandler); }
+
+            desktopTab.addEventListener("click", desktopHandler);
+            mobileTab.addEventListener("click", mobileHandler);
+            break;
+          }
+        }
+        return;
+      }
+
+      width = clamp(containerWidth, minWidth, maxWidth);
+      height = clamp(Math.floor(width * aspectRatio), minHeight, maxHeight);
+
+      // Replace src and style on iframe
+      try {
+        const oldWidth = rawSrc.match(widthRegexp);
+        const oldHeight = rawSrc.match(heightRegexp);
+
+        if (width === parseInt(oldWidth[2]) && height === parseInt(oldHeight[2])) {
+          return;
+        }
+
+        const newSrc = rawSrc
+          .replace(widthRegexp, "width=" + parseInt(width))
+          .replace(heightRegexp, "height=" + parseInt(height));
+
+        // Set attributes on frame
+        frame.attr("src", newSrc);
+        frame.css("width", width);
+        frame.css("height", height);
+      } catch (e) {
+        console.warn("Failed replacing width & height");
+        console.warn(e);
+      }
+    }
+  }
+
+  let adjustTimeoutFn;
+  $(window).load(function () {
+    adjust();
+
+    $(window).resize(function () {
+      clearTimeout(adjustTimeoutFn);
+      adjustTimeoutFn = setTimeout(function () {
+        adjust();
+      }, 250);
+    });
+
+    $.when(window.Pages.angularToolbarComplete).done(function () {
+      adjust();
+    });
+  });
+</script>
+
+<!-- End Facebook adjust -->
+
+
+    <script type="text/javascript">
+        $(function () {
+            document.cookie = "responsiveGhost=0; path=/";
+        });
+        $(window).on("load", function () {
+            $('body').addClass('doneLoading').removeClass('hideContent');
+
+            if ($('#404Content').length > 0)
+                $('div#bodyWrapper').css('padding', '0px');
+        });
+    </script>
+
+    <noscript>
+        <style>
+            body.hideContent {
+                opacity: 1 !important;
+            }
+        </style>
+    </noscript>
+
+        
+<div style="display: none;">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+		<symbol id="iconArrow--left" viewbox="0 0 25 25">
+			<title>Arrow Left</title>
+			<polygon style="fill:currentcolor" points="18.044,25 19.498,23.545 8.409,12.454 19.408,1.455 17.954,0 5.502,12.452"></polygon>
+		</symbol>
+
+		<symbol id="iconArrow--right" viewbox="0 0 25 25">
+			<title>Arrow Right</title>
+			<polygon style="fill:currentcolor" points="6.957,0 5.502,1.455 16.591,12.546 5.592,23.545 7.047,25 19.498,12.548"></polygon>
+		</symbol>
+
+	</svg>
+</div>
+    <script type="text/javascript">loadCSS('//fonts.googleapis.com/css?family=Heebo:100,300,500,700,800,900,regular|Lora:700,700italic,italic,regular|Rubik:300,300italic,500,500italic,700,700italic,900,900italic,italic,regular|');</script>
+    
+
+    
+        <div style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol id="iconSlideshowArrowLeft" viewbox="0 0 22.68 40">
+                    <title>Slideshow Left Arrow</title>
+                    <g>
+                        <path style="fill:currentcolor;" d="M20,40a2.67,2.67,0,0,1-1.9-.79L.79,21.9a2.68,2.68,0,0,1,0-3.79L18.1.79a2.68,2.68,0,1,1,3.79,3.79L6.47,20,21.89,35.42A2.68,2.68,0,0,1,20,40Z"></path>
+                    </g>
+                </symbol>
+                <symbol id="iconSlideshowArrowRight" viewbox="0 0 22.68 40">
+                    <title>Slideshow Right Arrow</title>
+                    <g>
+                        <path style="fill:currentcolor;" d="M2.68,0a2.67,2.67,0,0,1,1.9.79L21.89,18.1a2.68,2.68,0,0,1,0,3.79L4.58,39.21A2.68,2.68,0,0,1,.79,35.42L16.21,20,.79,4.58A2.68,2.68,0,0,1,2.68,0Z"></path>
+                    </g>
+                </symbol>
+            </svg>
+        </div>
+    
+    
+
+    <div id="root-picker-outlet"></div>
+
+
+<ul id="ui-id-1" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="display: none;"></ul>
+<div role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div>
+<aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu101" class="contentTop mainNavMegaMenu megaMenuContainer pageID_101 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; top: 370.188px;">	<div id="ccaa8756fe-fa8a-4638-b049-7de0b88a27a4" data-containerid="aa8756fe-fa8a-4638-b049-7de0b88a27a4" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu31" class="contentTop mainNavMegaMenu megaMenuContainer pageID_31 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; top: 370.188px;">	<div id="cc75eeaad1-d60c-4683-a3e4-aa252eef3b40" data-containerid="75eeaad1-d60c-4683-a3e4-aa252eef3b40" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu27" class="contentTop mainNavMegaMenu megaMenuContainer pageID_27 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; top: 370.188px;">	<div id="ccd9d0828a-22ef-43da-9eda-3239f658fe01" data-containerid="d9d0828a-22ef-43da-9eda-3239f658fe01" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu9" class="contentTop mainNavMegaMenu megaMenuContainer pageID_9 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; top: 370.188px;">	<div id="cc1a5f9b05-3ab6-45cc-b283-741fb68bcfeb" data-containerid="1a5f9b05-3ab6-45cc-b283-741fb68bcfeb" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside>
+</body>
+</html>
