@@ -1,0 +1,626 @@
+[
+  {
+    "name": "Jay Ruais",
+    "image": "images/9863a67cac9387a09c4564ec33031f213d6cf76b025859c7e98a42e0d7ae5ac5.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/mayor/images/MayorRuais_210.jpg?ver=2024-01-09-073304-200",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office",
+      "https://www.manchesternh.gov/",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor"
+    ],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 624-6500",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Mayor Jay Ruais contact information.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office"
+      },
+      {
+        "data": "(603) 624-6500",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and office contact info.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office"
+      },
+      {
+        "data": "(603) 624-6500",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and office contact info.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Mayor's Office.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website link labeled 'Email' near the Mayor's contact info, likely the official contact page.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from 'Contact Mayor Ruais' link near mayor's name and image.",
+        "source": "https://www.manchesternh.gov/"
+      },
+      {
+        "data": "https://manchesternh.gov/Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website shortcut 'manchesternh.gov/Mayor' near office info, converted to full URL.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-02",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Sworn in date explicitly stated as January 2, 2024.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Chris Morgan",
+    "image": "images/efb48285909fde1f5db7f39317e90859489627c0abac87b13cf280edff6ba6b3.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldMorgan.jpg?ver=2024-01-08-151401-173",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 674-2400",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 1 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL for Chris Morgan as Ward 1 Alderman.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Dan Goonan",
+    "image": "images/7c0a7006206a4125e8151cf8e69d5556c1187986866ce52a0bc2ac50238752b7.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldGoonan.jpg?ver=2024-01-08-151401-173",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 493-9052",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 2 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL for Dan Goonan.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Pat Long",
+    "image": "images/15ad4ba30fba057d484ad8f1951d9ab6a347892f663fa583b795eeaa9cf26013.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Long_210.jpg?ver=2020-01-23-082140-000",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 668-1037",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under Pat Long's name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Long55@comcast.net",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted from mailto link text near Pat Long's name.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 3 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Ward 3 Alderman Pat Long.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Christine Fajardo",
+    "image": "images/65ce39d148293cd22be464284463c2b5f12052d3f888bfa571fd6ad9f84cb973.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Fajardo210.jpg?ver=2024-01-09-140217-647",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(215) 287-8022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 4 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL for Christine Fajardo.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Anthony Sapienza",
+    "image": "images/62070d2350d2c351c6f8226941113dbb697372f498de8096e35b97edf0b17fef.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_TSapienza.jpg?ver=2024-01-09-135846-287",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 5"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 624-6943",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 5 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and link labeled 'Email' near name, no direct email address found.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Crissy Kantor",
+    "image": "images/e18ffeefab50720d807a1142ab7991ba7ff3a32648e76209849d713716464507.png",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Kantor.jpg?ver=2025-01-21-164356-237",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 6"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 851-1388",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 6 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and link labeled 'Email' near name, no direct email address found.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Ross Terrio",
+    "image": "images/ecb1e602e142105664709c1a72d70db756139c9cbb3c40c9ef04cf163180f638.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldTerrio.jpg?ver=2024-01-08-151401-160",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 7"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 820-9064",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly labeled 'Phone:' near name.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 7 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Ward 7 Alderman Ross Terrio.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Edward Sapienza",
+    "image": "images/452e644a61aafa7936cb0dbb899942f76bb7f96c2cf77888b389645bba671942.png",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/EdSapienza.png?ver=2021-09-28-123916-880",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 8"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-391-8038",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under Edward Sapienza's name and title.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 8 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and link labeled 'Email' near Edward Sapienza's contact info.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Jim Burkush",
+    "image": "images/43933044252077efdf8c590ca45366c7506454835560d12bef410ded66fb9bf7.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Burkush210.jpg?ver=2024-01-09-140047-757",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 9"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-714-0283",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 9 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and link labeled 'Ward 9 Alderman' associated with Jim Burkush.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Bill Barry",
+    "image": "images/6f5e2890d95ab627513e66571835d22d5adc9e9e3e8c5c594c4cce13795d33b8.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Barry_210.jpg?ver=2020-01-23-092211-287",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 10"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 627-7189",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under Bill Barry's name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 10 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and link labeled 'Email' near Bill Barry's name.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Norm Vincent",
+    "image": "images/8e9d9310dc54d5cc0e505dfefedf3389baa09aa04b6713c9ffac469cf7f07b6e.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldVincent.jpg?ver=2024-01-08-151401-173",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 11"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 384-6293",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under Norm Vincent's name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 11 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official profile page for Norm Vincent as Ward 11 Alderman.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Kelly Thomas",
+    "image": "images/3ff08aac7b2dd33e607800466aa620c3a5dde29551cdce309fdc41ebc063dfa1.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldThomas.jpg?ver=2024-01-08-151401-173",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman"
+    ],
+    "positions": [
+      "Alderman",
+      "Ward 12"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 384-0009",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as Ward 12 Alderman profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL for Kelly Thomas as Ward 12 Alderman.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Dan O'Neil",
+    "image": "images/e0a707a3777b8cba59ca49660dda766c9773729d21a1a677ebe0727259580ccf.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldOneil.jpg?ver=2024-01-08-151401-173",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil"
+    ],
+    "positions": [
+      "Alderman",
+      "At-Large"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 668-9814",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under the name and address.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as At-Large Alderman O'Neil profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-ONeil",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL for At-Large Alderman Dan O'Neil.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Joseph Kelly Levasseur",
+    "image": "images/68d91ed4ce7977845b4f5fb3c0f06827dd5f3ddad2881b5057da80f01c26fdbe.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Levasseur210.jpg?ver=2024-01-09-135946-740",
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur"
+    ],
+    "positions": [
+      "Alderman",
+      "At-Large"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 622-7575",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly labeled 'Phone:' near name.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly labeled as At-Large Alderman Levasseur profile.",
+        "source": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen"
+      },
+      {
+        "data": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL for Joseph Kelly Levasseur.",
+        "source": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-07"
+  }
+]

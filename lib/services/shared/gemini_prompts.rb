@@ -30,11 +30,14 @@ module Services
         If you are not highly certain of the current name for any specific position,
         or if the information might be outdated or incomplete, set the 'name' field to null for that entry.
 
-        Each object in the array must have two keys:
+        Return ONLY the following JSON structure with no other text:
         {
-          "name": The official's name (string) or null.
-          "positions": The position held (array of strings), which should be either "Mayor" or "Council Member" (or equivalent).
-        })
+          "people": [{
+            "name": The official's name (string) or null.
+            "positions": The position held (array of strings), which should be either "Mayor" or "Council Member" (or equivalent).
+          }]
+        }
+      )
       end
 
       def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "")
@@ -43,7 +46,7 @@ module Services
         government_type = municipality_context[:government_type]
         municipality_config = Core::CityManager.get_config(government_type)
         positions = municipality_config["positions"]
-        divisions = municipality_config["divisions"]
+        divisions = positions.flat_map { |position| position["divisions"] }
         position_examples = municipality_config["position_examples"]
         current_date = Date.today.strftime("%Y-%m-%d")
         maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|

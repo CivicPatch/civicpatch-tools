@@ -1,0 +1,288 @@
+[
+  {
+    "name": "Jay Ruais",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/9863a67cac9387a09c4564ec33031f213d6cf76b025859c7e98a42e0d7ae5ac5.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/mayor/images/MayorRuais_210.jpg?ver=2024-01-09-073304-200",
+    "phone_number": "(603) 624-6500",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor",
+    "start_date": "2024-01-02",
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office",
+      "https://www.manchesternh.gov/",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Dan O'Neil",
+    "positions": [
+      "Alderperson",
+      "At-large"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/e0a707a3777b8cba59ca49660dda766c9773729d21a1a677ebe0727259580ccf.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldOneil.jpg?ver=2024-01-08-151401-173",
+    "phone_number": "(603) 668-9814",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Joseph Kelly Levasseur",
+    "positions": [
+      "Alderperson",
+      "At-large"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/68d91ed4ce7977845b4f5fb3c0f06827dd5f3ddad2881b5057da80f01c26fdbe.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Levasseur210.jpg?ver=2024-01-09-135946-740",
+    "phone_number": "(603) 622-7575",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Chris Morgan",
+    "positions": [
+      "Alderperson",
+      "Ward 1"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/efb48285909fde1f5db7f39317e90859489627c0abac87b13cf280edff6ba6b3.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldMorgan.jpg?ver=2024-01-08-151401-173",
+    "phone_number": "(603) 674-2400",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Bill Barry",
+    "positions": [
+      "Alderperson",
+      "Ward 10"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/6f5e2890d95ab627513e66571835d22d5adc9e9e3e8c5c594c4cce13795d33b8.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Barry_210.jpg?ver=2020-01-23-092211-287",
+    "phone_number": "(603) 627-7189",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Norm Vincent",
+    "positions": [
+      "Alderperson",
+      "Ward 11"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/8e9d9310dc54d5cc0e505dfefedf3389baa09aa04b6713c9ffac469cf7f07b6e.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldVincent.jpg?ver=2024-01-08-151401-173",
+    "phone_number": "(603) 384-6293",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Kelly Thomas",
+    "positions": [
+      "Alderperson",
+      "Ward 12"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/3ff08aac7b2dd33e607800466aa620c3a5dde29551cdce309fdc41ebc063dfa1.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldThomas.jpg?ver=2024-01-08-151401-173",
+    "phone_number": "(603) 384-0009",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Dan Goonan",
+    "positions": [
+      "Alderperson",
+      "Ward 2"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/7c0a7006206a4125e8151cf8e69d5556c1187986866ce52a0bc2ac50238752b7.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldGoonan.jpg?ver=2024-01-08-151401-173",
+    "phone_number": "(603) 493-9052",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Pat Long",
+    "positions": [
+      "Alderperson",
+      "Ward 3"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/15ad4ba30fba057d484ad8f1951d9ab6a347892f663fa583b795eeaa9cf26013.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Long_210.jpg?ver=2020-01-23-082140-000",
+    "phone_number": "(603) 668-1037",
+    "email": "Long55@comcast.net",
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Christine Fajardo",
+    "positions": [
+      "Alderperson",
+      "Ward 4"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/65ce39d148293cd22be464284463c2b5f12052d3f888bfa571fd6ad9f84cb973.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Fajardo210.jpg?ver=2024-01-09-140217-647",
+    "phone_number": "(215) 287-8022",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Anthony Sapienza",
+    "positions": [
+      "Alderperson",
+      "Ward 5"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/62070d2350d2c351c6f8226941113dbb697372f498de8096e35b97edf0b17fef.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_TSapienza.jpg?ver=2024-01-09-135846-287",
+    "phone_number": "(603) 624-6943",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Crissy Kantor",
+    "positions": [
+      "Alderperson",
+      "Ward 6"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/e18ffeefab50720d807a1142ab7991ba7ff3a32648e76209849d713716464507.png",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Kantor.jpg?ver=2025-01-21-164356-237",
+    "phone_number": "(603) 851-1388",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Ross Terrio",
+    "positions": [
+      "Alderperson",
+      "Ward 7"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/ecb1e602e142105664709c1a72d70db756139c9cbb3c40c9ef04cf163180f638.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldTerrio.jpg?ver=2024-01-08-151401-160",
+    "phone_number": "(603) 820-9064",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Edward Sapienza",
+    "positions": [
+      "Alderperson",
+      "Ward 8"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/452e644a61aafa7936cb0dbb899942f76bb7f96c2cf77888b389645bba671942.png",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/EdSapienza.png?ver=2021-09-28-123916-880",
+    "phone_number": "(603) 391-8038",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Jim Burkush",
+    "positions": [
+      "Alderperson",
+      "Ward 9"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/manchester/images/43933044252077efdf8c590ca45366c7506454835560d12bef410ded66fb9bf7.jpg",
+    "source_image": "https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Ald_Burkush210.jpg?ver=2024-01-09-140047-757",
+    "phone_number": "(603) 714-0283",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
+    ],
+    "updated_at": "2025-05-07"
+  }
+]

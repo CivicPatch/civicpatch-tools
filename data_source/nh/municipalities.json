@@ -13,7 +13,14 @@
       "phone_number": "(603) 624-6505",
       "government_type": "aldermen",
       "email": "econdev@manchesternh.gov",
-      "website": "http://www.ManchesterNH.gov"
+      "website": "http://www.ManchesterNH.gov",
+      "meta_updated_at": "2025-05-07",
+      "meta_hash": "a8de4d379e8d65154a44b2cd0cfc0398",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Nashua",

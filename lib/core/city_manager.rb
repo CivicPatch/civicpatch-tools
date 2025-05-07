@@ -8,7 +8,7 @@ module Core
     GOVERNMENT_TYPE_MAYOR_COUNCIL = "mayor_council"
 
     def self.config
-      @config ||= YAML.load_file(CONFIG_PATH)
+      @config ||= YAML.load_file(CONFIG_PATH, aliases: true)
     end
 
     def self.get_config(government_type)
