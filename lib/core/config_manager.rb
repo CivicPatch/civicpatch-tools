@@ -23,11 +23,9 @@ module Core
       config_file_path = config_path(state, gnis)
       saved_config = YAML.load_file(config_file_path) if File.exist?(config_file_path)
 
-      if saved_config.present?
-        DEFAULT_CONFIG.merge(saved_config)
-      else
-        DEFAULT_CONFIG.dup
-      end
+      return DEFAULT_CONFIG.merge(saved_config) if saved_config.present?
+
+      DEFAULT_CONFIG.dup
     end
 
     def self.update_config(state, gnis, config, **updates)

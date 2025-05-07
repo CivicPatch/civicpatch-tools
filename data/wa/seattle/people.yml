@@ -4,13 +4,49 @@
   - Mayor
   email: bruce.harrell@seattle.gov
   phone_number: "(206) 684-4000"
-  website: https://www.seattle.gov/mayor
+  website: https://seattle.gov/mayor/about
+  start_date: '2021'
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/8269b9ec4078f6475973d59aaba87d12b4d5b4a916d001f15cd26b3e072c8fc1.jpg
   source_image: https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg
   sources:
   - https://seattle.gov/mayor/about
   - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/mayor
   - https://www.seattle.gov/mayor
+  updated_at: '2025-05-07'
+- name: Alexis Mercedes Rinck
+  positions:
+  - Council Member
+  - Citywide
+  - Position 8
+  email: AlexisMercedes.Rinck@seattle.gov
+  phone_number: "(206) 684-8808"
+  website: https://www.seattle.gov/council/rinck
+  start_date:
+  end_date:
+  image: https://cdn.civicpatch.org/open-data/wa/seattle/images/99ad0841d929b930c3bd05674c50f780c4ce8d3db9c0bd3a7e341425f4e9bb7b.jpg
+  source_image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council/rinck
+  updated_at: '2025-05-07'
+- name: Sara Nelson
+  positions:
+  - Council Member
+  - Citywide
+  - Position 9
+  email: Sara.Nelson@seattle.gov
+  phone_number: "(206) 684-8809"
+  website: https://www.seattle.gov/council/meet-the-council/sara-nelson
+  start_date:
+  end_date:
+  image: https://cdn.civicpatch.org/open-data/wa/seattle/images/1dcb108192067d67a5e90f75da99782e72b71df50314a8773d744dfd524b374f.jpg
+  source_image: https://www.seattle.gov/images/images/Council/Members/Nelson/nelson_300x300.jpg
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council/meet-the-council/sara-nelson
+  updated_at: '2025-05-07'
 - name: Rob Saka
   positions:
   - Council Member
@@ -18,11 +54,14 @@
   email: Rob.Saka@seattle.gov
   phone_number: "(206) 684-8801"
   website: https://www.seattle.gov/council/saka
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/cff4d84fc3da6885273503707a3fe46d27aad889d1df3f35646157a7f0f3b593.jpg
   source_image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/saka_300.jpg
   sources:
   - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/council/saka
+  updated_at: '2025-05-07'
 - name: Mark Solomon
   positions:
   - Council Member
@@ -30,11 +69,14 @@
   email: Mark.Solomon2@seattle.gov
   phone_number: "(206) 684-8802"
   website: https://www.seattle.gov/council/solomon
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/2c29f05305fdd34e05355cb4097656fd8d6d12a8af4662d7f6910c3df030a277.jpg
   source_image: https://www.seattle.gov/images//images/Council/Members/Solomon/mark-solomon.jpg
   sources:
   - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/council/solomon
+  updated_at: '2025-05-07'
 - name: Joy Hollingsworth
   positions:
   - Council Member
@@ -42,11 +84,14 @@
   email: Joy.Hollingsworth@seattle.gov
   phone_number: "(206) 684-8803"
   website: https://www.seattle.gov/council/hollingsworth
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/605125d4db35a9a55ed4d6819528234144071ad8923975899f30b98b0c405743.jpg
   source_image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg
   sources:
   - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/council/hollingsworth
+  updated_at: '2025-05-07'
 - name: Maritza Rivera
   positions:
   - Council Member
@@ -54,11 +99,14 @@
   email: Maritza.Rivera@seattle.gov
   phone_number: "(206) 684-8804"
   website: https://www.seattle.gov/council/rivera
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/51f9aec375fa159b2ba704373089b988351d1d1121d2b286f20e39098f26ce03.jpg
   source_image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rivera_300.jpg
   sources:
   - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/council/rivera
+  updated_at: '2025-05-07'
 - name: Cathy Moore
   positions:
   - Council Member
@@ -66,11 +114,14 @@
   email: Cathy.Moore@seattle.gov
   phone_number: "(206) 684-8805"
   website: https://www.seattle.gov/council/moore
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/170a011cd41d630964f0f2061df656bd93655124db3129c55c09e480e1745a34.jpg
   source_image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/moore_300.jpg
   sources:
   - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/council/moore
+  updated_at: '2025-05-07'
 - name: Dan Strauss
   positions:
   - Council Member
@@ -78,11 +129,14 @@
   email: Dan.Strauss@seattle.gov
   phone_number: "(206) 684-8806"
   website: https://www.seattle.gov/council/strauss
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/72cb2afc2923465b9b3dc8300093f59500567624646420d26f71f5f16ecdfbc7.jpg
   source_image: https://www.seattle.gov/images//images/Council/Members/Strauss/Struass-2022-headshot_square.jpg
   sources:
   - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/council/strauss
+  updated_at: '2025-05-07'
 - name: Bob Kettle
   positions:
   - Council Member
@@ -90,31 +144,10 @@
   email:
   phone_number:
   website: https://www.seattle.gov/council/kettle
+  start_date:
+  end_date:
   image: https://cdn.civicpatch.org/open-data/wa/seattle/images/f580e51d678bddb8ae45cbfc89f7e275812ff12e370ab203712b8814521e0384.jpg
   source_image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
   sources:
   - https://www.seattle.gov/elected-officials
-- name: Alexis Mercedes Rinck
-  positions:
-  - Council Member
-  - Position 8
-  email: AlexisMercedes.Rinck@seattle.gov
-  phone_number: "(206) 684-8808"
-  website: https://www.seattle.gov/council/rinck
-  image: https://cdn.civicpatch.org/open-data/wa/seattle/images/99ad0841d929b930c3bd05674c50f780c4ce8d3db9c0bd3a7e341425f4e9bb7b.jpg
-  source_image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg
-  sources:
-  - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/rinck
-- name: Sara Nelson
-  positions:
-  - Council Member
-  - Position 9
-  email: Sara.Nelson@seattle.gov
-  phone_number: "(206) 684-8809"
-  website: https://www.seattle.gov/council/meet-the-council/sara-nelson
-  image: https://cdn.civicpatch.org/open-data/wa/seattle/images/1dcb108192067d67a5e90f75da99782e72b71df50314a8773d744dfd524b374f.jpg
-  source_image: https://www.seattle.gov/images/images/Council/Members/Nelson/nelson_300x300.jpg
-  sources:
-  - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/meet-the-council/sara-nelson
+  updated_at: '2025-05-07'

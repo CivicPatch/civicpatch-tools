@@ -6,7 +6,7 @@
  *  [Contact](https://seattle.gov/mayor/contact) 
  *  [Mayor's Team](https://seattle.gov/mayor/team) 
  *  [About the Mayor](https://seattle.gov/mayor/about) 
-  [](https://seattle.gov/)  [Home](https://seattle.gov/mayor)  
+  [Home](https://seattle.gov/mayor)  
 
 # About Mayor Bruce Harrell
 
@@ -47,9 +47,7 @@ Bruce and his wife Joanne are proud to be the parents of three children and the 
 
  Mailing Address: P.O. Box 94749, Seattle, WA, 98124-4749
 
- Phone:  [(206) 684-4000]() 
-
-  [](https://www.facebook.com/MayorofSeattle)  [](https://www.twitter.com/mayorofseattle)  [](https://www.instagram.com/mayorofseattle)  
+ Phone: (206) 684-4000
 
 Newsletter Updates
 
@@ -81,4 +79,4 @@ Seattle's Mayor is the head of the Executive department. The Mayor directs and c
 
 ## Policies
 
-  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
