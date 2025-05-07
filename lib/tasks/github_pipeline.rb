@@ -71,8 +71,12 @@ namespace :github_pipeline do
 
     suggest_edit_details = Scrapers::MunicipalityOfficials.get_edit_detail(municipality_context)
 
-    action_items = GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
-                                                                     contested_people)
+    action_items = if suggest_edit_details.present?
+                     GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
+                                                                       contested_people)
+                   else
+                     ""
+                   end
 
     missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
 
