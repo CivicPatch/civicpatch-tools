@@ -253,7 +253,7 @@ namespace :one_off do
 
   task :update_government_types do
     official_government_types = %w[mayor_council selectmen aldermen town_meeting]
-    state = "nh"
+    state = "wa"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     municipalities.map do |municipality|
       next municipality if official_government_types.include?(municipality["government_type"])
@@ -272,13 +272,14 @@ namespace :one_off do
 
   def self.to_government_type(raw_government_type_string)
     government_type = nil
-    if raw_government_type_string.include?("council")
+    formatted_raw_government_type_string = raw_government_type_string.downcase
+    if formatted_raw_government_type_string.include?("council")
       government_type = "mayor_council"
-    elsif raw_government_type_string.include?("select")
+    elsif formatted_raw_government_type_string.include?("select")
       government_type = "selectmen"
-    elsif raw_government_type_string.include?("alder")
+    elsif formatted_raw_government_type_string.include?("alder")
       government_type = "aldermen"
-    elsif raw_government_type_string.include?("town") && raw_government_type_string.include?("meeting")
+    elsif formatted_raw_government_type_string.include?("town") && formatted_raw_government_type_string.include?("meeting")
       government_type = "town_meeting"
     end
 

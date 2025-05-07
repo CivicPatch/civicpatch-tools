@@ -25,11 +25,11 @@ That’s my vision for * __One Seattle__* , to turn our city’s pioneering spir
 
 ## Mayor Bruce Harrell
 
- Phone: [(206) 684-4000]()  Address: [Office](https://www.seattle.gov/)  |  [Mailing](https://www.seattle.gov/)  
+ Phone:(206) 684-4000 Address: [Office](https://www.seattle.gov/)  |  [Mailing](https://www.seattle.gov/)  
 
 ### Follow Us
 
- [](https://www.facebook.com/MayorofSeattle)  [](https://www.twitter.com/mayorofseattle)  [](https://www.instagram.com/mayorofseattle)   __Street Address:__ 
+  __Street Address:__ 
 
 600 4th Ave, Seattle, WA
 
@@ -45,7 +45,37 @@ Seattle, WA 98124-4749
 
 ## Press Releases
 
- Mayor's Office Press Releases  [TOMORROW: City Leaders Celebrate Grand Opening of South Park Plaza](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ddaf64?wgt_ref=WASEATTLE_WIDGET_93)  
+ Mayor's Office Press Releases  [TOMORROW: Downtown Activation Plan Demonstration: See State-of-the-Art Interactive Wayfinding Kiosk in advance of Seattle City Council Meeting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df6871?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/07/2025 12:55 PM PDT
+  [Mayor Harrell Signs Suite of Downtown Activation Plan Legislation to Fill Vacant Storefronts, Extend Housing Permits](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df3750?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/06/2025 12:00 PM PDT
+  [TODAY: Mayor Harrell Signs Suite of Downtown Activation Plan Legislation to Fill Vacant Storefronts, Extend Housing Permits](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df0d40?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/06/2025 07:30 AM PDT
+  [TOMORROW: Mayor Harrell Signs Suite of Downtown Activation Plan Legislation to Fill Vacant Storefronts, Extend Housing Permits](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df06a1?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/05/2025 12:00 PM PDT
+  [Nearly 5,000 Seattle Child Care Staff Receiving Retention Payments](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3de89eb?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/01/2025 12:00 PM PDT
+  [TODAY: Seattle Commemorates International Workers’ Day with 7th Annual City-Wide Outreach and Education Event  ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3de6965?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/01/2025 08:00 AM PDT
+  [TOMORROW: Seattle Commemorates International Workers’ Day with 7th Annual City-Wide Outreach and Education Event  ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3de324d?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 04/30/2025 10:00 AM PDT
+  [TODAY: City of Seattle, King County and Comcast Announce Launch of Campaign to Award $3 Million In Grants for Local Small Businesses ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3de2b68?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 04/30/2025 07:15 AM PDT
+  [TOMORROW: City of Seattle, King County and Comcast Announce Launch of Campaign to Award $3 Million In Grants for Local Small Businesses ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3de2a22?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 04/29/2025 10:49 AM PDT
+  [Mayor Harrell Celebrates Significant Increase in Police Hiring in 2025](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3de062e?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 04/28/2025 01:13 PM PDT
+  [TOMORROW: City Leaders Celebrate Grand Opening of South Park Plaza](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ddaf64?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 04/25/2025 02:00 PM PDT
   [Monday: Mayor Harrell Celebrates Significant Increase in Police Hiring in 2025 ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ddaeef?wgt_ref=WASEATTLE_WIDGET_93)  
@@ -75,40 +105,10 @@ Seattle, WA 98124-4749
   [TODAY: Mayor Harrell to Sign Earth Day Executive Order](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dcfcc3?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 04/22/2025 07:30 AM PDT
-  [TOMORROW: Mayor Harrell to Sign Earth Day Executive Order](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dcf006?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/21/2025 12:00 PM PDT
-  [City of Seattle Partners with Comcast to Announce $3 Million in Grants to Local Small Business Owners](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dbe86f?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/14/2025 12:26 PM PDT
-  [City of Seattle Selects Mercy Housing to Redevelop Lake City Community Center](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3db63be?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/11/2025 09:00 AM PDT
-  [TODAY: City Leaders Celebrate Grand Opening of Cheryl Chow Park](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3da8100?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/05/2025 09:00 AM PDT
-  [TOMORROW: City Leaders Celebrate Grand Opening of Cheryl Chow Park](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3da736b?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/04/2025 12:00 PM PDT
-  [City of Seattle Celebrates Tenth Anniversary of Minimum Wage and Wage Theft Ordinances](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3d9adba?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/01/2025 10:02 AM PDT
-  [Mayor Harrell Signs Legislation Fortifying Local Protections for People Seeking Gender-Affirming and Reproductive Health Care](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3d9a4c7?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 03/31/2025 01:30 PM PDT
-  [TODAY: Mayor Harrell Signs Legislation Fortifying Local Protections for People Seeking Gender-Affirming and Reproductive Health Care](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3d94da6?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 03/31/2025 07:30 AM PDT
-  [MONDAY: Mayor Harrell Signs Legislation Fortifying Local Protections for People Seeking Gender-Affirming and Reproductive Health Care](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3d941b6?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 03/28/2025 12:30 PM PDT
-  [ICYMI: Seattle Office of Immigrant and Refugee Affairs Denounces Cutting of Unaccompanied Children Program Funding](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3d9161e?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 03/27/2025 02:34 PM PDT
 
 Receive Email Updates
 
-  [![View RSS](images/2e2b79dc21000275c164453de0e4215d2aa7b13db44ec47415cab474f03f4cca.png)](https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE_WIDGET_93.rss)  [![Get Widget](images/5727b2a3046c41e038cd70644807f1962b26e9a7e85ede6127c779efb1ad6177.png)](https://www.seattle.gov/)  
+  ![View RSS](images/2e2b79dc21000275c164453de0e4215d2aa7b13db44ec47415cab474f03f4cca.png)  ![Get Widget](images/5727b2a3046c41e038cd70644807f1962b26e9a7e85ede6127c779efb1ad6177.png)  
 
 Copy the code below and paste it into your blog or Web page:
 
@@ -116,23 +116,23 @@ Copy the code below and paste it into your blog or Web page:
 
 ##  [Latest News - Mayor's Blog](https://harrell.seattle.gov/) 
 
-  [Mayor Bruce Harrell Announces Legislation to Build Light Rail Faster and Support Smooth Construction 
+  [Mayor Harrell Signs Suite of Downtown Activation Plan Legislation to Fill Vacant Storefronts, Extend Housing Permits 
+
+Seattle – Today, Mayor Bruce Harrell joined Councilmem...
+
+ Posted May. 06  ![Mayor Harrell signs Downtown Activation Plan legislation with leaders and community stakeholders behind him.](images/57a92f3a955580894c63c01d4d8f525b025d5f382c8671d24e92964116df4969.jpg)](https://harrell.seattle.gov/2025/05/06/mayor-harrell-signs-suite-of-downtown-activation-plan-legislation-to-fill-vacant-storefronts-extend-housing-permits/)   [Nearly 5,000 Seattle Child Care Staff Receiving Retention Payments 
+
+Seattle has invested $16 million in child care workfor...
+
+ Posted May. 01  ![SPP educators and students](images/f4fc69acb266a76587f2dcded3258fd4a9b628298f9cda03d81eb839e32ba701.jpg)](https://harrell.seattle.gov/2025/05/01/nearly-5000-seattle-child-care-staff-receiving-retention-payments/)   [Mayor Harrell Celebrates Significant Increase in Police Hiring in 2025 
+
+Seattle has hired 60 officers in 2025, a 500% improvem...
+
+ Posted Apr. 28  ![Seattle skyline with Space Needle and snow covered mountains](images/267c1ddbb29b0c2af7b402b3b793032342eecb424cd282118975308c7516caa2.jpg)](https://harrell.seattle.gov/2025/04/28/mayor-harrell-celebrates-significant-increase-in-police-hiring-in-2025/)   [Mayor Bruce Harrell Announces Legislation to Build Light Rail Faster and Support Smooth Construction 
 
 Seattle – Today, Seattle Mayor and Sound Transit Board...
 
- Posted Apr. 25  ![Sound Transit Link Light Rail train on a concrete bridge](images/2adf91f5b451bd8dcfca8204da170742637df91ea929f6868581101bf48988c8.jpg)](https://harrell.seattle.gov/2025/04/25/mayor-bruce-harrell-announces-legislation-to-build-light-rail-faster-and-support-smooth-construction/)   [Mayor Harrell Proposes Infrastructure Cost-Sharing Legislation to Remove Barriers to Housing and Growth  
-
-Legislation would more equitably distribute utility in...
-
- Posted Apr. 23  ![Downtown Seattle in the evening.](images/9b598f19abc0478f0aa90910d59cdbfb7b70d1923b08926d2af1c475a34df31d.jpg)](https://harrell.seattle.gov/2025/04/23/mayor-harrell-proposes-infrastructure-cost-sharing-legislation-to-remove-barriers-to-housing-and-growth/)   [Mayor Harrell Announces Every Child Ready Initiative and Bold Proposal to Renew Seattle’s Education Levy 
-
-Transformative investments in Seattle youth and famili...
-
- Posted Apr. 23  ![](images/6cb6d58885300c10aa112d0185e834cf38b84dd130e2ea956d7a6d97f59df125.jpg)](https://harrell.seattle.gov/2025/04/23/mayor-harrell-announces-every-child-ready-initiative-and-bold-proposal-to-renew-seattles-education-levy/)   [Mayor Harrell Issues Earth Day Executive Order to Update Seattle’s Climate Action Plan, Accelerate Emissions Reductions from Transportation  
-
-Seattle – Today, on Earth Day, Mayor Bruce Harrell iss...
-
- Posted Apr. 22  ![People clap and smile after Mayor Harrel signs the Earth Day Executive Order into law.](images/c8e87737c5b6f81e33314f29e231055700b969505c9dfdeb44f74c9e145aca5e.jpg)](https://harrell.seattle.gov/2025/04/22/mayor-harrell-issues-earth-day-executive-order-to-update-seattles-climate-action-plan-accelerate-emissions-reductions-from-transportation/)  
+ Posted Apr. 25  ![Sound Transit Link Light Rail train on a concrete bridge](images/2adf91f5b451bd8dcfca8204da170742637df91ea929f6868581101bf48988c8.jpg)](https://harrell.seattle.gov/2025/04/25/mayor-bruce-harrell-announces-legislation-to-build-light-rail-faster-and-support-smooth-construction/)  
 
 ## Requests and Services
 
@@ -151,9 +151,7 @@ Seattle – Today, on Earth Day, Mayor Bruce Harrell iss...
 
  Mailing Address: P.O. Box 94749, Seattle, WA, 98124-4749
 
- Phone:  [(206) 684-4000]() 
-
-  [](https://www.facebook.com/MayorofSeattle)  [](https://www.twitter.com/mayorofseattle)  [](https://www.instagram.com/mayorofseattle)  
+ Phone: (206) 684-4000
 
 Newsletter Updates
 
@@ -185,4 +183,4 @@ Seattle's Mayor is the head of the Executive department. The Mayor directs and c
 
 ## Policies
 
-  [About Our Digital Properties](https://www.seattle.gov/about-our-digital-properties)   [Privacy Policy](https://www.seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://www.seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+  [About Our Digital Properties](https://www.seattle.gov/about-our-digital-properties)   [Privacy Policy](https://www.seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://www.seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

@@ -29,7 +29,7 @@ namespace :pipeline do
     }.to_json
   end
 
-  desc "Scrape city info for a specific city"
+  desc "Scrape council members for a specific municipality"
   task :fetch, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
@@ -92,7 +92,10 @@ namespace :pipeline do
   def fetch_with_state_source(municipality_context)
     puts "#{municipality_context[:state]} - #{municipality_context[:municipality_entry]["name"]} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
+    puts "government type #{municipality_context[:government_type]}"
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
+
+    puts "Positions config: #{positions_config}"
 
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
