@@ -8,6 +8,7 @@ on:
         type: choice
         required: true
         options:
+          - nh
           - or
           - wa
       num_cities:
