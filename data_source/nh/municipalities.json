@@ -57,7 +57,14 @@
       "phone_number": "(603) 225-8570",
       "government_type": "mayor_council",
       "email": "tthompson@concordnh.gov",
-      "website": "http://www.concordnh.gov"
+      "website": "http://www.concordnh.gov",
+      "meta_updated_at": "2025-05-07",
+      "meta_hash": "720209fec17f53d8a5e268b26d259359",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Derry",

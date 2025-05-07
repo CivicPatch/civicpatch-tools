@@ -1,0 +1,69 @@
+---
+scrape_sources:
+- https://www.concordnh.gov/Directory.aspx?did=18
+- https://www.concordnh.gov/282/City-Council
+- https://www.concordnh.gov/directory.aspx?EID=257
+- https://concordnh.gov/directory.aspx?EID=257
+- https://www.concordnh.gov/directory.aspx?EID=19
+- https://www.concordnh.gov/directory.aspx?EID=25
+- https://concordnh.gov/directory.aspx?EID=258
+- https://www.concordnh.gov/directory.aspx?EID=14
+- https://www.concordnh.gov/directory.aspx?EID=135
+- https://concordnh.gov/directory.aspx?EID=263
+- https://concordnh.gov/directory.aspx?EID=259
+- https://www.concordnh.gov/Directory.aspx?EID=18
+- https://www.concordnh.gov/Directory.aspx?EID=220
+- https://www.concordnh.gov/Directory.aspx?EID=223
+- https://www.concordnh.gov/Directory.aspx?EID=224
+- https://concordnh.gov/directory.aspx?EID=260
+- https://concordnh.gov/directory.aspx?EID=261
+- https://concordnh.gov/directory.aspx?EID=262
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Byron Champlin
+    positions:
+    - Mayor
+  - name: Ali Sekou
+    positions:
+    - Council Member
+  - name: Amanda Grady Sexton
+    positions:
+    - Council Member
+  - name: Brent Todd
+    positions:
+    - Council Member
+  - name: Fred Keach
+    positions:
+    - Council Member
+  - name: Jeff Foote
+    positions:
+    - Council Member
+  - name: Jennifer Kretovic
+    positions:
+    - Council Member
+  - name: Jim Schlosser
+    positions:
+    - Council Member
+  - name: Judith Kurtz
+    positions:
+    - Council Member
+  - name: Karen McNamara
+    positions:
+    - Council Member
+  - name: Kris Schultz
+    positions:
+    - Council Member
+  - name: Michele Horne
+    positions:
+    - Council Member
+  - name: Nathan Fennessy
+    positions:
+    - Council Member
+  - name: Paula McLaughlin
+    positions:
+    - Council Member
+  - name: Stacey Brown
+    positions:
+    - Council Member
+people: {}
