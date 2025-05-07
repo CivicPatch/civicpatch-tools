@@ -43,6 +43,7 @@ namespace :one_off do
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     government_types_by_count = {}
     government_types_with_no_government_type = []
+    government_types_town_manager = []
     municipalities.each do |municipality|
       if municipality["government_type"].blank?
         government_types_with_no_government_type << municipality
@@ -50,10 +51,13 @@ namespace :one_off do
         government_types_by_count[municipality["government_type"]] =
           government_types_by_count[municipality["government_type"]].to_i + 1
       end
+
+      government_types_town_manager << municipality if municipality["government_type"] == "town manager"
     end
 
-    puts government_types_by_count.sort_by { |_key, value| value }.reverse
-    puts(government_types_with_no_government_type.map { |municipality| municipality["name"] })
+    # ~puts government_types_by_count.sort_by { |_key, value| value }.reverse
+    # ~puts(government_types_with_no_government_type.map { |municipality| municipality["name"] })
+    puts(government_types_town_manager.map { |municipality| municipality["name"] })
   end
 
   task :test_source do
@@ -245,6 +249,40 @@ namespace :one_off do
 
   task :scrape_nh do
     Scrapers::Municipalities.fetch("nh")
+  end
+
+  task :update_government_types do
+    official_government_types = %w[mayor_council selectmen aldermen town_meeting]
+    state = "nh"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    municipalities.map do |municipality|
+      next municipality if official_government_types.include?(municipality["government_type"])
+      next municipality if municipality["government_type"].nil?
+
+      new_government_type = to_government_type(municipality["government_type"])
+      puts "Could not find government type for #{municipality["government_type"]}" if new_government_type.nil?
+      next municipality if new_government_type.nil?
+
+      municipality["government_type"] = new_government_type
+      municipality
+    end
+
+    Core::StateManager.update_municipalities(state, municipalities)
+  end
+
+  def self.to_government_type(raw_government_type_string)
+    government_type = nil
+    if raw_government_type_string.include?("council")
+      government_type = "mayor_council"
+    elsif raw_government_type_string.include?("select")
+      government_type = "selectmen"
+    elsif raw_government_type_string.include?("alder")
+      government_type = "aldermen"
+    elsif raw_government_type_string.include?("town") && raw_government_type_string.include?("meeting")
+      government_type = "town_meeting"
+    end
+
+    government_type
   end
 
   def self.format_name(name)

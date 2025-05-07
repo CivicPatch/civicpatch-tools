@@ -73,16 +73,6 @@ module Scrapers
       end
     end
 
-    def self.get_government_type(state, municipality_entry)
-      scraper = get_scraper(state)
-
-      if scraper.respond_to?(:get_government_type)
-        scraper.get_government_type(municipality_entry)
-      else
-        Core::CityManager::GOVERNMENT_TYPE_MAYOR_COUNCIL
-      end
-    end
-
     def self.fetch_census_data(state, statefp)
       census_municipality_codes = fetch_census_municipality_codes(state, statefp)
       populations_hash = fetch_census_populations(statefp)

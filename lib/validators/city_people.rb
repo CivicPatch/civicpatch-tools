@@ -6,12 +6,6 @@ require_relative "../core/people_resolver"
 module Validators
   # List of elected officials for the city (municipality/place)
   class CityPeople
-    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_people.yml"))
-
-    def self.config
-      @config ||= YAML.load_file(CONFIG_PATH)
-    end
-
     def self.validate_sources(municipality_context)
       state = municipality_context[:state]
       gnis = municipality_context[:municipality_entry]["gnis"]
