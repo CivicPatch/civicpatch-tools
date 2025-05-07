@@ -28,15 +28,32 @@ namespace :one_off do
     state = "nh"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     updated_municipalities = municipalities.map do |municipality|
-      municipality["email"] = municipality["email_address"]
-      municipality["website"] = municipality["website_url"]
+      municipality["email"] = municipality["email_address"] if municipality["email_address"].present?
+      municipality["website"] = municipality["website_url"] if municipality["website_url"].present?
 
-      delete municipality["email_address"]
-      delete municipality["website_url"]
+      municipality = municipality.reject { |key, _| %w[email_address website_url].include?(key) }
       municipality
     end
 
     Core::StateManager.update_municipalities(state, updated_municipalities)
+  end
+
+  task :get_gov_types do
+    state = "nh"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    government_types_by_count = {}
+    government_types_with_no_government_type = []
+    municipalities.each do |municipality|
+      if municipality["government_type"].blank?
+        government_types_with_no_government_type << municipality
+      else
+        government_types_by_count[municipality["government_type"]] =
+          government_types_by_count[municipality["government_type"]].to_i + 1
+      end
+    end
+
+    puts government_types_by_count.sort_by { |_key, value| value }.reverse
+    puts(government_types_with_no_government_type.map { |municipality| municipality["name"] })
   end
 
   task :test_source do
