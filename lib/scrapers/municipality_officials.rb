@@ -6,27 +6,27 @@ require_relative "or/municipality_officials/state_level_scraper"
 module Scrapers
   module MunicipalityOfficials
     def self.fetch_with_state_level(municipality_context)
+      city_name = municipality_context[:municipality_entry]["name"]
+      state = municipality_context[:state]
+
       case municipality_context[:state]
       when "wa"
         people = Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
       when "or"
         people = Scrapers::Or::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
       else
-        raise "No state-level scraper found for #{municipality_context[:state]}"
+        raise "No state-level scraper found for #{state}"
       end
 
-      if people.blank?
-        city_name = municipality_context[:municipality_entry]["name"]
-        state = municipality_context[:state]
-        puts "No people found for #{city_name}, #{state}"
-        with_search_fallback(municipality_context)
-      else
-        {
-          "type" => "directory_list",
-          "people" => people,
-          "key_position" => "mayor"
-        }
-      end
+      raise "No people found for #{city_name}, #{state}" if people.blank?
+
+      {
+        "type" => "directory_list",
+        "people" => people
+      }
+    rescue StandardError => e
+      puts "Error fetching with state-level scraper for #{city_name}, #{state}: #{e.message}, falling back to search"
+      with_search_fallback(municipality_context)
     end
 
     def self.get_edit_detail(municipality_context)
@@ -51,8 +51,7 @@ module Scrapers
       people = response["people"]
       {
         "type" => "directory_list_fallback",
-        "people" => people,
-        "key_position" => "mayor"
+        "people" => people
       }
     end
   end

@@ -246,7 +246,7 @@ module Core
       puts "#{context[:llm_service_string]}: Source directory list config: #{source_directory_list_config}"
       puts "#{context[:llm_service_string]}: People found: #{found_positions}"
       puts "#{context[:llm_service_string]}: Officials count: #{valid_officials_count}"
-      return true unless found_key_position?(source_directory_list_config, found_positions)
+      # return true unless found_key_position?(source_directory_list_config, found_positions)
 
       # Sometimes state source can lag behind the city source
       #  -- there may be more members listed than are
@@ -257,10 +257,10 @@ module Core
       false
     end
 
-    def self.found_key_position?(source_directory_list_config, found_positions)
-      return true if source_directory_list_config["key_position"].blank?
+    # def self.found_key_position?(source_directory_list_config, found_positions)
+    #  return true if source_directory_list_config["key_position"].blank?
 
-      found_positions.flatten.map(&:downcase).include?(source_directory_list_config["key_position"].downcase)
-    end
+    #  found_positions.flatten.map(&:downcase).include?(source_directory_list_config["key_position"].downcase)
+    # end
   end
 end

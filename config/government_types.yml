@@ -6,7 +6,7 @@ government_types:
       - role: mayor pro tempore
         aliases: 
         - mayor pro-tem
-        - mayor pro tem 
+        - mayor pro tem
       - role: deputy mayor
       - role: council president
       - role: deputy council president
@@ -69,6 +69,12 @@ government_types:
   town_meeting: # Not handling this
   selectmen:
     positions:
+      - role: mayor # Optional, not always present
+      - role: mayor pro tempore
+        aliases: 
+        - mayor pro-tem
+        - mayor pro tem
+      - role: deputy mayor  
       - role: selectmen
     search_keywords:
       selectmen:
@@ -89,6 +95,11 @@ government_types:
   aldermen:
     positions:
       - role: mayor # Optional, not always present
+      - role: mayor pro tempore
+        aliases: 
+        - mayor pro-tem
+        - mayor pro tem
+      - role: deputy mayor
       - role: chair
       - role: vice chair
         aliases: 
