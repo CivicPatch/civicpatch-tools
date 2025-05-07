@@ -1,0 +1,59 @@
+---
+scrape_sources:
+- https://www.nashuanh.gov/148/Mayors-Office
+- https://www.nashuanh.gov/directory.aspx?did=4
+- https://www.nashuanh.gov/148/Mayors-Office/
+- https://www.nashuanh.gov/514/Board-of-Aldermen
+- https://www.nashuanh.gov/514/Board-of-Aldermen/
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Jim Donchess
+    positions:
+    - Mayor
+  - name: Ben Clemons
+    positions:
+    - Council Member
+  - name: Chris Thibodeau
+    positions:
+    - Council Member
+  - name: Derek Thibeault
+    positions:
+    - Council Member
+  - name: Ernest A. Jette
+    positions:
+    - Council Member
+  - name: Gloria Timmons
+    positions:
+    - Council Member
+  - name: John Sullivan
+    positions:
+    - Council Member
+  - name: Lori Wilshire
+    positions:
+    - Council Member
+  - name: Melbourne Moran Jr.
+    positions:
+    - Council Member
+  - name: Michael B. O'Brien Sr.
+    positions:
+    - Council Member
+  - name: Patricia Klee
+    positions:
+    - Council Member
+  - name: Richard A. Dowd
+    positions:
+    - Council Member
+  - name: Shoshanna Kelly
+    positions:
+    - Council Member
+  - name: Thomas Lopez
+    positions:
+    - Council Member
+  - name: Tim Sennott
+    positions:
+    - Council Member
+  - name: Tyler Gouveia
+    positions:
+    - Council Member
+people: {}
