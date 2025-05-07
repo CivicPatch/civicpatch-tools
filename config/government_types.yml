@@ -1,4 +1,20 @@
 ---
+divisions: &divisions
+  - citywide
+  - at-large
+  - ward
+  - district
+  - seat
+  - position
+position_examples: &position_examples | # Useful for LLM prompts
+  * council member ward 3 -> ["council member", "ward 3"]
+  * ward #3 -> ["ward 3"]
+  * mayor, 3rd district -> ["mayor", "district 3"]
+  * seat 5 -> ["council member", "seat 5"]
+  * mayor -> ["mayor"]
+  * mayor position 7 -> ["mayor", "position 7"]
+  * position 8 at-large -> ["position 8", "at-large"]
+  * position no 8 -> ["position 8"]
 government_types:
   mayor_council:
     positions:
@@ -21,22 +37,8 @@ government_types:
           - councilman
           - councilor
           - councillor
-        divisions:
-          - citywide
-          - at-large
-          - ward
-          - district
-          - seat
-          - position
-    position_examples: | # Useful for LLM prompts
-      * council member ward 3 -> ["council member", "ward 3"]
-      * ward #3 -> ["ward 3"]
-      * mayor, 3rd district -> ["mayor", "district 3"]
-      * seat 5 -> ["council member", "seat 5"]
-      * mayor -> ["mayor"]
-      * mayor position 7 -> ["mayor", "position 7"]
-      * position 8 at-large -> ["position 8", "at-large"]
-      * position no 8 -> ["position 8"]
+        divisions: *divisions
+    position_examples: *position_examples
     exclude_positions:
       - youth councilor
     search_keywords: # Keys are for google search, values are for web crawling
@@ -111,3 +113,32 @@ government_types:
         - alderman
         - alderwoman
         - member
+        divisions: *divisions
+    position_examples: *position_examples
+    search_keywords: # Keys are for google search, values are for web crawling
+      mayor:
+        - mayor and city council
+        - about mayor
+        - meet the mayor
+        - about the mayor
+        - mayor
+        - council president
+        - council manager
+      council members:
+        - meet the council
+        - city council members
+        - council bios
+        - council members
+        - councilmembers
+        - city council
+        - council districts
+        - city hall
+        - council
+      elected officials:
+        - elected officials
+        - city administration
+        - index
+        - government
+        - bios
+        - meet
+        - about

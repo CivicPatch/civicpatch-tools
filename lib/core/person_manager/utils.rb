@@ -15,6 +15,7 @@ module Core
       end
 
       def self.generate_divisions_map(positions_configs)
+        puts "Divisiosns config #{positions_configs}"
         divisions_map = {}
         positions_configs.each do |role_config|
           role = role_config["role"].downcase

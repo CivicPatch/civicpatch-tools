@@ -1,0 +1,73 @@
+---
+scrape_sources:
+- https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office
+- https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office
+- https://www.manchesternh.gov/
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor
+- https://www.manchesternh.gov/Mayor
+- https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil
+- https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-ONeil
+- https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman
+- https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Jay Ruais
+    positions:
+    - Mayor
+  - name: Anthony Sapienza
+    positions:
+    - Alderperson
+  - name: Bill Barry
+    positions:
+    - Alderperson
+  - name: Chris Morgan
+    positions:
+    - Alderperson
+  - name: Christine Fajardo
+    positions:
+    - Alderperson
+  - name: Crissy Kantor
+    positions:
+    - Alderperson
+  - name: Dan Goonan
+    positions:
+    - Alderperson
+  - name: Dan O'Neil
+    positions:
+    - Alderperson
+  - name: Edward Sapienza
+    positions:
+    - Alderperson
+  - name: Jim Burkush
+    positions:
+    - Alderperson
+  - name: Joseph Kelly Levasseur
+    positions:
+    - Alderperson
+  - name: Kelly Thomas
+    positions:
+    - Alderperson
+  - name: Norm Vincent
+    positions:
+    - Alderperson
+  - name: Pat Long
+    positions:
+    - Alderperson
+  - name: Ross Terrio
+    positions:
+    - Alderperson
+people: {}
