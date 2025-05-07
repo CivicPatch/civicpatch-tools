@@ -13,6 +13,7 @@ costs.csv
 testing/
 people.csv
 scratch.json
+scratch.html
 cost_images.csv
 cost_llms.csv
 cost_search_engine.csv
