@@ -1,5 +1,13 @@
 ---
-scrape_sources: []
+scrape_sources:
+- https://www.enterpriseoregon.gov/city-council
+- https://www.enterpriseoregon.gov/city-council/directory-listing/cody-lathrop
+- https://www.enterpriseoregon.gov/council-regular-meeting/directory-listing/jeffrey-yanke
+- https://www.enterpriseoregon.gov/city-council/directory-listing/carl-mcfetridge
+- https://www.enterpriseoregon.gov/city-council/directory-listing/dave-elliott
+- https://www.enterpriseoregon.gov/city-council/directory-listing/eric-stangel
+- https://www.enterpriseoregon.gov/city-council/directory-listing/jim-dickenson
+- https://www.enterpriseoregon.gov/city-council/directory-listing/rick-freeman
 source_directory_list:
   type: directory_list
   people:
@@ -43,5 +51,4 @@ source_directory_list:
     - Council Member
     email: freeman97828@gmail.com
     phone_number: "(541) 426-4196"
-  key_position: mayor
 people: {}
