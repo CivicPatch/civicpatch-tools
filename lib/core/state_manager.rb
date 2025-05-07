@@ -19,7 +19,6 @@ module Core
 
     def self.update_municipalities(state, updated_municipalities)
       municipalities = { # scaffold just in case it doesn't exist
-        "ocd_id" => "ocd-division/country:us/state:#{state}",
         "municipalities" => []
       }
 
