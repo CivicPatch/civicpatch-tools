@@ -2344,10 +2344,12 @@
       "phone_number": "(541) 426-4196",
       "website": "https://www.enterpriseoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "03cf6a41d2029f21e55245a52eeba894",
+      "meta_updated_at": "2025-05-07",
+      "meta_hash": "e8a9697c47f97f90505d09a455798e1e",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
