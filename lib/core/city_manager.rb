@@ -4,7 +4,7 @@ require_relative "../path_helper"
 
 module Core
   class CityManager
-    CONFIG_PATH = PathHelper.project_path(File.join("config", "city_people.yml"))
+    CONFIG_PATH = PathHelper.project_path(File.join("config", "government_types.yml"))
     GOVERNMENT_TYPE_MAYOR_COUNCIL = "mayor_council"
 
     def self.config
@@ -13,24 +13,6 @@ module Core
 
     def self.get_config(government_type)
       config.dig("government_types", government_type)
-    end
-
-    def self.get_positions(government_type)
-      config.dig("government_types", government_type, "positions")
-    end
-
-    def self.get_position_roles(government_type)
-      config.dig("government_types", government_type, "positions")
-            .map { |position| position["role"] }
-    end
-
-    def self.get_position_divisions(government_type)
-      config.dig("government_types", government_type, "positions")
-            .flat_map { |position| position["implied_by"] || [] }
-    end
-
-    def self.get_position_examples(government_type)
-      config.dig("government_types", government_type, "position_examples")
     end
 
     def self.get_search_keywords(government_type)

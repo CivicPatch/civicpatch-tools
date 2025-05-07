@@ -3,9 +3,10 @@ government_types:
   mayor_council:
     positions:
       - role: mayor
-      - role: mayor pro tem
+      - role: mayor pro tempore
         aliases: 
         - mayor pro-tem
+        - mayor pro tem 
       - role: deputy mayor
       - role: council president
       - role: deputy council president
@@ -38,7 +39,15 @@ government_types:
       * position no 8 -> ["position 8"]
     exclude_positions:
       - youth councilor
-    search_keywords:
+    search_keywords: # Keys are for google search, values are for web crawling
+      mayor:
+        - mayor and city council
+        - about mayor
+        - meet the mayor
+        - about the mayor
+        - mayor
+        - council president
+        - council manager
       council members:
         - meet the council
         - city council members
@@ -49,14 +58,6 @@ government_types:
         - council districts
         - city hall
         - council
-      mayor:
-        - mayor and city council
-        - about mayor
-        - meet the mayor
-        - about the mayor
-        - mayor
-        - council president
-        - council manager
       elected officials:
         - elected officials
         - city administration
@@ -65,3 +66,37 @@ government_types:
         - bios
         - meet
         - about
+  town_meeting: # Not handling this
+  selectmen:
+    positions:
+      - role: selectmen
+    search_keywords:
+      selectmen:
+        - board of selectmen
+      mayor:
+        - mayor and city council
+        - about mayor
+        - meet the mayor
+        - about the mayor
+        - mayor
+      elected officials:
+        - elected officials
+        - index
+        - government
+        - bios
+        - meet
+        - about
+  aldermen:
+    positions:
+      - role: mayor # Optional, not always present
+      - role: chair
+      - role: vice chair
+        aliases: 
+          - vice chairwoman
+          - vice chairman
+      - role: alderperson
+        aliases:
+        - alder
+        - alderman
+        - alderwoman
+        - member

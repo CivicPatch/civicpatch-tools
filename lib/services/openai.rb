@@ -50,11 +50,13 @@ module Services
     def generate_city_info_prompt(municipality_context, content, page_url, person_name = "")
       state = municipality_context[:state]
       government_type = municipality_context[:government_type]
-      positions = Core::CityManager.get_position_roles(government_type)
-      divisions = Core::CityManager.get_position_divisions(government_type)
-      position_examples = Core::CityManager.get_position_examples(government_type)
+      government_types_config = Core::CityManager.get_config(government_type)
+      positions = government_types_config["positions"].map { |position| position["role"] }
+      divisions = government_types_config["divisions"]
+      position_examples = government_types_config["position_examples"]
       municipality_entry = municipality_context[:municipality_entry]
       current_date = Date.today.strftime("%Y-%m-%d")
+
       maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
         person&.dig("name")
       end

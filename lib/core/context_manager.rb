@@ -3,12 +3,11 @@ module Core
     def self.get_context(state, gnis)
       config = Core::ConfigManager.get_config(state, gnis)
       municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-      government_type = Scrapers::Municipalities.get_government_type(state, municipality_entry)
 
       {
         state: state,
         municipality_entry: municipality_entry,
-        government_type: government_type,
+        government_type: municipality_entry["government_type"] || "mayor_council",
         config: config
       }
     end

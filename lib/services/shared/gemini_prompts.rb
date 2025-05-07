@@ -41,9 +41,10 @@ module Services
         state = municipality_context[:state]
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]
-        positions = Core::CityManager.get_position_roles(government_type)
-        divisions = Core::CityManager.get_position_divisions(government_type)
-        position_examples = Core::CityManager.get_position_examples(government_type)
+        municipality_config = Core::CityManager.get_config(government_type)
+        positions = municipality_config["positions"]
+        divisions = municipality_config["divisions"]
+        position_examples = municipality_config["position_examples"]
         current_date = Date.today.strftime("%Y-%m-%d")
         maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
           person&.dig("name")

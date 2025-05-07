@@ -11,7 +11,7 @@
       "population": 115644,
       "address": "One City Hall Plaza, Suite 110; Manchester, NH 03101-2099",
       "phone_number": "(603) 624-6505",
-      "government_type": "mayor & 14 aldermen",
+      "government_type": "aldermen",
       "email": "econdev@manchesternh.gov",
       "website": "http://www.ManchesterNH.gov"
     },
@@ -26,7 +26,7 @@
       "population": 91322,
       "address": "229 Main Street, PO Box 2019; Nashua, NH 03061-2019",
       "phone_number": "(603) 589-3072",
-      "government_type": "mayor & council",
+      "government_type": "mayor_council",
       "email": "cummingst@nashuanh.gov",
       "website": "http://www.nashuanh.gov"
     },
@@ -41,7 +41,7 @@
       "population": 43976,
       "address": "41 Green Street, City Hall; Concord, NH 03301",
       "phone_number": "(603) 225-8570",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "tthompson@concordnh.gov",
       "website": "http://www.concordnh.gov"
     },
@@ -56,7 +56,7 @@
       "population": 34317,
       "address": "14 Manning St; Derry, NH 03038",
       "phone_number": "(603) 432-6110 x5477",
-      "government_type": "town admin./council",
+      "government_type": "mayor_council",
       "email": "georgesioras@derrynh.org",
       "website": "http://www.derrynh.org"
     },
@@ -71,7 +71,7 @@
       "population": 32741,
       "address": "288 Central Avenue; Dover, NH 03820-4169",
       "phone_number": "(603) 516-6012",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "j.bizier@dover.nh.gov",
       "website": "http://www.dover.nh.gov"
     },
@@ -86,7 +86,7 @@
       "population": 32492,
       "address": "31 Wakefield Street, City Hall; Rochester, NH 03867-1917",
       "phone_number": "(603) 335-7522",
-      "government_type": "council/manager",
+      "government_type": "mayor_council",
       "email": "michael.scala@rochesternh.gov",
       "website": "http://www.rochesternh.gov"
     },
@@ -101,7 +101,7 @@
       "population": 30089,
       "address": "33 Geremonty Drive; Salem, NH 03079",
       "phone_number": "(603) 890-2120",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "jdevine@salemnh.gov",
       "website": "http://www.townofsalemnh.org"
     },
@@ -116,7 +116,7 @@
       "population": 26632,
       "address": "6 Baboosic Lake Road; Merrimack, NH 03054",
       "phone_number": "(603) 424-3531",
-      "government_type": "council/town manager",
+      "government_type": "mayor_council",
       "email": "commdev@merrimacknh.gov",
       "website": "http://www.merrimacknh.gov"
     },
@@ -131,7 +131,7 @@
       "population": 25826,
       "address": "268B Mammoth Road; Londonderry, NH 03053",
       "phone_number": "(603) 432-1100 x151",
-      "government_type": "town council",
+      "government_type": "mayor_council",
       "email": "mmalaguti@londonderrynh.org",
       "website": "http://www.londonderrynh.org"
     },
@@ -161,7 +161,7 @@
       "population": 23322,
       "address": "24 North Amherst Road; Bedford, NH 03110",
       "phone_number": "(603) 472-5243",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "rhebert@bedfordnh.org",
       "website": "http://www.bedfordnh.org"
     },
@@ -176,7 +176,7 @@
       "population": 23047,
       "address": "3 Washington Street; Keene, NH 03431-3191",
       "phone_number": "(603) 357-9804",
-      "government_type": "mayor, council, & manager",
+      "government_type": "mayor_council",
       "email": "hmattson@keenenh.gov",
       "website": "https://keenenh.gov/"
     },
@@ -191,7 +191,7 @@
       "population": 21956,
       "address": "1 Junkins Avenue; Portsmouth, NH 03801",
       "phone_number": "(603) 610-7220",
-      "government_type": "city manager & council",
+      "government_type": "mayor_council",
       "email": "sclancy@cityofportsmouth.com",
       "website": "http://cityofportsmouth.com"
     },
@@ -221,7 +221,7 @@
       "population": 16871,
       "address": "45 Beacon Street East; Laconia, NH 03246",
       "phone_number": "(603) 527-1270",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "citymanager@laconianh.gov",
       "website": "http://www.laconianh.gov"
     },
@@ -266,7 +266,7 @@
       "population": 16049,
       "address": "10 Front Street; Exeter, NH 03833",
       "phone_number": "(603) 773-6102",
-      "government_type": "select board",
+      "government_type": "selectmen",
       "email": "pmcelroy@exeternh.gov",
       "website": "http://exeternh.gov"
     },
@@ -296,7 +296,7 @@
       "population": 15490,
       "address": "8 Newmarket Road; Durham, NH 03824-2898",
       "phone_number": "(603) 868-8064",
-      "government_type": "administrator & council",
+      "government_type": "mayor_council",
       "email": "mbehrendt@ci.durham.nh.us",
       "website": "http://www.ci.durham.nh.us"
     },
@@ -311,7 +311,7 @@
       "population": 14871,
       "address": "35 Main Street; Hooksett, NH 03106-1397",
       "phone_number": "(603) 485-8472",
-      "government_type": "administrator & council",
+      "government_type": "mayor_council",
       "email": "agarron@hooksett.org",
       "website": "http://www.hooksett.org"
     },
@@ -326,7 +326,7 @@
       "population": 14282,
       "address": "51 North Park Street; Lebanon, NH 03766",
       "phone_number": "(603) 448-1457",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "crystal.taplin@lebanonnh.gov",
       "website": "http://www.lebanonnh.gov"
     },
@@ -356,7 +356,7 @@
       "population": 12949,
       "address": "14 North Street; Claremont, NH 03743",
       "phone_number": "(603) 542-7008",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "info@claremontnh.com",
       "website": "http://www.claremontnh.com"
     },
@@ -386,7 +386,7 @@
       "population": 11855,
       "address": "One Government Way; Somersworth, NH 03878",
       "phone_number": "(603) 692-9519",
-      "government_type": "city manager & council",
+      "government_type": "mayor_council",
       "email": "mmears@somersworthnh.gov",
       "website": "http://www.somersworthnh.gov"
     },
@@ -416,7 +416,7 @@
       "population": 10684,
       "address": "4 Epping Street; Raymond, NH 03077",
       "phone_number": "(603) 895-7007",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "phammond@raymondnh.gov",
       "website": "http://www.raymondnh.gov"
     },
@@ -446,7 +446,7 @@
       "population": 9430,
       "address": "186 Main Street; Newmarket, NH 03857",
       "phone_number": "(603) 659-3617",
-      "government_type": "council/town manager",
+      "government_type": "mayor_council",
       "email": "sfournier@newmarketnh.gov",
       "website": "http://www.newmarketnh.gov"
     },
@@ -461,7 +461,7 @@
       "population": 9425,
       "address": "168 Main Street, City Hall; Berlin, NH 03570",
       "phone_number": "(603) 752-7532",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "info@berlinnh.gov",
       "website": "http://www.berlinnh.gov"
     },
@@ -476,7 +476,7 @@
       "population": 9326,
       "address": "PO Box 660; Barrington, NH 03825",
       "phone_number": "(603) 664-9007",
-      "government_type": "selectmen/town meeting",
+      "government_type": "selectmen",
       "email": "administration@barrington.nh.gov",
       "website": "http://www.barrington.nh.gov"
     },
@@ -521,7 +521,7 @@
       "population": 8741,
       "address": "316 Central Street, City Hall; Franklin, NH 03235",
       "phone_number": "(603) 934-3900",
-      "government_type": "manager & council",
+      "government_type": "mayor_council",
       "email": "citymgr@franklinnh.org",
       "website": "http://www.franklinnh.org"
     },
@@ -551,7 +551,7 @@
       "population": 8401,
       "address": "PO Box 456; Seabrook, NH 03874",
       "phone_number": "(603) 474-3311",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "wmanzi@seabrooknh.org",
       "website": "http://www.seabrooknh.info"
     },
@@ -581,7 +581,7 @@
       "population": 8229,
       "address": "10 Grandview Road, Town Hall; Bow, NH 03304",
       "phone_number": "(603) 223-3910",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "dstack@bownh.gov",
       "website": "http://www.bownh.gov"
     },
@@ -596,7 +596,7 @@
       "population": 7830,
       "address": "145 Main Street; Plaistow, NH 03865",
       "phone_number": "(603) 382-5200 x261",
-      "government_type": "selectmen/manager",
+      "government_type": "selectmen",
       "email": "gcolby@plaistow.com",
       "website": "http://www.plaistow.com"
     },
@@ -656,7 +656,7 @@
       "population": 7270,
       "address": "Town Hall, PO Box 10009; Swanzey, NH 03446-0009",
       "phone_number": "(603) 352-7411",
-      "government_type": "select board",
+      "government_type": "selectmen",
       "email": "mbranley@swanzeynh.gov",
       "website": "http://www.swanzeynh.gov"
     },
@@ -686,7 +686,7 @@
       "population": 7125,
       "address": "157 Main Street; Epping, NH 03042",
       "phone_number": "(603) 679-5441",
-      "government_type": "selectmen/sb 2 voting",
+      "government_type": "selectmen",
       "email": "administrator@eppingnh.gov",
       "website": "http://www.townofepping.com"
     },
@@ -746,7 +746,7 @@
       "population": 6662,
       "address": "41 Main Street; Meredith, NH 03253",
       "phone_number": "(603) 677-4209",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "tbrown@meredithnh.org",
       "website": "http://www.meredithnh.org"
     },
@@ -776,7 +776,7 @@
       "population": 6476,
       "address": "30 Payson Hill Road; Rindge, NH 03461",
       "phone_number": "(603) 899-5181 x101",
-      "government_type": "selectmen/town administrator",
+      "government_type": "selectmen",
       "email": "townadmin@rindgenh.org",
       "website": "http://www.rindgenh.org"
     },
@@ -806,7 +806,7 @@
       "population": 6416,
       "address": "PO Box 629; Wolfeboro, NH 03894",
       "phone_number": "(603) 569-8161",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "townmanager@wolfeboronh.us",
       "website": "http://www.wolfeboronh.us"
     },
@@ -1001,7 +1001,7 @@
       "population": 5320,
       "address": "10 Goodnow Street; Jaffrey, NH 03452",
       "phone_number": "(603) 532-7880",
-      "government_type": "town manager",
+      "government_type": "selectmen",
       "email": "jzola@townofjaffrey.com",
       "website": "http://www.townofjaffrey.com"
     },
@@ -1121,7 +1121,7 @@
       "population": 4855,
       "address": "8 Raymond Road, PO Box 159; Deerfield, NH 03037",
       "phone_number": "(603) 463-8811 x309",
-      "government_type": "town meeting",
+      "government_type": "town_meeting",
       "email": "bos@townofdeerfieldnh.com",
       "website": "http://www.townofdeerfieldnh.com"
     },
@@ -1226,7 +1226,7 @@
       "population": 4585,
       "address": "2975 Dartmouth College Highway; North Haverhill, NH 03774",
       "phone_number": "(603) 787-6800",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "townmanager@haverhill-nh.com",
       "website": "http://www.haverhill-nh.com"
     },
@@ -1312,7 +1312,7 @@
       "population": 4408,
       "address": "210 Main Street; Danville, NH 03819",
       "phone_number": "(603) 382-8253",
-      "government_type": "town meeting",
+      "government_type": "town_meeting",
       "email": "townadmin@townofdanville.org",
       "website": "http://www.townofdanville.org"
     },
@@ -1432,7 +1432,7 @@
       "population": 3998,
       "address": "116 North Main Street; Boscawen, NH 03303",
       "phone_number": "(603) 753-9188 x2317",
-      "government_type": "select board",
+      "government_type": "selectmen",
       "email": "kphelps@boscawennh.gov",
       "website": "http://www.boscawennh.gov"
     },
@@ -1447,7 +1447,7 @@
       "population": 3962,
       "address": "257 Main Street; Tilton, NH 03276",
       "phone_number": "(603) 286-4521 x101",
-      "government_type": "selectmen/town meeting",
+      "government_type": "selectmen",
       "email": "shilliard@tiltonnh.org",
       "website": "http://tiltonnh.org"
     },
@@ -1582,7 +1582,7 @@
       "population": 3342,
       "address": "23 Edgemont Road; Sunapee, NH 03782",
       "phone_number": "(603) 763-2212",
-      "government_type": "selectmen/town manager",
+      "government_type": "selectmen",
       "email": "manager@town.sunapee.nh.us",
       "website": "http://www.town.sunapee.nh.us"
     },
@@ -1687,7 +1687,7 @@
       "population": 2812,
       "address": "84 Main Street; Tamworth, NH 03886",
       "phone_number": "(603) 323-7525",
-      "government_type": "select board",
+      "government_type": "selectmen",
       "email": "admin@tamworthnh.gov",
       "website": "http://www.tamworthnh.org"
     },
@@ -1882,7 +1882,7 @@
       "population": 2441,
       "address": "24 Depot Road; East Kingston, NH 03827",
       "phone_number": "(603) 642-8406",
-      "government_type": "town meeting",
+      "government_type": "town_meeting",
       "email": "gruelle@eastkingstonnh.gov",
       "website": "http://www.eknh.org"
     },
@@ -1912,7 +1912,7 @@
       "population": 2403,
       "address": "1 Drinkwater Road; Hampton Falls, NH 03844",
       "phone_number": "(603) 926-4618",
-      "government_type": "town meeting/sb 2",
+      "government_type": "town_meeting",
       "email": "townadministrator@hamptonfalls.org",
       "website": "http://www.hamptonfalls.org"
     },
@@ -2347,7 +2347,7 @@
       "population": 1631,
       "address": "PO Box 25; Lincoln, NH 03251",
       "phone_number": "(603) 745-2757",
-      "government_type": "town manager",
+      "government_type": "selectmen",
       "email": "townmanager@lincolnnh.gov",
       "website": "http://www.lincolnnh.org"
     },
@@ -3616,16 +3616,6 @@
         "Coos"
       ],
       "population": 1
-    },
-    {
-      "name": "County subdivisions not",
-      "type": "defined",
-      "fips": "33-00000",
-      "gnis": "0000000",
-      "counties": [
-        "Rockingham"
-      ],
-      "population": 0
     },
     {
       "name": "Sargents",
