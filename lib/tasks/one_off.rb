@@ -3,6 +3,7 @@
 require "services/spaces"
 require "utils/folder_helper"
 require "core/config_manager"
+require "scrapers/municipalities"
 
 namespace :one_off do
   desc "Scrape city offficials from a state-level source"
@@ -22,12 +23,16 @@ namespace :one_off do
     end
   end
 
-  desc "Fix WA city names"
-  task :fix_wa_city_names do
-    state = "wa"
+  desc "Fix NH contact properties"
+  task :fix_nh do
+    state = "nh"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     updated_municipalities = municipalities.map do |municipality|
-      municipality["name"] = municipality["name"].gsub("_", " ")
+      municipality["email"] = municipality["email_address"]
+      municipality["website"] = municipality["website_url"]
+
+      delete municipality["email_address"]
+      delete municipality["website_url"]
       municipality
     end
 
@@ -219,6 +224,10 @@ namespace :one_off do
       end
     end
     csv_file.close
+  end
+
+  task :scrape_nh do
+    Scrapers::Municipalities.fetch("nh")
   end
 
   def self.format_name(name)

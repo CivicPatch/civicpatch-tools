@@ -1,0 +1,3775 @@
+{
+  "ocd_id": "ocd-division/country:us/state:nh",
+  "municipalities": [
+    {
+      "name": "Manchester",
+      "type": "city",
+      "fips": "33-45140",
+      "gnis": "0873658",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 115644,
+      "address": "One City Hall Plaza, Suite 110; Manchester, NH 03101-2099",
+      "phone_number": "(603) 624-6505",
+      "email_address": "econdev@manchesternh.gov",
+      "website_url": "http://www.ManchesterNH.gov",
+      "government_type": "mayor & 14 aldermen"
+    },
+    {
+      "name": "Nashua",
+      "type": "city",
+      "fips": "33-50260",
+      "gnis": "0873672",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 91322,
+      "address": "229 Main Street, PO Box 2019; Nashua, NH 03061-2019",
+      "phone_number": "(603) 589-3072",
+      "email_address": "cummingst@nashuanh.gov",
+      "website_url": "http://www.nashuanh.gov",
+      "government_type": "mayor & council"
+    },
+    {
+      "name": "Concord",
+      "type": "city",
+      "fips": "33-14200",
+      "gnis": "0873569",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 43976,
+      "address": "41 Green Street, City Hall; Concord, NH 03301",
+      "phone_number": "(603) 225-8570",
+      "email_address": "tthompson@concordnh.gov",
+      "website_url": "http://www.concordnh.gov",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Derry",
+      "type": "town",
+      "fips": "33-17940",
+      "gnis": "0873578",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 34317,
+      "address": "14 Manning St; Derry, NH 03038",
+      "phone_number": "(603) 432-6110 x5477",
+      "email_address": "georgesioras@derrynh.org",
+      "website_url": "http://www.derrynh.org",
+      "government_type": "town admin./council"
+    },
+    {
+      "name": "Dover",
+      "type": "city",
+      "fips": "33-18820",
+      "gnis": "0873580",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 32741,
+      "address": "288 Central Avenue; Dover, NH 03820-4169",
+      "phone_number": "(603) 516-6012",
+      "email_address": "j.bizier@dover.nh.gov",
+      "website_url": "http://www.dover.nh.gov",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Rochester",
+      "type": "city",
+      "fips": "33-65140",
+      "gnis": "0873708",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 32492,
+      "address": "31 Wakefield Street, City Hall; Rochester, NH 03867-1917",
+      "phone_number": "(603) 335-7522",
+      "email_address": "michael.scala@rochesternh.gov",
+      "website_url": "http://www.rochesternh.gov",
+      "government_type": "council/manager"
+    },
+    {
+      "name": "Salem",
+      "type": "town",
+      "fips": "33-66660",
+      "gnis": "0873713",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 30089,
+      "address": "33 Geremonty Drive; Salem, NH 03079",
+      "phone_number": "(603) 890-2120",
+      "email_address": "jdevine@salemnh.gov",
+      "website_url": "http://www.townofsalemnh.org",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "Merrimack",
+      "type": "town",
+      "fips": "33-47540",
+      "gnis": "0873663",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 26632,
+      "address": "6 Baboosic Lake Road; Merrimack, NH 03054",
+      "phone_number": "(603) 424-3531",
+      "email_address": "commdev@merrimacknh.gov",
+      "website_url": "http://www.merrimacknh.gov",
+      "government_type": "council/town manager"
+    },
+    {
+      "name": "Londonderry",
+      "type": "town",
+      "fips": "33-43220",
+      "gnis": "0873651",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 25826,
+      "address": "268B Mammoth Road; Londonderry, NH 03053",
+      "phone_number": "(603) 432-1100 x151",
+      "email_address": "mmalaguti@londonderrynh.org",
+      "website_url": "http://www.londonderrynh.org",
+      "government_type": "town council"
+    },
+    {
+      "name": "Hudson",
+      "type": "town",
+      "fips": "33-37940",
+      "gnis": "0873631",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 25394,
+      "address": "12 School Street; Hudson, NH 03051",
+      "phone_number": "(603) 886-6024",
+      "email_address": "smalizia@hudsonnh.gov",
+      "website_url": "http://www.hudsonnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bedford",
+      "type": "town",
+      "fips": "33-04500",
+      "gnis": "0873541",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 23322,
+      "address": "24 North Amherst Road; Bedford, NH 03110",
+      "phone_number": "(603) 472-5243",
+      "email_address": "rhebert@bedfordnh.org",
+      "website_url": "http://www.bedfordnh.org",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Keene",
+      "type": "city",
+      "fips": "33-39300",
+      "gnis": "0873635",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 23047,
+      "address": "3 Washington Street; Keene, NH 03431-3191",
+      "phone_number": "(603) 357-9804",
+      "email_address": "hmattson@keenenh.gov",
+      "website_url": "https://keenenh.gov/",
+      "government_type": "mayor, council, & manager"
+    },
+    {
+      "name": "Portsmouth",
+      "type": "city",
+      "fips": "33-62900",
+      "gnis": "0873703",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 21956,
+      "address": "1 Junkins Avenue; Portsmouth, NH 03801",
+      "phone_number": "(603) 610-7220",
+      "email_address": "sclancy@cityofportsmouth.com",
+      "website_url": "http://cityofportsmouth.com",
+      "government_type": "city manager & council"
+    },
+    {
+      "name": "Goffstown",
+      "type": "town",
+      "fips": "33-29860",
+      "gnis": "0873606",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 18577,
+      "address": "Town Hall, 16 Main Street; Goffstown, NH 03045",
+      "phone_number": "(603) 497-8990 x118",
+      "email_address": "joann.duffy@goffstownnh.gov",
+      "website_url": "http://www.goffstownnh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Laconia",
+      "type": "city",
+      "fips": "33-40180",
+      "gnis": "0873639",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 16871,
+      "address": "45 Beacon Street East; Laconia, NH 03246",
+      "phone_number": "(603) 527-1270",
+      "email_address": "citymanager@laconianh.gov",
+      "website_url": "http://www.laconianh.gov",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Hampton",
+      "type": "town",
+      "fips": "33-33060",
+      "gnis": "0873616",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 16214,
+      "address": "100 Winnacunnet Road; Hampton, NH 03842",
+      "phone_number": "(603) 758-1517",
+      "email_address": "inquries@town.hampton.nh.us",
+      "website_url": "https://hamptonnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Milford",
+      "type": "town",
+      "fips": "33-48020",
+      "gnis": "0873666",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 16131,
+      "address": "1 Union Square; Milford, NH 03055",
+      "phone_number": "(603) 249-0601",
+      "email_address": "administration@milford.nh.gov",
+      "website_url": "http://www.milford.nh.gov/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Exeter",
+      "type": "town",
+      "fips": "33-25380",
+      "gnis": "0873595",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 16049,
+      "address": "10 Front Street; Exeter, NH 03833",
+      "phone_number": "(603) 773-6102",
+      "email_address": "pmcelroy@exeternh.gov",
+      "website_url": "http://exeternh.gov",
+      "government_type": "select board"
+    },
+    {
+      "name": "Windham",
+      "type": "town",
+      "fips": "33-85780",
+      "gnis": "0873758",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 15817,
+      "address": "3 North Lowell Road; Windham, NH 03087",
+      "phone_number": "(603) 432-7732",
+      "email_address": "townadmin@windhamnh.gov",
+      "website_url": "http://www.windhamnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Durham",
+      "type": "town",
+      "fips": "33-19700",
+      "gnis": "0873584",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 15490,
+      "address": "8 Newmarket Road; Durham, NH 03824-2898",
+      "phone_number": "(603) 868-8064",
+      "email_address": "mbehrendt@ci.durham.nh.us",
+      "website_url": "http://www.ci.durham.nh.us",
+      "government_type": "administrator & council"
+    },
+    {
+      "name": "Hooksett",
+      "type": "town",
+      "fips": "33-37300",
+      "gnis": "0873629",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 14871,
+      "address": "35 Main Street; Hooksett, NH 03106-1397",
+      "phone_number": "(603) 485-8472",
+      "email_address": "agarron@hooksett.org",
+      "website_url": "http://www.hooksett.org",
+      "government_type": "administrator & council"
+    },
+    {
+      "name": "Lebanon",
+      "type": "city",
+      "fips": "33-41300",
+      "gnis": "0873643",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 14282,
+      "address": "51 North Park Street; Lebanon, NH 03766",
+      "phone_number": "(603) 448-1457",
+      "email_address": "crystal.taplin@lebanonnh.gov",
+      "website_url": "http://www.lebanonnh.gov",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Pelham",
+      "type": "town",
+      "fips": "33-59940",
+      "gnis": "0873695",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 14222,
+      "address": "6 Village Green; Pelham, NH 03076",
+      "phone_number": "(603) 635-8233",
+      "email_address": "selectmen@pelhamweb.com",
+      "website_url": "http://www.pelhamweb.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Claremont",
+      "type": "city",
+      "fips": "33-12900",
+      "gnis": "0873567",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 12949,
+      "address": "14 North Street; Claremont, NH 03743",
+      "phone_number": "(603) 542-7008",
+      "email_address": "info@claremontnh.com",
+      "website_url": "http://www.claremontnh.com",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Hanover",
+      "type": "town",
+      "fips": "33-33860",
+      "gnis": "0873619",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 11870,
+      "address": "PO Box 483; Hanover, NH 03755",
+      "phone_number": "(603) 643-0701",
+      "email_address": "TownMgr@HanoverNH.org",
+      "website_url": "http://www.hanovernh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Somersworth",
+      "type": "city",
+      "fips": "33-69940",
+      "gnis": "0873721",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 11855,
+      "address": "One Government Way; Somersworth, NH 03878",
+      "phone_number": "(603) 692-9519",
+      "email_address": "mmears@somersworthnh.gov",
+      "website_url": "http://www.somersworthnh.gov",
+      "government_type": "city manager & council"
+    },
+    {
+      "name": "Amherst",
+      "type": "town",
+      "fips": "33-01300",
+      "gnis": "0873531",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 11753,
+      "address": "2 Main Street; Amherst, NH 03031-0960",
+      "phone_number": "(603) 673-6041",
+      "email_address": "dshankle@amherstnh.gov",
+      "website_url": "http://www.amherstnh.gov/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Raymond",
+      "type": "town",
+      "fips": "33-64020",
+      "gnis": "0873705",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 10684,
+      "address": "4 Epping Street; Raymond, NH 03077",
+      "phone_number": "(603) 895-7007",
+      "email_address": "phammond@raymondnh.gov",
+      "website_url": "http://www.raymondnh.gov",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "Conway",
+      "type": "town",
+      "fips": "33-14660",
+      "gnis": "0873570",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 9822,
+      "address": "23 Main Street; Conway, NH 03813",
+      "phone_number": "(603) 447-3811",
+      "email_address": "roconnor@conwaynh.org",
+      "website_url": "http://www.conwaynh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Newmarket",
+      "type": "town",
+      "fips": "33-52340",
+      "gnis": "0873683",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 9430,
+      "address": "186 Main Street; Newmarket, NH 03857",
+      "phone_number": "(603) 659-3617",
+      "email_address": "sfournier@newmarketnh.gov",
+      "website_url": "http://www.newmarketnh.gov",
+      "government_type": "council/town manager"
+    },
+    {
+      "name": "Berlin",
+      "type": "city",
+      "fips": "33-05140",
+      "gnis": "0873545",
+      "counties": [
+        "Coos"
+      ],
+      "population": 9425,
+      "address": "168 Main Street, City Hall; Berlin, NH 03570",
+      "phone_number": "(603) 752-7532",
+      "email_address": "info@berlinnh.gov",
+      "website_url": "http://www.berlinnh.gov",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Barrington",
+      "type": "town",
+      "fips": "33-03460",
+      "gnis": "0873538",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 9326,
+      "address": "PO Box 660; Barrington, NH 03825",
+      "phone_number": "(603) 664-9007",
+      "email_address": "administration@barrington.nh.gov",
+      "website_url": "http://www.barrington.nh.gov",
+      "government_type": "selectmen/town meeting"
+    },
+    {
+      "name": "Weare",
+      "type": "town",
+      "fips": "33-79780",
+      "gnis": "0873749",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 9092,
+      "address": "15 Flanders Memorial Road; Weare, NH 03281",
+      "phone_number": "(603) 529-7535",
+      "email_address": "nbolton@weare.nh.gov",
+      "website_url": "http://www.weare.nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hampstead",
+      "type": "town",
+      "fips": "33-32900",
+      "gnis": "0873615",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 8998,
+      "address": "11 Main Street; Hampstead, NH 03841",
+      "phone_number": "(603) 329-4100 x100",
+      "email_address": "sally.theriault@comcast.net",
+      "website_url": "http://www.hampsteadnh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Franklin",
+      "type": "city",
+      "fips": "33-27380",
+      "gnis": "0873600",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 8741,
+      "address": "316 Central Street, City Hall; Franklin, NH 03235",
+      "phone_number": "(603) 934-3900",
+      "email_address": "citymgr@franklinnh.org",
+      "website_url": "http://www.franklinnh.org",
+      "government_type": "manager & council"
+    },
+    {
+      "name": "Litchfield",
+      "type": "town",
+      "fips": "33-42260",
+      "gnis": "0873648",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 8478,
+      "address": "Two Liberty Way, Suite 3; Litchfield, NH 03052",
+      "phone_number": "(603) 424-4046",
+      "email_address": "townhall@litchfieldnh.gov",
+      "website_url": "http://litchfieldnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Seabrook",
+      "type": "town",
+      "fips": "33-68260",
+      "gnis": "0873718",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 8401,
+      "address": "PO Box 456; Seabrook, NH 03874",
+      "phone_number": "(603) 474-3311",
+      "email_address": "wmanzi@seabrooknh.org",
+      "website_url": "http://www.seabrooknh.info",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "Hollis",
+      "type": "town",
+      "fips": "33-37140",
+      "gnis": "0873628",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 8342,
+      "address": "7 Monument Square; Hollis, NH 03049",
+      "phone_number": "(603) 465-2209",
+      "email_address": "administration@hollisnh.org",
+      "website_url": "http://www.hollisnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bow",
+      "type": "town",
+      "fips": "33-06500",
+      "gnis": "0873548",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 8229,
+      "address": "10 Grandview Road, Town Hall; Bow, NH 03304",
+      "phone_number": "(603) 223-3910",
+      "email_address": "dstack@bownh.gov",
+      "website_url": "http://www.bownh.gov",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "Plaistow",
+      "type": "town",
+      "fips": "33-62500",
+      "gnis": "0873701",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 7830,
+      "address": "145 Main Street; Plaistow, NH 03865",
+      "phone_number": "(603) 382-5200 x261",
+      "email_address": "gcolby@plaistow.com",
+      "website_url": "http://www.plaistow.com",
+      "government_type": "selectmen/manager"
+    },
+    {
+      "name": "Gilford",
+      "type": "town",
+      "fips": "33-28740",
+      "gnis": "0873603",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 7699,
+      "address": "47 Cherry Valley Road; Gilford, NH 03249",
+      "phone_number": "(603) 527-4700",
+      "email_address": "selectmen@gilfordnh.org",
+      "website_url": "http://www.gilfordnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Stratham",
+      "type": "town",
+      "fips": "33-74340",
+      "gnis": "0873728",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 7669,
+      "address": "10 Bunker Hill Avenue; Stratham, NH 03885",
+      "phone_number": "(603) 772-7391 x181",
+      "email_address": "dmoore@strathamnh.gov",
+      "website_url": "http://www.strathamnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Belmont",
+      "type": "town",
+      "fips": "33-04740",
+      "gnis": "0873542",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 7314,
+      "address": "143 Main Street, PO Box 310; Belmont, NH 03220",
+      "phone_number": "(603) 267-8300",
+      "email_address": "townadministrator@belmontnh.org",
+      "website_url": "http://belmontnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Swanzey",
+      "type": "town",
+      "fips": "33-75700",
+      "gnis": "0873735",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 7270,
+      "address": "Town Hall, PO Box 10009; Swanzey, NH 03446-0009",
+      "phone_number": "(603) 352-7411",
+      "email_address": "mbranley@swanzeynh.gov",
+      "website_url": "http://www.swanzeynh.gov",
+      "government_type": "select board"
+    },
+    {
+      "name": "Pembroke",
+      "type": "town",
+      "fips": "33-60020",
+      "gnis": "0873696",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 7207,
+      "address": "311 Pembroke Street; Pembroke, NH 03275",
+      "phone_number": "(603) 485-4747",
+      "email_address": "Townhall@Pembroke-NH.com",
+      "website_url": "http://www.pembroke-nh.com/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Epping",
+      "type": "town",
+      "fips": "33-24660",
+      "gnis": "0873591",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 7125,
+      "address": "157 Main Street; Epping, NH 03042",
+      "phone_number": "(603) 679-5441",
+      "email_address": "administrator@eppingnh.gov",
+      "website_url": "http://www.townofepping.com",
+      "government_type": "selectmen/sb 2 voting"
+    },
+    {
+      "name": "Atkinson",
+      "type": "town",
+      "fips": "33-02340",
+      "gnis": "0873535",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 7087,
+      "address": "21 Academy Avenue; Atkinson, NH 03811",
+      "phone_number": "(603) 362-5761",
+      "email_address": "landuse@atkinson-nh.gov",
+      "website_url": "http://www.town-atkinsonnh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Farmington",
+      "type": "town",
+      "fips": "33-26020",
+      "gnis": "0873596",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 6722,
+      "address": "356 Main Street, Municipal Offices; Farmington, NH 03835",
+      "phone_number": "(603) 755-3657",
+      "email_address": "rdickie@farmington.nh.us",
+      "website_url": "http://www.farmington.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Plymouth",
+      "type": "town",
+      "fips": "33-62660",
+      "gnis": "0873702",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 6682,
+      "address": "6 Post Office Square; Plymouth, NH 03264",
+      "phone_number": "(603) 536-1731x102",
+      "email_address": "finance@plymouthnh.org",
+      "website_url": "http://www.plymouthnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Meredith",
+      "type": "town",
+      "fips": "33-47140",
+      "gnis": "0873662",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 6662,
+      "address": "41 Main Street; Meredith, NH 03253",
+      "phone_number": "(603) 677-4209",
+      "email_address": "tbrown@meredithnh.org",
+      "website_url": "http://www.meredithnh.org",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "Sandown",
+      "type": "town",
+      "fips": "33-67620",
+      "gnis": "0873716",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 6548,
+      "address": "320 Main Street, PO Box 1756; Sandown, NH 03873",
+      "phone_number": "(603) 887-3646",
+      "email_address": "townofsandown@sandown.us",
+      "website_url": "http://www.sandown.us/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Rindge",
+      "type": "town",
+      "fips": "33-64580",
+      "gnis": "0873707",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 6476,
+      "address": "30 Payson Hill Road; Rindge, NH 03461",
+      "phone_number": "(603) 899-5181 x101",
+      "email_address": "townadmin@rindgenh.org",
+      "website_url": "http://www.rindgenh.org",
+      "government_type": "selectmen/town administrator"
+    },
+    {
+      "name": "Peterborough",
+      "type": "town",
+      "fips": "33-60580",
+      "gnis": "0873697",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 6418,
+      "address": "1 Grove Street, Town House; Peterborough, NH 03458",
+      "phone_number": "(603) 924-8000 x116",
+      "email_address": "dmelone@peterboroughnh.gov",
+      "website_url": "http://www.peterboroughnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Wolfeboro",
+      "type": "town",
+      "fips": "33-86420",
+      "gnis": "0873760",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 6416,
+      "address": "PO Box 629; Wolfeboro, NH 03894",
+      "phone_number": "(603) 569-8161",
+      "email_address": "townmanager@wolfeboronh.us",
+      "website_url": "http://www.wolfeboronh.us",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "Newport",
+      "type": "town",
+      "fips": "33-52580",
+      "gnis": "0873684",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 6299,
+      "address": "15 Sunapee Street, Municipal Building; Newport, NH 03773",
+      "phone_number": "(603) 863-8010",
+      "email_address": "cdonovan@newportnh.gov",
+      "website_url": "http://www.newportnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Kingston",
+      "type": "town",
+      "fips": "33-40100",
+      "gnis": "0873638",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 6202,
+      "address": "163 Main Street, PO Box 716; Kingston, NH 03848",
+      "phone_number": "(603) 642-3342",
+      "email_address": "admin@kingstonnh.org",
+      "website_url": "http://www.kingstonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Henniker",
+      "type": "town",
+      "fips": "33-35540",
+      "gnis": "0873623",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 6185,
+      "address": "18 Depot Hill Road; Henniker, NH 03242",
+      "phone_number": "(603) 428-3221",
+      "email_address": "townadministrator@hennikernh.gov",
+      "website_url": "http://www.henniker.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "New Boston",
+      "type": "town",
+      "fips": "33-50740",
+      "gnis": "0873674",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 6108,
+      "address": "7 Meetinghouse Hill Road, PO Box 250; New Boston, NH 03070",
+      "phone_number": "(603) 487-2500 x142",
+      "email_address": "s.silver@newbostonnh.gov",
+      "website_url": "http://www.newbostonnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Littleton",
+      "type": "town",
+      "fips": "33-42580",
+      "gnis": "0873649",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 6005,
+      "address": "125 Main Street, Suite 200; Littleton, NH 03561",
+      "phone_number": "(603) 444-3996",
+      "email_address": "chief@littletonpd.org",
+      "website_url": "http://www.townoflittleton.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Auburn",
+      "type": "town",
+      "fips": "33-02820",
+      "gnis": "0873536",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 5946,
+      "address": "PO Box 309; Auburn, NH 03032-0309",
+      "phone_number": "(603) 483-5052",
+      "email_address": "townadmin@townofauburnnh.com",
+      "website_url": "http://www.auburnnh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hillsborough",
+      "type": "town",
+      "fips": "33-36180",
+      "gnis": "0873625",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 5939,
+      "address": "27 School Street, PO Box 7; Hillsborough, NH 03244",
+      "phone_number": "(603) 464-3877",
+      "email_address": "Not Available",
+      "website_url": "http://www.town.hillsborough.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hopkinton",
+      "type": "town",
+      "fips": "33-37540",
+      "gnis": "0873630",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 5914,
+      "address": "330 Main Street; Hopkinton, NH 03229",
+      "phone_number": "(603) 746-3170",
+      "email_address": "townadmin@hopkinton-nh.gov",
+      "website_url": "http://www.hopkinton-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Alton",
+      "type": "town",
+      "fips": "33-01060",
+      "gnis": "0873530",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 5894,
+      "address": "PO Box 659; Alton, NH 03809",
+      "phone_number": "(603) 875-2161",
+      "email_address": "administrator@alton.nh.gov",
+      "website_url": "http://www.alton.nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Brookline",
+      "type": "town",
+      "fips": "33-08100",
+      "gnis": "0873554",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 5639,
+      "address": "PO Box 360; Brookline, NH 03033-0360",
+      "phone_number": "(603) 673-8855",
+      "email_address": "town@brooklinenh.us",
+      "website_url": "http://www.brooklinenh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Loudon",
+      "type": "town",
+      "fips": "33-43380",
+      "gnis": "0873652",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 5576,
+      "address": "55 South Village Road, Ste #2; Loudon, NH 03307",
+      "phone_number": "(603) 798-4542",
+      "email_address": "townclerk@loudonnh.org",
+      "website_url": "http://www.loudonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Rye",
+      "type": "town",
+      "fips": "33-66180",
+      "gnis": "0873712",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 5543,
+      "address": "10 Central Road; Rye, NH 03870",
+      "phone_number": "(603) 964-5523",
+      "email_address": "mscruton@town.rye.nh.us",
+      "website_url": "http://www.town.rye.nh.us/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Jaffrey",
+      "type": "town",
+      "fips": "33-38500",
+      "gnis": "0873633",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 5320,
+      "address": "10 Goodnow Street; Jaffrey, NH 03452",
+      "phone_number": "(603) 532-7880",
+      "email_address": "jzola@townofjaffrey.com",
+      "website_url": "http://www.townofjaffrey.com",
+      "government_type": "town manager"
+    },
+    {
+      "name": "Chester",
+      "type": "town",
+      "fips": "33-12100",
+      "gnis": "0873564",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 5232,
+      "address": "84 Chester St, Municipal Office Building; Chester, NH 03036",
+      "phone_number": "(603) 887-3636 x105",
+      "email_address": "planning@chesternh.org",
+      "website_url": "http://www.chesternh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Nottingham",
+      "type": "town",
+      "fips": "33-57460",
+      "gnis": "0873690",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 5229,
+      "address": "PO Box 114; Nottingham, NH 03290",
+      "phone_number": "(603) 679-5022",
+      "email_address": "bospc@nottingham-nh.gov",
+      "website_url": "http://www.nottingham-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "New Ipswich",
+      "type": "town",
+      "fips": "33-51940",
+      "gnis": "0873681",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 5204,
+      "address": "661 Turnpike Road; New Ipswich, NH 03071",
+      "phone_number": "(603) 878-2772",
+      "email_address": "townadmin@newipswichnh.gov",
+      "website_url": "http://www.newipswichnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Wakefield",
+      "type": "town",
+      "fips": "33-78180",
+      "gnis": "0873743",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 5201,
+      "address": "2 High Street, Town Hall; Sanbornville, NH 03872",
+      "phone_number": "(603) 522-6205",
+      "email_address": "townadmin@wakefieldnh.com",
+      "website_url": "http://www.wakefieldnh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Moultonborough",
+      "type": "town",
+      "fips": "33-49380",
+      "gnis": "0873671",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 4918,
+      "address": "PO Box 139; Moultonborough, NH 03254",
+      "phone_number": "(603) 476-2347",
+      "email_address": "csmith@moultonboroughnh.gov",
+      "website_url": "http://www.moultonboroughnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Barnstead",
+      "type": "town",
+      "fips": "33-03220",
+      "gnis": "0873537",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 4915,
+      "address": "108 S. Barnstead Road, PO Box 11; Center Barnstead, NH 03225",
+      "phone_number": "(603) 269-4071",
+      "email_address": "kmontgomery@barnstead.org",
+      "website_url": "http://www.barnstead.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Northfield",
+      "type": "town",
+      "fips": "33-54260",
+      "gnis": "0873686",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 4872,
+      "address": "21 Summer Street; Northfield, NH 03276",
+      "phone_number": "(603) 286-7039",
+      "email_address": "townadmin@northfieldnh.gov",
+      "website_url": "http://www.northfieldnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Deerfield",
+      "type": "town",
+      "fips": "33-17460",
+      "gnis": "0873576",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4855,
+      "address": "8 Raymond Road, PO Box 159; Deerfield, NH 03037",
+      "phone_number": "(603) 463-8811 x309",
+      "email_address": "bos@townofdeerfieldnh.com",
+      "website_url": "http://www.townofdeerfieldnh.com",
+      "government_type": "town meeting"
+    },
+    {
+      "name": "Epsom",
+      "type": "town",
+      "fips": "33-24900",
+      "gnis": "0873592",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 4834,
+      "address": "1598 Dover Road; Epsom, NH 03234-0010",
+      "phone_number": "(603) 736-9002",
+      "email_address": "epsomtown@metrocast.net",
+      "website_url": "http://www.epsomnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Newton",
+      "type": "town",
+      "fips": "33-52900",
+      "gnis": "0873685",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4820,
+      "address": "2 Town Hall Road; Newton, NH 03858",
+      "phone_number": "(603) 382-4405 opt. 4",
+      "email_address": "townclerktaxcollector@newtonnh.net",
+      "website_url": "http://www.newton-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Charlestown",
+      "type": "town",
+      "fips": "33-11380",
+      "gnis": "0873562",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 4806,
+      "address": "PO Box 385; Charlestown, NH 03603",
+      "phone_number": "(603) 826-4400",
+      "email_address": "ctown@charlestown-nh.gov",
+      "website_url": "http://www.charlestown-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Fremont",
+      "type": "town",
+      "fips": "33-27940",
+      "gnis": "0873602",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4739,
+      "address": "295 Main Street, PO Box 120; Fremont, NH 03044-0120",
+      "phone_number": "(603) 895-2226 x301",
+      "email_address": "hcarlson@fremont.nh.gov",
+      "website_url": "http://www.Fremont.NH.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Allenstown",
+      "type": "town",
+      "fips": "33-00660",
+      "gnis": "0873528",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 4707,
+      "address": "16 School Street; Allenstown, NH 03275",
+      "phone_number": "(603) 485-4276",
+      "email_address": "dgoodine@allenstownnh.gov",
+      "website_url": "http://www.allenstownnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Northwood",
+      "type": "town",
+      "fips": "33-56820",
+      "gnis": "0873689",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4641,
+      "address": "818 First NH Turnpike; Northwood, NH 03261",
+      "phone_number": "(603) 942-5586 x2020",
+      "email_address": "nirvine@northwoodnh.org",
+      "website_url": "http://www.northwoodnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Haverhill",
+      "type": "town",
+      "fips": "33-34820",
+      "gnis": "0873621",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 4585,
+      "address": "2975 Dartmouth College Highway; North Haverhill, NH 03774",
+      "phone_number": "(603) 787-6800",
+      "email_address": "townmanager@haverhill-nh.com",
+      "website_url": "http://www.haverhill-nh.com",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "North Hampton",
+      "type": "town",
+      "fips": "33-54580",
+      "gnis": "0873687",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4538,
+      "address": "237A Atlantic Ave; North Hampton, NH 03862",
+      "phone_number": "(603) 964-8087",
+      "email_address": "mtully@northhampton-nh.gov",
+      "website_url": "http://www.northhampton-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Lee",
+      "type": "town",
+      "fips": "33-41460",
+      "gnis": "0873644",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 4520,
+      "address": "249 Calef Highway; Lee, NH 03861",
+      "phone_number": "(603) 659-5414 x312",
+      "email_address": "townadministrator@leenh.org",
+      "website_url": "http://www.leenh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Brentwood",
+      "type": "town",
+      "fips": "33-07220",
+      "gnis": "0873550",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4490,
+      "name": "Brentwood",
+      "url": "https://www2.nhes.nh.gov/GraniteStats/SessionServlet?page=Community.jsp&SID=1&city=0008\\03&cityName=Brentwood",
+      "error": "Contact table not found",
+      "government_type": null
+    },
+    {
+      "name": "Milton",
+      "type": "town",
+      "fips": "33-48660",
+      "gnis": "0873668",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 4482,
+      "address": "PO Box 310; Milton, NH 03851",
+      "phone_number": "(603) 652-4501 x1",
+      "email_address": "miltonta@miltonnh-us.com",
+      "website_url": "http://www.miltonnh-us.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Enfield",
+      "type": "town",
+      "fips": "33-24340",
+      "gnis": "0873590",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 4465,
+      "address": "PO Box 373; Enfield, NH 03748",
+      "phone_number": "(603) 632-5026",
+      "email_address": "townmanager@enfield.nh.us",
+      "website_url": "http://www.enfield.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Danville",
+      "type": "town",
+      "fips": "33-17140",
+      "gnis": "0873575",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4408,
+      "address": "210 Main Street; Danville, NH 03819",
+      "phone_number": "(603) 382-8253",
+      "email_address": "townadmin@townofdanville.org",
+      "website_url": "http://www.townofdanville.org",
+      "government_type": "town meeting"
+    },
+    {
+      "name": "New London",
+      "type": "town",
+      "fips": "33-52100",
+      "gnis": "0873682",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 4400,
+      "address": "375 Main Street; New London, NH 03257",
+      "phone_number": "(603) 526-4821",
+      "email_address": "townadmin@newlondon.nh.gov",
+      "website_url": "http://www.newlondon.nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Ossipee",
+      "type": "town",
+      "fips": "33-58740",
+      "gnis": "0873694",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 4372,
+      "address": "55 Main Street, PO Box 67; Center Ossipee, NH 03814",
+      "phone_number": "(603) 539-4181",
+      "email_address": "msawyer@ossipee.org",
+      "website_url": "http://www.ossipee.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Strafford",
+      "type": "town",
+      "fips": "33-73860",
+      "gnis": "0873726",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 4230,
+      "address": "12 Mountain View Drive; Strafford, NH 03884",
+      "phone_number": "(603) 664-2192",
+      "email_address": "administrator@strafford.nh.gov",
+      "website_url": "http://www.strafford.nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Winchester",
+      "type": "town",
+      "fips": "33-85540",
+      "gnis": "0873757",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 4150,
+      "address": "1 Richmond Road; Winchester, NH 03470",
+      "phone_number": "(603) 239-4951",
+      "email_address": "kminer@winchester.nh.gov",
+      "website_url": "http://www.winchester-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Pittsfield",
+      "type": "town",
+      "fips": "33-61940",
+      "gnis": "0873699",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 4075,
+      "address": "85 Main Street; Pittsfield, NH 03263",
+      "phone_number": "(603) 435-6773",
+      "email_address": "admin@pittsfieldnh.gov",
+      "website_url": "http://www.pittsfieldnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Greenland",
+      "type": "town",
+      "fips": "33-31700",
+      "gnis": "0873612",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4067,
+      "address": "11 Town Square, PO Box 100; Greenland, NH 03840",
+      "phone_number": "(603) 431-7111",
+      "email_address": "psanderson@greenland-nh.com",
+      "website_url": "http://www.greenland-nh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Candia",
+      "type": "town",
+      "fips": "33-09300",
+      "gnis": "0873558",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 4013,
+      "address": "74 High Street; Candia, NH 03034",
+      "phone_number": "(603) 483-8101",
+      "email_address": "info@candianh.org",
+      "website_url": "http://www.candianh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Boscawen",
+      "type": "town",
+      "fips": "33-06260",
+      "gnis": "0873547",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 3998,
+      "address": "116 North Main Street; Boscawen, NH 03303",
+      "phone_number": "(603) 753-9188 x2317",
+      "email_address": "kphelps@boscawennh.gov",
+      "website_url": "http://www.boscawennh.gov",
+      "government_type": "select board"
+    },
+    {
+      "name": "Tilton",
+      "type": "town",
+      "fips": "33-77060",
+      "gnis": "0873739",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 3962,
+      "address": "257 Main Street; Tilton, NH 03276",
+      "phone_number": "(603) 286-4521 x101",
+      "email_address": "shilliard@tiltonnh.org",
+      "website_url": "http://tiltonnh.org",
+      "government_type": "selectmen/town meeting"
+    },
+    {
+      "name": "Hinsdale",
+      "type": "town",
+      "fips": "33-36660",
+      "gnis": "0873626",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 3948,
+      "address": "11 Main Street, PO Box 13; Hinsdale, NH 03451",
+      "phone_number": "(603) 336-5710",
+      "email_address": "townadmin@hinsdalenh.org",
+      "website_url": "http://hinsdale.govoffice.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Gilmanton",
+      "type": "town",
+      "fips": "33-28980",
+      "gnis": "0873604",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 3945,
+      "address": "PO Box 550; Gilmanton, NH 03237",
+      "phone_number": "(603) 267-6700",
+      "email_address": "hcarpenter@gilmantonnh.org",
+      "website_url": "http://www.gilmantonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Wilton",
+      "type": "town",
+      "fips": "33-85220",
+      "gnis": "0873756",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 3896,
+      "address": "42 Main Street, PO Box 83; Wilton, NH 03086",
+      "phone_number": "(603) 654-9451",
+      "email_address": "jfarrell@wiltonnh.gov",
+      "website_url": "https://www.wiltonnh.gov/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Canaan",
+      "type": "town",
+      "fips": "33-08980",
+      "gnis": "0873557",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 3794,
+      "address": "PO Box 38; Canaan, NH 03741",
+      "phone_number": "(603) 523-4501",
+      "email_address": "townadmin@canaannh.org",
+      "website_url": "http://www.canaannh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Walpole",
+      "type": "town",
+      "fips": "33-78420",
+      "gnis": "0873744",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 3633,
+      "address": "PO Box 729; Walpole, NH 03608",
+      "phone_number": "(603) 756-3672",
+      "email_address": "sdowning@walpolenh.us",
+      "website_url": "http://www.walpolenh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Chesterfield",
+      "type": "town",
+      "fips": "33-12260",
+      "gnis": "0873565",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 3552,
+      "address": "PO Box 175; Chesterfield, NH 03443",
+      "phone_number": "(603) 363-4624",
+      "email_address": "townadmin@nhchesterfield.com",
+      "website_url": "http://www.nhchesterfield.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Grantham",
+      "type": "town",
+      "fips": "33-31220",
+      "gnis": "0873610",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 3404,
+      "address": "Grantham Town Building, 300 Route 10 South; Grantham, NH 03753",
+      "phone_number": "(603) 863-6021",
+      "email_address": "admin@granthamnh.net",
+      "website_url": "http://www.granthamnh.net",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Campton",
+      "type": "town",
+      "fips": "33-08660",
+      "gnis": "0873556",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 3343,
+      "address": "12 Gearty Way; Campton, NH 03223",
+      "phone_number": "(603) 726-3223",
+      "email_address": "townadministrator@camptonnh.gov",
+      "website_url": "http://www.camptonnh.org/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Sunapee",
+      "type": "town",
+      "fips": "33-75060",
+      "gnis": "0873732",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 3342,
+      "address": "23 Edgemont Road; Sunapee, NH 03782",
+      "phone_number": "(603) 763-2212",
+      "email_address": "manager@town.sunapee.nh.us",
+      "website_url": "http://www.town.sunapee.nh.us",
+      "government_type": "selectmen/town manager"
+    },
+    {
+      "name": "Bristol",
+      "type": "town",
+      "fips": "33-07700",
+      "gnis": "0873552",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 3244,
+      "address": "5 School Street; Bristol, NH 03222",
+      "phone_number": "(603) 744-3354",
+      "email_address": "townadmin@bristolnh.gov",
+      "website_url": "http://www.bristolnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Lancaster",
+      "type": "town",
+      "fips": "33-40420",
+      "gnis": "0873640",
+      "counties": [
+        "Coos"
+      ],
+      "population": 3218,
+      "address": "25 Main Street; Lancaster, NH 03584",
+      "phone_number": "(603) 788-3391",
+      "email_address": "info@lancasternh.org",
+      "website_url": "http://www.lancasternh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bartlett",
+      "type": "town",
+      "fips": "33-03700",
+      "gnis": "0873539",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 3200,
+      "address": "56 Town Hall Road; Intervale, NH 03845",
+      "phone_number": "(603) 356-2950",
+      "email_address": "selectmen@townofbartlettnh.org",
+      "website_url": "http://www.townofbartlettnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Sanbornton",
+      "type": "town",
+      "fips": "33-67300",
+      "gnis": "0873715",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 3026,
+      "address": "PO Box 124; Sanbornton, NH 03269",
+      "phone_number": "(603) 286-8303",
+      "email_address": "townadministrator@sanborntonnh.org",
+      "website_url": "http://www.sanborntonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Dunbarton",
+      "type": "town",
+      "fips": "33-19460",
+      "gnis": "0873583",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 3005,
+      "address": "1011 School Street; Dunbarton, NH 03046",
+      "phone_number": "(603) 774-3541",
+      "email_address": "townadministrator@dunbartonnh.org",
+      "website_url": "http://www.dunbartonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Warner",
+      "type": "town",
+      "fips": "33-78580",
+      "gnis": "0873745",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 2937,
+      "address": "5 East Main Street, PO Box 265; Warner, NH 03278-0265",
+      "phone_number": "(603) 456-2298 x1",
+      "email_address": "selectboard@warner.nh.gov",
+      "website_url": "http://www.warnernh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Tamworth",
+      "type": "town",
+      "fips": "33-76100",
+      "gnis": "0873736",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 2812,
+      "address": "84 Main Street; Tamworth, NH 03886",
+      "phone_number": "(603) 323-7525",
+      "email_address": "admin@tamworthnh.gov",
+      "website_url": "http://www.tamworthnh.org",
+      "government_type": "select board"
+    },
+    {
+      "name": "Thornton",
+      "type": "town",
+      "fips": "33-76740",
+      "gnis": "0873738",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 2708,
+      "address": "16 Merrill Access Road; Thornton, NH 03285",
+      "phone_number": "(603) 726-8168",
+      "email_address": "townadmin@thornton.gov",
+      "website_url": "http://www.townofthornton.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Gorham",
+      "type": "town",
+      "fips": "33-30260",
+      "gnis": "0873607",
+      "counties": [
+        "Coos"
+      ],
+      "population": 2698,
+      "address": "20 Park Street; Gorham, NH 03581",
+      "phone_number": "(603) 466-3322",
+      "email_address": "townmgr@gorhamnh.org",
+      "website_url": "http://www.gorhamnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "New Durham",
+      "type": "town",
+      "fips": "33-51220",
+      "gnis": "0873677",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 2693,
+      "address": "4 Main Street, PO Box 207; New Durham, NH 03855",
+      "phone_number": "(603) 859-2091",
+      "email_address": "ndadmin@newdurhamnh.us",
+      "website_url": "http://www.newdurhamnh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Chichester",
+      "type": "town",
+      "fips": "33-12420",
+      "gnis": "0873566",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 2665,
+      "address": "54 Main Street; Chichester, NH 03258",
+      "phone_number": "(603) 798-5350",
+      "email_address": "selectmen@chichesternh.org",
+      "website_url": "http://www.chichesternh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Antrim",
+      "type": "town",
+      "fips": "33-01700",
+      "gnis": "0873533",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 2651,
+      "address": "66 Main Street, PO Box 517; Antrim, NH 03440",
+      "phone_number": "(603) 588-6785",
+      "email_address": "townadmin@antrimnh.gov",
+      "website_url": "http://www.antrimnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Rollinsford",
+      "type": "town",
+      "fips": "33-65540",
+      "gnis": "0873709",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 2597,
+      "address": "PO Box 309; Rollinsford, NH 03869",
+      "phone_number": "(603) 742-2510",
+      "email_address": "selectboard@rollinsford.nh.us",
+      "website_url": "http://www.rollinsford.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Mont Vernon",
+      "type": "town",
+      "fips": "33-49140",
+      "gnis": "0873670",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 2584,
+      "address": "1 South Main Street, PO Box 444; Mont Vernon, NH 03057",
+      "phone_number": "(603) 673-6080",
+      "email_address": "townofmontvernon@montvernon.us",
+      "website_url": "http://www.montvernonnh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Madison",
+      "type": "town",
+      "fips": "33-45060",
+      "gnis": "0873657",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 2565,
+      "address": "PO Box 248; Madison, NH 03849",
+      "phone_number": "(603) 367-4332 x1",
+      "email_address": "office@madison-nh.org",
+      "website_url": "http://www.madison-nh.org/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Whitefield",
+      "type": "town",
+      "fips": "33-84420",
+      "gnis": "0873754",
+      "counties": [
+        "Coos"
+      ],
+      "population": 2490,
+      "address": "56 Littleton Road; Whitefield, NH 03598",
+      "phone_number": "(603) 837-2551",
+      "email_address": "administrativeassistant@whitefieldnh.org",
+      "website_url": "http://www.whitefieldnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bethlehem",
+      "type": "town",
+      "fips": "33-05460",
+      "gnis": "0873546",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 2484,
+      "address": "PO Box 189; Bethlehem, NH 03574",
+      "phone_number": "(603) 869-3351 x101",
+      "email_address": "admin@bethlehemnh.org",
+      "website_url": "http://www.bethlehemnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Tuftonboro",
+      "type": "town",
+      "fips": "33-77620",
+      "gnis": "0873741",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 2467,
+      "address": "Town Hall, PO Box 98; Tuftonboro, NH 03816",
+      "phone_number": "(603) 569-4539 x113",
+      "email_address": "selectmen@tuftonboro.org",
+      "website_url": "http://www.tuftonboro.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Plainfield",
+      "type": "town",
+      "fips": "33-62340",
+      "gnis": "0873700",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 2459,
+      "address": "PO Box 380; Meriden, NH 03770",
+      "phone_number": "(603) 469-3201",
+      "email_address": "plainfield.ta@plainfieldnh.org",
+      "website_url": "http://www.plainfieldnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "East Kingston",
+      "type": "town",
+      "fips": "33-21380",
+      "gnis": "0873585",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 2441,
+      "address": "24 Depot Road; East Kingston, NH 03827",
+      "phone_number": "(603) 642-8406",
+      "email_address": "gruelle@eastkingstonnh.gov",
+      "website_url": "http://www.eknh.org",
+      "government_type": "town meeting"
+    },
+    {
+      "name": "Andover",
+      "type": "town",
+      "fips": "33-01460",
+      "gnis": "0873532",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 2406,
+      "address": "PO Box 61; Andover, NH 03216",
+      "phone_number": "(603) 735-4140",
+      "email_address": "tadmin@andover-nh.gov",
+      "website_url": "http://www.andover-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hampton Falls",
+      "type": "town",
+      "fips": "33-33460",
+      "gnis": "0873617",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 2403,
+      "address": "1 Drinkwater Road; Hampton Falls, NH 03844",
+      "phone_number": "(603) 926-4618",
+      "email_address": "townadministrator@hamptonfalls.org",
+      "website_url": "http://www.hamptonfalls.org",
+      "government_type": "town meeting/sb 2"
+    },
+    {
+      "name": "Canterbury",
+      "type": "town",
+      "fips": "33-09860",
+      "gnis": "0873559",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 2389,
+      "address": "PO Box 500; Canterbury, NH 03224",
+      "phone_number": "(603) 783-9955",
+      "email_address": "Not Available",
+      "website_url": "http://www.canterbury-nh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "New Hampton",
+      "type": "town",
+      "fips": "33-51540",
+      "gnis": "0873679",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 2377,
+      "address": "6 Pinnacle Hill Road; New Hampton, NH 03256",
+      "phone_number": "(603) 744-3559",
+      "email_address": "TownAdmin@new-hampton.nh.us",
+      "website_url": "http://www.new-hampton.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Fitzwilliam",
+      "type": "town",
+      "fips": "33-26500",
+      "gnis": "0873597",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 2351,
+      "address": "PO Box 725; Fitzwilliam, NH 03447",
+      "phone_number": "(603) 585-7770; (603) 585-7723",
+      "email_address": "fitzwilliamnh@fitzwilliam-nh.gov",
+      "website_url": "http://fitzwilliam-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Newbury",
+      "type": "town",
+      "fips": "33-50900",
+      "gnis": "0873675",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 2172,
+      "address": "PO Box 296; Newbury, NH 03255",
+      "phone_number": "(603) 763-4940",
+      "email_address": "townadmin@newburynh.org",
+      "website_url": "http://www.newburynh.org/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Troy",
+      "type": "town",
+      "fips": "33-77380",
+      "gnis": "0873740",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 2130,
+      "address": "16 Central Square (Town Hall); Mailing address: PO Box 249; Troy, NH 03465",
+      "phone_number": "(603) 242-7722",
+      "email_address": "townadmin@troy-nh.us",
+      "website_url": "http://www.troy-nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Northumberland",
+      "type": "town",
+      "fips": "33-56100",
+      "gnis": "0873688",
+      "counties": [
+        "Coos"
+      ],
+      "population": 2126,
+      "address": "19 Main Street; Groveton, NH 03582",
+      "phone_number": "(603) 636-1450",
+      "email_address": "n.merriam@northumberlandnh.org",
+      "website_url": "http://www.northumberlandnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Marlborough",
+      "type": "town",
+      "fips": "33-45460",
+      "gnis": "0873659",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 2096,
+      "address": "PO Box 487; Marlborough, NH 03455-0487",
+      "phone_number": "(603) 876-3751",
+      "email_address": "selectmen@marlboroughnh.org",
+      "website_url": "http://www.marlboroughnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Kensington",
+      "type": "town",
+      "fips": "33-39780",
+      "gnis": "0873636",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 2095,
+      "address": "95 Amesbury Road; Kensington, NH 03833",
+      "phone_number": "(603) 772-5423",
+      "email_address": "kensington@kensingtontown.com",
+      "website_url": "http://www.town.kensington.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Colebrook",
+      "type": "town",
+      "fips": "33-13780",
+      "gnis": "0871097",
+      "counties": [
+        "Coos"
+      ],
+      "population": 2084,
+      "address": "17 Bridge Street; Colebrook, NH 03576",
+      "phone_number": "(603) 237-4142; (603) 237-4070",
+      "email_address": "hlawton@colebrooknh.org",
+      "website_url": "http://www.colebrooknh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Holderness",
+      "type": "town",
+      "fips": "33-36900",
+      "gnis": "0873627",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 2004,
+      "address": "PO Box 203; Holderness, NH 03245-0203",
+      "phone_number": "(603) 968-3537",
+      "email_address": "administrator@holderness-nh.gov",
+      "website_url": "http://www.holderness-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Sutton",
+      "type": "town",
+      "fips": "33-75460",
+      "gnis": "0873734",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 1978,
+      "address": "93 Main Street; Sutton Mills, NH 03221",
+      "phone_number": "(603) 927-2400",
+      "email_address": "townadmin@sutton-nh.org",
+      "website_url": "http://www.sutton-nh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Greenville",
+      "type": "town",
+      "fips": "33-31940",
+      "gnis": "0873613",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1974,
+      "address": "46 Main Street, PO Box 343; Greenville, NH 03048",
+      "phone_number": "(603) 878-2084",
+      "email_address": "administrator@greenvillenh.org",
+      "website_url": "http://www.greenvillenh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Ashland",
+      "type": "town",
+      "fips": "33-02020",
+      "gnis": "0873534",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1938,
+      "address": "20 Highland Street, PO Box 517; Ashland, NH 03217",
+      "phone_number": "(603) 968-4432",
+      "email_address": "townoffice@ashland.nh.gov",
+      "website_url": "http://www.ashlandnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Madbury",
+      "type": "town",
+      "fips": "33-44820",
+      "gnis": "0873656",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 1918,
+      "address": "13 Town Hall Road; Madbury, NH 03823",
+      "phone_number": "(603) 742-5131",
+      "email_address": "tcmadbury@comcast.net",
+      "website_url": "http://www.townofmadbury.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Webster",
+      "type": "town",
+      "fips": "33-80020",
+      "gnis": "0873750",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 1913,
+      "address": "945 Battle Street; Webster, NH 03303",
+      "phone_number": "(603) 648-2272",
+      "email_address": "townadmin@webster-nh.gov",
+      "website_url": "http://www.webster-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Deering",
+      "type": "town",
+      "fips": "33-17780",
+      "gnis": "0873577",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1904,
+      "address": "762 Deering Center Road; Deering, NH 03244",
+      "phone_number": "(603) 464-3248",
+      "email_address": "administrator@deeringnh.gov",
+      "website_url": "http://www.deering.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Alstead",
+      "type": "town",
+      "fips": "33-00820",
+      "gnis": "0873529",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 1864,
+      "address": "15 Mechanic Street, PO Box 60; Alstead, NH 03602-0060",
+      "phone_number": "(603) 835-2986",
+      "email_address": "alsteadadmin@alsteadnh.org",
+      "website_url": "http://www.alsteadnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Middleton",
+      "type": "town",
+      "fips": "33-47700",
+      "gnis": "0873664",
+      "counties": [
+        "Strafford"
+      ],
+      "population": 1823,
+      "address": "182 King's Highway; Middleton, NH 03887",
+      "phone_number": "(603) 473-2261",
+      "email_address": "bos@middletonnh.gov",
+      "website_url": "http://www.middletonnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Alexandria",
+      "type": "town",
+      "fips": "33-00580",
+      "gnis": "0873527",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1776,
+      "address": "47 Washburn Road; Alexandria, NH 03222",
+      "phone_number": "(603) 744-3220",
+      "email_address": "info@alexandrianh.com",
+      "website_url": "http://www.alexandrianh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Newfields",
+      "type": "town",
+      "fips": "33-51380",
+      "gnis": "0873678",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 1769,
+      "address": "65 Main Street; Newfields, NH 03856",
+      "phone_number": "(603) 772-5070",
+      "email_address": "selectmen@newfieldsnh.gov",
+      "website_url": "http://www.newfieldsnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Lyme",
+      "type": "town",
+      "fips": "33-44260",
+      "gnis": "0873654",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1745,
+      "address": "PO Box 126; Lyme, NH 03768",
+      "phone_number": "(603) 795-4639",
+      "email_address": "dina@lymenh.gov",
+      "website_url": "http://www.lymenh.gov/Home/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hancock",
+      "type": "town",
+      "fips": "33-33700",
+      "gnis": "0873618",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1731,
+      "address": "50 Main Street, PO Box 6; Hancock, NH 03449",
+      "phone_number": "(603) 525-4441",
+      "email_address": "select@hancocknh.org",
+      "website_url": "http://www.hancocknh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Greenfield",
+      "type": "town",
+      "fips": "33-31540",
+      "gnis": "0873611",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1716,
+      "address": "PO Box 256; Greenfield, NH 03047",
+      "phone_number": "(603) 547-3442",
+      "email_address": "townadministrator@greenfield-nh.gov",
+      "website_url": "http://www.greenfield-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Westmoreland",
+      "type": "town",
+      "fips": "33-82660",
+      "gnis": "0873753",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 1706,
+      "address": "PO Box 55; Westmoreland, NH 03467",
+      "phone_number": "(603) 399-4471",
+      "email_address": "townofwestmoreland@myfairpoint.net",
+      "website_url": "http://www.westmorelandnh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Lyndeborough",
+      "type": "town",
+      "fips": "33-44580",
+      "gnis": "0873655",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1702,
+      "address": "9 Citizens Hall Road; Lyndeborough, NH 03082",
+      "phone_number": "(603) 654-5955",
+      "email_address": "rboland@lyndeboroughnh.us",
+      "website_url": "http://www.lyndeboroughnh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Effingham",
+      "type": "town",
+      "fips": "33-23620",
+      "gnis": "0873588",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 1691,
+      "address": "68 School Street; Effingham, NH 03882",
+      "phone_number": "(603) 539-7770",
+      "email_address": "officeassistant@effinghamnh.net",
+      "website_url": "http://www.effinghamnh.net",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Freedom",
+      "type": "town",
+      "fips": "33-27700",
+      "gnis": "0873601",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 1689,
+      "address": "33 Old Portland Road, PO Box 227; Freedom, NH 03836",
+      "phone_number": "(603) 539-6323",
+      "email_address": "office@townoffreedom.net",
+      "website_url": "http://www.townoffreedom.net",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bradford",
+      "type": "town",
+      "fips": "33-06980",
+      "gnis": "0873549",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 1662,
+      "address": "PO Box 436; Bradford, NH 03221-0436",
+      "phone_number": "(603) 938-5900",
+      "email_address": "administrator@bradfordnh.org",
+      "website_url": "http://www.bradfordnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Lincoln",
+      "type": "town",
+      "fips": "33-41860",
+      "gnis": "0873646",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1631,
+      "address": "PO Box 25; Lincoln, NH 03251",
+      "phone_number": "(603) 745-2757",
+      "email_address": "townmanager@lincolnnh.gov",
+      "website_url": "http://www.lincolnnh.org",
+      "government_type": "town manager"
+    },
+    {
+      "name": "Lisbon",
+      "type": "town",
+      "fips": "33-42020",
+      "gnis": "0873647",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1621,
+      "address": "46 School Street; Lisbon, NH 03585",
+      "phone_number": "(603) 838-2862",
+      "email_address": "townclerk@lisbonnh.org",
+      "website_url": "http://www.lisbonnh.org/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Cornish",
+      "type": "town",
+      "fips": "33-15060",
+      "gnis": "0873571",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 1616,
+      "address": "488 Town House Road; Cornish, NH 03745",
+      "phone_number": "(603) 675-5611",
+      "email_address": "townbos@comcast.net",
+      "website_url": "http://www.cornishnh.net",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Francestown",
+      "type": "town",
+      "fips": "33-27140",
+      "gnis": "0873598",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1610,
+      "address": "27 Main Street, PO Box 5; Francestown, NH 03043",
+      "phone_number": "(603) 547-3469",
+      "email_address": "selectmensoffice@francestownnh.org",
+      "website_url": "http://www.francestownnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Dublin",
+      "type": "town",
+      "fips": "33-19140",
+      "gnis": "0873581",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 1532,
+      "address": "PO Box 277; Dublin, NH 03444",
+      "phone_number": "(603) 563-8544",
+      "email_address": "townadministrator@townofdublin.org",
+      "website_url": "http://www.townofdublin.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Unity",
+      "type": "town",
+      "fips": "33-77940",
+      "gnis": "0873742",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 1518,
+      "address": "13 Center Road, Unit 3; Unity, NH 03603",
+      "phone_number": "(603) 543-3102",
+      "email_address": "selectmen@townofunitynh.org",
+      "website_url": "http://www.townofunitynh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bennington",
+      "type": "town",
+      "fips": "33-04900",
+      "gnis": "0873543",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1501,
+      "address": "7 School Street, Unit 101; Bennington, NH 03442",
+      "phone_number": "(603) 588-2189",
+      "email_address": "ddavidson@townofbennington.com",
+      "website_url": "http://www.townofbennington.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Rumney",
+      "type": "town",
+      "fips": "33-65940",
+      "gnis": "0873711",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1498,
+      "address": "PO Box 220; Rumney, NH 03266",
+      "phone_number": "(603) 786-9511",
+      "email_address": "selectmen@rumneynh.org",
+      "website_url": "http://www.rumneynh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Sandwich",
+      "type": "town",
+      "fips": "33-67780",
+      "gnis": "0873717",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 1466,
+      "address": "PO Box 194; Center Sandwich, NH 03227",
+      "phone_number": "(603) 284-7701",
+      "email_address": "townadmin@sandwichnh.org",
+      "website_url": "http://www.sandwichnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Mason",
+      "type": "town",
+      "fips": "33-46260",
+      "gnis": "0873661",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1448,
+      "address": "16 Darling Hill Road; Mason, NH 03048",
+      "phone_number": "(603) 878-2070",
+      "email_address": "selectmen@masonnh.us",
+      "website_url": "http://www.masonnh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Woodstock",
+      "type": "town",
+      "fips": "33-87060",
+      "gnis": "0873761",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1434,
+      "address": "PO Box 156; North Woodstock, NH 03262",
+      "phone_number": "(603) 745-8752",
+      "email_address": "admin@woodstocknh.gov",
+      "website_url": "http://www.woodstocknh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Salisbury",
+      "type": "town",
+      "fips": "33-66980",
+      "gnis": "0873714",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 1422,
+      "address": "PO Box 214; Salisbury, NH 03268",
+      "phone_number": "(603) 648-6320",
+      "email_address": "salisburyadmin@tds.net",
+      "website_url": "http://www.salisburynh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Wilmot",
+      "type": "town",
+      "fips": "33-84900",
+      "gnis": "0873755",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 1407,
+      "address": "PO Box 72; Wilmot, NH 03287",
+      "phone_number": "(603) 526-4802",
+      "email_address": "admin@wilmotnh.org",
+      "website_url": "http://www.wilmotnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Grafton",
+      "type": "town",
+      "fips": "33-30820",
+      "gnis": "0873609",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1385,
+      "address": "Town Office Building, PO Box 299; Grafton, NH 03240",
+      "phone_number": "(603) 523-7700",
+      "email_address": "selectmen@townofgraftonnh.com",
+      "website_url": "http://www.townofgraftonnh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Temple",
+      "type": "town",
+      "fips": "33-76260",
+      "gnis": "0873737",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 1382,
+      "address": "PO Box 191; Temple, NH 03084",
+      "phone_number": "(603) 878-2536",
+      "email_address": "boardassistant@templenh.org",
+      "website_url": "http://www.templenh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Stoddard",
+      "type": "town",
+      "fips": "33-73700",
+      "gnis": "0873725",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 1374,
+      "address": "1450 Route 123 North; Stoddard, NH 03464",
+      "phone_number": "(603) 446-3326 x103",
+      "email_address": "townadministrator@stoddardnh.org",
+      "website_url": "http://www.stoddardnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Milan",
+      "type": "town",
+      "fips": "33-47860",
+      "gnis": "0873665",
+      "counties": [
+        "Coos"
+      ],
+      "population": 1358,
+      "address": "PO Box 300; Milan, NH 03588",
+      "phone_number": "(603) 449-2484",
+      "email_address": "townofmilan@gmail.com",
+      "website_url": "http://www.townofmilan.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Springfield",
+      "type": "town",
+      "fips": "33-72740",
+      "gnis": "0873723",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 1259,
+      "address": "PO Box 22; Springfield, NH 03284",
+      "phone_number": "(603) 763-4805",
+      "email_address": "admin@springfieldnh.org",
+      "website_url": "http://www.springfieldnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Danbury",
+      "type": "town",
+      "fips": "33-16980",
+      "gnis": "0873574",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 1250,
+      "address": "23 High Street; Danbury, NH 03230",
+      "phone_number": "(603) 768-3313",
+      "email_address": "danbury_selectmen@comcast.net",
+      "website_url": "http://www.townofdanburynh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Orford",
+      "type": "town",
+      "fips": "33-58500",
+      "gnis": "0873693",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1237,
+      "address": "2529 Route 25A; Orford, NH 03777",
+      "phone_number": "(603) 353-4404",
+      "email_address": "townclerk@orfordnh.us",
+      "website_url": "http://www.orfordnh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Richmond",
+      "type": "town",
+      "fips": "33-64420",
+      "gnis": "0873706",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 1197,
+      "address": "105 Old Homestead Highway; Richmond, NH 03470",
+      "phone_number": "(603) 239-4232",
+      "email_address": "susan.harrington.richmond@gmail.com",
+      "website_url": "http://www.richmond.nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Washington",
+      "type": "town",
+      "fips": "33-78980",
+      "gnis": "0873747",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 1192,
+      "address": "7 Halfmoon Pond Road; Washington, NH 03280",
+      "phone_number": "(603) 495-3661",
+      "email_address": "ddefosse@washingtonnh.org",
+      "website_url": "http://www.washingtonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bridgewater",
+      "type": "town",
+      "fips": "33-07540",
+      "gnis": "0873551",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1160,
+      "address": "297 Mayhew Turnpike; Bridgewater, NH 03222",
+      "phone_number": "(603) 744-5055",
+      "email_address": "townofbridgewaternh@gmail.com",
+      "website_url": "http://www.bridgewater-nh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Lempster",
+      "type": "town",
+      "fips": "33-41700",
+      "gnis": "0873645",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 1118,
+      "address": "856 NH Route 10; Lempster, NH 03605",
+      "phone_number": "(603) 863-3213 or (603) 863-2698",
+      "email_address": "townclerk@lempsternh.org",
+      "website_url": "http://www.lempsternh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Franconia",
+      "type": "town",
+      "fips": "33-27300",
+      "gnis": "0873599",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1083,
+      "address": "PO Box 900; Franconia, NH 03580",
+      "phone_number": "(603) 823-7752",
+      "email_address": "townadmin@franconianh.org",
+      "website_url": "http://www.franconianh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Bath",
+      "type": "town",
+      "fips": "33-03940",
+      "gnis": "0873540",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 1077,
+      "address": "PO Box 88; Bath, NH 03740",
+      "phone_number": "(603) 747-2454",
+      "email_address": "bathnh@myfairpoint.net",
+      "website_url": "http://www.bath-nh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Jefferson",
+      "type": "town",
+      "fips": "33-38820",
+      "gnis": "0873634",
+      "counties": [
+        "Coos"
+      ],
+      "population": 1043,
+      "address": "PO Box 81; Jefferson, NH 03583",
+      "phone_number": "(603) 586-4553",
+      "email_address": "administrativeassistant@jeffersonnh.org",
+      "website_url": "http://www.jeffersonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Center Harbor",
+      "type": "town",
+      "fips": "33-10660",
+      "gnis": "0873561",
+      "counties": [
+        "Belknap"
+      ],
+      "population": 1040,
+      "address": "PO Box 140; Center Harbor, NH 03226",
+      "phone_number": "(603) 253-4561",
+      "email_address": "selectmen@centerharbornh.gov",
+      "website_url": "http://www.centerharbornh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Jackson",
+      "type": "town",
+      "fips": "33-38260",
+      "gnis": "0873632",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 1028,
+      "address": "PO Box 268; Jackson, NH 03846",
+      "phone_number": "(603) 383-4223",
+      "email_address": "townadmin@jackson-nh.org",
+      "website_url": "http://www.jackson-nh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hill",
+      "type": "town",
+      "fips": "33-35860",
+      "gnis": "0873624",
+      "counties": [
+        "Merrimack"
+      ],
+      "population": 1017,
+      "address": "30 Crescent Street, Suite 1; Hill, NH 03243",
+      "phone_number": "(603) 934-1094",
+      "email_address": "hillselectmen@comcast.net",
+      "website_url": "http://www.townofhillnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "New Castle",
+      "type": "town",
+      "fips": "33-50980",
+      "gnis": "0873676",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 1000,
+      "address": "PO Box 367; New Castle, NH 03854",
+      "phone_number": "(603) 431-6710 x42",
+      "email_address": "townadmin@newcastlenh.org",
+      "website_url": "http://www.newcastlenh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Harrisville",
+      "type": "town",
+      "fips": "33-34420",
+      "gnis": "0873620",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 984,
+      "address": "705 Chesham Road; Harrisville, NH 03450",
+      "phone_number": "(603) 827-3431 x1 or (603) 827-5546",
+      "email_address": "Selectboard@harrisvillenh.org",
+      "website_url": "http://www.harrisvillenh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Dalton",
+      "type": "town",
+      "fips": "33-16820",
+      "gnis": "0873573",
+      "counties": [
+        "Coos"
+      ],
+      "population": 933,
+      "address": "756 Dalton Road; Dalton, NH 03598",
+      "phone_number": "(603) 837-7027",
+      "email_address": "selectmen@townofdaltonnh.gov",
+      "website_url": "http://townofdaltonnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "South Hampton",
+      "type": "town",
+      "fips": "33-71140",
+      "gnis": "0873722",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 894,
+      "address": "3 Hilldale Avenue; South Hampton, NH 03827",
+      "phone_number": "(603) 394-7696",
+      "email_address": "info@southhamptonnh.org",
+      "website_url": "https://southhamptonnh.org/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Monroe",
+      "type": "town",
+      "fips": "33-48980",
+      "gnis": "0873669",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 864,
+      "address": "152 Woodsville Road; Monroe, NH 03771",
+      "phone_number": "(603) 638-2644",
+      "email_address": "monroeselectmen@monroenh.org",
+      "website_url": "http://www.monroenh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Acworth",
+      "type": "town",
+      "fips": "33-00260",
+      "gnis": "0873525",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 853,
+      "address": "PO Box 37; Acworth, NH 03601",
+      "phone_number": "(603) 835-6879",
+      "email_address": "townoff@sover.net",
+      "website_url": "http://www.acworthnh.net",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Wentworth",
+      "type": "town",
+      "fips": "33-80500",
+      "gnis": "0873752",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 845,
+      "address": "7 Atwell Hill Rd., PO Box 2; Wentworth, NH 03282-0002",
+      "phone_number": "(603) 764-9955",
+      "email_address": "townofwentworth@wentworth-nh.org",
+      "website_url": "http://www.wentworth-nh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Warren",
+      "type": "town",
+      "fips": "33-78740",
+      "gnis": "0873746",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 825,
+      "address": "PO Box 40; Warren, NH 03279",
+      "phone_number": "(603) 764-5780",
+      "email_address": "administrator@warren-nh.com",
+      "website_url": "http://www.warren-nh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Surry",
+      "type": "town",
+      "fips": "33-75300",
+      "gnis": "0873733",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 820,
+      "address": "1 Village Road, Town Hall; Surry, NH 03431",
+      "phone_number": "(603) 352-3075",
+      "email_address": "selectmen@surry.nh.gov",
+      "website_url": "http://Surry.nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Carroll",
+      "type": "town",
+      "fips": "33-10100",
+      "gnis": "0873560",
+      "counties": [
+        "Coos"
+      ],
+      "population": 820,
+      "address": "PO Box 146; Twin Mountain, NH 03595",
+      "phone_number": "(603) 846-5494",
+      "email_address": "selectmen@townofcarroll.org",
+      "website_url": "http://www.carrollnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Stewartstown",
+      "type": "town",
+      "fips": "33-73380",
+      "gnis": "0871096",
+      "counties": [
+        "Coos"
+      ],
+      "population": 813,
+      "address": "PO Box 119; West Stewartstown, NH 03597",
+      "phone_number": "(603) 246-3329",
+      "email_address": "townofstewartstown@hotmail.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Newington",
+      "type": "town",
+      "fips": "33-51620",
+      "gnis": "0873680",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 811,
+      "address": "205 Nimble Hill Road; Newington, NH 03801",
+      "phone_number": "(603) 436-7640",
+      "email_address": "selectmen@newington.nh.us",
+      "website_url": "http://www.newington.nh.us",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Croydon",
+      "type": "town",
+      "fips": "33-16340",
+      "gnis": "0873572",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 801,
+      "address": "879 NH Route 10; Croydon, NH 03773",
+      "phone_number": "(603) 863-7830",
+      "email_address": "selectboard@croydon-nh.com",
+      "website_url": "http://www.croydon-nh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Pittsburg",
+      "type": "town",
+      "fips": "33-61780",
+      "gnis": "0871099",
+      "counties": [
+        "Coos"
+      ],
+      "population": 800,
+      "address": "1526 Main Street; Pittsburg, NH 03592",
+      "phone_number": "(603) 538-6697",
+      "email_address": "townoffice@pittsburg-nh.com",
+      "website_url": "http://www.pittsburg-nh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Goshen",
+      "type": "town",
+      "fips": "33-30500",
+      "gnis": "0873608",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 796,
+      "address": "PO Box  68; Goshen, NH 03752",
+      "phone_number": "(603) 863-5080",
+      "email_address": "selectmen@goshennh.org",
+      "website_url": "http://www.goshennh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Piermont",
+      "type": "town",
+      "fips": "33-61060",
+      "gnis": "0873698",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 769,
+      "address": "130 Route 10; Piermont, NH 03779",
+      "phone_number": "(603) 272-9181",
+      "email_address": "sarah.tucker@townofpiermontnh.org",
+      "website_url": "http://townofpiermontnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Albany",
+      "type": "town",
+      "fips": "33-00420",
+      "gnis": "0873526",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 759,
+      "address": "1972-A NH Route 16; Albany, NH 03818",
+      "phone_number": "(603) 447-6038",
+      "email_address": "contact@albanynh.org",
+      "website_url": "http://www.albanynh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Brookfield",
+      "type": "town",
+      "fips": "33-07940",
+      "gnis": "0873553",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 755,
+      "address": "267 Wentworth Road; Brookfield, NH 03872",
+      "phone_number": "(603) 522-3688",
+      "email_address": "adminasst@brookfieldnh.org",
+      "website_url": "http://www.brookfieldnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Gilsum",
+      "type": "town",
+      "fips": "33-29220",
+      "gnis": "0873605",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 752,
+      "address": "650 Route 10, PO Box 67; Gilsum, NH 03448",
+      "phone_number": "(603) 352-0845",
+      "email_address": "gilsum@gilsum-nh.gov",
+      "website_url": "https://gilsum-nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Marlow",
+      "type": "town",
+      "fips": "33-45700",
+      "gnis": "0873660",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 749,
+      "address": "167 NH Route 123, Town Office; Marlow, NH 03456-0184",
+      "phone_number": "(603) 446-2245 x1",
+      "email_address": "marlowtownoffice@marlownh.gov",
+      "website_url": "http://www.marlownh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Stratford",
+      "type": "town",
+      "fips": "33-74180",
+      "gnis": "0873727",
+      "counties": [
+        "Coos"
+      ],
+      "population": 662,
+      "address": "1956 US Route 3, PO Box 366; North Stratford, NH 03590-0366",
+      "phone_number": "(603) 922-5533",
+      "email_address": "town@stratfordnh.gov",
+      "website_url": "http://www.stratfordnh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Columbia",
+      "type": "town",
+      "fips": "33-13940",
+      "gnis": "0873568",
+      "counties": [
+        "Coos"
+      ],
+      "population": 659,
+      "address": "PO Box 157; Colebrook, NH 03576",
+      "phone_number": "(603) 237-5255",
+      "email_address": "towncolumbia@myfairpoint.net",
+      "website_url": "http://www.columbianh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Sullivan",
+      "type": "town",
+      "fips": "33-74900",
+      "gnis": "0873731",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 658,
+      "address": "PO Box 110; Sullivan, NH 03445",
+      "phone_number": "(603) 847-3316",
+      "email_address": "selectmen@townofsullivannh.com",
+      "website_url": "https://townofsullivannh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Langdon",
+      "type": "town",
+      "fips": "33-40900",
+      "gnis": "0873642",
+      "counties": [
+        "Sullivan"
+      ],
+      "population": 651,
+      "address": "122 NH Route 12A #1; Langdon, NH 03602",
+      "phone_number": "(603) 835-2389",
+      "email_address": "townoflangdon@yahoo.com",
+      "website_url": "http://www.langdonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Sugar Hill",
+      "type": "town",
+      "fips": "33-74740",
+      "gnis": "0873730",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 647,
+      "address": "PO Box 574; Sugar Hill, NH 03586",
+      "phone_number": "(603) 823-8468",
+      "email_address": "selectmen@sugarhillnh.org",
+      "website_url": "http://www.sugarhillnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hebron",
+      "type": "town",
+      "fips": "33-35220",
+      "gnis": "0873622",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 632,
+      "address": "PO Box 188; Hebron, NH 03241",
+      "phone_number": "(603) 744-2631",
+      "email_address": "execassist@hebronnh.gov",
+      "website_url": "https://www.hebronnh.gov/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Nelson",
+      "type": "town",
+      "fips": "33-50580",
+      "gnis": "0873673",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 629,
+      "address": "7 Nelson Common Road; Nelson, NH 03457",
+      "phone_number": "(603) 847-0047",
+      "email_address": "execadmin@nelsonnh.us",
+      "website_url": "http://www.townofnelson.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Lyman",
+      "type": "town",
+      "fips": "33-44100",
+      "gnis": "0873653",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 585,
+      "address": "65 Parker Hill Road; Lyman, NH 03585",
+      "phone_number": "(603) 838-5900",
+      "email_address": "lymanta@myfairpoint.net",
+      "website_url": "http://www.lymannh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Groton",
+      "type": "town",
+      "fips": "33-32180",
+      "gnis": "0873614",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 569,
+      "address": "754 North Groton Road; Groton, NH 03241",
+      "phone_number": "(603) 744-9190",
+      "email_address": "selectmen@grotonnh.org",
+      "website_url": "http://www.grotonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Waterville Valley",
+      "type": "town",
+      "fips": "33-79380",
+      "gnis": "0873748",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 508,
+      "address": "PO Box 500, Town Office; Waterville Valley, NH 03215",
+      "phone_number": "(603) 236-4730",
+      "email_address": "mdecoteau@watervillevalleynh.gov",
+      "website_url": "http://www.watervillevalleynh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Stark",
+      "type": "town",
+      "fips": "33-73060",
+      "gnis": "0873724",
+      "counties": [
+        "Coos"
+      ],
+      "population": 478,
+      "address": "1189 Stark Highway; Stark, NH 03582",
+      "phone_number": "(603) 636-2118",
+      "email_address": "patty@townofstark.com",
+      "website_url": "http://starknh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Landaff",
+      "type": "town",
+      "fips": "33-40660",
+      "gnis": "0873641",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 446,
+      "address": "12 Center Hill Road; Landaff, NH 03585",
+      "phone_number": "(603) 838-6220",
+      "email_address": "selectmen@landaffnh.org",
+      "website_url": "http://landaffnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Eaton",
+      "type": "town",
+      "fips": "33-23380",
+      "gnis": "0873587",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 405,
+      "address": "Town Hall, PO Box 88; Eaton, NH 03832",
+      "phone_number": "(603) 447-2840",
+      "email_address": "eatonth@roadrunner.com",
+      "website_url": "http://www.eatonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Benton",
+      "type": "town",
+      "fips": "33-05060",
+      "gnis": "0873544",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 374,
+      "address": "221 Coventry Road; Benton, NH 03785",
+      "phone_number": "(603) 787-6541",
+      "email_address": "bentonnhselectmen@gmail.com",
+      "website_url": "http://www.tobentonnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Sharon",
+      "type": "town",
+      "fips": "33-68820",
+      "gnis": "0873719",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 359,
+      "address": "432 Route 123; Sharon, NH 03458",
+      "phone_number": "(603) 924-9250",
+      "email_address": "sharon03458@gmail.com",
+      "website_url": "https://sharonnh.org/",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Shelburne",
+      "type": "town",
+      "fips": "33-68980",
+      "gnis": "0873720",
+      "counties": [
+        "Coos"
+      ],
+      "population": 353,
+      "address": "74 Village Road; Shelburne, NH 03581",
+      "phone_number": "(603) 466-2262",
+      "email_address": "noelle.meer@townofshelburnenh.com",
+      "website_url": "http://www.townofshelburnenh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Chatham",
+      "type": "town",
+      "fips": "33-11780",
+      "gnis": "0873563",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 341,
+      "address": "1071 Main Road; Chatham, NH 03813",
+      "phone_number": "(603) 694-2117",
+      "email_address": "townclerk@chathamnh.org",
+      "website_url": "http://chathamnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Dorchester",
+      "type": "town",
+      "fips": "33-18740",
+      "gnis": "0873579",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 339,
+      "address": "1021 NH Route 118; Dorchester, NH 03266",
+      "phone_number": "(603) 786-5095",
+      "email_address": "townofdorchester@gmail.com",
+      "website_url": "http://www.townofdorchester.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Randolph",
+      "type": "town",
+      "fips": "33-63860",
+      "gnis": "0873704",
+      "counties": [
+        "Coos"
+      ],
+      "population": 328,
+      "address": "130 Durand Road; Randolph, NH 03593",
+      "phone_number": "(603) 466-5771",
+      "email_address": "TownClerk@Randolph.nh.gov",
+      "website_url": "http://www.randolph.nh.gov",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Dummer",
+      "type": "town",
+      "fips": "33-19300",
+      "gnis": "0873582",
+      "counties": [
+        "Coos"
+      ],
+      "population": 306,
+      "address": "75 Hill Road; Dummer, NH 03588",
+      "phone_number": "(603) 449-2468",
+      "email_address": "townofdummer@gmail.com",
+      "website_url": "http://www.dummernh.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Errol",
+      "type": "town",
+      "fips": "33-25140",
+      "gnis": "0873593",
+      "counties": [
+        "Coos"
+      ],
+      "population": 298,
+      "address": "33 Main Street, PO Box 100; Errol, NH 03579-0100",
+      "phone_number": "(603) 482-3351",
+      "email_address": "errolnhselectmen@gmail.com",
+      "website_url": "http://www.errolnh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Clarksville",
+      "type": "town",
+      "fips": "33-13220",
+      "gnis": "0871098",
+      "counties": [
+        "Coos"
+      ],
+      "population": 294,
+      "address": "408 NH Route 145; Clarksville, NH 03592",
+      "phone_number": "(603) 246-7751",
+      "email_address": "twnclark@yahoo.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Easton",
+      "type": "town",
+      "fips": "33-22020",
+      "gnis": "0873586",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 292,
+      "address": "1060 Easton Valley Road; Easton, NH 03580",
+      "phone_number": "(603) 823-8017",
+      "email_address": "eastonnhselectboard@gmail.com",
+      "website_url": "http://easton-nh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Orange",
+      "type": "town",
+      "fips": "33-58340",
+      "gnis": "0873692",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 277,
+      "address": "Municipal Building, PO Box 37; Canaan, NH 03741",
+      "phone_number": "(603) 523-4467",
+      "email_address": "orangetownclerk@myfairpoint.net",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Windsor",
+      "type": "town",
+      "fips": "33-85940",
+      "gnis": "0873759",
+      "counties": [
+        "Hillsborough"
+      ],
+      "population": 262,
+      "address": "14 White Pond Road; Windsor, NH 03244",
+      "phone_number": "(603) 478-3292",
+      "email_address": "windsor@windsornh.org",
+      "website_url": "http://windsornh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Roxbury",
+      "type": "town",
+      "fips": "33-65700",
+      "gnis": "0873710",
+      "counties": [
+        "Cheshire"
+      ],
+      "population": 220,
+      "address": "3 Middletown Road; Roxbury, NH 03431",
+      "phone_number": "(603) 352-4903",
+      "email_address": "townofroxburynh@myfairpoint.net",
+      "website_url": "http://roxburynh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hale's",
+      "type": "location",
+      "fips": "33-32500",
+      "gnis": "0871993",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 132
+    },
+    {
+      "name": "Ellsworth",
+      "type": "town",
+      "fips": "33-23860",
+      "gnis": "0873589",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 93,
+      "address": "3 Ellsworth Pond Road; Ellsworth, NH 03223",
+      "phone_number": "(603) 726-3551",
+      "email_address": "dobellsworth@gmail.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Hart's Location",
+      "type": "town",
+      "fips": "33-34500",
+      "gnis": "0872015",
+      "counties": [
+        "Carroll"
+      ],
+      "population": 68,
+      "address": "979 US Route 302, PO Box 540; Hart's Location, NH 03812",
+      "phone_number": "(603) 374-6397",
+      "email_address": "smallesttown@gmail.com",
+      "website_url": "http://www.hartslocation.com",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Wentworth",
+      "type": "location",
+      "fips": "33-80740",
+      "gnis": "0873751",
+      "counties": [
+        "Coos"
+      ],
+      "population": 28,
+      "address": "7 Atwell Hill Rd., PO Box 2; Wentworth, NH 03282-0002",
+      "phone_number": "(603) 764-9955",
+      "email_address": "townofwentworth@wentworth-nh.org",
+      "website_url": "http://www.wentworth-nh.org",
+      "government_type": "selectmen"
+    },
+    {
+      "name": "Millsfield",
+      "type": "township",
+      "fips": "33-48260",
+      "gnis": "0873667",
+      "counties": [
+        "Coos"
+      ],
+      "population": 25
+    },
+    {
+      "name": "Cambridge",
+      "type": "township",
+      "fips": "33-08420",
+      "gnis": "0873555",
+      "counties": [
+        "Coos"
+      ],
+      "population": 16
+    },
+    {
+      "name": "Dixville",
+      "type": "township",
+      "fips": "33-18420",
+      "gnis": "0871095",
+      "counties": [
+        "Coos"
+      ],
+      "population": 4
+    },
+    {
+      "name": "Success",
+      "type": "township",
+      "fips": "33-74500",
+      "gnis": "0873729",
+      "counties": [
+        "Coos"
+      ],
+      "population": 4
+    },
+    {
+      "name": "Martins",
+      "type": "location",
+      "fips": "33-46020",
+      "gnis": "0872260",
+      "counties": [
+        "Coos"
+      ],
+      "population": 2
+    },
+    {
+      "name": "Livermore",
+      "type": "town",
+      "fips": "33-42820",
+      "gnis": "0873650",
+      "counties": [
+        "Grafton"
+      ],
+      "population": 2
+    },
+    {
+      "name": "Thompson and Meserves",
+      "type": "purchase",
+      "fips": "33-76580",
+      "gnis": "0872800",
+      "counties": [
+        "Coos"
+      ],
+      "population": 1
+    },
+    {
+      "name": "Second College",
+      "type": "grant",
+      "fips": "33-68500",
+      "gnis": "0871136",
+      "counties": [
+        "Coos"
+      ],
+      "population": 1
+    },
+    {
+      "name": "Odell",
+      "type": "township",
+      "fips": "33-57860",
+      "gnis": "0873691",
+      "counties": [
+        "Coos"
+      ],
+      "population": 1
+    },
+    {
+      "name": "County subdivisions not",
+      "type": "defined",
+      "fips": "33-00000",
+      "gnis": "0000000",
+      "counties": [
+        "Rockingham"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Sargents",
+      "type": "purchase",
+      "fips": "33-67860",
+      "gnis": "0872626",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Pinkhams",
+      "type": "grant",
+      "fips": "33-61620",
+      "gnis": "0872509",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Atkinson and Gilmanton Academy",
+      "type": "grant",
+      "fips": "33-02420",
+      "gnis": "0871100",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Low and Burbanks",
+      "type": "grant",
+      "fips": "33-43620",
+      "gnis": "0872225",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Kilkenny",
+      "type": "township",
+      "fips": "33-39940",
+      "gnis": "0873637",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Hadleys",
+      "type": "purchase",
+      "fips": "33-32420",
+      "gnis": "0872009",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Greens",
+      "type": "grant",
+      "fips": "33-31780",
+      "gnis": "0871974",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Ervings",
+      "type": "location",
+      "fips": "33-25180",
+      "gnis": "0873594",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Beans",
+      "type": "grant",
+      "fips": "33-04100",
+      "gnis": "0871459",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Dixs",
+      "type": "grant",
+      "fips": "33-18340",
+      "gnis": "0871113",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Cutts",
+      "type": "grant",
+      "fips": "33-16660",
+      "gnis": "0873196",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Crawfords",
+      "type": "purchase",
+      "fips": "33-16100",
+      "gnis": "0871742",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Chandlers",
+      "type": "purchase",
+      "fips": "33-11220",
+      "gnis": "0871663",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    },
+    {
+      "name": "Beans",
+      "type": "purchase",
+      "fips": "33-04260",
+      "gnis": "0871460",
+      "counties": [
+        "Coos"
+      ],
+      "population": 0
+    }
+  ]
+}

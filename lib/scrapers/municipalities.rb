@@ -1,20 +1,40 @@
 # frozen_string_literal: true
 
 require "services/census"
-require_relative "wa/municipalities"
+require_relative "nh/municipalities"
 require_relative "or/municipalities"
+require_relative "wa/municipalities"
 
 module Scrapers
   class Municipalities
-    CENSUS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:"
-    CENSUS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place"
+    CENSUS_PLACES_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=place:*&in=state:"
+    CENSUS_COUNTY_SUBDIVISIONS_POPULATION_API = "https://api.census.gov/data/2020/dec/pl?get=P1_001N,NAME&for=county subdivision:*&in=state:"
+    CENSUS_PLACES_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/place"
+    CENSUS_COUNTY_SUBDIVISIONS_MUNICIPALITIES_CODES = "https://www2.census.gov/geo/docs/reference/codes2020/cousub"
+
+    CENSUS_URL_MAPPINGS = {
+      "places_txt_url" => lambda { |state, statefp|
+        "#{CENSUS_PLACES_MUNICIPALITIES_CODES}/st#{statefp}_#{state}_place2020.txt"
+      },
+      "cousub_txt_url" => lambda { |state, statefp|
+        "#{CENSUS_COUNTY_SUBDIVISIONS_MUNICIPALITIES_CODES}/st#{statefp}_#{state}_cousub2020.txt"
+      },
+      "places_api_url" => lambda { |statefp|
+        "#{CENSUS_PLACES_POPULATION_API}#{statefp}"
+      },
+      "cousub_api_url" => lambda { |statefp|
+        "#{CENSUS_COUNTY_SUBDIVISIONS_POPULATION_API}#{statefp}"
+      }
+    }.freeze
 
     def self.get_scraper(state)
       case state
-      when "wa"
-        Scrapers::Wa::Municipalities
+      when "nh"
+        Scrapers::Nh::Municipalities
       when "or"
         Scrapers::Or::Municipalities
+      when "wa"
+        Scrapers::Wa::Municipalities
       else
         raise "No scraper found for #{state}"
       end
@@ -22,7 +42,7 @@ module Scrapers
 
     def self.fetch(state)
       scraper = get_scraper(state)
-      statefp = Services::STATE_TO_STATEFP[state]
+      statefp = Services::Census::STATE_TO_STATEFP[state]
 
       raise "No statefp found for #{state}" if statefp.nil?
 
@@ -33,11 +53,22 @@ module Scrapers
       additional_info_hash_by_municipality_name = scraper.fetch
 
       municipalities_with_census_data.map do |m|
+        if additional_info_hash_by_municipality_name.nil?
+          puts "No additional info found for #{m["name"]}"
+          next m
+        end
+
         # NOTE: Need to specify by county for states with duplicates.
         # See: Michigan
         {
           **m,
           **additional_info_hash_by_municipality_name[m["name"]]
+          # Properties available:
+          # address
+          # phone_number
+          # website
+          # email
+          # government_type
         }
       end
     end
@@ -68,24 +99,41 @@ module Scrapers
     end
 
     def self.fetch_census_municipality_codes(state, statefp)
-      url = "#{CENSUS_MUNICIPALITIES_CODES}/st#{statefp}_#{state}_place2020.txt"
+      places_txt_url = CENSUS_URL_MAPPINGS["places_txt_url"].call(state, statefp)
+      puts "Fetching census municipality codes from places: #{places_txt_url}"
+      response = HTTParty.get(places_txt_url)
+      places_csv = CSV.parse(response.body, headers: true, col_sep: "|")
 
-      puts "Fetching census municipality codes: #{url}"
-      response = HTTParty.get(url)
-      csv = CSV.parse(response.body, headers: true, col_sep: "|")
+      places = places_csv.map(&:to_h)
+                         .reject { |row| row["TYPE"] == "CENSUS DESIGNATED PLACE" }
+                         .map do |municipality_codes|
+        name, type = get_municipality_name_and_type(municipality_codes["PLACENAME"])
+        {
+          "name" => name,
+          "type" => type,
+          "fips" => "#{statefp}-#{municipality_codes["PLACEFP"]}",
+          "gnis" => format_gnis(municipality_codes["PLACENS"]),
+          "counties" => format_counties(municipality_codes["COUNTIES"])
+        }
+      end
 
-      csv.map(&:to_h)
-         .reject { |row| row["TYPE"] == "CENSUS DESIGNATED PLACE" }
-         .map do |municipality_codes|
-           name, type = get_municipality_name_and_type(municipality_codes["PLACENAME"])
-           {
-             "name" => name,
-             "type" => type,
-             "fips" => "#{statefp}-#{municipality_codes["PLACEFP"]}",
-             "gnis" => format_gnis(municipality_codes["PLACENS"]),
-             "counties" => format_counties(municipality_codes["COUNTIES"])
-           }
-         end
+      county_subdivisions_txt_url = CENSUS_URL_MAPPINGS["cousub_txt_url"].call(state, statefp)
+      puts "Fetching census municipality codes from county subdivisions: #{county_subdivisions_txt_url}"
+      response = HTTParty.get(county_subdivisions_txt_url)
+      county_subdivisions_csv = CSV.parse(response.body, headers: true, col_sep: "|")
+
+      county_subdivisions = county_subdivisions_csv.map do |municipality_codes|
+        name, type = get_municipality_name_and_type(municipality_codes["COUSUBNAME"])
+        {
+          "name" => name,
+          "type" => type,
+          "fips" => "#{statefp}-#{municipality_codes["COUSUBFP"]}",
+          "gnis" => format_gnis(municipality_codes["COUSUBNS"]),
+          "counties" => format_counties(municipality_codes["COUNTYNAME"])
+        }
+      end
+
+      places + county_subdivisions
     end
 
     def self.get_municipality_name_and_type(placename)
@@ -97,16 +145,29 @@ module Scrapers
     end
 
     def self.fetch_census_populations(statefp)
-      url = "#{CENSUS_POPULATION_API}#{statefp}"
+      hash_fips_to_population = {}
+      county_subdivisions_api_url = "#{CENSUS_COUNTY_SUBDIVISIONS_POPULATION_API}#{statefp}"
+      places_api_url = "#{CENSUS_PLACES_POPULATION_API}#{statefp}"
 
-      response = HTTParty.get(url)
-      JSON.parse(response.body)
+      county_subdivisions_response = HTTParty.get(county_subdivisions_api_url)
+      places_response = HTTParty.get(places_api_url)
 
-      response.each_with_object({}) do |row, hash|
+      county_subdivisions_json = JSON.parse(county_subdivisions_response.body)
+      places_json = JSON.parse(places_response.body)
+
+      county_subdivisions_json.drop(1).each do |row|
+        placefp = row[4]
+        population = row[0]
+        hash_fips_to_population[placefp] = population.to_i
+      end
+
+      places_json.drop(1).each do |row|
         placefp = row[3]
         population = row[0]
-        hash[placefp] = population.to_i
+        hash_fips_to_population[placefp] = population.to_i
       end
+
+      hash_fips_to_population
     end
 
     def self.format_municipality(statefp, placefp)
