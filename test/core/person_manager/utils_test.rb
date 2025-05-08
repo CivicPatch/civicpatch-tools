@@ -6,21 +6,25 @@ require "core/person_manager/utils"
 class CorePersonManagerUtilsTest < Minitest::Test
   def setup
     # Example positions_config with roles, aliases, and divisions
-    @positions_config = [
-      { "role" => "mayor" },
-      { "role" => "deputy mayor" },
-      { "role" => "council president" },
-      { "role" => "council vice president" },
-      { "role" => "council manager" },
-      { "role" => "council member", "aliases" => ["councilmember"],
-        "divisions" => %w[at-large ward district seat position] }
-    ]
+    @positions_config = {
+      "positions" => [
+        { "role" => "mayor" },
+        { "role" => "deputy mayor" },
+        { "role" => "council president" },
+        { "role" => "council vice president" },
+        { "role" => "council manager" },
+        { "role" => "council member", "aliases" => ["councilmember"],
+          "divisions" => %w[at-large ward district seat position] }
+      ]
+    }
 
-    @positions_config_sorted = [
-      { "role" => "mayor" },
-      { "role" => "deputy mayor", "divisions" => ["district"] },
-      { "role" => "council member", "divisions" => %w[position seat ward] }
-    ]
+    @positions_config_sorted = {
+      "positions" => [
+        { "role" => "mayor" },
+        { "role" => "deputy mayor", "divisions" => ["district"] },
+        { "role" => "council member", "divisions" => %w[position seat ward] }
+      ]
+    }
 
     @people = [
       { "name" => "Armondo Pavone", "positions" => ["mayor"] },
@@ -232,5 +236,19 @@ class CorePersonManagerUtilsTest < Minitest::Test
     expected_order = ["Person A", "Person B", "Person C"]
     sorted_names = sorted_people.map { |person| person["name"] }
     assert_equal expected_order, sorted_names
+  end
+
+  def test_format_division_identifier
+    assert_equal "at-large", Core::PersonManager::Utils.format_division_identifier("at-large")
+    assert_equal "1", Core::PersonManager::Utils.format_division_identifier("one")
+    assert_equal "1", Core::PersonManager::Utils.format_division_identifier("I")
+    assert_equal "10", Core::PersonManager::Utils.format_division_identifier("ten")
+    assert_equal "10", Core::PersonManager::Utils.format_division_identifier("X")
+  end
+
+  def test_normalize_positions_with_division_to_number
+    positions = ["councilmember district ii"]
+    normalized = Core::PersonManager::Utils.normalize_positions(positions, @positions_config)
+    assert_equal ["council member", "district 2"], normalized
   end
 end

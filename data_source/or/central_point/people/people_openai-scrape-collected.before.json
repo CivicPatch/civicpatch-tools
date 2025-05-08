@@ -42,7 +42,7 @@
       {
         "data": "https://www.centralpointoregon.gov/Directory.aspx?eid=38",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Taneea Browning.",
+        "llm_confidence_reason": "Primary page URL for the person.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
       }
     ],
@@ -50,7 +50,7 @@
       {
         "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted 'Elected 2024' as start date for current term.",
+        "llm_confidence_reason": "Extracted from 'Elected 2024' indicating start of current term.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
       }
     ],
@@ -58,7 +58,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted 'Current term ends December 31, 2028' and converted to YYYY-MM-DD.",
+        "llm_confidence_reason": "Extracted from 'Current term ends December 31, 2028' and converted to YYYY-MM-DD.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
       }
     ],
@@ -81,7 +81,7 @@
       {
         "data": "541-664-7935",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
       }
     ],
@@ -117,15 +117,15 @@
       {
         "data": "2022",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected 2018 & 2022; most recent election 2022 used as start date.",
+        "llm_confidence_reason": "Elected 2018 & 2022; most recent election 2022 used as start date for current term.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Current term ends December 31, 2026.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Current term ends December 31, 2026 explicitly stated.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
       }
     ],
@@ -147,7 +147,7 @@
       {
         "data": "541-499-8977",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
       }
     ],
@@ -175,17 +175,17 @@
     ],
     "start_dates": [
       {
-        "data": "2018",
+        "data": "2022",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected 2018 and 2022; earliest election date used as start_date.",
+        "llm_confidence_reason": "Elected 2018 and 2022, current term started with 2022 election.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Current term ends December 31, 2026.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Current term ends December 31, 2026 explicitly stated.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
       }
     ],
@@ -231,15 +231,15 @@
       {
         "data": "2024-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Appointed November 2024' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Extracted 'Appointed November 2024' and converted to YYYY-MM format.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Current term ends December 31, 2026' and converted to YYYY-MM-DD format.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted 'Current term ends December 31, 2026' and converted to YYYY-MM-DD format.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
       }
     ],
@@ -291,7 +291,7 @@
       {
         "data": "2024-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected November, 2024 converted to 2024-11.",
+        "llm_confidence_reason": "Elected November, 2024 converted to 2024-11 as start date of current term.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
       }
     ],
@@ -345,12 +345,6 @@
         "llm_confidence": 0.9,
         "llm_confidence_reason": "Primary page URL linked near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
-      },
-      {
-        "data": "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "URL labeled 'City Council' near name, likely profile or council page.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
       }
     ],
     "start_dates": [
@@ -425,8 +419,8 @@
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current term ends December 31, 2028.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term ends December 31, 2028 explicitly stated.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=39"
       }
     ],
