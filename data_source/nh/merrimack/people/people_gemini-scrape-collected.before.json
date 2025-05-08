@@ -1,0 +1,303 @@
+[
+  {
+    "name": "Finlay Rothhaus",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/finlay-rothhaus"
+    ],
+    "positions": [
+      "Chairman",
+      "Town Council"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 494-0893",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name.",
+        "source": "https://www.merrimacknh.gov/people/finlay-rothhaus"
+      }
+    ],
+    "emails": [
+      {
+        "data": "frothhaus@merrimacknh.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The contact link text 'Contact Finlay Rothhaus' suggests this is the likely email format, although the link itself is a contact form.",
+        "source": "https://www.merrimacknh.gov/people/finlay-rothhaus"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.merrimacknh.gov/people/finlay-rothhaus",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name in the table.",
+        "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/finlay-rothhaus/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the profile page itself.",
+        "source": "https://www.merrimacknh.gov/people/finlay-rothhaus"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-04",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 4/2026' next to the Chairman position.",
+        "source": "https://www.merrimacknh.gov/people/finlay-rothhaus"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Nancy Harrington",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.merrimacknh.gov/town-council"
+    ],
+    "positions": [
+      "Vice Chair"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.merrimacknh.gov/people/nancy-harrington",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name in the table.",
+        "source": "https://www.merrimacknh.gov/town-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Nancy Murphy",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/nancy-murphy"
+    ],
+    "positions": [
+      "Councilor",
+      "Town Council"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 424-0254",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the person's name.",
+        "source": "https://www.merrimacknh.gov/people/nancy-murphy"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.merrimacknh.gov/people/nancy-murphy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name in the table.",
+        "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/nancy-murphy/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the main page for the person.",
+        "source": "https://www.merrimacknh.gov/people/nancy-murphy"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-04",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 4/2027' in the table.",
+        "source": "https://www.merrimacknh.gov/people/nancy-murphy"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Mackenzie Murphy",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/mackenzie-murphy-0"
+    ],
+    "positions": [
+      "Councilor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 424-0254",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the name.",
+        "source": "https://www.merrimacknh.gov/people/mackenzie-murphy-0"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.merrimacknh.gov/people/mackenzie-murphy-0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name in the table.",
+        "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/mackenzie-murphy-0/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL in the breadcrumb and main heading is a person-specific profile page.",
+        "source": "https://www.merrimacknh.gov/people/mackenzie-murphy-0"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-04",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 4/2026' in the table.",
+        "source": "https://www.merrimacknh.gov/people/mackenzie-murphy-0"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Jennifer Jobin",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/jennifer-jobin"
+    ],
+    "positions": [
+      "Councilor",
+      "Council Member",
+      "Town Council"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 424-3755",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the person's name and photo.",
+        "source": "https://www.merrimacknh.gov/people/jennifer-jobin"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.merrimacknh.gov/people/jennifer-jobin",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name in the table.",
+        "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/jennifer-jobin/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL in breadcrumb and likely a personal profile page.",
+        "source": "https://www.merrimacknh.gov/people/jennifer-jobin"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-04",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 4/2028' in the table.",
+        "source": "https://www.merrimacknh.gov/people/jennifer-jobin"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Peter Albert",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/peter-albert-0"
+    ],
+    "positions": [
+      "Councilor",
+      "Council Member",
+      "Town Council"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-321-2055",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly below the person's name and image.",
+        "source": "https://www.merrimacknh.gov/people/peter-albert-0"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.merrimacknh.gov/people/peter-albert-0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name in the table.",
+        "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/peter-albert-0/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the current page is a profile page for the person.",
+        "source": "https://www.merrimacknh.gov/people/peter-albert-0"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Tom Thornton",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/tom-thornton"
+    ],
+    "positions": [
+      "Councilor",
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 424-2331",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Contact Info' section for the person.",
+        "source": "https://www.merrimacknh.gov/people/tom-thornton"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.merrimacknh.gov/people/tom-thornton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name in the table.",
+        "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/tom-thornton/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the current page is the person's profile page.",
+        "source": "https://www.merrimacknh.gov/people/tom-thornton"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-04",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 4/2027' in the table.",
+        "source": "https://www.merrimacknh.gov/people/tom-thornton"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  }
+]
