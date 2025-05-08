@@ -1,0 +1,37 @@
+---
+scrape_sources:
+- https://www.laconianh.gov/directory.aspx?EID=103
+- https://www.laconianh.gov/522/City-Council
+- https://www.laconianh.gov/directory.aspx?did=37
+- https://www.laconianh.gov/Directory.aspx?DID=37
+- https://www.laconianh.gov/directory.aspx?EID=118
+- https://www.laconianh.gov/directory.aspx?EID=99
+- https://www.laconianh.gov/directory.aspx?EID=100
+- https://www.laconianh.gov/directory.aspx?EID=119
+- https://www.laconianh.gov/directory.aspx?EID=102
+- https://www.laconianh.gov/directory.aspx?EID=97
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Andrew Hosmer
+    positions:
+    - Mayor
+  - name: Bruce Cheney
+    positions:
+    - Council Member
+  - name: Eric Hoffman
+    positions:
+    - Council Member
+  - name: Mark Haynes
+    positions:
+    - Council Member
+  - name: Robert Soucy
+    positions:
+    - Council Member
+  - name: Steven Bogert
+    positions:
+    - Council Member
+  - name: Tony Felch
+    positions:
+    - Council Member
+people: {}
