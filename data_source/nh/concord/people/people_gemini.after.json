@@ -8,14 +8,16 @@
     "source_image": null,
     "phone_number": "(603) 228-0097",
     "email": "bchamplin@concordnh.gov",
-    "website": "https://www.concordnh.gov/directory.aspx?EID=257",
+    "website": "https://concordnh.gov/directory.aspx?EID=257/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/Directory.aspx?did=18",
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=257",
-      "https://concordnh.gov/directory.aspx?EID=257"
+      "https://concordnh.gov/directory.aspx?EID=257",
+      "https://www.concordnh.gov/directory.aspx?EID=257/",
+      "https://concordnh.gov/directory.aspx?EID=257/"
     ],
     "updated_at": "2025-05-08"
   },
@@ -68,13 +70,12 @@
     "source_image": null,
     "phone_number": "(603) 406-4953",
     "email": "jkurtz@concordnh.gov",
-    "website": "https://concordnh.gov/directory.aspx?EID=258/",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=258",
-      "https://concordnh.gov/directory.aspx?EID=258/"
+      "https://concordnh.gov/directory.aspx?EID=258"
     ],
     "updated_at": "2025-05-08"
   },
@@ -107,12 +108,13 @@
     "source_image": null,
     "phone_number": "(603) 753-9609",
     "email": "brenttoddconcord@gmail.com",
-    "website": null,
+    "website": "https://www.concordnh.gov/directory.aspx?EID=135/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://www.concordnh.gov/directory.aspx?EID=135"
+      "https://www.concordnh.gov/directory.aspx?EID=135",
+      "https://www.concordnh.gov/directory.aspx?EID=135/"
     ],
     "updated_at": "2025-05-08"
   },
@@ -126,12 +128,13 @@
     "source_image": null,
     "phone_number": "(603) 225-3256",
     "email": "jfoote@concordnh.gov",
-    "website": null,
+    "website": "https://concordnh.gov/directory.aspx?EID=263/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=263"
+      "https://concordnh.gov/directory.aspx?EID=263",
+      "https://concordnh.gov/directory.aspx?EID=263/"
     ],
     "updated_at": "2025-05-08"
   },
@@ -145,12 +148,13 @@
     "source_image": null,
     "phone_number": "(603) 533-9278",
     "email": "mhorne@concordnh.gov",
-    "website": null,
+    "website": "https://concordnh.gov/directory.aspx?EID=259/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=259"
+      "https://concordnh.gov/directory.aspx?EID=259",
+      "https://concordnh.gov/directory.aspx?EID=259/"
     ],
     "updated_at": "2025-05-08"
   },
@@ -164,12 +168,13 @@
     "source_image": null,
     "phone_number": "(603) 228-8395",
     "email": "JKretovic@concordnh.gov",
-    "website": null,
+    "website": "https://www.concordnh.gov/Directory.aspx?EID=18/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://www.concordnh.gov/Directory.aspx?EID=18"
+      "https://www.concordnh.gov/Directory.aspx?EID=18",
+      "https://www.concordnh.gov/Directory.aspx?EID=18/"
     ],
     "updated_at": "2025-05-08"
   },
