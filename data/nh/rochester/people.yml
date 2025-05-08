@@ -1,0 +1,171 @@
+---
+- name: Paul Callaghan
+  positions:
+  - Mayor
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/209011
+  start_date:
+  end_date:
+  image: https://cdn.civicpatch.org/open-data/nh/rochester/images/19a343eecdfea721f14378a7402afd61dd1439fe80789bd9bf1eff65f429a9d4.jpg
+  source_image: https://www.rochesternh.gov/sites/g/files/vyhlif9211/f/imce/s279_rochester_2024councilgroup.jpg
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Don Hamann
+  positions:
+  - Deputy Mayor
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/131524
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Alexander de Geofroy
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/189461
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Bryan Karolian
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/63586
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Chuck Creteau
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/209021
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Daniel Fitzpatrick
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/178196
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: David Herman
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/209016
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: David Walker
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/178211
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Kevin Sullivan
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/144231
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Leslie "Les" Horne
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/178201
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Matthew Richardson
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/209026
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Patricia Turner
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/178186
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
+- name: Tim Fontneau
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website: https://www.rochesternh.gov/node/178191
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.rochesternh.gov/mayor-city-council
+  updated_at: '2025-05-08'
