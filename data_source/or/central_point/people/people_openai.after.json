@@ -15,7 +15,7 @@
       "https://www.centralpointoregon.gov/256/Mayor-Council",
       "https://www.centralpointoregon.gov/directory.aspx?eid=38"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Rob Hernandez",
@@ -27,13 +27,13 @@
     "phone_number": "(541) 664-5154",
     "email": "Rob.hernandez@centralpointoregon.gov",
     "website": "https://www.centralpointoregon.gov/directory.aspx?eid=40",
-    "start_date": "2024-11",
+    "start_date": "2016-11",
     "end_date": "2028-12-31",
     "sources": [
       "https://www.centralpointoregon.gov/256/Mayor-Council",
       "https://www.centralpointoregon.gov/directory.aspx?eid=40"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Michael Parsons",
@@ -52,7 +52,7 @@
       "https://www.centralpointoregon.gov/256/Mayor-Council",
       "https://www.centralpointoregon.gov/directory.aspx?eid=39"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Neil M. Olsen",
@@ -72,7 +72,7 @@
       "https://www.centralpointoregon.gov/256/Mayor-Council",
       "https://www.centralpointoregon.gov/directory.aspx?eid=35"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Kelley Johnson",
@@ -85,13 +85,13 @@
     "phone_number": "(541) 499-8977",
     "email": "kelley.johnson@centralpointoregon.gov",
     "website": "https://www.centralpointoregon.gov/directory.aspx?eid=36",
-    "start_date": "2022",
+    "start_date": "2018",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.centralpointoregon.gov/256/Mayor-Council",
       "https://www.centralpointoregon.gov/directory.aspx?eid=36"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Grey Zimmerman",
@@ -111,13 +111,12 @@
       "https://www.centralpointoregon.gov/256/Mayor-Council",
       "https://www.centralpointoregon.gov/directory.aspx?eid=37"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Brian Whitaker",
     "positions": [
       "Council Member",
-      "Ward 4",
       "Ward Iv"
     ],
     "image": "https://cdn.civicpatch.org/open-data/or/central_point/images/6dede0e51fdbbe6d5f9419122483cdcb34a8e414c7ae41fd31cfaacb6393711e.jpg",
@@ -131,6 +130,6 @@
       "https://www.centralpointoregon.gov/256/Mayor-Council",
       "https://www.centralpointoregon.gov/directory.aspx?eid=43"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   }
 ]
