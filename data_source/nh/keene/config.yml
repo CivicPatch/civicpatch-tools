@@ -1,0 +1,56 @@
+---
+scrape_sources:
+- https://keenenh.gov/my-city-government/mayor-0
+- https://keenenh.gov/my-city-government/city-council/
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Jay Kahn
+    positions:
+    - Mayor
+  - name: Andrew M. Madison
+    positions:
+    - Council Member
+  - name: Bettina A. Chadbourne
+    positions:
+    - Council Member
+  - name: Bryan J. Lake
+    positions:
+    - Council Member
+  - name: Catherine I. Workman
+    positions:
+    - Council Member
+  - name: Edward J. Haas
+    positions:
+    - Council Member
+  - name: Jacob R. Favolise
+    positions:
+    - Council Member
+  - name: Kate M. Bosley
+    positions:
+    - Council Member
+  - name: Kris E. Roberts
+    positions:
+    - Council Member
+  - name: Laura E. Tobin
+    positions:
+    - Council Member
+  - name: Michael J. Remy
+    positions:
+    - Council Member
+  - name: Mitchell H. Greenwald
+    positions:
+    - Council Member
+  - name: Philip M. Jones
+    positions:
+    - Council Member
+  - name: Randy L. Filiault
+    positions:
+    - Council Member
+  - name: Robert C. Williams
+    positions:
+    - Council Member
+  - name: Thomas F. Powers
+    positions:
+    - Council Member
+people: {}
