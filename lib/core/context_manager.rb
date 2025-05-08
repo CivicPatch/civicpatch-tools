@@ -3,7 +3,6 @@ module Core
     def self.get_context(state, gnis)
       config = Core::ConfigManager.get_config(state, gnis)
       municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-
       {
         state: state,
         municipality_entry: municipality_entry,

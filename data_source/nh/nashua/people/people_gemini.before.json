@@ -1,28 +1,9 @@
 [
   {
-    "name": "James W. Donchess",
-    "positions": [
-      "Mayor"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603-589-3260",
-    "email": "NashuaMayor@NashuaNH.gov",
-    "website": "https://www.nashuanh.gov/148/Mayors-Office/",
-    "start_date": "2016-01",
-    "end_date": null,
-    "sources": [
-      "https://www.nashuanh.gov/148/Mayors-Office",
-      "https://www.nashuanh.gov/directory.aspx?did=4",
-      "https://www.nashuanh.gov/148/Mayors-Office/"
-    ],
-    "updated_at": "2025-05-07"
-  },
-  {
     "name": "Ben Clemons",
     "positions": [
-      "Council Member",
-      "at-large"
+      "Alderperson",
+      "At-Large"
     ],
     "image": null,
     "source_image": null,
@@ -40,7 +21,7 @@
   {
     "name": "Richard A. Dowd",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Two"
     ],
     "image": null,
@@ -56,9 +37,9 @@
     "updated_at": "2025-05-07"
   },
   {
-    "name": "Tyler Gouveia",
+    "name": "TYLER GOUVEIA",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward One"
     ],
     "image": null,
@@ -76,7 +57,7 @@
   {
     "name": "Ernest A. Jette",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Five"
     ],
     "image": null,
@@ -94,8 +75,8 @@
   {
     "name": "Shoshanna Kelly",
     "positions": [
-      "Council Member",
-      "at-large"
+      "Alderperson",
+      "At-Large"
     ],
     "image": null,
     "source_image": null,
@@ -112,7 +93,7 @@
   {
     "name": "Patricia Klee",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Three"
     ],
     "image": null,
@@ -130,7 +111,7 @@
   {
     "name": "Thomas Lopez",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Four"
     ],
     "image": null,
@@ -146,10 +127,10 @@
     "updated_at": "2025-05-07"
   },
   {
-    "name": "Melbourne Moran, Jr.",
+    "name": "MELBOURNE MORAN, JR.",
     "positions": [
-      "Council Member",
-      "at-large"
+      "Alderperson",
+      "At-Large"
     ],
     "image": null,
     "source_image": null,
@@ -166,7 +147,8 @@
   {
     "name": "Michael B. O'Brien, Sr.",
     "positions": [
-      "Council Vice President"
+      "Vice President",
+      "Board of Aldermen"
     ],
     "image": null,
     "source_image": null,
@@ -183,7 +165,7 @@
   {
     "name": "Tim Sennott",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Seven"
     ],
     "image": null,
@@ -199,9 +181,9 @@
     "updated_at": "2025-05-07"
   },
   {
-    "name": "John Sullivan",
+    "name": "JOHN SULLIVAN",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Nine"
     ],
     "image": null,
@@ -217,9 +199,9 @@
     "updated_at": "2025-05-07"
   },
   {
-    "name": "Derek Thibeault",
+    "name": "DEREK THIBEAULT",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Eight"
     ],
     "image": null,
@@ -237,7 +219,7 @@
   {
     "name": "Chris Thibodeau",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward Six"
     ],
     "image": null,
@@ -253,10 +235,10 @@
     "updated_at": "2025-05-07"
   },
   {
-    "name": "Gloria Timmons",
+    "name": "GLORIA TIMMONS",
     "positions": [
-      "Council Member",
-      "at-large"
+      "Alderperson",
+      "At-Large"
     ],
     "image": null,
     "source_image": null,
@@ -273,7 +255,8 @@
   {
     "name": "Lori Wilshire",
     "positions": [
-      "Council President"
+      "President",
+      "Board of Aldermen"
     ],
     "image": null,
     "source_image": null,
@@ -284,6 +267,42 @@
     "end_date": "2027-12-31",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "James W. Donchess",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "603-589-3260",
+    "email": "NashuaMayor@NashuaNH.gov",
+    "website": "https://www.nashuanh.gov/148/Mayors-Office/",
+    "start_date": "2016-01",
+    "end_date": null,
+    "sources": [
+      "https://www.nashuanh.gov/148/Mayors-Office",
+      "https://www.nashuanh.gov/148/Mayors-Office/"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Jim Donchess",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "603-589-3260",
+    "email": "NashuaMayor@NashuaNH.gov",
+    "website": "https://www.nashuanh.gov/148/Mayors-Office",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.nashuanh.gov/804/City-Officials",
+      "https://www.nashuanh.gov/directory.aspx?did=4"
     ],
     "updated_at": "2025-05-07"
   }

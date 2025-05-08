@@ -1,5 +1,39 @@
 [
   {
+    "name": "Lori Wilshire",
+    "positions": [
+      "President Board Of Aldermen"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/3e14b2162d6e8491e8006368a3c864ad88b5de188b62ecc5b8438a05d90055d7.jpg",
+    "source_image": "https://www.nashuanh.gov/ImageRepository/Document?documentID=11904",
+    "phone_number": "(603) 809-4203",
+    "email": "WILSHIREL@NASHUANH.GOV",
+    "website": "https://www.nashuanh.gov/514/Board-of-Aldermen/",
+    "start_date": "2008-01-06",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://www.nashuanh.gov/514/Board-of-Aldermen"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Michael B. O'Brien Sr.",
+    "positions": [
+      "Vice President Board Of Aldermen"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/5d392f3889025af60b633b0d8e4a1cb59cd6d4ec4f77c25dbff8f3e6399e4baa.jpg",
+    "source_image": "https://www.nashuanh.gov/ImageRepository/Document?documentID=11907",
+    "phone_number": "(603) 888-8051",
+    "email": "OBRIENM@NASHUANH.GOV",
+    "website": "https://www.nashuanh.gov/514/Board-of-Aldermen/",
+    "start_date": "2016-01-10",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://www.nashuanh.gov/514/Board-of-Aldermen"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
     "name": "James W. Donchess",
     "positions": [
       "Mayor"
@@ -12,15 +46,14 @@
     "start_date": "2016-01",
     "end_date": null,
     "sources": [
-      "https://www.nashuanh.gov/148/Mayors-Office",
-      "https://www.nashuanh.gov/directory.aspx?did=4"
+      "https://www.nashuanh.gov/148/Mayors-Office"
     ],
     "updated_at": "2025-05-07"
   },
   {
     "name": "Ben Clemons",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/39ae6a5fe75882130899b3574351ecafc13b040817bd9f2111f6d54b87843bab.jpg",
@@ -38,7 +71,7 @@
   {
     "name": "Gloria Timmons",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/305063618260fa6875b8f065ea0bc5f9c59c9d240fe27098fb9caa5c07997a7d.jpg",
@@ -56,7 +89,7 @@
   {
     "name": "Melbourne Moran Jr.",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/3629fd185e08d533f4731016623b1c1d4fd089a5f7af27732427cbd0c80c61f4.jpg",
@@ -74,7 +107,7 @@
   {
     "name": "Shoshanna Kelly",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/c17ae5d61471ccf3e224280b1475da30e9d44a3cbbe8c7cd8b7812e9300d239e.gif",
@@ -92,7 +125,7 @@
   {
     "name": "Tyler Gouveia",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 1"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/8867f61c836ec40d4ae7c4a71cd619b07fc223b85d587fd28ab5edd9bc64d69c.jpg",
@@ -110,7 +143,7 @@
   {
     "name": "Richard A. Dowd",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 2"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/4f08e7625a5d5455a2207c62fd5a7bc511053e8286a14f7bd7aee3c8587baf5b.jpg",
@@ -128,7 +161,7 @@
   {
     "name": "Patricia Klee",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 3"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/ec2dd8be93b6f5afa8aade57116da77ef42efc5fc4fc75ee29997ff2c6546832.gif",
@@ -146,7 +179,7 @@
   {
     "name": "Thomas Lopez",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 4"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/f363cb2c7976f0ae4c1c64c8b32af289a86d3c92addff4b2e7f56fea6049c3f5.jpg",
@@ -164,7 +197,7 @@
   {
     "name": "Ernest A. Jette",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 5"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/59bcf2121983750b288c4048c7ea7a27a9c00e50b9b9369a5e24826232c93a4b.gif",
@@ -182,7 +215,7 @@
   {
     "name": "Chris Thibodeau",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 6"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/f3dfe4751e22087186e71f461bfe92bc4deab1da912a014357f78acb2f33811b.jpg",
@@ -200,7 +233,7 @@
   {
     "name": "Tim Sennott",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 7"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/ac98d2417c0768821437258c99190cf6c4e609001d707fcfc9473627d6730b78.jpg",
@@ -218,7 +251,7 @@
   {
     "name": "Derek Thibeault",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 8"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/257cfbb13595b3c58ba604d2c5951f2d30800a9aa6d85d86e92602ea2947e174.jpg",
@@ -236,7 +269,7 @@
   {
     "name": "John Sullivan",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 9"
     ],
     "image": "https://cdn.civicpatch.org/open-data/nh/nashua/images/ded24585481c7fdac8b296a1005791557220cb328a4a3062a57dd2892e19670c.jpg",
