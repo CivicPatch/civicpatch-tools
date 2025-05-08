@@ -7,7 +7,6 @@ divisions: &divisions
   - seat
   - position
 position_examples: &position_examples | # Useful for LLM prompts
-  * ward 5/seat 3 -> ["ward 5", "seat 3"]
   * council member ward 3 -> ["council member", "ward 3"]
   * ward #3 -> ["ward 3"]
   * mayor, 3rd district -> ["mayor", "district 3"]
@@ -26,11 +25,13 @@ government_types:
         - mayor pro tem
       - role: chair
         aliases:
+        - chairman
         - chairwoman
         - town council chair
       - role: vice chair
         aliases:
         - vice-chair
+        - vice chairman
         - vice chairwoman
       - role: deputy mayor
       - role: council president
@@ -86,8 +87,23 @@ government_types:
         aliases: 
         - mayor pro-tem
         - mayor pro tem
+      - role: chair
+        aliases:
+        - chairman
+        - chairwoman
+      - role: vice chair
+        aliases:
+        - vice-chair
+        - vice chairman
+        - vice-chairman
+        - vice chairwoman
+        - vice-chairwoman
       - role: deputy mayor  
       - role: selectmen
+        aliases:
+        - selectman
+        - selectwoman
+        - board of selectmen
     search_keywords:
       selectmen:
         - board of selectmen
@@ -115,6 +131,9 @@ government_types:
         - mayor pro tem
       - role: deputy mayor
       - role: chair
+        aliases:
+        - chairman
+        - chairwoman
       - role: vice chair
         aliases: 
           - vice chairwoman

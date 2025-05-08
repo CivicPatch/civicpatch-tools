@@ -59,7 +59,7 @@ module Core
 
           ## Try to find aliases
           matching_alias = alias_map.keys.find do |k|
-            normalized_position.include?(k)
+            normalized_position == k
           end
 
           next [alias_map[matching_alias]] if matching_alias.present?

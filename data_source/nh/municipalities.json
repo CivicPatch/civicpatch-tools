@@ -197,7 +197,14 @@
       "phone_number": "(603) 886-6024",
       "government_type": "selectmen",
       "email": "smalizia@hudsonnh.gov",
-      "website": "http://www.hudsonnh.gov"
+      "website": "http://www.hudsonnh.gov",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "976ff2c1f3d0afe86acf1e5fc74219df",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bedford",
