@@ -1,5 +1,24 @@
 [
   {
+    "name": "James W. Donchess",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "603-589-3260",
+    "email": "NashuaMayor@NashuaNH.gov",
+    "website": "https://www.nashuanh.gov/148/Mayors-Office/",
+    "start_date": "2016-01",
+    "end_date": null,
+    "sources": [
+      "https://www.nashuanh.gov/148/Mayors-Office",
+      "https://www.nashuanh.gov/148/Mayors-Office/",
+      "https://www.nashuanh.gov/directory.aspx?did=4"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
     "name": "Ben Clemons",
     "positions": [
       "Alderperson",
@@ -16,7 +35,7 @@
       "https://www.nashuanh.gov/514/Board-of-Aldermen",
       "https://www.nashuanh.gov/514/Board-of-Aldermen/"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Richard A. Dowd",
@@ -34,10 +53,10 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
-    "name": "TYLER GOUVEIA",
+    "name": "Tyler Gouveia",
     "positions": [
       "Alderperson",
       "Ward One"
@@ -52,7 +71,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Ernest A. Jette",
@@ -70,7 +89,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Shoshanna Kelly",
@@ -88,7 +107,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Patricia Klee",
@@ -106,7 +125,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Thomas Lopez",
@@ -124,10 +143,10 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
-    "name": "MELBOURNE MORAN, JR.",
+    "name": "Melbourne Moran, Jr.",
     "positions": [
       "Alderperson",
       "At-Large"
@@ -142,13 +161,12 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Michael B. O'Brien, Sr.",
     "positions": [
-      "Vice President",
-      "Board of Aldermen"
+      "Vice President Board of Aldermen"
     ],
     "image": null,
     "source_image": null,
@@ -160,7 +178,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Tim Sennott",
@@ -178,10 +196,10 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
-    "name": "JOHN SULLIVAN",
+    "name": "John Sullivan",
     "positions": [
       "Alderperson",
       "Ward Nine"
@@ -196,10 +214,10 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
-    "name": "DEREK THIBEAULT",
+    "name": "Derek Thibeault",
     "positions": [
       "Alderperson",
       "Ward Eight"
@@ -214,7 +232,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Chris Thibodeau",
@@ -232,10 +250,10 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
-    "name": "GLORIA TIMMONS",
+    "name": "Gloria Timmons",
     "positions": [
       "Alderperson",
       "At-Large"
@@ -250,13 +268,12 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Lori Wilshire",
     "positions": [
-      "President",
-      "Board of Aldermen"
+      "President Board of Aldermen"
     ],
     "image": null,
     "source_image": null,
@@ -268,42 +285,6 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
-  },
-  {
-    "name": "James W. Donchess",
-    "positions": [
-      "Mayor"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603-589-3260",
-    "email": "NashuaMayor@NashuaNH.gov",
-    "website": "https://www.nashuanh.gov/148/Mayors-Office/",
-    "start_date": "2016-01",
-    "end_date": null,
-    "sources": [
-      "https://www.nashuanh.gov/148/Mayors-Office",
-      "https://www.nashuanh.gov/148/Mayors-Office/"
-    ],
-    "updated_at": "2025-05-07"
-  },
-  {
-    "name": "Jim Donchess",
-    "positions": [
-      "Mayor"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603-589-3260",
-    "email": "NashuaMayor@NashuaNH.gov",
-    "website": "https://www.nashuanh.gov/148/Mayors-Office",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.nashuanh.gov/804/City-Officials",
-      "https://www.nashuanh.gov/directory.aspx?did=4"
-    ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   }
 ]

@@ -106,8 +106,8 @@ module Services
 
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
-        - For positions:
-          - **CRITICAL**: Extract ONLY roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
+        - Positions extraction:
+          - **CRITICAL**: Extract roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
             **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
           - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased, or their position is otherwise noted as vacant (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their position, even if a future term date is also mentioned. The statement of resignation or vacancy takes precedence over listed term dates for determining current active status.
           - **Check for Past Dates**: Before extracting a specific position title (e.g., "Council President", "Chair"), examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012", "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past** and is not the person's current role, **DO NOT extract that specific position title.** Focus only on roles the person currently holds according to the text.
@@ -117,7 +117,12 @@ module Services
             Focus on the primary elected/appointed governing body members.
           - Include only active roles (today is #{current_date}).
           - Include both the role and any associated division (e.g., "Council Member, District 3").
-          - **Avoid Redundant Phrasing in Positions**: If similar terms describing the same core role (e.g., "Council Member," "Councilor") are found associated with the same division (like Ward, District, Seat), extract only the most complete or primary term used in the source text. Do not concatenate these similar terms for a single position. For instance, for "Ward 3 Councilor," prefer "Councilor, Ward 3" or "Council Member, Ward 3" (if "Council Member" is the standard term for that role type), but not "Council Member, Ward 3 Councilor."
+          - **Avoid Redundant Phrasing in Positions**: If similar terms describing the same core role
+            (e.g., "Council Member," "Councilor") are found associated with the same division (like Ward, District, Seat),
+            extract only the most complete or primary term used in the source text. Do not concatenate these similar terms
+            for a single position. For instance, for "Ward 3 Councilor," prefer "Councilor, Ward 3" or
+            "Council Member, Ward 3" (if "Council Member" is the standard term for that role type),
+            but not "Council Member, Ward 3 Councilor."
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
@@ -142,23 +147,33 @@ module Services
             Extract the email address shown in the brackets.
           - Place extracted emails ONLY in the "email" field, NEVER in the "website" field.
         - start_date and end_date extraction:
-          - **Default to Null**: The `data` field for `start_date` and `end_date` MUST be null by default. Only populate it if you find an EXPLICIT date string in the text that meets the criteria below.
+          - **Default to Null**: The `data` field for `start_date` and `end_date` MUST be null by default.
+            Only populate it if you find an EXPLICIT date string in the text that meets the criteria below.
           - **Prohibited Actions**:
-            - **DO NOT infer, assume, or calculate dates** based on context, patterns, "common practice", "typical term start", "recently", the current date (`#{current_date}`), or any other non-explicit information. **Confidence reasoning like "Common term start date..." is specifically forbidden if the date wasn't explicitly written.** Output MUST be null in such cases.
+            - **DO NOT infer, assume, or calculate dates** based on context, patterns, "common practice",
+              "typical term start", "recently", the current date (`#{current_date}`), or any other non-explicit
+              information. **Confidence reasoning like "Common term start date..." is specifically forbidden
+              if the date wasn't explicitly written.** Output MUST be null in such cases.
             - Do not add default days or months unless performing the specific `Month YYYY` -> `YYYY-MM` conversion.
           - **Allowed Extraction & Formatting (Only if explicit date found)**:
             - Allowed output formats: `YYYY`, `YYYY-MM`, `YYYY-MM-DD`.
             - If the source text explicitly provides a date as `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`, output that exact string.
-            - If the source text explicitly provides a date as `Month YYYY` (e.g., "January 2027"), convert it to `YYYY-MM` (e.g., "2027-01").
+            - If the source text explicitly provides a date as `Month YYYY` (e.g., "January 2027"),
+              convert it to `YYYY-MM` (e.g., "2027-01").
             - If the source text provides an explicit date in any other format, treat it as not found and output null.
           - **Identifying the Correct Start Date (if multiple 'elected' dates)**:
-            - If multiple "elected" or "reelected" dates are mentioned for a person, use the date associated with the **most recent** election/re-election for the `start_date`.
-            - Example: "elected in November 2020 and was reelected in November 2024" → `start_date` should be based on "November 2024".
+            - If multiple "elected" or "reelected" dates are mentioned for a person, use the date associated with the
+              **most recent** election/re-election for the `start_date`.
+            - Example: "elected in November 2020 and was reelected in November 2024" → `start_date` should
+              be based on "November 2024".
           - **Locating Dates**:
             - Use keywords (`start_date` keywords: 'Elected:', 'Elected in', 'Appointed:', 'Term Began:', 'Sworn In:', 'Serving Since:', 'First Elected:', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service', `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Term ending', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:') and patterns (`Term: [Date1] to [Date2]`, `Term: YYYY-YYYY`) to find potential explicit date strings **that are clearly associated with the specific person being processed.**
-            - When multiple `start_date` keywords like "elected" or "reelected" are found, apply the "Identifying the Correct Start Date" rule above.
-            - When extracting from tables, ensure the date string is found **within the same row or entry** as the person's name.
-            - Apply the formatting rules above ONLY to explicitly found and correctly associated dates. Extract both dates for `Term: ... to ...` pattern if both are explicit and associated with the current person.
+            - When multiple `start_date` keywords like "elected" or "reelected" are found,
+              apply the "Identifying the Correct Start Date" rule above.
+            - When extracting from tables, ensure the date string is found
+              **within the same row or entry** as the person's name.
+            - Apply the formatting rules above ONLY to explicitly found and correctly associated dates.
+            - Extract both dates for `Term: ... to ...` pattern if both are explicit and associated with the current person.
           - **Key Examples**:
             - "Term Expires January 2027" -> `end_date`: {"data": "2027-01"}
             - "Serving through 2025" -> `end_date`: {"data": "2025"}
@@ -167,13 +182,19 @@ module Services
             - "Term began on the usual date" -> `start_date`: null
             - "elected in Nov 2020, reelected Nov 2024" -> `start_date`: {"data": "2024-11"}
             - "term ending December 2028" -> `end_date`: {"data": "2028-12"}
-            - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." -> (This person should NOT be in the output, or if forced to output, all their fields like positions and dates should be null/empty, with a reason citing the resignation).
-          - **Final Check**: Was the output date explicitly written in the text (or directly convertible via the Month YYYY rule) **and clearly associated with the correct individual**? If not, it MUST be null. No exceptions for inference or misattribution.
+            - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." -> (This person should NOT
+              be in the output, or if forced to output, all their fields like positions and dates should be null/empty,
+              with a reason citing the resignation).
+            - **Final Check**: Was the output date explicitly written in the text (or directly convertible via
+              the Month YYYY rule) **and clearly associated with the correct individual**? If not, it MUST be null.
+              No exceptions for inference or misattribution.
         - Today is #{current_date}. Context only, do not use for date calculation.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'
           that appear structurally close (e.g., immediately following section) to a specific person's name or section
           should be associated with that person unless the text clearly indicates otherwise (e.g., 'General City Contact').
-          **When processing tabular data, ensure all extracted fields for a single person (name, positions, dates, etc.) are sourced from data within that person's specific row or clearly delineated section. Do not carry over or associate data from adjacent rows or different individuals.**
+          **When processing tabular data, ensure all extracted fields for a single person (name, positions, dates, etc.)
+          are sourced from data within that person's specific row or clearly delineated section.
+          Do not carry over or associate data from adjacent rows or different individuals.**
         - Ensure only ONE entry exists per unique person's name.
           Merge all extracted details for the same person into a single record
 

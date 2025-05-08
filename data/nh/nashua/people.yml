@@ -1,5 +1,5 @@
 ---
-- name: James W. Donchess
+- name: Jim Donchess
   positions:
   - Mayor
   email: NashuaMayor@NashuaNH.gov
@@ -12,24 +12,11 @@
   sources:
   - https://www.nashuanh.gov/148/Mayors-Office
   - https://www.nashuanh.gov/148/Mayors-Office/
-  updated_at: '2025-05-07'
-- name: Jim Donchess
-  positions:
-  - Mayor
-  email: NashuaMayor@NashuaNH.gov
-  phone_number: "(603) 589-3260"
-  website: https://www.nashuanh.gov/148/Mayors-Office
-  start_date:
-  end_date:
-  image:
-  source_image:
-  sources:
-  - https://www.nashuanh.gov/804/City-Officials
   - https://www.nashuanh.gov/directory.aspx?did=4
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Lori Wilshire
   positions:
-  - Alderperson
+  - President Board Of Aldermen
   email: WILSHIREL@NASHUANH.GOV
   phone_number: "(603) 809-4203"
   website: https://www.nashuanh.gov/514/Board-of-Aldermen/
@@ -39,10 +26,10 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentID=11904
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Michael B. O'Brien Sr.
   positions:
-  - Alderperson
+  - Vice President Board Of Aldermen
   email: OBRIENM@NASHUANH.GOV
   phone_number: "(603) 888-8051"
   website: https://www.nashuanh.gov/514/Board-of-Aldermen/
@@ -52,7 +39,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentID=11907
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Ben Clemons
   positions:
   - Alderperson
@@ -67,7 +54,7 @@
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
   - https://www.nashuanh.gov/514/Board-of-Aldermen/
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Gloria Timmons
   positions:
   - Alderperson
@@ -81,7 +68,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=24717
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Melbourne Moran Jr.
   positions:
   - Alderperson
@@ -95,7 +82,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=24718
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Shoshanna Kelly
   positions:
   - Alderperson
@@ -109,7 +96,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=11974
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Tyler Gouveia
   positions:
   - Alderperson
@@ -123,7 +110,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=24716
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Richard A. Dowd
   positions:
   - Alderperson
@@ -137,7 +124,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentID=11903
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Patricia Klee
   positions:
   - Alderperson
@@ -151,7 +138,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=11975
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Thomas Lopez
   positions:
   - Alderperson
@@ -165,7 +152,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentID=11812
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Ernest A. Jette
   positions:
   - Alderperson
@@ -179,7 +166,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=11972
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Chris Thibodeau
   positions:
   - Alderperson
@@ -193,7 +180,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=29468
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Tim Sennott
   positions:
   - Alderperson
@@ -207,7 +194,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=29469
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: Derek Thibeault
   positions:
   - Alderperson
@@ -221,7 +208,7 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentID=24720
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'
 - name: John Sullivan
   positions:
   - Alderperson
@@ -235,4 +222,4 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=24719
   sources:
   - https://www.nashuanh.gov/514/Board-of-Aldermen
-  updated_at: '2025-05-07'
+  updated_at: '2025-05-08'

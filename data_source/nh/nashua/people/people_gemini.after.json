@@ -1,6 +1,6 @@
 [
   {
-    "name": "James W. Donchess",
+    "name": "Jim Donchess",
     "positions": [
       "Mayor"
     ],
@@ -13,32 +13,15 @@
     "end_date": null,
     "sources": [
       "https://www.nashuanh.gov/148/Mayors-Office",
-      "https://www.nashuanh.gov/148/Mayors-Office/"
-    ],
-    "updated_at": "2025-05-07"
-  },
-  {
-    "name": "Jim Donchess",
-    "positions": [
-      "Mayor"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 589-3260",
-    "email": "NashuaMayor@NashuaNH.gov",
-    "website": "https://www.nashuanh.gov/148/Mayors-Office",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.nashuanh.gov/804/City-Officials",
+      "https://www.nashuanh.gov/148/Mayors-Office/",
       "https://www.nashuanh.gov/directory.aspx?did=4"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Lori Wilshire",
     "positions": [
-      "Alderperson"
+      "President Board Of Aldermen"
     ],
     "image": null,
     "source_image": null,
@@ -50,12 +33,12 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Michael B. O'Brien Sr.",
     "positions": [
-      "Alderperson"
+      "Vice President Board Of Aldermen"
     ],
     "image": null,
     "source_image": null,
@@ -67,7 +50,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Ben Clemons",
@@ -86,7 +69,7 @@
       "https://www.nashuanh.gov/514/Board-of-Aldermen",
       "https://www.nashuanh.gov/514/Board-of-Aldermen/"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Gloria Timmons",
@@ -104,7 +87,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Melbourne Moran Jr.",
@@ -122,7 +105,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Shoshanna Kelly",
@@ -140,7 +123,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Tyler Gouveia",
@@ -158,7 +141,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Richard A. Dowd",
@@ -176,7 +159,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Patricia Klee",
@@ -194,7 +177,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Thomas Lopez",
@@ -212,7 +195,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Ernest A. Jette",
@@ -230,7 +213,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Chris Thibodeau",
@@ -248,7 +231,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Tim Sennott",
@@ -266,7 +249,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Derek Thibeault",
@@ -284,7 +267,7 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "John Sullivan",
@@ -302,6 +285,6 @@
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   }
 ]
