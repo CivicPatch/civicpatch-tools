@@ -23,15 +23,13 @@ namespace :one_off do
     end
   end
 
-  desc "Fix NH contact properties"
+  desc "Fix NH selectmen government type"
   task :fix_nh do
     state = "nh"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     updated_municipalities = municipalities.map do |municipality|
-      municipality["email"] = municipality["email_address"] if municipality["email_address"].present?
-      municipality["website"] = municipality["website_url"] if municipality["website_url"].present?
+      municipality["government_type"] = "select_board" if municipality["government_type"] == "selectmen"
 
-      municipality = municipality.reject { |key, _| %w[email_address website_url].include?(key) }
       municipality
     end
 

@@ -14,7 +14,7 @@
       {
         "data": "rbridle@hamptonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name in the Select Board table.",
+        "llm_confidence_reason": "Extracted from mailto link text near name in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -23,8 +23,8 @@
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date extracted from the Select Board table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from 'Term Expires' column in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -45,7 +45,7 @@
       {
         "data": "cberiont@hamptonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name in the Select Board table.",
+        "llm_confidence_reason": "Extracted from mailto link text near name in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -54,8 +54,8 @@
     "end_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date extracted from the Select Board table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from 'Term Expires' column in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -76,7 +76,7 @@
       {
         "data": "crage@hamptonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name in the Select Board table.",
+        "llm_confidence_reason": "Extracted from mailto link text near name in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -85,8 +85,8 @@
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date extracted from the Select Board table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from 'Term Expires' column in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -107,7 +107,7 @@
       {
         "data": "ahansen@hamptonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name in the Select Board table.",
+        "llm_confidence_reason": "Extracted from mailto link text near name in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -116,8 +116,8 @@
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date extracted from the Select Board table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from 'Term Expires' column in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -138,7 +138,7 @@
       {
         "data": "jgrip@hamptonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name in the Select Board table.",
+        "llm_confidence_reason": "Extracted from mailto link text near name in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -147,8 +147,8 @@
     "end_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term Expires date extracted from the Select Board table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from 'Term Expires' column in the Select Board table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],

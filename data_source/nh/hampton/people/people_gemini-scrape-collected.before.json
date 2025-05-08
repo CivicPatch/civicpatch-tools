@@ -7,15 +7,15 @@
       "https://www.hamptonnh.gov/282/Board-of-Selectmen"
     ],
     "positions": [
-      "Selectman",
-      "Chairman"
+      "Chairman",
+      "Select Board member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "rbridle@hamptonnh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text in the email column.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text in the table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -24,8 +24,8 @@
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from the 'Term Expires' column in the table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year explicitly listed in the 'Term Expires' column.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -39,15 +39,15 @@
       "https://www.hamptonnh.gov/282/Board-of-Selectmen"
     ],
     "positions": [
-      "Selectman",
-      "Vice-chairwoman"
+      "Vice-chairwoman",
+      "Select Board member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "cberiont@hamptonnh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text in the email column.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text in the table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -56,8 +56,8 @@
     "end_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from the 'Term Expires' column in the table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year explicitly listed in the 'Term Expires' column.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -71,14 +71,14 @@
       "https://www.hamptonnh.gov/282/Board-of-Selectmen"
     ],
     "positions": [
-      "Selectman"
+      "Select Board member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "crage@hamptonnh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text in the email column.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text in the table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -87,8 +87,8 @@
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from the 'Term Expires' column in the table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year explicitly listed in the 'Term Expires' column.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -102,14 +102,14 @@
       "https://www.hamptonnh.gov/282/Board-of-Selectmen"
     ],
     "positions": [
-      "Selectman"
+      "Select Board member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "ahansen@hamptonnh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text in the email column.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text in the table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -118,8 +118,8 @@
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from the 'Term Expires' column in the table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year explicitly listed in the 'Term Expires' column.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -133,14 +133,14 @@
       "https://www.hamptonnh.gov/282/Board-of-Selectmen"
     ],
     "positions": [
-      "Selectman"
+      "Select Board member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jgrip@hamptonnh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text in the email column.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text in the table.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],
@@ -149,8 +149,8 @@
     "end_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from the 'Term Expires' column in the table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration year explicitly listed in the 'Term Expires' column.",
         "source": "https://www.hamptonnh.gov/282/Board-of-Selectmen"
       }
     ],

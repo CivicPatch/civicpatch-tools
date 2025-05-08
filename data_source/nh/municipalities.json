@@ -202,7 +202,7 @@
       "population": 25394,
       "address": "12 School Street; Hudson, NH 03051",
       "phone_number": "(603) 886-6024",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "smalizia@hudsonnh.gov",
       "website": "http://www.hudsonnh.gov",
       "meta_updated_at": "2025-05-08",
@@ -290,7 +290,7 @@
       "population": 18577,
       "address": "Town Hall, 16 Main Street; Goffstown, NH 03045",
       "phone_number": "(603) 497-8990 x118",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "joann.duffy@goffstownnh.gov",
       "website": "http://www.goffstownnh.com"
     },
@@ -320,11 +320,11 @@
       "population": 16214,
       "address": "100 Winnacunnet Road; Hampton, NH 03842",
       "phone_number": "(603) 758-1517",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "inquries@town.hampton.nh.us",
       "website": "https://hamptonnh.gov",
       "meta_updated_at": "2025-05-08",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_hash": "1acf0b78a83da0a92ce114448ab9f13a",
       "meta_sources": [
         "state_source",
         "gemini",
@@ -342,7 +342,7 @@
       "population": 16131,
       "address": "1 Union Square; Milford, NH 03055",
       "phone_number": "(603) 249-0601",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administration@milford.nh.gov",
       "website": "http://www.milford.nh.gov/"
     },
@@ -357,7 +357,7 @@
       "population": 16049,
       "address": "10 Front Street; Exeter, NH 03833",
       "phone_number": "(603) 773-6102",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "pmcelroy@exeternh.gov",
       "website": "http://exeternh.gov"
     },
@@ -372,7 +372,7 @@
       "population": 15817,
       "address": "3 North Lowell Road; Windham, NH 03087",
       "phone_number": "(603) 432-7732",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@windhamnh.gov",
       "website": "http://www.windhamnh.gov"
     },
@@ -432,7 +432,7 @@
       "population": 14222,
       "address": "6 Village Green; Pelham, NH 03076",
       "phone_number": "(603) 635-8233",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@pelhamweb.com",
       "website": "http://www.pelhamweb.com"
     },
@@ -462,7 +462,7 @@
       "population": 11870,
       "address": "PO Box 483; Hanover, NH 03755",
       "phone_number": "(603) 643-0701",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "TownMgr@HanoverNH.org",
       "website": "http://www.hanovernh.org"
     },
@@ -492,7 +492,7 @@
       "population": 11753,
       "address": "2 Main Street; Amherst, NH 03031-0960",
       "phone_number": "(603) 673-6041",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "dshankle@amherstnh.gov",
       "website": "http://www.amherstnh.gov/"
     },
@@ -507,7 +507,7 @@
       "population": 10684,
       "address": "4 Epping Street; Raymond, NH 03077",
       "phone_number": "(603) 895-7007",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "phammond@raymondnh.gov",
       "website": "http://www.raymondnh.gov"
     },
@@ -522,7 +522,7 @@
       "population": 9822,
       "address": "23 Main Street; Conway, NH 03813",
       "phone_number": "(603) 447-3811",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "roconnor@conwaynh.org",
       "website": "http://www.conwaynh.org"
     },
@@ -567,7 +567,7 @@
       "population": 9326,
       "address": "PO Box 660; Barrington, NH 03825",
       "phone_number": "(603) 664-9007",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administration@barrington.nh.gov",
       "website": "http://www.barrington.nh.gov"
     },
@@ -582,7 +582,7 @@
       "population": 9092,
       "address": "15 Flanders Memorial Road; Weare, NH 03281",
       "phone_number": "(603) 529-7535",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "nbolton@weare.nh.gov",
       "website": "http://www.weare.nh.gov"
     },
@@ -597,7 +597,7 @@
       "population": 8998,
       "address": "11 Main Street; Hampstead, NH 03841",
       "phone_number": "(603) 329-4100 x100",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "sally.theriault@comcast.net",
       "website": "http://www.hampsteadnh.us"
     },
@@ -627,7 +627,7 @@
       "population": 8478,
       "address": "Two Liberty Way, Suite 3; Litchfield, NH 03052",
       "phone_number": "(603) 424-4046",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townhall@litchfieldnh.gov",
       "website": "http://litchfieldnh.gov"
     },
@@ -642,7 +642,7 @@
       "population": 8401,
       "address": "PO Box 456; Seabrook, NH 03874",
       "phone_number": "(603) 474-3311",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "wmanzi@seabrooknh.org",
       "website": "http://www.seabrooknh.info"
     },
@@ -657,7 +657,7 @@
       "population": 8342,
       "address": "7 Monument Square; Hollis, NH 03049",
       "phone_number": "(603) 465-2209",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administration@hollisnh.org",
       "website": "http://www.hollisnh.org"
     },
@@ -672,7 +672,7 @@
       "population": 8229,
       "address": "10 Grandview Road, Town Hall; Bow, NH 03304",
       "phone_number": "(603) 223-3910",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "dstack@bownh.gov",
       "website": "http://www.bownh.gov"
     },
@@ -687,7 +687,7 @@
       "population": 7830,
       "address": "145 Main Street; Plaistow, NH 03865",
       "phone_number": "(603) 382-5200 x261",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "gcolby@plaistow.com",
       "website": "http://www.plaistow.com"
     },
@@ -702,7 +702,7 @@
       "population": 7699,
       "address": "47 Cherry Valley Road; Gilford, NH 03249",
       "phone_number": "(603) 527-4700",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@gilfordnh.org",
       "website": "http://www.gilfordnh.org"
     },
@@ -717,7 +717,7 @@
       "population": 7669,
       "address": "10 Bunker Hill Avenue; Stratham, NH 03885",
       "phone_number": "(603) 772-7391 x181",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "dmoore@strathamnh.gov",
       "website": "http://www.strathamnh.gov"
     },
@@ -732,7 +732,7 @@
       "population": 7314,
       "address": "143 Main Street, PO Box 310; Belmont, NH 03220",
       "phone_number": "(603) 267-8300",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@belmontnh.org",
       "website": "http://belmontnh.org"
     },
@@ -747,7 +747,7 @@
       "population": 7270,
       "address": "Town Hall, PO Box 10009; Swanzey, NH 03446-0009",
       "phone_number": "(603) 352-7411",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "mbranley@swanzeynh.gov",
       "website": "http://www.swanzeynh.gov"
     },
@@ -762,7 +762,7 @@
       "population": 7207,
       "address": "311 Pembroke Street; Pembroke, NH 03275",
       "phone_number": "(603) 485-4747",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "Townhall@Pembroke-NH.com",
       "website": "http://www.pembroke-nh.com/"
     },
@@ -777,7 +777,7 @@
       "population": 7125,
       "address": "157 Main Street; Epping, NH 03042",
       "phone_number": "(603) 679-5441",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@eppingnh.gov",
       "website": "http://www.townofepping.com"
     },
@@ -792,7 +792,7 @@
       "population": 7087,
       "address": "21 Academy Avenue; Atkinson, NH 03811",
       "phone_number": "(603) 362-5761",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "landuse@atkinson-nh.gov",
       "website": "http://www.town-atkinsonnh.com"
     },
@@ -807,7 +807,7 @@
       "population": 6722,
       "address": "356 Main Street, Municipal Offices; Farmington, NH 03835",
       "phone_number": "(603) 755-3657",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "rdickie@farmington.nh.us",
       "website": "http://www.farmington.nh.us"
     },
@@ -822,7 +822,7 @@
       "population": 6682,
       "address": "6 Post Office Square; Plymouth, NH 03264",
       "phone_number": "(603) 536-1731x102",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "finance@plymouthnh.org",
       "website": "http://www.plymouthnh.org"
     },
@@ -837,7 +837,7 @@
       "population": 6662,
       "address": "41 Main Street; Meredith, NH 03253",
       "phone_number": "(603) 677-4209",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "tbrown@meredithnh.org",
       "website": "http://www.meredithnh.org"
     },
@@ -852,7 +852,7 @@
       "population": 6548,
       "address": "320 Main Street, PO Box 1756; Sandown, NH 03873",
       "phone_number": "(603) 887-3646",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofsandown@sandown.us",
       "website": "http://www.sandown.us/"
     },
@@ -867,7 +867,7 @@
       "population": 6476,
       "address": "30 Payson Hill Road; Rindge, NH 03461",
       "phone_number": "(603) 899-5181 x101",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@rindgenh.org",
       "website": "http://www.rindgenh.org"
     },
@@ -882,7 +882,7 @@
       "population": 6418,
       "address": "1 Grove Street, Town House; Peterborough, NH 03458",
       "phone_number": "(603) 924-8000 x116",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "dmelone@peterboroughnh.gov",
       "website": "http://www.peterboroughnh.gov"
     },
@@ -897,7 +897,7 @@
       "population": 6416,
       "address": "PO Box 629; Wolfeboro, NH 03894",
       "phone_number": "(603) 569-8161",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townmanager@wolfeboronh.us",
       "website": "http://www.wolfeboronh.us"
     },
@@ -912,7 +912,7 @@
       "population": 6299,
       "address": "15 Sunapee Street, Municipal Building; Newport, NH 03773",
       "phone_number": "(603) 863-8010",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "cdonovan@newportnh.gov",
       "website": "http://www.newportnh.gov"
     },
@@ -927,7 +927,7 @@
       "population": 6202,
       "address": "163 Main Street, PO Box 716; Kingston, NH 03848",
       "phone_number": "(603) 642-3342",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@kingstonnh.org",
       "website": "http://www.kingstonnh.org"
     },
@@ -942,7 +942,7 @@
       "population": 6185,
       "address": "18 Depot Hill Road; Henniker, NH 03242",
       "phone_number": "(603) 428-3221",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@hennikernh.gov",
       "website": "http://www.henniker.org"
     },
@@ -957,7 +957,7 @@
       "population": 6108,
       "address": "7 Meetinghouse Hill Road, PO Box 250; New Boston, NH 03070",
       "phone_number": "(603) 487-2500 x142",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "s.silver@newbostonnh.gov",
       "website": "http://www.newbostonnh.gov"
     },
@@ -972,7 +972,7 @@
       "population": 6005,
       "address": "125 Main Street, Suite 200; Littleton, NH 03561",
       "phone_number": "(603) 444-3996",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "chief@littletonpd.org",
       "website": "http://www.townoflittleton.org"
     },
@@ -987,7 +987,7 @@
       "population": 5946,
       "address": "PO Box 309; Auburn, NH 03032-0309",
       "phone_number": "(603) 483-5052",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@townofauburnnh.com",
       "website": "http://www.auburnnh.us"
     },
@@ -1002,7 +1002,7 @@
       "population": 5939,
       "address": "27 School Street, PO Box 7; Hillsborough, NH 03244",
       "phone_number": "(603) 464-3877",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "Not Available",
       "website": "http://www.town.hillsborough.nh.us"
     },
@@ -1017,7 +1017,7 @@
       "population": 5914,
       "address": "330 Main Street; Hopkinton, NH 03229",
       "phone_number": "(603) 746-3170",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@hopkinton-nh.gov",
       "website": "http://www.hopkinton-nh.gov"
     },
@@ -1032,7 +1032,7 @@
       "population": 5894,
       "address": "PO Box 659; Alton, NH 03809",
       "phone_number": "(603) 875-2161",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@alton.nh.gov",
       "website": "http://www.alton.nh.gov"
     },
@@ -1047,7 +1047,7 @@
       "population": 5639,
       "address": "PO Box 360; Brookline, NH 03033-0360",
       "phone_number": "(603) 673-8855",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "town@brooklinenh.us",
       "website": "http://www.brooklinenh.us"
     },
@@ -1062,7 +1062,7 @@
       "population": 5576,
       "address": "55 South Village Road, Ste #2; Loudon, NH 03307",
       "phone_number": "(603) 798-4542",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townclerk@loudonnh.org",
       "website": "http://www.loudonnh.org"
     },
@@ -1077,7 +1077,7 @@
       "population": 5543,
       "address": "10 Central Road; Rye, NH 03870",
       "phone_number": "(603) 964-5523",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "mscruton@town.rye.nh.us",
       "website": "http://www.town.rye.nh.us/"
     },
@@ -1092,7 +1092,7 @@
       "population": 5320,
       "address": "10 Goodnow Street; Jaffrey, NH 03452",
       "phone_number": "(603) 532-7880",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "jzola@townofjaffrey.com",
       "website": "http://www.townofjaffrey.com"
     },
@@ -1107,7 +1107,7 @@
       "population": 5232,
       "address": "84 Chester St, Municipal Office Building; Chester, NH 03036",
       "phone_number": "(603) 887-3636 x105",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "planning@chesternh.org",
       "website": "http://www.chesternh.org"
     },
@@ -1122,7 +1122,7 @@
       "population": 5229,
       "address": "PO Box 114; Nottingham, NH 03290",
       "phone_number": "(603) 679-5022",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "bospc@nottingham-nh.gov",
       "website": "http://www.nottingham-nh.gov"
     },
@@ -1137,7 +1137,7 @@
       "population": 5204,
       "address": "661 Turnpike Road; New Ipswich, NH 03071",
       "phone_number": "(603) 878-2772",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@newipswichnh.gov",
       "website": "http://www.newipswichnh.gov"
     },
@@ -1152,7 +1152,7 @@
       "population": 5201,
       "address": "2 High Street, Town Hall; Sanbornville, NH 03872",
       "phone_number": "(603) 522-6205",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@wakefieldnh.com",
       "website": "http://www.wakefieldnh.com"
     },
@@ -1167,7 +1167,7 @@
       "population": 4918,
       "address": "PO Box 139; Moultonborough, NH 03254",
       "phone_number": "(603) 476-2347",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "csmith@moultonboroughnh.gov",
       "website": "http://www.moultonboroughnh.gov"
     },
@@ -1182,7 +1182,7 @@
       "population": 4915,
       "address": "108 S. Barnstead Road, PO Box 11; Center Barnstead, NH 03225",
       "phone_number": "(603) 269-4071",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "kmontgomery@barnstead.org",
       "website": "http://www.barnstead.org"
     },
@@ -1197,7 +1197,7 @@
       "population": 4872,
       "address": "21 Summer Street; Northfield, NH 03276",
       "phone_number": "(603) 286-7039",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@northfieldnh.gov",
       "website": "http://www.northfieldnh.org"
     },
@@ -1227,7 +1227,7 @@
       "population": 4834,
       "address": "1598 Dover Road; Epsom, NH 03234-0010",
       "phone_number": "(603) 736-9002",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "epsomtown@metrocast.net",
       "website": "http://www.epsomnh.org"
     },
@@ -1242,7 +1242,7 @@
       "population": 4820,
       "address": "2 Town Hall Road; Newton, NH 03858",
       "phone_number": "(603) 382-4405 opt. 4",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townclerktaxcollector@newtonnh.net",
       "website": "http://www.newton-nh.gov"
     },
@@ -1257,7 +1257,7 @@
       "population": 4806,
       "address": "PO Box 385; Charlestown, NH 03603",
       "phone_number": "(603) 826-4400",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "ctown@charlestown-nh.gov",
       "website": "http://www.charlestown-nh.gov"
     },
@@ -1272,7 +1272,7 @@
       "population": 4739,
       "address": "295 Main Street, PO Box 120; Fremont, NH 03044-0120",
       "phone_number": "(603) 895-2226 x301",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "hcarlson@fremont.nh.gov",
       "website": "http://www.Fremont.NH.gov"
     },
@@ -1287,7 +1287,7 @@
       "population": 4707,
       "address": "16 School Street; Allenstown, NH 03275",
       "phone_number": "(603) 485-4276",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "dgoodine@allenstownnh.gov",
       "website": "http://www.allenstownnh.gov"
     },
@@ -1302,7 +1302,7 @@
       "population": 4641,
       "address": "818 First NH Turnpike; Northwood, NH 03261",
       "phone_number": "(603) 942-5586 x2020",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "nirvine@northwoodnh.org",
       "website": "http://www.northwoodnh.org"
     },
@@ -1317,7 +1317,7 @@
       "population": 4585,
       "address": "2975 Dartmouth College Highway; North Haverhill, NH 03774",
       "phone_number": "(603) 787-6800",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townmanager@haverhill-nh.com",
       "website": "http://www.haverhill-nh.com"
     },
@@ -1332,7 +1332,7 @@
       "population": 4538,
       "address": "237A Atlantic Ave; North Hampton, NH 03862",
       "phone_number": "(603) 964-8087",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "mtully@northhampton-nh.gov",
       "website": "http://www.northhampton-nh.gov"
     },
@@ -1347,7 +1347,7 @@
       "population": 4520,
       "address": "249 Calef Highway; Lee, NH 03861",
       "phone_number": "(603) 659-5414 x312",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@leenh.org",
       "website": "http://www.leenh.org"
     },
@@ -1373,7 +1373,7 @@
       "population": 4482,
       "address": "PO Box 310; Milton, NH 03851",
       "phone_number": "(603) 652-4501 x1",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "miltonta@miltonnh-us.com",
       "website": "http://www.miltonnh-us.com"
     },
@@ -1388,7 +1388,7 @@
       "population": 4465,
       "address": "PO Box 373; Enfield, NH 03748",
       "phone_number": "(603) 632-5026",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townmanager@enfield.nh.us",
       "website": "http://www.enfield.nh.us"
     },
@@ -1418,7 +1418,7 @@
       "population": 4400,
       "address": "375 Main Street; New London, NH 03257",
       "phone_number": "(603) 526-4821",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@newlondon.nh.gov",
       "website": "http://www.newlondon.nh.gov"
     },
@@ -1433,7 +1433,7 @@
       "population": 4372,
       "address": "55 Main Street, PO Box 67; Center Ossipee, NH 03814",
       "phone_number": "(603) 539-4181",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "msawyer@ossipee.org",
       "website": "http://www.ossipee.org"
     },
@@ -1448,7 +1448,7 @@
       "population": 4230,
       "address": "12 Mountain View Drive; Strafford, NH 03884",
       "phone_number": "(603) 664-2192",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@strafford.nh.gov",
       "website": "http://www.strafford.nh.gov"
     },
@@ -1463,7 +1463,7 @@
       "population": 4150,
       "address": "1 Richmond Road; Winchester, NH 03470",
       "phone_number": "(603) 239-4951",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "kminer@winchester.nh.gov",
       "website": "http://www.winchester-nh.gov"
     },
@@ -1478,7 +1478,7 @@
       "population": 4075,
       "address": "85 Main Street; Pittsfield, NH 03263",
       "phone_number": "(603) 435-6773",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@pittsfieldnh.gov",
       "website": "http://www.pittsfieldnh.gov"
     },
@@ -1493,7 +1493,7 @@
       "population": 4067,
       "address": "11 Town Square, PO Box 100; Greenland, NH 03840",
       "phone_number": "(603) 431-7111",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "psanderson@greenland-nh.com",
       "website": "http://www.greenland-nh.com"
     },
@@ -1508,7 +1508,7 @@
       "population": 4013,
       "address": "74 High Street; Candia, NH 03034",
       "phone_number": "(603) 483-8101",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "info@candianh.org",
       "website": "http://www.candianh.org"
     },
@@ -1523,7 +1523,7 @@
       "population": 3998,
       "address": "116 North Main Street; Boscawen, NH 03303",
       "phone_number": "(603) 753-9188 x2317",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "kphelps@boscawennh.gov",
       "website": "http://www.boscawennh.gov"
     },
@@ -1538,7 +1538,7 @@
       "population": 3962,
       "address": "257 Main Street; Tilton, NH 03276",
       "phone_number": "(603) 286-4521 x101",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "shilliard@tiltonnh.org",
       "website": "http://tiltonnh.org"
     },
@@ -1553,7 +1553,7 @@
       "population": 3948,
       "address": "11 Main Street, PO Box 13; Hinsdale, NH 03451",
       "phone_number": "(603) 336-5710",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@hinsdalenh.org",
       "website": "http://hinsdale.govoffice.com"
     },
@@ -1568,7 +1568,7 @@
       "population": 3945,
       "address": "PO Box 550; Gilmanton, NH 03237",
       "phone_number": "(603) 267-6700",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "hcarpenter@gilmantonnh.org",
       "website": "http://www.gilmantonnh.org"
     },
@@ -1583,7 +1583,7 @@
       "population": 3896,
       "address": "42 Main Street, PO Box 83; Wilton, NH 03086",
       "phone_number": "(603) 654-9451",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "jfarrell@wiltonnh.gov",
       "website": "https://www.wiltonnh.gov/"
     },
@@ -1598,7 +1598,7 @@
       "population": 3794,
       "address": "PO Box 38; Canaan, NH 03741",
       "phone_number": "(603) 523-4501",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@canaannh.org",
       "website": "http://www.canaannh.org"
     },
@@ -1613,7 +1613,7 @@
       "population": 3633,
       "address": "PO Box 729; Walpole, NH 03608",
       "phone_number": "(603) 756-3672",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "sdowning@walpolenh.us",
       "website": "http://www.walpolenh.us"
     },
@@ -1628,7 +1628,7 @@
       "population": 3552,
       "address": "PO Box 175; Chesterfield, NH 03443",
       "phone_number": "(603) 363-4624",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@nhchesterfield.com",
       "website": "http://www.nhchesterfield.com"
     },
@@ -1643,7 +1643,7 @@
       "population": 3404,
       "address": "Grantham Town Building, 300 Route 10 South; Grantham, NH 03753",
       "phone_number": "(603) 863-6021",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@granthamnh.net",
       "website": "http://www.granthamnh.net"
     },
@@ -1658,7 +1658,7 @@
       "population": 3343,
       "address": "12 Gearty Way; Campton, NH 03223",
       "phone_number": "(603) 726-3223",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@camptonnh.gov",
       "website": "http://www.camptonnh.org/"
     },
@@ -1673,7 +1673,7 @@
       "population": 3342,
       "address": "23 Edgemont Road; Sunapee, NH 03782",
       "phone_number": "(603) 763-2212",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "manager@town.sunapee.nh.us",
       "website": "http://www.town.sunapee.nh.us"
     },
@@ -1688,7 +1688,7 @@
       "population": 3244,
       "address": "5 School Street; Bristol, NH 03222",
       "phone_number": "(603) 744-3354",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@bristolnh.gov",
       "website": "http://www.bristolnh.gov"
     },
@@ -1703,7 +1703,7 @@
       "population": 3218,
       "address": "25 Main Street; Lancaster, NH 03584",
       "phone_number": "(603) 788-3391",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "info@lancasternh.org",
       "website": "http://www.lancasternh.org"
     },
@@ -1718,7 +1718,7 @@
       "population": 3200,
       "address": "56 Town Hall Road; Intervale, NH 03845",
       "phone_number": "(603) 356-2950",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@townofbartlettnh.org",
       "website": "http://www.townofbartlettnh.org"
     },
@@ -1733,7 +1733,7 @@
       "population": 3026,
       "address": "PO Box 124; Sanbornton, NH 03269",
       "phone_number": "(603) 286-8303",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@sanborntonnh.org",
       "website": "http://www.sanborntonnh.org"
     },
@@ -1748,7 +1748,7 @@
       "population": 3005,
       "address": "1011 School Street; Dunbarton, NH 03046",
       "phone_number": "(603) 774-3541",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@dunbartonnh.org",
       "website": "http://www.dunbartonnh.org"
     },
@@ -1763,7 +1763,7 @@
       "population": 2937,
       "address": "5 East Main Street, PO Box 265; Warner, NH 03278-0265",
       "phone_number": "(603) 456-2298 x1",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectboard@warner.nh.gov",
       "website": "http://www.warnernh.gov"
     },
@@ -1778,7 +1778,7 @@
       "population": 2812,
       "address": "84 Main Street; Tamworth, NH 03886",
       "phone_number": "(603) 323-7525",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@tamworthnh.gov",
       "website": "http://www.tamworthnh.org"
     },
@@ -1793,7 +1793,7 @@
       "population": 2708,
       "address": "16 Merrill Access Road; Thornton, NH 03285",
       "phone_number": "(603) 726-8168",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@thornton.gov",
       "website": "http://www.townofthornton.org"
     },
@@ -1808,7 +1808,7 @@
       "population": 2698,
       "address": "20 Park Street; Gorham, NH 03581",
       "phone_number": "(603) 466-3322",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townmgr@gorhamnh.org",
       "website": "http://www.gorhamnh.org"
     },
@@ -1823,7 +1823,7 @@
       "population": 2693,
       "address": "4 Main Street, PO Box 207; New Durham, NH 03855",
       "phone_number": "(603) 859-2091",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "ndadmin@newdurhamnh.us",
       "website": "http://www.newdurhamnh.us"
     },
@@ -1838,7 +1838,7 @@
       "population": 2665,
       "address": "54 Main Street; Chichester, NH 03258",
       "phone_number": "(603) 798-5350",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@chichesternh.org",
       "website": "http://www.chichesternh.org"
     },
@@ -1853,7 +1853,7 @@
       "population": 2651,
       "address": "66 Main Street, PO Box 517; Antrim, NH 03440",
       "phone_number": "(603) 588-6785",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@antrimnh.gov",
       "website": "http://www.antrimnh.org"
     },
@@ -1868,7 +1868,7 @@
       "population": 2597,
       "address": "PO Box 309; Rollinsford, NH 03869",
       "phone_number": "(603) 742-2510",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectboard@rollinsford.nh.us",
       "website": "http://www.rollinsford.nh.us"
     },
@@ -1883,7 +1883,7 @@
       "population": 2584,
       "address": "1 South Main Street, PO Box 444; Mont Vernon, NH 03057",
       "phone_number": "(603) 673-6080",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofmontvernon@montvernon.us",
       "website": "http://www.montvernonnh.us"
     },
@@ -1898,7 +1898,7 @@
       "population": 2565,
       "address": "PO Box 248; Madison, NH 03849",
       "phone_number": "(603) 367-4332 x1",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "office@madison-nh.org",
       "website": "http://www.madison-nh.org/"
     },
@@ -1913,7 +1913,7 @@
       "population": 2490,
       "address": "56 Littleton Road; Whitefield, NH 03598",
       "phone_number": "(603) 837-2551",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrativeassistant@whitefieldnh.org",
       "website": "http://www.whitefieldnh.org"
     },
@@ -1928,7 +1928,7 @@
       "population": 2484,
       "address": "PO Box 189; Bethlehem, NH 03574",
       "phone_number": "(603) 869-3351 x101",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@bethlehemnh.org",
       "website": "http://www.bethlehemnh.org"
     },
@@ -1943,7 +1943,7 @@
       "population": 2467,
       "address": "Town Hall, PO Box 98; Tuftonboro, NH 03816",
       "phone_number": "(603) 569-4539 x113",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@tuftonboro.org",
       "website": "http://www.tuftonboro.org"
     },
@@ -1958,7 +1958,7 @@
       "population": 2459,
       "address": "PO Box 380; Meriden, NH 03770",
       "phone_number": "(603) 469-3201",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "plainfield.ta@plainfieldnh.org",
       "website": "http://www.plainfieldnh.org"
     },
@@ -1988,7 +1988,7 @@
       "population": 2406,
       "address": "PO Box 61; Andover, NH 03216",
       "phone_number": "(603) 735-4140",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "tadmin@andover-nh.gov",
       "website": "http://www.andover-nh.gov"
     },
@@ -2018,7 +2018,7 @@
       "population": 2389,
       "address": "PO Box 500; Canterbury, NH 03224",
       "phone_number": "(603) 783-9955",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "Not Available",
       "website": "http://www.canterbury-nh.org"
     },
@@ -2033,7 +2033,7 @@
       "population": 2377,
       "address": "6 Pinnacle Hill Road; New Hampton, NH 03256",
       "phone_number": "(603) 744-3559",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "TownAdmin@new-hampton.nh.us",
       "website": "http://www.new-hampton.nh.us"
     },
@@ -2048,7 +2048,7 @@
       "population": 2351,
       "address": "PO Box 725; Fitzwilliam, NH 03447",
       "phone_number": "(603) 585-7770; (603) 585-7723",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "fitzwilliamnh@fitzwilliam-nh.gov",
       "website": "http://fitzwilliam-nh.gov"
     },
@@ -2063,7 +2063,7 @@
       "population": 2172,
       "address": "PO Box 296; Newbury, NH 03255",
       "phone_number": "(603) 763-4940",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@newburynh.org",
       "website": "http://www.newburynh.org/"
     },
@@ -2078,7 +2078,7 @@
       "population": 2130,
       "address": "16 Central Square (Town Hall); Mailing address: PO Box 249; Troy, NH 03465",
       "phone_number": "(603) 242-7722",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@troy-nh.us",
       "website": "http://www.troy-nh.us"
     },
@@ -2093,7 +2093,7 @@
       "population": 2126,
       "address": "19 Main Street; Groveton, NH 03582",
       "phone_number": "(603) 636-1450",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "n.merriam@northumberlandnh.org",
       "website": "http://www.northumberlandnh.org"
     },
@@ -2108,7 +2108,7 @@
       "population": 2096,
       "address": "PO Box 487; Marlborough, NH 03455-0487",
       "phone_number": "(603) 876-3751",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@marlboroughnh.org",
       "website": "http://www.marlboroughnh.org"
     },
@@ -2123,7 +2123,7 @@
       "population": 2095,
       "address": "95 Amesbury Road; Kensington, NH 03833",
       "phone_number": "(603) 772-5423",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "kensington@kensingtontown.com",
       "website": "http://www.town.kensington.nh.us"
     },
@@ -2138,7 +2138,7 @@
       "population": 2084,
       "address": "17 Bridge Street; Colebrook, NH 03576",
       "phone_number": "(603) 237-4142; (603) 237-4070",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "hlawton@colebrooknh.org",
       "website": "http://www.colebrooknh.org"
     },
@@ -2153,7 +2153,7 @@
       "population": 2004,
       "address": "PO Box 203; Holderness, NH 03245-0203",
       "phone_number": "(603) 968-3537",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@holderness-nh.gov",
       "website": "http://www.holderness-nh.gov"
     },
@@ -2168,7 +2168,7 @@
       "population": 1978,
       "address": "93 Main Street; Sutton Mills, NH 03221",
       "phone_number": "(603) 927-2400",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@sutton-nh.org",
       "website": "http://www.sutton-nh.org"
     },
@@ -2183,7 +2183,7 @@
       "population": 1974,
       "address": "46 Main Street, PO Box 343; Greenville, NH 03048",
       "phone_number": "(603) 878-2084",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@greenvillenh.org",
       "website": "http://www.greenvillenh.org"
     },
@@ -2198,7 +2198,7 @@
       "population": 1938,
       "address": "20 Highland Street, PO Box 517; Ashland, NH 03217",
       "phone_number": "(603) 968-4432",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townoffice@ashland.nh.gov",
       "website": "http://www.ashlandnh.org"
     },
@@ -2213,7 +2213,7 @@
       "population": 1918,
       "address": "13 Town Hall Road; Madbury, NH 03823",
       "phone_number": "(603) 742-5131",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "tcmadbury@comcast.net",
       "website": "http://www.townofmadbury.com"
     },
@@ -2228,7 +2228,7 @@
       "population": 1913,
       "address": "945 Battle Street; Webster, NH 03303",
       "phone_number": "(603) 648-2272",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@webster-nh.gov",
       "website": "http://www.webster-nh.gov"
     },
@@ -2243,7 +2243,7 @@
       "population": 1904,
       "address": "762 Deering Center Road; Deering, NH 03244",
       "phone_number": "(603) 464-3248",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@deeringnh.gov",
       "website": "http://www.deering.nh.us"
     },
@@ -2258,7 +2258,7 @@
       "population": 1864,
       "address": "15 Mechanic Street, PO Box 60; Alstead, NH 03602-0060",
       "phone_number": "(603) 835-2986",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "alsteadadmin@alsteadnh.org",
       "website": "http://www.alsteadnh.org"
     },
@@ -2273,7 +2273,7 @@
       "population": 1823,
       "address": "182 King's Highway; Middleton, NH 03887",
       "phone_number": "(603) 473-2261",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "bos@middletonnh.gov",
       "website": "http://www.middletonnh.gov"
     },
@@ -2288,7 +2288,7 @@
       "population": 1776,
       "address": "47 Washburn Road; Alexandria, NH 03222",
       "phone_number": "(603) 744-3220",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "info@alexandrianh.com",
       "website": "http://www.alexandrianh.com"
     },
@@ -2303,7 +2303,7 @@
       "population": 1769,
       "address": "65 Main Street; Newfields, NH 03856",
       "phone_number": "(603) 772-5070",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@newfieldsnh.gov",
       "website": "http://www.newfieldsnh.gov"
     },
@@ -2318,7 +2318,7 @@
       "population": 1745,
       "address": "PO Box 126; Lyme, NH 03768",
       "phone_number": "(603) 795-4639",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "dina@lymenh.gov",
       "website": "http://www.lymenh.gov/Home/"
     },
@@ -2333,7 +2333,7 @@
       "population": 1731,
       "address": "50 Main Street, PO Box 6; Hancock, NH 03449",
       "phone_number": "(603) 525-4441",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "select@hancocknh.org",
       "website": "http://www.hancocknh.org"
     },
@@ -2348,7 +2348,7 @@
       "population": 1716,
       "address": "PO Box 256; Greenfield, NH 03047",
       "phone_number": "(603) 547-3442",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@greenfield-nh.gov",
       "website": "http://www.greenfield-nh.gov"
     },
@@ -2363,7 +2363,7 @@
       "population": 1706,
       "address": "PO Box 55; Westmoreland, NH 03467",
       "phone_number": "(603) 399-4471",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofwestmoreland@myfairpoint.net",
       "website": "http://www.westmorelandnh.com"
     },
@@ -2378,7 +2378,7 @@
       "population": 1702,
       "address": "9 Citizens Hall Road; Lyndeborough, NH 03082",
       "phone_number": "(603) 654-5955",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "rboland@lyndeboroughnh.us",
       "website": "http://www.lyndeboroughnh.us"
     },
@@ -2393,7 +2393,7 @@
       "population": 1691,
       "address": "68 School Street; Effingham, NH 03882",
       "phone_number": "(603) 539-7770",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "officeassistant@effinghamnh.net",
       "website": "http://www.effinghamnh.net"
     },
@@ -2408,7 +2408,7 @@
       "population": 1689,
       "address": "33 Old Portland Road, PO Box 227; Freedom, NH 03836",
       "phone_number": "(603) 539-6323",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "office@townoffreedom.net",
       "website": "http://www.townoffreedom.net"
     },
@@ -2423,7 +2423,7 @@
       "population": 1662,
       "address": "PO Box 436; Bradford, NH 03221-0436",
       "phone_number": "(603) 938-5900",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@bradfordnh.org",
       "website": "http://www.bradfordnh.org"
     },
@@ -2438,7 +2438,7 @@
       "population": 1631,
       "address": "PO Box 25; Lincoln, NH 03251",
       "phone_number": "(603) 745-2757",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townmanager@lincolnnh.gov",
       "website": "http://www.lincolnnh.org"
     },
@@ -2453,7 +2453,7 @@
       "population": 1621,
       "address": "46 School Street; Lisbon, NH 03585",
       "phone_number": "(603) 838-2862",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townclerk@lisbonnh.org",
       "website": "http://www.lisbonnh.org/"
     },
@@ -2468,7 +2468,7 @@
       "population": 1616,
       "address": "488 Town House Road; Cornish, NH 03745",
       "phone_number": "(603) 675-5611",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townbos@comcast.net",
       "website": "http://www.cornishnh.net"
     },
@@ -2483,7 +2483,7 @@
       "population": 1610,
       "address": "27 Main Street, PO Box 5; Francestown, NH 03043",
       "phone_number": "(603) 547-3469",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmensoffice@francestownnh.org",
       "website": "http://www.francestownnh.org"
     },
@@ -2498,7 +2498,7 @@
       "population": 1532,
       "address": "PO Box 277; Dublin, NH 03444",
       "phone_number": "(603) 563-8544",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@townofdublin.org",
       "website": "http://www.townofdublin.org"
     },
@@ -2513,7 +2513,7 @@
       "population": 1518,
       "address": "13 Center Road, Unit 3; Unity, NH 03603",
       "phone_number": "(603) 543-3102",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@townofunitynh.org",
       "website": "http://www.townofunitynh.org"
     },
@@ -2528,7 +2528,7 @@
       "population": 1501,
       "address": "7 School Street, Unit 101; Bennington, NH 03442",
       "phone_number": "(603) 588-2189",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "ddavidson@townofbennington.com",
       "website": "http://www.townofbennington.com"
     },
@@ -2543,7 +2543,7 @@
       "population": 1498,
       "address": "PO Box 220; Rumney, NH 03266",
       "phone_number": "(603) 786-9511",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@rumneynh.org",
       "website": "http://www.rumneynh.org"
     },
@@ -2558,7 +2558,7 @@
       "population": 1466,
       "address": "PO Box 194; Center Sandwich, NH 03227",
       "phone_number": "(603) 284-7701",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@sandwichnh.org",
       "website": "http://www.sandwichnh.org"
     },
@@ -2573,7 +2573,7 @@
       "population": 1448,
       "address": "16 Darling Hill Road; Mason, NH 03048",
       "phone_number": "(603) 878-2070",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@masonnh.us",
       "website": "http://www.masonnh.us"
     },
@@ -2588,7 +2588,7 @@
       "population": 1434,
       "address": "PO Box 156; North Woodstock, NH 03262",
       "phone_number": "(603) 745-8752",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@woodstocknh.gov",
       "website": "http://www.woodstocknh.gov"
     },
@@ -2603,7 +2603,7 @@
       "population": 1422,
       "address": "PO Box 214; Salisbury, NH 03268",
       "phone_number": "(603) 648-6320",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "salisburyadmin@tds.net",
       "website": "http://www.salisburynh.org"
     },
@@ -2618,7 +2618,7 @@
       "population": 1407,
       "address": "PO Box 72; Wilmot, NH 03287",
       "phone_number": "(603) 526-4802",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@wilmotnh.org",
       "website": "http://www.wilmotnh.org"
     },
@@ -2633,7 +2633,7 @@
       "population": 1385,
       "address": "Town Office Building, PO Box 299; Grafton, NH 03240",
       "phone_number": "(603) 523-7700",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@townofgraftonnh.com",
       "website": "http://www.townofgraftonnh.com"
     },
@@ -2648,7 +2648,7 @@
       "population": 1382,
       "address": "PO Box 191; Temple, NH 03084",
       "phone_number": "(603) 878-2536",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "boardassistant@templenh.org",
       "website": "http://www.templenh.org"
     },
@@ -2663,7 +2663,7 @@
       "population": 1374,
       "address": "1450 Route 123 North; Stoddard, NH 03464",
       "phone_number": "(603) 446-3326 x103",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadministrator@stoddardnh.org",
       "website": "http://www.stoddardnh.org"
     },
@@ -2678,7 +2678,7 @@
       "population": 1358,
       "address": "PO Box 300; Milan, NH 03588",
       "phone_number": "(603) 449-2484",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofmilan@gmail.com",
       "website": "http://www.townofmilan.com"
     },
@@ -2693,7 +2693,7 @@
       "population": 1259,
       "address": "PO Box 22; Springfield, NH 03284",
       "phone_number": "(603) 763-4805",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "admin@springfieldnh.org",
       "website": "http://www.springfieldnh.org"
     },
@@ -2708,7 +2708,7 @@
       "population": 1250,
       "address": "23 High Street; Danbury, NH 03230",
       "phone_number": "(603) 768-3313",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "danbury_selectmen@comcast.net",
       "website": "http://www.townofdanburynh.com"
     },
@@ -2723,7 +2723,7 @@
       "population": 1237,
       "address": "2529 Route 25A; Orford, NH 03777",
       "phone_number": "(603) 353-4404",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townclerk@orfordnh.us",
       "website": "http://www.orfordnh.us"
     },
@@ -2738,7 +2738,7 @@
       "population": 1197,
       "address": "105 Old Homestead Highway; Richmond, NH 03470",
       "phone_number": "(603) 239-4232",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "susan.harrington.richmond@gmail.com",
       "website": "http://www.richmond.nh.gov"
     },
@@ -2753,7 +2753,7 @@
       "population": 1192,
       "address": "7 Halfmoon Pond Road; Washington, NH 03280",
       "phone_number": "(603) 495-3661",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "ddefosse@washingtonnh.org",
       "website": "http://www.washingtonnh.org"
     },
@@ -2768,7 +2768,7 @@
       "population": 1160,
       "address": "297 Mayhew Turnpike; Bridgewater, NH 03222",
       "phone_number": "(603) 744-5055",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofbridgewaternh@gmail.com",
       "website": "http://www.bridgewater-nh.com"
     },
@@ -2783,7 +2783,7 @@
       "population": 1118,
       "address": "856 NH Route 10; Lempster, NH 03605",
       "phone_number": "(603) 863-3213 or (603) 863-2698",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townclerk@lempsternh.org",
       "website": "http://www.lempsternh.org"
     },
@@ -2798,7 +2798,7 @@
       "population": 1083,
       "address": "PO Box 900; Franconia, NH 03580",
       "phone_number": "(603) 823-7752",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@franconianh.org",
       "website": "http://www.franconianh.org"
     },
@@ -2813,7 +2813,7 @@
       "population": 1077,
       "address": "PO Box 88; Bath, NH 03740",
       "phone_number": "(603) 747-2454",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "bathnh@myfairpoint.net",
       "website": "http://www.bath-nh.org"
     },
@@ -2828,7 +2828,7 @@
       "population": 1043,
       "address": "PO Box 81; Jefferson, NH 03583",
       "phone_number": "(603) 586-4553",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrativeassistant@jeffersonnh.org",
       "website": "http://www.jeffersonnh.org"
     },
@@ -2843,7 +2843,7 @@
       "population": 1040,
       "address": "PO Box 140; Center Harbor, NH 03226",
       "phone_number": "(603) 253-4561",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@centerharbornh.gov",
       "website": "http://www.centerharbornh.gov"
     },
@@ -2858,7 +2858,7 @@
       "population": 1028,
       "address": "PO Box 268; Jackson, NH 03846",
       "phone_number": "(603) 383-4223",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@jackson-nh.org",
       "website": "http://www.jackson-nh.org"
     },
@@ -2873,7 +2873,7 @@
       "population": 1017,
       "address": "30 Crescent Street, Suite 1; Hill, NH 03243",
       "phone_number": "(603) 934-1094",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "hillselectmen@comcast.net",
       "website": "http://www.townofhillnh.org"
     },
@@ -2888,7 +2888,7 @@
       "population": 1000,
       "address": "PO Box 367; New Castle, NH 03854",
       "phone_number": "(603) 431-6710 x42",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townadmin@newcastlenh.org",
       "website": "http://www.newcastlenh.org"
     },
@@ -2903,7 +2903,7 @@
       "population": 984,
       "address": "705 Chesham Road; Harrisville, NH 03450",
       "phone_number": "(603) 827-3431 x1 or (603) 827-5546",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "Selectboard@harrisvillenh.org",
       "website": "http://www.harrisvillenh.org"
     },
@@ -2918,7 +2918,7 @@
       "population": 933,
       "address": "756 Dalton Road; Dalton, NH 03598",
       "phone_number": "(603) 837-7027",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@townofdaltonnh.gov",
       "website": "http://townofdaltonnh.gov"
     },
@@ -2933,7 +2933,7 @@
       "population": 894,
       "address": "3 Hilldale Avenue; South Hampton, NH 03827",
       "phone_number": "(603) 394-7696",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "info@southhamptonnh.org",
       "website": "https://southhamptonnh.org/"
     },
@@ -2948,7 +2948,7 @@
       "population": 864,
       "address": "152 Woodsville Road; Monroe, NH 03771",
       "phone_number": "(603) 638-2644",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "monroeselectmen@monroenh.org",
       "website": "http://www.monroenh.org"
     },
@@ -2963,7 +2963,7 @@
       "population": 853,
       "address": "PO Box 37; Acworth, NH 03601",
       "phone_number": "(603) 835-6879",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townoff@sover.net",
       "website": "http://www.acworthnh.net"
     },
@@ -2978,7 +2978,7 @@
       "population": 845,
       "address": "7 Atwell Hill Rd., PO Box 2; Wentworth, NH 03282-0002",
       "phone_number": "(603) 764-9955",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofwentworth@wentworth-nh.org",
       "website": "http://www.wentworth-nh.org"
     },
@@ -2993,7 +2993,7 @@
       "population": 825,
       "address": "PO Box 40; Warren, NH 03279",
       "phone_number": "(603) 764-5780",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "administrator@warren-nh.com",
       "website": "http://www.warren-nh.com"
     },
@@ -3008,7 +3008,7 @@
       "population": 820,
       "address": "1 Village Road, Town Hall; Surry, NH 03431",
       "phone_number": "(603) 352-3075",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@surry.nh.gov",
       "website": "http://Surry.nh.gov"
     },
@@ -3023,7 +3023,7 @@
       "population": 820,
       "address": "PO Box 146; Twin Mountain, NH 03595",
       "phone_number": "(603) 846-5494",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@townofcarroll.org",
       "website": "http://www.carrollnh.org"
     },
@@ -3038,7 +3038,7 @@
       "population": 813,
       "address": "PO Box 119; West Stewartstown, NH 03597",
       "phone_number": "(603) 246-3329",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofstewartstown@hotmail.com"
     },
     {
@@ -3052,7 +3052,7 @@
       "population": 811,
       "address": "205 Nimble Hill Road; Newington, NH 03801",
       "phone_number": "(603) 436-7640",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@newington.nh.us",
       "website": "http://www.newington.nh.us"
     },
@@ -3067,7 +3067,7 @@
       "population": 801,
       "address": "879 NH Route 10; Croydon, NH 03773",
       "phone_number": "(603) 863-7830",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectboard@croydon-nh.com",
       "website": "http://www.croydon-nh.com"
     },
@@ -3082,7 +3082,7 @@
       "population": 800,
       "address": "1526 Main Street; Pittsburg, NH 03592",
       "phone_number": "(603) 538-6697",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townoffice@pittsburg-nh.com",
       "website": "http://www.pittsburg-nh.com"
     },
@@ -3097,7 +3097,7 @@
       "population": 796,
       "address": "PO Box  68; Goshen, NH 03752",
       "phone_number": "(603) 863-5080",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@goshennh.org",
       "website": "http://www.goshennh.org"
     },
@@ -3112,7 +3112,7 @@
       "population": 769,
       "address": "130 Route 10; Piermont, NH 03779",
       "phone_number": "(603) 272-9181",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "sarah.tucker@townofpiermontnh.org",
       "website": "http://townofpiermontnh.org"
     },
@@ -3127,7 +3127,7 @@
       "population": 759,
       "address": "1972-A NH Route 16; Albany, NH 03818",
       "phone_number": "(603) 447-6038",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "contact@albanynh.org",
       "website": "http://www.albanynh.org"
     },
@@ -3142,7 +3142,7 @@
       "population": 755,
       "address": "267 Wentworth Road; Brookfield, NH 03872",
       "phone_number": "(603) 522-3688",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "adminasst@brookfieldnh.org",
       "website": "http://www.brookfieldnh.org"
     },
@@ -3157,7 +3157,7 @@
       "population": 752,
       "address": "650 Route 10, PO Box 67; Gilsum, NH 03448",
       "phone_number": "(603) 352-0845",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "gilsum@gilsum-nh.gov",
       "website": "https://gilsum-nh.gov"
     },
@@ -3172,7 +3172,7 @@
       "population": 749,
       "address": "167 NH Route 123, Town Office; Marlow, NH 03456-0184",
       "phone_number": "(603) 446-2245 x1",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "marlowtownoffice@marlownh.gov",
       "website": "http://www.marlownh.gov"
     },
@@ -3187,7 +3187,7 @@
       "population": 662,
       "address": "1956 US Route 3, PO Box 366; North Stratford, NH 03590-0366",
       "phone_number": "(603) 922-5533",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "town@stratfordnh.gov",
       "website": "http://www.stratfordnh.gov"
     },
@@ -3202,7 +3202,7 @@
       "population": 659,
       "address": "PO Box 157; Colebrook, NH 03576",
       "phone_number": "(603) 237-5255",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "towncolumbia@myfairpoint.net",
       "website": "http://www.columbianh.org"
     },
@@ -3217,7 +3217,7 @@
       "population": 658,
       "address": "PO Box 110; Sullivan, NH 03445",
       "phone_number": "(603) 847-3316",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@townofsullivannh.com",
       "website": "https://townofsullivannh.com"
     },
@@ -3232,7 +3232,7 @@
       "population": 651,
       "address": "122 NH Route 12A #1; Langdon, NH 03602",
       "phone_number": "(603) 835-2389",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townoflangdon@yahoo.com",
       "website": "http://www.langdonnh.org"
     },
@@ -3247,7 +3247,7 @@
       "population": 647,
       "address": "PO Box 574; Sugar Hill, NH 03586",
       "phone_number": "(603) 823-8468",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@sugarhillnh.org",
       "website": "http://www.sugarhillnh.org"
     },
@@ -3262,7 +3262,7 @@
       "population": 632,
       "address": "PO Box 188; Hebron, NH 03241",
       "phone_number": "(603) 744-2631",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "execassist@hebronnh.gov",
       "website": "https://www.hebronnh.gov/"
     },
@@ -3277,7 +3277,7 @@
       "population": 629,
       "address": "7 Nelson Common Road; Nelson, NH 03457",
       "phone_number": "(603) 847-0047",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "execadmin@nelsonnh.us",
       "website": "http://www.townofnelson.org"
     },
@@ -3292,7 +3292,7 @@
       "population": 585,
       "address": "65 Parker Hill Road; Lyman, NH 03585",
       "phone_number": "(603) 838-5900",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "lymanta@myfairpoint.net",
       "website": "http://www.lymannh.org"
     },
@@ -3307,7 +3307,7 @@
       "population": 569,
       "address": "754 North Groton Road; Groton, NH 03241",
       "phone_number": "(603) 744-9190",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@grotonnh.org",
       "website": "http://www.grotonnh.org"
     },
@@ -3322,7 +3322,7 @@
       "population": 508,
       "address": "PO Box 500, Town Office; Waterville Valley, NH 03215",
       "phone_number": "(603) 236-4730",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "mdecoteau@watervillevalleynh.gov",
       "website": "http://www.watervillevalleynh.org"
     },
@@ -3337,7 +3337,7 @@
       "population": 478,
       "address": "1189 Stark Highway; Stark, NH 03582",
       "phone_number": "(603) 636-2118",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "patty@townofstark.com",
       "website": "http://starknh.gov"
     },
@@ -3352,7 +3352,7 @@
       "population": 446,
       "address": "12 Center Hill Road; Landaff, NH 03585",
       "phone_number": "(603) 838-6220",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "selectmen@landaffnh.org",
       "website": "http://landaffnh.org"
     },
@@ -3367,7 +3367,7 @@
       "population": 405,
       "address": "Town Hall, PO Box 88; Eaton, NH 03832",
       "phone_number": "(603) 447-2840",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "eatonth@roadrunner.com",
       "website": "http://www.eatonnh.org"
     },
@@ -3382,7 +3382,7 @@
       "population": 374,
       "address": "221 Coventry Road; Benton, NH 03785",
       "phone_number": "(603) 787-6541",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "bentonnhselectmen@gmail.com",
       "website": "http://www.tobentonnh.org"
     },
@@ -3397,7 +3397,7 @@
       "population": 359,
       "address": "432 Route 123; Sharon, NH 03458",
       "phone_number": "(603) 924-9250",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "sharon03458@gmail.com",
       "website": "https://sharonnh.org/"
     },
@@ -3412,7 +3412,7 @@
       "population": 353,
       "address": "74 Village Road; Shelburne, NH 03581",
       "phone_number": "(603) 466-2262",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "noelle.meer@townofshelburnenh.com",
       "website": "http://www.townofshelburnenh.com"
     },
@@ -3427,7 +3427,7 @@
       "population": 341,
       "address": "1071 Main Road; Chatham, NH 03813",
       "phone_number": "(603) 694-2117",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townclerk@chathamnh.org",
       "website": "http://chathamnh.org"
     },
@@ -3442,7 +3442,7 @@
       "population": 339,
       "address": "1021 NH Route 118; Dorchester, NH 03266",
       "phone_number": "(603) 786-5095",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofdorchester@gmail.com",
       "website": "http://www.townofdorchester.org"
     },
@@ -3457,7 +3457,7 @@
       "population": 328,
       "address": "130 Durand Road; Randolph, NH 03593",
       "phone_number": "(603) 466-5771",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "TownClerk@Randolph.nh.gov",
       "website": "http://www.randolph.nh.gov"
     },
@@ -3472,7 +3472,7 @@
       "population": 306,
       "address": "75 Hill Road; Dummer, NH 03588",
       "phone_number": "(603) 449-2468",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofdummer@gmail.com",
       "website": "http://www.dummernh.com"
     },
@@ -3487,7 +3487,7 @@
       "population": 298,
       "address": "33 Main Street, PO Box 100; Errol, NH 03579-0100",
       "phone_number": "(603) 482-3351",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "errolnhselectmen@gmail.com",
       "website": "http://www.errolnh.org"
     },
@@ -3502,7 +3502,7 @@
       "population": 294,
       "address": "408 NH Route 145; Clarksville, NH 03592",
       "phone_number": "(603) 246-7751",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "twnclark@yahoo.com"
     },
     {
@@ -3516,7 +3516,7 @@
       "population": 292,
       "address": "1060 Easton Valley Road; Easton, NH 03580",
       "phone_number": "(603) 823-8017",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "eastonnhselectboard@gmail.com",
       "website": "http://easton-nh.org"
     },
@@ -3531,7 +3531,7 @@
       "population": 277,
       "address": "Municipal Building, PO Box 37; Canaan, NH 03741",
       "phone_number": "(603) 523-4467",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "orangetownclerk@myfairpoint.net"
     },
     {
@@ -3545,7 +3545,7 @@
       "population": 262,
       "address": "14 White Pond Road; Windsor, NH 03244",
       "phone_number": "(603) 478-3292",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "windsor@windsornh.org",
       "website": "http://windsornh.org"
     },
@@ -3560,7 +3560,7 @@
       "population": 220,
       "address": "3 Middletown Road; Roxbury, NH 03431",
       "phone_number": "(603) 352-4903",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofroxburynh@myfairpoint.net",
       "website": "http://roxburynh.org"
     },
@@ -3585,7 +3585,7 @@
       "population": 93,
       "address": "3 Ellsworth Pond Road; Ellsworth, NH 03223",
       "phone_number": "(603) 726-3551",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "dobellsworth@gmail.com"
     },
     {
@@ -3599,7 +3599,7 @@
       "population": 68,
       "address": "979 US Route 302, PO Box 540; Hart's Location, NH 03812",
       "phone_number": "(603) 374-6397",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "smallesttown@gmail.com",
       "website": "http://www.hartslocation.com"
     },
@@ -3614,7 +3614,7 @@
       "population": 28,
       "address": "7 Atwell Hill Rd., PO Box 2; Wentworth, NH 03282-0002",
       "phone_number": "(603) 764-9955",
-      "government_type": "selectmen",
+      "government_type": "select_board",
       "email": "townofwentworth@wentworth-nh.org",
       "website": "http://www.wentworth-nh.org"
     },

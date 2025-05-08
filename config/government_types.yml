@@ -31,6 +31,8 @@ government_types:
       - role: vice chair
         aliases:
         - vice-chair
+        - vice-chairman
+        - vice-chairwoman
         - vice chairman
         - vice-chairman
         - vice chairwoman
@@ -84,7 +86,7 @@ government_types:
         - meet
         - about
   town_meeting: # Not handling this
-  selectmen:
+  select_board:
     positions:
       - role: mayor # Optional, not always present
       - role: mayor pro tempore
@@ -93,20 +95,27 @@ government_types:
         - mayor pro tem
       - role: chair
         aliases:
+        - select board chairman
+        - select board chairwoman
         - chairman
         - chairwoman
       - role: vice chair
         aliases:
+        - select board vice chairman
+        - select board vice chairwoman
+        - select board vice-chairman
+        - select board vice-chairwoman
         - vice-chair
         - vice chairman
         - vice-chairman
         - vice chairwoman
         - vice-chairwoman
       - role: deputy mayor  
-      - role: selectmen
+      - role: select board member
         aliases:
         - selectman
         - selectwoman
+        - select board
         - board of selectmen
     search_keywords:
       selectmen:

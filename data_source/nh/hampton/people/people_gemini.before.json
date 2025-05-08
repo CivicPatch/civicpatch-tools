@@ -2,8 +2,8 @@
   {
     "name": "Rusty Bridle",
     "positions": [
-      "Selectman",
-      "Chairman"
+      "Chairman",
+      "Select Board member"
     ],
     "image": null,
     "source_image": null,
@@ -20,8 +20,8 @@
   {
     "name": "Carleigh Beriont",
     "positions": [
-      "Selectman",
-      "Vice-chairwoman"
+      "Vice-chairwoman",
+      "Select Board member"
     ],
     "image": null,
     "source_image": null,
@@ -38,7 +38,7 @@
   {
     "name": "Chuck Rage",
     "positions": [
-      "Selectman"
+      "Select Board member"
     ],
     "image": null,
     "source_image": null,
@@ -55,7 +55,7 @@
   {
     "name": "Amy Hansen",
     "positions": [
-      "Selectman"
+      "Select Board member"
     ],
     "image": null,
     "source_image": null,
@@ -72,7 +72,7 @@
   {
     "name": "Jeff Grip",
     "positions": [
-      "Selectman"
+      "Select Board member"
     ],
     "image": null,
     "source_image": null,
