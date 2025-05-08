@@ -1,15 +1,16 @@
 ---
-scrape_sources: []
+scrape_sources:
+- http://www.londonderrynh.org/378/Town-Council
 source_directory_list:
   type: directory_list_fallback
   people:
-  - name: Ron Dunn
-    positions:
-    - Mayor
   - name: Dan Bouchard
     positions:
     - Council Member
   - name: Deb Paul
+    positions:
+    - Council Member
+  - name: Ron Dunn
     positions:
     - Council Member
   - name: Shawn Faber
