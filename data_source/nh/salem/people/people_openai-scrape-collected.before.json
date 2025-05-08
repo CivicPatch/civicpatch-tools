@@ -9,14 +9,14 @@
       "https://www.salemnh.gov/directory.aspx?EID=194"
     ],
     "positions": [
-      "Chair",
+      "Town Council Chair",
       "Councilor"
     ],
     "phone_numbers": [
       {
         "data": "603-890-2000",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near Salem Town Hall contact info on the same page.",
+        "llm_confidence_reason": "Phone number found near contact info on the same page, likely town hall main line.",
         "source": "https://www.salemnh.gov/directory.aspx?EID=194"
       }
     ],
@@ -25,13 +25,13 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=194",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=194",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Cathy Ann Stacey's directory entry.",
+        "llm_confidence_reason": "Page URL is the profile page for Cathy Ann Stacey.",
         "source": "https://www.salemnh.gov/directory.aspx?EID=194"
       }
     ],
@@ -62,7 +62,7 @@
       "https://www.salemnh.gov/directory.aspx?EID=192"
     ],
     "positions": [
-      "Vice-Chair",
+      "Town Council Vice-Chair",
       "Councilor"
     ],
     "phone_numbers": [],
@@ -71,7 +71,7 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=192",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
@@ -108,6 +108,7 @@
       "https://www.salemnh.gov/directory.aspx?EID=196"
     ],
     "positions": [
+      "Town Council Secretary",
       "Secretary",
       "Town Council Member"
     ],
@@ -117,7 +118,7 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=196",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
@@ -154,7 +155,7 @@
       "https://www.salemnh.gov/directory.aspx?EID=191"
     ],
     "positions": [
-      "Council Member",
+      "Town Council Member",
       "Vice-Chair",
       "Vice Chair"
     ],
@@ -164,13 +165,13 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=191",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=191",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence_reason": "Primary page URL for the person's directory entry.",
         "source": "https://www.salemnh.gov/directory.aspx?EID=191"
       }
     ],
@@ -201,7 +202,7 @@
       "https://www.salemnh.gov/directory.aspx?EID=189"
     ],
     "positions": [
-      "Council Member",
+      "Town Council Member",
       "Councilor"
     ],
     "phone_numbers": [],
@@ -210,13 +211,13 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=189",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
-        "data": "https://www.salemnh.gov/directory.aspx?EID=189",
+        "data": "https://www.salemnh.gov/Directory.aspx?EID=189",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Robert F. Bryant.",
+        "llm_confidence_reason": "Page URL is a profile page for Robert F. Bryant.",
         "source": "https://www.salemnh.gov/directory.aspx?EID=189"
       }
     ],
@@ -239,15 +240,15 @@
   },
   {
     "name": "Paul Pelletier",
-    "image": null,
-    "source_image": null,
+    "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
+    "source_image": "https://www.salemnh.gov/ImageRepository/Document?documentId=71",
     "sources": [
       "https://www.salemnh.gov/537/Town-Council",
       "https://www.salemnh.gov/Directory.aspx?did=55",
       "https://www.salemnh.gov/directory.aspx?EID=193"
     ],
     "positions": [
-      "Council Member",
+      "Town Council Member",
       "Councilor"
     ],
     "phone_numbers": [],
@@ -256,7 +257,7 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=193",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
@@ -293,7 +294,7 @@
       "https://www.salemnh.gov/directory.aspx?EID=195"
     ],
     "positions": [
-      "Council Member",
+      "Town Council Member",
       "Councilor"
     ],
     "phone_numbers": [],
@@ -302,13 +303,13 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=195",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=195",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence_reason": "Primary page URL for the person's directory profile.",
         "source": "https://www.salemnh.gov/directory.aspx?EID=195"
       }
     ],
@@ -331,36 +332,29 @@
   },
   {
     "name": "Joseph F. Sweeney",
-    "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
-    "source_image": "https://www.salemnh.gov/ImageRepository/Document?documentId=71",
+    "image": null,
+    "source_image": null,
     "sources": [
       "https://www.salemnh.gov/537/Town-Council",
       "https://www.salemnh.gov/Directory.aspx?did=55",
       "https://www.salemnh.gov/directory.aspx?EID=190"
     ],
     "positions": [
-      "Council Member",
+      "Town Council Member",
       "Chair"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-890-2000",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near contact info on same page.",
-        "source": "https://www.salemnh.gov/directory.aspx?EID=190"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=190",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
         "data": "https://www.salemnh.gov/Directory.aspx?EID=190",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Primary page URL for Joseph F. Sweeney's directory entry.",
         "source": "https://www.salemnh.gov/directory.aspx?EID=190"
       }
@@ -392,7 +386,7 @@
       "https://www.salemnh.gov/directory.aspx?EID=197"
     ],
     "positions": [
-      "Council Member",
+      "Town Council Member",
       "Councilor"
     ],
     "phone_numbers": [],
@@ -401,13 +395,13 @@
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=197",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a direct profile link from the staff directory near the name.",
+        "llm_confidence_reason": "URL is a direct profile link from the staff directory table.",
         "source": "https://www.salemnh.gov/Directory.aspx?did=55"
       },
       {
         "data": "https://www.salemnh.gov/directory.aspx?EID=197",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is a profile page for Bonnie Wright.",
+        "llm_confidence_reason": "Page URL is the profile page for Bonnie Wright.",
         "source": "https://www.salemnh.gov/directory.aspx?EID=197"
       }
     ],
