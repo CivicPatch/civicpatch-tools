@@ -4,16 +4,18 @@ scrape_sources:
 source_directory_list:
   type: directory_list_fallback
   people:
+  - name: Ron Dunn
+    positions:
+    - Chair
+    - Council Member
+  - name: Shawn Faber
+    positions:
+    - Vice Chair
+    - Council Member
   - name: Dan Bouchard
     positions:
     - Council Member
   - name: Deb Paul
-    positions:
-    - Council Member
-  - name: Ron Dunn
-    positions:
-    - Council Member
-  - name: Shawn Faber
     positions:
     - Council Member
   - name: Ted Combes

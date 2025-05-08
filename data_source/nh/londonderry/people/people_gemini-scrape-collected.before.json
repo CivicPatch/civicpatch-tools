@@ -13,8 +13,8 @@
     "emails": [
       {
         "data": "rdunn@londonderrynh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -23,8 +23,8 @@
     "end_dates": [
       {
         "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2026'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -44,8 +44,8 @@
     "emails": [
       {
         "data": "sfaber@londonderrynh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -54,8 +54,8 @@
     "end_dates": [
       {
         "data": "2027-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2027'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -69,14 +69,14 @@
       "http://www.londonderrynh.org/378/Town-Council"
     ],
     "positions": [
-      "Councilor"
+      "Council Member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "tcombes@londonderrynh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -85,8 +85,8 @@
     "end_dates": [
       {
         "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2026'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -100,14 +100,14 @@
       "http://www.londonderrynh.org/378/Town-Council"
     ],
     "positions": [
-      "Councilor"
+      "Council Member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "dbouchard@londonderrynh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -116,8 +116,8 @@
     "end_dates": [
       {
         "data": "2028-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2028'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -131,14 +131,14 @@
       "http://www.londonderrynh.org/378/Town-Council"
     ],
     "positions": [
-      "Councilor"
+      "Council Member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "dpaul@londonderrynh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
@@ -147,8 +147,8 @@
     "end_dates": [
       {
         "data": "2028-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2028'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date explicitly listed next to the name.",
         "source": "http://www.londonderrynh.org/378/Town-Council"
       }
     ],
