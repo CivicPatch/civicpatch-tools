@@ -12,21 +12,21 @@
   sources:
   - https://www.centralpointoregon.gov/256/Mayor-Council
   - https://www.centralpointoregon.gov/directory.aspx?eid=38
-  updated_at: '2025-05-06'
+  updated_at: '2025-05-08'
 - name: Michael Parsons
   positions:
   - Council Member
   email: Michael.parsons@centralpointoregon.gov
   phone_number: "(541) 554-3892"
   website: https://www.centralpointoregon.gov/directory.aspx?eid=39
-  start_date: 2018-07
+  start_date: '2024'
   end_date: '2028-12-31'
   image: https://cdn.civicpatch.org/open-data/or/central_point/images/fc04a4c5a38a404759becf0de09454999c974e92b561651d8b486975be141893.jpg
   source_image: https://www.centralpointoregon.gov/ImageRepository/Document?documentID=1080
   sources:
   - https://www.centralpointoregon.gov/256/Mayor-Council
   - https://www.centralpointoregon.gov/directory.aspx?eid=39
-  updated_at: '2025-05-06'
+  updated_at: '2025-05-08'
 - name: Rob Hernandez
   positions:
   - Council Member
@@ -40,7 +40,7 @@
   sources:
   - https://www.centralpointoregon.gov/256/Mayor-Council
   - https://www.centralpointoregon.gov/directory.aspx?eid=40
-  updated_at: '2025-05-06'
+  updated_at: '2025-05-08'
 - name: Neil M. Olsen
   positions:
   - Council Member
@@ -55,7 +55,7 @@
   sources:
   - https://www.centralpointoregon.gov/256/Mayor-Council
   - https://www.centralpointoregon.gov/directory.aspx?eid=35
-  updated_at: '2025-05-06'
+  updated_at: '2025-05-08'
 - name: Kelley Johnson
   positions:
   - Council Member
@@ -70,7 +70,7 @@
   sources:
   - https://www.centralpointoregon.gov/256/Mayor-Council
   - https://www.centralpointoregon.gov/directory.aspx?eid=36
-  updated_at: '2025-05-06'
+  updated_at: '2025-05-08'
 - name: Grey Zimmerman
   positions:
   - Council Member
@@ -85,7 +85,7 @@
   sources:
   - https://www.centralpointoregon.gov/256/Mayor-Council
   - https://www.centralpointoregon.gov/directory.aspx?eid=37
-  updated_at: '2025-05-06'
+  updated_at: '2025-05-08'
 - name: Brian Whitaker
   positions:
   - Council Member
@@ -100,4 +100,4 @@
   sources:
   - https://www.centralpointoregon.gov/256/Mayor-Council
   - https://www.centralpointoregon.gov/directory.aspx?eid=43
-  updated_at: '2025-05-06'
+  updated_at: '2025-05-08'

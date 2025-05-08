@@ -14,7 +14,7 @@
       {
         "data": "541-890-8377",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and title.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
       }
     ],
@@ -35,14 +35,14 @@
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=38",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL linked near name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
         "data": "https://www.centralpointoregon.gov/Directory.aspx?eid=38",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official profile page for Taneea Browning.",
+        "llm_confidence_reason": "Page URL is the profile page for Taneea Browning.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
       }
     ],
@@ -50,19 +50,19 @@
       {
         "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Elected 2024' indicating term start year.",
+        "llm_confidence_reason": "Extracted from 'Elected 2024' indicating start of current term.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Extracted from 'Current term ends December 31, 2028' and converted to YYYY-MM-DD.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Neil Olsen",
@@ -75,7 +75,7 @@
     "positions": [
       "Council Member",
       "Ward I",
-      "ward 1"
+      "Ward 1"
     ],
     "phone_numbers": [
       {
@@ -102,14 +102,14 @@
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=35",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL linked near name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=35",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Neil Olsen's profile.",
+        "llm_confidence_reason": "Page URL is the profile page for Neil Olsen.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
       }
     ],
@@ -117,19 +117,19 @@
       {
         "data": "2022",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current term started with election in 2022, most recent active term.",
+        "llm_confidence_reason": "Elected 2018 & 2022; most recent election 2022 used as start date.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Current term ends December 31, 2026.'",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Current term ends December 31, 2026.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Kelley Johnson",
@@ -146,7 +146,7 @@
     "phone_numbers": [
       {
         "data": "541-499-8977",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
       }
@@ -168,22 +168,16 @@
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=36",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL linked near name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
-      },
-      {
-        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=36",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Kelley Johnson.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
       }
     ],
     "start_dates": [
       {
-        "data": "2022",
+        "data": "2018",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current term started with election in 2022, which is the most recent active term.",
+        "llm_confidence_reason": "Elected 2018 and 2022; earliest election year for current term used as start date.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
       }
     ],
@@ -191,11 +185,11 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Current term ends December 31, 2026.'",
+        "llm_confidence_reason": "Current term ends December 31, 2026 explicitly stated.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Grey Zimmerman",
@@ -228,34 +222,28 @@
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=37",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL linked near name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
-      },
-      {
-        "data": "https://www.centralpointoregon.gov/Directory.aspx?eid=37",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Grey Zimmerman.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
       }
     ],
     "start_dates": [
       {
         "data": "2024-11",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted 'Appointed November 2024' and converted to YYYY-MM format.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted 'Appointed November 2024' and converted to YYYY-MM.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted 'Current term ends December 31, 2026' and converted to YYYY-MM-DD format.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted 'Current term ends December 31, 2026' and converted to YYYY-MM-DD.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Brian Whitaker",
@@ -267,14 +255,13 @@
     ],
     "positions": [
       "Council Member",
-      "Ward IV",
-      "ward 4"
+      "Ward IV"
     ],
     "phone_numbers": [
       {
         "data": "541-778-7299",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near the name and title.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
       }
     ],
@@ -288,21 +275,21 @@
       {
         "data": "Brian.whitaker@centralpointoregon.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Extracted from mailto link text near the name.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
       }
     ],
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=43",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL linked near name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
-        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=43",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Brian Whitaker's profile.",
+        "data": "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "URL labeled 'City Council' near the name, likely profile or related page.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
       }
     ],
@@ -310,7 +297,7 @@
       {
         "data": "2024-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected November, 2024 converted to 2024-11.",
+        "llm_confidence_reason": "Elected November, 2024 converted to 2024-11 as per date conversion rules.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
       }
     ],
@@ -318,11 +305,11 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Current term ends December 31, 2028 converted to 2028-12-31.",
+        "llm_confidence_reason": "Term ends December 31, 2028 converted to 2028-12-31.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Rob Hernandez",
@@ -340,7 +327,7 @@
       {
         "data": "541-664-5154",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
       }
     ],
@@ -361,22 +348,22 @@
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=40",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL linked near name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
-        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=40",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Rob Hernandez.",
+        "data": "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "URL labeled 'City Council' near name likely profile or council page.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
       }
     ],
     "start_dates": [
       {
-        "data": "2024-11",
+        "data": "2016-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Most recent election date is November 2024, indicating term start likely November 2024.",
+        "llm_confidence_reason": "Elected November 2016 is earliest elected date for current service.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
       }
     ],
@@ -384,11 +371,11 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Current term ends December 31, 2028.'",
+        "llm_confidence_reason": "Current term ends December 31, 2028 explicitly stated.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Michael Parsons",
@@ -428,8 +415,8 @@
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=39",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL linked near name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL near name.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       }
     ],
@@ -437,7 +424,7 @@
       {
         "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current term started with election in 2024, latest active term.",
+        "llm_confidence_reason": "Elected in 2024 for current term; used year only as no month/day specified.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=39"
       }
     ],
@@ -445,10 +432,10 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Current term ends December 31, 2028.'",
+        "llm_confidence_reason": "Current term ends December 31, 2028; converted to YYYY-MM-DD.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=39"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-05-08"
   }
 ]
