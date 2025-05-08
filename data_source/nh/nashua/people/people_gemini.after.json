@@ -13,15 +13,32 @@
     "end_date": null,
     "sources": [
       "https://www.nashuanh.gov/148/Mayors-Office",
-      "https://www.nashuanh.gov/directory.aspx?did=4",
       "https://www.nashuanh.gov/148/Mayors-Office/"
+    ],
+    "updated_at": "2025-05-07"
+  },
+  {
+    "name": "Jim Donchess",
+    "positions": [
+      "Mayor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 589-3260",
+    "email": "NashuaMayor@NashuaNH.gov",
+    "website": "https://www.nashuanh.gov/148/Mayors-Office",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.nashuanh.gov/804/City-Officials",
+      "https://www.nashuanh.gov/directory.aspx?did=4"
     ],
     "updated_at": "2025-05-07"
   },
   {
     "name": "Lori Wilshire",
     "positions": [
-      "Council President"
+      "Alderperson"
     ],
     "image": null,
     "source_image": null,
@@ -38,7 +55,7 @@
   {
     "name": "Michael B. O'Brien Sr.",
     "positions": [
-      "Council Vice President"
+      "Alderperson"
     ],
     "image": null,
     "source_image": null,
@@ -55,7 +72,7 @@
   {
     "name": "Ben Clemons",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": null,
@@ -74,7 +91,7 @@
   {
     "name": "Gloria Timmons",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": null,
@@ -92,7 +109,7 @@
   {
     "name": "Melbourne Moran Jr.",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": null,
@@ -110,7 +127,7 @@
   {
     "name": "Shoshanna Kelly",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "At-large"
     ],
     "image": null,
@@ -128,7 +145,7 @@
   {
     "name": "Tyler Gouveia",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 1"
     ],
     "image": null,
@@ -146,7 +163,7 @@
   {
     "name": "Richard A. Dowd",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 2"
     ],
     "image": null,
@@ -164,7 +181,7 @@
   {
     "name": "Patricia Klee",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 3"
     ],
     "image": null,
@@ -182,7 +199,7 @@
   {
     "name": "Thomas Lopez",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 4"
     ],
     "image": null,
@@ -200,7 +217,7 @@
   {
     "name": "Ernest A. Jette",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 5"
     ],
     "image": null,
@@ -218,7 +235,7 @@
   {
     "name": "Chris Thibodeau",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 6"
     ],
     "image": null,
@@ -236,7 +253,7 @@
   {
     "name": "Tim Sennott",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 7"
     ],
     "image": null,
@@ -254,7 +271,7 @@
   {
     "name": "Derek Thibeault",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 8"
     ],
     "image": null,
@@ -272,7 +289,7 @@
   {
     "name": "John Sullivan",
     "positions": [
-      "Council Member",
+      "Alderperson",
       "Ward 9"
     ],
     "image": null,

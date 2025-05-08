@@ -11,12 +11,51 @@
   source_image: https://www.nashuanh.gov/ImageRepository/Document?documentId=20232
   sources:
   - https://www.nashuanh.gov/148/Mayors-Office
-  - https://www.nashuanh.gov/directory.aspx?did=4
   - https://www.nashuanh.gov/148/Mayors-Office/
+  updated_at: '2025-05-07'
+- name: Jim Donchess
+  positions:
+  - Mayor
+  email: NashuaMayor@NashuaNH.gov
+  phone_number: "(603) 589-3260"
+  website: https://www.nashuanh.gov/148/Mayors-Office
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.nashuanh.gov/804/City-Officials
+  - https://www.nashuanh.gov/directory.aspx?did=4
+  updated_at: '2025-05-07'
+- name: Lori Wilshire
+  positions:
+  - Alderperson
+  email: WILSHIREL@NASHUANH.GOV
+  phone_number: "(603) 809-4203"
+  website: https://www.nashuanh.gov/514/Board-of-Aldermen/
+  start_date: '2008-01-06'
+  end_date: '2027-12-31'
+  image: https://cdn.civicpatch.org/open-data/nh/nashua/images/3e14b2162d6e8491e8006368a3c864ad88b5de188b62ecc5b8438a05d90055d7.jpg
+  source_image: https://www.nashuanh.gov/ImageRepository/Document?documentID=11904
+  sources:
+  - https://www.nashuanh.gov/514/Board-of-Aldermen
+  updated_at: '2025-05-07'
+- name: Michael B. O'Brien Sr.
+  positions:
+  - Alderperson
+  email: OBRIENM@NASHUANH.GOV
+  phone_number: "(603) 888-8051"
+  website: https://www.nashuanh.gov/514/Board-of-Aldermen/
+  start_date: '2016-01-10'
+  end_date: '2027-12-31'
+  image: https://cdn.civicpatch.org/open-data/nh/nashua/images/5d392f3889025af60b633b0d8e4a1cb59cd6d4ec4f77c25dbff8f3e6399e4baa.jpg
+  source_image: https://www.nashuanh.gov/ImageRepository/Document?documentID=11907
+  sources:
+  - https://www.nashuanh.gov/514/Board-of-Aldermen
   updated_at: '2025-05-07'
 - name: Ben Clemons
   positions:
-  - Council Member
+  - Alderperson
   - At-large
   email: CLEMONSB@NASHUANH.GOV
   phone_number: "(603) 305-9969"
@@ -31,7 +70,7 @@
   updated_at: '2025-05-07'
 - name: Gloria Timmons
   positions:
-  - Council Member
+  - Alderperson
   - At-large
   email: TIMMONSG@NASHUANH.GOV
   phone_number: "(603) 521-7988"
@@ -45,7 +84,7 @@
   updated_at: '2025-05-07'
 - name: Melbourne Moran Jr.
   positions:
-  - Council Member
+  - Alderperson
   - At-large
   email: MORANM@NASHUANH.GOV
   phone_number: "(978) 483-0182"
@@ -59,7 +98,7 @@
   updated_at: '2025-05-07'
 - name: Shoshanna Kelly
   positions:
-  - Council Member
+  - Alderperson
   - At-large
   email: KELLYS@NASHUANH.GOV
   phone_number: "(603) 589-3030"
@@ -73,7 +112,7 @@
   updated_at: '2025-05-07'
 - name: Tyler Gouveia
   positions:
-  - Council Member
+  - Alderperson
   - Ward 1
   email: GOUVEIAT@NASHUANH.GOV
   phone_number: "(603) 809-1786"
@@ -87,7 +126,7 @@
   updated_at: '2025-05-07'
 - name: Richard A. Dowd
   positions:
-  - Council Member
+  - Alderperson
   - Ward 2
   email: DOWDR@NASHUANH.GOV
   phone_number: "(603) 598-3528"
@@ -101,7 +140,7 @@
   updated_at: '2025-05-07'
 - name: Patricia Klee
   positions:
-  - Council Member
+  - Alderperson
   - Ward 3
   email: KLEEP@NASHUANH.GOV
   phone_number: "(603) 966-0979"
@@ -115,7 +154,7 @@
   updated_at: '2025-05-07'
 - name: Thomas Lopez
   positions:
-  - Council Member
+  - Alderperson
   - Ward 4
   email: LOPEZT@NASHUANH.GOV
   phone_number: "(603) 589-3030"
@@ -129,7 +168,7 @@
   updated_at: '2025-05-07'
 - name: Ernest A. Jette
   positions:
-  - Council Member
+  - Alderperson
   - Ward 5
   email: JETTEE@NASHUANH.GOV
   phone_number: "(603) 883-3459"
@@ -143,7 +182,7 @@
   updated_at: '2025-05-07'
 - name: Chris Thibodeau
   positions:
-  - Council Member
+  - Alderperson
   - Ward 6
   email: THIBODEAUCH@NASHUANH.GOV
   phone_number: "(603) 565-0594"
@@ -157,7 +196,7 @@
   updated_at: '2025-05-07'
 - name: Tim Sennott
   positions:
-  - Council Member
+  - Alderperson
   - Ward 7
   email: SENNOTTT@NASHUANH.GOV
   phone_number: "(603) 347-8971"
@@ -171,7 +210,7 @@
   updated_at: '2025-05-07'
 - name: Derek Thibeault
   positions:
-  - Council Member
+  - Alderperson
   - Ward 8
   email: THIBEAULTD@NASHUANH.GOV
   phone_number: "(603) 305-8046"
@@ -185,7 +224,7 @@
   updated_at: '2025-05-07'
 - name: John Sullivan
   positions:
-  - Council Member
+  - Alderperson
   - Ward 9
   email: SULLIVANJ@NASHUANH.GOV
   phone_number: "(603) 365-7785"

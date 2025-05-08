@@ -33,11 +33,11 @@
       "population": 91322,
       "address": "229 Main Street, PO Box 2019; Nashua, NH 03061-2019",
       "phone_number": "(603) 589-3072",
-      "government_type": "mayor_council",
+      "government_type": "aldermen",
       "email": "cummingst@nashuanh.gov",
       "website": "http://www.nashuanh.gov",
       "meta_updated_at": "2025-05-07",
-      "meta_hash": "e66879d229e2f1405eee37d07fa0bfe3",
+      "meta_hash": "35fc7c73583d4e8722fd43f781c7e2ec",
       "meta_sources": [
         "state_source",
         "gemini",

@@ -754,19 +754,19 @@ Special Requirements:
 
  1.    
 
-#### Wed, May 7   
+#### Thu, May 8   
 
-  __ [Joint Meeting - Committee on Infrastructure and Police Commission](https://www.nashuanh.gov/Calendar.aspx?EID=12370)__  
+  __ [Budget Review Committee - FY26 Dept. Budgets - Public Works](https://www.nashuanh.gov/Calendar.aspx?EID=12422)__  
  1.    
 
-#### Wed, May 7   
+#### Fri, May 9   
 
-  __ [Committee on Infrastructure - 5/7/25](https://www.nashuanh.gov/Calendar.aspx?EID=12547)__  
+  __ [Downtown Improvement Committee](https://www.nashuanh.gov/Calendar.aspx?EID=12240)__  
  1.    
 
-#### Wed, May 7   
+#### Fri, May 9   
 
-  __ [Finance Committee](https://www.nashuanh.gov/Calendar.aspx?EID=11869)__  
+  __ [Nashua Center for the Arts Board of Trustees Meeting](https://www.nashuanh.gov/Calendar.aspx?EID=12476)__  
   [View All](https://www.nashuanh.gov/calendar.aspx)  /Calendar.aspx 
 
  1.   [Committee Membership (PDF)](https://www.nashuanh.gov/DocumentCenter/Index/2577)  
