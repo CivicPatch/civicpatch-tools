@@ -42,8 +42,9 @@ module Core
 
           if matching_division.present?
             division_string = normalize_division_string(
+              matching_division,
               normalized_position.slice(
-                normalized_position.index(matching_division)..
+                (normalized_position.index(matching_division) + matching_division.length)..
               )
             )
             next [divisions_map[matching_division], division_string]
@@ -73,33 +74,31 @@ module Core
         position.split(" ").map(&:capitalize).join(" ")
       end
 
-      def self.normalize_division_string(position_string)
+      def self.normalize_division_string(division, division_identifier)
+        division_identifier = division_identifier.strip
         unwanted_prefixes = ["no.", "no", "#"]
 
-        division, rest = position_string.split(" ", 2)
-        return position_string unless rest
-
         unwanted_prefixes.each do |prefix|
-          rest = rest.delete_prefix(prefix)
+          division_identifier = division_identifier.delete_prefix(prefix)
         end
 
-        rest = division_rest_to_number(rest)
+        rest = format_division_identifier(division_identifier)
 
         [division, rest].join(" ").split.join(" ")
       end
 
       # NOTE: Assume no one is going to use non-numeric characters
       # when numbers go higher than 10
-      def self.division_rest_to_number(division_rest_string)
+      def self.format_division_identifier(division_rest_string)
         number_words_in_english = %w[one two three four five six seven eight nine ten]
-        number_words_in_roman = %w[I II III IV V VI VII VIII IX X]
+        number_words_in_roman = %w[i ii iii iv v vi vii viii ix x]
 
         if number_words_in_english.include?(division_rest_string)
-          return number_words_in_english.index(division_rest_string) + 1
+          return (number_words_in_english.index(division_rest_string) + 1).to_s
         end
 
         if number_words_in_roman.include?(division_rest_string)
-          return number_words_in_roman.index(division_rest_string) + 1
+          return (number_words_in_roman.index(division_rest_string) + 1).to_s
         end
 
         division_rest_string

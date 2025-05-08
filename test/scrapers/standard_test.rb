@@ -109,4 +109,42 @@ class StandardTest < Minitest::Test
     assert_equal 1, result.size
     assert_includes result.map { |p| p["name"] }, "Ward 5"
   end
+
+  def test_exact_match_positions_from_mayor_council
+    # Test for exact matches from the mayor_council config
+    positions = ["council president"] # Exactly as in config
+
+    result = Scrapers::Standard.determine_positions(positions, nil, nil)
+    assert_equal 1, result.size
+    assert_equal "council president", result.first["name"]
+  end
+
+  def test_exact_match_with_different_case
+    # Test for case-insensitive exact matches
+    positions = ["Council President"] # Different case than config
+
+    result = Scrapers::Standard.determine_positions(positions, nil, nil)
+    assert_equal 1, result.size
+    assert_equal "council president", result.first["name"]
+  end
+
+  def test_division_handling_with_exact_match_priority
+    # Tests that exact matches are prioritized over division splitting
+    positions = ["council president ward 3"] # Should NOT be split if exact match exists
+
+    result = Scrapers::Standard.determine_positions(positions, nil, nil)
+    # Should preserve council president as one role, add ward 3 as division
+    assert_equal 2, result.size
+    assert_includes result.map { |p| p["name"] }, "council president"
+    assert_includes result.map { |p| p["name"] }, "ward 3"
+  end
+
+  def test_preserve_exact_match_for_compound_roles
+    # Test for preserving specific compound roles from config
+    positions = ["president board of aldermen"] # Exact match in aldermen config
+
+    result = Scrapers::Standard.determine_positions(positions, nil, nil)
+    assert_equal 1, result.size
+    assert_equal "president board of aldermen", result.first["name"]
+  end
 end
