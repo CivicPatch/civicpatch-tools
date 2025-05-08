@@ -92,10 +92,7 @@ namespace :pipeline do
   def fetch_with_state_source(municipality_context)
     puts "#{municipality_context[:state]} - #{municipality_context[:municipality_entry]["name"]} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
-    puts "government type #{municipality_context[:government_type]}"
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
-
-    puts "Positions config: #{positions_config}"
 
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
