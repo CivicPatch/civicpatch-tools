@@ -23,6 +23,10 @@ government_types:
         aliases: 
         - mayor pro-tem
         - mayor pro tem
+      - role: chair
+      - role: vice chair
+        aliases:
+        - vice-chair
       - role: deputy mayor
       - role: council president
       - role: deputy council president

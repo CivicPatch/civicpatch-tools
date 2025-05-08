@@ -16,13 +16,14 @@ module Services
         Instructions:
 
         First, determine the total number of elected officials on the City Council for #{city_name}.
-        This total number includes the Mayor.
+        This total number includes the Mayor (only if available).
 
         Create a JSON object with a single top-level key "people". The value of "people" must be an array.
 
         This array must contain exactly the total number of elected officials determined in step 1.
 
-        Within the array, include one entry for the Mayor and the remaining entries for "Council Member" positions.
+        Within the array, include one entry for the Mayor (only if available)
+        and the remaining entries for "Council Member" positions.
 
         For each entry in the array, provide the current elected official's name
         only if you are highly certain based on your training data or search results.
