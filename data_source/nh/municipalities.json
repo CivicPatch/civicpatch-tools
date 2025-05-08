@@ -205,7 +205,14 @@
       "phone_number": "(603) 472-5243",
       "government_type": "mayor_council",
       "email": "rhebert@bedfordnh.org",
-      "website": "http://www.bedfordnh.org"
+      "website": "http://www.bedfordnh.org",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "f623150826d3d6ec4d89c258903ac6c4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Keene",
