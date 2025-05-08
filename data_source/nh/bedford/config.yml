@@ -1,0 +1,28 @@
+---
+scrape_sources:
+- https://www.bedfordnh.org/219/Town-Council
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Becky Soule
+    positions:
+    - Council Member
+  - name: David Gilbert
+    positions:
+    - Council Member
+  - name: Kathleen Bemiss
+    positions:
+    - Council Member
+  - name: Lori Radke
+    positions:
+    - Council Member
+  - name: Michael Strand
+    positions:
+    - Council Member
+  - name: Phil Greazzo
+    positions:
+    - Council Member
+  - name: William Carter
+    positions:
+    - Council Member
+people: {}
