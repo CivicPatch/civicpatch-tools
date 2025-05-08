@@ -9,14 +9,13 @@
     ],
     "positions": [
       "Chairman",
-      "Board of Selectmen",
       "Selectman"
     ],
     "phone_numbers": [
       {
         "data": "603-886-6024",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
@@ -29,28 +28,22 @@
     "emails": [
       {
         "data": "ddumont@hudsonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly next to the name.",
-        "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
-      },
-      {
-        "data": "ddumont@hudsonnh.gov",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.hudsonnh.gov/directory-listing/dillon-dumont"
+        "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       }
     ],
     "websites": [
       {
         "data": "https://www.hudsonnh.gov/directory-listing/dillon-dumont",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL linked to the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked from the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
         "data": "https://www.hudsonnh.gov/directory-listing/dillon-dumont",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name in the table and skip link.",
+        "llm_confidence_reason": "URL associated with the name in the table and main content link.",
         "source": "https://www.hudsonnh.gov/directory-listing/dillon-dumont"
       }
     ],
@@ -58,15 +51,9 @@
     "end_dates": [
       {
         "data": "2027-03",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date 'March 2027' listed directly next to the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'March 2027' explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
-      },
-      {
-        "data": "2027-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date 'March 2027' explicitly listed next to the position.",
-        "source": "https://www.hudsonnh.gov/directory-listing/dillon-dumont"
       }
     ],
     "updated_at": "2025-05-08"
@@ -80,48 +67,50 @@
       "https://www.hudsonnh.gov/directory-listing/bob-guessferd"
     ],
     "positions": [
+      "Vice Chair",
+      "Selectman",
       "Vice-Chairman",
       "Board of Selectmen"
     ],
     "phone_numbers": [
       {
         "data": "603-886-6024",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
         "data": "603-886-6024",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed and labeled.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed next to name and 'Phone Number:' label.",
         "source": "https://www.hudsonnh.gov/directory-listing/bob-guessferd"
       }
     ],
     "emails": [
       {
         "data": "rguessferd@hudsonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
         "data": "rguessferd@hudsonnh.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed and labeled.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed next to name and 'Email:' label.",
         "source": "https://www.hudsonnh.gov/directory-listing/bob-guessferd"
       }
     ],
     "websites": [
       {
         "data": "https://www.hudsonnh.gov/directory-listing/bob-guessferd",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL linked to the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked from the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
-        "data": "https://www.hudsonnh.gov/directory-listing/bob-guessferd",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to person's profile page found in table.",
+        "data": "https://www.hudsonnh.gov/directory-listing/bob-guessferd/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the name in the table.",
         "source": "https://www.hudsonnh.gov/directory-listing/bob-guessferd"
       }
     ],
@@ -129,14 +118,14 @@
     "end_dates": [
       {
         "data": "2028-03",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date 'March 2028' listed directly next to the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'March 2028' explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
         "data": "2028-03",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term end date 'March 2028' explicitly listed next to position.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'March 2028' next to position.",
         "source": "https://www.hudsonnh.gov/directory-listing/bob-guessferd"
       }
     ],
@@ -156,8 +145,8 @@
     "phone_numbers": [
       {
         "data": "603-886-6024",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
@@ -170,22 +159,28 @@
     "emails": [
       {
         "data": "dmorin@hudsonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
+      },
+      {
+        "data": "dmorin@hudsonnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.hudsonnh.gov/directory-listing/david-s-morin"
       }
     ],
     "websites": [
       {
         "data": "https://www.hudsonnh.gov/directory-listing/david-s-morin",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL linked to the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked from the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
         "data": "https://www.hudsonnh.gov/directory-listing/david-s-morin",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is a direct link associated with the person's name in a directory table.",
+        "llm_confidence_reason": "URL associated with the name in the table.",
         "source": "https://www.hudsonnh.gov/directory-listing/david-s-morin"
       }
     ],
@@ -193,9 +188,15 @@
     "end_dates": [
       {
         "data": "2026-03",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date 'March 2026' listed directly next to the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'March 2026' explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
+      },
+      {
+        "data": "2026-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'March 2026' explicitly listed next to the position and name.",
+        "source": "https://www.hudsonnh.gov/directory-listing/david-s-morin"
       }
     ],
     "updated_at": "2025-05-08"
@@ -214,8 +215,8 @@
     "phone_numbers": [
       {
         "data": "603-886-6024",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
@@ -228,8 +229,8 @@
     "emails": [
       {
         "data": "xvurgaropulos@hudsonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
@@ -242,8 +243,8 @@
     "websites": [
       {
         "data": "https://www.hudsonnh.gov/directory-listing/xen-vurgaropulos",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL linked to the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked from the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
@@ -257,8 +258,8 @@
     "end_dates": [
       {
         "data": "2028-03",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date 'March 2028' listed directly next to the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'March 2028' explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
@@ -284,13 +285,13 @@
     "phone_numbers": [
       {
         "data": "603-886-6024",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
         "data": "603-886-6024",
-        "llm_confidence": 1.0,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Phone number explicitly listed next to the name.",
         "source": "https://www.hudsonnh.gov/directory-listing/heidi-jakoby"
       }
@@ -298,28 +299,22 @@
     "emails": [
       {
         "data": "hjakoby@hudsonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly next to the name.",
-        "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
-      },
-      {
-        "data": "hjakoby@hudsonnh.gov",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.hudsonnh.gov/directory-listing/heidi-jakoby"
+        "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       }
     ],
     "websites": [
       {
         "data": "https://www.hudsonnh.gov/directory-listing/heidi-jakoby",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL linked to the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked from the name.",
         "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       },
       {
         "data": "https://www.hudsonnh.gov/directory-listing/heidi-jakoby/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is a directory listing specifically for Heidi Jakoby.",
+        "llm_confidence_reason": "URL associated with the person's name in a directory listing table.",
         "source": "https://www.hudsonnh.gov/directory-listing/heidi-jakoby"
       }
     ],
@@ -327,15 +322,9 @@
     "end_dates": [
       {
         "data": "2027-03",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date 'March 2027' listed directly next to the name and title.",
-        "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
-      },
-      {
-        "data": "2027-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'March 2027' as the term end date.",
-        "source": "https://www.hudsonnh.gov/directory-listing/heidi-jakoby"
+        "llm_confidence_reason": "End date 'March 2027' explicitly listed next to the name.",
+        "source": "https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members"
       }
     ],
     "updated_at": "2025-05-08"
