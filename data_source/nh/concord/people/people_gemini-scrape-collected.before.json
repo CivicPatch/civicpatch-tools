@@ -7,7 +7,9 @@
       "https://www.concordnh.gov/Directory.aspx?did=18",
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=257",
-      "https://concordnh.gov/directory.aspx?EID=257"
+      "https://concordnh.gov/directory.aspx?EID=257",
+      "https://www.concordnh.gov/directory.aspx?EID=257/",
+      "https://concordnh.gov/directory.aspx?EID=257/"
     ],
     "positions": [
       "Mayor"
@@ -16,48 +18,84 @@
       {
         "data": "603-228-0097",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number directly listed in table next to name.",
+        "llm_confidence_reason": "Phone number explicitly listed in table next to name.",
         "source": "https://www.concordnh.gov/Directory.aspx?did=18"
       },
       {
         "data": "603-228-0097",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number directly associated with the name and contact information.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed twice.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=257"
       },
       {
         "data": "603-228-0097",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
+        "llm_confidence_reason": "Phone number explicitly listed.",
         "source": "https://concordnh.gov/directory.aspx?EID=257"
+      },
+      {
+        "data": "603-228-0097",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed and associated with the name.",
+        "source": "https://www.concordnh.gov/directory.aspx?EID=257/"
+      },
+      {
+        "data": "603-228-0097",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and title.",
+        "source": "https://concordnh.gov/directory.aspx?EID=257/"
       }
     ],
     "emails": [
       {
         "data": "bchamplin@concordnh.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly listed in table next to name.",
+        "llm_confidence_reason": "Email address explicitly listed in table next to name.",
         "source": "https://www.concordnh.gov/Directory.aspx?did=18"
       },
       {
         "data": "bchamplin@concordnh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name and contact information.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed and linked.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=257"
       },
       {
-        "data": "bchamplin@concordnh.gov",
+        "data": "BChamplin@Concordnh.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to name and title.",
+        "llm_confidence_reason": "Email address explicitly listed and linked.",
         "source": "https://concordnh.gov/directory.aspx?EID=257"
+      },
+      {
+        "data": "bchamplin@concordnh.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed and associated with the name.",
+        "source": "https://www.concordnh.gov/directory.aspx?EID=257/"
       }
     ],
     "websites": [
       {
         "data": "https://www.concordnh.gov/directory.aspx?EID=257",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL linked from the person's name in the staff table, likely a profile page.",
+        "llm_confidence_reason": "Link associated with the person's name in the directory table.",
         "source": "https://www.concordnh.gov/Directory.aspx?did=18"
+      },
+      {
+        "data": "https://www.concordnh.gov/directory.aspx?EID=257/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the specific profile page for the person.",
+        "source": "https://www.concordnh.gov/directory.aspx?EID=257"
+      },
+      {
+        "data": "https://concordnh.gov/directory.aspx?EID=257/",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This page appears to be the individual's profile page.",
+        "source": "https://concordnh.gov/directory.aspx?EID=257"
+      },
+      {
+        "data": "https://concordnh.gov/directory.aspx?EID=257/",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "This is the specific directory page for the person, although not a dedicated personal profile.",
+        "source": "https://concordnh.gov/directory.aspx?EID=257/"
       }
     ],
     "start_dates": [],
@@ -70,29 +108,44 @@
     "source_image": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://www.concordnh.gov/directory.aspx?EID=135"
+      "https://www.concordnh.gov/directory.aspx?EID=135",
+      "https://www.concordnh.gov/directory.aspx?EID=135/"
     ],
     "positions": [
       "Councilor",
-      "Ward One"
+      "Ward One",
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "603-753-9609",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number found directly associated with the person's name and contact information.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to 'Phone:' and in contact section.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=135"
+      },
+      {
+        "data": "603-753-9609",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
+        "source": "https://www.concordnh.gov/directory.aspx?EID=135/"
       }
     ],
     "emails": [
       {
         "data": "brenttoddconcord@gmail.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the person's name and contact information.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed and linked.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=135"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.concordnh.gov/directory.aspx?EID=135/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is a profile page for this person.",
+        "source": "https://www.concordnh.gov/directory.aspx?EID=135"
+      }
+    ],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-08"
@@ -103,29 +156,56 @@
     "source_image": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=259"
+      "https://concordnh.gov/directory.aspx?EID=259",
+      "https://concordnh.gov/directory.aspx?EID=259/"
     ],
     "positions": [
       "Councilor",
-      "Ward Two"
+      "Ward Two",
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "603-533-9278",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed.",
+        "llm_confidence_reason": "Phone number directly listed.",
         "source": "https://concordnh.gov/directory.aspx?EID=259"
+      },
+      {
+        "data": "603-533-9278",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and repeated.",
+        "source": "https://concordnh.gov/directory.aspx?EID=259/"
       }
     ],
     "emails": [
       {
         "data": "mhorne@concordnh.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "llm_confidence_reason": "Email address directly listed.",
         "source": "https://concordnh.gov/directory.aspx?EID=259"
+      },
+      {
+        "data": "mhorne@concordnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked.",
+        "source": "https://concordnh.gov/directory.aspx?EID=259/"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://concordnh.gov/directory.aspx?EID=259/",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page URL for Michele Horne, but not a dedicated personal profile page.",
+        "source": "https://concordnh.gov/directory.aspx?EID=259"
+      },
+      {
+        "data": "https://concordnh.gov/directory.aspx?EID=259/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the specific profile page for Michele Horne on the city website.",
+        "source": "https://concordnh.gov/directory.aspx?EID=259/"
+      }
+    ],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-08"
@@ -136,29 +216,50 @@
     "source_image": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://www.concordnh.gov/Directory.aspx?EID=18"
+      "https://www.concordnh.gov/Directory.aspx?EID=18",
+      "https://www.concordnh.gov/Directory.aspx?EID=18/"
     ],
     "positions": [
       "Councilor",
-      "Ward Three"
+      "Ward Three",
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "603-228-8395",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed next to the name and in the contact section.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=18"
+      },
+      {
+        "data": "603-228-8395",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed and associated with the name.",
+        "source": "https://www.concordnh.gov/Directory.aspx?EID=18/"
       }
     ],
     "emails": [
       {
         "data": "JKretovic@concordnh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.concordnh.gov/Directory.aspx?EID=18"
+        "llm_confidence_reason": "Email address explicitly listed and associated with the name.",
+        "source": "https://www.concordnh.gov/Directory.aspx?EID=18/"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.concordnh.gov/Directory.aspx?EID=18/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page URL is a directory entry specifically for this person.",
+        "source": "https://www.concordnh.gov/Directory.aspx?EID=18"
+      },
+      {
+        "data": "https://www.concordnh.gov/Directory.aspx?EID=18",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "This is the specific directory page for Jennifer Kretovic, serving as her profile page on the municipal website.",
+        "source": "https://www.concordnh.gov/Directory.aspx?EID=18/"
+      }
+    ],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-08"
@@ -179,7 +280,7 @@
       {
         "data": "603-545-5578",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
+        "llm_confidence_reason": "Phone number explicitly listed next to name and title, and repeated in contact section.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=220"
       }
     ],
@@ -214,13 +315,13 @@
       {
         "data": "603-717-1350",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed.",
+        "llm_confidence_reason": "Phone number explicitly provided and associated with the name.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=223"
       },
       {
         "data": "603-717-1350",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
+        "llm_confidence_reason": "Phone number explicitly provided and associated with the person.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=223/"
       }
     ],
@@ -228,16 +329,28 @@
       {
         "data": "sfbrown@concordnh.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed and provided as a mailto link.",
+        "llm_confidence_reason": "Email address explicitly provided and associated with the name.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=223"
+      },
+      {
+        "data": "sfbrown@concordnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked to the person.",
+        "source": "https://www.concordnh.gov/Directory.aspx?EID=223/"
       }
     ],
     "websites": [
       {
         "data": "https://www.concordnh.gov/Directory.aspx?EID=223/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the specific profile page for the individual.",
+        "llm_confidence_reason": "The page URL is a directory entry specifically for this person.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=223"
+      },
+      {
+        "data": "https://www.concordnh.gov/Directory.aspx?EID=223/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL appears to be the specific profile page for this person.",
+        "source": "https://www.concordnh.gov/Directory.aspx?EID=223/"
       }
     ],
     "start_dates": [],
@@ -259,16 +372,16 @@
     "phone_numbers": [
       {
         "data": "603-848-2930",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name and in contact section.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=224"
       }
     ],
     "emails": [
       {
         "data": "pwmclaughlin24@gmail.com",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed and provided as a mailto link.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=224"
       }
     ],
@@ -287,22 +400,21 @@
     ],
     "positions": [
       "Councilor",
-      "Ward Seven",
-      "Council Member"
+      "Ward Seven"
     ],
     "phone_numbers": [
       {
         "data": "781-879-2089",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed and associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
         "source": "https://concordnh.gov/directory.aspx?EID=260"
       }
     ],
     "emails": [
       {
         "data": "jim4concord@gmail.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed and associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed and provided as a mailto link.",
         "source": "https://concordnh.gov/directory.aspx?EID=260"
       }
     ],
@@ -353,29 +465,50 @@
     "source_image": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=263"
+      "https://concordnh.gov/directory.aspx?EID=263",
+      "https://concordnh.gov/directory.aspx?EID=263/"
     ],
     "positions": [
       "Councilor",
-      "Ward Ten"
+      "Ward Ten",
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "603-225-3256",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is explicitly listed next to the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
         "source": "https://concordnh.gov/directory.aspx?EID=263"
+      },
+      {
+        "data": "603-225-3256",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://concordnh.gov/directory.aspx?EID=263/"
       }
     ],
     "emails": [
       {
         "data": "jfoote@concordnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed.",
+        "source": "https://concordnh.gov/directory.aspx?EID=263"
+      },
+      {
+        "data": "jfoote@concordnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed.",
+        "source": "https://concordnh.gov/directory.aspx?EID=263/"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://concordnh.gov/directory.aspx?EID=263/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is explicitly listed next to the name.",
+        "llm_confidence_reason": "The current page URL is a profile page for this person.",
         "source": "https://concordnh.gov/directory.aspx?EID=263"
       }
     ],
-    "websites": [],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-08"
@@ -390,14 +523,13 @@
     ],
     "positions": [
       "Councilor",
-      "At-Large",
-      "Council Member"
+      "At-Large"
     ],
     "phone_numbers": [
       {
         "data": "603-856-3890",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed next to the name and in the contact section.",
+        "llm_confidence_reason": "Phone number explicitly listed.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=14"
       }
     ],
@@ -405,7 +537,7 @@
       {
         "data": "nfennessy@concordnh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address explicitly listed.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=14"
       }
     ],
@@ -431,7 +563,7 @@
       {
         "data": "603-548-9377",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed.",
+        "llm_confidence_reason": "Phone number explicitly listed next to name and under contact.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=19"
       }
     ],
@@ -439,7 +571,7 @@
       {
         "data": "agradysexton@concordnh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed and linked.",
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=19"
       }
     ],
@@ -465,36 +597,36 @@
     "phone_numbers": [
       {
         "data": "603-568-7667",
-        "llm_confidence": 0.98,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Phone number explicitly listed.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=25"
       },
       {
         "data": "603-568-7667",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed and repeated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed explicitly under 'Phone' and in contact section.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=25/"
       }
     ],
     "emails": [
       {
         "data": "fkeach@concordnh.gov",
-        "llm_confidence": 0.98,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly listed and linked.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=25"
       },
       {
         "data": "fkeach@concordnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found directly in mailto link text.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=25/"
       }
     ],
     "websites": [
       {
         "data": "https://www.concordnh.gov/directory.aspx?EID=25/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the specific profile page for the person.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This page appears to be the individual's profile page.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=25"
       }
     ],
@@ -508,8 +640,7 @@
     "source_image": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=258",
-      "https://concordnh.gov/directory.aspx?EID=258/"
+      "https://concordnh.gov/directory.aspx?EID=258"
     ],
     "positions": [
       "Councilor",
@@ -519,39 +650,20 @@
     "phone_numbers": [
       {
         "data": "603-406-4953",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed multiple times.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed and associated with the name.",
         "source": "https://concordnh.gov/directory.aspx?EID=258"
-      },
-      {
-        "data": "603-406-4953",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
-        "source": "https://concordnh.gov/directory.aspx?EID=258/"
       }
     ],
     "emails": [
       {
         "data": "jkurtz@concordnh.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed and linked.",
-        "source": "https://concordnh.gov/directory.aspx?EID=258"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://concordnh.gov/directory.aspx?EID=258/",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the specific directory page for the person.",
+        "llm_confidence_reason": "Email address explicitly listed and associated with the name.",
         "source": "https://concordnh.gov/directory.aspx?EID=258"
-      },
-      {
-        "data": "https://concordnh.gov/Directory.aspx?DID=10",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to 'At-Large Councilors' directory page is provided near the name, likely the closest thing to a profile page.",
-        "source": "https://concordnh.gov/directory.aspx?EID=258/"
       }
     ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-08"

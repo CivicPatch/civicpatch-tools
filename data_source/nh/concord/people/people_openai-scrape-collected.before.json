@@ -106,7 +106,7 @@
       {
         "data": "brenttoddconcord@gmail.com",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near name.",
         "source": "https://www.concordnh.gov/directory.aspx?EID=135"
       }
     ],
@@ -253,8 +253,7 @@
     ],
     "positions": [
       "Council Member",
-      "Ward Five",
-      "Ward 5"
+      "Ward Five"
     ],
     "phone_numbers": [
       {
@@ -301,7 +300,7 @@
       {
         "data": "603-848-2930",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' and repeated in contact section near name.",
         "source": "https://www.concordnh.gov/Directory.aspx?EID=224"
       }
     ],
@@ -319,12 +318,6 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "URL is a directory link associated with Paula McLaughlin's name under Ward Councilors.",
         "source": "https://www.concordnh.gov/282/City-Council"
-      },
-      {
-        "data": "https://www.concordnh.gov/Directory.aspx?EID=224",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the profile page for Paula McLaughlin.",
-        "source": "https://www.concordnh.gov/Directory.aspx?EID=224"
       }
     ],
     "start_dates": [],
@@ -348,7 +341,7 @@
       {
         "data": "781-879-2089",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' and repeated in contact section near name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone' and repeated in contact section near name.",
         "source": "https://concordnh.gov/directory.aspx?EID=260"
       }
     ],
@@ -356,7 +349,7 @@
       {
         "data": "jim4concord@gmail.com",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near name.",
         "source": "https://concordnh.gov/directory.aspx?EID=260"
       }
     ],
@@ -397,7 +390,7 @@
       {
         "data": "asekou@concordnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://concordnh.gov/directory.aspx?EID=261"
       }
     ],
@@ -429,7 +422,7 @@
     "phone_numbers": [
       {
         "data": "603-275-2227",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Phone number labeled 'Phone:' and repeated in contact section near name.",
         "source": "https://concordnh.gov/directory.aspx?EID=262"
       }
@@ -438,7 +431,7 @@
       {
         "data": "kschultz@concordnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://concordnh.gov/directory.aspx?EID=262"
       }
     ],
@@ -479,7 +472,7 @@
       {
         "data": "jfoote@concordnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near name.",
         "source": "https://concordnh.gov/directory.aspx?EID=263"
       }
     ],
@@ -529,6 +522,12 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "URL is a directory link associated with Nathan Fennessy's name under At-Large Councilors.",
         "source": "https://www.concordnh.gov/282/City-Council"
+      },
+      {
+        "data": "https://www.concordnh.gov/directory.aspx?EID=14",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for the person.",
+        "source": "https://www.concordnh.gov/directory.aspx?EID=14"
       }
     ],
     "start_dates": [],
@@ -660,7 +659,7 @@
       {
         "data": "https://concordnh.gov/directory.aspx?EID=258",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Judith Kurtz's directory entry.",
+        "llm_confidence_reason": "Page URL is the profile page for Judith Kurtz.",
         "source": "https://concordnh.gov/directory.aspx?EID=258"
       }
     ],
