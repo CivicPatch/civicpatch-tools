@@ -24,6 +24,8 @@ government_types:
         - mayor pro-tem
         - mayor pro tem
       - role: chair
+        aliases:
+        - town council chair
       - role: vice chair
         aliases:
         - vice-chair
@@ -41,6 +43,7 @@ government_types:
           - councilman
           - councilor
           - councillor
+          - town council member
         divisions: *divisions
     position_examples: *position_examples
     exclude_positions:

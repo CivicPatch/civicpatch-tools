@@ -4,37 +4,36 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.salemnh.gov/537/Town-Council",
-      "https://www.salemnh.gov/537/Town-Council/"
+      "https://www.salemnh.gov/537/Town-Council"
     ],
     "positions": [
-      "Chair",
-      "Town Council Member"
+      "Town Council Member",
+      "Chair"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2024-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
+    "websites": [],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2026-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2026' directly under the person's name.",
-        "source": "https://www.salemnh.gov/537/Town-Council/"
+        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2026'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
     "updated_at": "2025-05-08"
@@ -47,28 +46,35 @@
       "https://www.salemnh.gov/537/Town-Council"
     ],
     "positions": [
-      "Vice-Chair",
-      "Town Council Member"
+      "Town Council Member",
+      "Vice Chair"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2024-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {
@@ -79,28 +85,35 @@
       "https://www.salemnh.gov/537/Town-Council"
     ],
     "positions": [
-      "Secretary",
-      "Town Council Member"
+      "Town Council Member",
+      "Secretary"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2024-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {
@@ -113,25 +126,32 @@
     "positions": [
       "Town Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2023-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term expires March 2026'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {
@@ -144,25 +164,32 @@
     "positions": [
       "Town Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2024-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {
@@ -175,25 +202,32 @@
     "positions": [
       "Town Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2025-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2028'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {
@@ -206,25 +240,32 @@
     "positions": [
       "Town Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2025-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2028'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {
@@ -237,25 +278,32 @@
     "positions": [
       "Town Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2023-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2026'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {
@@ -268,25 +316,32 @@
     "positions": [
       "Town Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.salemnh.gov/537/Town-Council/",
+        "data": "603-890-2120",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "This is the general council page, not a specific profile page.",
+        "llm_confidence_reason": "General Town Council phone number, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "start_dates": [
+    "emails": [
       {
-        "data": "2025-03",
+        "data": "Salem_Town_Council@salemnh.gov",
         "llm_confidence": 0.5,
-        "llm_confidence_reason": "Assuming term starts in March of the year prior to expiration, but not explicitly stated.",
+        "llm_confidence_reason": "General Town Council email, not specific to the individual.",
         "source": "https://www.salemnh.gov/537/Town-Council"
       }
     ],
-    "end_dates": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2028'.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
     "updated_at": "2025-05-08"
   }
 ]
