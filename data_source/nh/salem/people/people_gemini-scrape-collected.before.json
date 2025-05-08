@@ -1,1 +1,351 @@
-[]
+[
+  {
+    "name": "Cathy Ann Stacey",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=194"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Chair",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=194",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2026' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      },
+      {
+        "data": "2026-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2026'.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=194"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Jeffrey Hatch",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=192"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Vice Chair",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=192",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      },
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=192/",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the specific page for Jeffrey Hatch.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=192"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      },
+      {
+        "data": "2027-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027'.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=192"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Lisa Withrow",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Secretary"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "DJ Bettencourt",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=191"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Vice-Chair"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=191",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term expires March 2026' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Robert F. Bryant",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=189"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Councilor",
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=189",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      },
+      {
+        "data": "2027-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2027' and converted to YYYY-MM format.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=189"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Paul Pelletier",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=193"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=193",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2028' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      },
+      {
+        "data": "2025-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2025'.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=193"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Keith Stramaglia",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=195"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=195",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2028' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      },
+      {
+        "data": "2025-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2025'.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=195"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Joseph F. Sweeney",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=190"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Chair",
+      "Town Council"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=190",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2026' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      },
+      {
+        "data": "2026-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: March 2026'.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=190"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Bonnie Wright",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=197"
+    ],
+    "positions": [
+      "Town Council Member",
+      "Councilor"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.salemnh.gov/directory.aspx?EID=197",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name in the staff directory table.",
+        "source": "https://www.salemnh.gov/Directory.aspx?did=55"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2028' next to the name.",
+        "source": "https://www.salemnh.gov/537/Town-Council"
+      },
+      {
+        "data": "2025-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires March 2025' and converted to YYYY-MM format.",
+        "source": "https://www.salemnh.gov/directory.aspx?EID=197"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  }
+]

@@ -1,1 +1,184 @@
-[]
+[
+  {
+    "name": "Cathy Ann Stacey",
+    "positions": [
+      "Town Council Member",
+      "Chair",
+      "Councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=194",
+    "start_date": null,
+    "end_date": "2026-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=194"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Jeffrey Hatch",
+    "positions": [
+      "Town Council Member",
+      "Vice Chair",
+      "Councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=192/",
+    "start_date": null,
+    "end_date": "2027-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=192"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Lisa Withrow",
+    "positions": [
+      "Town Council Member",
+      "Secretary"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2027-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "DJ Bettencourt",
+    "positions": [
+      "Town Council Member",
+      "Vice-Chair"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=191",
+    "start_date": null,
+    "end_date": "2026-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=191"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Robert F. Bryant",
+    "positions": [
+      "Town Council Member",
+      "Councilor",
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=189",
+    "start_date": null,
+    "end_date": "2027-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=189"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Paul Pelletier",
+    "positions": [
+      "Town Council Member",
+      "Councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=193",
+    "start_date": null,
+    "end_date": "2028-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=193"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Keith Stramaglia",
+    "positions": [
+      "Town Council Member",
+      "Councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=195",
+    "start_date": null,
+    "end_date": "2028-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=195"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Joseph F. Sweeney",
+    "positions": [
+      "Town Council Member",
+      "Chair",
+      "Town Council"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=190",
+    "start_date": null,
+    "end_date": "2026-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=190"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Bonnie Wright",
+    "positions": [
+      "Town Council Member",
+      "Councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.salemnh.gov/directory.aspx?EID=197",
+    "start_date": null,
+    "end_date": "2028-03",
+    "sources": [
+      "https://www.salemnh.gov/537/Town-Council",
+      "https://www.salemnh.gov/Directory.aspx?did=55",
+      "https://www.salemnh.gov/directory.aspx?EID=197"
+    ],
+    "updated_at": "2025-05-08"
+  }
+]
