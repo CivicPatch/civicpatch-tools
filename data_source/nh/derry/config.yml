@@ -1,0 +1,27 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Brian Chirichiello
+    positions:
+    - Council Member
+  - name: Charles Foote
+    positions:
+    - Council Member
+  - name: David Granese
+    positions:
+    - Council Member
+  - name: Douglas Flood
+    positions:
+    - Council Member
+  - name: Erin Spencer
+    positions:
+    - Council Member
+  - name: Jack Webb
+    positions:
+    - Council Member
+  - name: Jim MacEachern
+    positions:
+    - Council Member
+people: {}
