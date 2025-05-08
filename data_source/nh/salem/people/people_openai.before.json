@@ -2,7 +2,7 @@
   {
     "name": "Cathy Ann Stacey",
     "positions": [
-      "Town Council Chair",
+      "Chair",
       "Councilor"
     ],
     "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
@@ -22,7 +22,7 @@
   {
     "name": "Jeffrey Hatch",
     "positions": [
-      "Town Council Vice-Chair",
+      "Vice-Chair",
       "Councilor"
     ],
     "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
@@ -42,9 +42,7 @@
   {
     "name": "Lisa Withrow",
     "positions": [
-      "Town Council Secretary",
-      "Secretary",
-      "Town Council Member"
+      "Secretary"
     ],
     "image": null,
     "source_image": null,
@@ -63,7 +61,7 @@
   {
     "name": "DJ Bettencourt",
     "positions": [
-      "Town Council Member",
+      "Council Member",
       "Vice-Chair",
       "Vice Chair"
     ],
@@ -84,7 +82,7 @@
   {
     "name": "Robert F. Bryant",
     "positions": [
-      "Town Council Member",
+      "Council Member",
       "Councilor"
     ],
     "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
@@ -104,7 +102,7 @@
   {
     "name": "Paul Pelletier",
     "positions": [
-      "Town Council Member",
+      "Council Member",
       "Councilor"
     ],
     "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
@@ -124,7 +122,7 @@
   {
     "name": "Keith Stramaglia",
     "positions": [
-      "Town Council Member",
+      "Council Member",
       "Councilor"
     ],
     "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
@@ -144,11 +142,11 @@
   {
     "name": "Joseph F. Sweeney",
     "positions": [
-      "Town Council Member",
+      "Council Member",
       "Chair"
     ],
-    "image": null,
-    "source_image": null,
+    "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
+    "source_image": "https://www.salemnh.gov/ImageRepository/Document?documentId=71",
     "phone_number": null,
     "email": null,
     "website": "https://www.salemnh.gov/directory.aspx?EID=190",
@@ -164,7 +162,7 @@
   {
     "name": "Bonnie Wright",
     "positions": [
-      "Town Council Member",
+      "Council Member",
       "Councilor"
     ],
     "image": "images/d0818aa906f2a011eef4ac4d769b0ea3932daa487014258437f51184f6a812d5.png",
