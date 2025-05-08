@@ -7,34 +7,47 @@ module Utils
 
       # TODO: Only support one phone # for now
       phone = phone.first if phone.is_a?(Array)
-      phone.strip.empty?
+      return nil if phone.strip.empty?
 
-      # Extract digits and plus sign for international numbers
-      digits = phone.gsub(/[^\d+]/, "")
+      # Check for extension before removing non-digits
+      has_ext = phone.match(/ext(?:ension)?|x/i)
 
-      # Handle extensions (e.g., "123-456-7890 ext. 123")
-      base_number, extension = digits.split(/ext|x/i, 2).map(&:strip)
+      # Split by extension separator
+      base_phone, extension = if has_ext
+                                phone.split(/ext(?:ension)?|x/i, 2).map(&:strip)
+                              else
+                                [phone, nil]
+                              end
+
+      # Now extract digits from base phone, preserving the + sign if it exists
+      has_plus = base_phone.start_with?("+")
+      base_digits = base_phone.gsub(/[^\d]/, "")
 
       # Reject numbers that are too short (e.g., 7-digit numbers)
-      return nil if base_number.nil?
-      return nil if base_number.length < 10
+      return nil if base_digits.nil? || base_digits.empty?
+      return nil if base_digits.length < 10
+
+      # Extract digits from extension if present
+      ext_digits = extension&.gsub(/[^\d]/, "")
 
       # U.S. Number Formatting
-      formatted = case base_number.length
+      formatted = case base_digits.length
                   when 10
-                    "(#{base_number[0..2]}) #{base_number[3..5]}-#{base_number[6..9]}"
+                    "(#{base_digits[0..2]}) #{base_digits[3..5]}-#{base_digits[6..9]}"
                   when 11
-                    if base_number.start_with?("1") # U.S. country code
-                      "(#{base_number[1..3]}) #{base_number[4..6]}-#{base_number[7..10]}"
+                    if base_digits.start_with?("1") # U.S. country code
+                      "(#{base_digits[1..3]}) #{base_digits[4..6]}-#{base_digits[7..10]}"
                     else
-                      "+#{base_number}" # Assume international
+                      # International with 11 digits
+                      has_plus ? "+#{base_digits}" : base_digits
                     end
                   else
-                    "+#{base_number}" # Default to international
+                    # International or other format
+                    has_plus ? "+#{base_digits}" : base_digits
                   end
 
       # Append extension if present
-      extension ? "#{formatted} ext. #{extension}" : formatted
+      ext_digits ? "#{formatted} ext. #{ext_digits}" : formatted
     end
   end
 end

@@ -1,0 +1,24 @@
+---
+scrape_sources:
+- http://www.londonderrynh.org/378/Town-Council
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Ron Dunn
+    positions:
+    - Chair
+    - Council Member
+  - name: Shawn Faber
+    positions:
+    - Vice Chair
+    - Council Member
+  - name: Dan Bouchard
+    positions:
+    - Council Member
+  - name: Deb Paul
+    positions:
+    - Council Member
+  - name: Ted Combes
+    positions:
+    - Council Member
+people: {}
