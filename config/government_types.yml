@@ -26,10 +26,12 @@ government_types:
         - mayor pro tem
       - role: chair
         aliases:
+        - chairwoman
         - town council chair
       - role: vice chair
         aliases:
         - vice-chair
+        - vice chairwoman
       - role: deputy mayor
       - role: council president
       - role: deputy council president
