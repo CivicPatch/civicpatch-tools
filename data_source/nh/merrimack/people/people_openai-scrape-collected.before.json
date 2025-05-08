@@ -9,11 +9,7 @@
     ],
     "positions": [
       "Chairman",
-      "Town Council Chairman",
-      "Town Council Representative",
-      "Highway Safety Committee",
-      "Town Center Committee",
-      "Heritage Commission"
+      "Town Council"
     ],
     "phone_numbers": [
       {
@@ -24,8 +20,8 @@
       },
       {
         "data": "(603) 494-0893",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number explicitly listed near name with label 'Phone:'",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name.",
         "source": "https://www.merrimacknh.gov/people/finlay-rothhaus"
       }
     ],
@@ -40,7 +36,7 @@
       {
         "data": "https://www.merrimacknh.gov/people/finlay-rothhaus",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official profile page for Finlay Rothhaus",
+        "llm_confidence_reason": "Page URL is the profile page for Finlay Rothhaus.",
         "source": "https://www.merrimacknh.gov/people/finlay-rothhaus"
       }
     ],
@@ -55,7 +51,7 @@
       {
         "data": "2026-04",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Chairman (Term Expires 4/2026)' in Board Memberships table",
+        "llm_confidence_reason": "Extracted from 'Chairman (Term Expires 4/2026)' in board membership table.",
         "source": "https://www.merrimacknh.gov/people/finlay-rothhaus"
       }
     ],
@@ -63,13 +59,15 @@
   },
   {
     "name": "Nancy Harrington",
-    "image": null,
-    "source_image": null,
+    "image": "images/f67cbcb7c3b8d474e82a389b5f96363154d95645d8caa32d1060e4d7613b5e47.jpg",
+    "source_image": "https://www.merrimacknh.gov/sites/g/files/vyhlif3456/f/styles/news_image/public/people/nancy_harrington_2021.jpg?itok=CgzJEDof",
     "sources": [
-      "https://www.merrimacknh.gov/town-council"
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/nancy-harrington"
     ],
     "positions": [
-      "Vice Chair"
+      "Vice Chair",
+      "Town Council"
     ],
     "phone_numbers": [
       {
@@ -77,6 +75,12 @@
         "llm_confidence": 0.8,
         "llm_confidence_reason": "General Town Council phone number listed near council info; no personal number found.",
         "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "(603) 494-5139",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found near name labeled 'Phone:'",
+        "source": "https://www.merrimacknh.gov/people/nancy-harrington"
       }
     ],
     "emails": [],
@@ -86,6 +90,12 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Official profile page URL from council member list.",
         "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/nancy-harrington",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the profile page for Nancy Harrington",
+        "source": "https://www.merrimacknh.gov/people/nancy-harrington"
       }
     ],
     "start_dates": [],
@@ -95,6 +105,12 @@
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Term Expires 4/2027 converted to 2027-04.",
         "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "2027-04",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from 'Vice Chair (Term Expires 4/2027)' in Board Memberships table",
+        "source": "https://www.merrimacknh.gov/people/nancy-harrington"
       }
     ],
     "updated_at": "2025-05-08"
@@ -120,7 +136,7 @@
       {
         "data": "(603) 424-0254",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number found near name labeled 'Phone:'",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Nancy Murphy's name.",
         "source": "https://www.merrimacknh.gov/people/nancy-murphy"
       }
     ],
@@ -135,7 +151,7 @@
       {
         "data": "https://www.merrimacknh.gov/people/nancy-murphy",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Nancy Murphy",
+        "llm_confidence_reason": "Page URL is the profile page for Nancy Murphy.",
         "source": "https://www.merrimacknh.gov/people/nancy-murphy"
       }
     ],
@@ -150,7 +166,7 @@
       {
         "data": "2027-04",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Councilor (Term Expires 4/2027)'",
+        "llm_confidence_reason": "Extracted from 'Councilor (Term Expires 4/2027)' indicating term expiration date.",
         "source": "https://www.merrimacknh.gov/people/nancy-murphy"
       }
     ],
@@ -177,7 +193,7 @@
       {
         "data": "(603) 424-0254",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to name and image.",
         "source": "https://www.merrimacknh.gov/people/mackenzie-murphy-0"
       }
     ],
@@ -192,7 +208,7 @@
       {
         "data": "https://www.merrimacknh.gov/people/mackenzie-murphy-0",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Mackenzie Murphy.",
+        "llm_confidence_reason": "Page URL is the official profile page for Mackenzie Murphy.",
         "source": "https://www.merrimacknh.gov/people/mackenzie-murphy-0"
       }
     ],
@@ -207,7 +223,7 @@
       {
         "data": "2026-04",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires 4/2026' in board membership table.",
+        "llm_confidence_reason": "Extracted from 'Councilor (Term Expires 4/2026)' in Board Memberships table.",
         "source": "https://www.merrimacknh.gov/people/mackenzie-murphy-0"
       }
     ],
@@ -234,8 +250,8 @@
       },
       {
         "data": "(603) 424-3755",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed near name and contact info.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and contact link.",
         "source": "https://www.merrimacknh.gov/people/jennifer-jobin"
       }
     ],
@@ -250,7 +266,7 @@
       {
         "data": "https://www.merrimacknh.gov/people/jennifer-jobin",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official profile page for Jennifer Jobin.",
+        "llm_confidence_reason": "Page URL is the profile page for Jennifer Jobin.",
         "source": "https://www.merrimacknh.gov/people/jennifer-jobin"
       }
     ],
@@ -265,7 +281,7 @@
       {
         "data": "2028-04",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date extracted from 'Councilor (Term Expires 4/2028)'. Converted to YYYY-MM format.",
+        "llm_confidence_reason": "Extracted from 'Councilor (Term Expires 4/2028)' in Board Memberships table.",
         "source": "https://www.merrimacknh.gov/people/jennifer-jobin"
       }
     ],
@@ -280,8 +296,7 @@
       "https://www.merrimacknh.gov/people/peter-albert-0"
     ],
     "positions": [
-      "Councilor",
-      "Town Council Representative"
+      "Councilor"
     ],
     "phone_numbers": [
       {
@@ -293,7 +308,7 @@
       {
         "data": "603-321-2055",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and image.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to the name and image.",
         "source": "https://www.merrimacknh.gov/people/peter-albert-0"
       }
     ],
@@ -323,7 +338,7 @@
       {
         "data": "2028-04",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Councilor (Term Expires 4/2028)' and converted to YYYY-MM format.",
+        "llm_confidence_reason": "Extracted from 'Councilor (Term Expires 4/2028)' in Board Memberships table.",
         "source": "https://www.merrimacknh.gov/people/peter-albert-0"
       }
     ],
@@ -338,9 +353,7 @@
       "https://www.merrimacknh.gov/people/tom-thornton"
     ],
     "positions": [
-      "Councilor",
-      "Town Council Representative",
-      "Alternate"
+      "Councilor"
     ],
     "phone_numbers": [
       {

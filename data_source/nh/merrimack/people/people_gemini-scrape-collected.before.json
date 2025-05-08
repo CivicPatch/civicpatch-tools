@@ -57,12 +57,21 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.merrimacknh.gov/town-council"
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/nancy-harrington"
     ],
     "positions": [
-      "Vice Chair"
+      "Vice Chair",
+      "Town Council"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 494-5139",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under her name.",
+        "source": "https://www.merrimacknh.gov/people/nancy-harrington"
+      }
+    ],
     "emails": [],
     "websites": [
       {
@@ -70,10 +79,23 @@
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Directly linked from the name in the table.",
         "source": "https://www.merrimacknh.gov/town-council"
+      },
+      {
+        "data": "https://www.merrimacknh.gov/people/nancy-harrington/",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is her profile page.",
+        "source": "https://www.merrimacknh.gov/people/nancy-harrington"
       }
     ],
     "start_dates": [],
-    "end_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-04",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 4/2027' in the table.",
+        "source": "https://www.merrimacknh.gov/people/nancy-harrington"
+      }
+    ],
     "updated_at": "2025-05-08"
   },
   {

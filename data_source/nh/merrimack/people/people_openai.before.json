@@ -3,11 +3,7 @@
     "name": "Finlay Rothhaus",
     "positions": [
       "Chairman",
-      "Town Council Chairman",
-      "Town Council Representative",
-      "Highway Safety Committee",
-      "Town Center Committee",
-      "Heritage Commission"
+      "Town Council"
     ],
     "image": "images/813c32fa502b595c673422664fee5b31843e08849e46b586e72141ec59403c1f.jpg",
     "source_image": "https://www.merrimacknh.gov/sites/g/files/vyhlif3456/f/styles/news_image/public/biography/headshots/frothhaus_2017_tn.jpg?itok=lY4E_Eze",
@@ -25,17 +21,19 @@
   {
     "name": "Nancy Harrington",
     "positions": [
-      "Vice Chair"
+      "Vice Chair",
+      "Town Council"
     ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 424-2331",
+    "image": "images/f67cbcb7c3b8d474e82a389b5f96363154d95645d8caa32d1060e4d7613b5e47.jpg",
+    "source_image": "https://www.merrimacknh.gov/sites/g/files/vyhlif3456/f/styles/news_image/public/people/nancy_harrington_2021.jpg?itok=CgzJEDof",
+    "phone_number": "(603) 494-5139",
     "email": null,
     "website": "https://www.merrimacknh.gov/people/nancy-harrington",
     "start_date": null,
     "end_date": "2027-04",
     "sources": [
-      "https://www.merrimacknh.gov/town-council"
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/nancy-harrington"
     ],
     "updated_at": "2025-05-08"
   },
@@ -97,8 +95,7 @@
   {
     "name": "Peter Albert",
     "positions": [
-      "Councilor",
-      "Town Council Representative"
+      "Councilor"
     ],
     "image": "images/300d038f6c4149e831186a44832e9ab5ceb8b0f55f43e0689beae5df92f6ebb0.jpg",
     "source_image": "https://www.merrimacknh.gov/sites/g/files/vyhlif3456/f/styles/news_image/public/people/palbert_2017.jpg?itok=DtGU2Ocu",
@@ -116,9 +113,7 @@
   {
     "name": "Tom Thornton",
     "positions": [
-      "Councilor",
-      "Town Council Representative",
-      "Alternate"
+      "Councilor"
     ],
     "image": "images/f6d6e54a6970009ba33be7c88bb8c462fef212a5818c7ed42261352a96f47e4b.jpg",
     "source_image": "https://www.merrimacknh.gov/sites/g/files/vyhlif3456/f/styles/news_image/public/people/tommy.jpg?itok=w_sit5wV",

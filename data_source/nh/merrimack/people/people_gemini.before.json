@@ -21,17 +21,19 @@
   {
     "name": "Nancy Harrington",
     "positions": [
-      "Vice Chair"
+      "Vice Chair",
+      "Town Council"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(603) 494-5139",
     "email": null,
     "website": "https://www.merrimacknh.gov/people/nancy-harrington",
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027-04",
     "sources": [
-      "https://www.merrimacknh.gov/town-council"
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/nancy-harrington"
     ],
     "updated_at": "2025-05-08"
   },

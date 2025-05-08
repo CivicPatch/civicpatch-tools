@@ -3,14 +3,15 @@
   positions:
   - Vice Chair
   email:
-  phone_number: "(603) 424-2331"
+  phone_number: "(603) 494-5139"
   website: https://www.merrimacknh.gov/people/nancy-harrington
   start_date:
   end_date: 2027-04
-  image:
-  source_image:
+  image: https://cdn.civicpatch.org/open-data/nh/merrimack/images/f67cbcb7c3b8d474e82a389b5f96363154d95645d8caa32d1060e4d7613b5e47.jpg
+  source_image: https://www.merrimacknh.gov/sites/g/files/vyhlif3456/f/styles/news_image/public/people/nancy_harrington_2021.jpg?itok=CgzJEDof
   sources:
   - https://www.merrimacknh.gov/town-council
+  - https://www.merrimacknh.gov/people/nancy-harrington
   updated_at: '2025-05-08'
 - name: Jennifer Jobin
   positions:
