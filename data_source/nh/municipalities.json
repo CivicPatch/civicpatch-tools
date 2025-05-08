@@ -270,7 +270,14 @@
       "phone_number": "(603) 610-7220",
       "government_type": "mayor_council",
       "email": "sclancy@cityofportsmouth.com",
-      "website": "http://cityofportsmouth.com"
+      "website": "http://cityofportsmouth.com",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "96afb9261597a5a24c47693ee030f02d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Goffstown",
