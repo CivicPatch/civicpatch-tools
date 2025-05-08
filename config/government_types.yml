@@ -7,6 +7,7 @@ divisions: &divisions
   - seat
   - position
 position_examples: &position_examples | # Useful for LLM prompts
+  * ward 5/seat 3 -> ["ward 5", "seat 3"]
   * council member ward 3 -> ["council member", "ward 3"]
   * ward #3 -> ["ward 3"]
   * mayor, 3rd district -> ["mayor", "district 3"]
