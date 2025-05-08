@@ -32,7 +32,9 @@ government_types:
         aliases:
         - vice-chair
         - vice chairman
+        - vice-chairman
         - vice chairwoman
+        - vice-chairwoman
       - role: deputy mayor
       - role: council president
       - role: deputy council president
@@ -47,7 +49,9 @@ government_types:
           - councilman
           - councilor
           - councillor
+          - town council representative
           - town council member
+          - town council
         divisions: *divisions
     position_examples: *position_examples
     exclude_positions:

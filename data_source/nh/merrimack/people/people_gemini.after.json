@@ -1,5 +1,24 @@
 [
   {
+    "name": "Finlay Rothhaus",
+    "positions": [
+      "Chair",
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 494-0893",
+    "email": null,
+    "website": "https://www.merrimacknh.gov/people/finlay-rothhaus",
+    "start_date": null,
+    "end_date": "2026-04",
+    "sources": [
+      "https://www.merrimacknh.gov/town-council",
+      "https://www.merrimacknh.gov/people/finlay-rothhaus"
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
     "name": "Nancy Harrington",
     "positions": [
       "Vice Chair"
@@ -10,7 +29,7 @@
     "email": null,
     "website": "https://www.merrimacknh.gov/people/nancy-harrington",
     "start_date": null,
-    "end_date": "2027-04",
+    "end_date": null,
     "sources": [
       "https://www.merrimacknh.gov/town-council",
       "https://www.merrimacknh.gov/people/nancy-harrington"
@@ -82,7 +101,7 @@
     "email": null,
     "website": "https://www.merrimacknh.gov/people/peter-albert-0",
     "start_date": null,
-    "end_date": null,
+    "end_date": "2028-04",
     "sources": [
       "https://www.merrimacknh.gov/town-council",
       "https://www.merrimacknh.gov/people/peter-albert-0"
