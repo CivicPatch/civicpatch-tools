@@ -17,7 +17,7 @@
       "https://www.concordnh.gov/directory.aspx?EID=257",
       "https://concordnh.gov/directory.aspx?EID=257"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Amanda Grady Sexton",
@@ -36,26 +36,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=19"
     ],
-    "updated_at": "2025-05-07"
-  },
-  {
-    "name": "Fred Keach",
-    "positions": [
-      "Council Member",
-      "At-large"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 568-7667",
-    "email": "fkeach@concordnh.gov",
-    "website": "https://www.concordnh.gov/directory.aspx?EID=25",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.concordnh.gov/282/City-Council",
-      "https://www.concordnh.gov/directory.aspx?EID=25"
-    ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Judith Kurtz",
@@ -74,7 +55,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=258"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Nathan Fennessy",
@@ -93,7 +74,27 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=14"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Fred Keach",
+    "positions": [
+      "Council Member",
+      "At-large",
+      "At-large City Councilor"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 568-7667",
+    "email": "fkeach@concordnh.gov",
+    "website": "https://www.concordnh.gov/directory.aspx?EID=25",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.concordnh.gov/282/City-Council",
+      "https://www.concordnh.gov/directory.aspx?EID=25"
+    ],
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Brent Todd",
@@ -112,7 +113,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=135"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Jeff Foote",
@@ -131,7 +132,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=263"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Michele Horne",
@@ -150,7 +151,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=259"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Jennifer Kretovic",
@@ -169,7 +170,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/Directory.aspx?EID=18"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Karen McNamara",
@@ -188,7 +189,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/Directory.aspx?EID=220"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Stacey Brown",
@@ -207,7 +208,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/Directory.aspx?EID=223"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Paula McLaughlin",
@@ -226,7 +227,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/Directory.aspx?EID=224"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Jim Schlosser",
@@ -245,7 +246,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=260"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Ali Sekou",
@@ -264,7 +265,7 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=261"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Kris Schultz",
@@ -283,6 +284,6 @@
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=262"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   }
 ]
