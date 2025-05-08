@@ -28,7 +28,7 @@ class CorePersonManagerUtilsTest < Minitest::Test
     }
 
     @loaded_config = YAML.load_file(PathHelper.project_path("config/government_types.yml"), aliases: true)
-    @selectmen_config = @loaded_config["government_types"]["selectmen"]
+    @selectmen_config = @loaded_config["government_types"]["select_board"]
 
     @people = [
       { "name" => "Armondo Pavone", "positions" => ["mayor"] },
@@ -258,6 +258,12 @@ class CorePersonManagerUtilsTest < Minitest::Test
 
   def test_normalize_positions_selectmen_vice_chairman
     positions = ["vice-chairman"]
+    normalized = Core::PersonManager::Utils.normalize_positions(positions, @selectmen_config)
+    assert_equal ["vice chair"], normalized
+  end
+
+  def test_normalize_positions_selectmen_vice_chairman
+    positions = ["vice-chairwoman"]
     normalized = Core::PersonManager::Utils.normalize_positions(positions, @selectmen_config)
     assert_equal ["vice chair"], normalized
   end
