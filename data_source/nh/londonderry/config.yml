@@ -1,0 +1,21 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Ron Dunn
+    positions:
+    - Mayor
+  - name: Dan Bouchard
+    positions:
+    - Council Member
+  - name: Deb Paul
+    positions:
+    - Council Member
+  - name: Shawn Faber
+    positions:
+    - Council Member
+  - name: Ted Combes
+    positions:
+    - Council Member
+people: {}
