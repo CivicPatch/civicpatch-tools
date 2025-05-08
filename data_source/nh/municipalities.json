@@ -87,7 +87,14 @@
       "phone_number": "(603) 516-6012",
       "government_type": "mayor_council",
       "email": "j.bizier@dover.nh.gov",
-      "website": "http://www.dover.nh.gov"
+      "website": "http://www.dover.nh.gov",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "d939f16c5b53339a216e27da9166e124",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rochester",
