@@ -6,7 +6,9 @@ scrape_sources:
 - https://concordnh.gov/directory.aspx?EID=257
 - https://www.concordnh.gov/directory.aspx?EID=19
 - https://www.concordnh.gov/directory.aspx?EID=25
+- https://www.concordnh.gov/directory.aspx?EID=25/
 - https://concordnh.gov/directory.aspx?EID=258
+- https://concordnh.gov/directory.aspx?EID=258/
 - https://www.concordnh.gov/directory.aspx?EID=14
 - https://www.concordnh.gov/directory.aspx?EID=135
 - https://concordnh.gov/directory.aspx?EID=263
@@ -14,6 +16,7 @@ scrape_sources:
 - https://www.concordnh.gov/Directory.aspx?EID=18
 - https://www.concordnh.gov/Directory.aspx?EID=220
 - https://www.concordnh.gov/Directory.aspx?EID=223
+- https://www.concordnh.gov/Directory.aspx?EID=223/
 - https://www.concordnh.gov/Directory.aspx?EID=224
 - https://concordnh.gov/directory.aspx?EID=260
 - https://concordnh.gov/directory.aspx?EID=261

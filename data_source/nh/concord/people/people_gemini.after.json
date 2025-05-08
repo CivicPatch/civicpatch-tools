@@ -17,7 +17,7 @@
       "https://www.concordnh.gov/directory.aspx?EID=257",
       "https://concordnh.gov/directory.aspx?EID=257"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Amanda Grady Sexton",
@@ -29,14 +29,14 @@
     "source_image": null,
     "phone_number": "(603) 548-9377",
     "email": "agradysexton@concordnh.gov",
-    "website": "https://www.concordnh.gov/directory.aspx?EID=19",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=19"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Fred Keach",
@@ -48,14 +48,15 @@
     "source_image": null,
     "phone_number": "(603) 568-7667",
     "email": "fkeach@concordnh.gov",
-    "website": "https://www.concordnh.gov/directory.aspx?EID=25",
+    "website": "https://www.concordnh.gov/directory.aspx?EID=25/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://www.concordnh.gov/directory.aspx?EID=25"
+      "https://www.concordnh.gov/directory.aspx?EID=25",
+      "https://www.concordnh.gov/directory.aspx?EID=25/"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Judith Kurtz",
@@ -67,14 +68,15 @@
     "source_image": null,
     "phone_number": "(603) 406-4953",
     "email": "jkurtz@concordnh.gov",
-    "website": "https://concordnh.gov/directory.aspx?EID=258",
+    "website": "https://concordnh.gov/directory.aspx?EID=258/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=258"
+      "https://concordnh.gov/directory.aspx?EID=258",
+      "https://concordnh.gov/directory.aspx?EID=258/"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Nathan Fennessy",
@@ -86,14 +88,14 @@
     "source_image": null,
     "phone_number": "(603) 856-3890",
     "email": "nfennessy@concordnh.gov",
-    "website": "https://www.concordnh.gov/directory.aspx?EID=14",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=14"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Brent Todd",
@@ -105,14 +107,14 @@
     "source_image": null,
     "phone_number": "(603) 753-9609",
     "email": "brenttoddconcord@gmail.com",
-    "website": "https://www.concordnh.gov/directory.aspx?EID=135",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/directory.aspx?EID=135"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Jeff Foote",
@@ -124,14 +126,14 @@
     "source_image": null,
     "phone_number": "(603) 225-3256",
     "email": "jfoote@concordnh.gov",
-    "website": "https://concordnh.gov/directory.aspx?EID=263",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=263"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Michele Horne",
@@ -143,14 +145,14 @@
     "source_image": null,
     "phone_number": "(603) 533-9278",
     "email": "mhorne@concordnh.gov",
-    "website": "https://concordnh.gov/directory.aspx?EID=259",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=259"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Jennifer Kretovic",
@@ -162,14 +164,14 @@
     "source_image": null,
     "phone_number": "(603) 228-8395",
     "email": "JKretovic@concordnh.gov",
-    "website": "https://www.concordnh.gov/Directory.aspx?EID=18",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/Directory.aspx?EID=18"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Karen McNamara",
@@ -180,15 +182,15 @@
     "image": null,
     "source_image": null,
     "phone_number": "(603) 545-5578",
-    "email": null,
-    "website": "https://www.concordnh.gov/Directory.aspx?EID=220",
+    "email": "kmcnamaraward4@gmail.com",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/Directory.aspx?EID=220"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Stacey Brown",
@@ -200,14 +202,15 @@
     "source_image": null,
     "phone_number": "(603) 717-1350",
     "email": "sfbrown@concordnh.gov",
-    "website": "https://www.concordnh.gov/Directory.aspx?EID=223",
+    "website": "https://www.concordnh.gov/Directory.aspx?EID=223/",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
-      "https://www.concordnh.gov/Directory.aspx?EID=223"
+      "https://www.concordnh.gov/Directory.aspx?EID=223",
+      "https://www.concordnh.gov/Directory.aspx?EID=223/"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Paula McLaughlin",
@@ -219,14 +222,14 @@
     "source_image": null,
     "phone_number": "(603) 848-2930",
     "email": "pwmclaughlin24@gmail.com",
-    "website": "https://www.concordnh.gov/Directory.aspx?EID=224",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://www.concordnh.gov/Directory.aspx?EID=224"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Jim Schlosser",
@@ -238,14 +241,14 @@
     "source_image": null,
     "phone_number": "(781) 879-2089",
     "email": "jim4concord@gmail.com",
-    "website": "https://concordnh.gov/directory.aspx?EID=260",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.concordnh.gov/282/City-Council",
       "https://concordnh.gov/directory.aspx?EID=260"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Ali Sekou",
@@ -255,16 +258,15 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(603) 366-6353",
-    "email": "asekou@concordnh.gov",
-    "website": "https://concordnh.gov/directory.aspx?EID=261",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=261"
+      "https://www.concordnh.gov/282/City-Council"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Kris Schultz",
@@ -274,15 +276,14 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(603) 275-2227",
-    "email": "kschultz@concordnh.gov",
-    "website": "https://concordnh.gov/directory.aspx?EID=262",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.concordnh.gov/282/City-Council",
-      "https://concordnh.gov/directory.aspx?EID=262"
+      "https://www.concordnh.gov/282/City-Council"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-08"
   }
 ]
