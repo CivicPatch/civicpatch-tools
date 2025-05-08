@@ -248,7 +248,14 @@
       "phone_number": "(603) 357-9804",
       "government_type": "mayor_council",
       "email": "hmattson@keenenh.gov",
-      "website": "https://keenenh.gov/"
+      "website": "https://keenenh.gov/",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "afba06e79082daf9e0366fbff50aab02",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Portsmouth",
