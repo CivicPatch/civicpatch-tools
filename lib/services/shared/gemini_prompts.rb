@@ -36,8 +36,11 @@ module Services
           "people": [{
             "name": The official's name (string) or null.
             "positions": The position held (array of strings), which should be either "Mayor" or "Council Member" (or equivalent).
-          }]
+          }],
+          "notes": "Notes about the search and the results"
         }
+
+        IMPORTANT: I need ONLY the JSON object as your response, with NO additional text, explanation, or markdown formatting. Do not include any text before or after the JSON object. Your entire response should be a valid JSON object that can be directly parsed.
       )
       end
 
