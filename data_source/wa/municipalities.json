@@ -351,7 +351,14 @@
       "gnis": "2411381",
       "type": "Code city",
       "population": 77108,
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-05-09",
+      "meta_hash": "3bbf3b5e56f2a1aa84657d701de579b2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "ocd_ids": [
