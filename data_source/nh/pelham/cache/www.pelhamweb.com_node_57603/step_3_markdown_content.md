@@ -2,7 +2,7 @@
 
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-  [Skip to main content](https://www.pelhamweb.com/node/59503/)  Keywords  ![Pelham NH](images/6018c7f5743a684d3fa45d0e9d342e26223eb2c5b65ab46b3c951e5d26c79fea.png)  
+  [Skip to main content](https://www.pelhamweb.com/node/57603/)  Keywords  ![Pelham NH](images/6018c7f5743a684d3fa45d0e9d342e26223eb2c5b65ab46b3c951e5d26c79fea.png)  
 
  *  [Home](https://www.pelhamweb.com/) 
  *  [Boards»](https://www.pelhamweb.com/Boards) 
@@ -121,15 +121,11 @@ Pelham NH Town Hall
 ## You are here
 
  1.  [Home](https://www.pelhamweb.com/) ››
- 1.  [Budget Committee](https://www.pelhamweb.com/budget-committee) 
+ 1.  [Board of Selectmen](https://www.pelhamweb.com/board-of-selectmen) 
 
-# Jason Croteau
+# Jaie Bergeron
 
- E-mail:  [Contact Jason Croteau](https://www.pelhamweb.com/user/4953/contact)  
-
- 
-
-   
+ E-mail:  [Contact Jaie Bergeron](https://www.pelhamweb.com/user/4683/contact)  
 
 ### Board Memberships
 
@@ -138,11 +134,19 @@ Pelham NH Town Hall
 
 |Board/Committee|Job title|Date Served - If Applicable|Membership Status|This contact is|
 |---|---|---|---|---|
-|[Budget Committee](https://www.pelhamweb.com/budget-committee)|Member - 2023||Inactive Membership|Elected|
-|[Board of Selectmen](https://www.pelhamweb.com/board-of-selectmen)|Selectmen - 2025|March 8, 2022 to March 11, 2025|Active Membership||
+|[Board of Selectmen](https://www.pelhamweb.com/board-of-selectmen)|Selectmen (2023)|March 13, 2020 to March 14, 2023|Active Membership|Elected|
 
- *  [Budget Committee Bylaws](https://www.pelhamweb.com/budget-committee/files/budget-committee-bylaws-1) 
- *  [FY 2025 Town Budget Request with Historical Detail as of 1-16-2025 postings](https://www.pelhamweb.com/budget-committee/files/fy-2025-town-budget-request-with-historical-detail-as-of-1-16-2025-postings) 
+ *  [Board of Selectmen By-Laws](https://www.pelhamweb.com/board-of-selectmen/files/board-of-selectmen-by-laws) 
+ *  [Downloadable Documents and Forms](https://www.pelhamweb.com/board-of-selectmen/links/downloadable-documents-and-forms) 
+ *  [Hawker Peddler/Itinerant Vendor/ Solicitors](https://www.pelhamweb.com/board-of-selectmen/pages/hawker-peddleritinerant-vendor-solicitors) 
+ *  [RFP/RFQ's](https://www.pelhamweb.com/board-of-selectmen/links/rfprfqs) 
+ *  [Rules for Political Signs 1-27-2025](https://www.pelhamweb.com/board-of-selectmen/files/rules-for-political-signs-1-27-2025) 
+ *  [Town Policies & Ordinances](https://www.pelhamweb.com/board-of-selectmen/webforms/town-policies-ordinances) 
+ *  [Town Reports](https://www.pelhamweb.com/board-of-selectmen/pages/town-reports) 
+
+## Contact Info
+
+ Phone: (603) 635-8233 Fax: (603) 635-8274 
 
 Town of Pelham, NH
 
@@ -154,5 +158,5 @@ Town of Pelham, NH
 
  [Government Websites by CivicPlus ®](https://www.civicplus.com/) 
 
- *  [Login](https://www.pelhamweb.com/user/login?current=node/59503) 
+ *  [Login](https://www.pelhamweb.com/user/login?current=node/57603) 
  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Explore your accessibility options 

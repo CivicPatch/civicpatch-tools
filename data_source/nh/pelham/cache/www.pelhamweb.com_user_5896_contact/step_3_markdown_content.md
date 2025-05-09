@@ -2,7 +2,7 @@
 
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-  [Skip to main content](https://www.pelhamweb.com/node/59503/)  Keywords  ![Pelham NH](images/6018c7f5743a684d3fa45d0e9d342e26223eb2c5b65ab46b3c951e5d26c79fea.png)  
+  [Skip to main content](https://www.pelhamweb.com/user/5896/contact/)  Keywords  ![Pelham NH](images/6018c7f5743a684d3fa45d0e9d342e26223eb2c5b65ab46b3c951e5d26c79fea.png)  
 
  *  [Home](https://www.pelhamweb.com/) 
  *  [Boards»](https://www.pelhamweb.com/Boards) 
@@ -116,33 +116,22 @@ Pelham NH Town Hall
    *  [Town Facebook Videos](https://www.facebook.com/TownofPelhamNH/videos) 
    *  [Town Live Stream (Youtube)](https://www.pelhamweb.com/home/pages/town-of-pelham-nh-live-stream) 
    *  [Town and School Video Archives](https://ptv.viebit.com/index.php?folder=ALL) 
-  ![Print](images/6e39d58b96e918224067860d8a4d9b88196c77c636b855c74fd88abd3be0abf1.png)  
+
+## Primary tabs
+
+ *  [View](https://www.pelhamweb.com/users/dmassequinn) 
+ *  [Contact(active tab)](https://www.pelhamweb.com/user/5896/contact) 
 
 ## You are here
 
  1.  [Home](https://www.pelhamweb.com/) ››
- 1.  [Budget Committee](https://www.pelhamweb.com/budget-committee) 
+ 1.  [dmassequinn](https://www.pelhamweb.com/users/dmassequinn) 
 
-# Jason Croteau
+# Contact Danielle Masse Quinn
 
- E-mail:  [Contact Jason Croteau](https://www.pelhamweb.com/user/4953/contact)  
+ Your name * Your e-mail address * To [dmassequinn](https://www.pelhamweb.com/users/dmassequinn)  Subject * Message * Attachments Files must be less than __2 MB__.
 
- 
-
-   
-
-### Board Memberships
-
-|Board/Committee|Job title|Date Served - If Applicable|Membership Status|This contact is|
-|---|---|---|---|---|
-
-|Board/Committee|Job title|Date Served - If Applicable|Membership Status|This contact is|
-|---|---|---|---|---|
-|[Budget Committee](https://www.pelhamweb.com/budget-committee)|Member - 2023||Inactive Membership|Elected|
-|[Board of Selectmen](https://www.pelhamweb.com/board-of-selectmen)|Selectmen - 2025|March 8, 2022 to March 11, 2025|Active Membership||
-
- *  [Budget Committee Bylaws](https://www.pelhamweb.com/budget-committee/files/budget-committee-bylaws-1) 
- *  [FY 2025 Town Budget Request with Historical Detail as of 1-16-2025 postings](https://www.pelhamweb.com/budget-committee/files/fy-2025-town-budget-request-with-historical-detail-as-of-1-16-2025-postings) 
+Allowed file types: __txt doc pdf docx jpg gif png__. Attachment #1 Attachment #2 Attachment #3 CAPTCHA This question is for testing whether or not you are a human visitor and to prevent automated spam submissions. Leave this field blank 
 
 Town of Pelham, NH
 
@@ -154,5 +143,5 @@ Town of Pelham, NH
 
  [Government Websites by CivicPlus ®](https://www.civicplus.com/) 
 
- *  [Login](https://www.pelhamweb.com/user/login?current=node/59503) 
+ *  [Login](https://www.pelhamweb.com/user/login?current=user/5896/contact) 
  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Explore your accessibility options 

@@ -116,7 +116,7 @@ Pelham NH Town Hall
    *  [Town Facebook Videos](https://www.facebook.com/TownofPelhamNH/videos) 
    *  [Town Live Stream (Youtube)](https://www.pelhamweb.com/home/pages/town-of-pelham-nh-live-stream) 
    *  [Town and School Video Archives](https://ptv.viebit.com/index.php?folder=ALL) 
-  [Urgent Alerts: Multiple Alerts Updated April 18, 2025](https://www.pelhamweb.com/home/urgent-alerts/urgent-alerts-multiple-alerts-updated-april-18-2025)   [Read more »](https://www.pelhamweb.com/home/urgent-alerts/urgent-alerts-multiple-alerts-updated-april-18-2025)   ![Print](images/6e39d58b96e918224067860d8a4d9b88196c77c636b855c74fd88abd3be0abf1.png)   ![Share page with AddThis](images/17415b82298b0f9ab4d4e152a305ff8c478314ef82bb36f66d927ef57e5b092e.png)  
+  [Urgent Alerts: Multiple Alerts Updated April 18, 2025](https://www.pelhamweb.com/home/urgent-alerts/urgent-alerts-multiple-alerts-updated-april-18-2025)   [Read more »](https://www.pelhamweb.com/home/urgent-alerts/urgent-alerts-multiple-alerts-updated-april-18-2025)   ![Print](images/6e39d58b96e918224067860d8a4d9b88196c77c636b855c74fd88abd3be0abf1.png)  
 
 ## You are here
 
@@ -182,7 +182,7 @@ Annual Town Report * __Now Available!__*
 |---|---|---|---|---|---|---|
 | | | | |1 |2 |3 |
 |4 |5 |6 |7 |8 |9 |10 |
-|11 |12 |[13](https://www.pelhamweb.com/node/!1/events/month/!2/3416/2025-05-13)     *   [PUBLIC HEARING: Regarding a proposal to purchase approx 63 acres to be acquired for use as conservation land.](https://www.pelhamweb.com/board-of-selectmen/events/93676)  6:30pm |14 |15 |16 |17 |
+|11 |12 |[13](https://www.pelhamweb.com/node/!1/events/month/!2/3416/2025-05-13)     *   [Board of Selectmen Meeting](https://www.pelhamweb.com/board-of-selectmen/events/93986)  6:30pm   *   [PUBLIC HEARING: Regarding a proposal to purchase approx 63 acres to be acquired for use as conservation land.](https://www.pelhamweb.com/board-of-selectmen/events/93676)  6:30pm |14 |15 |16 |17 |
 |18 |19 |20 |21 |22 |23 |24 |
 |25 |26 |[27](https://www.pelhamweb.com/node/!1/events/month/!2/3416/2025-05-27)     *   [PUBLIC HEARING 2: Regarding a proposal to purchase approx 63 acres to be acquired for use as conservation land.](https://www.pelhamweb.com/board-of-selectmen/events/93681)  6:30pm |28 |29 |30 |31 |
 
@@ -192,9 +192,9 @@ Annual Town Report * __Now Available!__*
 
  *   [PUBLIC HEARING 2 : Regarding a proposal to purchase approx 63 acres to be acquired for use as conservation land.](https://www.pelhamweb.com/board-of-selectmen/agenda/public-hearing-2-regarding-a-proposal-to-purchase-approx-63-acres-to-be)  May 27, 2025 - 6:30pm 
  *   [PUBLIC HEARING: Regarding a proposal to purchase approx 63 acres to be acquired for use as conservation land.](https://www.pelhamweb.com/board-of-selectmen/agenda/public-hearing-regarding-a-proposal-to-purchase-approx-63-acres-to-be)  May 13, 2025 - 6:30pm 
+ *   [Board of Selectmen Meeting Agenda for 5-13-2025](https://www.pelhamweb.com/board-of-selectmen/agenda/board-of-selectmen-meeting-agenda-for-5-13-2025)  May 13, 2025 - 6:30pm 
  *   [Board of Selectmen Meeting Agenda for 4-15-2025](https://www.pelhamweb.com/board-of-selectmen/agenda/board-of-selectmen-meeting-agenda-for-4-15-2025)  April 15, 2025 - 6:30pm 
  *   [Bord of Selectmen Meeting Agenda for 3-18-2025](https://www.pelhamweb.com/board-of-selectmen/agenda/bord-of-selectmen-meeting-agenda-for-3-18-2025)  March 18, 2025 - 6:30pm 
- *   [Board of Selectmen Meeting Agenda for 3-4-2025](https://www.pelhamweb.com/board-of-selectmen/agenda/board-of-selectmen-meeting-agenda-for-3-4-2025-0)  March 4, 2025 - 6:30pm 
   [View all](https://www.pelhamweb.com/node/3416/agenda)  
 
 ##  [Minutes](https://www.pelhamweb.com/node/3416/minutes) 
