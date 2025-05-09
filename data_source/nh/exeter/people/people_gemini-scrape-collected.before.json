@@ -15,14 +15,21 @@
       {
         "data": "npapakonstantis@exeternh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address listed directly next to the name in the contact section.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Molly Cowan",
@@ -40,14 +47,21 @@
       {
         "data": "mcowan@exeternh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address listed directly next to the name in the contact section.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Nancy Belanger",
@@ -64,14 +78,21 @@
       {
         "data": "nbelanger@exeternh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address listed directly next to the name in the contact section.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Julie D. Gilman",
@@ -88,14 +109,21 @@
       {
         "data": "jgilman@exeternh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address listed directly next to the name in the contact section.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Daniel Chartrand",
@@ -112,13 +140,20 @@
       {
         "data": "dchartrand@exeternh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address listed directly next to the name in the contact section.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
   }
 ]

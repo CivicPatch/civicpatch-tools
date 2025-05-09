@@ -2,7 +2,8 @@
   {
     "name": "Niko Papakonstantis",
     "positions": [
-      "Select Board Chair"
+      "Select Board Member",
+      "Chair"
     ],
     "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
     "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
@@ -14,15 +15,16 @@
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Molly Cowan",
     "positions": [
-      "Select Board Vice Chair"
+      "Select Board Member",
+      "Vice Chair"
     ],
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "phone_number": null,
     "email": "mcowan@exeternh.gov",
     "website": "https://www.exeternh.gov/bos",
@@ -31,15 +33,16 @@
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Nancy Belanger",
     "positions": [
-      "Select Board Clerk"
+      "Select Board Member",
+      "Clerk"
     ],
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "phone_number": null,
     "email": "nbelanger@exeternh.gov",
     "website": "https://www.exeternh.gov/bos",
@@ -48,15 +51,15 @@
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Julie D. Gilman",
     "positions": [
       "Select Board Member"
     ],
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "phone_number": null,
     "email": "jgilman@exeternh.gov",
     "website": "https://www.exeternh.gov/bos",
@@ -65,15 +68,15 @@
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Daniel Chartrand",
     "positions": [
       "Select Board Member"
     ],
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "phone_number": null,
     "email": "dchartrand@exeternh.gov",
     "website": "https://www.exeternh.gov/bos",
@@ -82,6 +85,6 @@
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   }
 ]

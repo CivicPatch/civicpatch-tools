@@ -7,14 +7,15 @@
       "https://www.exeternh.gov/bos"
     ],
     "positions": [
-      "Select Board Chair"
+      "Select Board Member",
+      "Chair"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "npapakonstantis@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name.",
+        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
@@ -31,28 +32,29 @@
       {
         "data": "2028",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Ends: 2028' near name.",
+        "llm_confidence_reason": "Term Ends: 2028 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Molly Cowan",
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
     "positions": [
-      "Select Board Vice Chair"
+      "Select Board Member",
+      "Vice Chair"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "mcowan@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name.",
+        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
@@ -69,28 +71,29 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Ends: 2027' near name.",
+        "llm_confidence_reason": "Term Ends: 2027 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Nancy Belanger",
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
     "positions": [
-      "Select Board Clerk"
+      "Select Board Member",
+      "Clerk"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "nbelanger@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name.",
+        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
@@ -107,16 +110,16 @@
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Ends: 2026' near name.",
+        "llm_confidence_reason": "Term Ends: 2026 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Julie D. Gilman",
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
@@ -128,7 +131,7 @@
       {
         "data": "jgilman@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name.",
+        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
@@ -145,16 +148,16 @@
       {
         "data": "2028",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Ends: 2028' near name.",
+        "llm_confidence_reason": "Term Ends: 2028 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Daniel Chartrand",
-    "image": null,
-    "source_image": null,
+    "image": "images/570588e58d701ba10d13d06a46951cd28d24d95fcd8e8b418b1a8c42c3bc46cc.jpg",
+    "source_image": "https://www.exeternh.gov/sites/default/files/styles/full_node_primary/public/imageattachments/bos/page/13401/exeterselectboard08.2023.jpg?itok=rBh7JUEU",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
@@ -166,7 +169,7 @@
       {
         "data": "dchartrand@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name.",
+        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
@@ -183,10 +186,10 @@
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Ends: 2026' near name.",
+        "llm_confidence_reason": "Term Ends: 2026 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   }
 ]

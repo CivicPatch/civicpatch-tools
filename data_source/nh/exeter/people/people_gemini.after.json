@@ -11,11 +11,11 @@
     "email": "npapakonstantis@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2028",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Molly Cowan",
@@ -29,11 +29,11 @@
     "email": "mcowan@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2027",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Daniel Chartrand",
@@ -46,11 +46,11 @@
     "email": "dchartrand@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2026",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Julie D. Gilman",
@@ -63,11 +63,11 @@
     "email": "jgilman@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2028",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   },
   {
     "name": "Nancy Belanger",
@@ -80,10 +80,10 @@
     "email": "nbelanger@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2026",
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-08"
   }
 ]

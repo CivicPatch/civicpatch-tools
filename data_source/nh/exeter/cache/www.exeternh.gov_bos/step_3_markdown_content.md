@@ -152,7 +152,7 @@ Column 3
    *  [__Projects__](https://www.exeternh.gov/projects) 
    *  [__COVID-19__](https://www.exeternh.gov/covid19) 
    *  [__Event Calendar__](https://www.exeternh.gov/calendar)  
- Search form Search Website  [Select Board](https://www.exeternh.gov/bos)  
+ Search form Search Website 
 
 # Select Board
 
@@ -186,6 +186,7 @@ Current Members and Terms
   [Select Board Meetings - Video On Demand](https://videoplayer.telvue.com/player/LyAOBTaTsnn_CnwjwcB5-VoxQtyoKR1P/categories/1413?autostart=false&showtabssearch=true)  
 
  *  ![Printer-friendly version](images/fc8ff5b33272958522f87b29c5264ae51798b8a2c38a172647bb14a4d1cd6c02.png) 
+  [Select Board](https://www.exeternh.gov/bos)  
 
  *  [Policies and Procedures](https://www.exeternh.gov/bos/town-operating-policies-and-procedures) 
  *  [Frequently Asked Questions](https://www.exeternh.gov/bos/frequently-asked-questions) 
