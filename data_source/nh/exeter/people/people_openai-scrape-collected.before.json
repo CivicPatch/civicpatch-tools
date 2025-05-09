@@ -15,14 +15,14 @@
       {
         "data": "npapakonstantis@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
+        "llm_confidence_reason": "Email explicitly listed near name with clear format.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [
       {
         "data": "https://www.exeternh.gov/bos",
-        "llm_confidence": 0.85,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Primary Select Board page URL.",
         "source": "https://www.exeternh.gov/bos"
       }
@@ -31,12 +31,12 @@
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term Ends: 2028 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Molly Cowan",
@@ -54,14 +54,14 @@
       {
         "data": "mcowan@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
+        "llm_confidence_reason": "Email explicitly listed near name with clear format.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [
       {
         "data": "https://www.exeternh.gov/bos",
-        "llm_confidence": 0.85,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Primary Select Board page URL.",
         "source": "https://www.exeternh.gov/bos"
       }
@@ -70,12 +70,12 @@
     "end_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term Ends: 2027 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Nancy Belanger",
@@ -93,14 +93,14 @@
       {
         "data": "nbelanger@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
+        "llm_confidence_reason": "Email explicitly listed near name with clear format.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [
       {
         "data": "https://www.exeternh.gov/bos",
-        "llm_confidence": 0.85,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Primary Select Board page URL.",
         "source": "https://www.exeternh.gov/bos"
       }
@@ -109,12 +109,12 @@
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term Ends: 2026 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Julie D. Gilman",
@@ -131,14 +131,14 @@
       {
         "data": "jgilman@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
+        "llm_confidence_reason": "Email explicitly listed near name with clear format.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [
       {
         "data": "https://www.exeternh.gov/bos",
-        "llm_confidence": 0.85,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Primary Select Board page URL.",
         "source": "https://www.exeternh.gov/bos"
       }
@@ -147,12 +147,12 @@
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term Ends: 2028 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Daniel Chartrand",
@@ -169,14 +169,14 @@
       {
         "data": "dchartrand@exeternh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name with mailto link.",
+        "llm_confidence_reason": "Email explicitly listed near name with clear format.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
     "websites": [
       {
         "data": "https://www.exeternh.gov/bos",
-        "llm_confidence": 0.85,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Primary Select Board page URL.",
         "source": "https://www.exeternh.gov/bos"
       }
@@ -185,11 +185,11 @@
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Term Ends: 2026 explicitly stated.",
         "source": "https://www.exeternh.gov/bos"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   }
 ]

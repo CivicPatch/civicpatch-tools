@@ -88,9 +88,14 @@ jobs:
           app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
           private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
 
-      - name: Install dependencies
+      - name: Install gem dependencies
         run: |
           bundle install
+      
+      - name: Install Playwright
+        run: |
+          npm install playwright
+          ./node_modules/.bin/playwright install
 
       - name: Extract State and GNIS ID from Branch Name
         run: |

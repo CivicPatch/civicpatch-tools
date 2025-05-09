@@ -4,10 +4,9 @@ scrape_sources:
 source_directory_list:
   type: directory_list_fallback
   people:
-  - name: Niko Papakonstantis
+  - name:
     positions:
-    - Chair
-    - Select Board Member
+    - Mayor
   - name: Daniel Chartrand
     positions:
     - Select Board Member
@@ -15,9 +14,6 @@ source_directory_list:
     positions:
     - Select Board Member
   - name: Molly Cowan
-    positions:
-    - Select Board Member
-  - name: Nancy Belanger
     positions:
     - Select Board Member
 people: {}

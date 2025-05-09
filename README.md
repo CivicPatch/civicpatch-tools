@@ -46,10 +46,9 @@ rake 'city_scrape:get_places[mi]'
 ### FIPS examples
 * https://www2.census.gov/geo/docs/reference/codes2020/place/st41_or_place2020.txt
 
-### Scratch
-```bash
-gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-wa-" --template '{{range .}}{{.headRefName}} {{end}}'
-```
+### Playwright Setup
+* npm install playwright
+* ./node_modules/.bin/playwright install
 
 ### Services
 * Search Services

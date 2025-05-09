@@ -112,6 +112,10 @@ GEM
     markitdown (0.3.3)
       nokogiri
     matrix (0.4.2)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2025.0507)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.5)
@@ -135,6 +139,9 @@ GEM
     parser (3.3.8.0)
       ast (~> 2.4.1)
       racc
+    playwright-ruby-client (1.51.0)
+      concurrent-ruby (>= 1.1.6)
+      mime-types (>= 3.0)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -235,6 +242,7 @@ DEPENDENCIES
   namae (~> 1.2)
   nokogiri
   open_data!
+  playwright-ruby-client (~> 1.51)
   pp (~> 0.6.2)
   rake (~> 13.0)
   rubocop (~> 1.75)

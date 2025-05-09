@@ -56,3 +56,5 @@ gem "namae", "~> 1.2"
 gem "rubocop-minitest", "~> 0.38.0"
 
 gem "rubocop-rake", "~> 0.7.1"
+
+gem "playwright-ruby-client", "~> 1.51"

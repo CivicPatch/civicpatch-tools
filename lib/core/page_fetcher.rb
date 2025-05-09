@@ -27,7 +27,9 @@ module Core
       end
 
       image_dir = PathHelper.project_path(File.join(destination_dir, "images"))
-      html, image_map = Browser.fetch_page_and_images(url, image_dir)
+      response = Browser.fetch_page_content(url, { image_dir: image_dir, wait_for: 2 })
+      html = response[:page_html]
+      image_map = response[:image_map]
 
       return [nil, nil] if html.blank?
 

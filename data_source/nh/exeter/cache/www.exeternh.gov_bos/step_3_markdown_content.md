@@ -5,7 +5,7 @@
 
  *  [Home](https://www.exeternh.gov/) 
  *  [Contact Us](https://www.exeternh.gov/contact) 
-  ![facebook](images/626699726f770bf1bc6e1bfb40c98c00bd5169962f808bfc6d1f5a85c6d940b0.png)   ![twitter](images/4300a4f26897eaf67d26faf6021ebbae04658990ce45c3c9b46625fb8fba2cb8.png)   ![youtube](images/7fd4764073ab8602ea2e08df30071fd7f7db0e3f6fc2eb4a204a331e312d8be6.png)  
+  ![facebook](images/20e56e3d1b124893557b6f22d9addf154d98d9e2a3bb36c1fccda33d88e2f157.png)   ![twitter](images/9334dd871f41241af63a6d91a33262c12d01f198399722b11575000091715864.png)   ![youtube](images/ee3d313aef7ab0dac6e39ad43700ed464bec6b70ac284955055fa94dcccd9a04.png)  
 
  *  Services   
 
@@ -179,7 +179,7 @@ Current Members and Terms
 
 #### Supporting Documents
 
-  ![PDF icon](images/c4bc8b4b4e5960b1f15abc8aa3e0cd298c1f3480bb3bbe64628bff2319d8ffbc.png)  [Management Study and Strategic Recommendations - Keegan Associates - January, 2024](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/management_study_and_strategic_recommendations_-_keegan_associates_january_2024.pdf)  (32 MB)  ![PDF icon](images/c4bc8b4b4e5960b1f15abc8aa3e0cd298c1f3480bb3bbe64628bff2319d8ffbc.png)  [2023-24 Select Board Goals](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/select_board_goals_2023_by_category.pdf)  (113 KB)  ![PDF icon](images/c4bc8b4b4e5960b1f15abc8aa3e0cd298c1f3480bb3bbe64628bff2319d8ffbc.png)  [2022 Goal Setting Report](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/exeter_goal_setting_summary_june_2022.pdf)  (999 KB)  ![PDF icon](images/c4bc8b4b4e5960b1f15abc8aa3e0cd298c1f3480bb3bbe64628bff2319d8ffbc.png)  [2021 Goal Setting Draft Report](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/2021_goal_setting_draft_report.pdf)  (141 KB)  ![PDF icon](images/c4bc8b4b4e5960b1f15abc8aa3e0cd298c1f3480bb3bbe64628bff2319d8ffbc.png)  [Select Board Operating Procedures 2010](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/bos_operating_policies_procedures_final_083010.pdf)  (221 KB) 
+  ![PDF icon](images/d71b8d04d08ec44368dbaf1e56fd15a500b13d28b0260ac0f70c78e025064da5.png)  [Management Study and Strategic Recommendations - Keegan Associates - January, 2024](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/management_study_and_strategic_recommendations_-_keegan_associates_january_2024.pdf)  (32 MB)  ![PDF icon](images/d71b8d04d08ec44368dbaf1e56fd15a500b13d28b0260ac0f70c78e025064da5.png)  [2023-24 Select Board Goals](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/select_board_goals_2023_by_category.pdf)  (113 KB)  ![PDF icon](images/d71b8d04d08ec44368dbaf1e56fd15a500b13d28b0260ac0f70c78e025064da5.png)  [2022 Goal Setting Report](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/exeter_goal_setting_summary_june_2022.pdf)  (999 KB)  ![PDF icon](images/d71b8d04d08ec44368dbaf1e56fd15a500b13d28b0260ac0f70c78e025064da5.png)  [2021 Goal Setting Draft Report](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/2021_goal_setting_draft_report.pdf)  (141 KB)  ![PDF icon](images/d71b8d04d08ec44368dbaf1e56fd15a500b13d28b0260ac0f70c78e025064da5.png)  [Select Board Operating Procedures 2010](https://www.exeternh.gov/sites/default/files/fileattachments/select_board/page/13401/bos_operating_policies_procedures_final_083010.pdf)  (221 KB) 
 
 #### Web Links
 
@@ -243,4 +243,4 @@ Daniel Chartrand
 
 10 Front Street Exeter, NH 03833
 
-  [a municodeWEB design |](http://www.ahaconsulting.com/)  [Photo Credits](https://www.exeternh.gov/bos/node/61775)   ![placeholder](images/739d4440cd86f15d00522980f45d909a7363723738d8b5cdd965a79aee19ae92.png)  
+  [a municodeWEB design |](http://www.ahaconsulting.com/)  [Photo Credits](https://www.exeternh.gov/bos/node/61775)   ![placeholder](images/ab4293fbf1f900461796cd6965f1dd1d9cb019a072298a5d3a50013aae358bf5.png)  
