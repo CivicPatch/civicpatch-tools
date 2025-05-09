@@ -1,18 +1,20 @@
 ---
-scrape_sources: []
+scrape_sources:
+- https://www.goffstownnh.gov/381/Select-Board
+- https://www.goffstownnh.gov/381/Select-Board/
 source_directory_list:
   type: directory_list_fallback
   people:
-  - name: Peter Georgantas
-    positions:
-    - Chair
-  - name: Mark T. Lemay
-    positions:
-    - Vice Chair
   - name: Jim Craig
     positions:
     - Select Board Member
   - name: Joshua Douglas
+    positions:
+    - Select Board Member
+  - name: Mark T. Lemay
+    positions:
+    - Select Board Member
+  - name: Peter Georgantas
     positions:
     - Select Board Member
   - name: Richard Manzo
