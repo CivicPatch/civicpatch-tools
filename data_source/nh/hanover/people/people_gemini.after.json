@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Carey Callaghan",
+    "positions": [
+      "Chair"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "Carey.Callaghan@hanovernh.org",
+    "website": "https://www.hanovernh.org/directory.aspx?eid=132",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=132"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Jarett Berke",
+    "positions": [
+      "Select Board Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "Jarett.Berke@hanovernh.org",
+    "website": "https://www.hanovernh.org/directory.aspx?eid=136",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=136"
+    ],
+    "updated_at": "2025-05-09"
+  }
+]
