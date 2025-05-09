@@ -1,1 +1,205 @@
-[]
+[
+  {
+    "name": "Chris Labonte",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.milford.nh.gov/selectboard"
+    ],
+    "positions": [
+      "Select Board Member",
+      "Board of Selectmen's Representative",
+      "Selectmen's Rep",
+      "Board of Selectman Representative Liaison"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "clabonte@milford.nh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed as public email near name.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Member 2026 tag likely indicates term ending 2026; no explicit start date found.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Member 2026 tag likely indicates term ending 2026.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "David Freel",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.milford.nh.gov/selectboard"
+    ],
+    "positions": [
+      "Select Board Representative",
+      "Vice Chair"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dfreel@milford.nh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed as public email near name.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Vice Chair 2026 tag likely indicates term ending 2026; no explicit start date found.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Vice Chair 2026 tag likely indicates term ending 2026.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Gary Daniels",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.milford.nh.gov/selectboard"
+    ],
+    "positions": [
+      "Chairman",
+      "Select Board Representative-Alternate"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "gdaniels@milford.nh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed as public email near name.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Chairman 2028 tag likely indicates term ending 2028; no explicit start date found.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Chairman 2028 tag likely indicates term ending 2028.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Paul Dargie",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.milford.nh.gov/selectboard"
+    ],
+    "positions": [
+      "Select Board Representative",
+      "Voting Member",
+      "Selectmen's Representative",
+      "Select Board Representative-Alternate",
+      "Select Board Representative"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "pdargie@milford.nh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed as public email near name.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Member 2027 tag likely indicates term ending 2027; no explicit start date found.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Member 2027 tag likely indicates term ending 2027.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Tina Philbrick",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.milford.nh.gov/selectboard"
+    ],
+    "positions": [
+      "Select Board Member",
+      "Board of Selectmen's Representative",
+      "Select Board Representative",
+      "Select Board Alternate",
+      "Board of Selectman Representative -Alternate"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tphilbrick@milford.nh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed as public email near name.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Member 2027 tag likely indicates term ending 2027; no explicit start date found.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Member 2027 tag likely indicates term ending 2027.",
+        "source": "https://www.milford.nh.gov/selectboard"
+      }
+    ],
+    "updated_at": "2025-05-09"
+  }
+]

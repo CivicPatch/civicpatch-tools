@@ -1,1 +1,53 @@
---- []
+---
+- name: Gary Daniels
+  positions:
+  - Chair
+  email: gdaniels@milford.nh.gov
+  phone_number:
+  website:
+  start_date: '2028'
+  end_date: '2028'
+  image:
+  source_image:
+  sources:
+  - https://www.milford.nh.gov/selectboard
+  updated_at: '2025-05-09'
+- name: David Freel
+  positions:
+  - Vice Chair
+  email: dfreel@milford.nh.gov
+  phone_number:
+  website:
+  start_date: '2026'
+  end_date: '2026'
+  image:
+  source_image:
+  sources:
+  - https://www.milford.nh.gov/selectboard
+  updated_at: '2025-05-09'
+- name: Chris Labonte
+  positions:
+  - Select Board Member
+  email: clabonte@milford.nh.gov
+  phone_number:
+  website:
+  start_date: '2026'
+  end_date: '2026'
+  image:
+  source_image:
+  sources:
+  - https://www.milford.nh.gov/selectboard
+  updated_at: '2025-05-09'
+- name: Tina Philbrick
+  positions:
+  - Select Board Member
+  email: tphilbrick@milford.nh.gov
+  phone_number:
+  website:
+  start_date: '2027'
+  end_date: '2027'
+  image:
+  source_image:
+  sources:
+  - https://www.milford.nh.gov/selectboard
+  updated_at: '2025-05-09'
