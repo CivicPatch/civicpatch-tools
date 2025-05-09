@@ -388,8 +388,8 @@
       "government_type": "select_board",
       "email": "pmcelroy@exeternh.gov",
       "website": "http://exeternh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "044b7312edbf14ea2e452076d6958a6d",
+      "meta_updated_at": "2025-05-09",
+      "meta_hash": "db9605c9851f1c711e3cff77c56aeeab",
       "meta_sources": [
         "state_source",
         "gemini",

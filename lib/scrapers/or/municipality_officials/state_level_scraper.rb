@@ -23,20 +23,15 @@ module Scrapers
           municipality_entry = municipality_context[:municipality_entry]
           source_url = get_source_url(municipality_entry)
           # Fetch HTML, interacting to select "All" entries
-          response = Browser.fetch_html(source_url) do |browser, wait|
-            # Find the select element for pagination length
-            select_element = wait.until do
-              browser.find_element(css: "select[name='dtCityContacts_length']")
-            end
-
+          response = Browser.fetch_html(source_url) do |browser|
             # Create a Select object and choose the "All" option by its value ("-1")
-            select_list = Selenium::WebDriver::Support::Select.new(select_element)
-            select_list.select_by(:value, "-1")
+            page.select_option("select#dtCityContacts_length", value: "-1")
 
             # Wait briefly for the table to potentially update after changing pagination
             # A more robust wait might look for staleness or specific element changes
             # Example: wait for the first row of the table body to be present again
-            wait.until { browser.find_element(css: "#dtCityContacts tbody tr") }
+            sleep(2)
+            browser.query_selector("#dtCityContacts tbody tr")
           end
           # Ensure response is not nil before parsing
           parse_html(response)

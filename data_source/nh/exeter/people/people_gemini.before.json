@@ -11,11 +11,11 @@
     "email": "npapakonstantis@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": "2028",
+    "end_date": null,
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Molly Cowan",
@@ -29,15 +29,16 @@
     "email": "mcowan@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": "2027",
+    "end_date": null,
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Nancy Belanger",
     "positions": [
+      "Clerk",
       "Select Board member"
     ],
     "image": null,
@@ -46,11 +47,11 @@
     "email": "nbelanger@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": "2026",
+    "end_date": null,
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Julie D. Gilman",
@@ -63,11 +64,11 @@
     "email": "jgilman@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": "2028",
+    "end_date": null,
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   },
   {
     "name": "Daniel Chartrand",
@@ -80,10 +81,10 @@
     "email": "dchartrand@exeternh.gov",
     "website": null,
     "start_date": null,
-    "end_date": "2026",
+    "end_date": null,
     "sources": [
       "https://www.exeternh.gov/bos"
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-05-09"
   }
 ]

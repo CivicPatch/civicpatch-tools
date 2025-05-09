@@ -102,6 +102,11 @@ jobs:
         run: |
           bundle install
 
+      - name: Install Playwright
+        run: |
+          npm install playwright
+          ./node_modules/.bin/playwright install
+
       - name: Set up git
         run: |
           git config --global user.name "Civic Patch Pipeline Bot"

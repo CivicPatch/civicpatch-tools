@@ -3,50 +3,69 @@
 require "securerandom"
 require "utils/url_helper"
 require_relative "../utils/image_helper"
+require "playwright"
 
 module Browser
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 2  # Base sleep time for exponential backoff
   EXCLUDE_IMAGE_URLS = ["tile.openstreetmap.org"]
   EXCLUDE_IMAGE_PATTERNS = ["spinner.gif", "loading.gif", "ajax-loader.gif", "loader.gif"]
+  INCLUDE_API_CONTENT = {
+    mwjsPeople: {
+      pattern: "mwjsPeople",
+      variable: "var mwjsMemberData"
+    }
+  }
 
-  def self.start
-    options = Selenium::WebDriver::Chrome::Options.new
-    options.add_argument("--headless") # Run without UI
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-blink-features=AutomationControlled") # Avoid bot detection
-    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
+  def self.with_browser
+    # options = Selenium::WebDriver::Chrome::Options.new
+    # options.add_argument("--headless") # Run without UI
+    # options.add_argument("--disable-gpu")
+    # options.add_argument("--no-sandbox")
+    # options.add_argument("--disable-blink-features=AutomationControlled") # Avoid bot detection
+    # options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
 
-    Selenium::WebDriver.for(:chrome, options: options)
+    # Selenium::WebDriver.for(:chrome, options: options)
+
+    Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwright") do |playwright|
+      browser = playwright.chromium.launch(headless: false)
+      context = browser.new_context
+      browser_page = context.new_page
+
+      yield(browser_page)
+    end
   end
 
-  def self.fetch_page_and_images(url, image_dir)
-    FileUtils.mkdir_p(image_dir) unless Dir.exist?(image_dir)
-    browser = start
+  def self.fetch_page_content(url, options = {})
+    response = {}
 
-    begin
-      browser.get(url)
+    with_browser do |browser|
+      browser.goto(url)
 
-      wait = Selenium::WebDriver::Wait.new(timeout: 30) # seconds
-      wait.until { browser.execute_script("return document.readyState") == "complete" }
+      sleep(options[:wait_for]) if options[:wait_for].present?
 
       return nil unless html_page?(browser)
 
-      original_page_source = browser.page_source
+      original_page_source = browser.content
       base_url = Utils::UrlHelper.extract_page_base_url(original_page_source, url)
 
-      FileUtils.mkdir_p(image_dir)
-      image_map = download_images(browser, image_dir, base_url)
-      page_source_with_images = browser.page_source
+      if options[:image_dir].present?
+        image_dir = options[:image_dir]
+        FileUtils.mkdir_p(image_dir)
+        image_map = download_images(browser, image_dir, base_url)
+        response[:image_map] = image_map
+      end
 
-      page_html = Utils::UrlHelper.format_links_to_absolute(page_source_with_images, url)
+      include_api_content(browser, options[:include_api_content]) if options[:include_api_content].present?
 
-      [page_html, image_map]
-    ensure
-      browser.quit
+      page_source = browser.content
+      page_html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
+      response[:page_html] = page_html
+
+      response
     end
   rescue StandardError => e
+    puts e.backtrace
     puts "Browser fetch failed for #{url}: #{e.message}"
     nil
   end
@@ -54,20 +73,14 @@ module Browser
   def self.fetch_html(url)
     retry_attempts = 0
 
-    begin
-      browser = start
-      browser.get(url)
-
-      # Wait for document ready AND jQuery AJAX requests to complete (if jQuery is present)
-      wait = Selenium::WebDriver::Wait.new(timeout: 30) # seconds
-      wait.until do
-        browser.execute_script("return document.readyState == 'complete' && (typeof jQuery == 'undefined' || jQuery.active == 0)")
-      end
+    with_browser do |browser|
+      browser.goto(url)
 
       # Yield the browser instance to the block for interactions
-      yield(browser, wait) if block_given?
+      yield(browser) if block_given?
 
-      source = browser.page_source
+      source = browser.content
+
       Utils::UrlHelper.format_links_to_absolute(source, url)
     rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
       if retry_attempts < MAX_RETRIES
@@ -84,14 +97,11 @@ module Browser
     rescue StandardError => e
       puts "Browser fetch failed for #{url}: #{e.message}"
       nil
-    ensure
-      # Check if browser variable exists and is not nil before calling quit
-      browser&.quit
     end
   end
 
   def self.html_page?(browser)
-    content_type = browser.execute_script("return document.contentType")
+    content_type = browser.evaluate("document.contentType")
 
     return false if content_type.blank?
 
@@ -99,8 +109,7 @@ module Browser
   end
 
   def self.download_images(browser, image_dir, base_url)
-    sleep(2) # wait for images to load
-    image_elements = browser.find_elements(tag_name: "img")
+    image_elements = browser.query_selector_all("img")
 
     image_map = {}
 
@@ -112,6 +121,9 @@ module Browser
     image_map
   end
 
+  def self.include_api_content(browser)
+  end
+
   def self.generate_filename(src, file_type)
     hash = Digest::SHA256.hexdigest(src)
     "#{hash}.#{file_type}"
@@ -119,7 +131,7 @@ module Browser
 
   def self.capture_image_as_data_url(browser, img_element)
     # Set crossorigin attribute before attempting to draw to canvas
-    browser.execute_script("
+    browser.evaluate("
       const img = arguments[0];
       // Add crossorigin attribute to allow canvas operations
       img.setAttribute('crossorigin', 'anonymous');
@@ -143,32 +155,8 @@ module Browser
     ", img_element)
   end
 
-  def self.capture_image_as_blob(browser, img_element)
-    browser.execute_script("
-      const image = arguments[0];
-      image.setAttribute('crossorigin', 'anonymous');
-      const canvas = document.createElement('canvas');
-      canvas.width = image.naturalWidth;
-      canvas.height = image.naturalHeight;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(image, 0, 0);
-
-      canvas.toBlob(function(blob) {
-        // Create a download link
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'image.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 'image/png');
-    ", img_element)
-  end
-
   def self.capture_image_as_browser_screenshot(img_element)
-    data = img_element.screenshot_as(:png)
+    data = img_element.screenshot
     tempfile = Tempfile.new(binmode: true)
     tempfile.write(data)
     tempfile.rewind
@@ -191,7 +179,7 @@ module Browser
   end
 
   def self.process_image(browser, image_dir, base_url, img_element)
-    src = img_element.attribute("src")
+    src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
 
     # Pre-processing: Skip common spinner images
@@ -228,18 +216,13 @@ module Browser
 
     FileUtils.mv(file.path, image_path)
 
-    browser.execute_script("arguments[0].setAttribute('src', arguments[1])",
-                           img_element, "images/#{filename}")
+    img_element.evaluate("(el, src) => el.setAttribute('src', 'images/#{filename}')")
 
     [filename, absolute_src]
   rescue StandardError => e
     puts "\t\t\t\t❌: Error processing image (#{src}): #{e.message}, removing image element"
-    remove_image_element(browser, img_element)
+    img_element.evaluate("el => el.remove()")
     nil
-  end
-
-  def self.remove_image_element(browser, img_element)
-    browser.execute_script("arguments[0].remove()", img_element)
   end
 
   def self.download_image(absolute_src, browser, img_element)
@@ -335,61 +318,6 @@ module Browser
     # If the loop finishes, max redirects were exceeded
     puts "Max redirects (#{max_redirects}) exceeded for original URL: #{initial_url}"
     nil # Return nil explicitly
-  end
-
-  def self.capture_image_as_blob_data_url(browser, img_element)
-    browser.execute_async_script("
-      // Selenium callback function
-      const callback = arguments[arguments.length - 1];
-      const img = arguments[0];
-
-      function readBlobAsDataURL(blob) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = (err) => reject('FileReader failed: ' + err);
-          reader.readAsDataURL(blob);
-        });
-      }
-
-      function canvasToBlob(canvas, type = 'image/png', quality) {
-         return new Promise((resolve, reject) => {
-             canvas.toBlob(blob => {
-                 if (blob) {
-                     resolve(blob);
-                 } else {
-                     // Blob creation fails often due to tainted canvas
-                     reject(new Error('Failed to create blob, canvas might be tainted.'));
-                 }
-             }, type, quality);
-         });
-      }
-
-      // Main async logic
-      async function captureImage() {
-        try {
-          img.setAttribute('crossorigin', 'anonymous');
-
-          // Wait a bit after setting crossOrigin
-          await new Promise(resolve => setTimeout(resolve, 100));
-
-          const canvas = document.createElement('canvas');
-          canvas.width = img.naturalWidth || img.offsetWidth || 300;
-          canvas.height = img.naturalHeight || img.offsetHeight || 150;
-          const ctx = canvas.getContext('2d');
-
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const blob = await canvasToBlob(canvas, 'image/png');
-          const dataURL = await readBlobAsDataURL(blob);
-          callback({ status: 'success', data: dataURL });
-        } catch (error) {
-          console.error('Image capture error:', error); // Log error in browser console too
-          callback({ status: 'error', message: 'Image capture failed: ' + error.message });
-        }
-      }
-
-      captureImage();
-    ", img_element)
   end
 
   def self.determine_file_type(file)
