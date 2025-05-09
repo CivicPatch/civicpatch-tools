@@ -27,7 +27,9 @@ module Core
       end
 
       image_dir = PathHelper.project_path(File.join(destination_dir, "images"))
-      response = Browser.fetch_page_content(url, { image_dir: image_dir, wait_for: 2 })
+      response = Browser.fetch_page_content(url, { image_dir: image_dir,
+                                                   wait_for: 2,
+                                                   include_api_content: true })
       html = response[:page_html]
       image_map = response[:image_map]
 

@@ -64,7 +64,7 @@ module Core
 
           next [alias_map[matching_alias]] if matching_alias.present?
 
-          # TODO: let's toss anything we don't recognize
+          # TODO: Toss anything we don't recognize?
           # [normalized_position]
           []
         end.uniq

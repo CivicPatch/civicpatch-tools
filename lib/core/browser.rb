@@ -8,27 +8,19 @@ require "playwright"
 module Browser
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 2  # Base sleep time for exponential backoff
-  EXCLUDE_IMAGE_URLS = ["tile.openstreetmap.org"]
-  EXCLUDE_IMAGE_PATTERNS = ["spinner.gif", "loading.gif", "ajax-loader.gif", "loader.gif"]
+  EXCLUDE_IMAGE_URLS = ["tile.openstreetmap.org"].freeze
+  EXCLUDE_IMAGE_PATTERNS = ["spinner.gif", "loading.gif", "ajax-loader.gif", "loader.gif"].freeze
   INCLUDE_API_CONTENT = {
     mwjsPeople: {
       pattern: "mwjsPeople",
-      variable: "var mwjsMemberData"
+      start_string: "var mwjsMemberData=",
+      end_string: ",onerror"
     }
-  }
+  }.freeze
 
   def self.with_browser
-    # options = Selenium::WebDriver::Chrome::Options.new
-    # options.add_argument("--headless") # Run without UI
-    # options.add_argument("--disable-gpu")
-    # options.add_argument("--no-sandbox")
-    # options.add_argument("--disable-blink-features=AutomationControlled") # Avoid bot detection
-    # options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
-
-    # Selenium::WebDriver.for(:chrome, options: options)
-
     Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwright") do |playwright|
-      browser = playwright.chromium.launch(headless: false)
+      browser = playwright.chromium.launch(headless: true)
       context = browser.new_context
       browser_page = context.new_page
 
@@ -37,11 +29,27 @@ module Browser
   end
 
   def self.fetch_page_content(url, options = {})
-    response = {}
+    result = {}
+
+    mutex = Mutex.new
+    api_data = []
 
     with_browser do |browser|
-      browser.goto(url)
+      # Sometimes content is only available in the Shadow DOM,
+      # so we'll want to include content from the API
+      if options[:include_api_content].present?
+        browser.on("response", lambda { |response|
+          api_content = include_api_content(response)
 
+          unless api_content.blank?
+            mutex.synchronize do
+              api_data << api_content
+            end
+          end
+        })
+      end
+
+      browser.goto(url)
       sleep(options[:wait_for]) if options[:wait_for].present?
 
       return nil unless html_page?(browser)
@@ -49,20 +57,26 @@ module Browser
       original_page_source = browser.content
       base_url = Utils::UrlHelper.extract_page_base_url(original_page_source, url)
 
+      if options[:include_api_content].present?
+        mutex.synchronize do
+          api_data.each do |api_content|
+            browser.evaluate("document.body.innerHTML += '#{api_content}'")
+          end
+        end
+      end
+
       if options[:image_dir].present?
         image_dir = options[:image_dir]
         FileUtils.mkdir_p(image_dir)
         image_map = download_images(browser, image_dir, base_url)
-        response[:image_map] = image_map
+        result[:image_map] = image_map
       end
-
-      include_api_content(browser, options[:include_api_content]) if options[:include_api_content].present?
 
       page_source = browser.content
       page_html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
-      response[:page_html] = page_html
+      result[:page_html] = page_html
 
-      response
+      result
     end
   rescue StandardError => e
     puts e.backtrace
@@ -100,7 +114,7 @@ module Browser
     end
   end
 
-  def self.html_page?(browser)
+  private_class_method def self.html_page?(browser)
     content_type = browser.evaluate("document.contentType")
 
     return false if content_type.blank?
@@ -108,7 +122,35 @@ module Browser
     content_type.downcase.include?("text/html")
   end
 
-  def self.download_images(browser, image_dir, base_url)
+  private_class_method def self.include_api_content(response)
+    return unless response.url.include?(INCLUDE_API_CONTENT[:mwjsPeople][:pattern])
+
+    puts "Including API content for #{response.url}"
+    text = response.text
+
+    extract_api_content(INCLUDE_API_CONTENT[:mwjsPeople][:pattern], text)
+  end
+
+  private_class_method def self.extract_api_content(pattern, text)
+    INCLUDE_API_CONTENT.each_value do |config|
+      next unless config[:pattern] == pattern
+
+      start_string = config[:start_string] || "="
+      end_string = config[:end_string] || "(?:\\s*;|\\n|$)"
+      pattern_regex = /#{start_string}\s*(.+?)#{end_string}/m
+
+      matches = text.match(pattern_regex)
+      next unless matches && matches[1]
+
+      extracted_content = matches[1].strip
+      puts "Extracted content: #{extracted_content}"
+      return extracted_content
+    end
+
+    nil
+  end
+
+  private_class_method def self.download_images(browser, image_dir, base_url)
     image_elements = browser.query_selector_all("img")
 
     image_map = {}
@@ -121,41 +163,36 @@ module Browser
     image_map
   end
 
-  def self.include_api_content(browser)
-  end
-
-  def self.generate_filename(src, file_type)
+  private_class_method def self.generate_filename(src, file_type)
     hash = Digest::SHA256.hexdigest(src)
     "#{hash}.#{file_type}"
   end
 
-  def self.capture_image_as_data_url(browser, img_element)
-    # Set crossorigin attribute before attempting to draw to canvas
-    browser.evaluate("
-      const img = arguments[0];
-      // Add crossorigin attribute to allow canvas operations
-      img.setAttribute('crossorigin', 'anonymous');
+  private_class_method def self.capture_image_as_data_url(page, img_element)
+    img_element.evaluate("
+      async (img) => {
+        // Add crossorigin attribute to allow canvas operations
+        img.setAttribute('crossorigin', 'anonymous');
 
-      // Small delay to let browser apply the attribute
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          try {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth || 300;
-            canvas.height = img.naturalHeight || 150;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            resolve(canvas.toDataURL('image/jpeg'));
-          } catch (e) {
-            // Return error message if canvas is tainted
-            resolve('ERROR: ' + e.message);
-          }
-        }, 100);
-      });
-    ", img_element)
+        // Small delay to let browser apply the attribute
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth || 300;
+          canvas.height = img.naturalHeight || 150;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          return canvas.toDataURL('image/jpeg');
+        } catch (e) {
+          // Return error message if canvas is tainted
+          return 'ERROR: ' + e.message;
+        }
+      }
+    ")
   end
 
-  def self.capture_image_as_browser_screenshot(img_element)
+  private_class_method def self.capture_image_as_browser_screenshot(img_element)
     data = img_element.screenshot
     tempfile = Tempfile.new(binmode: true)
     tempfile.write(data)
@@ -164,7 +201,7 @@ module Browser
     tempfile
   end
 
-  def self.save_image_from_data_url(data_url)
+  private_class_method def self.save_image_from_data_url(data_url)
     # Strip data URL prefix to get base64 data
     return nil unless data_url.start_with?("data:image/")
 
@@ -178,7 +215,7 @@ module Browser
     downloaded_file
   end
 
-  def self.process_image(browser, image_dir, base_url, img_element)
+  private_class_method def self.process_image(browser, image_dir, base_url, img_element)
     src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
 
@@ -225,7 +262,7 @@ module Browser
     nil
   end
 
-  def self.download_image(absolute_src, browser, img_element)
+  private_class_method def self.download_image(absolute_src, browser, img_element)
     # Try downloading with HTTParty first
     file = download_with_httparty(absolute_src)
     return file if file
@@ -240,7 +277,7 @@ module Browser
       return file
     end
 
-    puts "\t\t\t->Canvas error for #{absolute_src}: #{response}, re-trying with browser screenshot"
+    puts "\t\t\t->Canvas error for #{absolute_src}, re-trying with browser screenshot"
 
     file = capture_image_as_browser_screenshot(img_element)
     if file
@@ -252,7 +289,7 @@ module Browser
     nil
   end
 
-  def self.download_with_httparty(absolute_src)
+  private_class_method def self.download_with_httparty(absolute_src)
     # Skip data URLs
     return nil if absolute_src.start_with?("data:")
 
@@ -320,7 +357,7 @@ module Browser
     nil # Return nil explicitly
   end
 
-  def self.determine_file_type(file)
+  private_class_method def self.determine_file_type(file)
     content_type = Utils::ImageHelper.determine_mime_type(file.path)
     extension = Utils::ImageHelper.mime_type_to_extension(content_type)
     if extension.nil?
