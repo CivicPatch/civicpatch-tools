@@ -143,6 +143,9 @@ module Services
             - **Prefer the term "Position X" (e.g., "Position 1", "Position 2") when a numeric identifier is used, unless the source text clearly and consistently uses a different term like "Seat X" or "Ward X" for those numbered roles on the same page.**
             - Combine with the main role, e.g., "Council Member, Position 1".
           - EXCLUDE judicial, most admin staff, non-municipal.
+          - For position extraction:
+            - Identify the person's core role on the governing body (e.g., "Select Board Member")
+            - Prefer simpler terms when they convey the same meaning, but preserve all distinct responsibilities
         - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start 'images/'.
         - Contact Details (Phone/Email/Website):
           - Associate details logically if near the person's name/section.
