@@ -1,0 +1,40 @@
+---
+- name: Daniel Chartrand
+  positions:
+  - Select Board Member
+  email: dchartrand@exeternh.gov
+  phone_number:
+  website: https://www.exeternh.gov/bos
+  start_date:
+  end_date: '2026'
+  image:
+  source_image:
+  sources:
+  - https://www.exeternh.gov/bos
+  updated_at: '2025-05-09'
+- name: Julie D. Gilman
+  positions:
+  - Select Board Member
+  email: jgilman@exeternh.gov
+  phone_number:
+  website: https://www.exeternh.gov/bos
+  start_date:
+  end_date: '2028'
+  image:
+  source_image:
+  sources:
+  - https://www.exeternh.gov/bos
+  updated_at: '2025-05-09'
+- name: Molly Cowan
+  positions:
+  - Select Board Member
+  email: mcowan@exeternh.gov
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.exeternh.gov/bos
+  updated_at: '2025-05-09'

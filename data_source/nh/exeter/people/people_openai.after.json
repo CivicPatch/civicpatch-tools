@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Daniel Chartrand",
+    "positions": [
+      "Select Board Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "dchartrand@exeternh.gov",
+    "website": "https://www.exeternh.gov/bos",
+    "start_date": null,
+    "end_date": "2026",
+    "sources": [
+      "https://www.exeternh.gov/bos"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Julie D. Gilman",
+    "positions": [
+      "Select Board Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "jgilman@exeternh.gov",
+    "website": "https://www.exeternh.gov/bos",
+    "start_date": null,
+    "end_date": "2028",
+    "sources": [
+      "https://www.exeternh.gov/bos"
+    ],
+    "updated_at": "2025-05-09"
+  }
+]
