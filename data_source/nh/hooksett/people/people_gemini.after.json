@@ -1,0 +1,187 @@
+[
+  {
+    "name": "Timothy Tsantoulis",
+    "positions": [
+      "Chair",
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 669-6999",
+    "email": "ttsantoulis@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "James Sullivan",
+    "positions": [
+      "Vice Chair",
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 315-0084",
+    "email": "jsullivan@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/boards_committees/planning_board/index.php",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Alexander Walczyk",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(818) 446-6599",
+    "email": "awalczyk@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/boards___committees/conservation_commission/index.php",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Jeff Nyhan",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 932-3775",
+    "email": "jnyhan@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Jodi Pinard",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "jpinard@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php",
+      "https://www.hooksett.org/government/boards_committees/economic_development_committee/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Keith Judge",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 493-7991",
+    "email": "kjudge@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Lindsey Laliberte",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 461-1805",
+    "email": "llaliberte@hooksett.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Randall Lapierre",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 341-8311",
+    "email": "rlapierre@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Roger Duhaime",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": "rogerduhaime@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/",
+      "https://www.hooksett.org/government/boards_committees/economic_development_committee/index.php",
+      "https://www.hooksett.org/government/boards___committees/zoning_board_of_adjustment/index.php",
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  },
+  {
+    "name": "Vincent Lembo Jr",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.hooksett.org/government/boards_committees/parks_recreation_advisory_board/index.php"
+    ],
+    "updated_at": "2025-05-09"
+  }
+]

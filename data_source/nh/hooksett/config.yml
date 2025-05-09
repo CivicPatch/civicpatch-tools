@@ -1,0 +1,40 @@
+---
+scrape_sources:
+- https://www.hooksett.org/
+- https://www.hooksett.org/government/town_council/index.php
+- https://www.hooksett.org/government/boards_committees/planning_board/index.php
+- https://www.hooksett.org/government/boards___committees/conservation_commission/index.php
+- https://www.hooksett.org/government/boards_committees/budget_committee/index.php
+- https://www.hooksett.org/government/boards_committees/economic_development_committee/index.php
+- https://www.hooksett.org/government/boards___committees/zoning_board_of_adjustment/index.php
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Alexander Walczyk
+    positions:
+    - Council Member
+  - name: James Sullivan
+    positions:
+    - Council Member
+  - name: Jeff Nyhan
+    positions:
+    - Council Member
+  - name: Jodi Pinard
+    positions:
+    - Council Member
+  - name: Keith Judge
+    positions:
+    - Council Member
+  - name: Lindsey Laliberte
+    positions:
+    - Council Member
+  - name: Randall Lapierre
+    positions:
+    - Council Member
+  - name: Roger Duhaime
+    positions:
+    - Council Member
+  - name: Timothy Tsantoulis
+    positions:
+    - Council Member
+people: {}

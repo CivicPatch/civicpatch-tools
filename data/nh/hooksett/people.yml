@@ -1,0 +1,133 @@
+---
+- name: Timothy Tsantoulis
+  positions:
+  - Chair
+  - Council Member
+  email: ttsantoulis@hooksett.org
+  phone_number: "(603) 669-6999"
+  website: https://www.hooksett.org/
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
+- name: James Sullivan
+  positions:
+  - Vice Chair
+  - Council Member
+  email: jsullivan@hooksett.org
+  phone_number: "(603) 315-0084"
+  website: https://www.hooksett.org/
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/boards_committees/planning_board/index.php
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
+- name: Alexander Walczyk
+  positions:
+  - Council Member
+  email: awalczyk@hooksett.org
+  phone_number: "(818) 446-6599"
+  website: https://www.hooksett.org/
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/boards___committees/conservation_commission/index.php
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
+- name: Jeff Nyhan
+  positions:
+  - Council Member
+  email: jnyhan@hooksett.org
+  phone_number: "(603) 932-3775"
+  website: https://www.hooksett.org/
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
+- name: Jodi Pinard
+  positions:
+  - Council Member
+  email: jpinard@hooksett.org
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/government/boards_committees/budget_committee/index.php
+  - https://www.hooksett.org/government/boards_committees/economic_development_committee/index.php
+  updated_at: '2025-05-09'
+- name: Keith Judge
+  positions:
+  - Council Member
+  email: kjudge@hooksett.org
+  phone_number: "(603) 493-7991"
+  website: https://www.hooksett.org/
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
+- name: Lindsey Laliberte
+  positions:
+  - Council Member
+  email: llaliberte@hooksett.gov
+  phone_number: "(603) 461-1805"
+  website: https://www.hooksett.org/
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
+- name: Randall Lapierre
+  positions:
+  - Council Member
+  email: rlapierre@hooksett.org
+  phone_number: "(603) 341-8311"
+  website:
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
+- name: Roger Duhaime
+  positions:
+  - Council Member
+  email: rogerduhaime@hooksett.org
+  phone_number:
+  website: https://www.hooksett.org/
+  start_date:
+  end_date: '2025-06-30'
+  image:
+  source_image:
+  sources:
+  - https://www.hooksett.org/
+  - https://www.hooksett.org/government/boards_committees/economic_development_committee/index.php
+  - https://www.hooksett.org/government/boards___committees/zoning_board_of_adjustment/index.php
+  - https://www.hooksett.org/government/town_council/index.php
+  updated_at: '2025-05-09'
