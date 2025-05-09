@@ -1,0 +1,9 @@
+---
+scrape_sources:
+- https://www.pelhamweb.com/board-of-selectmen
+- https://www.pelhamweb.com/node/59503
+- https://www.pelhamweb.com/node/36913
+source_directory_list:
+  type: directory_list_fallback
+  people: []
+people: {}
