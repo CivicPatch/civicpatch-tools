@@ -7,13 +7,14 @@
       "https://www.pelhamweb.com/board-of-selectmen"
     ],
     "positions": [
+      "Select Board Member",
       "Chair"
     ],
     "phone_numbers": [
       {
         "data": "(603) 635-8233",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board phone number listed near Board of Selectmen section; no personal number found.",
+        "llm_confidence_reason": "Phone number listed under Contact Info for Board of Selectmen, likely main contact number.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -21,7 +22,7 @@
       {
         "data": "selectmen@pelhamweb.com",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "General Board email provided; no personal email found.",
+        "llm_confidence_reason": "General Board of Selectmen email provided; no individual email found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -29,7 +30,7 @@
       {
         "data": "https://www.pelhamweb.com/node/59503",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL linked from name in Board Members table.",
+        "llm_confidence_reason": "URL linked from the name in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -38,7 +39,7 @@
       {
         "data": "2028",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year extracted from 'Term Exp.' column.",
+        "llm_confidence_reason": "Term expiration year listed as 2028 in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -52,21 +53,22 @@
       "https://www.pelhamweb.com/board-of-selectmen"
     ],
     "positions": [
+      "Select Board Member",
       "Vice-Chair"
     ],
     "phone_numbers": [
       {
         "data": "(603) 635-8233",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board phone number listed near Board of Selectmen section; no personal number found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board phone number used as no individual number found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "selectmen@pelhamweb.com",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "General Board email provided; no personal email found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board email used; no individual email found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -74,7 +76,7 @@
       {
         "data": "https://www.pelhamweb.com/node/36913",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL linked from name in Board Members table.",
+        "llm_confidence_reason": "URL linked from the name in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -83,7 +85,7 @@
       {
         "data": "2026",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year extracted from 'Term Exp.' column.",
+        "llm_confidence_reason": "Term expiration year listed as 2026 in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -97,21 +99,21 @@
       "https://www.pelhamweb.com/board-of-selectmen"
     ],
     "positions": [
-      "Member"
+      "Select Board Member"
     ],
     "phone_numbers": [
       {
         "data": "(603) 635-8233",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board phone number listed near Board of Selectmen section; no personal number found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board phone number used; no individual number found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "selectmen@pelhamweb.com",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "General Board email provided; no personal email found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board email used; no individual email found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -119,7 +121,7 @@
       {
         "data": "https://www.pelhamweb.com/user/6596/contact",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL linked from name in Board Members table.",
+        "llm_confidence_reason": "URL linked from the name in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -128,7 +130,7 @@
       {
         "data": "2026",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year extracted from 'Term Exp.' column.",
+        "llm_confidence_reason": "Term expiration year listed as 2026 in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -143,28 +145,28 @@
       "https://www.pelhamweb.com/node/57603"
     ],
     "positions": [
-      "Member",
+      "Select Board Member",
       "Selectmen"
     ],
     "phone_numbers": [
       {
         "data": "(603) 635-8233",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board phone number listed near Board of Selectmen section; no personal number found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board phone number used; no individual number found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       },
       {
         "data": "(603) 635-8233",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under Contact Info near name.",
+        "llm_confidence_reason": "Phone number listed under Contact Info near Jaie Bergeron's section.",
         "source": "https://www.pelhamweb.com/node/57603"
       }
     ],
     "emails": [
       {
         "data": "selectmen@pelhamweb.com",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "General Board email provided; no personal email found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board email used; no individual email found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -172,13 +174,13 @@
       {
         "data": "https://www.pelhamweb.com/node/57603",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL linked from name in Board Members table.",
+        "llm_confidence_reason": "URL linked from the name in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       },
       {
-        "data": "https://www.pelhamweb.com/board-of-selectmen",
+        "data": "https://www.pelhamweb.com/user/4683/contact",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "Board of Selectmen page linked near name.",
+        "llm_confidence_reason": "Contact link labeled 'Contact Jaie Bergeron' associated with the person.",
         "source": "https://www.pelhamweb.com/node/57603"
       }
     ],
@@ -186,7 +188,7 @@
       {
         "data": "2020-03-13",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Date Served' field 'March 13, 2020 to March 14, 2023' for active membership; start date is first date.",
+        "llm_confidence_reason": "Extracted from 'Date Served' field: 'March 13, 2020 to March 14, 2023' with term start date used.",
         "source": "https://www.pelhamweb.com/node/57603"
       }
     ],
@@ -194,13 +196,13 @@
       {
         "data": "2026",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year extracted from 'Term Exp.' column.",
+        "llm_confidence_reason": "Term expiration year listed as 2026 in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       },
       {
         "data": "2023-03-14",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Date Served' field 'March 13, 2020 to March 14, 2023'; end date is second date.",
+        "llm_confidence_reason": "Extracted from 'Date Served' field: 'March 13, 2020 to March 14, 2023' with term end date used.",
         "source": "https://www.pelhamweb.com/node/57603"
       }
     ],
@@ -214,21 +216,21 @@
       "https://www.pelhamweb.com/board-of-selectmen"
     ],
     "positions": [
-      "Member"
+      "Select Board Member"
     ],
     "phone_numbers": [
       {
         "data": "(603) 635-8233",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board phone number listed near Board of Selectmen section; no personal number found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board phone number used; no individual number found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "selectmen@pelhamweb.com",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "General Board email provided; no personal email found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board email used; no individual email found.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -236,7 +238,7 @@
       {
         "data": "https://www.pelhamweb.com/user/5896/contact",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL linked from name in Board Members table.",
+        "llm_confidence_reason": "URL linked from the name in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],
@@ -245,7 +247,7 @@
       {
         "data": "2028",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year extracted from 'Term Exp.' column.",
+        "llm_confidence_reason": "Term expiration year listed as 2028 in the Board Members table.",
         "source": "https://www.pelhamweb.com/board-of-selectmen"
       }
     ],

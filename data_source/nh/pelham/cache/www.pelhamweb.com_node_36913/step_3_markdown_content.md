@@ -116,7 +116,7 @@ Pelham NH Town Hall
    *  [Town Facebook Videos](https://www.facebook.com/TownofPelhamNH/videos) 
    *  [Town Live Stream (Youtube)](https://www.pelhamweb.com/home/pages/town-of-pelham-nh-live-stream) 
    *  [Town and School Video Archives](https://ptv.viebit.com/index.php?folder=ALL) 
-  ![Print](images/6e39d58b96e918224067860d8a4d9b88196c77c636b855c74fd88abd3be0abf1.png)   ![Share page with AddThis](images/17415b82298b0f9ab4d4e152a305ff8c478314ef82bb36f66d927ef57e5b092e.png)  
+  ![Print](images/6e39d58b96e918224067860d8a4d9b88196c77c636b855c74fd88abd3be0abf1.png)  
 
 ## You are here
 
