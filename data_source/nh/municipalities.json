@@ -299,7 +299,14 @@
       "phone_number": "(603) 497-8990 x118",
       "government_type": "select_board",
       "email": "joann.duffy@goffstownnh.gov",
-      "website": "http://www.goffstownnh.com"
+      "website": "https://www.goffstownnh.gov",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "1152a17de5e776e5c1c5d1a1fcc76784",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Laconia",
