@@ -463,7 +463,14 @@
       "phone_number": "(603) 542-7008",
       "government_type": "mayor_council",
       "email": "info@claremontnh.com",
-      "website": "http://www.claremontnh.com"
+      "website": "http://www.claremontnh.com",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "27a948d62312a96eba772998dfa73678",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hanover",
