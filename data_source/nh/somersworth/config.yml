@@ -1,0 +1,36 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Matt Gerding
+    positions:
+    - Mayor
+  - name: Crystal Paradis-Catanzaro
+    positions:
+    - Council Member
+  - name: David A. Witham
+    positions:
+    - Council Member
+  - name: Kenneth S. Vincent
+    positions:
+    - Council Member
+  - name: Laura Barry
+    positions:
+    - Council Member
+  - name: Martin Pepin
+    positions:
+    - Council Member
+  - name: Nancie Cameron
+    positions:
+    - Council Member
+  - name: Paul Goodwin
+    positions:
+    - Council Member
+  - name: Richard R. Michaud
+    positions:
+    - Council Member
+  - name: Robert G. Gibson
+    positions:
+    - Council Member
+people: {}
