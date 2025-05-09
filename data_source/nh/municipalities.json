@@ -365,7 +365,14 @@
       "phone_number": "(603) 249-0601",
       "government_type": "select_board",
       "email": "administration@milford.nh.gov",
-      "website": "http://www.milford.nh.gov/"
+      "website": "http://www.milford.nh.gov/",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Exeter",

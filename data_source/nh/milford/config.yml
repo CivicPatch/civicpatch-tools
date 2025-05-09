@@ -1,0 +1,21 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Chris Labonte
+    positions:
+    - Select Board Member
+  - name: David Freel
+    positions:
+    - Select Board Member
+  - name: Gary Daniels
+    positions:
+    - Select Board Member
+  - name: Paul Dargie
+    positions:
+    - Select Board Member
+  - name: Tina Philbrick
+    positions:
+    - Select Board Member
+people: {}
