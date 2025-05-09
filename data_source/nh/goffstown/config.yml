@@ -1,0 +1,21 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Peter Georgantas
+    positions:
+    - Chair
+  - name: Mark T. Lemay
+    positions:
+    - Vice Chair
+  - name: Jim Craig
+    positions:
+    - Select Board Member
+  - name: Joshua Douglas
+    positions:
+    - Select Board Member
+  - name: Richard Manzo
+    positions:
+    - Select Board Member
+people: {}
