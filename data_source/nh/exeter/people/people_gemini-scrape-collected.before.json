@@ -1,0 +1,159 @@
+[
+  {
+    "name": "Niko Papakonstantis",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.exeternh.gov/bos"
+    ],
+    "positions": [
+      "Chair",
+      "Select Board member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "npapakonstantis@exeternh.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Molly Cowan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.exeternh.gov/bos"
+    ],
+    "positions": [
+      "Vice Chair",
+      "Select Board member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mcowan@exeternh.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Nancy Belanger",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.exeternh.gov/bos"
+    ],
+    "positions": [
+      "Select Board member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "nbelanger@exeternh.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Julie D. Gilman",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.exeternh.gov/bos"
+    ],
+    "positions": [
+      "Select Board member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jgilman@exeternh.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  },
+  {
+    "name": "Daniel Chartrand",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.exeternh.gov/bos"
+    ],
+    "positions": [
+      "Select Board member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dchartrand@exeternh.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed in the table.",
+        "source": "https://www.exeternh.gov/bos"
+      }
+    ],
+    "updated_at": "2025-05-08"
+  }
+]
