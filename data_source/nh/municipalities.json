@@ -476,7 +476,14 @@
       "phone_number": "(603) 635-8233",
       "government_type": "select_board",
       "email": "selectmen@pelhamweb.com",
-      "website": "http://www.pelhamweb.com"
+      "website": "http://www.pelhamweb.com",
+      "meta_updated_at": "2025-05-08",
+      "meta_hash": "2904a644d848182a256afa952eacac7a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Claremont",
