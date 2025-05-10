@@ -32,7 +32,7 @@ module Validators
       url.gsub("www.", "")
     end
 
-    def self.merge_people_across_sources(people_config, sources)
+    def self.merge_people_across_sources(people_config, sources) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
       return sources.first[:people] if sources.count == 1
 
       merged = []

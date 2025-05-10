@@ -61,7 +61,7 @@ module Browser
 
     begin
       yield
-    rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
+    rescue Net::ReadTimeout, Faraday::TooManyRequestsError
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
         puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"

@@ -4,6 +4,9 @@ require:
 
 AllCops:
   TargetRubyVersion: 3.4
+  Exclude:
+    - "test/**/*"
+    - "lib/tasks/one_off.rb"
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
