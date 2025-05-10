@@ -10,7 +10,8 @@ module Scrapers
       CONTACT_TABLE_MAIN_KEYWORDS = ["community contact", "telephone"].freeze
 
       def self.fetch
-        directory_html_string = Browser.fetch_html(DIRECTORY_URL)
+        response = Browser.fetch_page_content(DIRECTORY_URL)
+        directory_html_string = response[:page_html]
         unless directory_html_string
           puts "Failed to fetch NH Directory page at #{DIRECTORY_URL}"
           return []
@@ -40,7 +41,7 @@ module Scrapers
       end
 
       def self.scrape_page_details(page_info)
-        page_html_string = Browser.fetch_html(page_info[:url])
+        page_html_string = Browser.fetch_page_content(page_info[:url])
         unless page_html_string
           puts "Failed to fetch page for #{page_info[:name]} at #{page_info[:url]}"
           return { name: page_info[:name], url: page_info[:url], error: "Page fetch failed" }

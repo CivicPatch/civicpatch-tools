@@ -36,15 +36,18 @@ module Browser
       api_data = []
 
       if options[:include_api_content]
-        browser.on("response") do |response|
+        browser.on("response", lambda { |response|
           content = include_api_content(response)
           api_data << content if content.present?
-        end
+        })
       end
+
       with_network_retry(url) do
         browser.goto(url)
       end
+
       sleep(options[:wait_for]) if options[:wait_for].present?
+
       return nil unless html_page?(browser)
 
       yield(browser) if block_given?
@@ -56,21 +59,20 @@ module Browser
   private_class_method def self.with_network_retry(url)
     retry_attempts = 0
 
-    yield while retry_attempts < MAX_RETRIES
-  rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
-    if retry_attempts < MAX_RETRIES
-      sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
-      puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
-      sleep sleep_time
-      retry_attempts += 1
-      retry
-    else
-      puts "[429] Too many requests. Max retries reached for #{url}."
-      nil
+    begin
+      yield
+    rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
+      if retry_attempts < MAX_RETRIES
+        sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
+        puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
+        sleep sleep_time
+        retry_attempts += 1
+        retry
+      else
+        puts "[429] Too many requests. Max retries reached for #{url}."
+        nil
+      end
     end
-  rescue StandardError => e
-    log_error(url, e)
-    nil
   end
 
   private_class_method def self.process_page(browser, url, options, api_data)
@@ -115,8 +117,13 @@ module Browser
   private_class_method def self.include_api_content(response)
     return unless response.url.include?(INCLUDE_API_CONTENT[:mwjsPeople][:pattern])
 
-    puts "Including API content for #{response.url}"
-    text = response.text
+    begin
+      text = response.text
+    rescue StandardError => e
+      puts "Error getting response text: #{e.message}"
+      puts e.backtrace
+      return nil
+    end
 
     extract_api_content(INCLUDE_API_CONTENT[:mwjsPeople][:pattern], text)
   end
@@ -205,7 +212,7 @@ module Browser
     downloaded_file
   end
 
-  private_class_method def self.process_image(browser, image_dir, base_url, img_element)
+  private_class_method def self.process_image(browser, image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
     src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
 
@@ -296,7 +303,7 @@ module Browser
     _fetch_and_follow_redirects(absolute_src, max_redirects)
   end
 
-  private_class_method def self._fetch_and_follow_redirects(initial_url, max_redirects)
+  private_class_method def self._fetch_and_follow_redirects(initial_url, max_redirects) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity,Metrics/AbcSize
     current_url = initial_url
     redirect_count = 0
 
