@@ -20,8 +20,9 @@ module Core
         keyword_groups, max_depth, avoid_keywords
       )
 
+      # Sort by URL length, then shuffle within groups
       results_to_interleave = results.values
-                                     .map { |group| group.sort_by(&:length).shuffle } # Sort by URL length, then shuffle within groups
+                                     .map { |group| group.sort_by(&:length).shuffle }
 
       results = Utils::ArrayHelper.interleave_arrays(results_to_interleave)
                                   &.uniq # Remove duplicates

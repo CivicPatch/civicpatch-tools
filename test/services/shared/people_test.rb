@@ -203,12 +203,12 @@ module Services
       end
 
       def test_data_point_nil
-        assert_equal false, People.data_point?(nil)
+        refute People.data_point?(nil)
       end
 
       def test_data_point_empty
         data_point = { "data" => "" }
-        assert_equal false, People.data_point?(data_point)
+        refute People.data_point?(data_point)
       end
 
       def test_profile_data_points_present_with_positions_and_websites
@@ -241,7 +241,7 @@ module Services
           "emails" => [{ "data" => "test@example.com" }]
         }
 
-        assert_equal false, People.profile_data_points_present?(person)
+        refute People.profile_data_points_present?(person)
       end
 
       def test_profile_data_points_not_present_without_websites_or_contact_info
@@ -252,7 +252,7 @@ module Services
           "emails" => []
         }
 
-        assert_equal false, People.profile_data_points_present?(person)
+        refute People.profile_data_points_present?(person)
       end
 
       def test_contact_data_points_present_with_two_types
@@ -292,7 +292,7 @@ module Services
           "emails" => [],
           "websites" => []
         }
-        assert_equal false, People.contact_data_points_present?(person)
+        refute People.contact_data_points_present?(person)
       end
 
       def test_collect_people_adds_dr_name_to_other_names

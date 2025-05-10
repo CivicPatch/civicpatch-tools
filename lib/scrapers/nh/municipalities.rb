@@ -47,8 +47,6 @@ module Scrapers
         end
         page_doc = Nokogiri::HTML(page_html_string)
 
-        selectors_to_find = []
-
         contact_details = parse_contact_details(page_info, page_doc)
         government_type = parse_government_type(page_info, page_doc)
 

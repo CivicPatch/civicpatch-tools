@@ -14,8 +14,10 @@ class PersonResolverTest < Minitest::Test
     @person1_alt_case = { "name" => "jane doe", "email" => "JANE.DOE@EXAMPLE.COM", "website" => "https://JANE.example.com" }
     @person1_substring = { "name" => "Jane" } # For substring matching
     @person1_other_name = { "name" => "Janie Doe" } # Name in other_names
-    @person_weak_match = { "name" => "J. Doe", "email" => "jane.doe@example.com" } # Different name, same email/last name
-    @person_weak_match_web = { "name" => "J. Doe", "email" => "diff@ex.com", "website" => "https://jane.example.com" } # Same website/last name
+    # Different name, same email/last name
+    @person_weak_match = { "name" => "J. Doe", "email" => "jane.doe@example.com" }
+    # Same website/last name
+    @person_weak_match_web = { "name" => "J. Doe", "email" => "diff@ex.com", "website" => "https://jane.example.com" }
     @person_no_email = { "name" => "No Email Doe", "website" => "https://nodoe.com", "email" => nil }
     @person_no_website = { "name" => "No Web Doe", "email" => "noweb@example.com", "website" => nil }
     @person_nil_fields = { "name" => "Nil Doe", "email" => nil, "website" => nil }
@@ -55,17 +57,17 @@ class PersonResolverTest < Minitest::Test
   end
 
   def test_same_email_different
-    assert_equal false, Core::PersonResolver.same_email?(@person1, @person2)
+    refute Core::PersonResolver.same_email?(@person1, @person2)
   end
 
   def test_same_email_one_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_email?(@person1, @person_no_email)
+    refute Core::PersonResolver.same_email?(@person1, @person_no_email)
   end
 
   def test_same_email_both_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_email?(@person_nil_fields, @person_nil_fields)
+    refute Core::PersonResolver.same_email?(@person_nil_fields, @person_nil_fields)
   end
 
   def test_same_website_matching
@@ -78,17 +80,17 @@ class PersonResolverTest < Minitest::Test
   end
 
   def test_same_website_different
-    assert_equal false, Core::PersonResolver.same_website?(@person1, @person2)
+    refute Core::PersonResolver.same_website?(@person1, @person2)
   end
 
   def test_same_website_one_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_website?(@person1, @person_no_website)
+    refute Core::PersonResolver.same_website?(@person1, @person_no_website)
   end
 
   def test_same_website_both_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    assert_equal false, Core::PersonResolver.same_website?(@person_nil_fields, @person_nil_fields)
+    refute Core::PersonResolver.same_website?(@person_nil_fields, @person_nil_fields)
   end
 
   # --- .name_in_config? Test (Updated Signature) ---
@@ -100,18 +102,18 @@ class PersonResolverTest < Minitest::Test
 
   def test_name_in_config_no_match
     config_entry = @people_config["Jane Doe"]
-    assert_equal false, Core::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "John Doe")
+    refute Core::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "John Doe")
   end
 
   def test_name_in_config_missing_other_names_key
     config_entry = @people_config_missing_other_names["Jane Doe"]
     # This should not raise an error and return false
-    assert_equal false, Core::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "Janie Doe")
+    refute Core::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "Janie Doe")
   end
 
   def test_name_in_config_nil_config_entry
     # This should not raise an error and return false
-    assert_equal false, Core::PersonResolver.name_in_config?(nil, "Janie Doe")
+    refute Core::PersonResolver.name_in_config?(nil, "Janie Doe")
   end
 
   # --- Tests for .find_by_name (Previously match_by_name) ---
@@ -151,7 +153,7 @@ class PersonResolverTest < Minitest::Test
   def test_find_by_name_config_present_but_no_other_names_match
     needle_name = "Janet Doe" # Similar name, but not in other_names
     # Should not match based on name_in_config? alone if substring fails
-    assert_equal false, Core::PersonResolver.name_in_config?({ "Jane Doe" => @people_config["Jane Doe"] }, needle_name)
+    refute Core::PersonResolver.name_in_config?({ "Jane Doe" => @people_config["Jane Doe"] }, needle_name)
     assert_nil Core::PersonResolver.find_by_name(@people_config, @people, needle_name)
   end
 

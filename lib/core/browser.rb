@@ -22,7 +22,7 @@ module Browser
     Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwright") do |playwright|
       browser = playwright.chromium.launch(headless: true)
       context = browser.new_context(
-        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" # rubocop:disable Metrics/LineLength
       )
 
       browser_page = context.new_page
@@ -31,90 +31,77 @@ module Browser
     end
   end
 
-  def self.fetch_page_content(url, options = {})
-    result = {}
-
-    mutex = Mutex.new
-    api_data = []
-
+  def self.fetch_page_content(url, options = {}) # rubocop:disable Metrics/AbcSize
     with_browser do |browser|
-      # Sometimes content is only available in the Shadow DOM,
-      # so we'll want to include content from the API
-      if options[:include_api_content].present?
-        browser.on("response", lambda { |response|
-          api_content = include_api_content(response)
+      api_data = []
 
-          unless api_content.blank?
-            mutex.synchronize do
-              api_data << api_content
-            end
-          end
-        })
-      end
-
-      browser.goto(url)
-      sleep(options[:wait_for]) if options[:wait_for].present?
-
-      return nil unless html_page?(browser)
-
-      original_page_source = browser.content
-      base_url = Utils::UrlHelper.extract_page_base_url(original_page_source, url)
-
-      if options[:include_api_content].present?
-        mutex.synchronize do
-          api_data.each do |api_content|
-            browser.evaluate("document.body.innerHTML += '#{api_content}'")
-          end
+      if options[:include_api_content]
+        browser.on("response") do |response|
+          content = include_api_content(response)
+          api_data << content if content.present?
         end
       end
-
-      if options[:image_dir].present?
-        image_dir = options[:image_dir]
-        FileUtils.mkdir_p(image_dir)
-        image_map = download_images(browser, image_dir, base_url)
-        result[:image_map] = image_map
+      with_network_retry(url) do
+        browser.goto(url)
       end
+      sleep(options[:wait_for]) if options[:wait_for].present?
+      return nil unless html_page?(browser)
 
-      page_source = browser.content
-      page_html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
-      result[:page_html] = page_html
+      yield(browser) if block_given?
 
-      result
+      process_page(browser, url, options, api_data)
+    end
+  end
+
+  private_class_method def self.with_network_retry(url)
+    retry_attempts = 0
+
+    yield while retry_attempts < MAX_RETRIES
+  rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
+    if retry_attempts < MAX_RETRIES
+      sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
+      puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
+      sleep sleep_time
+      retry_attempts += 1
+      retry
+    else
+      puts "[429] Too many requests. Max retries reached for #{url}."
+      nil
     end
   rescue StandardError => e
-    puts e.backtrace
-    puts "Browser fetch failed for #{url}: #{e.message}"
+    log_error(url, e)
     nil
   end
 
-  def self.fetch_html(url)
-    retry_attempts = 0
+  private_class_method def self.process_page(browser, url, options, api_data)
+    page_source = browser.content
+    formatted_html = format_page_html(browser, page_source, api_data, url)
 
-    with_browser do |browser|
-      browser.goto(url)
+    {
+      page_html: formatted_html,
+      image_map: download_images_if_needed(browser, options, url)
+    }.compact
+  end
 
-      # Yield the browser instance to the block for interactions
-      yield(browser) if block_given?
+  private_class_method def self.format_page_html(browser, page_source, api_content, url)
+    return Utils::UrlHelper.format_links_to_absolute(page_source, url) if api_content.empty?
 
-      source = browser.content
+    browser.evaluate("document.body.innerHTML += '#{api_content.join}'")
+    Utils::UrlHelper.format_links_to_absolute(browser.content, url)
+  end
 
-      Utils::UrlHelper.format_links_to_absolute(source, url)
-    rescue Net::ReadTimeout, Faraday::TooManyRequestsError => e
-      if retry_attempts < MAX_RETRIES
-        sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
-        puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
-        sleep sleep_time
-        retry_attempts += 1
-        retry
-      else
-        puts "[429] Too many requests. Max retries reached for #{url}."
-        # Explicitly return nil or raise a custom error if needed
-        nil
-      end
-    rescue StandardError => e
-      puts "Browser fetch failed for #{url}: #{e.message}"
-      nil
-    end
+  private_class_method def self.download_images_if_needed(browser, options, url)
+    return unless options[:image_dir]
+
+    image_dir = options[:image_dir]
+    FileUtils.mkdir_p(image_dir)
+    base_url = Utils::UrlHelper.extract_page_base_url(browser.content, url)
+    download_images(browser, image_dir, base_url)
+  end
+
+  private_class_method def self.log_error(url, error)
+    puts error.backtrace
+    puts "Browser fetch failed for #{url}: #{error.message}"
   end
 
   private_class_method def self.html_page?(browser)
@@ -171,7 +158,7 @@ module Browser
     "#{hash}.#{file_type}"
   end
 
-  private_class_method def self.capture_image_as_data_url(page, img_element)
+  private_class_method def self.capture_image_as_data_url(_page, img_element)
     img_element.evaluate("
       async (img) => {
         // Add crossorigin attribute to allow canvas operations
@@ -222,20 +209,8 @@ module Browser
     src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
 
-    # Pre-processing: Skip common spinner images
-    if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
-      # Remove the element from the DOM
-      remove_image_element(browser, img_element)
-      puts "Removed spinner image element with src: #{src}" # Optional logging
-      return # Don't process this element further
-    end
-
-    if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
-      # Remove the element from the DOM
-      remove_image_element(browser, img_element)
-      puts "Removed excluded image element with src: #{src}" # Optional logging
-      return # Don't process this element further
-    end
+    image_excluded = maybe_exclude_image(img_element)
+    return if image_excluded
 
     absolute_src = Utils::UrlHelper.format_url(Addressable::URI.join(base_url, src).to_s)
 
@@ -245,11 +220,7 @@ module Browser
 
     file_type = determine_file_type(file)
 
-    # Log and return if file type is unknown
-    if file_type.nil?
-      file.unlink # Clean up the unusable temp file
-      raise "File type is nil for #{absolute_src}"
-    end
+    raise "File type is nil for #{absolute_src}" if file_type.nil?
 
     filename = generate_filename(src, file_type).to_s
     image_path = File.join(image_dir, filename)
@@ -261,8 +232,33 @@ module Browser
     [filename, absolute_src]
   rescue StandardError => e
     puts "\t\t\t\t❌: Error processing image (#{src}): #{e.message}, removing image element"
-    img_element.evaluate("el => el.remove()")
+    file&.unlink
+    remove_image_element(img_element)
     nil
+  end
+
+  private_class_method def self.maybe_exclude_image(img_element)
+    src = img_element.get_attribute("src")
+    return false if src.nil? || src.empty?
+
+    if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
+      remove_image_element(img_element)
+      puts "Removed spinner image element with src: #{src}" # Optional logging
+      return true # Don't process this element further
+    end
+
+    if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
+      # Remove the element from the DOM
+      remove_image_element(img_element)
+      puts "Removed excluded image element with src: #{src}" # Optional logging
+      return true # Don't process this element further
+    end
+
+    false # Don't process this element further
+  end
+
+  private_class_method def self.remove_image_element(img_element)
+    img_element.evaluate("el => el.remove()")
   end
 
   private_class_method def self.download_image(absolute_src, browser, img_element)

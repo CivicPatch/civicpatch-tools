@@ -5,12 +5,13 @@ require "google/apis/sheets_v4"
 require "csv"
 require "json"
 
+OOB_URI = "urn:ietf:wg:oauth:2.0:oob"
+APPLICATION_NAME = "CSV to Google Sheets"
+SCOPE = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
+
 namespace :sheets do
   desc "Send costs to sheets"
   task :send_costs do
-    OOB_URI = "urn:ietf:wg:oauth:2.0:oob"
-    APPLICATION_NAME = "CSV to Google Sheets"
-    SCOPE = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
     spreadsheet_id = ENV["GOOGLE_SHEETS_SPREADSHEET_ID"]
 
     if File.exist?(PathHelper.project_path("cost_llms.csv"))

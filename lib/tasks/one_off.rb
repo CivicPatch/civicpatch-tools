@@ -229,8 +229,8 @@ namespace :one_off do
     file_path = "data/**/people.yml"
     csv_file_path = "data/people.csv"
     csv_file = File.open(csv_file_path, "w")
-    csv_file.puts %w[state_name state_abbrev city_name name positions image source_image email phone_number website start_date
-                     end_date].join(",")
+    csv_file.puts %w[state_name state_abbrev city_name name positions image source_image email
+                     phone_number website start_date end_date].join(",")
     Dir.glob(file_path).each do |file|
       # find state from data/<state>/<cities>/people.yml
       state_abbrev = file.split("/").second

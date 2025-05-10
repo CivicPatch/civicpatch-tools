@@ -68,34 +68,37 @@ module Validators
     end
 
     def self.select_best_value(field, values)
-      non_nil_values = values.reject { |v| v[:value].nil? || v[:value] == "" || v[:value] == [] }
+      non_nil_values = filter_valid_values(values)
       return nil if non_nil_values.empty?
+      return merge_common_values(values.map { |v| v[:value] }) if field == "positions"
 
-      # Group by normalized value (e.g., phone number, email, or text)
-      grouped = non_nil_values.group_by do |v|
-        case field
-        when "positions"
-          # NOTE: don't want to pick by confidence score here,
-          # just by the common values between each source
-          return merge_common_values(values.map { |val| val[:value] })
-        when "email"
-          normalize_email(v[:value])
-        when "phone_number"
-          normalize_phone_number(v[:value])
-        when "website"
-          normalize_url(v[:value])
-        else
-          normalize_text(v[:value])
-        end
-      end
+      find_best_value(non_nil_values, field)
+    end
 
-      # Rank groups by their total confidence score
-      best_group = grouped.max_by { |_val, group| group.sum { |v| v[:confidence_score] || 1.0 } }
+    private_class_method def self.filter_valid_values(values)
+      values.reject { |v| v[:value].nil? || v[:value].empty? }
+    end
 
+    private_class_method def self.find_best_value(values, field)
+      grouped = values.group_by { |v| normalize_value(field, v[:value]) }
+      best_group = find_best_group(grouped)
       best_group.last.max_by { |v| v[:confidence_score] || 1.0 }[:value]
     end
 
-    def self.merge_common_values(arrays)
+    private_class_method def self.find_best_group(grouped)
+      grouped.max_by { |_, group| group.sum { |v| v[:confidence_score] || 1.0 } }
+    end
+
+    private_class_method def self.normalize_value(field, value)
+      case field
+      when "email" then normalize_email(value)
+      when "phone_number" then normalize_phone_number(value)
+      when "website" then normalize_url(value)
+      else normalize_text(value)
+      end
+    end
+
+    private_class_method def self.merge_common_values(arrays)
       hash_counts = arrays.each_with_object(Hash.new(0)) do |array, aggregated_counts|
         array.uniq.each do |item|
           aggregated_counts[item] += 1

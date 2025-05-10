@@ -8,7 +8,7 @@ module Scrapers
         CITY_AND_TOWN_PROFILES_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles"
         EDIT_OFFICIALS_URL = "https://mrsc.org/research-tools/washington-city-and-town-profiles/city-officials"
 
-        @@html_cache ||= {}
+        @html_cache ||= {}
 
         def self.get_source_url(city_entry)
           city_initial = city_entry["name"][0]
@@ -43,16 +43,16 @@ module Scrapers
           source_url = get_source_url(municipality_entry)
 
           # Check cache first
-          if @@html_cache[municipality_entry["name"]]
+          if @html_cache[municipality_entry["name"]]
             puts "Cache hit for #{municipality_entry["name"]}."
           else
             puts "Cache miss for #{municipality_entry["name"]}. Fetching from URL..."
             response = HTTParty.get(source_url)
-            @@html_cache[municipality_entry["name"]] = response.body
+            @html_cache[municipality_entry["name"]] = response.body
           end
 
           # Use cached or newly fetched HTML
-          html_string = @@html_cache[municipality_entry["name"]]
+          html_string = @html_cache[municipality_entry["name"]]
 
           parse_officials(municipality_entry, html_string)
         rescue StandardError => e

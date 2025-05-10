@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Utils
   module DateHelper
     def self.format_date(date_string)

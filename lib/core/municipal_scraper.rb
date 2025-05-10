@@ -4,7 +4,6 @@ require "utils/url_helper"
 require "services/shared/people"
 require "services/google_gemini"
 require "services/openai"
-require "set"
 require "resolvers/search_resolver"
 
 module Core

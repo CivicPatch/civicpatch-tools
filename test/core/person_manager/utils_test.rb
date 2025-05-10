@@ -261,10 +261,4 @@ class CorePersonManagerUtilsTest < Minitest::Test
     normalized = Core::PersonManager::Utils.normalize_positions(positions, @selectmen_config)
     assert_equal ["vice chair"], normalized
   end
-
-  def test_normalize_positions_selectmen_vice_chairman
-    positions = ["vice-chairwoman"]
-    normalized = Core::PersonManager::Utils.normalize_positions(positions, @selectmen_config)
-    assert_equal ["vice chair"], normalized
-  end
 end
