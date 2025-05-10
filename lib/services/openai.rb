@@ -10,8 +10,9 @@ require "core/city_manager"
 module Services
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 5  # Base sleep time for exponential backoff
+  MAX_TOKENS = 100_000
+
   class Openai
-    @@MAX_TOKENS = 100_000
     MODEL = "gpt-4.1-mini"
 
     def initialize
@@ -24,7 +25,7 @@ module Services
 
       content = File.read(content_file)
 
-      return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
+      return { error: "Content for city council members are too long" } if content.split(" ").length > MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(municipality_context, content, page_url,
                                                                          person_name)
@@ -47,7 +48,7 @@ module Services
       end
     end
 
-    def generate_city_info_prompt(municipality_context, content, page_url, person_name = "")
+    def generate_city_info_prompt(municipality_context, content, page_url, person_name = "") # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       state = municipality_context[:state]
       government_type = municipality_context[:government_type]
       government_types_config = Core::CityManager.get_config(government_type)

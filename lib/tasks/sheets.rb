@@ -46,7 +46,7 @@ namespace :sheets do
     nil
   end
 
-  def send_csv_to_sheets_and_clear(spreadsheet_id, sheet_name, csv_file_path)
+  def send_csv_to_sheets_and_clear(spreadsheet_id, sheet_name, csv_file_path) # rubocop:disable Metrics/AbcSize
     service = Google::Apis::SheetsV4::SheetsService.new
     service.client_options.application_name = APPLICATION_NAME
     service.authorization = authorize

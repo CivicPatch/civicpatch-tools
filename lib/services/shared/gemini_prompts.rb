@@ -3,7 +3,7 @@
 module Services
   module Shared
     class GeminiPrompts
-      def self.gemini_generate_search_for_people_prompt(state, municipality_entry)
+      def self.gemini_generate_search_for_people_prompt(state, municipality_entry) # rubocop:disable Metrics/MethodLength
         city_name = municipality_entry["name"]
 
         %(
@@ -35,13 +35,16 @@ module Services
         {
           "people": [{
             "name": The official's name (string) or null.
-            "positions": The position held (array of strings), which should be either "Mayor" or "Council Member" (or equivalent).
+            "positions": The position held (array of strings),
+                         which should be either "Mayor" or "Council Member" (or equivalent).
           }],
           "notes": "Notes about the search and the results"
         }
 
-        IMPORTANT: I need ONLY the JSON object as your response, with NO additional text, explanation, or markdown formatting.
-        Do not include any text before or after the JSON object. Your entire response should be a valid JSON object that can be directly parsed.
+        IMPORTANT: I need ONLY the JSON object as your response,
+        with NO additional text, explanation, or markdown formatting.
+        Do not include any text before or after the JSON object.
+        Your entire response should be a valid JSON object that can be directly parsed.
       )
       end
 
@@ -92,19 +95,27 @@ module Services
           "people": [
             {
               "name": "John Doe",
-              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact."},
-              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name."},
-              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header"},
+              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95,
+                               "llm_confidence_reason": "Listed under Contact."},
+              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95,
+                               "llm_confidence_reason": "Directly associated with name."},
+              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Found under header"},
               "positions": ["Mayor", "Council Member"],
-              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."},
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."}
+              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Listed under header."},
+              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Listed under header."}
             },
             {
               "name": "Jane Smith",
-              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
-              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name."},
+              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90,
+                              "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
+              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92,
+                              "llm_confidence_reason": "Found under 'Contact Us' section near name."},
               "positions": ["Council President"],
-              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
+              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95,
+                              "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
             }
           ]
         }

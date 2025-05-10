@@ -90,7 +90,9 @@ namespace :pipeline do
   end
 
   def fetch_with_state_source(municipality_context)
-    puts "#{municipality_context[:state]} - #{municipality_context[:municipality_entry]["name"]} - Fetching with state source"
+    state = municipality_context[:state]
+    municipality_name = municipality_context[:municipality_entry]["name"]
+    puts "#{state} - #{municipality_name} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 

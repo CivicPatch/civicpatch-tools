@@ -11,8 +11,6 @@
 
 require "core/people_resolver"
 require_relative "../core/context_manager"
-require_relative "../validators/city_people"
-require_relative "../github/city_people"
 
 namespace :github_pipeline do
   desc "Get people.yml link for pull request"
