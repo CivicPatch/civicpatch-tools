@@ -2,7 +2,7 @@
 
 module Utils
   class PhoneHelper
-    def self.format_phone_number(phone) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
+    def self.format_phone_number(phone) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
       return nil if phone.nil?
 
       # TODO: Only support one phone # for now

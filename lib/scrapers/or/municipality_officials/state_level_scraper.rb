@@ -23,7 +23,7 @@ module Scrapers
           municipality_entry = municipality_context[:municipality_entry]
           source_url = get_source_url(municipality_entry)
           # Fetch HTML, interacting to select "All" entries
-          response = Browser.fetch_html(source_url) do |browser|
+          response = Browser.fetch_page_content(source_url) do |browser|
             # Create a Select object and choose the "All" option by its value ("-1")
             page.select_option("select#dtCityContacts_length", value: "-1")
 
@@ -34,7 +34,7 @@ module Scrapers
             browser.query_selector("#dtCityContacts tbody tr")
           end
           # Ensure response is not nil before parsing
-          parse_html(response)
+          parse_html(response[:page_html])
         rescue StandardError => e
           puts "Could not fetch directory list: #{e}"
           []

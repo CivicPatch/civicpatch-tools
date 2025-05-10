@@ -3,7 +3,7 @@
 module Services
   module Shared
     class GeminiPrompts
-      def self.gemini_generate_search_for_people_prompt(state, municipality_entry)
+      def self.gemini_generate_search_for_people_prompt(state, municipality_entry) # rubocop:disable Metrics/MethodLength
         city_name = municipality_entry["name"]
 
         %(
@@ -35,16 +35,20 @@ module Services
         {
           "people": [{
             "name": The official's name (string) or null.
-            "positions": The position held (array of strings), which should be either "Mayor" or "Council Member" (or equivalent).
+            "positions": The position held (array of strings),
+                         which should be either "Mayor" or "Council Member" (or equivalent).
           }],
           "notes": "Notes about the search and the results"
         }
 
-        IMPORTANT: I need ONLY the JSON object as your response, with NO additional text, explanation, or markdown formatting. Do not include any text before or after the JSON object. Your entire response should be a valid JSON object that can be directly parsed.
+        IMPORTANT: I need ONLY the JSON object as your response,
+        with NO additional text, explanation, or markdown formatting.
+        Do not include any text before or after the JSON object.
+        Your entire response should be a valid JSON object that can be directly parsed.
       )
       end
 
-      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "")
+      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "") # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         state = municipality_context[:state]
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]
@@ -91,19 +95,27 @@ module Services
           "people": [
             {
               "name": "John Doe",
-              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under Contact."},
-              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95, "llm_confidence_reason": "Directly associated with name."},
-              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95, "llm_confidence_reason": "Found under header"},
+              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95,
+                               "llm_confidence_reason": "Listed under Contact."},
+              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95,
+                               "llm_confidence_reason": "Directly associated with name."},
+              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Found under header"},
               "positions": ["Mayor", "Council Member"],
-              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."},
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Listed under header."}
+              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Listed under header."},
+              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Listed under header."}
             },
             {
               "name": "Jane Smith",
-              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90, "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
-              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92, "llm_confidence_reason": "Found under 'Contact Us' section near name."},
+              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90,
+                              "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
+              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92,
+                              "llm_confidence_reason": "Found under 'Contact Us' section near name."},
               "positions": ["Council President"],
-              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95, "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
+              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95,
+                              "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
             }
           ]
         }
@@ -113,8 +125,16 @@ module Services
         - Positions extraction:
           - **CRITICAL**: Extract roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
             **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
-          - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased, or their position is otherwise noted as vacant (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their position, even if a future term date is also mentioned. The statement of resignation or vacancy takes precedence over listed term dates for determining current active status.
-          - **Check for Past Dates**: Before extracting a specific position title (e.g., "Council President", "Chair"), examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012", "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past** and is not the person's current role, **DO NOT extract that specific position title.** Focus only on roles the person currently holds according to the text.
+          - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned,
+            vacated their position, is deceased, or their position is otherwise noted as vacant
+            (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their
+            position, even if a future term date is also mentioned. The statement of resignation or vacancy takes
+            precedence over listed term dates for determining current active status.
+          - **Check for Past Dates**: Before extracting a specific position title (e.g., "Council President", "Chair"),
+            examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012",
+            "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past**
+            and is not the person's current role, **DO NOT extract that specific position title.** Focus only on roles
+            the person currently holds according to the text.
           - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
             (e.g., "Youth Councilor", "Student Representative"),
             or non-voting unless they are explicitly listed in the Target Municipal Roles.
@@ -161,7 +181,8 @@ module Services
             - Do not add default days or months unless performing the specific `Month YYYY` -> `YYYY-MM` conversion.
           - **Allowed Extraction & Formatting (Only if explicit date found)**:
             - Allowed output formats: `YYYY`, `YYYY-MM`, `YYYY-MM-DD`.
-            - If the source text explicitly provides a date as `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`, output that exact string.
+            - If the source text explicitly provides a date as `YYYY`, `YYYY-MM`,
+              or `YYYY-MM-DD`, output that exact string.
             - If the source text explicitly provides a date as `Month YYYY` (e.g., "January 2027"),
               convert it to `YYYY-MM` (e.g., "2027-01").
             - If the source text provides an explicit date in any other format, treat it as not found and output null.
@@ -171,13 +192,19 @@ module Services
             - Example: "elected in November 2020 and was reelected in November 2024" → `start_date` should
               be based on "November 2024".
           - **Locating Dates**:
-            - Use keywords (`start_date` keywords: 'Elected:', 'Elected in', 'Appointed:', 'Term Began:', 'Sworn In:', 'Serving Since:', 'First Elected:', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced', 'Assumed Office:', 'Joined Council', 'Began Service', `end_date` keywords: 'Term Expires:', 'Term Ends:', 'Term ending', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:') and patterns (`Term: [Date1] to [Date2]`, `Term: YYYY-YYYY`) to find potential explicit date strings **that are clearly associated with the specific person being processed.**
+            - Use keywords (`start_date` keywords: 'Elected:', 'Elected in', 'Appointed:', 'Term Began:', 'Sworn In:',
+            'Serving Since:', 'First Elected:', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced',
+            'Assumed Office:', 'Joined Council', 'Began Service', `end_date` keywords: 'Term Expires:', 'Term Ends:',
+            'Term ending', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:')
+             and patterns (`Term: [Date1] to [Date2]`, `Term: YYYY-YYYY`) to find potential explicit date strings
+             **that are clearly associated with the specific person being processed.**
             - When multiple `start_date` keywords like "elected" or "reelected" are found,
               apply the "Identifying the Correct Start Date" rule above.
             - When extracting from tables, ensure the date string is found
               **within the same row or entry** as the person's name.
             - Apply the formatting rules above ONLY to explicitly found and correctly associated dates.
-            - Extract both dates for `Term: ... to ...` pattern if both are explicit and associated with the current person.
+            - Extract both dates for `Term: ... to ...` pattern if both are explicit and
+              associated with the current person.
           - **Key Examples**:
             - "Term Expires January 2027" -> `end_date`: {"data": "2027-01"}
             - "Serving through 2025" -> `end_date`: {"data": "2025"}
@@ -195,7 +222,8 @@ module Services
         - Today is #{current_date}. Context only, do not use for date calculation.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'
           that appear structurally close (e.g., immediately following section) to a specific person's name or section
-          should be associated with that person unless the text clearly indicates otherwise (e.g., 'General City Contact').
+          should be associated with that person unless the text clearly indicates
+          otherwise (e.g., 'General City Contact').
           **When processing tabular data, ensure all extracted fields for a single person (name, positions, dates, etc.)
           are sourced from data within that person's specific row or clearly delineated section.
           Do not carry over or associate data from adjacent rows or different individuals.**

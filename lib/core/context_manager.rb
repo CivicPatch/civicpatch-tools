@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Core
   class ContextManager
     def self.get_context(state, gnis)

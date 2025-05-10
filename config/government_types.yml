@@ -117,6 +117,7 @@ government_types:
         - selectwoman
         - select board
         - board of selectmen
+        - select board representative
     search_keywords:
       selectmen:
         - board of selectmen

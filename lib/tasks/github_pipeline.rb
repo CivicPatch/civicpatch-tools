@@ -9,9 +9,8 @@
 # Main tasks:
 # - github_pipeline:get_pr_comment[state,gnis,branch_name]# Generate markdown for PR
 
+require "core/people_resolver"
 require_relative "../core/context_manager"
-require_relative "../validators/city_people"
-require_relative "../github/city_people"
 
 namespace :github_pipeline do
   desc "Get people.yml link for pull request"
@@ -140,7 +139,7 @@ namespace :github_pipeline do
   end
 
   def self.generate_comparison(municipality_context)
-    validation_results = Validators::CityPeople.validate_sources(municipality_context)
+    validation_results = Core::PeopleResolver.resolve(municipality_context)
 
     compare_results = validation_results[:compare_results]
     contested_people = compare_results[:contested_people]

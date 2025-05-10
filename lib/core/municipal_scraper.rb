@@ -4,7 +4,6 @@ require "utils/url_helper"
 require "services/shared/people"
 require "services/google_gemini"
 require "services/openai"
-require "set"
 require "resolvers/search_resolver"
 
 module Core
@@ -12,7 +11,7 @@ module Core
     MAX_URLS_TO_SCRAPE = 30
     MIN_PEOPLE_TO_FIND = 3
 
-    def self.fetch(
+    def self.fetch( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
       llm_service_string,
       municipality_context,
       request_cache: {},

@@ -11,11 +11,7 @@ require_relative "../core/browser"
 
 module Core
   class PageFetcher
-    @@image_map ||= {}
-
-    def image_map
-      @@image_map
-    end
+    @image_map ||= {}
 
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
@@ -23,7 +19,7 @@ module Core
 
       if File.exist?(cached_file)
         puts "Skipping page fetch to #{url} because cache file already exists"
-        return [cached_file, image_map]
+        return [cached_file, @image_map]
       end
 
       image_dir = PathHelper.project_path(File.join(destination_dir, "images"))
@@ -31,7 +27,7 @@ module Core
                                                    wait_for: 2,
                                                    include_api_content: true })
       html = response[:page_html]
-      image_map = response[:image_map]
+      @image_map = response[:image_map]
 
       return [nil, nil] if html.blank?
 
@@ -50,7 +46,7 @@ module Core
       File.write(markdown_content_file_path, markdown_content)
       content_file_path = PathHelper.project_path(markdown_content_file_path)
 
-      [content_file_path, image_map]
+      [content_file_path, @image_map]
     end
 
     def sanitize_html(html)

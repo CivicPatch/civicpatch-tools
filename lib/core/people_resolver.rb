@@ -1,10 +1,57 @@
 # frozen_string_literal: true
 
+require "validators/utils"
+
 module Core
   class PeopleResolver
     DISAGREEMENT_THRESHOLD = 0.9
 
-    def self.compare_people_across_sources(people_config, sources)
+    def self.resolve(municipality_context)
+      state = municipality_context[:state]
+      gnis = municipality_context[:municipality_entry]["gnis"]
+      state_source = municipality_context[:config]["source_directory_list"]["people"]
+      people_config = municipality_context[:config]["people"]
+
+      sources_folder_path = PathHelper.get_people_sources_path(state, gnis)
+      source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
+
+      sources = [{
+        source_name: "state_source",
+        people: state_source,
+        confidence_score: 0.9
+      }]
+      source_files.each do |source_file|
+        next if source_file.include?("before") # Discard unprocessed results
+
+        source_people = JSON.parse(File.read(source_file))
+        source_name = if source_file.include?("openai")
+                        "openai"
+                      elsif source_file.include?("gemini")
+                        "gemini"
+                      end
+
+        source = {
+          source_name: source_name,
+          people: source_people,
+          confidence_score: case source_name
+                            when "openai"
+                              0.7
+                            when "gemini"
+                              0.7
+                            else
+                              0.0
+                            end
+        }
+        sources << source
+      end
+
+      {
+        compare_results: compare_people_across_sources(people_config, sources),
+        merged_sources: merge_people_across_sources(people_config, sources)
+      }
+    end
+
+    def self.compare_people_across_sources(people_config, sources) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
       File.write("scratch.json", JSON.pretty_generate(sources))
 
       fields = %w[positions email phone_number website start_date end_date] # Fields to compare
@@ -73,6 +120,41 @@ module Core
         missing_people: missing_people_report,
         agreement_score: agreement_score.round(2)
       }
+    end
+
+    def self.merge_people_across_sources(people_config, sources) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+      return sources.first[:people] if sources.count == 1
+
+      merged = []
+
+      unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
+
+      unique_names.each do |name|
+        person_records = sources.map do |source|
+          person = Core::PersonResolver.find_by_name(people_config, source[:people], name)
+          next unless person
+
+          person.merge("confidence_score" => source[:confidence_score], "source_name" => source[:source_name])
+        end.compact
+
+        next if person_records.empty?
+
+        merged_person = { "name" => name }
+
+        %w[positions email phone_number website start_date end_date].each do |field|
+          values = person_records.map { |p| { value: p[field], confidence_score: p["confidence_score"] } }
+
+          merged_person[field] = select_best_value(field, values)
+        end
+
+        merged_person["image"] = person_records.map { |p| p["image"] }.compact.first
+        merged_person["source_image"] = person_records.map { |p| p["source_image"] }.compact.first
+        merged_person["sources"] = person_records.map { |p| p["sources"] }.flatten.compact.uniq
+
+        merged << merged_person
+      end
+
+      merged
     end
 
     def self.compare_field_values(existing_records, field)
@@ -164,6 +246,47 @@ module Core
 
       distance = Text::Levenshtein.distance(value1, value2)
       1.0 - (distance.to_f / max_length)
+    end
+
+    def self.select_best_value(field, values)
+      non_nil_values = filter_valid_values(values)
+      return nil if non_nil_values.empty?
+      return merge_common_values(values.map { |v| v[:value] }) if field == "positions"
+
+      find_best_value(non_nil_values, field)
+    end
+
+    private_class_method def self.filter_valid_values(values)
+      values.reject { |v| v[:value].nil? || v[:value].empty? }
+    end
+
+    private_class_method def self.find_best_value(values, field)
+      grouped = values.group_by { |v| normalize_value(field, v[:value]) }
+      best_group = find_best_group(grouped)
+      best_group.last.max_by { |v| v[:confidence_score] || 1.0 }[:value]
+    end
+
+    private_class_method def self.find_best_group(grouped)
+      grouped.max_by { |_, group| group.sum { |v| v[:confidence_score] || 1.0 } }
+    end
+
+    private_class_method def self.normalize_value(field, value)
+      case field
+      when "email" then Validators::Utils.normalize_email(value)
+      when "phone_number" then Validators::Utils.normalize_phone_number(value)
+      when "website" then Validators::Utils.normalize_url(value)
+      else Validators::Utils.normalize_text(value)
+      end
+    end
+
+    private_class_method def self.merge_common_values(arrays)
+      hash_counts = arrays.each_with_object(Hash.new(0)) do |array, aggregated_counts|
+        array.uniq.each do |item|
+          aggregated_counts[item] += 1
+        end
+      end
+
+      hash_counts.keys.select { |key| hash_counts[key] > 1 }
     end
   end
 end

@@ -20,8 +20,9 @@ module Core
         keyword_groups, max_depth, avoid_keywords
       )
 
+      # Sort by URL length, then shuffle within groups
       results_to_interleave = results.values
-                                     .map { |group| group.sort_by(&:length).shuffle } # Sort by URL length, then shuffle within groups
+                                     .map { |group| group.sort_by(&:length).shuffle }
 
       results = Utils::ArrayHelper.interleave_arrays(results_to_interleave)
                                   &.uniq # Remove duplicates
@@ -33,7 +34,7 @@ module Core
       base_url, queue, visited, max_pages,
       keyword_groups, max_depth, avoid_keywords
     )
-      results = Hash.new { |hash, key| hash[key] = [] } # Default to an empty array for each keyword group
+      results = Hash.new { |hash, key| hash[key] = [] }
 
       while queue.any? && visited.size < max_pages
         current = queue.shift
@@ -42,29 +43,37 @@ module Core
         visited.add(current[:url])
         puts "Crawling: #{current[:url]} (#{visited.size}/#{max_pages})"
 
-        keyword_groups.each do |keyword_group|
-          found_links = follow_links(
-            base_url,
-            visited,
-            current[:url],
-            keyword_group[:keywords],
-            max_depth,
-            current[:depth] + 1,
-            avoid_keywords
-          )
-
-          # Stop adding links if max_pages is reached
-          remaining_slots = max_pages - visited.size
-          found_links = found_links.first(remaining_slots) if remaining_slots < found_links.size
-
-          results[keyword_group[:name]].concat(found_links) unless found_links.empty?
-
-          # Add new links to queue only if max_pages isn't exceeded
-          queue.concat(found_links.map { |url| { url: url, depth: current[:depth] + 1 } }) if visited.size < max_pages
-        end
+        process_keyword_groups(
+          base_url, visited, current, keyword_groups,
+          max_depth, avoid_keywords, max_pages, results, queue
+        )
       end
 
-      results # Return URLs grouped by keyword group name
+      results
+    end
+
+    private_class_method def self.process_keyword_groups(
+      base_url, visited, current, keyword_groups,
+      max_depth, avoid_keywords, max_pages, results, queue
+    )
+      keyword_groups.each do |keyword_group|
+        found_links = follow_links(
+          base_url, visited, current[:url],
+          keyword_group[:keywords], max_depth,
+          current[:depth] + 1, avoid_keywords
+        )
+
+        remaining_slots = max_pages - visited.size
+        found_links = found_links.first(remaining_slots) if remaining_slots < found_links.size
+
+        results[keyword_group[:name]].concat(found_links) unless found_links.empty?
+
+        add_to_queue(queue, found_links, current[:depth]) if visited.size < max_pages
+      end
+    end
+
+    private_class_method def self.add_to_queue(queue, links, current_depth)
+      queue.concat(links.map { |url| { url: url, depth: current_depth + 1 } })
     end
 
     def self.follow_links(base_url, visited, url, keywords, max_depth, depth, avoid_keywords)
@@ -95,7 +104,7 @@ module Core
       formatted_html = Utils::UrlHelper.format_links_to_absolute(response.body, url)
       Nokogiri::HTML(formatted_html)
     rescue StandardError
-      html = Browser.fetch_html(url)
+      html = Browser.fetch_page_content(url)
       Nokogiri::HTML(html)
     end
 

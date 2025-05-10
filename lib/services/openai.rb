@@ -10,8 +10,9 @@ require "core/city_manager"
 module Services
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 5  # Base sleep time for exponential backoff
+  MAX_TOKENS = 100_000
+
   class Openai
-    @@MAX_TOKENS = 100_000
     MODEL = "gpt-4.1-mini"
 
     def initialize
@@ -24,7 +25,7 @@ module Services
 
       content = File.read(content_file)
 
-      return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
+      return { error: "Content for city council members are too long" } if content.split(" ").length > MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(municipality_context, content, page_url,
                                                                          person_name)
@@ -47,7 +48,7 @@ module Services
       end
     end
 
-    def generate_city_info_prompt(municipality_context, content, page_url, person_name = "")
+    def generate_city_info_prompt(municipality_context, content, page_url, person_name = "") # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       state = municipality_context[:state]
       government_type = municipality_context[:government_type]
       government_types_config = Core::CityManager.get_config(government_type)
@@ -133,8 +134,8 @@ module Services
         }
 
         Extraction Guidelines:
-        - General: Today is #{current_date}. Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field's data.
-        - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in 'positions'.
+        - General: Today is #{current_date}. Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field\'s data.
+        - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in \'positions\'.
         - Positions:
           - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
           - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased, or their position is otherwise noted as vacant (e.g., "applications being accepted for this seat")**, DO NOT include them as a current office holder or extract their position. The statement of resignation or vacancy takes precedence over any listed future term dates when determining current active status. For example, if a person was "Elected Nov 2024 for term ending Dec 2028" but then "Resigned April 15", they should NOT be included in the output as an active member.
@@ -144,9 +145,18 @@ module Services
             - Combine with the main role, e.g., "Council Member, Position 1".
           - EXCLUDE judicial, most admin staff, non-municipal.
           - For position extraction:
-            - Identify the person's core role on the governing body (e.g., "Select Board Member")
-            - Prefer simpler terms when they convey the same meaning, but preserve all distinct responsibilities
-        - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start 'images/'.
+            - **Core Membership Role Inclusion**:
+              - The `Key roles` list provided to you contains canonical names for primary/core membership roles on the main governing body (e.g., "Council Member", "Select Board Member", "Commissioner", "Alderman", "Trustee").
+              - For each person, if their roles extracted directly from the text include:
+                  a) A *leadership position* from the `Key roles` list that applies to the main governing body (e.g., "Mayor" if they preside over the Council, "Chair", "President"), OR
+                  b) Any other role from the `Key roles` or `Examples` that clearly signifies membership on that main governing body (even if it\'s a more specific version, a common variation, or an alias of a core membership role – e.g., text says "Selectman" and "Select Board Member" is a Key Role; text says "Councilmember At-Large" and "Council Member" is a Key Role),
+              - THEN you MUST ensure that the relevant canonical primary/core membership role from `Key roles` (e.g., "Select Board Member", "Council Member") is included in their `positions` array.
+              - *Example*: If "Council Member" is a key core role, a person listed as "Council President" should have both "Council President" AND "Council Member" in their positions. If "Select Board Member" is a key core role, a person listed only as "Selectman" (a common variation/alias) should also have "Select Board Member" listed.
+            - **Additional Specific Roles**:
+              - In addition to the ensured core membership role, also include all other distinct, active municipal roles or more specific titles found in the text, provided they match the `Target Roles` or `Examples`. This includes specific committee assignments, liaison roles, or detailed versions of their main role if they add clarity beyond the core membership role (e.g., "Council Member, Ward 3", "Select Board Representative to Finance Committee").
+            - **Clarity and Conciseness**:
+              - When multiple terms in the text describe the exact same specific responsibility (e.g., "Board of Selectmen\'s Representative to Planning Board" and "Selectmen\'s Rep to Planning Board"), prefer the most complete, official-sounding, or consistently used term from the source for that specific responsibility. Avoid redundant listings *for the exact same specific role* if one is merely an abbreviation of the other. However, this does not override the rule to include both the core membership role and a more specific title if they represent different levels of detail (e.g., "Council Member" and "Council Member, District A").
+        - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start \'images/\'.
         - Contact Details (Phone/Email/Website):
           - Associate details logically if near the person's name/section.
           - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.

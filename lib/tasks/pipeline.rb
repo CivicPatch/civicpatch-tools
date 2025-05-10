@@ -90,7 +90,9 @@ namespace :pipeline do
   end
 
   def fetch_with_state_source(municipality_context)
-    puts "#{municipality_context[:state]} - #{municipality_context[:municipality_entry]["name"]} - Fetching with state source"
+    state = municipality_context[:state]
+    municipality_name = municipality_context[:municipality_entry]["name"]
+    puts "#{state} - #{municipality_name} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
@@ -157,7 +159,7 @@ namespace :pipeline do
     municipality_entry = municipality_context[:municipality_entry]
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
     people_config = municipality_context[:config]["people"]
-    validated_result = Validators::CityPeople.validate_sources(municipality_context)
+    validated_result = Core::PeopleResolver.resolve(municipality_context)
 
     combined_people = validated_result[:merged_sources]
     people = Core::PeopleManager.format_people(people_config, combined_people, positions_config)

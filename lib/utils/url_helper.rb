@@ -46,21 +46,14 @@ module Utils
     def self.format_links_to_absolute(page_html_string, page_url)
       base_url = extract_page_base_url(page_html_string, page_url)
       nokogiri_html = Nokogiri::HTML(page_html_string)
+
       nokogiri_html.css("a").each do |link|
-        next if link["href"].blank?
+        href = link["href"]&.strip
+        next if href.blank? || href.start_with?("mailto:", "tel:")
 
-        link["href"] = link["href"].strip
-        next if link["href"].start_with?("mailto:")
-        next if link["href"].start_with?("tel:")
-
-        begin
-          absolute_url = Addressable::URI.join(base_url, link["href"]).to_s
-          absolute_url = format_url(absolute_url)
-          link["href"] = absolute_url
-        rescue StandardError => e
-          puts "Error formatting link: #{link["href"]} - #{e.message}"
-          next
-        end
+        link["href"] = format_url(Addressable::URI.join(base_url, href).to_s)
+      rescue StandardError => e
+        puts "Error formatting link: #{href} - #{e.message}"
       end
 
       nokogiri_html.to_html
