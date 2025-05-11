@@ -1,36 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Mary Scheifelbein
-    positions:
-    - Mayor
-    email: meschiefelbein@netscape.net
-    phone_number: "(541) 545-6566"
-  - name: Ashley Trushell
-    positions:
-    - Council Member
-    email: ashleytrushellcitycouncil@gmail.com
-    phone_number: "(541) 545-6566"
-  - name: Nancy Ibarra
-    positions:
-    - Council Member
-    - Position 2
-    email: dounancy_79@yahoo.com
-    phone_number: "(541) 545-6566"
-  - name: Ashlie Pence
-    positions:
-    - Council Member
-    - Position 3
-    email: Ashlie.Pence@oit.edu
-    phone_number: "(541) 545-6566"
-  - name: Roland Scott
-    positions:
-    - Council Member
-    - Position 5
-    email: ''
-    phone_number: "(541) 545-6566"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

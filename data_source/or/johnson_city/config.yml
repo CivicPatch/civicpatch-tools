@@ -1,33 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Vincent Whitehead
-    positions:
-    - Mayor
-    email: vowjr@outlook.com
-    phone_number: "(503) 655-9710"
-  - name: Angie Long
-    positions:
-    - Council Member
-    email: johnson.city@comcast.net
-    phone_number: "(503) 655-9710"
-  - name: Jackie Moriz
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(503) 655-9710"
-  - name: Margaret McCrea
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(503) 655-9710"
-  - name: Randy Anderson
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(503) 655-9710"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

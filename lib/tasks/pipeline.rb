@@ -91,17 +91,17 @@ namespace :pipeline do
     municipality_name = municipality_context[:municipality_entry]["name"]
     puts "#{state} - #{municipality_name} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
-    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
-    source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
+    directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
-    people = source_directory_list["people"]
+    people = state_level_directory_list["people"]
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
-    formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
-                                                         positions_config)
-    source_directory_list["people"] = formatted_people
+    formatted_people = Resolvers::PeopleResolver.save_people(municipality_context, people_config,
+                                                             people_with_canoncial_names,
+                                                             "state_source")
+    directory_list["people"] = formatted_people
 
-    [source_directory_list, people_config]
+    [directory_list, people_config]
   end
 
   def fetch_with_scrape(municipality_context)
@@ -132,8 +132,6 @@ namespace :pipeline do
 
   def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil,
                        seeded_urls: [], request_cache: {})
-    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
-
     page_fetcher, source_dirs, accumulated_people, people_config = Core::MunicipalScraper.fetch(
       llm_service_string,
       municipality_context,
@@ -142,10 +140,7 @@ namespace :pipeline do
       request_cache: request_cache
     )
 
-    Core::PeopleManager.update_people(municipality_context, accumulated_people, "#{llm_service_string}.before")
-    people = Core::PeopleManager.format_people(people_config, accumulated_people, positions_config)
-    Core::PeopleManager.update_people(municipality_context, people, "#{llm_service_string}.after")
-
+    people = Resolvers::PeopleResolver.save_people(municipality_context, accumulated_people, "#{llm_service_string}")
     source_urls = people.map { |person| person["sources"] }.flatten.uniq
 
     [page_fetcher, source_urls, source_dirs, people, people_config]

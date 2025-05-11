@@ -1,13 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Henry Balensifer, III
-    positions:
-    - Mayor
-    email: hbalensifer@warrentonoregon.us
-    phone_number: "(503) 861-2288"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

@@ -1,33 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Carlos Mendoza
-    positions:
-    - Mayor
-    email: ''
-    phone_number: "(541) 372-2179"
-  - name: Tom Pierce
-    positions:
-    - Council President
-    email: cityofadrian@hotmail.com
-    phone_number: "(541) 372-2179"
-  - name: Echo Snyder
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 372-2179"
-  - name: Karen E. Olsen
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 372-2179"
-  - name: Keith Baldwin
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 372-2179"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

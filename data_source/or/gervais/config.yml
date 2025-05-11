@@ -1,38 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Brian Wagner
-    positions:
-    - Mayor
-    email: BWagner@cityofgervais.com
-    phone_number: "(503) 792-4900"
-  - name: Abby Fernandez
-    positions:
-    - Council Member
-    email: afernandez@cityofgervais.com
-    phone_number: "(503) 792-4900"
-  - name: Audra Geddes
-    positions:
-    - Council Member
-    email: ageddes@cityofgervais.com
-    phone_number: "(503) 792-4900"
-  - name: Diana Bartch
-    positions:
-    - Council Member
-    email: dbartch@cityofgervais.com
-    phone_number: "(503) 792-4900"
-  - name: Jesse Geddes
-    positions:
-    - Council Member
-    email: jgeddes@cityofgervais.com
-    phone_number: "(503) 792-4900"
-  - name: Petra Wright
-    positions:
-    - Council Member
-    email: pwright@cityofgervais.com
-    phone_number: "(503) 792-4900"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

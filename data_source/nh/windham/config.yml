@@ -1,22 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list_fallback
-  people:
-  - name: Bruce Breton
-    positions:
-    - Select Board Member
-  - name: Heath Partington
-    positions:
-    - Select Board Member
-  - name: Mark Samsel
-    positions:
-    - Select Board Member
-  - name: Roger Hohenberger
-    positions:
-    - Select Board Member
-  - name: Ross McLeod
-    positions:
-    - Select Board Member
 people: {}
 sources:
 - https://www.windhamnh.gov/258/Board-of-Selectmen

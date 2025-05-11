@@ -1,28 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list_fallback
-  people:
-  - name: Andrew Hosmer
-    positions:
-    - Mayor
-  - name: Bruce Cheney
-    positions:
-    - Council Member
-  - name: Eric Hoffman
-    positions:
-    - Council Member
-  - name: Mark Haynes
-    positions:
-    - Council Member
-  - name: Robert Soucy
-    positions:
-    - Council Member
-  - name: Steven Bogert
-    positions:
-    - Council Member
-  - name: Tony Felch
-    positions:
-    - Council Member
 people: {}
 sources:
 - https://www.laconianh.gov/directory.aspx?EID=103

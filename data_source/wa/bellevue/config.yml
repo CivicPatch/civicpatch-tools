@@ -1,6 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list_default
 people: {}
 sources:
 - https://bellevuewa.gov/city-government/city-council/councilmembers

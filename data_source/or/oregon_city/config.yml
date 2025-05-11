@@ -1,13 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Denyse C. McGriff
-    positions:
-    - Mayor
-    email: dmcgriff@orcity.org
-    phone_number: "(503) 657-0891"
-  key_position: mayor
 people: {}
 sources:
 - https://www.orcity.org/933/Mayor-City-Commission

@@ -1,10 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list_fallback
-  people:
-  - name:
-    positions:
-    - Mayor
 people: {}
 sources:
 - https://www.milford.nh.gov/selectboard
