@@ -5,9 +5,6 @@ require "path_helper"
 module Core
   class ConfigManager
     DEFAULT_CONFIG = {
-      "source_directory_list" => {
-        "type" => "directory_list_default"
-      }, # Just defaults, need to overwrite
       "people" => {}, # Maintain a list keyed by people names
       "sources" => [],
       "exclude_sources" => []

@@ -13,7 +13,7 @@
 
 ## A Message from Mayor Harrell
 
- ![Mayor Bruce Harrell](images/ae297f8bf7650b66f3e5267ccc06abf23234a9c4acb178cb3abad7f800c199ce.jpg) 
+ ![Mayor Bruce Harrell](images/076894b214bb793dd71e4f78e1305a309d345db8a31a070a61984f98ac945d28.jpg) 
 
 Seattle is a global destination and leader in industry, innovation, and creativity. As your Mayor, I am committed to uniting our diverse communities around shared priorities and meaningful progress on our biggest challenges. Through our focus on a back-to-basics approach like restoring public safety, helping people move indoors, keeping parks open and welcoming, and fixing potholes, we can build a strong foundation and bright future for our city and our families.
 
@@ -45,7 +45,13 @@ Seattle, WA 98124-4749
 
 ## Press Releases
 
- Mayor's Office Press Releases  [TOMORROW: Downtown Activation Plan Demonstration: See State-of-the-Art Interactive Wayfinding Kiosk in advance of Seattle City Council Meeting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df6871?wgt_ref=WASEATTLE_WIDGET_93)  
+ Mayor's Office Press Releases  [Registration is Open for Furry 5K, Benefiting the Seattle Animal Shelter](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df1007?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/08/2025 10:00 AM PDT
+  [TODAY: Downtown Activation Plan Demonstration: See State-of-the-Art Interactive Wayfinding Kiosk in advance of Seattle City Council Meeting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df6955?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/08/2025 07:30 AM PDT
+  [TOMORROW: Downtown Activation Plan Demonstration: See State-of-the-Art Interactive Wayfinding Kiosk in advance of Seattle City Council Meeting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df6871?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 05/07/2025 12:55 PM PDT
   [Mayor Harrell Signs Suite of Downtown Activation Plan Legislation to Fill Vacant Storefronts, Extend Housing Permits](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3df3750?wgt_ref=WASEATTLE_WIDGET_93)  
@@ -99,12 +105,6 @@ Seattle, WA 98124-4749
   [TOMORROW: Mayor Harrell Announces Every Child Ready Initiative and Bold Proposal to Renew Seattle’s Education Levy](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dd2195?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 04/22/2025 01:00 PM PDT
-  [Mayor Harrell Issues Earth Day Executive Order to Update Seattle’s Climate Action Plan, Accelerate Emissions Reductions from Transportation](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dd221f?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/22/2025 12:29 PM PDT
-  [TODAY: Mayor Harrell to Sign Earth Day Executive Order](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dcfcc3?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/22/2025 07:30 AM PDT
 
 Receive Email Updates
 
@@ -112,33 +112,33 @@ Receive Email Updates
 
 Copy the code below and paste it into your blog or Web page:
 
-<script id="govd_widget_js_waseattle_waseattle_widget_93" src="https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE_WIDGET_93.js" type="text/javascript"></script> [close](https://seattle.gov/)  
+<script id="govd_widget_js_waseattle_waseattle_widget_93" src="https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE_WIDGET_93.js" type="text/javascript"></script> [close](https://seattle.gov)  
 
-##  [Latest News - Mayor's Blog](https://harrell.seattle.gov/) 
+##  [Latest News - Mayor's Blog](https://harrell.seattle.gov) 
 
   [Mayor Harrell Signs Suite of Downtown Activation Plan Legislation to Fill Vacant Storefronts, Extend Housing Permits 
 
 Seattle – Today, Mayor Bruce Harrell joined Councilmem...
 
- Posted May. 06  ![Mayor Harrell signs Downtown Activation Plan legislation with leaders and community stakeholders behind him.](images/57a92f3a955580894c63c01d4d8f525b025d5f382c8671d24e92964116df4969.jpg)](https://harrell.seattle.gov/2025/05/06/mayor-harrell-signs-suite-of-downtown-activation-plan-legislation-to-fill-vacant-storefronts-extend-housing-permits/)   [Nearly 5,000 Seattle Child Care Staff Receiving Retention Payments 
+ Posted May. 06  ![Mayor Harrell signs Downtown Activation Plan legislation with leaders and community stakeholders behind him.](images/57a92f3a955580894c63c01d4d8f525b025d5f382c8671d24e92964116df4969.jpg)](https://harrell.seattle.gov/2025/05/06/mayor-harrell-signs-suite-of-downtown-activation-plan-legislation-to-fill-vacant-storefronts-extend-housing-permits)   [Nearly 5,000 Seattle Child Care Staff Receiving Retention Payments 
 
 Seattle has invested $16 million in child care workfor...
 
- Posted May. 01  ![SPP educators and students](images/f4fc69acb266a76587f2dcded3258fd4a9b628298f9cda03d81eb839e32ba701.jpg)](https://harrell.seattle.gov/2025/05/01/nearly-5000-seattle-child-care-staff-receiving-retention-payments/)   [Mayor Harrell Celebrates Significant Increase in Police Hiring in 2025 
+ Posted May. 01  ![SPP educators and students](images/f4fc69acb266a76587f2dcded3258fd4a9b628298f9cda03d81eb839e32ba701.jpg)](https://harrell.seattle.gov/2025/05/01/nearly-5000-seattle-child-care-staff-receiving-retention-payments)   [Mayor Harrell Celebrates Significant Increase in Police Hiring in 2025 
 
 Seattle has hired 60 officers in 2025, a 500% improvem...
 
- Posted Apr. 28  ![Seattle skyline with Space Needle and snow covered mountains](images/267c1ddbb29b0c2af7b402b3b793032342eecb424cd282118975308c7516caa2.jpg)](https://harrell.seattle.gov/2025/04/28/mayor-harrell-celebrates-significant-increase-in-police-hiring-in-2025/)   [Mayor Bruce Harrell Announces Legislation to Build Light Rail Faster and Support Smooth Construction 
+ Posted Apr. 28  ![Seattle skyline with Space Needle and snow covered mountains](images/267c1ddbb29b0c2af7b402b3b793032342eecb424cd282118975308c7516caa2.jpg)](https://harrell.seattle.gov/2025/04/28/mayor-harrell-celebrates-significant-increase-in-police-hiring-in-2025)   [Mayor Bruce Harrell Announces Legislation to Build Light Rail Faster and Support Smooth Construction 
 
 Seattle – Today, Seattle Mayor and Sound Transit Board...
 
- Posted Apr. 25  ![Sound Transit Link Light Rail train on a concrete bridge](images/2adf91f5b451bd8dcfca8204da170742637df91ea929f6868581101bf48988c8.jpg)](https://harrell.seattle.gov/2025/04/25/mayor-bruce-harrell-announces-legislation-to-build-light-rail-faster-and-support-smooth-construction/)  
+ Posted Apr. 25  ![Sound Transit Link Light Rail train on a concrete bridge](images/2adf91f5b451bd8dcfca8204da170742637df91ea929f6868581101bf48988c8.jpg)](https://harrell.seattle.gov/2025/04/25/mayor-bruce-harrell-announces-legislation-to-build-light-rail-faster-and-support-smooth-construction)  
 
 ## Requests and Services
 
 ## Requests and Services
 
-  [Send a Message to the Mayor](https://seattlegov.powerappsportals.us/contact-mayor/)   [Request the Mayor to Attend an Event](https://web8.seattle.gov/MORequest)   [Service on Legal Documents on the City of Seattle](https://seattle.gov/mayor/service-of-legal-documents)   [Request Proclamation or Letter](https://forms.office.com/Pages/ResponsePage.aspx?id=RR7meOtrCUCPmTWdi1T0GyBsffvOIRZHo10mP-LPxldUNTFUQ1EwOERRRjM3STFZSTNRVTRIR09aSC4u)  
+  [Send a Message to the Mayor](https://seattlegov.powerappsportals.us/contact-mayor)   [Request the Mayor to Attend an Event](https://web8.seattle.gov/MORequest)   [Service on Legal Documents on the City of Seattle](https://seattle.gov/mayor/service-of-legal-documents)   [Request Proclamation or Letter](https://forms.office.com/Pages/ResponsePage.aspx?id=RR7meOtrCUCPmTWdi1T0GyBsffvOIRZHo10mP-LPxldUNTFUQ1EwOERRRjM3STFZSTNRVTRIR09aSC4u)  
 
  *  [About Seattle](https://seattle.gov/opcd/population-and-demographics/about-seattle) 
  *  [Downtown Campus Map](https://seattle.gov/customer-service-bureau/downtown-campus-map) 
@@ -162,11 +162,11 @@ Sign up for the latest updates from Mayor Bruce Harrell
 ## Citywide Information
 
  *  [Elected Officials](https://seattle.gov/elected-officials) 
- *  [Open Data Portal](https://data.seattle.gov/) 
+ *  [Open Data Portal](https://data.seattle.gov) 
  *  [Public Records](https://seattle.gov/public-records) 
  *  [City Holidays and Closures](https://seattle.gov/holidays-and-closures) 
 
- *  [City News Feed](https://news.seattle.gov/) 
+ *  [City News Feed](https://news.seattle.gov) 
  *  [City Event Calendar](https://seattle.gov/event-calendar) 
  *  [All City Newsletters](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/topics?qsp=CODE_RED) 
  *  [View the Departments & Agencies List](https://seattle.gov/departments) 

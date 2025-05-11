@@ -7,45 +7,19 @@
     "image": null,
     "source_image": null,
     "phone_number": "(603) 624-6500",
-    "email": "LUC@manchesternh.gov",
+    "email": null,
     "website": "https://www.manchesternh.gov/Mayor",
     "start_date": "2024-01-02",
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office",
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office",
-      "https://www.manchesternh.gov/",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor",
-      "https://www.manchesternh.gov/Mayor"
+      "https://www.manchesternh.gov",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office",
+      "https://www.manchesternh.gov/Mayor",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor"
     ],
-    "updated_at": "2025-05-07"
-  },
-  {
-    "name": "Joseph Kelly Levasseur",
-    "positions": [
-      "Chair",
-      "Vice Chair",
-      "Alderperson",
-      "At-large"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 622-7575",
-    "email": null,
-    "website": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office",
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office",
-      "https://www.manchesternh.gov/",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor",
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur"
-    ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Norm Vincent",
@@ -58,60 +32,65 @@
     "source_image": null,
     "phone_number": "(603) 384-6293",
     "email": null,
-    "website": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
-    "name": "Pat Long",
+    "name": "Crissy Kantor",
     "positions": [
       "Chair",
       "Alderperson",
-      "Ward 3"
+      "Ward 6"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(603) 668-1037",
-    "email": "Long55@comcast.net",
-    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman"
-    ],
-    "updated_at": "2025-05-07"
-  },
-  {
-    "name": "Ross Terrio",
-    "positions": [
-      "Chair",
-      "Alderperson",
-      "Ward 7"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 820-9064",
+    "phone_number": "(603) 851-1388",
     "email": null,
-    "website": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
-    "name": "Dan O'Neil",
+    "name": "Daniel P. O'Neil",
     "positions": [
       "Alderperson",
       "At-large"
@@ -119,20 +98,63 @@
     "image": null,
     "source_image": null,
     "phone_number": "(603) 668-9814",
-    "email": "aldermanoneil@manchesternh.gov",
-    "website": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-ONeil",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office",
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayors-Office",
-      "https://www.manchesternh.gov/",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Mayors-Office/Contact-the-Mayor",
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-ONeil"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-ONeil",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Joseph Kelly Levasseur",
+    "positions": [
+      "Alderperson",
+      "At-large"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 622-7575",
+    "email": null,
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur"
+    ],
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Chris Morgan",
@@ -149,10 +171,23 @@
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Bill Barry",
@@ -169,10 +204,22 @@
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Kelly Thomas",
@@ -189,10 +236,23 @@
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Dan Goonan",
@@ -209,10 +269,54 @@
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Patrick Long",
+    "positions": [
+      "Alderperson",
+      "Ward 3"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 668-1037",
+    "email": "Long55@comcast.net",
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
+    ],
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Christine Fajardo",
@@ -223,16 +327,29 @@
     "image": null,
     "source_image": null,
     "phone_number": "(215) 287-8022",
-    "email": null,
-    "website": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+    "email": "LUC@manchesternh.gov",
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Anthony Sapienza",
@@ -249,33 +366,58 @@
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
-    "name": "Crissy Kantor",
+    "name": "Ross Terrio",
     "positions": [
       "Alderperson",
-      "Ward 6"
+      "Ward 7"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(603) 851-1388",
+    "phone_number": "(603) 820-9064",
     "email": null,
-    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
-    "name": "Edward Sapienza",
+    "name": "Edward J. Sapienza",
     "positions": [
       "Alderperson",
       "Ward 8"
@@ -289,10 +431,23 @@
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Jim Burkush",
@@ -304,14 +459,27 @@
     "source_image": null,
     "phone_number": "(603) 714-0283",
     "email": null,
-    "website": "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+    "website": "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Levasseur",
       "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/At-Large-Ald-Oneil",
-      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-1-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-12-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-4-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-5-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-6-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-7-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-8-Alderman",
+      "https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman",
+      "https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-9-Alderman"
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-05-11"
   }
 ]

@@ -10,9 +10,9 @@
 
 # About Mayor Bruce Harrell
 
- Mayor Bruce Harrell was elected the 57th mayor of Seattle in 2021 and was sworn in as Seattle’s 54th mayor for an interim period in 2017. Learn more about his background and priorities.  ![Mayor Bruce Harrell](images/739ca47072a2ad0274878c759609121e38f3b35183e701715c20edfa146b5f59.jpg)  
+ Mayor Bruce Harrell was elected the 57th mayor of Seattle in 2021 and was sworn in as Seattle’s 54th mayor for an interim period in 2017. Learn more about his background and priorities.  ![Mayor Bruce Harrell](images/6191b5abef4e5ea49f6d25c01791087f5fe1dede06d4066628f0341f1b418ad5.jpg)  
 
- ![Mayor Bruce Harrell](images/d020331e6cfc4ddf8e7421741dec9b07435a0db24b564f149cd73196defd8b1c.jpg) 
+ ![Mayor Bruce Harrell](images/10e736a008edf70d1de3ca07b23e211b47ca98509d948953000a8a56be2681bc.jpg) 
 
 Bruce Harrell was born in Seattle to an African American father who was one of the first Black union lineman at Seattle City Light, and a Japanese American mother who had been incarcerated at Minidoka during World War II. His mother "Rose" worked for the Seattle Public Library and was elected to the Seattle City Credit Union Board of Directors. He is Seattle's first Asian American and first biracial mayor and Seattle's second Black mayor.    
 
@@ -58,11 +58,11 @@ Sign up for the latest updates from Mayor Bruce Harrell
 ## Citywide Information
 
  *  [Elected Officials](https://seattle.gov/elected-officials) 
- *  [Open Data Portal](https://data.seattle.gov/) 
+ *  [Open Data Portal](https://data.seattle.gov) 
  *  [Public Records](https://seattle.gov/public-records) 
  *  [City Holidays and Closures](https://seattle.gov/holidays-and-closures) 
 
- *  [City News Feed](https://news.seattle.gov/) 
+ *  [City News Feed](https://news.seattle.gov) 
  *  [City Event Calendar](https://seattle.gov/event-calendar) 
  *  [All City Newsletters](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/topics?qsp=CODE_RED) 
  *  [View the Departments & Agencies List](https://seattle.gov/departments) 

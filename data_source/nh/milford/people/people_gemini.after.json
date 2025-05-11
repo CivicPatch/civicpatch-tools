@@ -7,7 +7,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(603) 249-0600",
     "email": "gdaniels@milford.nh.gov",
     "website": null,
     "start_date": null,
@@ -15,7 +15,7 @@
     "sources": [
       "https://www.milford.nh.gov/selectboard"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "David Freel",
@@ -24,7 +24,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(603) 249-0600",
     "email": "dfreel@milford.nh.gov",
     "website": null,
     "start_date": null,
@@ -32,7 +32,7 @@
     "sources": [
       "https://www.milford.nh.gov/selectboard"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Chris Labonte",
@@ -41,7 +41,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(603) 249-0600",
     "email": "clabonte@milford.nh.gov",
     "website": null,
     "start_date": null,
@@ -49,7 +49,7 @@
     "sources": [
       "https://www.milford.nh.gov/selectboard"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Paul Dargie",
@@ -58,7 +58,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(603) 249-0600",
     "email": "pdargie@milford.nh.gov",
     "website": null,
     "start_date": null,
@@ -66,7 +66,7 @@
     "sources": [
       "https://www.milford.nh.gov/selectboard"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Tina Philbrick",
@@ -75,7 +75,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
+    "phone_number": "(603) 249-0600",
     "email": "tphilbrick@milford.nh.gov",
     "website": null,
     "start_date": null,
@@ -83,6 +83,6 @@
     "sources": [
       "https://www.milford.nh.gov/selectboard"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-11"
   }
 ]
