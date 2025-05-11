@@ -3,7 +3,7 @@
 # test/core/person_resolver_test.rb
 require "test_helper"
 require "minitest/autorun"
-require "core/person_resolver" # Adjust path as necessary
+require "resolvers/person_resolver" # Adjust path as necessary
 
 class PersonResolverTest < Minitest::Test
   def setup
@@ -49,179 +49,179 @@ class PersonResolverTest < Minitest::Test
 
   def test_same_email_matching
     person1_same_email = @person1.dup # Ensure email field exists and matches
-    assert Core::PersonResolver.same_email?(@person1, person1_same_email)
+    assert Resolvers::PersonResolver.same_email?(@person1, person1_same_email)
   end
 
   def test_same_email_matching_case_insensitive
-    assert Core::PersonResolver.same_email?(@person1, @person1_alt_case)
+    assert Resolvers::PersonResolver.same_email?(@person1, @person1_alt_case)
   end
 
   def test_same_email_different
-    refute Core::PersonResolver.same_email?(@person1, @person2)
+    refute Resolvers::PersonResolver.same_email?(@person1, @person2)
   end
 
   def test_same_email_one_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    refute Core::PersonResolver.same_email?(@person1, @person_no_email)
+    refute Resolvers::PersonResolver.same_email?(@person1, @person_no_email)
   end
 
   def test_same_email_both_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    refute Core::PersonResolver.same_email?(@person_nil_fields, @person_nil_fields)
+    refute Resolvers::PersonResolver.same_email?(@person_nil_fields, @person_nil_fields)
   end
 
   def test_same_website_matching
     person1_same_website = @person1.dup
-    assert Core::PersonResolver.same_website?(@person1, person1_same_website)
+    assert Resolvers::PersonResolver.same_website?(@person1, person1_same_website)
   end
 
   def test_same_website_matching_case_insensitive
-    assert Core::PersonResolver.same_website?(@person1, @person1_alt_case)
+    assert Resolvers::PersonResolver.same_website?(@person1, @person1_alt_case)
   end
 
   def test_same_website_different
-    refute Core::PersonResolver.same_website?(@person1, @person2)
+    refute Resolvers::PersonResolver.same_website?(@person1, @person2)
   end
 
   def test_same_website_one_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    refute Core::PersonResolver.same_website?(@person1, @person_no_website)
+    refute Resolvers::PersonResolver.same_website?(@person1, @person_no_website)
   end
 
   def test_same_website_both_nil
     # This will raise NoMethodError if not handled, test assumes it should be false
-    refute Core::PersonResolver.same_website?(@person_nil_fields, @person_nil_fields)
+    refute Resolvers::PersonResolver.same_website?(@person_nil_fields, @person_nil_fields)
   end
 
   # --- .name_in_config? Test (Updated Signature) ---
 
   def test_name_in_config_other_names_match
     config_entry = @people_config["Jane Doe"]
-    assert Core::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "Janie Doe")
+    assert Resolvers::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "Janie Doe")
   end
 
   def test_name_in_config_no_match
     config_entry = @people_config["Jane Doe"]
-    refute Core::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "John Doe")
+    refute Resolvers::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "John Doe")
   end
 
   def test_name_in_config_missing_other_names_key
     config_entry = @people_config_missing_other_names["Jane Doe"]
     # This should not raise an error and return false
-    refute Core::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "Janie Doe")
+    refute Resolvers::PersonResolver.name_in_config?({ "Jane Doe" => config_entry }, "Janie Doe")
   end
 
   def test_name_in_config_nil_config_entry
     # This should not raise an error and return false
-    refute Core::PersonResolver.name_in_config?(nil, "Janie Doe")
+    refute Resolvers::PersonResolver.name_in_config?(nil, "Janie Doe")
   end
 
   # --- Tests for .find_by_name (Previously match_by_name) ---
 
   def test_find_by_name_exact_match
     needle_name = "Jane Doe"
-    assert_equal @person1, Core::PersonResolver.find_by_name(@people_config, @people, needle_name)
+    assert_equal @person1, Resolvers::PersonResolver.find_by_name(@people_config, @people, needle_name)
   end
 
   def test_find_by_name_substring_match_needle_in_haystack
     needle_name = "Jane" # Substring of "Jane Doe" and "Jane Elizabeth Doe"
     # It should return nil -- needs a last name to match
-    assert_nil Core::PersonResolver.find_by_name(@people_config, @people, needle_name)
+    assert_nil Resolvers::PersonResolver.find_by_name(@people_config, @people, needle_name)
   end
 
   def test_find_by_name_substring_match_haystack_in_needle
     needle_name = "Dr. Jane Doe" # Contains "Jane Doe"
-    assert_equal @person1, Core::PersonResolver.find_by_name(@people_config, @people, needle_name)
+    assert_equal @person1, Resolvers::PersonResolver.find_by_name(@people_config, @people, needle_name)
   end
 
   def test_find_by_name_other_name_match
     needle_name = "Janie Doe" # In other_names for "Jane Doe"
-    assert_equal @person1, Core::PersonResolver.find_by_name(@people_config, @people, needle_name)
+    assert_equal @person1, Resolvers::PersonResolver.find_by_name(@people_config, @people, needle_name)
   end
 
   def test_find_by_name_no_match
     needle_name = "Unknown Person"
-    assert_nil Core::PersonResolver.find_by_name(@people_config, @people, needle_name)
+    assert_nil Resolvers::PersonResolver.find_by_name(@people_config, @people, needle_name)
   end
 
   def test_find_by_name_blank_config
     needle_name = "Lily Evans"
-    assert_nil Core::PersonResolver.find_by_name({}, @people, needle_name)
-    assert_nil Core::PersonResolver.find_by_name(nil, @people, needle_name)
+    assert_nil Resolvers::PersonResolver.find_by_name({}, @people, needle_name)
+    assert_nil Resolvers::PersonResolver.find_by_name(nil, @people, needle_name)
   end
 
   def test_find_by_name_config_present_but_no_other_names_match
     needle_name = "Janet Doe" # Similar name, but not in other_names
     # Should not match based on name_in_config? alone if substring fails
-    refute Core::PersonResolver.name_in_config?({ "Jane Doe" => @people_config["Jane Doe"] }, needle_name)
-    assert_nil Core::PersonResolver.find_by_name(@people_config, @people, needle_name)
+    refute Resolvers::PersonResolver.name_in_config?({ "Jane Doe" => @people_config["Jane Doe"] }, needle_name)
+    assert_nil Resolvers::PersonResolver.find_by_name(@people_config, @people, needle_name)
   end
 
   # --- .match_by_weak_ties Tests ---
 
   def test_match_by_weak_ties_last_name_and_email
     # Uses @person_weak_match which has different name but same last name/email as @person1
-    assert_equal @person1, Core::PersonResolver.match_by_weak_ties(@people, @person_weak_match)
+    assert_equal @person1, Resolvers::PersonResolver.match_by_weak_ties(@people, @person_weak_match)
   end
 
   def test_match_by_weak_ties_last_name_and_website
     # Uses @person_weak_match_web which has different name/email but same last name/website as @person1
-    assert_equal @person1, Core::PersonResolver.match_by_weak_ties(@people, @person_weak_match_web)
+    assert_equal @person1, Resolvers::PersonResolver.match_by_weak_ties(@people, @person_weak_match_web)
   end
 
   def test_match_by_weak_ties_only_last_name
     needle = { "name" => "J. Doe", "email" => "diff@example.com", "website" => "diff.com" }
-    assert_nil Core::PersonResolver.match_by_weak_ties(@people, needle)
+    assert_nil Resolvers::PersonResolver.match_by_weak_ties(@people, needle)
   end
 
   def test_match_by_weak_ties_email_and_last_name
     needle = { "name" => "J. Doe", "email" => "jane.doe@example.com", "website" => "https://jane.example.com" }
-    assert_equal @person1, Core::PersonResolver.match_by_weak_ties(@people, needle)
+    assert_equal @person1, Resolvers::PersonResolver.match_by_weak_ties(@people, needle)
   end
 
   def test_match_by_weak_ties_different_last_names
     needle = { "name" => "J. Smith", "email" => "jane.doe@example.com", "website" => "https://jane.example.com" }
-    assert_nil Core::PersonResolver.match_by_weak_ties(@people, needle)
+    assert_nil Resolvers::PersonResolver.match_by_weak_ties(@people, needle)
   end
 
   def test_match_by_weak_ties_handles_nil_in_needle
     # Should not match anything as email/website are nil
-    assert_nil Core::PersonResolver.match_by_weak_ties(@people, @person_nil_fields)
+    assert_nil Resolvers::PersonResolver.match_by_weak_ties(@people, @person_nil_fields)
   end
 
   def test_match_by_weak_ties_handles_nil_in_haystack
     haystack = [@person_nil_fields, @person1]
     needle = { "name" => "Jane Doe", "email" => "jane.doe@example.com", "website" => "https://jane.example.com" }
     # Should skip person_nil_fields gracefully and match person1
-    assert_equal @person1, Core::PersonResolver.match_by_weak_ties(haystack, needle)
+    assert_equal @person1, Resolvers::PersonResolver.match_by_weak_ties(haystack, needle)
   end
 
   # --- .find_existing_person Tests ---
 
   def test_find_existing_person_exact_name_match
-    found, config = Core::PersonResolver.find_existing_person(@config_for_update, @people, @person1.dup)
+    found, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, @person1.dup)
     assert_equal @person1, found
     assert_equal @people_config, config # Config shouldn't change
   end
 
   def test_find_existing_person_other_name_match_updates_config
-    found, config = Core::PersonResolver.find_existing_person(@config_for_update, @people, @person1_other_name)
+    found, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, @person1_other_name)
     assert_equal @person1, found
     assert_includes config["Jane Doe"]["other_names"], "Janie Doe"
   end
 
   def test_find_existing_person_weak_match_updates_config_if_names_differ
-    found, config = Core::PersonResolver.find_existing_person(@config_for_update, @people, @person_weak_match)
+    found, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, @person_weak_match)
     assert_equal @person1, found
     assert_includes config["Jane Doe"]["other_names"], "J. Doe"
   end
 
   def test_find_existing_person_does_not_add_duplicate_other_names
     # First call adds the name via weak match
-    _found, config = Core::PersonResolver.find_existing_person(@config_for_update, @people, @person_weak_match)
+    _found, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, @person_weak_match)
     assert_equal 1, config["Jane Doe"]["other_names"].count("J. Doe")
     # Second call (e.g., finding via other_name) should not add it again
-    _found, config = Core::PersonResolver.find_existing_person(@config_for_update, @people, @person_weak_match)
+    _found, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, @person_weak_match)
     assert_equal 1, config["Jane Doe"]["other_names"].count("J. Doe")
   end
 
@@ -229,14 +229,14 @@ class PersonResolverTest < Minitest::Test
     # Find person2 via weak ties using its own data (should resolve to itself)
     person2_weak_match = @person2.dup
     original_config_copy = Marshal.load(Marshal.dump(@people_config))
-    found, config = Core::PersonResolver.find_existing_person(@config_for_update, @people, person2_weak_match)
+    found, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, person2_weak_match)
     assert_equal @person2, found
     assert_equal original_config_copy, config # Config shouldn't change
   end
 
   def test_find_existing_person_no_match
     new_person_no_match = { "name" => "Unknown Person", "email" => "unknown@example.com" }
-    found_person, config = Core::PersonResolver.find_existing_person(@config_for_update, @people, new_person_no_match)
+    found_person, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, new_person_no_match)
     assert_nil found_person
     assert_equal @config_for_update, config
   end
@@ -246,7 +246,7 @@ class PersonResolverTest < Minitest::Test
     needle = { "name" => "Victoria M. Doyle" }
     expected_person = @person_victoria # Should match the existing "Victoria Doyle"
 
-    found, config_after = Core::PersonResolver.find_existing_person(@config_for_update, @people, needle)
+    found, config_after = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, needle)
 
     assert_equal expected_person, found,
                  "Should find '#{expected_person["name"]}' when searching for '#{needle["name"]}'"
@@ -258,7 +258,7 @@ class PersonResolverTest < Minitest::Test
     expected_person = @person_eduardo
     config_before = Marshal.load(Marshal.dump(@config_for_update))
 
-    found, config_after = Core::PersonResolver.find_existing_person(@config_for_update, @people, needle)
+    found, config_after = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, needle)
 
     assert_equal expected_person, found, "Should find Eduardo Morales using the other name 'Eddy Morales'"
     # Ensure the config wasn't mutated unnecessarily (Eddy was already there)

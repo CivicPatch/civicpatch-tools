@@ -2,7 +2,7 @@
 
 require "validators/utils"
 
-module Core
+module Resolvers
   class PeopleResolver
     DISAGREEMENT_THRESHOLD = 0.9
 
@@ -74,7 +74,7 @@ module Core
       unique_names.each do |name|
         person_records = sources.map do |source|
           {
-            person: Core::PersonResolver.find_by_name(people_config, source[:people], name),
+            person: Resolvers::PersonResolver.find_by_name(people_config, source[:people], name),
             source_name: source[:source_name],
             confidence_score: source[:confidence_score]
           }
@@ -131,13 +131,14 @@ module Core
 
       unique_names.each do |name|
         person_records = sources.map do |source|
-          person = Core::PersonResolver.find_by_name(people_config, source[:people], name)
+          person = Resolvers::PersonResolver.find_by_name(people_config, source[:people], name)
           next unless person
 
           person.merge("confidence_score" => source[:confidence_score], "source_name" => source[:source_name])
         end.compact
 
         next if person_records.empty?
+        next if person_records.count == 1
 
         merged_person = { "name" => name }
 

@@ -3,7 +3,7 @@
 module Services
   module Shared
     class GeminiPrompts
-      def self.gemini_generate_search_for_people_prompt(state, municipality_entry) # rubocop:disable Metrics/MethodLength
+      def self.gemini_generate_search_for_people_prompt(state, municipality_entry)
         city_name = municipality_entry["name"]
 
         %(
@@ -29,14 +29,18 @@ module Services
         only if you are highly certain based on your training data or search results.
 
         If you are not highly certain of the current name for any specific position,
-        or if the information might be outdated or incomplete, set the 'name' field to null for that entry.
+        or if the information might be outdated or incomplete, set the 'name' field
+        to null for that entry.
 
-        Return ONLY the following JSON structure with no other text:
+        Return ONLY the following JSON structure. Ensure the JSON is perfectly valid and
+        can be parsed directly.
+        Pay close attention to matching brackets `[]` for arrays and braces `{}` for objects.
         {
           "people": [{
-            "name": The official's name (string) or null.
+            "name": The official's name (string) or null,
             "positions": The position held (array of strings),
-                         which should be either "Mayor" or "Council Member" (or equivalent).
+                         which should be either "Mayor" (only if the municipality has a mayor)
+                         or "Council Member" (or equivalent).
           }],
           "notes": "Notes about the search and the results"
         }
@@ -45,16 +49,18 @@ module Services
         with NO additional text, explanation, or markdown formatting.
         Do not include any text before or after the JSON object.
         Your entire response should be a valid JSON object that can be directly parsed.
+        Verify all brackets, braces, quotes, and commas are correct.
       )
       end
 
-      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "") # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "")
         state = municipality_context[:state]
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]
         municipality_config = Core::CityManager.get_config(government_type)
-        positions = municipality_config["positions"]
-        divisions = positions.flat_map { |position| position["divisions"] }
+        # Ensure 'positions' here refers to the actual role names for the prompt string
+        positions = municipality_config["positions"].map { |p| p["role"] }
+        divisions = municipality_config["positions"].flat_map { |position| position["divisions"] }
         position_examples = municipality_config["position_examples"]
         current_date = Date.today.strftime("%Y-%m-%d")
         maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
@@ -142,9 +148,10 @@ module Services
           - Include only active roles (today is #{current_date}).
           - Include both the role and any associated division (e.g., "Council Member, District 3").
           - **Avoid Redundant Phrasing in Positions**: If similar terms describing the same core role
-            (e.g., "Council Member," "Councilor") are found associated with the same division (like Ward, District, Seat),
-            extract only the most complete or primary term used in the source text. Do not concatenate these similar terms
-            for a single position. For instance, for "Ward 3 Councilor," prefer "Councilor, Ward 3" or
+            (e.g., "Council Member," "Councilor") are found associated with the same division
+            (ex: Ward, District, Seat), extract only the most complete or primary term used
+            in the source text. Do not concatenate these similar terms for a single position.
+            For instance, for "Ward 3 Councilor," prefer "Councilor, Ward 3" or
             "Council Member, Ward 3" (if "Council Member" is the standard term for that role type),
             but not "Council Member, Ward 3 Councilor."
         - Name extraction: Extract full names ONLY, not titles

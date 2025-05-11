@@ -6,10 +6,10 @@ require_relative "../core/context_manager"
 require_relative "../core/config_manager"
 require_relative "../core/municipal_scraper"
 require_relative "../core/page_fetcher"
+require_relative "../core/cache_manager"
 require_relative "../core/state_manager"
-require_relative "../core/search_router"
 require_relative "../core/people_manager"
-require_relative "../core/person_resolver"
+require_relative "../resolvers/person_resolver"
 require_relative "../services/spaces"
 require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
@@ -34,28 +34,25 @@ namespace :pipeline do
     state = args[:state]
     gnis = args[:gnis]
 
-    municipality_context = Core::ContextManager.get_context(state, gnis)
+    context = Core::ContextManager.get_context(state, gnis)
 
-    prepare_directories(state, municipality_context[:municipality_entry])
+    prepare_directories(state, context[:municipality_entry])
 
-    source_directory_list_config, people_config = fetch_with_state_source(municipality_context)
-    municipality_context = Core::ContextManager
-                           .update_context_config(municipality_context,
-                                                  source_directory_list: source_directory_list_config,
-                                                  people: people_config)
+    source_directory_list_config, people_config = fetch_with_state_source(context)
+    context = Core::ContextManager
+              .update_context_config(context,
+                                     source_directory_list: source_directory_list_config,
+                                     people: people_config)
 
-    people_config = fetch_with_scrape(municipality_context)
-    municipality_context = Core::ContextManager
-                           .update_context_config(municipality_context,
-                                                  people: people_config)
+    people_config = fetch_with_scrape(context)
+    context = Core::ContextManager
+              .update_context_config(context,
+                                     people: people_config)
 
-    scrape_sources = aggregate_sources(municipality_context,
-                                       sources: %w[state_source gemini openai])
-    municipality_context = Core::ContextManager
-                           .update_context_config(municipality_context,
-                                                  scrape_sources: scrape_sources)
+    aggregate_sources(context,
+                      sources: %w[state_source gemini openai])
 
-    finalize(municipality_context)
+    on_complete(context)
   end
 
   desc "Fetch city officials from state source"
@@ -159,10 +156,9 @@ namespace :pipeline do
     municipality_entry = municipality_context[:municipality_entry]
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
     people_config = municipality_context[:config]["people"]
-    validated_result = Core::PeopleResolver.resolve(municipality_context)
+    validated_result = Resolvers::PeopleResolver.resolve(municipality_context)
 
-    combined_people = validated_result[:merged_sources]
-    people = Core::PeopleManager.format_people(people_config, combined_people, positions_config)
+    people = Core::PeopleManager.format_people(people_config, validated_result[:merged_sources], positions_config)
 
     Core::PeopleManager.update_people(municipality_context, people)
 
@@ -175,8 +171,6 @@ namespace :pipeline do
                                                  "meta_hash" => officials_hash,
                                                  "meta_sources" => sources }
                                              ])
-
-    people.map { |person| person["sources"] }.flatten.uniq
   end
 
   def prepare_directories(state, municipality_entry)
@@ -232,29 +226,20 @@ namespace :pipeline do
     end
   end
 
-  def self.finalize(municipality_context)
+  def self.on_complete(municipality_context)
     gnis = municipality_context[:municipality_entry]["gnis"]
     people = Core::PeopleManager.get_people(municipality_context[:state], gnis)
     state = municipality_context[:state]
-    cache_dir = PathHelper.get_city_cache_path(state, gnis)
 
-    if Dir.exist?(cache_dir)
-      cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
+    source_urls = people.flat_map do |person|
+      person["sources"]
+    end.uniq
 
-      # Get list of src files in use
-      source_urls = people.flat_map do |person|
-        person["sources"]
-          &.map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
-      end.uniq
+    Core::ContextManager
+      .update_context_config(municipality_context,
+                             scrape_sources: source_urls)
 
-      cache_folders.each do |cache_folder|
-        unless source_urls.any? { |source_url| cache_folder.include?(source_url) }
-          puts "Removing #{cache_folder} from cache"
-          FileUtils.rm_rf(cache_folder)
-        end
-      end
-    end
-
+    Core::CacheManager.clean(state, gnis, source_urls)
     Core::ConfigManager.finalize_config(state, gnis, municipality_context[:config])
   end
 

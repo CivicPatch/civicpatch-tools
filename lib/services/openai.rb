@@ -65,14 +65,27 @@ module Services
       content_type = if person_name.present?
                        "First, determine if the content contains information about the target person."
                      else
-                       %(Your primary task is to identify and extract information for ALL council members
+                       %(Your primary task is to identify and extract information for ALL members of
+                         the primary governing body (e.g., Town Council, City Council, Select Board,
+                         Board of Aldermen, Commissioners)
                          of the target municipality found within the provided content.
-                         As a helpful guide, the following people might be council members based on previous data:
+                         Be cautious with other municipal boards (e.g., Planning Board, Zoning Board,
+                         Conservation Commission, etc.).
+                         Only extract individuals from these secondary boards if their listed role explicitly
+                         indicates they are also a representative FROM or TO the primary governing body
+                         (e.g., "Town Council Representative to the Planning Board", "Select Board Liaison").
+                         If their role on a secondary board does not clearly state a connection to
+                         the primary governing body, they should typically be excluded unless the content
+                         strongly suggests they are also primary governing body members.
+
+                         As a helpful guide, the following people might be members of the primary governing body
+                         based on previous data:
                          [#{maybe_target_people.join(", ")}].
                          Use this list to aid identification, but DO NOT limit your search to only these names.
-                         Extract information for EVERY relevant person you find in the content, regardless
-                         of whether they were on the provided list.
-                         If the content does not appear to contain council member information, return an empty JSON array `[]`.
+                         Extract information for EVERY relevant person you find in the content who is part of
+                         the primary governing body, regardless of whether they were on the provided list.
+                         If the content does not appear to contain members of the primary governing body,
+                         return an empty JSON array `[]`.
                          )
                      end
 
@@ -92,7 +105,7 @@ module Services
         Output Field Definitions & Structure:
         - name: (String) Full name only (no titles).
         - positions: (Array of Strings) Active municipal roles. Include specific division/district/position number (e.g., "Council Member, Position 1").
-        - image: (String or null) URL of the person's portrait/headshot (usually starts 'images/').
+        - image: (String or null) URL of the person's portrait/headshot (usually starts 'images/'). **IMPORTANT: This field must be a simple string (the URL) or null. It should NOT be an object and should NOT include confidence scores.**
         - phone_number: (Object or null) {data: "Formatted Number", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
         - email: (Object or null) {data: "email@example.com", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
         - website: (Object or null) {data: "http(s)://...", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
@@ -138,6 +151,13 @@ module Services
         - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in \'positions\'.
         - Positions:
           - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
+          - **Focus on Main Governing Body**: Prioritize extracting members of the primary municipal governing body (e.g., Town Council, City Council, Select Board). The `Key roles` and `Examples` provided to you primarily refer to positions on this main body.
+          - **Secondary Boards (e.g., Planning Board, Zoning Board, Commissions):**
+            - If the content is clearly about a specific secondary board (e.g., a page titled "Planning Board Members" or "Zoning Commission Roster"):
+              - **Do NOT extract individuals solely based on leadership roles held *within that specific secondary board* (such as \'Chair of the Planning Board\', \'Planning Board Vice-Chair\', \'Zoning Secretary\').** These titles by themselves do not make them members of the primary governing body.
+              - ONLY extract an individual from such a page if their listed role *also explicitly and unambiguously* indicates they are concurrently a member of, or a designated representative/liaison FROM or TO, the primary governing body (e.g., "Town Council Representative to the Planning Board", "Selectman Liaison to Conservation", "Council Member (also on Zoning Board)").
+              - *Example*: If a page lists "Jane Doe, Chair" under "Planning Board Members", and no other role links Jane Doe to the Town Council, Jane Doe should NOT be extracted as a member of the primary governing body. However, if the page lists "John Smith, Town Council Rep.", John Smith SHOULD be extracted with his primary role as "Town Council Member" (if that is a key role) and optionally "Town Council Rep." if that detail is desired.
+            - If a person *is* identified as a representative from the primary governing body *to* a secondary board (as in the John Smith example above), ensure you extract their role on the primary governing body (e.g., "Council Member" if that is a Key Role from your list of target roles).
           - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased, or their position is otherwise noted as vacant (e.g., "applications being accepted for this seat")**, DO NOT include them as a current office holder or extract their position. The statement of resignation or vacancy takes precedence over any listed future term dates when determining current active status. For example, if a person was "Elected Nov 2024 for term ending Dec 2028" but then "Resigned April 15", they should NOT be included in the output as an active member.
           - **Include specific division, district, or position identifier if present.**
             - If the source uses numeric identifiers like "#1", "No. 2", or similar for a role (e.g., in a table column named "Position" or "District"), interpret this as a position number.
@@ -153,10 +173,10 @@ module Services
               - THEN you MUST ensure that the relevant canonical primary/core membership role from `Key roles` (e.g., "Select Board Member", "Council Member") is included in their `positions` array.
               - *Example*: If "Council Member" is a key core role, a person listed as "Council President" should have both "Council President" AND "Council Member" in their positions. If "Select Board Member" is a key core role, a person listed only as "Selectman" (a common variation/alias) should also have "Select Board Member" listed.
             - **Additional Specific Roles**:
-              - In addition to the ensured core membership role, also include all other distinct, active municipal roles or more specific titles found in the text, provided they match the `Target Roles` or `Examples`. This includes specific committee assignments, liaison roles, or detailed versions of their main role if they add clarity beyond the core membership role (e.g., "Council Member, Ward 3", "Select Board Representative to Finance Committee").
+              - In addition to the ensured core membership role, also include all other distinct, active municipal roles or more specific titles found in the text, provided they match the `Key Roles` or `Examples` OR if they represent a clear representative role from the primary governing body to another board/commission. This includes specific committee assignments, liaison roles, or detailed versions of their main role if they add clarity beyond the core membership role (e.g., "Council Member, Ward 3", "Select Board Representative to Finance Committee").
             - **Clarity and Conciseness**:
               - When multiple terms in the text describe the exact same specific responsibility (e.g., "Board of Selectmen\'s Representative to Planning Board" and "Selectmen\'s Rep to Planning Board"), prefer the most complete, official-sounding, or consistently used term from the source for that specific responsibility. Avoid redundant listings *for the exact same specific role* if one is merely an abbreviation of the other. However, this does not override the rule to include both the core membership role and a more specific title if they represent different levels of detail (e.g., "Council Member" and "Council Member, District A").
-        - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start \'images/\'.
+        - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start \'images/\'. **The output for the 'image' field in the JSON must be the direct URL string or null; do NOT wrap it in an object with 'data' or 'llm_confidence'.**
         - Contact Details (Phone/Email/Website):
           - Associate details logically if near the person's name/section.
           - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
@@ -232,7 +252,12 @@ module Services
 
       begin
         JSON.parse(json_output)
-      rescue StandardError
+      rescue JSON::ParserError => e
+        puts "JSON Parsing Error for #{municipality_name}, #{state}: #{e.message}"
+        puts "Problematic JSON string was:\n#{json_output}"
+        nil
+      rescue StandardError => e
+        puts "Other StandardError during JSON processing for #{municipality_name}, #{state}: #{e.message}"
         nil
       end
     rescue Faraday::TooManyRequestsError

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require "utils/url_helper"
-require "core/person_resolver"
+require "resolvers/person_resolver"
+
 module Services
   module Shared
     class People
@@ -54,15 +55,15 @@ module Services
 
         people_by_name = {}
         people.each do |person|
-          canonical_name = Core::PersonResolver.get_canonical_name(people_config, person)
+          canonical_name = Resolvers::PersonResolver.get_canonical_name(people_config, person)
           people_by_name[canonical_name] = person
         end
 
         partial_people.each do |partial_person|
-          existing_person, updated_people_config = Core::PersonResolver.find_existing_person(updated_people_config,
-                                                                                             people_by_name.values,
-                                                                                             partial_person)
-          name = Core::PersonResolver.get_canonical_name(updated_people_config, partial_person)
+          existing_person, updated_people_config = Resolvers::PersonResolver.find_existing_person(updated_people_config,
+                                                                                                  people_by_name.values,
+                                                                                                  partial_person)
+          name = Resolvers::PersonResolver.get_canonical_name(updated_people_config, partial_person)
           people_by_name[name] = if existing_person.present?
                                    merge_person(existing_person, partial_person)
                                  else
@@ -186,7 +187,7 @@ module Services
       end
 
       # Combines all data points into a single person hash
-      def self.format_person(llm_person)
+      def self.format_person(llm_person) # rubocop:disable Metrics/PerceivedComplexity
         term_date = pick_best_term_dates(llm_person["start_dates"], llm_person["end_dates"])
         selected_data_points = {
           "phone_number" => pick_best_data_point(llm_person["phone_numbers"]),
@@ -202,10 +203,12 @@ module Services
           "positions" => llm_person["positions"],
           "image" => llm_person["image"],
           "source_image" => llm_person["source_image"],
-          "phone_number" => selected_data_points["phone_number"].present? ? selected_data_points["phone_number"]["data"] : nil,
+          "phone_number" => if selected_data_points["phone_number"].present?
+                              selected_data_points["phone_number"]["data"]
+                            end,
           "email" => selected_data_points["email"].present? ? selected_data_points["email"]["data"] : nil,
           "website" => selected_data_points["website"].present? ? selected_data_points["website"]["data"] : nil,
-          "start_date" => selected_data_points["start_date"].present? ? selected_data_points["start_date"]["data"] : nil,
+          "start_date" => (selected_data_points["start_date"]["data"] if selected_data_points["start_date"].present?),
           "end_date" => selected_data_points["end_date"].present? ? selected_data_points["end_date"]["data"] : nil,
           "sources" => (Array(llm_person["sources"]) + Array(sources)).uniq
         }

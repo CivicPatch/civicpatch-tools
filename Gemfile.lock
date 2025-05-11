@@ -134,6 +134,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-darwin)
       racc (~> 1.4)
+    nokolexbor (0.6.0)
+    nokolexbor (0.6.0-x86_64-darwin)
     os (1.1.4)
     parallel (1.27.0)
     parser (3.3.8.0)
@@ -241,6 +243,7 @@ DEPENDENCIES
   minitest (~> 5.16)
   namae (~> 1.2)
   nokogiri
+  nokolexbor (~> 0.6.0)
   open_data!
   playwright-ruby-client (~> 1.51)
   pp (~> 0.6.2)
