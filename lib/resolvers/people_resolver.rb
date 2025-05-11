@@ -138,6 +138,7 @@ module Resolvers
         end.compact
 
         next if person_records.empty?
+        next if person_records.count == 1
 
         merged_person = { "name" => name }
 

@@ -20,7 +20,7 @@
     "websites": [
       {
         "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Page URL is the official profile page for Joe Friedman as Town Councilor.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       },
@@ -89,7 +89,7 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Expiration Date' column as 'March 2026' converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expiration Date' March 2026, converted to YYYY-MM format.",
         "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],
@@ -221,7 +221,7 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Expiration Date' column as 'March 2026' converted to YYYY-MM.",
+        "llm_confidence_reason": "Extracted from 'Term Expiration Date' March 2026, converted to YYYY-MM format.",
         "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],

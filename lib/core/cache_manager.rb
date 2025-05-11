@@ -2,7 +2,9 @@
 
 module Core
   class CacheManager
-    def self.clean(state, gnis, urls_to_keep)
+    def self.clean(state, gnis, source_urls) # rubocop:disable Metrics/CyclomaticComplexity
+      urls_to_keep = source_urls.map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
+
       cache_dir = PathHelper.get_city_cache_path(state, gnis)
       return unless Dir.exist?(cache_dir)
 

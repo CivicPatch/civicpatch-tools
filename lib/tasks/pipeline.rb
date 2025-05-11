@@ -49,11 +49,8 @@ namespace :pipeline do
               .update_context_config(context,
                                      people: people_config)
 
-    scrape_sources = aggregate_sources(context,
-                                       sources: %w[state_source gemini openai])
-    context = Core::ContextManager
-              .update_context_config(context,
-                                     scrape_sources: scrape_sources)
+    aggregate_sources(context,
+                      sources: %w[state_source gemini openai])
 
     on_complete(context)
   end
@@ -161,8 +158,7 @@ namespace :pipeline do
     people_config = municipality_context[:config]["people"]
     validated_result = Resolvers::PeopleResolver.resolve(municipality_context)
 
-    combined_people = validated_result[:merged_sources]
-    people = Core::PeopleManager.format_people(people_config, combined_people, positions_config)
+    people = Core::PeopleManager.format_people(people_config, validated_result[:merged_sources], positions_config)
 
     Core::PeopleManager.update_people(municipality_context, people)
 
@@ -175,8 +171,6 @@ namespace :pipeline do
                                                  "meta_hash" => officials_hash,
                                                  "meta_sources" => sources }
                                              ])
-
-    people.map { |person| person["sources"] }.flatten.uniq
   end
 
   def prepare_directories(state, municipality_entry)
@@ -238,8 +232,12 @@ namespace :pipeline do
     state = municipality_context[:state]
 
     source_urls = people.flat_map do |person|
-      person["sources"]&.map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
+      person["sources"]
     end.uniq
+
+    Core::ContextManager
+      .update_context_config(municipality_context,
+                             scrape_sources: source_urls)
 
     Core::CacheManager.clean(state, gnis, source_urls)
     Core::ConfigManager.finalize_config(state, gnis, municipality_context[:config])
