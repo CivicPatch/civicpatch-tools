@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.olympiawa.gov/government/city_council___mayor/dontae_payne.php
 - https://olympiawa.gov/government/city_council___mayor/index.php
 - https://www.olympiawa.gov/government/city_council___mayor/yen_huynh.php
@@ -9,3 +12,4 @@ scrape_sources:
 - https://www.olympiawa.gov/government/city_council___mayor/jim_cooper.php
 - https://www.olympiawa.gov/government/city_council___mayor/kelly_green.php
 - https://www.olympiawa.gov/government/city_council___mayor/robert_vanderpool.php
+exclude_sources: []

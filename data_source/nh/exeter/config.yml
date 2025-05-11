@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://www.exeternh.gov/bos
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -17,3 +15,6 @@ source_directory_list:
     positions:
     - Select Board Member
 people: {}
+sources:
+- https://www.exeternh.gov/bos
+exclude_sources: []

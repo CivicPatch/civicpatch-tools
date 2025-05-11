@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell
 - https://www.lynnwoodwa.gov/Government/Mayor-Christine-Frizzell/About-Mayor-Christine-Frizzell
 - https://www.lynnwoodwa.gov/Government/City-Council
@@ -10,3 +13,4 @@ scrape_sources:
 - https://www.lynnwoodwa.gov/Government/City-Council/Parshall-new-format
 - https://www.lynnwoodwa.gov/Government/City-Council/Decker-new-format
 - https://www.lynnwoodwa.gov/Government/City-Council/Robert-Leutwyler
+exclude_sources: []

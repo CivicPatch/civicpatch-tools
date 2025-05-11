@@ -1,13 +1,4 @@
 ---
-scrape_sources:
-- https://www.derrynh.org/town-council
-- https://www.derrynh.org/node/212206
-- https://www.derrynh.org/node/217056
-- https://www.derrynh.org/node/222206
-- https://www.derrynh.org/node/9881
-- https://www.derrynh.org/node/20843
-- https://www.derrynh.org/node/2141
-- https://www.derrynh.org/node/222201
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -33,3 +24,13 @@ source_directory_list:
     positions:
     - Council Member
 people: {}
+sources:
+- https://www.derrynh.org/town-council
+- https://www.derrynh.org/node/212206
+- https://www.derrynh.org/node/217056
+- https://www.derrynh.org/node/222206
+- https://www.derrynh.org/node/9881
+- https://www.derrynh.org/node/20843
+- https://www.derrynh.org/node/2141
+- https://www.derrynh.org/node/222201
+exclude_sources: []

@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://everettwa.gov/citycouncil
 - https://www.everettwa.gov/1132/About-Mayor-Franklin
 - https://www.everettwa.gov/3057/Don-Schwab---District-3
@@ -9,3 +12,4 @@ scrape_sources:
 - https://www.everettwa.gov/3053/Mary-Fosse---District-1
 - https://www.everettwa.gov/2944/Paula-Rhyne---District-2
 - https://www.everettwa.gov/3058/Liz-Vogeli---District-4
+exclude_sources: []

@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.cityofpuyallup.org/634/Mayor---Jim-Kastama
 - https://www.cityofpuyallup.org/633/Meet-the-Council
 - https://www.cityofpuyallup.org/638/Deputy-Mayor---Dennis-King
@@ -8,3 +11,4 @@ scrape_sources:
 - https://www.cityofpuyallup.org/671/District-2---Dean-Johnson
 - https://www.cityofpuyallup.org/666/District-3---Julie-Door
 - https://www.cityofpuyallup.org/669/District-3---Ned-Witting
+exclude_sources: []

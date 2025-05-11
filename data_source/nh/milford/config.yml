@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://www.milford.nh.gov/selectboard
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -8,3 +6,6 @@ source_directory_list:
     positions:
     - Mayor
 people: {}
+sources:
+- https://www.milford.nh.gov/selectboard
+exclude_sources: []

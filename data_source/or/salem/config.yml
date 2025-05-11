@@ -1,8 +1,4 @@
 ---
-scrape_sources:
-- https://www.cityofsalem.net/government/city-council-mayor
-- https://www.cityofsalem.net/government/city-council-mayor/mayor
-- https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor
 source_directory_list:
   type: directory_list
   people:
@@ -62,3 +58,8 @@ source_directory_list:
     phone_number: "(503) 435-9794"
   key_position: mayor
 people: {}
+sources:
+- https://www.cityofsalem.net/government/city-council-mayor
+- https://www.cityofsalem.net/government/city-council-mayor/mayor
+- https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor
+exclude_sources: []

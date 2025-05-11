@@ -1,11 +1,4 @@
 ---
-scrape_sources:
-- https://www.wilsonvilleoregon.gov/citycouncil
-- https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil
-- https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry
-- https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham
-- https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin
-- https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell
 source_directory_list:
   type: directory_list
   people:
@@ -31,3 +24,11 @@ source_directory_list:
     phone_number: "(503) 682-1011"
   key_position: mayor
 people: {}
+sources:
+- https://www.wilsonvilleoregon.gov/citycouncil
+- https://www.wilsonvilleoregon.gov/directory-listing/shawn-oneil
+- https://www.wilsonvilleoregon.gov/directory-listing/caroline-berry
+- https://www.wilsonvilleoregon.gov/directory-listing/adam-cunningham
+- https://www.wilsonvilleoregon.gov/directory-listing/anne-shevlin
+- https://www.wilsonvilleoregon.gov/directory-listing/katie-dunwell
+exclude_sources: []

@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://www.tualatinoregon.gov/citycouncil/meet-your-council
 source_directory_list:
   type: directory_list
   people:
@@ -27,3 +25,6 @@ source_directory_list:
     - Council Member
   key_position: mayor
 people: {}
+sources:
+- https://www.tualatinoregon.gov/citycouncil/meet-your-council
+exclude_sources: []

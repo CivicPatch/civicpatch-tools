@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.ci.richland.wa.us/government/city-council/theresa-richardson
 - http://www.ci.richland.wa.us/government/city-council
 - https://www.ci.richland.wa.us/government/city-council/sandra-kent
@@ -8,3 +11,4 @@ scrape_sources:
 - https://www.ci.richland.wa.us/government/city-council/shayne-vandyke
 - https://www.ci.richland.wa.us/government/kurt-maier
 - https://www.ci.richland.wa.us/government/city-council/ryan-whitten
+exclude_sources: []

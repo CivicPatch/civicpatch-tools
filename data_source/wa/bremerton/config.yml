@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://bremertonwa.gov/194/Mayor-Greg-Wheeler
 - https://bremertonwa.gov/directory.aspx?EID=113
 - https://bremertonwa.gov/27/Our-Government
@@ -19,3 +22,4 @@ scrape_sources:
 - https://bremertonwa.gov/Directory.aspx?EID=114
 - https://bremertonwa.gov/directory.aspx?EID=197
 - https://bremertonwa.gov/Directory.aspx?EID=197
+exclude_sources: []

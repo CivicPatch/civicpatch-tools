@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.spokanevalleywa.gov/directory.aspx?EID=21
 - https://www.spokanevalleywa.gov/193/City-Council
 - https://www.spokanevalleywa.gov/directory.aspx?EID=22
@@ -9,3 +12,4 @@ scrape_sources:
 - https://spokanevalleywa.gov/directory.aspx?EID=19
 - https://www.spokanevalleywa.gov/directory.aspx?EID=20
 - https://www.spokanevalleywa.gov/directory.aspx?EID=23
+exclude_sources: []

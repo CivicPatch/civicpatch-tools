@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://www.happyvalleyor.gov/city-hall/city-council/
 source_directory_list:
   type: directory_list
   people:
@@ -31,3 +29,6 @@ source_directory_list:
     phone_number: "(503) 783-3800"
   key_position: mayor
 people: {}
+sources:
+- https://www.happyvalleyor.gov/city-hall/city-council/
+exclude_sources: []

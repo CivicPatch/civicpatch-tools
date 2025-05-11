@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.mountvernonwa.gov/91/Mayor
 - https://mountvernonwa.gov/881/Richard-Brocksmith
 - https://mountvernonwa.gov/98/City-Council
@@ -9,3 +12,4 @@ scrape_sources:
 - https://mountvernonwa.gov/514/Gary-Molenaar
 - https://mountvernonwa.gov/517/Mary-Hudson
 - https://mountvernonwa.gov/880/Melissa-Beaton
+exclude_sources: []

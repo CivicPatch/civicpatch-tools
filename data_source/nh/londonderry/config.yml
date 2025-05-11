@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- http://www.londonderrynh.org/378/Town-Council
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -22,3 +20,6 @@ source_directory_list:
     positions:
     - Council Member
 people: {}
+sources:
+- http://www.londonderrynh.org/378/Town-Council
+exclude_sources: []

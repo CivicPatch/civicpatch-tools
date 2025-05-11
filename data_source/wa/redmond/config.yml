@@ -1,5 +1,9 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://redmond.gov/284/Office-of-the-Mayor
 - https://redmond.gov/284/Office-of-the-Mayor#bio
 - https://redmond.gov/189
+exclude_sources: []

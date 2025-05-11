@@ -1,14 +1,4 @@
 ---
-scrape_sources:
-- https://www.lakestevenswa.gov/65/Mayor
-- https://www.lakestevenswa.gov/320/Council-Members
-- https://www.lakestevenswa.gov/directory.aspx?EID=31
-- https://www.lakestevenswa.gov/directory.aspx?EID=57
-- https://www.lakestevenswa.gov/directory.aspx?EID=33
-- https://www.lakestevenswa.gov/directory.aspx?EID=34
-- https://www.lakestevenswa.gov/directory.aspx?EID=35
-- https://www.lakestevenswa.gov/directory.aspx?EID=32
-- https://www.lakestevenswa.gov/directory.aspx?EID=37
 source_directory_list:
   type: directory_list
   people:
@@ -45,3 +35,14 @@ source_directory_list:
     - Council Member
     email: sewing@lakestevenswa.gov
 people: {}
+sources:
+- https://www.lakestevenswa.gov/65/Mayor
+- https://www.lakestevenswa.gov/320/Council-Members
+- https://www.lakestevenswa.gov/directory.aspx?EID=31
+- https://www.lakestevenswa.gov/directory.aspx?EID=57
+- https://www.lakestevenswa.gov/directory.aspx?EID=33
+- https://www.lakestevenswa.gov/directory.aspx?EID=34
+- https://www.lakestevenswa.gov/directory.aspx?EID=35
+- https://www.lakestevenswa.gov/directory.aspx?EID=32
+- https://www.lakestevenswa.gov/directory.aspx?EID=37
+exclude_sources: []

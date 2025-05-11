@@ -1,16 +1,4 @@
 ---
-scrape_sources:
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski
-- https://www.medfordoregon.gov/Government/Mayor-City-Council
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski/
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4
-- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4
 source_directory_list:
   type: directory_list
   people:
@@ -61,3 +49,16 @@ source_directory_list:
     phone_number: "(541) 774-2000"
   key_position: mayor
 people: {}
+sources:
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski
+- https://www.medfordoregon.gov/Government/Mayor-City-Council
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Mayor-Zarosinski/
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Ayres-Ward-1
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Kerlinger-Ward-1
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Quinn-Ward-2
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Smith-Ward-2
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-West-Ward-3
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Stine-Ward-3
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Keating-Ward-4
+- https://www.medfordoregon.gov/Government/Mayor-City-Council/Councilor-Card-Ward-4
+exclude_sources: []

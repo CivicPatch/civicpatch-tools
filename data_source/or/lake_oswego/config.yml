@@ -1,13 +1,4 @@
 ---
-scrape_sources:
-- https://www.ci.oswego.or.us/citycouncil/mayor-and-council
-- https://www.ci.oswego.or.us/citycouncil/mayor-joe-buck
-- https://www.ci.oswego.or.us/citycouncil/councilor-aaron-rapf
-- https://www.ci.oswego.or.us/citycouncil/councilor-ali-afghan
-- https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland
-- https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup
-- https://www.ci.oswego.or.us/citycouncil/councilor-rachel-verdick
-- https://www.ci.oswego.or.us/citycouncil/councilor-trudy-corrigan
 source_directory_list:
   type: directory_list
   people:
@@ -48,6 +39,16 @@ source_directory_list:
     phone_number: "(503) 635-0215"
   key_position: mayor
 people: {}
+sources:
+- https://www.ci.oswego.or.us/citycouncil/mayor-and-council
+- https://www.ci.oswego.or.us/citycouncil/mayor-joe-buck
+- https://www.ci.oswego.or.us/citycouncil/councilor-aaron-rapf
+- https://www.ci.oswego.or.us/citycouncil/councilor-ali-afghan
+- https://www.ci.oswego.or.us/citycouncil/councilor-john-wendland
+- https://www.ci.oswego.or.us/citycouncil/councilor-massene-mboup
+- https://www.ci.oswego.or.us/citycouncil/councilor-rachel-verdick
+- https://www.ci.oswego.or.us/citycouncil/councilor-trudy-corrigan
+exclude_sources: []
 scrape_exit_config:
   people_count: 5
   key_position: mayor

@@ -1,11 +1,4 @@
 ---
-scrape_sources:
-- https://www.redmondoregon.gov/government/city-council/city-council
-- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio
-- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker
-- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio
-- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock
-- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio
 source_directory_list:
   type: directory_list
   people:
@@ -46,6 +39,14 @@ source_directory_list:
     phone_number: "(541) 923-7710"
   key_position: mayor
 people: {}
+sources:
+- https://www.redmondoregon.gov/government/city-council/city-council
+- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-fitch-bio
+- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-cat-zwicker
+- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-evelyn-bio
+- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-jon-bullock
+- https://www.redmondoregon.gov/government/city-council/city-council-bios/councilor-wedding-bio
+exclude_sources: []
 scrape_exit_config:
   people_count: 5
   key_position: mayor

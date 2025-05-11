@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://albanyoregon.gov/council
 source_directory_list:
   type: directory_list
   people:
@@ -47,6 +45,9 @@ people:
   Alex D. Johnson II:
     other_names:
     - Alex D. Johnson II, II
+sources:
+- https://albanyoregon.gov/council
+exclude_sources: []
 scrape_exit_config:
   people_count: 5
   key_position: mayor

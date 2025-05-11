@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://www.mcminnvilleoregon.gov/citycouncil
 source_directory_list:
   type: directory_list
   people:
@@ -44,3 +42,6 @@ people:
   Salvador Peralta:
     other_names:
     - Sal Peralta
+sources:
+- https://www.mcminnvilleoregon.gov/citycouncil
+exclude_sources: []

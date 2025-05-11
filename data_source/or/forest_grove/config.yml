@@ -1,8 +1,4 @@
 ---
-scrape_sources:
-- https://www.forestgrove-or.gov/365/City-Council
-- https://www.forestgrove-or.gov/611/Meet-the-Council
-- https://www.forestgrove-or.gov/611/Meet-the-Council/
 source_directory_list:
   type: directory_list
   people:
@@ -48,3 +44,8 @@ source_directory_list:
     phone_number: "(503) 992-3200"
   key_position: mayor
 people: {}
+sources:
+- https://www.forestgrove-or.gov/365/City-Council
+- https://www.forestgrove-or.gov/611/Meet-the-Council
+- https://www.forestgrove-or.gov/611/Meet-the-Council/
+exclude_sources: []
