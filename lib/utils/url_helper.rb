@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "nokolexbor"
 require "addressable/uri"
 require "uri"
 
@@ -47,9 +48,9 @@ module Utils
 
     def self.format_links_to_absolute(page_html_string, page_url)
       base_url = extract_page_base_url(page_html_string, page_url)
-      nokogiri_html = Nokogiri::HTML(page_html_string)
+      nokolexbor_html = Nokolexbor::HTML(page_html_string)
 
-      nokogiri_html.css("a").each do |link|
+      nokolexbor_html.css("a").each do |link|
         href = link["href"]&.strip
         next if href.blank? || href.start_with?("mailto:", "tel:")
 
@@ -58,38 +59,31 @@ module Utils
         puts "Error formatting link: #{href} - #{e.message}"
       end
 
-      nokogiri_html.to_html
+      nokolexbor_html.to_html
     end
 
-    # NOTE: you should not have to use this method directly
     def self.extract_page_base_url(page_html_string, default_url)
-      begin
-        base_elements = Nokogiri::HTML(page_html_string).css("base")
+      base_elements = Nokolexbor::HTML(page_html_string).css("base")
 
-        unless base_elements.empty?
-          base_href_attribute = base_elements[0]["href"].to_s.strip
+      if base_elements.empty?
+        default_url_with_slash = default_url.dup
+        default_url_with_slash += "/" unless default_url_with_slash.end_with?("/")
+        default_url_with_slash
+      else
+        base_href_attribute = base_elements[0]["href"].to_s.strip
 
-          # Resolve the base href against the document's URL
-          # This handles cases like <base href="/"> or <base href="../">
-          absolute_base_url = if base_href_attribute.start_with?("http")
-                                base_href_attribute
-                              else
-                                Addressable::URI.join(default_url, base_href_attribute).to_s
-                              end
+        # Resolve the base href against the document's URL
+        # This handles cases like <base href="/"> or <base href="../">
+        absolute_base_url = if base_href_attribute.start_with?("http")
+                              base_href_attribute
+                            else
+                              Addressable::URI.join(default_url, base_href_attribute).to_s
+                            end
 
-          # Ensure it ends with a slash for proper joining later
-          absolute_base_url += "/" unless absolute_base_url.end_with?("/")
-          return absolute_base_url
-        end
-      rescue StandardError => e
-        puts "Error detecting/resolving base URL: #{e.message}"
+        # Ensure it ends with a slash for proper joining later
+        absolute_base_url += "/" unless absolute_base_url.end_with?("/")
+        absolute_base_url
       end
-
-      # Fallback to the original document URL if no valid base tag found
-      # Ensure it ends with a slash
-      default_url_with_slash = default_url.dup
-      default_url_with_slash += "/" unless default_url_with_slash.end_with?("/")
-      default_url_with_slash
     end
 
     def self.urls_without_keywords(url_pairs, keywords)

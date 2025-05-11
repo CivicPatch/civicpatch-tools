@@ -1,7 +1,82 @@
 # frozen_string_literal: true
 
 module GitHub
-  class CityPeople
+  class MunicipalityOfficials
+    def self.generate_people_list_markdown(municipality_context, merged_people, missing_people, contested_people) # rubocop:disable Metrics/AbcSize
+      city = municipality_context[:municipality_entry]["name"]
+      state = municipality_context[:state]
+      suggest_edit_details = Scrapers::MunicipalityOfficials.get_edit_detail(municipality_context)
+      action_items = generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
+                                                    contested_people)
+      missing_people_comment = to_markdown_missing_people_table(missing_people)
+      sources = merged_people.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")
+
+      <<~MARKDOWN
+        # #{city.capitalize}, #{state.upcase}
+        ## Action Items
+         - [ ] Review & Merge this PR
+           - [ ] (Optional) Make updates to people.yml if needed
+           - [ ] (Optional) Make updates to config.yml if needed
+           - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
+         #{action_items}
+        ## Missing People
+        #{missing_people_comment.present? ? missing_people_comment : "N/A"}
+        ## Sources
+        #{sources}
+        ## People
+        #{to_people_list(merged_people)}
+
+      MARKDOWN
+    end
+
+    def self.to_people_list(people) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+      <<~MARKDOWN
+        | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Term Dates** | **Image**     |
+        |-----------|-------------------|---------------|---------------|---------------|----------------|---------------|
+        #{people.map do |person|
+          image = person["image"]
+          email = person["email"]
+          phone = person["phone_number"]
+          website = person["website"]
+          start_term_date = person["start_date"].present? ? person["start_date"] : "N/A"
+          end_term_date = person["end_date"].present? ? person["end_date"] : "N/A"
+          term_date_markdown = "#{start_term_date} - #{end_term_date}"
+
+          position_markdown = if person["positions"].present?
+                                person["positions"].join(", ")
+                              else
+                                "N/A"
+                              end
+
+          image_markdown = if image.present?
+                             "![](#{image})"
+                           else
+                             "N/A"
+                           end
+
+          email_markdown = if email.present?
+                             email
+                           else
+                             "N/A"
+                           end
+
+          phone_markdown = if phone.present?
+                             phone
+                           else
+                             "N/A"
+                           end
+
+          website_markdown = if website.present?
+                               "[Link](#{website})"
+                             else
+                               "N/A"
+                             end
+
+          "**#{person["name"]}**| #{position_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{term_date_markdown} | #{image_markdown}"
+        end.join("\n")}
+      MARKDOWN
+    end
+
     def self.to_markdown_missing_people_table(missing_people)
       return "" if missing_people.nil? || missing_people.empty?
 
@@ -94,6 +169,8 @@ module GitHub
     def self.generate_suggest_edit_markdown(
       merged_people, suggest_edit_details, missing_people, contested_people
     )
+      return "" if suggest_edit_details.nil?
+
       action_item_summary = generate_readable_updates_needed_list(
         merged_people, missing_people, contested_people
       )

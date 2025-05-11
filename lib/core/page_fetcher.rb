@@ -32,9 +32,7 @@ module Core
                                                    include_api_content: true })
       html = response[:page_html]
 
-      if response && response[:image_map].present?
-        @image_map = @image_map.merge(response[:image_map])
-      end
+      @image_map = @image_map.merge(response[:image_map]) if response && response[:image_map].present?
 
       return [nil, nil] if html.blank?
 

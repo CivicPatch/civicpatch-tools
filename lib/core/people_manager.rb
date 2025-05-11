@@ -29,7 +29,7 @@ module Core
 
       people.map do |person|
         name = person["name"]&.squeeze(" ")
-        canonical_name = Core::PersonResolver.get_canonical_name(people_config, person)
+        canonical_name = Resolvers::PersonResolver.get_canonical_name(people_config, person)
         person["name"] = if canonical_name.present?
                            canonical_name
                          else

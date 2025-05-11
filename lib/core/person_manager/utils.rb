@@ -161,7 +161,7 @@ module Core
           }
         end
 
-        sort_map.values.sort_by do |data|
+        sorted_values = sort_map.values.sort_by do |data|
           primary_role = data[:roles].find { |r| role_order.key?(r.downcase) } || "zzz"
           role_index = role_order[primary_role.downcase] || Float::INFINITY
 
@@ -172,7 +172,9 @@ module Core
           name = data[:name] || ""
 
           [role_index, division_combo, name]
-        end.map { |data| data[:person] }
+        end
+
+        sorted_values.map { |data| data[:person] }
       end
 
       private_class_method def self.apply_sort_order(normalized_positions, positions_config)

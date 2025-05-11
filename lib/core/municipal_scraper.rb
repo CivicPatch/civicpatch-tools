@@ -130,7 +130,7 @@ module Core
 
         unless people.blank?
           accumulated_people, people_config = Services::Shared::People.collect_people(people_config,
-                                                                                    accumulated_people, people)
+                                                                                      accumulated_people, people)
           content_dirs << content_dir
           data[:accumulated_people] = accumulated_people
           data[:people_config] = people_config
@@ -176,7 +176,7 @@ module Core
 
           next if people.blank?
 
-          person_with_website_data = Core::PersonResolver.find_by_name(people_config, people, person["name"])
+          person_with_website_data = Resolvers::PersonResolver.find_by_name(people_config, people, person["name"])
 
           next if person_with_website_data.blank?
 

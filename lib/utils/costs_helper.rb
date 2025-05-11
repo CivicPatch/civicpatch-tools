@@ -36,7 +36,7 @@ module Utils
       File.write("cost_search_engine.csv", "#{row}\n", mode: "a")
     end
 
-    def self.log_llm_cost(
+    def self.log_llm_cost( # rubocop:disable Metrics/ParameterLists
       state,
       municipality_name,
       service,

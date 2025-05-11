@@ -218,7 +218,7 @@ module Browser
     tempfile
   end
 
-  private_class_method def self.process_image(browser, image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
+  private_class_method def self.process_image(browser, image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize
     src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
 
@@ -265,7 +265,7 @@ module Browser
     img_element.evaluate("el => el.remove()")
   end
 
-  private_class_method def self.download_image(absolute_src, browser, img_element)
+  private_class_method def self.download_image(absolute_src, _browser, img_element)
     # Try downloading with HTTParty first
     file = download_with_httparty(absolute_src)
     return file if file

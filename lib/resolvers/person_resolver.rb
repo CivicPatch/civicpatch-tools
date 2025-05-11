@@ -2,7 +2,7 @@
 
 require "namae"
 
-module Core
+module Resolvers
   class PersonResolver
     def self.same_email?(person1, person2)
       emails1 = person1["email"].present? ? [person1["email"]] : person1["emails"]&.map { |email| email["data"] } || []

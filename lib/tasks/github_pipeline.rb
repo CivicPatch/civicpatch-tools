@@ -9,7 +9,8 @@
 # Main tasks:
 # - github_pipeline:get_pr_comment[state,gnis,branch_name]# Generate markdown for PR
 
-require "core/people_resolver"
+require "github/municipality_officials"
+require "resolvers/people_resolver"
 require_relative "../core/context_manager"
 
 namespace :github_pipeline do
@@ -49,97 +50,21 @@ namespace :github_pipeline do
     context = Core::ContextManager.get_context(state, gnis)
 
     contested_people, missing_people, merged_people, agreement_score = generate_comparison(context)
-    people_list_comment = generate_people_list_comment(context, merged_people, missing_people, contested_people)
+    people_list_section = GitHub::MunicipalityOfficials.generate_people_list_markdown(context, merged_people,
+                                                                                      missing_people, contested_people)
     disagreements_section = generate_disagreements_section(merged_people, contested_people, agreement_score)
 
     data = {
       "approve" => disagreements_section["approve"],
-      "comment" => [people_list_comment, disagreements_section["comment"]]
+      "comment" => [people_list_section, disagreements_section["comment"]]
            .join("\n\n***\n\n").to_s.gsub(/\n/, '\n')
     }
 
     puts JSON.generate(data)
   end
 
-  def self.generate_people_list_comment(municipality_context, merged_people, missing_people, contested_people)
-    state = municipality_context[:state]
-    city_entry = municipality_context[:municipality_entry]
-    city = city_entry["name"]
-
-    city_directory = Core::PeopleManager.get_people(state, city_entry["gnis"])
-
-    suggest_edit_details = Scrapers::MunicipalityOfficials.get_edit_detail(municipality_context)
-
-    action_items = if suggest_edit_details.present?
-                     GitHub::CityPeople.generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
-                                                                       contested_people)
-                   else
-                     ""
-                   end
-
-    missing_people_comment = GitHub::CityPeople.to_markdown_missing_people_table(missing_people)
-
-    <<~MARKDOWN
-      # #{city.capitalize}, #{state.upcase}
-      ## Action Items
-       - [ ] Review & Merge this PR
-         - [ ] (Optional) Make updates to people.yml if needed
-         - [ ] (Optional) Make updates to config.yml if needed
-         - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
-       #{action_items}
-      ## Missing People
-      #{missing_people_comment.present? ? missing_people_comment : "N/A"}
-      ## Sources
-      #{city_directory.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")}
-      ## People
-      | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Term Dates** | **Image**     |
-      |-----------|-------------------|---------------|---------------|---------------|----------------|---------------|
-      #{city_directory.map do |person|
-        image = person["image"]
-        email = person["email"]
-        phone = person["phone_number"]
-        website = person["website"]
-        start_term_date = person["start_date"].present? ? person["start_date"] : "N/A"
-        end_term_date = person["end_date"].present? ? person["end_date"] : "N/A"
-        term_date_markdown = "#{start_term_date} - #{end_term_date}"
-
-        position_markdown = if person["positions"].present?
-                              person["positions"].join(", ")
-                            else
-                              "N/A"
-                            end
-
-        image_markdown = if image.present?
-                           "![](#{image})"
-                         else
-                           "N/A"
-                         end
-
-        email_markdown = if email.present?
-                           email
-                         else
-                           "N/A"
-                         end
-
-        phone_markdown = if phone.present?
-                           phone
-                         else
-                           "N/A"
-                         end
-
-        website_markdown = if website.present?
-                             "[Link](#{website})"
-                           else
-                             "N/A"
-                           end
-
-        "**#{person["name"]}**| #{position_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{term_date_markdown} | #{image_markdown}"
-      end.join("\n")}
-    MARKDOWN
-  end
-
   def self.generate_comparison(municipality_context)
-    validation_results = Core::PeopleResolver.resolve(municipality_context)
+    validation_results = Resolvers::PeopleResolver.resolve(municipality_context)
 
     compare_results = validation_results[:compare_results]
     contested_people = compare_results[:contested_people]
@@ -159,7 +84,7 @@ namespace :github_pipeline do
     contested_people.each do |name, fields|
       # Generate the markdown table for the contested person
       merged_person = merged_people.find { |person| person["name"] == name }
-      contested_people_markdown = GitHub::CityPeople.to_markdown_disagreement_table(fields, merged_person)
+      contested_people_markdown = GitHub::MunicipalityOfficials.to_markdown_disagreement_table(fields, merged_person)
 
       # Add a header for each contested person and append the table
       comment += "### #{name}\n\n"
