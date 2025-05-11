@@ -8,6 +8,110 @@
     "updated_at": "2025-05-11"
   },
   {
+    "name": "Joy Hollingsworth",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Joy.Hollingsworth@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Robert Kettle",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Robert.Kettle@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "AlexisMercedes.Rinck@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Cathy Moore",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Cathy.Moore@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Maritza Rivera",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Maritza.Rivera@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Rob Saka",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Rob.Saka@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Mark Solomon",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "mark.solomon@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Dan Strauss",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "Dan.Strauss@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Saad Bashir",
+    "positions": [
+      "Chief Technology Officer"
+    ],
+    "email": "saad.bashir@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Ann Davison",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "Ann.Davison@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "David Jones",
+    "positions": [
+      "City Auditor"
+    ],
+    "email": "david.jones@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Scheereen Dedman",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "scheereen.dedman@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Nathan Torgelson",
+    "positions": [
+      "Construction/Inspections Director"
+    ],
+    "email": "nathan.torgelson@seattle.gov",
+    "updated_at": "2025-05-11"
+  },
+  {
     "name": "Sara Nelson",
     "positions": [
       "Council President"
@@ -16,67 +120,75 @@
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Alexis Mercedes Rinck",
+    "name": "Elizabeth Baldwin",
     "positions": [
-      "Council Member"
+      "Court Administrator"
     ],
-    "email": "AlexisMercedes.Rinck@seattle.gov",
+    "email": "elizabeth.baldwin@seattle.gov",
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Cathy Moore",
+    "name": "Harold Scoggins",
     "positions": [
-      "Council Member"
+      "Fire Chief"
     ],
-    "email": "Cathy.Moore@seattle.gov",
+    "email": null,
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Dan Strauss",
+    "name": "Ryan Vancil",
     "positions": [
-      "Council Member"
+      "Hearing Examiner"
     ],
-    "email": "Dan.Strauss@seattle.gov",
+    "email": "ryan.vancil@seattle.gov",
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Joy Hollingsworth",
+    "name": "Kimberly Loving",
     "positions": [
-      "Council Member"
+      "Human Resources Director"
     ],
-    "email": "Joy.Hollingsworth@seattle.gov",
+    "email": "kimberly.loving@seattle.gov",
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Maritza Rivera",
+    "name": "Gael D. Tarleton",
     "positions": [
-      "Council Member"
+      "Intergovernmental Relations Director"
     ],
-    "email": "Maritza.Rivera@seattle.gov",
+    "email": "Gael.Tarleton@seattle.gov",
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Mark Solomon",
+    "name": "Jamie Carnell",
     "positions": [
-      "Council Member"
+      "Interim Finance Director"
     ],
-    "email": "mark.solomon@seattle.gov",
+    "email": "jamie.carnell@seattle.gov",
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Rob Saka",
+    "name": "Rico Quirindongo",
     "positions": [
-      "Council Member"
+      "Planning/Community Development Director"
     ],
-    "email": "Rob.Saka@seattle.gov",
+    "email": "Rico.Quirindongo@seattle.gov",
     "updated_at": "2025-05-11"
   },
   {
-    "name": "Robert Kettle",
+    "name": "Adrian Diaz",
     "positions": [
-      "Council Member"
+      "Police Chief"
     ],
-    "email": "Robert.Kettle@seattle.gov",
+    "email": null,
+    "updated_at": "2025-05-11"
+  },
+  {
+    "name": "Jesús Aguirre",
+    "positions": [
+      "Superintendent"
+    ],
+    "email": null,
     "updated_at": "2025-05-11"
   }
 ]

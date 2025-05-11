@@ -48,7 +48,7 @@ module Services
       end
     end
 
-    def generate_city_info_prompt(municipality_context, content, page_url, person_name = "") # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    def generate_city_info_prompt(municipality_context, content, page_url, maybe_target_names) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       state = municipality_context[:state]
       government_type = municipality_context[:government_type]
       government_types_config = Core::CityManager.get_config(government_type)
@@ -58,11 +58,13 @@ module Services
       municipality_entry = municipality_context[:municipality_entry]
       current_date = Date.today.strftime("%Y-%m-%d")
 
-      maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
-        person&.dig("name")
-      end
+      target_person = if maybe_target_names.present? && maybe_target_names.count == 1
+                        maybe_target_names.first
+                      else
+                        ""
+                      end
 
-      content_type = if person_name.present?
+      content_type = if target_person.present?
                        "First, determine if the content contains information about the target person."
                      else
                        %(Your primary task is to identify and extract information for ALL members of
@@ -80,21 +82,18 @@ module Services
 
                          As a helpful guide, the following people might be members of the primary governing body
                          based on previous data:
-                         [#{maybe_target_people.join(", ")}].
+                         [#{maybe_target_names.join(", ")}].
                          Use this list to aid identification, but DO NOT limit your search to only these names.
                          Extract information for EVERY relevant person you find in the content who is part of
                          the primary governing body, regardless of whether they were on the provided list.
-                         If the content does not appear to contain members of the primary governing body,
-                         return an empty JSON array `[]`.
-                         )
+                          )
                      end
 
       system_instructions = <<~INSTRUCTIONS
-        You are an expert data extractor focused on accuracy.
+        #{system_instructions}
 
-        #{content_type} If not, return an empty JSON array `[]`.
+        #{content_type}
 
-        Target Person (if applicable): #{person_name}
         Target Municipality: #{municipality_entry["name"]}, #{state}
         Key roles: #{positions.join(", ")}
         Associated divisions: #{divisions.join(",")}

@@ -1,6 +1,6 @@
  
 
- *  [City Of Manchester](https://www.manchesternh.gov/) 
+ *  [City Of Manchester](https://www.manchesternh.gov) 
  *   [Business Center](https://www.manchesternh.gov/Business-Center) 
    *  [Area Profile](https://www.manchesternh.gov/Business-Center/Area-Profile) 
    *  [Inspections, Permits and Apps](https://www.manchesternh.gov/Business-Center/Inspections-Permits-and-Apps) 
@@ -157,15 +157,15 @@
      *   [Central Business Service District](https://www.manchesternh.gov/Departments/Economic-Development/Central-Business-Service-District) 
        *  [CBSD Calendar](https://www.manchesternh.gov/Departments/Economic-Development/Central-Business-Service-District/CBSD-Calendar) 
        *  [CBSD Minutes and Agendas](https://www.manchesternh.gov/Departments/Economic-Development/Central-Business-Service-District/CBSD-Minutes-and-Agendas) 
-     *  [Greater Manchester Profile](http://www.yourmanchesternh.com/greater-manchester-profile/) 
-     *  [Grow Your Business](http://www.yourmanchesternh.com/grow-your-business/) 
-     *  [Live Here](http://www.yourmanchesternh.com/live-here/) 
+     *  [Greater Manchester Profile](https://www.yourmanchesternh.com/greater-manchester-profile) 
+     *  [Grow Your Business](https://www.yourmanchesternh.com/grow-your-business) 
+     *  [Live Here](https://www.yourmanchesternh.com/live-here) 
      *  [Manchester Job Board](https://www.manchesternh.gov/Departments/Economic-Development/Manchester-Job-Board) 
      *  [Manchester Master Plan](https://www.manchesternh.gov/Departments/Planning-and-Comm-Dev/Long-Range-Planning/Master-Plan) 
      *  [MEDO Minute Newsletter](https://www.manchesternh.gov/Departments/Economic-Development/MEDO-Minute-Newsletter) 
      *  [Newsroom](https://www.manchesternh.gov/Departments/Economic-Development/Newsroom) 
-     *  [Our Team](http://www.yourmanchesternh.com/our-team/) 
-     *  [Why Manchester](http://www.yourmanchesternh.com/why-manchester/) 
+     *  [Our Team](https://www.yourmanchesternh.com/our-team) 
+     *  [Why Manchester](https://www.yourmanchesternh.com/why-manchester) 
    *   [Finance](https://www.manchesternh.gov/Departments/Finance) 
      *  [Annual Financial Report](https://www.manchesternh.gov/Departments/Finance/Annual-Financial-Report) 
      *  [Budget Info](https://www.manchesternh.gov/Departments/Finance/Budget-Info) 
@@ -379,12 +379,12 @@
      *  [Departmental Expenditures](https://www.manchesternh.gov/Departments/Information-Systems/Departmental-Expenditures) 
      *  [Vendor Notification](https://www.manchesternh.gov/Departments/Information-Systems/Vendor-Notification) 
    *   [Library](https://www.manchesternh.gov/Departments/Library) 
-     *  [About Us](http://www.manchester.lib.nh.us/About-Us) 
-     *  [Departmental Expenditures](http://www.manchester.lib.nh.us/AboutUs/DepartmentalExpenditures.aspx) 
-     *  [Find](http://www.manchester.lib.nh.us/Find) 
+     *  [About Us](https://www.manchester.lib.nh.us/About-Us) 
+     *  [Departmental Expenditures](https://www.manchester.lib.nh.us/AboutUs/DepartmentalExpenditures.aspx) 
+     *  [Find](https://www.manchester.lib.nh.us/Find) 
      *  [Library Newsletter](https://www.manchesternh.gov/Departments/Library/Library-Newsletter) 
-     *  [Research](http://www.manchester.lib.nh.us/Research) 
-     *  [Visit Us](http://www.manchester.lib.nh.us/Visit-Us) 
+     *  [Research](https://www.manchester.lib.nh.us/Research) 
+     *  [Visit Us](https://www.manchester.lib.nh.us/Visit-Us) 
    *   [Municipal Buildings](https://www.manchesternh.gov/Departments/Municipal-Buildings) 
      *  [Buildings](https://www.manchesternh.gov/Departments/Municipal-Buildings/Buildings) 
      *  [Contact Facilities](https://www.manchesternh.gov/Departments/Municipal-Buildings/Contact-Facilities) 
@@ -401,7 +401,7 @@
      *  [Departmental Expenditures](https://www.manchesternh.gov/Departments/Parking/Departmental-Expenditures) 
      *  [On Street and Off Street Parking](https://www.manchesternh.gov/Departments/Parking/On-Street-and-Off-Street-Parking) 
      *  [Overnight Winter Notice](https://www.manchesternh.gov/Departments/Parking/Overnight-Winter-Notice) 
-     *   [Parking Ticket Payment System](http://parkingticketpayments.manchesternh.gov/) 
+     *   [Parking Ticket Payment System](https://parkingticketpayments.manchesternh.gov) 
        *  [Parking Ticket FAQ](https://www.manchesternh.gov/Departments/Parking/Parking-Ticket-Payment-System/Parking-Ticket-FAQ) 
      *  [Pay and Display Permit](https://www.manchesternh.gov/Departments/Parking/Pay-and-Display-Permit) 
      *  [What's New](https://www.manchesternh.gov/Departments/Parking/Whats-New) 
@@ -578,7 +578,7 @@
        *  [Zoning Ordinance Community Survey](https://www.manchesternh.gov/Departments/Planning-and-Comm-Dev/Land-Use-Code/Zoning-Ordinance-Community-Survey) 
        *  [Zoning Ordinance FAQ](https://www.manchesternh.gov/Departments/Planning-and-Comm-Dev/Land-Use-Code/Zoning-Ordinance-FAQ) 
        *  [Zoning Ordinance Meeting Schedule](https://www.manchesternh.gov/Departments/Planning-and-Comm-Dev/Land-Use-Code/Zoning-Ordinance-Meeting-Schedule) 
-     *  [Lead Paint](http://www.leadsafemanchester.com/) 
+     *  [Lead Paint](https://www.leadsafemanchester.com) 
      *   [Long-Range Planning](https://www.manchesternh.gov/Departments/Planning-and-Comm-Dev/Long-Range-Planning) 
        *  [Master Plan](https://www.manchesternh.gov/Departments/Planning-and-Comm-Dev/Long-Range-Planning/Master-Plan) 
        *  [Strategic Development Plan](https://www.manchesternh.gov/Departments/Planning-and-Comm-Dev/Long-Range-Planning/Strategic-Development-Plan) 
@@ -774,7 +774,7 @@
        *  [Inspections](https://www.manchesternh.gov/Departments/Tax-Collector/Motor-Vehicle-Registration/Inspections) 
        *  [New Residents](https://www.manchesternh.gov/Departments/Tax-Collector/Motor-Vehicle-Registration/New-Residents) 
        *  [Requesting Duplicates](https://www.manchesternh.gov/Departments/Tax-Collector/Motor-Vehicle-Registration/Requesting-Duplicates) 
-       *  [Estimate Vehicle Registration Costs](http://www.nhmvkiosk.com/estimate.aspx?ID=6) 
+       *  [Estimate Vehicle Registration Costs](https://www.nhmvkiosk.com/estimate.aspx?ID=6) 
        *  [Types Of Registrations](https://www.manchesternh.gov/Departments/Tax-Collector/Motor-Vehicle-Registration/Types-Of-Registrations) 
        *  [Vehicle Registration Online Renewal](https://www.manchesternh.gov/Departments/Tax-Collector/Motor-Vehicle-Registration/Vehicle-Registration-Online-Renewal) 
        *  [Vehicle FAQ](https://www.manchesternh.gov/Departments/Tax-Collector/Motor-Vehicle-Registration/Vehicle-FAQ) 
@@ -910,28 +910,28 @@
    *  [Reference](https://www.manchesternh.gov/Residents/Reference) 
    *  [Safety](https://www.manchesternh.gov/Residents/Safety) 
    *   [School District](https://www.manchesternh.gov/Residents/School-District) 
-     *  [Bakersville School](http://bakersville.mansd.org/) 
-     *  [Beech St. School](http://beech.mansd.org/) 
-     *  [Central School](http://central.mansd.org/) 
-     *  [Gossler Park School](http://gossler.mansd.org/) 
-     *  [Green Acres School](http://greenacres.mansd.org/) 
-     *  [Highland Goffe's Falls School](http://highland.mansd.org/) 
-     *  [Hillside School](http://hillside.mansd.org/) 
-     *  [Jewett School](http://jewett.mansd.org/) 
-     *  [Manchester School of Technology](http://mst.mansd.org/) 
-     *  [McDonough School](http://mcdonough.mansd.org/) 
-     *  [McLaughlin School](http://mclaughlin.mansd.org/) 
-     *  [Memorial School](http://memorial.mansd.org/) 
-     *  [Northwest School](http://northwest.mansd.org/) 
-     *  [Parker-Varney School](http://parkervarney.mansd.org/) 
-     *  [Parkside School](http://parkside.mansd.org/) 
-     *  [School Meeting Calendar](http://mansd.org/calendar) 
-     *  [Smyth Rd. School](http://smyth.mansd.org/) 
-     *  [Southside School](http://southside.mansd.org/) 
-     *  [Webster School](http://webster.mansd.org/) 
-     *  [Weston School](http://weston.mansd.org/) 
-     *  [West School](http://west.mansd.org/) 
-     *  [Wilson School](http://wilson.mansd.org/) 
+     *  [Bakersville School](https://bakersville.mansd.org) 
+     *  [Beech St. School](https://beech.mansd.org) 
+     *  [Central School](https://central.mansd.org) 
+     *  [Gossler Park School](https://gossler.mansd.org) 
+     *  [Green Acres School](https://greenacres.mansd.org) 
+     *  [Highland Goffe's Falls School](https://highland.mansd.org) 
+     *  [Hillside School](https://hillside.mansd.org) 
+     *  [Jewett School](https://jewett.mansd.org) 
+     *  [Manchester School of Technology](https://mst.mansd.org) 
+     *  [McDonough School](https://mcdonough.mansd.org) 
+     *  [McLaughlin School](https://mclaughlin.mansd.org) 
+     *  [Memorial School](https://memorial.mansd.org) 
+     *  [Northwest School](https://northwest.mansd.org) 
+     *  [Parker-Varney School](https://parkervarney.mansd.org) 
+     *  [Parkside School](https://parkside.mansd.org) 
+     *  [School Meeting Calendar](https://mansd.org/calendar) 
+     *  [Smyth Rd. School](https://smyth.mansd.org) 
+     *  [Southside School](https://southside.mansd.org) 
+     *  [Webster School](https://webster.mansd.org) 
+     *  [Weston School](https://weston.mansd.org) 
+     *  [West School](https://west.mansd.org) 
+     *  [Wilson School](https://wilson.mansd.org) 
    *   [Transportation](https://www.manchesternh.gov/Residents/Transportation) 
      *  [Air Terminal](https://www.manchesternh.gov/Departments/Airport) 
      *  [Boston Bus Service](https://www.manchesternh.gov/Residents/Transportation/Boston-Bus-Service) 
@@ -944,21 +944,21 @@
    *  [History](https://www.manchesternh.gov/Departments/City-Clerk/Municipal-Archives-and-Records) 
    *  [Leisure and Entertainment](https://www.manchesternh.gov/Visitors/Leisure-and-Entertainment) 
    *  [Points of Interest](https://www.manchesternh.gov/Residents/Maps) 
-  ![City of Manchester NH Official Web Site](images/ed360ce828acab43712a3b214c388e88e5afecdf52391c8b0e1929b06cb50245.png)   [Pay Online](https://www.manchesternh.gov/Residents/e-Services/Pay-Online)  [Employment](https://www.manchesternh.gov/Departments/Human-Resources/Employment)  Use the up and down arrows to select a result. Press enter to go to the selected search result. Touch device users can use touch and swipe gestures.     
+  ![City of Manchester NH Official Web Site](images/6772e88fa02e829f062828b46c9532080d1f2d02cc900fd132cdd4710e33d723.png)   [Pay Online](https://www.manchesternh.gov/Residents/e-Services/Pay-Online)  [Employment](https://www.manchesternh.gov/Departments/Human-Resources/Employment)  Use the up and down arrows to select a result. Press enter to go to the selected search result. Touch device users can use touch and swipe gestures.     
 
- *   ![Hamburger Menu](images/7e97529319749f7a1fb5e45efd2c87e1a5c5e5c3a4bec70c19c223d4e598e017.png)  
- *  [Home](https://www.manchesternh.gov/) 
+ *   ![Hamburger Menu](images/0b06d3d453bea740e35eef014e59e63e9aaed2b88d9cc2a6c19582dd1bd10a7e.png)  
+ *  [Home](https://www.manchesternh.gov) 
  *  [Government](https://www.manchesternh.gov/Government) 
  *  [Departments](https://www.manchesternh.gov/Departments) 
  *  [Business](https://www.manchesternh.gov/Business-Center) 
  *  [Residents](https://www.manchesternh.gov/Residents) 
  *  [Visitors](https://www.manchesternh.gov/Visitors) 
  *  [Contact Us](https://www.manchesternh.gov/Contact-Us) 
-  [Home](https://www.manchesternh.gov/)  »   [Government](https://www.manchesternh.gov/Government)   »   [Mayor and Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen)   »   [Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen)   »   [Ward 3 Alderman](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman)  
+  [Home](https://www.manchesternh.gov)  »   [Government](https://www.manchesternh.gov/Government)   »   [Mayor and Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen)   »   [Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen)   »   [Ward 3 Alderman](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman)  
 
 #  Ward 3 Alderman 
 
- ![Alderman Tim Banes](images/15ad4ba30fba057d484ad8f1951d9ab6a347892f663fa583b795eeaa9cf26013.jpg) 
+ ![Alderman Tim Banes](images/a0b0f06fd1d546e582774ea494ae7c5c62a5f6ed7940913d0591a57e260dcfe5.jpg) 
 
 Pat Long
 
@@ -990,7 +990,7 @@ Phone: (603) 668-1037
 
 #  Email Ward 3 Alderman 
 
- Email Your Name Subject Message CAPTCHA  ![](images/5ba763ed605bd26a86e5465627c82a1d237dc4997302db97164d82c406031e89.jpg)  Submit 
+ Email Your Name Subject Message CAPTCHA  ![](images/0b7e95551a89cdf2cc197a9c30183a3f7fd9a2a2d4988fe2c63916c555a09653.jpg)  Submit 
 
 ###  Aldermen 
 
@@ -1051,7 +1051,7 @@ Manchester
 
  *  [Alert Notifications](https://www.manchesternh.gov/Residents/e-Services/Alert-Notifications) 
  *  [City Announcements](https://www.manchesternh.gov/Government/General-Announcements) 
- *  [Manchester Public TV](https://www.manchestertv.org/) 
+ *  [Manchester Public TV](https://www.manchestertv.org) 
  *  [Sustainability](https://www.manchesternh.gov/Business-Center/Sustainability-Manchester) 
 
 #### City
@@ -1068,19 +1068,19 @@ Services
 
 App
 
- ![City Hall Icon](images/11b1bd597c1d2480a490dcfe2db89a1d698492eeabd71068b4c3406e122f37f7.png) 
+ ![City Hall Icon](images/b3da97fba7b30c762a28e791b4f4bf61d45ad0ab8fc1e57d43bb7467081b2181.png) 
 
- ![iPhone App Store](images/a6e099dbc1160052c199e7f311147e236ea1c6f052941a5f7308d19ec51b0845.png) 
+ ![iPhone App Store](images/663d2553a5ce0d0532aa92a6939c27712d568826f517e17ad2c9432e3f3d26c0.png) 
 
- ![Android Market](images/c2a02ebfa804c7275d8faaf8e2c35ac3126974c36b099d6111132699f7850f9f.png) 
+ ![Android Market](images/a1332a5ac1c173173784b2f3dc443ba726912649e4a92a2ecc8d390e79560213.png) 
 
-  ![Manchester City Seal](images/774290a327e252cb30223e920aaebfd61f96f254221cb697343b40c6706e28d3.png)  
+  ![Manchester City Seal](images/eddd767f798e1f26ab5f34fba6c7461533d8d8d693294bf27a7b152843383fb4.png)  
 
- *  ![Facebook](images/745b330c8afe5e086bcb77e90d1ac78678a5e9dcdc83d956da2dc48c0f4895ab.png) 
- *  ![Twitter](images/ff699f75feddcfb8da75e067217ec775596d202abd422ec95498cb290c1e1a79.png) 
- *  ![Newsletter](images/d035866ca4cf29564df2246b00ac902654befe4e4bc857b89706056fc2f229d2.png) 
- *  ![YouTube](images/d4a49c35348d3f119b52bb3354c25f1510f497f3b23f81a9c60daf10f14bb3f6.png) 
- *  ![Nixle](images/63872c0f2eff199784cf4dc576f3891f0e9ff67a55dbdec8221e03eda2384c24.png) 
+ *  ![Facebook](images/f9285dd8cc7f8904fba0b0ba3603e4cae197170a42b23a464e10bed77a0ffad4.png) 
+ *  ![Twitter](images/a98eb138789bbe20bf78fd14db7633c622707f50a54f8db3d98d979574ff1cad.png) 
+ *  ![Newsletter](images/3803ec5a10257a72a6e7f241c63ec94bb3343d384bf9e1617a89a0db28840178.png) 
+ *  ![YouTube](images/32f981c3f4341de479d7efea9d36d922b72ab3f76dcc1f980ec43f5dec958d1a.png) 
+ *  ![Nixle](images/c717314ef410f6fd4d3de729975c7b3e1f9180b68a81895eeba8d5d5ad8bfd6c.png) 
  Copyright 2025 City of Manchester 
 
   [Terms of Use](https://www.manchesternh.gov/Terms-of-use) | [Privacy Statement](https://www.manchesternh.gov/Privacy-Statement) | [Site Map](https://www.manchesternh.gov/Site-Map) | [Login](https://www.manchesternh.gov/Employee-Login?returnurl=/Government/Mayor-and-Aldermen/Aldermen/Ward-3-Alderman)  

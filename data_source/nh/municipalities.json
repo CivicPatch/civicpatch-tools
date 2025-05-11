@@ -14,8 +14,8 @@
       "government_type": "aldermen",
       "email": "econdev@manchesternh.gov",
       "website": "http://www.ManchesterNH.gov",
-      "meta_updated_at": "2025-05-07",
-      "meta_hash": "a8de4d379e8d65154a44b2cd0cfc0398",
+      "meta_updated_at": "2025-05-11",
+      "meta_hash": "b60bc0121469d8d0fce22737d6e5731d",
       "meta_sources": [
         "state_source",
         "gemini",
@@ -366,8 +366,8 @@
       "government_type": "select_board",
       "email": "administration@milford.nh.gov",
       "website": "http://www.milford.nh.gov/",
-      "meta_updated_at": "2025-05-09",
-      "meta_hash": "2bd2707e6b883783a732973f1b87fae1",
+      "meta_updated_at": "2025-05-11",
+      "meta_hash": "9bc7e085153c74eec68b3758a4f57dce",
       "meta_sources": [
         "state_source",
         "gemini",

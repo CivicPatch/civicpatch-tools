@@ -38,13 +38,12 @@ namespace :pipeline do
 
     prepare_directories(state, context[:municipality_entry])
 
-    source_directory_list_config, people_config = fetch_with_state_source(context)
+    potential_people_list, people_config = fetch_with_state_source(context)
     context = Core::ContextManager
               .update_context_config(context,
-                                     source_directory_list: source_directory_list_config,
                                      people: people_config)
 
-    people_config = fetch_with_scrape(context)
+    people_config = fetch_with_scrape(context, potential_people_list)
     context = Core::ContextManager
               .update_context_config(context,
                                      people: people_config)
@@ -65,14 +64,12 @@ namespace :pipeline do
     municipalities.each do |municipality_entry|
       context = Core::ContextManager.get_context(state, municipality_entry["gnis"])
       next unless municipality_entry["website"].present?
-      next unless context[:config]["source_directory_list"]["type"] == "directory_list_default"
 
-      source_directory_list, people_config = fetch_with_state_source(context)
+      _, people_config = fetch_with_state_source(context)
       aggregate_sources(context, sources: %w[state_source])
       context = Core::ContextManager.update_context_config(context,
-                                                           source_directory_list: source_directory_list,
                                                            people: people_config)
-      finalize(context)
+      on_complete(context)
     end
   end
 
@@ -94,17 +91,14 @@ namespace :pipeline do
 
     directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
-    people = state_level_directory_list["people"]
+    people = directory_list["people"]
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
-    formatted_people = Resolvers::PeopleResolver.save_people(municipality_context, people_config,
-                                                             people_with_canoncial_names,
+    formatted_people = Resolvers::PeopleResolver.save_people(municipality_context, people_with_canoncial_names,
                                                              "state_source")
-    directory_list["people"] = formatted_people
-
-    [directory_list, people_config]
+    [formatted_people, people_config]
   end
 
-  def fetch_with_scrape(municipality_context)
+  def fetch_with_scrape(municipality_context, potential_people_list)
     request_cache = {}
 
     # OpenAI - LLM call
@@ -123,6 +117,7 @@ namespace :pipeline do
 
     # Gemini - LLM call
     _, _, _, _, people_config = process_with_llm(municipality_context, "gemini",
+                                                 potential_people_list: potential_people_list,
                                                  page_fetcher: page_fetcher,
                                                  seeded_urls: source_urls,
                                                  request_cache: request_cache)
@@ -131,16 +126,17 @@ namespace :pipeline do
   end
 
   def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil,
-                       seeded_urls: [], request_cache: {})
+                       potential_people_list: [], seeded_urls: [], request_cache: {})
     page_fetcher, source_dirs, accumulated_people, people_config = Core::MunicipalScraper.fetch(
       llm_service_string,
       municipality_context,
+      potential_people_list: potential_people_list || [],
       page_fetcher: page_fetcher,
       seeded_urls: seeded_urls,
       request_cache: request_cache
     )
 
-    people = Resolvers::PeopleResolver.save_people(municipality_context, accumulated_people, "#{llm_service_string}")
+    people = Resolvers::PeopleResolver.save_people(municipality_context, accumulated_people, llm_service_string)
     source_urls = people.map { |person| person["sources"] }.flatten.uniq
 
     [page_fetcher, source_urls, source_dirs, people, people_config]
