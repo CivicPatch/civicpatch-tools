@@ -11,7 +11,11 @@ require_relative "../core/browser"
 
 module Core
   class PageFetcher
-    @image_map ||= {}
+    WAIT_TIME = 2
+
+    def initialize
+      @image_map = {}
+    end
 
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
@@ -24,10 +28,13 @@ module Core
 
       image_dir = PathHelper.project_path(File.join(destination_dir, "images"))
       response = Browser.fetch_page_content(url, { image_dir: image_dir,
-                                                   wait_for: 2,
+                                                   wait_for: WAIT_TIME,
                                                    include_api_content: true })
       html = response[:page_html]
-      @image_map = response[:image_map]
+
+      if response && response[:image_map].present?
+        @image_map = @image_map.merge(response[:image_map])
+      end
 
       return [nil, nil] if html.blank?
 

@@ -4,6 +4,7 @@ require "securerandom"
 require "utils/url_helper"
 require_relative "../utils/image_helper"
 require "playwright"
+require "nokolexbor"
 
 module Browser
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
@@ -77,28 +78,31 @@ module Browser
 
   private_class_method def self.process_page(browser, url, options, api_data)
     page_source = browser.content
-    formatted_html = format_page_html(browser, page_source, api_data, url)
+    page_source, image_map = maybe_download_images(browser, page_source, options, url)
+    formatted_html = format_page_html(page_source, api_data, url)
 
     {
       page_html: formatted_html,
-      image_map: download_images_if_needed(browser, options, url)
+      image_map: image_map
     }.compact
   end
 
-  private_class_method def self.format_page_html(browser, page_source, api_content, url)
-    return Utils::UrlHelper.format_links_to_absolute(page_source, url) if api_content.empty?
+  private_class_method def self.format_page_html(page_source, api_content, url)
+    formatted_html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
+    return formatted_html if api_content.empty?
 
-    browser.evaluate("document.body.innerHTML += '#{api_content.join}'")
-    Utils::UrlHelper.format_links_to_absolute(browser.content, url)
+    browser.evaluate("document.body.innerHTML += '#{api_content.join("\n")}'")
+    browser.content
   end
 
-  private_class_method def self.download_images_if_needed(browser, options, url)
-    return unless options[:image_dir]
+  private_class_method def self.maybe_download_images(browser, page_source, options, url)
+    return [page_source, nil] unless options[:image_dir]
 
     image_dir = options[:image_dir]
     FileUtils.mkdir_p(image_dir)
-    base_url = Utils::UrlHelper.extract_page_base_url(browser.content, url)
-    download_images(browser, image_dir, base_url)
+    base_url = Utils::UrlHelper.extract_page_base_url(page_source, url)
+    page_source, image_map = download_images(browser, page_source, image_dir, base_url)
+    [page_source, image_map]
   end
 
   private_class_method def self.log_error(url, error)
@@ -147,17 +151,32 @@ module Browser
     nil
   end
 
-  private_class_method def self.download_images(browser, image_dir, base_url)
-    image_elements = browser.query_selector_all("img")
+  private_class_method def self.download_images(browser, page_source, image_dir, base_url)
+    image_elements = browser.locator("img").all
 
     image_map = {}
 
     image_elements.each do |image_element|
+      image_excluded = maybe_exclude_image(image_element)
+      next if image_excluded
+
       key, source_image = process_image(browser, image_dir, base_url, image_element)
       image_map[key] = source_image if key.present? && source_image.present?
     end
 
-    image_map
+    html = Nokolexbor::HTML(page_source)
+    html.css("img").each do |img|
+      image_map_key = image_map.keys.find { |key| image_map[key].include?(img["src"]) }
+      if image_map_key.present?
+        img["src"] = "images/#{image_map_key}"
+      else
+        img.remove
+      end
+    end
+
+    page_source = html.to_html
+
+    [page_source, image_map]
   end
 
   private_class_method def self.generate_filename(src, file_type)
@@ -165,6 +184,7 @@ module Browser
     "#{hash}.#{file_type}"
   end
 
+  # TODO: broken until playwright is figured out
   private_class_method def self.capture_image_as_data_url(_page, img_element)
     img_element.evaluate("
       async (img) => {
@@ -198,26 +218,9 @@ module Browser
     tempfile
   end
 
-  private_class_method def self.save_image_from_data_url(data_url)
-    # Strip data URL prefix to get base64 data
-    return nil unless data_url.start_with?("data:image/")
-
-    base64_data = data_url.split(",")[1]
-
-    # Save image file
-    downloaded_file = Tempfile.new(binmode: true)
-    downloaded_file.write(Base64.decode64(base64_data))
-    downloaded_file.close
-
-    downloaded_file
-  end
-
   private_class_method def self.process_image(browser, image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
     src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
-
-    image_excluded = maybe_exclude_image(img_element)
-    return if image_excluded
 
     absolute_src = Utils::UrlHelper.format_url(Addressable::URI.join(base_url, src).to_s)
 
@@ -234,13 +237,10 @@ module Browser
 
     FileUtils.mv(file.path, image_path)
 
-    img_element.evaluate("(el, src) => el.setAttribute('src', 'images/#{filename}')")
-
     [filename, absolute_src]
   rescue StandardError => e
     puts "\t\t\t\t❌: Error processing image (#{src}): #{e.message}, removing image element"
     file&.unlink
-    remove_image_element(img_element)
     nil
   end
 
@@ -249,14 +249,11 @@ module Browser
     return false if src.nil? || src.empty?
 
     if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
-      remove_image_element(img_element)
       puts "Removed spinner image element with src: #{src}" # Optional logging
       return true # Don't process this element further
     end
 
     if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
-      # Remove the element from the DOM
-      remove_image_element(img_element)
       puts "Removed excluded image element with src: #{src}" # Optional logging
       return true # Don't process this element further
     end
@@ -273,26 +270,17 @@ module Browser
     file = download_with_httparty(absolute_src)
     return file if file
 
-    # If HTTParty failed, try canvas data URL approach
-    response = capture_image_as_data_url(browser, img_element)
-    if response["status"] == "success"
-      data_url = response["data"]
-      file = save_image_from_data_url(data_url)
-
-      puts "\t\t\t✅: Canvas data URL captured for #{absolute_src}"
-      return file
-    end
-
-    puts "\t\t\t->Canvas error for #{absolute_src}, re-trying with browser screenshot"
-
+    # If HTTParty failed, try browser screenshot
     file = capture_image_as_browser_screenshot(img_element)
-    if file
-      puts "\t\t\t\t✅: Browser screenshot captured for #{absolute_src}"
-      return file
+
+    if file.present?
+      puts "\t\t\t✅: Browser screenshot captured for #{absolute_src}"
+    else
+      puts "\t\t\t❌: Screenshot capture failed for #{absolute_src}, giving up"
+      return nil
     end
 
-    puts "\t\t\t\t❌: Screenshot capture failed for #{absolute_src}, giving up"
-    nil
+    file
   end
 
   private_class_method def self.download_with_httparty(absolute_src)

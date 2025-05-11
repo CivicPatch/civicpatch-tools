@@ -2,56 +2,22 @@
   {
     "name": "Joe Friedman",
     "positions": [
-      "Chair"
+      "Chair",
+      "Council Member"
     ],
-    "image": "https://cdn.civicpatch.org/open-data/nh/durham/images/b6c59932870ab27db346b2078d7724774e60aa3c8f6863d07076cd5a84692a7f.jpg",
+    "image": "https://cdn.civicpatch.org/open-data/nh/durham/images/8b08e8d00ac773a1ffabcd0ad69459bb2e1cfee2c67d77eecfa14fb61b9263a9.jpg",
     "source_image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_primary/public/imageattachments/administration/page/73350/joe_friedman_cropped.jpg?itok=TIpv6_g3",
     "phone_number": null,
     "email": null,
-    "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
+    "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
-      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
     ],
-    "updated_at": "2025-05-09"
-  },
-  {
-    "name": "Paul Rasmussen",
-    "positions": [
-      "Chair"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": "2026-04-30",
-    "sources": [
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
-    ],
-    "updated_at": "2025-05-09"
-  },
-  {
-    "name": "Sally Tobias",
-    "positions": [
-      "Vice Chair"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": "2026-04-30",
-    "sources": [
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
-    ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
   },
   {
     "name": "Curtis Register",
@@ -66,10 +32,9 @@
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
   },
   {
     "name": "Darrell Ford",
@@ -84,10 +49,9 @@
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
   },
   {
     "name": "Emily Friedrichs",
@@ -102,10 +66,27 @@
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
+  },
+  {
+    "name": "Eric Lund",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "https://cdn.civicpatch.org/open-data/nh/durham/images/c1dde9958eb69f39c52cb36cad1febce582a3a8897bb51ef88887b8fc1d5e95a.jpg",
+    "source_image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/lund_eric_-_town_council.jpg?itok=3IrQ2KYD",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2025-03",
+    "end_date": "2028-03",
+    "sources": [
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+      "https://www.ci.durham.nh.us/boc_planning/board-members"
+    ],
+    "updated_at": "2025-05-10"
   },
   {
     "name": "Heather Grant",
@@ -121,10 +102,9 @@
     "end_date": "2027-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/boc_planning/board-members",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/boc_planning/board-members"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
   },
   {
     "name": "Robin Vogt",
@@ -139,10 +119,9 @@
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
   },
   {
     "name": "Sally Needell",
@@ -157,10 +136,9 @@
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
   },
   {
     "name": "Wayne Burton",
@@ -175,9 +153,8 @@
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "http://www.ci.durham.nh.us/towncouncil/current-council-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-05-10"
   }
 ]

@@ -16,11 +16,13 @@ module Utils
 
       begin
         uri = Addressable::URI.parse(url)
+        # Always use https
+        uri.scheme = "https"
 
         normalized_uri = uri.normalize
         normalized_string = normalized_uri.to_s
         # Remove any trailing slashes for consistency
-        normalized_string.gsub(%r{/$}, "")
+        normalized_string = normalized_string.gsub(%r{/$}, "")
         # Remove fragments
         normalized_string.gsub(/#.*$/, "")
       rescue StandardError => e

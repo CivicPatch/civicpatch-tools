@@ -8,7 +8,7 @@ require "resolvers/search_resolver"
 
 module Core
   class MunicipalScraper
-    MAX_URLS_TO_SCRAPE = 30
+    MAX_URLS_TO_SCRAPE = 10
     MIN_PEOPLE_TO_FIND = 3
 
     def self.fetch( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
@@ -39,6 +39,7 @@ module Core
       # Initialize combined data hash
       data = { accumulated_people: [], processed_urls: [], content_dirs: [],
                people_config: municipality_context[:config]["people"] }
+      exit_early = false
 
       %w[seeded search crawler].each do |scrape_with|
         puts "Scraping with #{scrape_with}"
@@ -46,17 +47,20 @@ module Core
 
         case scrape_with
         when "seeded"
+          exit_early = false
           next if seeded_urls.blank?
 
           puts "#{llm_service_string}: Scraping with seeded URLs"
 
           urls = seeded_urls
         when "search"
+          exit_early = true
           keyword_terms = keyword_groups.map { |group| group[:name] }
           puts "#{llm_service_string}: Scraping with search with keyword_terms: #{keyword_terms}"
           urls = scrape_with_search(context, keyword_terms)
           puts "Search results: #{urls}"
         when "crawler"
+          exit_early = true
           avoid_keywords = %w[alerts news event calendar]
           puts "#{llm_service_string}: Scraping with crawler #{keyword_groups}, avoid keywords #{avoid_keywords}"
           urls = scrape_with_crawler(context, keyword_groups, avoid_keywords)
@@ -66,7 +70,7 @@ module Core
 
         urls = urls.map { |url| Utils::UrlHelper.format_url(url) }
 
-        data = scrape_city_directory_urls(context, data, urls_to_process: urls, early_exit: true)
+        data = scrape_urls(context, data, urls_to_process: urls, early_exit: exit_early)
       end
 
       profile_content_dirs, accumulated_people = scrape_profiles(context, data[:accumulated_people],
@@ -103,7 +107,7 @@ module Core
       results
     end
 
-    def self.scrape_city_directory_urls(
+    def self.scrape_urls(
       context,
       data,
       urls_to_process: [],
@@ -115,24 +119,32 @@ module Core
       content_dirs = []
       processed_urls = data[:processed_urls] || []
       people_config = data[:people_config]
+      urls_to_process = urls_to_process.reject do |url|
+        processed_urls.include?(url)
+      end
 
       urls_to_process.each do |url|
         break if early_exit && !should_continue_scraping?(context, data)
 
-        puts "#{context[:llm_service_string]} Scraping #{url} for municipal directory"
         content_dir, people = scrape_url_for_municipal_directory(context, url)
-        next if people.blank?
 
-        accumulated_people, people_config = Services::Shared::People.collect_people(people_config,
+        unless people.blank?
+          accumulated_people, people_config = Services::Shared::People.collect_people(people_config,
                                                                                     accumulated_people, people)
+          content_dirs << content_dir
+          data[:accumulated_people] = accumulated_people
+          data[:people_config] = people_config
+          data[:content_dirs] = content_dirs
+        end
 
-        content_dirs << content_dir
         processed_urls << url
-
-        data[:accumulated_people] = accumulated_people
-        data[:content_dirs] = content_dirs
         data[:processed_urls] = processed_urls
-        data[:people_config] = people_config
+
+        found_people = accumulated_people.map { |person| person["positions"] }
+        num_urls_scraped = processed_urls.count
+
+        puts "#{context[:llm_service_string]}: Scraping #{url}: #{num_urls_scraped} of MAX (#{MAX_URLS_TO_SCRAPE})"
+        puts "#{context[:llm_service_string]}: #{found_people.count} people found: #{found_people}"
       end
 
       data
@@ -238,28 +250,10 @@ module Core
         official["positions"].present? && Services::Shared::People.profile_data_points_present?(official)
       end
 
-      found_positions = accumulated_officials.map do |official|
-        official["positions"]
-      end
-
-      puts "#{context[:llm_service_string]}: Source directory list config: #{source_directory_list_config}"
-      puts "#{context[:llm_service_string]}: People found: #{found_positions}"
-      puts "#{context[:llm_service_string]}: Officials count: #{valid_officials_count}"
-      # return true unless found_key_position?(source_directory_list_config, found_positions)
-
-      # Sometimes state source can lag behind the city source
-      #  -- there may be more members listed than are
-      # available on the city website
       people_to_find = [source_directory_list_config["people"].count - 2, MIN_PEOPLE_TO_FIND].max
       return true if valid_officials_count < people_to_find
 
       false
     end
-
-    # def self.found_key_position?(source_directory_list_config, found_positions)
-    #  return true if source_directory_list_config["key_position"].blank?
-
-    #  found_positions.flatten.map(&:downcase).include?(source_directory_list_config["key_position"].downcase)
-    # end
   end
 end
