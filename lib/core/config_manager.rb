@@ -5,13 +5,12 @@ require "path_helper"
 module Core
   class ConfigManager
     DEFAULT_CONFIG = {
-      "scrape_sources" => [],
       "source_directory_list" => {
-        "type" => "directory_list_default",
-        "people" => [nil, nil, nil, nil, nil], # Absolute default is 5 people
-        "key_position" => "mayor"
+        "type" => "directory_list_default"
       }, # Just defaults, need to overwrite
-      "people" => {} # Maintain a list keyed by people names
+      "people" => {}, # Maintain a list keyed by people names
+      "sources" => [],
+      "exclude_sources" => []
     }.freeze
 
     def self.config_path(state, gnis)
@@ -32,6 +31,10 @@ module Core
       updated_config = config.dup
       updated_config = updated_config.merge(updates.stringify_keys)
       config_file_path = config_path(state, gnis)
+
+      # Config file does not exist, so we can't update it
+      return nil unless File.exist?(config_file_path)
+
       File.write(config_file_path, updated_config.to_yaml)
 
       config

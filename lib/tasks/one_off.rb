@@ -36,6 +36,20 @@ namespace :one_off do
     Core::StateManager.update_municipalities(state, updated_municipalities)
   end
 
+  desc "Fix config.yml"
+  task :fix_config do
+    state = "nh"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    municipalities.each do |municipality|
+      config = Core::ConfigManager.get_config(state, municipality["gnis"])
+
+      config["sources"] = config["scrape_sources"] || []
+      config.delete("scrape_sources")
+      config["exclude_sources"] = []
+      Core::ConfigManager.update_config(state, municipality["gnis"], config)
+    end
+  end
+
   task :get_gov_types do
     state = "nh"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]

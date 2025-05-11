@@ -1,7 +1,4 @@
 ---
-scrape_sources:
-- https://keenenh.gov/my-city-government/mayor-0
-- https://keenenh.gov/my-city-government/city-council/
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -54,3 +51,7 @@ source_directory_list:
     positions:
     - Council Member
 people: {}
+sources:
+- https://keenenh.gov/my-city-government/mayor-0
+- https://keenenh.gov/my-city-government/city-council/
+exclude_sources: []

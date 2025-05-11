@@ -1,5 +1,4 @@
 ---
-scrape_sources: []
 source_directory_list:
   type: directory_list
   people:
@@ -35,3 +34,5 @@ source_directory_list:
     phone_number: "(503) 368-5767"
   key_position: mayor
 people: {}
+sources: []
+exclude_sources: []

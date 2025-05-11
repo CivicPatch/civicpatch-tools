@@ -1,12 +1,4 @@
 ---
-scrape_sources:
-- https://www.newbergoregon.gov/government/city_council/city_council_members.php
-- https://www.newbergoregon.gov/business_detail_T2_R2.php
-- https://www.newbergoregon.gov/business_detail_T2_R5.php
-- https://www.newbergoregon.gov/business_detail_T2_R6.php
-- https://www.newbergoregon.gov/business_detail_T2_R7.php
-- https://www.newbergoregon.gov/business_detail_T2_R9.php
-- https://www.newbergoregon.gov/business_detail_T2_R8.php
 source_directory_list:
   type: directory_list
   people:
@@ -52,3 +44,12 @@ source_directory_list:
     phone_number: "(503) 537-1201"
   key_position: mayor
 people: {}
+sources:
+- https://www.newbergoregon.gov/government/city_council/city_council_members.php
+- https://www.newbergoregon.gov/business_detail_T2_R2.php
+- https://www.newbergoregon.gov/business_detail_T2_R5.php
+- https://www.newbergoregon.gov/business_detail_T2_R6.php
+- https://www.newbergoregon.gov/business_detail_T2_R7.php
+- https://www.newbergoregon.gov/business_detail_T2_R9.php
+- https://www.newbergoregon.gov/business_detail_T2_R8.php
+exclude_sources: []

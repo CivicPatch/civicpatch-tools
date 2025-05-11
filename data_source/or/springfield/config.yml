@@ -1,7 +1,4 @@
 ---
-scrape_sources:
-- https://springfield-or.gov/city/mayor-and-city-council/mayor/
-- https://springfield-or.gov/city/mayor-and-city-council/mayor-council/
 source_directory_list:
   type: directory_list
   people:
@@ -50,6 +47,10 @@ people:
   Victoria Doyle:
     other_names:
     - Victoria M. Doyle
+sources:
+- https://springfield-or.gov/city/mayor-and-city-council/mayor/
+- https://springfield-or.gov/city/mayor-and-city-council/mayor-council/
+exclude_sources: []
 scrape_exit_config:
   people_count: 6
   key_position: mayor

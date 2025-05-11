@@ -1,13 +1,4 @@
 ---
-scrape_sources:
-- https://www.tigard-or.gov/your-government/council/meet-the-council
-- https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb
-- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf
-- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi
-- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins
-- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack
-- https://www.tigard-or.gov/your-government/council/councilor-shaw
-- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu
 source_directory_list:
   type: directory_list
   people:
@@ -48,3 +39,13 @@ source_directory_list:
     phone_number: "(503) 718-2490"
   key_position: mayor
 people: {}
+sources:
+- https://www.tigard-or.gov/your-government/council/meet-the-council
+- https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack
+- https://www.tigard-or.gov/your-government/council/councilor-shaw
+- https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu
+exclude_sources: []

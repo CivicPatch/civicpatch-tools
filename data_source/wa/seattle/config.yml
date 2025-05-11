@@ -1,17 +1,4 @@
 ---
-scrape_sources:
-- https://seattle.gov/mayor/about
-- https://www.seattle.gov/elected-officials
-- https://seattle.gov/mayor
-- https://www.seattle.gov/mayor
-- https://www.seattle.gov/council/rinck
-- https://www.seattle.gov/council/meet-the-council/sara-nelson
-- https://www.seattle.gov/council/saka
-- https://www.seattle.gov/council/solomon
-- https://www.seattle.gov/council/hollingsworth
-- https://www.seattle.gov/council/rivera
-- https://www.seattle.gov/council/moore
-- https://www.seattle.gov/council/strauss
 source_directory_list:
   type: directory_list
   people:
@@ -56,3 +43,5 @@ source_directory_list:
     - Council Member
     email: Robert.Kettle@seattle.gov
 people: {}
+sources: []
+exclude_sources: []

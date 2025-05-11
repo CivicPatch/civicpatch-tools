@@ -1,8 +1,12 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://cityoflacey.org/government/lacey-city-council
 - https://cityoflacey.org/government/lacey-city-council#section2
 - https://cityoflacey.org/government/lacey-city-council#section5
 - https://cityoflacey.org/government/lacey-city-council#section3
 - https://cityoflacey.org/government/lacey-city-council#section4
 - https://cityoflacey.org/government/lacey-city-council#section6
+exclude_sources: []

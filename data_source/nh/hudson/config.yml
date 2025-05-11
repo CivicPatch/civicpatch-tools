@@ -1,11 +1,4 @@
 ---
-scrape_sources:
-- https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members
-- https://www.hudsonnh.gov/directory-listing/dillon-dumont
-- https://www.hudsonnh.gov/directory-listing/bob-guessferd
-- https://www.hudsonnh.gov/directory-listing/david-s-morin
-- https://www.hudsonnh.gov/directory-listing/heidi-jakoby
-- https://www.hudsonnh.gov/directory-listing/xen-vurgaropulos
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -13,3 +6,11 @@ source_directory_list:
     positions:
     - Chair
 people: {}
+sources:
+- https://www.hudsonnh.gov/boardofselectmen/page/selectmen-members
+- https://www.hudsonnh.gov/directory-listing/dillon-dumont
+- https://www.hudsonnh.gov/directory-listing/bob-guessferd
+- https://www.hudsonnh.gov/directory-listing/david-s-morin
+- https://www.hudsonnh.gov/directory-listing/heidi-jakoby
+- https://www.hudsonnh.gov/directory-listing/xen-vurgaropulos
+exclude_sources: []

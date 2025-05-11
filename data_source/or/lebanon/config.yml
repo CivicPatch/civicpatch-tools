@@ -1,13 +1,4 @@
 ---
-scrape_sources:
-- https://www.lebanonoregon.gov/366/Mayor-City-Council
-- https://www.lebanonoregon.gov/directory.aspx?eid=45
-- https://www.lebanonoregon.gov/directory.aspx?eid=51
-- https://www.lebanonoregon.gov/directory.aspx?eid=47
-- https://www.lebanonoregon.gov/directory.aspx?eid=56
-- https://www.lebanonoregon.gov/directory.aspx?eid=49
-- https://www.lebanonoregon.gov/directory.aspx?eid=55
-- https://www.lebanonoregon.gov/directory.aspx?eid=50
 source_directory_list:
   type: directory_list
   people:
@@ -48,3 +39,13 @@ source_directory_list:
     phone_number: "(541) 258-4983"
   key_position: mayor
 people: {}
+sources:
+- https://www.lebanonoregon.gov/366/Mayor-City-Council
+- https://www.lebanonoregon.gov/directory.aspx?eid=45
+- https://www.lebanonoregon.gov/directory.aspx?eid=51
+- https://www.lebanonoregon.gov/directory.aspx?eid=47
+- https://www.lebanonoregon.gov/directory.aspx?eid=56
+- https://www.lebanonoregon.gov/directory.aspx?eid=49
+- https://www.lebanonoregon.gov/directory.aspx?eid=55
+- https://www.lebanonoregon.gov/directory.aspx?eid=50
+exclude_sources: []

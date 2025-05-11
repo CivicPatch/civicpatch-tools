@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://www.claremontnh.com/city-council
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -28,3 +26,6 @@ source_directory_list:
     positions:
     - Council Member
 people: {}
+sources:
+- https://www.claremontnh.com/city-council
+exclude_sources: []

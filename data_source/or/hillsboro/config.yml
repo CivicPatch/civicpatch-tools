@@ -1,14 +1,4 @@
 ---
-scrape_sources:
-- https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300
-- https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300
 source_directory_list:
   type: directory_list
   people:
@@ -49,6 +39,17 @@ source_directory_list:
     phone_number: "(503) 681-6100"
   key_position: mayor
 people: {}
+sources:
+- https://hillsboro-oregon.civicweb.net/portal/members.aspx?id=10
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718/
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300
+- https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300
+exclude_sources: []
 scrape_exit_config:
   people_count: 5
   key_position: mayor

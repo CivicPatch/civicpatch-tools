@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - http://www.mylongview.com/518/MaryAlice-Wallis
 - http://www.mylongview.com/Directory.aspx?EID=109
 - http://www.mylongview.com/497/City-Council
@@ -12,3 +15,4 @@ scrape_sources:
 - http://www.mylongview.com/Directory.aspx?EID=122
 - http://www.mylongview.com/Directory.aspx?EID=83
 - http://www.mylongview.com/629/Ruth-Kendall
+exclude_sources: []

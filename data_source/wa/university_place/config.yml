@@ -1,6 +1,10 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.cityofup.com/252/City-Council
 - https://www.cityofup.com/280/Mayor-Javier-Figueroa
 - https://www.cityofup.com/283/Mayor-Pro-Tem-Edward-Wood
 - https://www.cityofup.com/281/Council-Member-Frank-Boykin
+exclude_sources: []

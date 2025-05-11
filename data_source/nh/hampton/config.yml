@@ -1,6 +1,4 @@
 ---
-scrape_sources:
-- https://www.hamptonnh.gov/282/Board-of-Selectmen
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -20,3 +18,6 @@ source_directory_list:
     positions:
     - Select Board Member
 people: {}
+sources:
+- https://www.hamptonnh.gov/282/Board-of-Selectmen
+exclude_sources: []

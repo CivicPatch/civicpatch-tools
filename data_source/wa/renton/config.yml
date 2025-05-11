@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
 - https://www.rentonwa.gov/Government/City-Council/rivera
 - https://www.rentonwa.gov/Government/City-Council/ohalloran
@@ -8,3 +11,4 @@ scrape_sources:
 - https://www.rentonwa.gov/Government/City-Council/perez
 - https://www.rentonwa.gov/Government/City-Council/mcirvin
 - https://www.rentonwa.gov/Government/City-Council/alberson
+exclude_sources: []

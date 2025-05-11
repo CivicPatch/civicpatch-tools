@@ -1,14 +1,4 @@
 ---
-scrape_sources:
-- https://www.bendoregon.gov/government/city-council
-- https://www.bendoregon.gov/government/city-council/melanie-kebler
-- https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video
-- https://www.bendoregon.gov/government/city-council/megan-perkins
-- https://www.bendoregon.gov/government/city-council/ariel-mendez
-- https://www.bendoregon.gov/government/city-council/gina-franzosa
-- https://www.bendoregon.gov/government/city-council/megan-norris
-- https://www.bendoregon.gov/government/city-council/mike-riley
-- https://www.bendoregon.gov/government/city-council/steve-platt
 source_directory_list:
   type: directory_list
   people:
@@ -49,3 +39,14 @@ source_directory_list:
     phone_number: "(541) 388-5505"
   key_position: mayor
 people: {}
+sources:
+- https://www.bendoregon.gov/government/city-council
+- https://www.bendoregon.gov/government/city-council/melanie-kebler
+- https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video
+- https://www.bendoregon.gov/government/city-council/megan-perkins
+- https://www.bendoregon.gov/government/city-council/ariel-mendez
+- https://www.bendoregon.gov/government/city-council/gina-franzosa
+- https://www.bendoregon.gov/government/city-council/megan-norris
+- https://www.bendoregon.gov/government/city-council/mike-riley
+- https://www.bendoregon.gov/government/city-council/steve-platt
+exclude_sources: []

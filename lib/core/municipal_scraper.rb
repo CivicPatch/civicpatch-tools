@@ -119,8 +119,9 @@ module Core
       content_dirs = []
       processed_urls = data[:processed_urls] || []
       people_config = data[:people_config]
+      exclude_urls = context[:municipality_context][:config]["exclude_sources"] || []
       urls_to_process = urls_to_process.reject do |url|
-        processed_urls.include?(url)
+        processed_urls.include?(url) || exclude_urls.include?(url)
       end
 
       urls_to_process.each do |url|

@@ -1,15 +1,4 @@
 ---
-scrape_sources:
-- https://www.cityofportsmouth.com/mayor
-- https://www.cityofportsmouth.com/cityclerk/elected-city-officials
-- https://www.cityofportsmouth.com/citycouncil
-- https://www.cityofportsmouth.com/citycouncil/profiles/deaglan-mceachern
-- https://www.cityofportsmouth.com/citycouncil/profiles/beth-moreau
-- https://www.cityofportsmouth.com/citycouncil/profiles/john-tabor
-- https://www.cityofportsmouth.com/citycouncil/profiles/josh-denton
-- https://www.cityofportsmouth.com/citycouncil/profiles/kate-cook
-- https://www.cityofportsmouth.com/citycouncil/profiles/rich-blalock
-- https://www.cityofportsmouth.com/citycouncil/profiles/vincent-lombardi
 source_directory_list:
   type: directory_list_fallback
   people:
@@ -41,3 +30,15 @@ source_directory_list:
     positions:
     - Council Member
 people: {}
+sources:
+- https://www.cityofportsmouth.com/mayor
+- https://www.cityofportsmouth.com/cityclerk/elected-city-officials
+- https://www.cityofportsmouth.com/citycouncil
+- https://www.cityofportsmouth.com/citycouncil/profiles/deaglan-mceachern
+- https://www.cityofportsmouth.com/citycouncil/profiles/beth-moreau
+- https://www.cityofportsmouth.com/citycouncil/profiles/john-tabor
+- https://www.cityofportsmouth.com/citycouncil/profiles/josh-denton
+- https://www.cityofportsmouth.com/citycouncil/profiles/kate-cook
+- https://www.cityofportsmouth.com/citycouncil/profiles/rich-blalock
+- https://www.cityofportsmouth.com/citycouncil/profiles/vincent-lombardi
+exclude_sources: []

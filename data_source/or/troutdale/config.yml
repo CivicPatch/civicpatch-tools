@@ -1,13 +1,4 @@
 ---
-scrape_sources:
-- https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
-- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
-- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
-- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
 source_directory_list:
   type: directory_list
   people:
@@ -42,3 +33,13 @@ source_directory_list:
     email: zach.andrews@troutdaleoregon.gov
     phone_number: "(503) 665-5175"
 people: {}
+sources:
+- https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
+- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
+- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
+- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
+- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
+- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+- https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+exclude_sources: []

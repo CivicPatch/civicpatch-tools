@@ -1,5 +1,8 @@
 ---
-scrape_sources:
+source_directory_list:
+  type: directory_list_default
+people: {}
+sources:
 - https://cob.org/gov/mayor/bio
 - https://cob.org/gov/council/michael-lilliquist
 - https://cob.org/gov/council/contacts-bios
@@ -9,3 +12,4 @@ scrape_sources:
 - https://cob.org/gov/council/hanna-stone
 - https://cob.org/gov/council/lisa-anderson
 - https://cob.org/gov/council/council-member-jace-cotton
+exclude_sources: []
