@@ -1,34 +1,34 @@
 [
   {
     "name": "Joe Friedman",
-    "image": "images/8b08e8d00ac773a1ffabcd0ad69459bb2e1cfee2c67d77eecfa14fb61b9263a9.jpg",
-    "source_image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_primary/public/imageattachments/administration/page/73350/joe_friedman_cropped.jpg?itok=TIpv6_g3",
+    "image": "images/d463fcb22db80ba90b0af176fb8a98eff5634f4836cc992df89e7fe45ce581d6.jpg",
+    "source_image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_primary/public/imageattachments/administration/page/69511/friedman_joe_-_town_council.jpg?itok=oaxjZoHV",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
-      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
+      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
+      "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
     "positions": [
       "Chair",
       "Council Member",
-      "Town Council Member",
       "Town Councilor",
-      "Chair Pro Tem"
+      "Chair Pro Tem",
+      "Town Council Member"
     ],
     "phone_numbers": [],
     "emails": [],
     "websites": [
       {
-        "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is a profile page for Joe Friedman as Town Council member.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
-      },
-      {
         "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
         "llm_confidence": 0.99,
         "llm_confidence_reason": "Page URL is the official profile page for Joe Friedman as Town Councilor.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
+      },
+      {
+        "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is a profile page for Joe Friedman as Town Council member.",
+        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
       }
     ],
     "start_dates": [
@@ -40,7 +40,7 @@
       },
       {
         "data": "2022",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Text states '2022-Present Durham Town Council' indicating start year 2022.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       }
@@ -53,7 +53,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Eric Lund",
@@ -66,8 +66,7 @@
     "positions": [
       "Chair Pro Tem",
       "Council Member",
-      "Alternate Town Council Representative",
-      "Town Council Member"
+      "Alternate Town Council Representative"
     ],
     "phone_numbers": [],
     "emails": [],
@@ -90,11 +89,11 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date given as 'March 2026' for Alt. Town Council Rep.",
+        "llm_confidence_reason": "Extracted from 'Term Expiration Date' column as 'March 2026' converted to YYYY-MM.",
         "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Wayne Burton",
@@ -125,7 +124,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Darrell Ford",
@@ -156,7 +155,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Emily Friedrichs",
@@ -187,7 +186,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Heather Grant",
@@ -199,8 +198,7 @@
     ],
     "positions": [
       "Council Member",
-      "Town Council Representative",
-      "Town Council Member"
+      "Town Council Representative"
     ],
     "phone_numbers": [],
     "emails": [],
@@ -223,11 +221,11 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date given as 'March 2026' for Town Council Rep.",
+        "llm_confidence_reason": "Extracted from 'Term Expiration Date' column as 'March 2026' converted to YYYY-MM.",
         "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Sally Needell",
@@ -258,7 +256,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Curtis Register",
@@ -289,7 +287,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Robin Vogt",
@@ -320,6 +318,6 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   }
 ]

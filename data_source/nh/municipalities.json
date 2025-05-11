@@ -432,8 +432,8 @@
       "government_type": "mayor_council",
       "email": "mbehrendt@ci.durham.nh.us",
       "website": "http://www.ci.durham.nh.us",
-      "meta_updated_at": "2025-05-10",
-      "meta_hash": "9ee7c796aa818d468ac620903b4061a8",
+      "meta_updated_at": "2025-05-11",
+      "meta_hash": "80d310d1bad090736613ea420ba8c8d0",
       "meta_sources": [
         "state_source",
         "gemini",

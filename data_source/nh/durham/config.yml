@@ -7,6 +7,12 @@ scrape_sources:
 source_directory_list:
   type: directory_list_fallback
   people:
+  - name:
+    positions:
+    - Mayor
+  - name: Curtis Register
+    positions:
+    - Council Member
   - name: Darrell Ford
     positions:
     - Council Member
@@ -16,7 +22,16 @@ source_directory_list:
   - name: Eric Lund
     positions:
     - Council Member
+  - name: Heather Grant
+    positions:
+    - Council Member
+  - name: James Bubar
+    positions:
+    - Council Member
   - name: Joe Friedman
+    positions:
+    - Council Member
+  - name: Sally Needell
     positions:
     - Council Member
   - name: Wayne Burton

@@ -5,41 +5,23 @@
     "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
+      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
+      "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
     "positions": [
-      "Chair",
       "Council Member",
+      "Chair",
       "Town Councilor",
-      "Mayor Pro Tempore"
+      "Chair Pro Tem",
+      "Town Council"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      },
-      {
         "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the specific profile page for Joe Friedman.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "This is the specific profile page URL for the person.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       }
     ],
@@ -47,13 +29,13 @@
       {
         "data": "2025-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/25' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       },
       {
         "data": "2022",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated '2022-Present Durham Town Council'.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated '2022-Present' for Town Council position.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       }
     ],
@@ -61,54 +43,31 @@
       {
         "data": "2028-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/28' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Eric Lund",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
     "positions": [
-      "Chair Pro Tem",
       "Council Member",
-      "Council Member (Alternate)"
+      "Chair Pro Tem"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2025-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/25' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -116,17 +75,11 @@
       {
         "data": "2028-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/28' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      },
-      {
-        "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'March 2026' in the table.",
-        "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Wayne Burton",
@@ -138,35 +91,14 @@
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2023-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/23' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -174,11 +106,11 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/26' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Darrell Ford",
@@ -190,35 +122,14 @@
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2024-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/24' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -226,11 +137,11 @@
       {
         "data": "2027-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/27' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Emily Friedrichs",
@@ -242,35 +153,14 @@
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2023-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/23' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -278,52 +168,30 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/26' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Heather Grant",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2024-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/24' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -331,17 +199,11 @@
       {
         "data": "2027-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/27' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      },
-      {
-        "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'March 2026' in the table.",
-        "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Sally Needell",
@@ -353,35 +215,14 @@
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2023-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/23' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -389,11 +230,11 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/26' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Curtis Register",
@@ -405,35 +246,14 @@
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2024-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/24' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -441,11 +261,11 @@
       {
         "data": "2027-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/27' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   },
   {
     "name": "Robin Vogt",
@@ -457,35 +277,14 @@
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2025-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "Explicitly listed term start date '3/25' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -493,10 +292,10 @@
       {
         "data": "2028-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "Explicitly listed term end date '3/28' associated with the name.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-10"
+    "updated_at": "2025-05-11"
   }
 ]
