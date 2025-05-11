@@ -1,28 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Robert Lang Larson
-    positions:
-    - Mayor
-    email: ''
-    phone_number: "(503) 266-1330"
-  - name: Clyde Anderson
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(503) 266-1330"
-  - name: Darrell Wagner
-    positions:
-    - Council Member
-    email: Darrell@canby.com
-    phone_number: "(503) 266-1330"
-  - name: Michael Barnett
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(503) 266-1330"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

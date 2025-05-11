@@ -1,33 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Stephen Bartlow
-    positions:
-    - Mayor
-    email: sbartlow@josephoregon.org
-    phone_number: "(541) 432-3832"
-  - name: Brinda Stanley
-    positions:
-    - Council Member
-    email: bstanley@josephoregon.org
-    phone_number: "(541) 432-3833"
-  - name: John Dundas
-    positions:
-    - Council Member
-    email: cityadmin@josephoregon.org
-    phone_number: "(541) 432-3833"
-  - name: Mary Smith
-    positions:
-    - Council Member
-    email: msmith@josephoregon.org
-    phone_number: ''
-  - name: Nancy Parmenter
-    positions:
-    - Council Member
-    email: councilor2@josephoregon.org
-    phone_number: "(541) 432-3833"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

@@ -1,28 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list_fallback
-  people:
-  - name: Andy Hunter
-    positions:
-    - Council Member
-  - name: Finlay Rothhaus
-    positions:
-    - Council Member
-  - name: Jennifer Jobin
-    positions:
-    - Council Member
-  - name: Mackenzie Murphy
-    positions:
-    - Council Member
-  - name: Nancy Harrington
-    positions:
-    - Council Member
-  - name: Nancy Murphy
-    positions:
-    - Council Member
-  - name: Thomas Koenig
-    positions:
-    - Council Member
 people: {}
 sources:
 - https://www.merrimacknh.gov/town-council

@@ -1,23 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Chris Barhyte
-    positions:
-    - Mayor
-    email: mayor@cityofrivergrove.com
-    phone_number: "(503) 639-6919"
-  - name: Curt Taylor
-    positions:
-    - Council Member
-    email: ctaylor@cityofrivergrove.com
-    phone_number: "(503) 639-6919"
-  - name: William Tuttle
-    positions:
-    - Council Member
-    email: wtuttle@cityofrivergrove.com
-    phone_number: "(503) 639-6919"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

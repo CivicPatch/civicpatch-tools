@@ -1,38 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list
-  people:
-  - name: Steven Fischer
-    positions:
-    - Mayor
-    email: tocc1862@ortelco.net
-    phone_number: "(541) 575-0509"
-  - name: Jenny Workman
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 575-0509"
-  - name: Jim Johnston
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 575-0509"
-  - name: Matt Turner
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 575-2010"
-  - name: Rachelle Simmons
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 575-0509"
-  - name: Scott Myers
-    positions:
-    - Council Member
-    email: ''
-    phone_number: "(541) 575-0509"
-  key_position: mayor
 people: {}
 sources: []
 exclude_sources: []

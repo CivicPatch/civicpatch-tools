@@ -6,6 +6,15 @@ module Resolvers
   class PeopleResolver
     DISAGREEMENT_THRESHOLD = 0.9
 
+    def self.save_people(context, people_config, people, source_type)
+      positions_config = Core::CityManager.get_config(context[:government_type])
+      Core::PeopleManager.update_people(context, people, "#{source_type}.before")
+      formatted_people = Core::PeopleManager.format_people(people_config, people, positions_config)
+      Core::PeopleManager.update_people(context, formatted_people, "#{source_type}.after")
+
+      formatted_people
+    end
+
     def self.resolve(municipality_context)
       state = municipality_context[:state]
       gnis = municipality_context[:municipality_entry]["gnis"]

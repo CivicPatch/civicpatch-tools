@@ -1,7 +1,4 @@
 ---
-source_directory_list:
-  type: directory_list_fallback
-  people: []
 people: {}
 sources:
 - https://www.pelhamweb.com/board-of-selectmen
