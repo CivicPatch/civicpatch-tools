@@ -7,15 +7,15 @@
 /spec/reports/
 /tmp/
 
+/node_modules/
 /vendor/
+
 chat.txt
 costs.csv
 testing/
 people.csv
 scratch.json
 scratch.html
-node_modules/
-
 cost_images.csv
 cost_llms.csv
 cost_search_engine.csv

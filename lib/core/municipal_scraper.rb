@@ -5,6 +5,7 @@ require "services/shared/people"
 require "services/google_gemini"
 require "services/openai"
 require "resolvers/search_resolver"
+require "core/crawler"
 
 module Core
   class MunicipalScraper
