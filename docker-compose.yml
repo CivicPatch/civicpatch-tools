@@ -1,0 +1,6 @@
+services:
+  scraper:
+    build: .
+    volumes:
+      - ./config:/app/config
+      - ./lib:/app/lib
