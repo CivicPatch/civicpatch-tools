@@ -16,6 +16,7 @@ var (
 	scrapeCommand    = flag.NewFlagSet("scrape", flag.ExitOnError)
 	withCi           = scrapeCommand.Bool("with-ci", false, "Run with CI")
 	createPr         = scrapeCommand.Bool("create-pr", false, "Create a PR")
+	develop          = scrapeCommand.Bool("develop", false, "Develop locally")
 	state            = scrapeCommand.String("state", "", "State to scrape")
 	gnis             = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
@@ -52,7 +53,7 @@ func checkGitHubCredentials(ctx context.Context) string {
 	return github_token.AccessToken
 }
 
-func checkScrapeInput(ctx context.Context, state string, gnis string, withCI bool) {
+func checkScrapeInput(state string, gnis string, withCI bool) {
 	if withCI {
 		checkEnvironmentVariables(requiredEnvVarsCI)
 	} else {
@@ -69,9 +70,9 @@ func checkScrapeInput(ctx context.Context, state string, gnis string, withCI boo
 	}
 }
 
-func scrape(state string, gnis string, createPr bool, withCi bool) error {
+func scrape(state string, gnis string, createPr bool, withCi bool, develop bool) error {
 	ctx := context.Background()
-	checkScrapeInput(ctx, state, gnis, withCi)
+	checkScrapeInput(state, gnis, withCi)
 
 	github_token := os.Getenv("GITHUB_TOKEN")
 	if !withCi {
@@ -87,14 +88,24 @@ func scrape(state string, gnis string, createPr bool, withCi bool) error {
 	}
 	defer dockerClient.Close()
 
-	if err := dockerClient.BuildImage(ctx, "Dockerfile", "scraper:local"); err != nil {
+	imageTag := "civpatch"
+	dockerfile := "Dockerfile.civpatch"
+	if develop {
+		imageTag = "civpatch-dev"
+		dockerfile = "Dockerfile.civpatch-dev"
+	}
+
+	if err := dockerClient.BuildImage(ctx, dockerfile, imageTag); err != nil {
 		fmt.Println("Error building image:", err)
 		os.Exit(1)
 	}
 
-	volumes := map[string]string{
-		"./config": "/app/config",
-		"./lib":    "/app/lib",
+	volumes := map[string]string{}
+	if develop {
+		volumes = map[string]string{
+			"./config": "/app/config",
+			"./lib":    "/app/lib",
+		}
 	}
 
 	args := map[string]string{
@@ -103,7 +114,8 @@ func scrape(state string, gnis string, createPr bool, withCi bool) error {
 
 	cmd := []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr)}
 
-	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx, "scraper:local",
+	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx,
+		imageTag,
 		requiredEnvVarsCI,
 		args,
 		cmd,
@@ -138,6 +150,6 @@ func main() {
 	}
 
 	if scrapeCommand.Parsed() {
-		scrape(*state, *gnis, *createPr, *withCi)
+		scrape(*state, *gnis, *createPr, *withCi, *develop)
 	}
 }

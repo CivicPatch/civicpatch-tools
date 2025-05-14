@@ -1,13 +1,18 @@
 require "git"
 require "octokit"
-require "path_helper"
+require_relative "../path_helper"
 
 module Services
   class GitHub
-    def initialize
+    attr_reader :local_repo
+
+    def initialize(develop: false)
       @client = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
       @repo = "CivicPatch/open-data"
       @local_repo = Git.open(PathHelper.project_path(""))
+      return unless develop
+
+      @local_repo.config("core.sparseCheckout", "true")
     end
 
     def pull_and_create_branch(municipality_context)
