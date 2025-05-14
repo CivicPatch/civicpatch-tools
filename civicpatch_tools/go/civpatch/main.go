@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"flag"
 	"fmt"
@@ -8,8 +9,6 @@ import (
 
 	"civpatch/docker"
 	"civpatch/services"
-
-	"github.com/docker/docker/pkg/stdcopy"
 )
 
 var (
@@ -20,31 +19,7 @@ var (
 	state            = scrapeCommand.String("state", "", "State to scrape")
 	gnis             = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
-
-	requiredEnvVars = []string{
-		"OPENAI_TOKEN",
-		"BRAVE_TOKEN",
-		"GOOGLE_GEMINI_TOKEN",
-		"CLOUDFLARE_R2_ENDPOINT", // TODO: Get rid of this
-		"CLOUDFLARE_R2_ACCESS_KEY_ID",
-		"CLOUDFLARE_R2_SECRET_KEY",
-		"GOOGLE_SEARCH_API_KEY",
-		"GOOGLE_SEARCH_ENGINE_ID",
-	}
-
-	requiredEnvVarsCI = append(requiredEnvVars,
-		"GITHUB_TOKEN",
-	)
 )
-
-func checkEnvironmentVariables(envVars []string) {
-	for _, envVar := range envVars {
-		if os.Getenv(envVar) == "" {
-			fmt.Printf("Error: %s is not set\n", envVar)
-			os.Exit(1)
-		}
-	}
-}
 
 func checkGitHubCredentials(ctx context.Context) {
 	deviceFlow, err := services.NewGitHubDeviceFlow(GITHUB_CLIENT_ID)
@@ -111,7 +86,7 @@ func scrape(state string, gnis string, dryRun bool, withCI bool) error {
 
 	cmd := []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, dryRun)}
 
-	containerID, logs, err := dockerClient.RunContainer(ctx, "scraper:local", requiredEnvVars,
+	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx, "scraper:local", requiredEnvVars,
 		cmd,
 		volumes)
 	if err != nil {
@@ -119,16 +94,24 @@ func scrape(state string, gnis string, dryRun bool, withCI bool) error {
 		os.Exit(1)
 	}
 
+	defer logCancel()
+
 	fmt.Println("Container started:", containerID)
 
 	// Set stdout and stderr to unbuffered
-	os.Stdout = os.NewFile(1, "stdout")
-	os.Stderr = os.NewFile(2, "stderr")
+	//os.Stdout = os.NewFile(1, "stdout")
+	//os.Stderr = os.NewFile(2, "stderr")
 
-	_, err = stdcopy.StdCopy(os.Stdout, os.Stderr, logs)
-	if err != nil {
-		fmt.Println("Error copying logs:", err)
+	scanner := bufio.NewScanner(logs)
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
 	}
+
+	//_, err = stdcopy.StdCopy(os.Stdout, os.Stderr, logs)
+	//if err != nil {
+	//	fmt.Println("Error copying logs:", err)
+	//}
+	//return nil
 	return nil
 }
 
