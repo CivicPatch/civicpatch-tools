@@ -14,7 +14,7 @@ module Core
     WAIT_TIME = 2
 
     def initialize
-      @image_map = {}
+      # @image_map = {}
     end
 
     # TODO: -- robots.txt?
@@ -23,18 +23,21 @@ module Core
 
       if File.exist?(cached_file)
         puts "Skipping page fetch to #{url} because cache file already exists"
-        return [cached_file, @image_map]
+        # return [cached_file, @image_map]
+        return cached_file
       end
 
-      image_dir = PathHelper.project_path(File.join(destination_dir, "images"))
-      response = Browser.fetch_page_content(url, { image_dir: image_dir,
-                                                   wait_for: WAIT_TIME,
-                                                   include_api_content: true })
+      # image_dir = PathHelper.project_path(File.join(destination_dir, "images"))
+      response = Browser.fetch_page_content(url, { # image_dir: image_dir,
+                                              wait_for: WAIT_TIME,
+                                              include_api_content: true
+                                            })
       html = response[:page_html]
 
-      @image_map = @image_map.merge(response[:image_map]) if response && response[:image_map].present?
+      # @image_map = @image_map.merge(response[:image_map]) if response && response[:image_map].present?
 
-      return [nil, nil] if html.blank?
+      # return [nil, nil] if html.blank?
+      return nil if html.blank?
 
       FileUtils.mkdir_p(destination_dir)
 
@@ -49,9 +52,9 @@ module Core
       markdown_content_file_path = PathHelper.project_path(File.join(destination_dir.to_s,
                                                                      "step_3_markdown_content.md"))
       File.write(markdown_content_file_path, markdown_content)
-      content_file_path = PathHelper.project_path(markdown_content_file_path)
 
-      [content_file_path, @image_map]
+      PathHelper.project_path(markdown_content_file_path)
+      # [content_file_path, @image_map]
     end
 
     def sanitize_html(html)

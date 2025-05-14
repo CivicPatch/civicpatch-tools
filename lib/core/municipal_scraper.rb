@@ -200,7 +200,7 @@ module Core
       url_content_path = File.join(cache_path, Utils::UrlHelper.url_to_safe_folder_name(url))
       FileUtils.mkdir_p(url_content_path)
 
-      content_file, image_map = page_fetcher.extract_content(url, url_content_path)
+      content_file = page_fetcher.extract_content(url, url_content_path)
       return [nil, nil] unless content_file.present?
 
       people = llm_service.extract_city_people(municipality_context, content_file, url, person_name)
@@ -210,24 +210,21 @@ module Core
                 nil]
       end
 
-      people_with_images = people.map do |person|
-        maybe_add_source_image_to_person(person, image_map)
-      end
+      # people_with_images = people.map do |person|
+      #  maybe_add_source_image_to_person(person, image_map)
+      # end
 
-      [url_content_path, people_with_images]
+      # [url_content_path, people_with_images]
+      [url_content_path, people]
     end
 
-    def self.maybe_add_source_image_to_person(person, image_map)
-      return person if person["image"].blank?
+    # def self.maybe_add_source_image_to_person(person, image_map)
+    #  return person if person["image"].blank?
 
-      image_key = person["image"].gsub("images/", "")
-      if person["image"].present? && !image_map[image_key].present?
-        puts "image_key: #{image_key} not found in image_map"
-        pp image_map
-      end
-      person["source_image"] = image_map[image_key]
-      person
-    end
+    #  image_key = person["image"].gsub("images/", "")
+    #  person["source_image"] = image_map[image_key]
+    #  person
+    # end
 
     def self.get_llm_service(llm_service_string)
       case llm_service_string

@@ -50,11 +50,18 @@ module Utils
       base_url = extract_page_base_url(page_html_string, page_url)
       nokolexbor_html = Nokolexbor::HTML(page_html_string)
 
-      nokolexbor_html.css("a").each do |link|
-        href = link["href"]&.strip
-        next if href.blank? || href.start_with?("mailto:", "tel:")
+      nokolexbor_html.css("a, img").each do |link|
+        if link.name == "a"
+          href = link["href"]&.strip
+          next if href.blank? || href.start_with?("mailto:", "tel:")
 
-        link["href"] = format_url(Addressable::URI.join(base_url, href).to_s)
+          link["href"] = format_url(Addressable::URI.join(base_url, href).to_s)
+        elsif link.name == "img"
+          src = link["src"]&.strip
+          next if src.blank?
+
+          link["src"] = format_url(Addressable::URI.join(base_url, src).to_s)
+        end
       rescue StandardError => e
         puts "Error formatting link: #{href} - #{e.message}"
       end

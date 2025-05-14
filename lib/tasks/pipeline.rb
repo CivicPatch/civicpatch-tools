@@ -15,19 +15,19 @@ require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
 
 namespace :pipeline do
-  desc "Pick cities from queue"
-  task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args|
-    state = args[:state]
-    num_cities = args[:num_cities]
-    gnis_to_ignore = args[:gnis_to_ignore].present? ? args[:gnis_to_ignore].split(" ") : []
+  # desc "Pick cities from queue"
+  # task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args|
+  #  state = args[:state]
+  #  num_cities = args[:num_cities]
+  #  gnis_to_ignore = args[:gnis_to_ignore].present? ? args[:gnis_to_ignore].split(" ") : []
 
-    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
-    municipalities_to_scrape = municipalities.select { |c| should_scrape?(gnis_to_ignore, c) }.first(num_cities.to_i)
+  #  municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+  #  municipalities_to_scrape = municipalities.select { |c| should_scrape?(gnis_to_ignore, c) }.first(num_cities.to_i)
 
-    puts municipalities_to_scrape.map { |m|
-      { "name": m["name"].gsub(" ", "_"), "gnis": m["gnis"], "county": m["counties"].first }
-    }.to_json
-  end
+  #  puts municipalities_to_scrape.map { |m|
+  #    { "name": m["name"].gsub(" ", "_"), "gnis": m["gnis"], "county": m["counties"].first }
+  #  }.to_json
+  # end
 
   desc "Scrape council members for a specific municipality"
   task :fetch, [:state, :gnis] do |_t, args|
@@ -118,8 +118,8 @@ namespace :pipeline do
 
     # openai is the only call that scrapes images; arbitrarily choose openai for this
     # since it's the first call
-    people_with_images = process_images(municipality_context, source_dirs, people)
-    Core::PeopleManager.update_people(municipality_context, people_with_images, "openai.after")
+    # people_with_images = process_images(municipality_context, source_dirs, people)
+    # Core::PeopleManager.update_people(municipality_context, people_with_images, "openai.after")
 
     # Gemini - LLM call
     _, _, _, _, people_config = process_with_llm(municipality_context, "gemini",
@@ -245,10 +245,10 @@ namespace :pipeline do
 
   private
 
-  def self.should_scrape?(gnis_to_ignore, municipality_entry)
-    !gnis_to_ignore.include?(municipality_entry["gnis"]) &&
-      municipality_entry["website"].present? &&
-      # If there's only one source, it hasn't been scraped yet
-      (municipality_entry["meta_sources"].blank? || municipality_entry["meta_sources"].count == 1)
-  end
+  # def self.should_scrape?(gnis_to_ignore, municipality_entry)
+  #  !gnis_to_ignore.include?(municipality_entry["gnis"]) &&
+  #    municipality_entry["website"].present? &&
+  #    # If there's only one source, it hasn't been scraped yet
+  #    (municipality_entry["meta_sources"].blank? || municipality_entry["meta_sources"].count == 1)
+  # end
 end

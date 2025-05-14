@@ -53,7 +53,8 @@ module Browser
 
       yield(browser) if block_given?
 
-      process_page(browser, url, options, api_data)
+      # process_page(browser, url, options, api_data)
+      process_page(browser, url, api_data)
     end
   end
 
@@ -76,14 +77,15 @@ module Browser
     end
   end
 
-  private_class_method def self.process_page(browser, url, options, api_data)
+  # private_class_method def self.process_page(browser, url, options, api_data)
+  private_class_method def self.process_page(browser, url, api_data)
     page_source = browser.content
-    page_source, image_map = maybe_download_images(browser, page_source, options, url)
+    # page_source, image_map = maybe_download_images(browser, page_source, options, url)
     formatted_html = format_page_html(page_source, api_data, url)
 
     {
-      page_html: formatted_html,
-      image_map: image_map
+      page_html: formatted_html
+      # image_map: image_map
     }.compact
   end
 
@@ -95,15 +97,15 @@ module Browser
     browser.content
   end
 
-  private_class_method def self.maybe_download_images(browser, page_source, options, url)
-    return [page_source, nil] unless options[:image_dir]
+  # private_class_method def self.maybe_download_images(browser, page_source, options, url)
+  #  return [page_source, nil] unless options[:image_dir]
 
-    image_dir = options[:image_dir]
-    FileUtils.mkdir_p(image_dir)
-    base_url = Utils::UrlHelper.extract_page_base_url(page_source, url)
-    page_source, image_map = download_images(browser, page_source, image_dir, base_url)
-    [page_source, image_map]
-  end
+  #  image_dir = options[:image_dir]
+  #  FileUtils.mkdir_p(image_dir)
+  #  base_url = Utils::UrlHelper.extract_page_base_url(page_source, url)
+  #  page_source, image_map = download_images(browser, page_source, image_dir, base_url)
+  #  [page_source, image_map]
+  # end
 
   private_class_method def self.log_error(url, error)
     puts error.backtrace
@@ -151,33 +153,33 @@ module Browser
     nil
   end
 
-  private_class_method def self.download_images(browser, page_source, image_dir, base_url)
-    image_elements = browser.locator("img").all
+  # private_class_method def self.download_images(browser, page_source, image_dir, base_url)
+  #  image_elements = browser.locator("img").all
 
-    image_map = {}
+  #  image_map = {}
 
-    image_elements.each do |image_element|
-      image_excluded = maybe_exclude_image(image_element)
-      next if image_excluded
+  #  image_elements.each do |image_element|
+  #    image_excluded = maybe_exclude_image(image_element)
+  #    next if image_excluded
 
-      key, source_image = process_image(browser, image_dir, base_url, image_element)
-      image_map[key] = source_image if key.present? && source_image.present?
-    end
+  #    key, source_image = process_image(browser, image_dir, base_url, image_element)
+  #    image_map[key] = source_image if key.present? && source_image.present?
+  #  end
 
-    html = Nokolexbor::HTML(page_source)
-    html.css("img").each do |img|
-      image_map_key = image_map.keys.find { |key| image_map[key].include?(img["src"]) }
-      if image_map_key.present?
-        img["src"] = "images/#{image_map_key}"
-      else
-        img.remove
-      end
-    end
+  #  html = Nokolexbor::HTML(page_source)
+  #  html.css("img").each do |img|
+  #    image_map_key = image_map.keys.find { |key| image_map[key].include?(img["src"]) }
+  #    if image_map_key.present?
+  #      img["src"] = "images/#{image_map_key}"
+  #    else
+  #      img.remove
+  #    end
+  #  end
 
-    page_source = html.to_html
+  #  page_source = html.to_html
 
-    [page_source, image_map]
-  end
+  #  [page_source, image_map]
+  # end
 
   private_class_method def self.generate_filename(src, file_type)
     hash = Digest::SHA256.hexdigest(src)
