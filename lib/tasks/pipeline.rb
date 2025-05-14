@@ -35,9 +35,10 @@ namespace :pipeline do
   end
 
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :gnis] do |_t, args|
+  task :fetch, [:state, :gnis, :dry_run] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
+    dry_run = args[:dry_run]
 
     context = Core::ContextManager.get_context(state, gnis)
 

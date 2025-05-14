@@ -6,21 +6,25 @@ RUN apt-get update && apt-get install -y  \
   && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password civicpatch_user
+WORKDIR /app
+RUN chown -R civicpatch_user:civicpatch_user /app && \
+  chmod -R 755 /app
+
 USER civicpatch_user
 
-WORKDIR /app
-
-COPY --chown=civicpatch_user Gemfile Gemfile.lock ./
+COPY --chown=civicpatch_user Gemfile Gemfile.lock open_data.gemspec ./
+COPY --chown=civicpatch_user lib/open_data/version.rb ./lib/open_data/
 COPY --chown=civicpatch_user package.json package-lock.json ./
-COPY --chown=civicpatch_user . .
 
 RUN bundle install
-RUN npm install
+RUN npm ci
 
 USER root
 RUN ./node_modules/.bin/playwright install-deps
 
 USER civicpatch_user
-RUN ./node_modules/.bin/playwright install
+RUN ./node_modules/.bin/playwright install chromium
 
-CMD ["bundle", "exec", "rake", "pipeline:hello"]
+COPY --chown=civicpatch_user . .
+
+CMD ["tail", "-f", "/dev/null"]

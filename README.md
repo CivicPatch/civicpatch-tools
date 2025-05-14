@@ -1,13 +1,14 @@
 # OpenData
 
-## Rules
-* Cities can be in two counties (ex: King/Snohomish -> Bothell)
-* A county can have the same name as a city (ex: Spokane/Spokane)
+## Development
+```bash
+
+```
 
 ## Commands
 
 ```bash
-rake 'city_scrape:get_places[mi]'
+rake 'pipeline:fetch[wa,2411856]'
 ```
 
 ## Sources

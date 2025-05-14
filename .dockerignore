@@ -1,3 +1,11 @@
-/cli/
-/gui/
-/node_modules/
+node_modules
+node_modules/**
+node_modules/.bin
+node_modules/.bin/**
+.DS_Store
+.ruby-lsp/
+tmp/
+
+tmp
+civicpatch_tools/
+Dockerfile

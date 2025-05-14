@@ -1,0 +1,8 @@
+root = "."
+tmp_dir = "civicpatch_tools/go/tmp"
+
+[build]
+cmd = "cd ./civicpatch_tools/go/civpatch && go build -o ../tmp/civpatch ."
+bin = "./civicpatch_tools/go/tmp/civpatch"
+args_bin = ["scrape", "-state", "wa", "-gnis", "2411856"]
+include_dir = ["./civicpatch_tools/go/civpatch"]
