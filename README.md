@@ -1,5 +1,25 @@
 # OpenData
 
+## Contribute
+### Run Pipelines
+**Simple Setup (Login via Browser)**
+```bash
+civicpatch scrape -state wa --gnis 2411856
+```
+
+**CI Setup (Setup Environment Variables)**
+* GOOGLE_SEARCH_API_KEY
+* GOOGLE_SEARCH_ENGINE_ID
+* BRAVE_TOKEN (optional)
+* OPENAI_TOKEN
+* GOOGLE_GEMINI_TOKEN
+```bash
+civicpatch scrape -state wa --gnis 2411856 --with-ci true --dry-run false
+```
+####
+
+### Approve a PR
+
 ## Development
 ```bash
 

@@ -2,7 +2,12 @@ module civpatch
 
 go 1.24.3
 
-require github.com/docker/docker v28.1.1+incompatible
+require (
+	github.com/cenkalti/backoff/v4 v4.3.0
+	github.com/docker/docker v28.1.1+incompatible
+	github.com/google/go-github/v72 v72.0.0
+	golang.org/x/oauth2 v0.30.0
+)
 
 require (
 	github.com/Microsoft/go-winio v0.4.14 // indirect
@@ -14,6 +19,7 @@ require (
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
+	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/go-archive v0.1.0 // indirect

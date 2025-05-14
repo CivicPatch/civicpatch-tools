@@ -7,15 +7,18 @@ import (
 	"os"
 
 	"civpatch/docker"
+	"civpatch/services"
 
 	"github.com/docker/docker/pkg/stdcopy"
 )
 
 var (
-	scrapeCommand = flag.NewFlagSet("scrape", flag.ExitOnError)
-	dryRun        = scrapeCommand.Bool("dry-run", true, "Run scraper, but don't open a PR")
-	state         = scrapeCommand.String("state", "", "State to scrape")
-	gnis          = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
+	GITHUB_CLIENT_ID = "Iv23liEGI2vDgAHmft8C"
+	scrapeCommand    = flag.NewFlagSet("scrape", flag.ExitOnError)
+	withCI           = scrapeCommand.Bool("with-ci", false, "Run with CI")
+	dryRun           = scrapeCommand.Bool("dry-run", true, "Run scraper, but don't open a PR")
+	state            = scrapeCommand.String("state", "", "State to scrape")
+	gnis             = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
 
 	requiredEnvVars = []string{
@@ -28,10 +31,14 @@ var (
 		"GOOGLE_SEARCH_API_KEY",
 		"GOOGLE_SEARCH_ENGINE_ID",
 	}
+
+	requiredEnvVarsCI = append(requiredEnvVars,
+		"GITHUB_TOKEN",
+	)
 )
 
-func checkEnvironmentVariables() {
-	for _, envVar := range requiredEnvVars {
+func checkEnvironmentVariables(envVars []string) {
+	for _, envVar := range envVars {
 		if os.Getenv(envVar) == "" {
 			fmt.Printf("Error: %s is not set\n", envVar)
 			os.Exit(1)
@@ -39,8 +46,36 @@ func checkEnvironmentVariables() {
 	}
 }
 
-func checkScrapeInput(state string, gnis string) {
-	checkEnvironmentVariables()
+func checkGitHubCredentials(ctx context.Context) {
+	deviceFlow, err := services.NewGitHubDeviceFlow(GITHUB_CLIENT_ID)
+	if err != nil {
+		fmt.Println("Error creating device flow:", err)
+		os.Exit(1)
+	}
+
+	client, err := deviceFlow.NewClient(ctx)
+	if err != nil {
+		fmt.Println("Error getting GitHub Client", err)
+		os.Exit(1)
+	}
+
+	user, _, err := client.Users.Get(ctx, "")
+	if err != nil {
+		fmt.Println("Error getting user:", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("Successfully authenticated as %s\n", *user.Name)
+}
+
+func checkScrapeInput(ctx context.Context, state string, gnis string, withCI bool) {
+	if withCI {
+		checkEnvironmentVariables(requiredEnvVarsCI)
+	} else {
+		checkEnvironmentVariables(requiredEnvVars)
+		checkGitHubCredentials(ctx)
+	}
+
 	if state == "" {
 		fmt.Println("Error: state is required")
 		os.Exit(1)
@@ -51,9 +86,9 @@ func checkScrapeInput(state string, gnis string) {
 	}
 }
 
-func scrape(state string, gnis string, dryRun bool) error {
+func scrape(state string, gnis string, dryRun bool, withCI bool) error {
 	ctx := context.Background()
-	checkScrapeInput(state, gnis)
+	checkScrapeInput(ctx, state, gnis, withCI)
 
 	fmt.Println("Scraping with dry run:", dryRun)
 
@@ -83,7 +118,6 @@ func scrape(state string, gnis string, dryRun bool) error {
 		fmt.Println("Error running container:", err)
 		os.Exit(1)
 	}
-	defer logs.Close()
 
 	fmt.Println("Container started:", containerID)
 
@@ -111,6 +145,6 @@ func main() {
 	}
 
 	if scrapeCommand.Parsed() {
-		scrape(*state, *gnis, *dryRun)
+		scrape(*state, *gnis, *dryRun, *withCI)
 	}
 }
