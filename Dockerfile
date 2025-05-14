@@ -12,19 +12,21 @@ RUN chown -R civicpatch_user:civicpatch_user /app && \
 
 USER civicpatch_user
 
-COPY --chown=civicpatch_user Gemfile Gemfile.lock open_data.gemspec ./
-COPY --chown=civicpatch_user lib/open_data/version.rb ./lib/open_data/
-COPY --chown=civicpatch_user package.json package-lock.json ./
+RUN git init --initial-branch=main && \
+  git remote add origin https://${GITHUB_TOKEN}:x-oauth-basic@github.com/CivicPatch/open-data.git && \
+  git sparse-checkout set package.json package-lock.json \
+  Gemfile Gemfile.lock open_data.gemspec lib/open_data/version.rb && \
+  git pull origin main
 
-RUN bundle install
+RUN ls -la
+
 RUN npm ci
+RUN bundle install
 
 USER root
 RUN ./node_modules/.bin/playwright install-deps
 
 USER civicpatch_user
 RUN ./node_modules/.bin/playwright install chromium
-
-COPY --chown=civicpatch_user . .
 
 CMD ["tail", "-f", "/dev/null"]

@@ -19,6 +19,7 @@ var (
 	state            = scrapeCommand.String("state", "", "State to scrape")
 	gnis             = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
+	municipalities = flag.NewFlagSet("municipalities", flag.ExitOnError)
 )
 
 func checkGitHubCredentials(ctx context.Context) string {

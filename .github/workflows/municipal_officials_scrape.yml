@@ -29,16 +29,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.4.2' 
-          bundler-cache: true
-
-      - name: Install dependencies
-        run: |
-          bundle install
-
       - name: Read cities from queue
         id: set-cities
         run: |

@@ -123,6 +123,11 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 		return "", nil, nil, fmt.Errorf("error converting volumes to bind mounts: %v", err)
 	}
 
+	tmpfs, err := utils.ToTmpfsMounts(volumes)
+	if err != nil {
+		return "", nil, nil, fmt.Errorf("error converting volumes to tmpfs mounts: %v", err)
+	}
+
 	env := make([]string, len(envVars))
 	for i, envVar := range envVars {
 		if args[envVar] != "" {
@@ -141,6 +146,7 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 		Volumes: containerVolumes,
 	}, &container.HostConfig{
 		Binds:      binds,
+		Tmpfs:      tmpfs,
 		AutoRemove: true,
 	}, nil, nil, "")
 
