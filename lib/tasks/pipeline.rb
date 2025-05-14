@@ -15,11 +15,6 @@ require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
 
 namespace :pipeline do
-  desc "Docker hello world"
-  task :hello do
-    puts "Hello, world!"
-  end
-
   desc "Pick cities from queue"
   task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args|
     state = args[:state]
@@ -35,21 +30,21 @@ namespace :pipeline do
   end
 
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :gnis, :dry_run] do |_t, args|
+  task :fetch, [:state, :gnis] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
-    dry_run = args[:dry_run]
 
     context = Core::ContextManager.get_context(state, gnis)
 
     prepare_directories(state, context[:municipality_entry])
 
-    potential_people_list, people_config = fetch_with_state_source(context)
+    source_directory_list_config, people_config = fetch_with_state_source(context)
     context = Core::ContextManager
               .update_context_config(context,
+                                     source_directory_list: source_directory_list_config,
                                      people: people_config)
 
-    people_config = fetch_with_scrape(context, potential_people_list)
+    people_config = fetch_with_scrape(context)
     context = Core::ContextManager
               .update_context_config(context,
                                      people: people_config)
@@ -70,12 +65,14 @@ namespace :pipeline do
     municipalities.each do |municipality_entry|
       context = Core::ContextManager.get_context(state, municipality_entry["gnis"])
       next unless municipality_entry["website"].present?
+      next unless context[:config]["source_directory_list"]["type"] == "directory_list_default"
 
-      _, people_config = fetch_with_state_source(context)
+      source_directory_list, people_config = fetch_with_state_source(context)
       aggregate_sources(context, sources: %w[state_source])
       context = Core::ContextManager.update_context_config(context,
+                                                           source_directory_list: source_directory_list,
                                                            people: people_config)
-      on_complete(context)
+      finalize(context)
     end
   end
 
@@ -94,17 +91,20 @@ namespace :pipeline do
     municipality_name = municipality_context[:municipality_entry]["name"]
     puts "#{state} - #{municipality_name} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
+    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
-    directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
+    source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
-    people = directory_list["people"]
+    people = source_directory_list["people"]
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
-    formatted_people = Resolvers::PeopleResolver.save_people(municipality_context, people_with_canoncial_names,
-                                                             "state_source")
-    [formatted_people, people_config]
+    formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
+                                                         positions_config)
+    source_directory_list["people"] = formatted_people
+
+    [source_directory_list, people_config]
   end
 
-  def fetch_with_scrape(municipality_context, potential_people_list)
+  def fetch_with_scrape(municipality_context)
     request_cache = {}
 
     # OpenAI - LLM call
@@ -123,7 +123,6 @@ namespace :pipeline do
 
     # Gemini - LLM call
     _, _, _, _, people_config = process_with_llm(municipality_context, "gemini",
-                                                 potential_people_list: potential_people_list,
                                                  page_fetcher: page_fetcher,
                                                  seeded_urls: source_urls,
                                                  request_cache: request_cache)
@@ -132,17 +131,21 @@ namespace :pipeline do
   end
 
   def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil,
-                       potential_people_list: [], seeded_urls: [], request_cache: {})
+                       seeded_urls: [], request_cache: {})
+    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
+
     page_fetcher, source_dirs, accumulated_people, people_config = Core::MunicipalScraper.fetch(
       llm_service_string,
       municipality_context,
-      potential_people_list: potential_people_list || [],
       page_fetcher: page_fetcher,
       seeded_urls: seeded_urls,
       request_cache: request_cache
     )
 
-    people = Resolvers::PeopleResolver.save_people(municipality_context, accumulated_people, llm_service_string)
+    Core::PeopleManager.update_people(municipality_context, accumulated_people, "#{llm_service_string}.before")
+    people = Core::PeopleManager.format_people(people_config, accumulated_people, positions_config)
+    Core::PeopleManager.update_people(municipality_context, people, "#{llm_service_string}.after")
+
     source_urls = people.map { |person| person["sources"] }.flatten.uniq
 
     [page_fetcher, source_urls, source_dirs, people, people_config]

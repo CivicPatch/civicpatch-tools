@@ -60,3 +60,7 @@ gem "rubocop-rake", "~> 0.7.1"
 gem "playwright-ruby-client", "~> 1.51"
 
 gem "nokolexbor", "~> 0.6.0"
+
+gem "octokit", "~> 10.0"
+
+gem "git", "~> 3.0"

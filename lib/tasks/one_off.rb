@@ -36,35 +36,6 @@ namespace :one_off do
     Core::StateManager.update_municipalities(state, updated_municipalities)
   end
 
-  desc "Fix config.yml"
-  task :fix_config do
-    state = "or"
-    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
-    municipalities.each do |municipality|
-      context = Core::ContextManager.get_context(state, municipality["gnis"])
-
-      config = Core::ConfigManager.get_config(state, municipality["gnis"])
-
-      if config["source_directory_list"].present?
-        type = config["source_directory_list"]["type"]
-        if type != "directory_list_default"
-          people = config["source_directory_list"]["people"]
-          people_config = config["people"]
-          file_type = type == "directory_list_fallback" ? "gemini_search_fallback" : "state_source"
-
-          # Update people
-          if people.present?
-            Resolvers::PeopleResolver.save_people(context, people_config, people, file_type)
-          end
-        end
-      end
-      
-
-      config.delete("source_directory_list")
-      Core::ConfigManager.update_config(state, municipality["gnis"], config)
-    end
-  end
-
   task :get_gov_types do
     state = "nh"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]

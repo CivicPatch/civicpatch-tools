@@ -110,7 +110,7 @@ type ContainerLogs struct {
 }
 
 // RunContainer runs a container with the specified configuration and returns its logs
-func (c *Client) RunContainer(ctx context.Context, image string, envVars []string, cmd []string, volumes map[string]string) (string, io.ReadCloser, context.CancelFunc, error) {
+func (c *Client) RunContainer(ctx context.Context, image string, envVars []string, args map[string]string, cmd []string, volumes map[string]string) (string, io.ReadCloser, context.CancelFunc, error) {
 	// Convert volume map to container format
 	containerVolumes := make(map[string]struct{})
 	for path := range volumes {
@@ -125,10 +125,14 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 
 	env := make([]string, len(envVars))
 	for i, envVar := range envVars {
-		env[i] = fmt.Sprintf("%s=%s", envVar, os.Getenv(envVar))
+		if args[envVar] != "" {
+			env[i] = fmt.Sprintf("%s=%s", envVar, args[envVar])
+		} else {
+			env[i] = fmt.Sprintf("%s=%s", envVar, os.Getenv(envVar))
+		}
 	}
 
-	fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ") + " && tail -f /dev/null"}
+	fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ") + " || true ; tail -f /dev/null"}
 
 	resp, err := c.client.ContainerCreate(ctx, &container.Config{
 		Image:   image,

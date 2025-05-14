@@ -14,14 +14,14 @@ import (
 var (
 	GITHUB_CLIENT_ID = "Iv23liEGI2vDgAHmft8C"
 	scrapeCommand    = flag.NewFlagSet("scrape", flag.ExitOnError)
-	withCI           = scrapeCommand.Bool("with-ci", false, "Run with CI")
-	dryRun           = scrapeCommand.Bool("dry-run", true, "Run scraper, but don't open a PR")
+	withCi           = scrapeCommand.Bool("with-ci", false, "Run with CI")
+	createPr         = scrapeCommand.Bool("create-pr", false, "Create a PR")
 	state            = scrapeCommand.String("state", "", "State to scrape")
 	gnis             = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
 )
 
-func checkGitHubCredentials(ctx context.Context) {
+func checkGitHubCredentials(ctx context.Context) string {
 	deviceFlow, err := services.NewGitHubDeviceFlow(GITHUB_CLIENT_ID)
 	if err != nil {
 		fmt.Println("Error creating device flow:", err)
@@ -41,6 +41,14 @@ func checkGitHubCredentials(ctx context.Context) {
 	}
 
 	fmt.Printf("Successfully authenticated as %s\n", *user.Name)
+
+	github_token, err := deviceFlow.GetToken(ctx)
+	if err != nil {
+		fmt.Println("Error getting GitHub token:", err)
+		os.Exit(1)
+	}
+
+	return github_token.AccessToken
 }
 
 func checkScrapeInput(ctx context.Context, state string, gnis string, withCI bool) {
@@ -48,7 +56,6 @@ func checkScrapeInput(ctx context.Context, state string, gnis string, withCI boo
 		checkEnvironmentVariables(requiredEnvVarsCI)
 	} else {
 		checkEnvironmentVariables(requiredEnvVars)
-		checkGitHubCredentials(ctx)
 	}
 
 	if state == "" {
@@ -61,11 +68,16 @@ func checkScrapeInput(ctx context.Context, state string, gnis string, withCI boo
 	}
 }
 
-func scrape(state string, gnis string, dryRun bool, withCI bool) error {
+func scrape(state string, gnis string, createPr bool, withCi bool) error {
 	ctx := context.Background()
-	checkScrapeInput(ctx, state, gnis, withCI)
+	checkScrapeInput(ctx, state, gnis, withCi)
 
-	fmt.Println("Scraping with dry run:", dryRun)
+	github_token := os.Getenv("GITHUB_TOKEN")
+	if !withCi {
+		github_token = checkGitHubCredentials(ctx)
+	}
+
+	fmt.Printf("Scraping with createPr: %t\n", createPr)
 
 	dockerClient, err := docker.NewClient()
 	if err != nil {
@@ -84,9 +96,15 @@ func scrape(state string, gnis string, dryRun bool, withCI bool) error {
 		"./lib":    "/app/lib",
 	}
 
-	cmd := []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, dryRun)}
+	args := map[string]string{
+		"GITHUB_TOKEN": github_token,
+	}
 
-	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx, "scraper:local", requiredEnvVars,
+	cmd := []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr)}
+
+	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx, "scraper:local",
+		requiredEnvVarsCI,
+		args,
 		cmd,
 		volumes)
 	if err != nil {
@@ -98,20 +116,11 @@ func scrape(state string, gnis string, dryRun bool, withCI bool) error {
 
 	fmt.Println("Container started:", containerID)
 
-	// Set stdout and stderr to unbuffered
-	//os.Stdout = os.NewFile(1, "stdout")
-	//os.Stderr = os.NewFile(2, "stderr")
-
 	scanner := bufio.NewScanner(logs)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
 
-	//_, err = stdcopy.StdCopy(os.Stdout, os.Stderr, logs)
-	//if err != nil {
-	//	fmt.Println("Error copying logs:", err)
-	//}
-	//return nil
 	return nil
 }
 
@@ -128,6 +137,6 @@ func main() {
 	}
 
 	if scrapeCommand.Parsed() {
-		scrape(*state, *gnis, *dryRun, *withCI)
+		scrape(*state, *gnis, *createPr, *withCi)
 	}
 }

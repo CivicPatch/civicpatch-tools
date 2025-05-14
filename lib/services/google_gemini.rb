@@ -34,7 +34,7 @@ module Services
       response
     end
 
-    def extract_city_people(municipality_context, content_file, url, maybe_target_names = [])
+    def extract_city_people(municipality_context, content_file, url, person_name = "")
       state = municipality_context[:state]
       municipality_name = municipality_context[:municipality_entry]["name"]
       content = File.read(content_file)
@@ -43,7 +43,7 @@ module Services
       # return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
 
       prompt = Services::Shared::GeminiPrompts
-               .gemini_generate_municipal_directory_prompt(municipality_context, content, maybe_target_names)
+               .gemini_generate_municipal_directory_prompt(municipality_context, content, person_name)
 
       response = run_prompt(prompt, state, municipality_name,
                             response_schema: Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
