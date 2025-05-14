@@ -8,13 +8,14 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	"civpatch/projectpath"
+	"time"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/archive"
+
+	"civpatch/projectpath"
 )
 
 // Client wraps Docker client operations
@@ -135,7 +136,8 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 		Env:     env,
 		Volumes: containerVolumes,
 	}, &container.HostConfig{
-		Binds: binds,
+		Binds:      binds,
+		AutoRemove: true,
 	}, nil, nil, "")
 
 	if err != nil {
@@ -148,16 +150,18 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 	}
 
 	// Get container logs
-	logs, err := c.client.ContainerLogs(context.Background(), resp.ID, container.LogsOptions{
+	logCtx, logCancel := context.WithTimeout(ctx, 10*time.Minute)
+	logs, err := c.client.ContainerLogs(logCtx, resp.ID, container.LogsOptions{
 		ShowStdout: true,
 		ShowStderr: true,
 		Follow:     true,
-		Timestamps: true,
+		Timestamps: false,
 		Tail:       "all",
 		Since:      "0",
 		Until:      "",
 	})
 	if err != nil {
+		logCancel()
 		return resp.ID, nil, fmt.Errorf("error getting container logs: %v", err)
 	}
 
