@@ -6,45 +6,43 @@ module Resolvers
   class PeopleResolver
     DISAGREEMENT_THRESHOLD = 0.9
 
-    SOURCE_CONFIDENCE_SCORES = {
-      "state_source" => 0.9,
-      "openai" => 0.7,
-      "gemini" => 0.7
-    }.freeze
-
-    def self.save_people(context, people, source_type)
-      positions_config = Core::CityManager.get_config(context[:government_type])
-      people_config = context[:config]["people"]
-      Core::PeopleManager.update_people(context, people, "#{source_type}.before")
-      formatted_people = Core::PeopleManager.format_people(people_config, people, positions_config)
-      Core::PeopleManager.update_people(context, formatted_people, "#{source_type}.after")
-
-      formatted_people
-    end
-
     def self.resolve(municipality_context)
       state = municipality_context[:state]
       gnis = municipality_context[:municipality_entry]["gnis"]
+      state_source = municipality_context[:config]["source_directory_list"]["people"]
       people_config = municipality_context[:config]["people"]
 
       sources_folder_path = PathHelper.get_people_sources_path(state, gnis)
-      valid_sources = %w[state_source openai gemini]
       source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
-                        .select { |file| file.include?("after") && !file.include?("fallback") }
 
-      sources = []
+      sources = [{
+        source_name: "state_source",
+        people: state_source,
+        confidence_score: 0.9
+      }]
       source_files.each do |source_file|
-        source_name = valid_sources.find { |source| source_file.include?(source) }
-        next unless source_name
+        next if source_file.include?("before") # Discard unprocessed results
 
         source_people = JSON.parse(File.read(source_file))
-        source_people = source_people.reject { |person| person["name"].blank? }
+        source_name = if source_file.include?("openai")
+                        "openai"
+                      elsif source_file.include?("gemini")
+                        "gemini"
+                      end
 
-        sources << {
+        source = {
           source_name: source_name,
           people: source_people,
-          confidence_score: SOURCE_CONFIDENCE_SCORES[source_name]
+          confidence_score: case source_name
+                            when "openai"
+                              0.7
+                            when "gemini"
+                              0.7
+                            else
+                              0.0
+                            end
         }
+        sources << source
       end
 
       {

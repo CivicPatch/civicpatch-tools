@@ -53,7 +53,7 @@ module Services
       )
       end
 
-      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, maybe_target_names)
+      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "")
         state = municipality_context[:state]
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]
@@ -63,15 +63,17 @@ module Services
         divisions = municipality_config["positions"].flat_map { |position| position["divisions"] }
         position_examples = municipality_config["position_examples"]
         current_date = Date.today.strftime("%Y-%m-%d")
-        target_person = maybe_target_names.count == 1 ? maybe_target_names.first : ""
+        maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
+          person&.dig("name")
+        end
 
-        target_text = if target_person.present?
-                        target_person
+        target_text = if person_name.present?
+                        person_name
                       else
                         %(the council members (including the mayor) of the target municipality.
                         If the content includes information about the following people, they are
                         very likely to be on the council:
-                        #{maybe_target_names.join(", ")}
+                        #{maybe_target_people.join(", ")}
                         )
                       end
 

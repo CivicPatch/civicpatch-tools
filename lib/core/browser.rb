@@ -79,7 +79,7 @@ module Browser
   private_class_method def self.process_page(browser, url, options, api_data)
     page_source = browser.content
     page_source, image_map = maybe_download_images(browser, page_source, options, url)
-    formatted_html = format_page_html(browser, page_source, api_data, url)
+    formatted_html = format_page_html(page_source, api_data, url)
 
     {
       page_html: formatted_html,
@@ -87,7 +87,7 @@ module Browser
     }.compact
   end
 
-  private_class_method def self.format_page_html(browser, page_source, api_content, url)
+  private_class_method def self.format_page_html(page_source, api_content, url)
     formatted_html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
     return formatted_html if api_content.empty?
 
@@ -166,7 +166,7 @@ module Browser
 
     html = Nokolexbor::HTML(page_source)
     html.css("img").each do |img|
-      image_map_key = image_map.keys.find { |key| img["src"].present? && image_map[key].include?(img["src"]) }
+      image_map_key = image_map.keys.find { |key| image_map[key].include?(img["src"]) }
       if image_map_key.present?
         img["src"] = "images/#{image_map_key}"
       else
