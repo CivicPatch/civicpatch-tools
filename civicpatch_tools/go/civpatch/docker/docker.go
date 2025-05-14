@@ -15,7 +15,7 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/archive"
 
-	"civpatch/projectpath"
+	"civpatch/utils"
 )
 
 // Client wraps Docker client operations
@@ -41,7 +41,7 @@ func (c *Client) Close() error {
 func (c *Client) BuildImage(ctx context.Context, dockerfilePath string, tag string) error {
 	// Convert Dockerfile path to absolute path from project root if it's relative
 	if !filepath.IsAbs(dockerfilePath) {
-		absPath, err := projectpath.FromProjectRoot(dockerfilePath)
+		absPath, err := utils.FromProjectRoot(dockerfilePath)
 		if err != nil {
 			return fmt.Errorf("error resolving Dockerfile path: %v", err)
 		}
@@ -110,7 +110,7 @@ type ContainerLogs struct {
 }
 
 // RunContainer runs a container with the specified configuration and returns its logs
-func (c *Client) RunContainer(ctx context.Context, image string, envVars []string, cmd []string, volumes map[string]string) (string, io.ReadCloser, error) {
+func (c *Client) RunContainer(ctx context.Context, image string, envVars []string, cmd []string, volumes map[string]string) (string, io.ReadCloser, context.CancelFunc, error) {
 	// Convert volume map to container format
 	containerVolumes := make(map[string]struct{})
 	for path := range volumes {
@@ -118,9 +118,9 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 	}
 
 	// Convert volume map to binds using projectpath package
-	binds, err := projectpath.ToBindMounts(volumes)
+	binds, err := utils.ToBindMounts(volumes)
 	if err != nil {
-		return "", nil, fmt.Errorf("error converting volumes to bind mounts: %v", err)
+		return "", nil, nil, fmt.Errorf("error converting volumes to bind mounts: %v", err)
 	}
 
 	env := make([]string, len(envVars))
@@ -141,12 +141,12 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 	}, nil, nil, "")
 
 	if err != nil {
-		return "", nil, fmt.Errorf("error creating container: %v", err)
+		return "", nil, nil, fmt.Errorf("error creating container: %v", err)
 	}
 
 	err = c.client.ContainerStart(ctx, resp.ID, container.StartOptions{})
 	if err != nil {
-		return "", nil, fmt.Errorf("error starting container: %v", err)
+		return "", nil, nil, fmt.Errorf("error starting container: %v", err)
 	}
 
 	// Get container logs
@@ -162,8 +162,8 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 	})
 	if err != nil {
 		logCancel()
-		return resp.ID, nil, fmt.Errorf("error getting container logs: %v", err)
+		return resp.ID, nil, nil, fmt.Errorf("error getting container logs: %v", err)
 	}
 
-	return resp.ID, logs, nil
+	return resp.ID, logs, logCancel, nil
 }
