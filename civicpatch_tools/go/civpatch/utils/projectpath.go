@@ -78,19 +78,3 @@ func ToBindMounts(volumes map[string]string) ([]string, error) {
 	}
 	return binds, nil
 }
-
-func ToTmpfsMount(hostPath, containerPath string) (string, error) {
-	return ToContainerPath(hostPath) + ":" + containerPath + ":rw,exec", nil
-}
-
-func ToTmpfsMounts(volumes map[string]string) (map[string]string, error) {
-	binds := make(map[string]string)
-	for host, container := range volumes {
-		bind, err := ToTmpfsMount(host, container)
-		if err != nil {
-			return nil, err
-		}
-		binds[host] = bind
-	}
-	return binds, nil
-}
