@@ -41,6 +41,8 @@ module Core
                people_config: municipality_context[:config]["people"] }
       exit_early = false
 
+      avoid_keywords = %w[alerts news event calendar archive]
+
       %w[seeded search crawler].each do |scrape_with|
         puts "Scraping with #{scrape_with}"
         break unless should_continue_scraping?(context, data)
@@ -61,14 +63,15 @@ module Core
           puts "Search results: #{urls}"
         when "crawler"
           exit_early = true
-          avoid_keywords = %w[alerts news event calendar]
           puts "#{llm_service_string}: Scraping with crawler #{keyword_groups}, avoid keywords #{avoid_keywords}"
           urls = scrape_with_crawler(context, keyword_groups, avoid_keywords)
         end
 
         next if urls.blank?
 
-        urls = urls.map { |url| Utils::UrlHelper.format_url(url) }
+        urls = urls.map { |url| Utils::UrlHelper.format_url(url) }.reject do |url|
+          avoid_keywords.any? { |keyword| url.include?(keyword) }
+        end
 
         data = scrape_urls(context, data, urls_to_process: urls, early_exit: exit_early)
       end

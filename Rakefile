@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require "bundler/gem_tasks"
 require "minitest/test_task"
 
 require "bundler/setup"
+$LOAD_PATH.unshift(File.expand_path("lib", __dir__))
+
 require "nokogiri"
 require "open-uri"
 require "httparty"

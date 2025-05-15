@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
 require "pathname"
-require "core/state_manager"
-require "utils/folder_helper"
+require_relative "utils/folder_helper"
+require_relative "core/state_manager"
+
 module PathHelper
   def self.project_path(relative_path)
     File.expand_path(relative_path, Dir.pwd)
+  end
+
+  def self.format_name(name)
+    name.downcase.gsub(" ", "_")
   end
 
   def self.get_municipality_config_path(state, gnis)
@@ -24,7 +29,7 @@ module PathHelper
       path_name = "#{city_entry["name"]}_#{city_entry["gnis"]}"
     end
 
-    Utils::FolderHelper.format_name(path_name)
+    format_name(path_name)
   end
 
   def self.get_data_source_city_path(state, gnis)

@@ -15,6 +15,9 @@ require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
 
 namespace :pipeline do
+  task :hello do
+    puts "Hello, world!"
+  end
   # desc "Pick cities from queue"
   # task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args|
   #  state = args[:state]

@@ -12,12 +12,8 @@ RUN chown -R civicpatch_user:civicpatch_user /app && \
 
 USER civicpatch_user
 
-COPY package.json package-lock.json ./
-COPY Gemfile Gemfile.lock open_data.gemspec ./
-COPY lib/open_data/version.rb ./lib/open_data
-
-RUN git pull origin main
-RUN ls -la
+COPY --chown=civicpatch_user package.json package-lock.json ./
+COPY --chown=civicpatch_user Gemfile Gemfile.lock ./
 
 RUN npm ci
 RUN bundle install
@@ -27,5 +23,7 @@ RUN ./node_modules/.bin/playwright install-deps
 
 USER civicpatch_user
 RUN ./node_modules/.bin/playwright install chromium
+
+RUN ls -la
 
 CMD ["tail", "-f", "/dev/null"]

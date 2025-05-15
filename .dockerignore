@@ -8,4 +8,4 @@ tmp/
 
 tmp
 civicpatch_tools/
-Dockerfile
+Dockerfile.*

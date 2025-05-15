@@ -55,7 +55,6 @@ module Core
     end
 
     def self.get_city_entry_by_gnis(state, gnis)
-      puts "State and gnis: #{state} #{gnis}"
       municipalities = get_municipalities(state)
       municipalities["municipalities"].find { |municipality| municipality["gnis"] == gnis }
     end

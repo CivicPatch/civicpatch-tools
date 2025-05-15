@@ -2,7 +2,7 @@
 
 require "test_helper"
 require_relative "../../../lib/services/shared/people"
-require "core/person_resolver" # Added dependency
+require "resolvers/person_resolver" # Added dependency
 
 module Services
   module Shared

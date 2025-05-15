@@ -20,8 +20,13 @@ module Browser
   }.freeze
 
   def self.with_browser
-    Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwright") do |playwright|
-      browser = playwright.chromium.launch(headless: true)
+    Playwright.create(
+      playwright_cli_executable_path: "/app/node_modules/.bin/playwright"
+    ) do |playwright|
+      browser = playwright.chromium.launch(
+        headless: true,
+        args: ["--single-process"] # Started happening after upgrading Docker https://github.com/microsoft/playwright/issues/4303
+      )
       context = browser.new_context(
         userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" # rubocop:disable Metrics/LineLength
       )
