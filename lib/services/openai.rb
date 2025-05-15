@@ -53,7 +53,7 @@ module Services
       government_type = municipality_context[:government_type]
       government_types_config = Core::CityManager.get_config(government_type)
       positions = government_types_config["positions"].map { |position| position["role"] }
-      divisions = government_types_config["positions"].flat_map { |position| position["divisions"] }
+      divisions = government_types_config["positions"].flat_map { |position| position["divisions"] }.compact.uniq
       position_examples = government_types_config["position_examples"]
       municipality_entry = municipality_context[:municipality_entry]
       current_date = Date.today.strftime("%Y-%m-%d")

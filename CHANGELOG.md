@@ -1,5 +1,7 @@
-## [Unreleased]
+## 2025-04-14
+- Dockerized setup
+- Add go cli to run scrapes
 
-## [0.1.0] - 2025-03-21
+## 2025-03-21
 
 - Initial release

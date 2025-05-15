@@ -111,12 +111,6 @@ type ContainerLogs struct {
 
 // RunContainer runs a container with the specified configuration and returns its logs
 func (c *Client) RunContainer(ctx context.Context, image string, envVars []string, args map[string]string, cmd []string, volumes map[string]string) (string, io.ReadCloser, context.CancelFunc, error) {
-	// Convert volume map to container format
-	containerVolumes := make(map[string]struct{})
-	for path := range volumes {
-		containerVolumes[path] = struct{}{}
-	}
-
 	// Convert volume map to binds using projectpath package
 	binds, err := utils.ToBindMounts(volumes)
 	if err != nil {
@@ -135,10 +129,9 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 	fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ") + " || true ; tail -f /dev/null"}
 
 	resp, err := c.client.ContainerCreate(ctx, &container.Config{
-		Image:   image,
-		Cmd:     fullCmd,
-		Env:     env,
-		Volumes: containerVolumes,
+		Image: image,
+		Cmd:   fullCmd,
+		Env:   env,
 	}, &container.HostConfig{
 		Binds:      binds,
 		AutoRemove: true,

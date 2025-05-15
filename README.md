@@ -28,7 +28,7 @@ civicpatch scrape -state wa --gnis 2411856 --with-ci true --dry-run false
 ## Commands
 
 ```bash
-rake 'pipeline:fetch[wa,2411856]'
+rake "pipeline:fetch[wa,2411856]"
 ```
 
 ## Sources

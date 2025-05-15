@@ -86,7 +86,7 @@ func (d *DeviceFlow) GetToken(ctx context.Context) (*oauth2.Token, error) {
 	fmt.Println("\nWhat this means:")
 	fmt.Println("- You'll be granting access to create pull requests on public repositories")
 	fmt.Println("- You can revoke this access at any time in your GitHub settings")
-	fmt.Println("- The token will be stored locally and expire in 7 days")
+	fmt.Println("- The token will be stored locally and you will have to re-authenticate when it expires")
 	fmt.Println("\nTo authenticate:")
 	fmt.Println("1. Visit:", resp.VerificationURI)
 	fmt.Println("2. Enter this code:", resp.UserCode)

@@ -2,19 +2,21 @@
 
 require "core/city_manager"
 require "utils/costs_helper"
-require "pp"
-require_relative "shared/gemini_prompts"
 require "utils/name_helper"
+require_relative "shared/gemini_prompts"
+require_relative "shared/requests"
 
 module Services
   class GoogleGemini
-    MAX_RETRIES = 5
-    # MODEL = "gemini-2.5-pro-exp-03-25".freeze
-    MODEL = "gemini-2.5-flash-preview-04-17"
-    # MODEL = "gemini-2.0-flash".freeze
-    # MODEL = "gemini-1.5-pro".freeze
+    MODELS = %w[
+      gemini-2.5-flash-preview-04-17
+      gemini-2.0-flash
+    ].freeze
+
     BASE_URI = "https://generativelanguage.googleapis.com"
+    MAX_RETRIES = 5
     BASE_SLEEP = 5
+    DEFAULT_TIMEOUT = 180
 
     def initialize
       @api_key = ENV["GOOGLE_GEMINI_TOKEN"]
@@ -61,113 +63,79 @@ module Services
     end
 
     def run_prompt(prompt, state, municipality_name, response_schema: nil, with_search: false)
-      retry_attempts = 0
-      url = "#{BASE_URI}/v1beta/models/#{MODEL}:generateContent?key=#{@api_key}"
-
-      payload = {
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }],
-        generationConfig: {
-          temperature: 0
-        }
-      }
-
-      if with_search
-        payload[:tools] = { googleSearch: {} }
-      else
-        payload[:generationConfig][:responseMimeType] = "application/json"
-        payload[:generationConfig][:responseSchema] = response_schema
+      Services::Shared::Requests.with_model_fallback do |model|
+        make_request(prompt, model, response_schema, with_search, state, municipality_name)
       end
-
-      options = {
-        body: payload.to_json,
-        headers: {
-          "Content-Type" => "application/json"
-        },
-        timeout: 180
-      }
-
-      response = nil
-      progress_thread = Thread.new do
-        loop do
-          puts "Google Gemini is running..."
-          sleep 2
-        end
-      end
-
-      begin
-        response = HTTParty.post(url, options)
-      ensure
-        progress_thread.kill
-        puts "\n" # Add a newline after the dots
-      end
-
-      if response.success?
-        usage = response["usageMetadata"]
-        input_tokens_num = usage["promptTokenCount"]
-        candidates_token_num = usage["candidatesTokenCount"]
-        thoughts_token_num = usage["thoughtsTokenCount"].to_i # Diff models might not support thoughts
-
-        Utils::CostsHelper.log_llm_cost(
-          state,
-          municipality_name,
-          "google_gemini",
-          input_tokens_num,
-          candidates_token_num + thoughts_token_num,
-          MODEL,
-          with_search: with_search
-        )
-
-        # TODO: needs more robustness
-        response_candidate = response["candidates"].first
-
-        json_output = response_candidate["content"]["parts"].first["text"]
-
-        cleaned_json_output = json_output.gsub("```json", "").gsub("```", "")
-
-        parsed_response = begin
-          JSON.parse(cleaned_json_output)
-        rescue StandardError
-          nil
-        end
-
-        puts "Failed to parse JSON response from Gemini: #{json_output}" if parsed_response.nil?
-
-        parsed_response
-      else
-        puts "Request failed. HTTP Status: #{response.code}"
-        puts "Response: #{response.message}"
-        nil
-      end
-    rescue Net::ReadTimeout => e
-      puts e.message
-      puts e.backtrace
-      if retry_attempts < MAX_RETRIES # Check if MAX_RETRIES is defined
-        sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
-        puts "Might be running into rate limits. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
-        sleep sleep_time
-        retry_attempts += 1
-        retry
-      else
-        puts "Too many requests. Max retries reached for Google Gemini."
-      end
-      nil
     end
 
-    def self.get_cost(input_tokens_num, output_tokens_num)
+    def get_cost(input_tokens_num, output_tokens_num)
       input_cost_per_million = 0.15 # USD
       output_cost_per_million = 0.60 # USD
 
       input_millions = input_tokens_num / 1_000_000.0
       output_millions = output_tokens_num / 1_000_000.0
 
-      input_cost = input_millions * input_cost_per_million
-      output_cost = output_millions * output_cost_per_million
+      input_millions * input_cost_per_million + output_millions * output_cost_per_million
+    end
 
-      input_cost + output_cost
+    private
+
+    def make_request(prompt, model, response_schema, with_search, state, municipality_name)
+      Services::Shared::Requests.with_progress_indicator do
+        response = HTTParty.post(
+          "#{BASE_URI}/v1beta/models/#{model}:generateContent?key=#{@api_key}",
+          request_options(prompt, response_schema, with_search)
+        )
+
+        if response.success?
+          log_usage(response, model, with_search, state, municipality_name)
+          parse_response(response)
+        else
+          log_error(response)
+          nil
+        end
+      end
+    end
+
+    def request_options(prompt, response_schema, with_search)
+      {
+        body: build_payload(prompt, response_schema, with_search).to_json,
+        headers: { "Content-Type" => "application/json" },
+        timeout: DEFAULT_TIMEOUT
+      }
+    end
+
+    def build_payload(prompt, response_schema, with_search)
+      {
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0,
+          responseMimeType: with_search ? nil : "application/json",
+          responseSchema: with_search ? nil : response_schema
+        },
+        tools: with_search ? { googleSearch: {} } : nil
+      }.compact
+    end
+
+    def log_usage(response, model, with_search, state, municipality_name)
+      usage = response["usageMetadata"]
+      Utils::CostsHelper.log_llm_cost(
+        state, municipality_name, "google_gemini",
+        usage["promptTokenCount"],
+        usage["candidatesTokenCount"] + usage["thoughtsTokenCount"].to_i,
+        model, with_search: with_search
+      )
+    end
+
+    def log_error(response)
+      puts "Request failed. HTTP Status: #{response.code}\nResponse: #{response.message}"
+    end
+
+    def parse_response(response)
+      JSON.parse(response["candidates"].first["content"]["parts"].first["text"].gsub(/```json|```/, ""))
+    rescue JSON::ParserError => e
+      puts "Failed to parse JSON response from Gemini: #{e.message}"
+      nil
     end
   end
 end

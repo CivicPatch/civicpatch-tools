@@ -16,10 +16,8 @@ RUN git init --initial-branch=main && \
   git remote add origin https://${GITHUB_TOKEN}:x-oauth-basic@github.com/CivicPatch/open-data.git
 
 RUN git sparse-checkout set package.json package-lock.json \
-  Gemfile Gemfile.lock open_data.gemspec lib/open_data/version.rb && \
+  Gemfile Gemfile.lock && \
   git pull origin main
-
-RUN ls -la
 
 RUN npm ci
 RUN bundle install

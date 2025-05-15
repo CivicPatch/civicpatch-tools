@@ -103,8 +103,7 @@ func scrape(state string, gnis string, createPr bool, withCi bool, develop bool)
 	volumes := map[string]string{}
 	if develop {
 		volumes = map[string]string{
-			"./config": "/app/config",
-			"./lib":    "/app/lib",
+			".": "/app",
 		}
 	}
 
