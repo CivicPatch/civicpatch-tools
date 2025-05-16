@@ -7,7 +7,7 @@ set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd "${SCRIPT_DIR}"
 
-OUTPUT_DIR="./dist" 
+OUTPUT_DIR="../dist" 
 APP_NAME="civpatch_cli"
 MAIN_PACKAGE="."
 
@@ -21,7 +21,8 @@ mkdir -p "${OUTPUT_DIR}"
 build_for_platform() {
     local os="$1"
     local arch="$2"
-    local output_name="${APP_NAME}-${RELEASE_VERSION}-${os}-${arch}"
+    local friendly_name="$3"
+    local output_name="${APP_NAME}-${RELEASE_VERSION}-${friendly_name}"
 
     if [ "${os}" == "windows" ]; then
         output_name+=".exe"
@@ -38,11 +39,11 @@ build_for_platform() {
 }
 
 # Build for common platforms
-build_for_platform "linux" "amd64"
-build_for_platform "linux" "arm64"
-build_for_platform "windows" "amd64"
-build_for_platform "darwin" "amd64" # For Intel Macs
-build_for_platform "darwin" "arm64" # For Apple Silicon Macs
+build_for_platform "linux" "amd64" "linux-amd64"
+build_for_platform "linux" "arm64" "linux-arm64"
+build_for_platform "windows" "amd64" "windows-amd64.exe"
+build_for_platform "darwin" "amd64" "macos-intel"
+build_for_platform "darwin" "arm64" "macos-apple-silicon"
 
 # Example: Build for a specific target if arguments are provided
 # if [ "$1" != "" ] && [ "$2" != "" ]; then

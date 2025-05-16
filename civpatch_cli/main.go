@@ -36,12 +36,13 @@ func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error 
 		if err != nil {
 			return err
 		}
-	}
-	if scrapeRun {
+	} else if scrapeRun {
 		err = commands.ScrapeRun(ctx, *state, *gnis, *createPr, *develop, *withCi)
 		if err != nil {
 			return err
 		}
+	} else {
+		return fmt.Errorf("no scrape sub-command provided")
 	}
 
 	if output != "" {

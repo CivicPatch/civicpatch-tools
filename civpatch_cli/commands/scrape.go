@@ -19,9 +19,11 @@ import (
 const (
 	DATA_SOURCE_URL = "https://raw.githubusercontent.com/CivicPatch/open-data/refs/heads/main/data_source/<STATE>/municipalities.json"
 
-	imageName      = "ghcr.io/civicpatch/civpatch"
-	localImageTag  = "develop"
-	remoteImageTag = "latest"
+	imageName       = "ghcr.io/civicpatch/civpatch"
+	localImageTag   = "develop"
+	remoteImageTag  = "latest"
+	localImageName  = imageName + ":" + localImageTag
+	remoteImageName = imageName + ":" + remoteImageTag
 )
 
 type Municipality struct {
@@ -73,11 +75,11 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 		"GITHUB_USERNAME": githubUsername,
 	}
 
-	imageTag := remoteImageTag
 	cmd := []string{}
 	volumes := map[string]string{}
+	fullImageName := remoteImageName
 	if develop {
-		imageTag = localImageTag
+		fullImageName = localImageName
 		cmd = []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, develop, createPr)}
 		volumes = map[string]string{
 			".": "/app",
@@ -89,7 +91,7 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	}
 
 	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx,
-		imageTag,
+		fullImageName,
 		utils.RequiredEnvVarsCI,
 		args,
 		cmd,
@@ -202,7 +204,7 @@ func prepareScrape(ctx context.Context, state string, gnis string, withCi bool, 
 	}
 
 	if develop {
-		fmt.Println("Building image:", imageName+":"+localImageTag)
+		fmt.Println("Building image:", localImageName)
 		scriptPath, err := utils.FromProjectRoot("civpatch/build.sh")
 		if err != nil {
 			return "", "", nil, fmt.Errorf("error getting script path: %w", err)
@@ -215,12 +217,14 @@ func prepareScrape(ctx context.Context, state string, gnis string, withCi bool, 
 		}
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
+
+		fmt.Println("Finished running script")
 		if err := cmd.Run(); err != nil {
 			return "", "", nil, fmt.Errorf("error running script: %w", err)
 		}
 	} else {
-		fmt.Println("Pulling image:", imageName+":"+remoteImageTag)
-		if err := dockerClient.PullImage(ctx, imageName+":"+remoteImageTag, githubUsername, githubToken); err != nil {
+		fmt.Println("Pulling image:", remoteImageName)
+		if err := dockerClient.PullImage(ctx, remoteImageName, githubUsername, githubToken); err != nil {
 			return "", "", nil, fmt.Errorf("error pulling image: %w", err)
 		}
 	}
