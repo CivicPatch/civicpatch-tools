@@ -7,5 +7,5 @@ node_modules/.bin/**
 tmp/
 
 tmp
-civicpatch_tools/
+civicpatch_tools/go
 Dockerfile.*
