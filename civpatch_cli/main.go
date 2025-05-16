@@ -24,6 +24,7 @@ var (
 	withCi    = scrapeCommand.Bool("with-ci", false, "Run with CI")
 	// TODO: IMPLEMENT
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
+	// withReleaseVersion = scrapeCommand.Bool("with-release-version", false, "With release version")
 )
 
 func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error {

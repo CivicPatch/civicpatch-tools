@@ -2,35 +2,33 @@
 
 # build.sh
 
-set -e # Exit immediately if a command exits with a non-zero status.
+set -e
 
-# Default output directory
-OUTPUT_DIR="../dist"
-# Name of your main Go package/executable
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+cd "${SCRIPT_DIR}"
+
+OUTPUT_DIR="./dist" 
 APP_NAME="civpatch_cli"
-# Path to your main package
-MAIN_PACKAGE="." # Or ./cmd/mygoapp, etc.
-# Opt for dates instead of semver
-VERSION=$(date +%Y-%m-%d)
+MAIN_PACKAGE="."
 
-echo "Listing files in $(pwd):"
+if [ -z "${RELEASE_VERSION}" ]; then
+    echo "RELEASE_VERSION must be set"
+    exit 1
+fi
 
-
-# Create output directory if it doesn't exist
 mkdir -p "${OUTPUT_DIR}"
 
-# Function to build for a specific platform
 build_for_platform() {
     local os="$1"
     local arch="$2"
-    local output_name="${APP_NAME}-${VERSION}-${os}-${arch}"
+    local output_name="${APP_NAME}-${RELEASE_VERSION}-${os}-${arch}"
 
     if [ "${os}" == "windows" ]; then
         output_name+=".exe"
     fi
 
     echo "Building for ${os}/${arch}..."
-    env GOOS="${os}" GOARCH="${arch}" go build -ldflags="-X main.Version=${VERSION}" -o "${OUTPUT_DIR}/${output_name}" "${MAIN_PACKAGE}"
+    env GOOS="${os}" GOARCH="${arch}" go build -ldflags="-X main.Version=${RELEASE_VERSION}" -o "${OUTPUT_DIR}/${output_name}" "${MAIN_PACKAGE}"
     if [ $? -eq 0 ]; then
         echo "Successfully built ${OUTPUT_DIR}/${output_name}"
     else
