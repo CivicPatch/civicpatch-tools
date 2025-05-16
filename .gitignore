@@ -4,15 +4,12 @@
 /coverage/
 /doc/
 /pkg/
-/spec/reports/
-**/tmp/**
-
+/dist/
 /node_modules/
 /vendor/
 
 chat.txt
 costs.csv
-testing/
 people.csv
 scratch.json
 scratch.html

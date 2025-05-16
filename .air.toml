@@ -1,12 +1,12 @@
 root = "."
-tmp_dir = "civicpatch_tools/go/tmp"
+tmp_dir = "dist/tmp"
 
 [build]
-cmd = "cd ./civicpatch_tools/go/civpatch && go build -o ../tmp/civpatch ."
-bin = "./civicpatch_tools/go/tmp/civpatch"
+cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
+bin = "./dist/tmp/civpatch_cli"
 # args_bin = ["scrape", "-state", "wa", "-gnis", "2411856", "-develop"]
 # args_bin = ["scrape", "-state", "wa", "-gnis", "2411856", "-develop"]
-# args_bin = ["scrape", "-plan", "-state", "wa"]
-args_bin = ["deploy"]
+args_bin = ["scrape", "-plan", "-state", "wa"]
+# args_bin = ["deploy"]
 # args_bin = ["auth-clear"]
-include_dir = ["civicpatch_tools"]
+include_dir = ["civpatch_cli"]
