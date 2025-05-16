@@ -20,32 +20,20 @@ namespace :pipeline do
   end
 
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :gnis, :develop] do |_t, args|
+  task :fetch, [:state, :gnis, :develop, :create_pr] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
-    develop = args[:develop]
+    develop = args[:develop].to_s.downcase == "true"
+    create_pr = args[:create_pr].to_s.downcase == "true"
 
     context = Core::ContextManager.get_context(state, gnis)
+    github = Services::GitHub.new(develop: develop)
 
-    unless develop
+    github.pull_and_create_branch(context) unless develop
 
-    prepare_directories(state, context[:municipality_entry])
+    scrape(context)
 
-    source_directory_list_config, people_config = fetch_with_state_source(context)
-    context = Core::ContextManager
-              .update_context_config(context,
-                                     source_directory_list: source_directory_list_config,
-                                     people: people_config)
-
-    people_config = fetch_with_scrape(context)
-    context = Core::ContextManager
-              .update_context_config(context,
-                                     people: people_config)
-
-    aggregate_sources(context,
-                      sources: %w[state_source gemini openai])
-
-    on_complete(context)
+    github.create_pull_request(context) if create_pr
   end
 
   desc "Fetch city officials from state source"
@@ -238,6 +226,25 @@ namespace :pipeline do
 
   private
 
-  def self.scrape(municipality_context)
+  def self.scrape(context)
+    state = context[:state]
+    municipality_entry = context[:municipality_entry]
+    prepare_directories(state, municipality_entry)
+
+    source_directory_list_config, people_config = fetch_with_state_source(context)
+    context = Core::ContextManager
+              .update_context_config(context,
+                                     source_directory_list: source_directory_list_config,
+                                     people: people_config)
+
+    people_config = fetch_with_scrape(context)
+    context = Core::ContextManager
+              .update_context_config(context,
+                                     people: people_config)
+
+    aggregate_sources(context,
+                      sources: %w[state_source gemini openai])
+
+    on_complete(context)
   end
 end
