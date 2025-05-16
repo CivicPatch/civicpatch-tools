@@ -7,20 +7,15 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"strings"
 	"time"
 
 	"civpatch/utils"
 
-	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/api/types/registry"
 	"github.com/docker/docker/client"
-	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/jsonmessage"
-	"github.com/moby/term"
 )
 
 // Client wraps Docker client operations
@@ -40,82 +35,6 @@ func NewClient() (*Client, error) {
 // Close closes the Docker client
 func (c *Client) Close() error {
 	return c.client.Close()
-}
-
-// BuildImage builds a Docker image from a local Dockerfile
-func (c *Client) BuildImage(ctx context.Context, dockerfilePath string, tag string) error {
-	fmt.Printf("Preparing to build image '%s' using Dockerfile: '%s'\n", tag, dockerfilePath)
-
-	// Convert Dockerfile path to absolute path from project root if it's relative
-	if !filepath.IsAbs(dockerfilePath) {
-		absPath, err := utils.FromProjectRoot(dockerfilePath)
-		if err != nil {
-			return fmt.Errorf("error resolving Dockerfile path '%s': %v", dockerfilePath, err)
-		}
-		dockerfilePath = absPath
-	}
-
-	// Get the directory containing the Dockerfile to use as the build context
-	buildContext := filepath.Dir(dockerfilePath)
-	// The Dockerfile name relative to the build context
-	dockerfileName := filepath.Base(dockerfilePath)
-
-	fmt.Printf("Using build context: '%s'\n", buildContext)
-	fmt.Printf("Using Dockerfile name (relative to context): '%s'\n", dockerfileName)
-
-	// Create a tar archive of the build context.
-	// This archive respects .dockerignore if present in the buildContext.
-	tar, err := archive.TarWithOptions(buildContext, &archive.TarOptions{
-		Compression: archive.Uncompressed,
-		// Add ExcludePatterns here if you need to programmatically add ignores
-		// on top of what .dockerignore provides.
-	})
-	if err != nil {
-		return fmt.Errorf("error creating build context tar for '%s': %v", buildContext, err)
-	}
-	defer tar.Close()
-
-	buildResp, err := c.client.ImageBuild(ctx, tar, types.ImageBuildOptions{
-		Dockerfile: dockerfileName,
-		Tags:       []string{tag},
-		Remove:     true, // Remove intermediate containers after a successful build
-		// NoCache:    false, // Set to true to disable build cache if needed for debugging
-		// PullParent: false, // Set to true to always attempt to pull newer base image versions
-	})
-	if err != nil {
-		return fmt.Errorf("error initiating image build for tag '%s': %v", tag, err)
-	}
-	defer buildResp.Body.Close()
-
-	fmt.Printf("Streaming build output for %s...\n", tag)
-
-	// Use Docker's utility to display the JSON message stream from the build.
-	// termFd is the file descriptor for the output, isTerminal indicates if it's a TTY.
-	termFd, isTerminal := term.GetFdInfo(os.Stdout)
-
-	// DisplayJSONMessagesStream will process the body and print to os.Stdout.
-	// It returns an error if it encounters an "error" message in the Docker event stream.
-	displayErr := jsonmessage.DisplayJSONMessagesStream(buildResp.Body, os.Stdout, termFd, isTerminal, nil)
-	if displayErr != nil {
-		// Check if the error is a structured JSONError from the Docker daemon
-		if jerr, ok := displayErr.(*jsonmessage.JSONError); ok {
-			// This means Docker sent a specific error message (e.g., a command in Dockerfile failed)
-			return fmt.Errorf("docker build for '%s' failed: %s (code: %d)", tag, strings.TrimSpace(jerr.Message), jerr.Code)
-		}
-		// Otherwise, it's some other error related to stream processing or an unexpected issue.
-		return fmt.Errorf("failed to stream build output for '%s', build may have failed: %v", tag, displayErr)
-	}
-
-	// IMPORTANT: Even if DisplayJSONMessagesStream returns nil, the image might not have been
-	// created if the stream ended prematurely without a specific error message that
-	// DisplayJSONMessagesStream recognizes as fatal. Always verify image existence.
-	_, _, err = c.client.ImageInspectWithRaw(ctx, tag) // Using ImageInspectWithRaw for consistency
-	if err != nil {
-		return fmt.Errorf("error verifying image '%s' after build (image may not have been created successfully despite no direct stream error reported by DisplayJSONMessagesStream): %v", tag, err)
-	}
-
-	fmt.Printf("Successfully built and verified image %s\n", tag)
-	return nil
 }
 
 // ContainerLogs represents the output streams from a container
@@ -252,74 +171,5 @@ func (c *Client) PullImage(ctx context.Context, imageTag string, username string
 	}
 
 	fmt.Printf("Successfully pulled image %s\n", imageTag)
-	return nil
-}
-
-// PushImage pushes a Docker image to a remote registry.
-// username and password must be provided.
-func (c *Client) PushImage(ctx context.Context, imageTag string, username string, password string) error {
-	if username == "" || password == "" {
-		return fmt.Errorf("username and password must be provided to push image %s", imageTag)
-	}
-
-	authConfig := registry.AuthConfig{
-		Username: username,
-		Password: password,
-	}
-	encodedJSON, err_marshal := json.Marshal(authConfig) // Use new variable for this specific error
-	if err_marshal != nil {
-		return fmt.Errorf("error marshalling auth config for %s: %v", imageTag, err_marshal)
-	}
-	authStr := base64.URLEncoding.EncodeToString(encodedJSON)
-
-	pushResp, err_push := c.client.ImagePush(ctx, imageTag, image.PushOptions{ // Use new variable for this specific error
-		RegistryAuth: authStr,
-	})
-	if err_push != nil {
-		return fmt.Errorf("error pushing image %s: %v", imageTag, err_push)
-	}
-	defer pushResp.Close()
-
-	// Stream the push output
-	decoder := json.NewDecoder(pushResp)
-	for {
-		var pushOutput struct {
-			Status         string `json:"status"`
-			Error          string `json:"error"`
-			Progress       string `json:"progress"`
-			ProgressDetail struct {
-				Current int `json:"current"`
-				Total   int `json:"total"`
-			} `json:"progressDetail"`
-		}
-		// Use a new variable for decode error
-		err_decode := decoder.Decode(&pushOutput)
-		if err_decode != nil {
-			if err_decode == io.EOF {
-				break // End of stream
-			}
-			break
-		}
-
-		if pushOutput.Error != "" {
-			if strings.Contains(strings.ToLower(pushOutput.Status), "unauthorized") || strings.Contains(strings.ToLower(pushOutput.Status), "denied") {
-				return fmt.Errorf("image push authorization error for %s: %s. Check credentials and permissions", imageTag, pushOutput.Status)
-			}
-			return fmt.Errorf("image push error for %s: %s", imageTag, pushOutput.Error)
-		}
-
-		if pushOutput.Status != "" {
-			if strings.Contains(strings.ToLower(pushOutput.Status), "unauthorized") || strings.Contains(strings.ToLower(pushOutput.Status), "denied") {
-				return fmt.Errorf("image push authorization error for %s: %s. Check credentials and permissions", imageTag, pushOutput.Status)
-			}
-			if pushOutput.Progress != "" {
-				fmt.Printf("Status: %s, Progress: %s\n", pushOutput.Status, pushOutput.Progress)
-			} else {
-				fmt.Printf("Status: %s\n", pushOutput.Status)
-			}
-		}
-	}
-
-	fmt.Printf("Successfully pushed image %s\n", imageTag)
 	return nil
 }
