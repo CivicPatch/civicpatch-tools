@@ -1,12 +1,12 @@
 name: Create Release for CivPatch
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - civpatch/lib/**
-      - civpatch_cli/**
+  #push:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - civpatch/lib/**
+  #    - civpatch_cli/**
   workflow_dispatch:
 
 env:
@@ -23,13 +23,18 @@ jobs:
         with:
           go-version: 1.24.3
       
-      - name: Deploy civpatch image
+      - name: Build and push civpatch image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USERNAME: ${{ github.actor }}
         run:
           RELEASE_VERSION=$(date +%Y-%m-%d) PUSH_IMAGE=true ./civpatch/build.sh
 
-      - name: Build civpatch_cli
+      - name: Build and release civpatch_cli
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          RELEASE_VERSION=$(date +%Y-%m-%d) ./civpatch_cli/build.sh
+          RELEASE_VERSION=$(date +%Y-%m-%d)
+          RELEASE_VERSION=${RELEASE_VERSION} ./civpatch_cli/build.sh
+          gh release create ${RELEASE_VERSION} --generate-notes ./dist/*
+
