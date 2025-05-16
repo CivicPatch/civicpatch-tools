@@ -5,7 +5,7 @@ set -e
 GITHUB_TOKEN=${GITHUB_TOKEN}
 GITHUB_USERNAME=${GITHUB_USERNAME}
 
-if [ ${PUSH_IMAGE} == "true" ]; then
+if [[ ${PUSH_IMAGE} == "true" ]]; then
   if [ -z "${GITHUB_TOKEN}" ] || [ -z "${GITHUB_USERNAME}" ]; then
     echo "GITHUB_TOKEN and GITHUB_USERNAME must be set"
     exit 1
