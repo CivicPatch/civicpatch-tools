@@ -18,26 +18,16 @@ namespace :pipeline do
   task :hello do
     puts "Hello, world!"
   end
-  # desc "Pick cities from queue"
-  # task :pick_cities, [:state, :num_cities, :gnis_to_ignore] do |_t, args|
-  #  state = args[:state]
-  #  num_cities = args[:num_cities]
-  #  gnis_to_ignore = args[:gnis_to_ignore].present? ? args[:gnis_to_ignore].split(" ") : []
-
-  #  municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
-  #  municipalities_to_scrape = municipalities.select { |c| should_scrape?(gnis_to_ignore, c) }.first(num_cities.to_i)
-
-  #  puts municipalities_to_scrape.map { |m|
-  #    { "name": m["name"].gsub(" ", "_"), "gnis": m["gnis"], "county": m["counties"].first }
-  #  }.to_json
-  # end
 
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :gnis] do |_t, args|
+  task :fetch, [:state, :gnis, :develop] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
+    develop = args[:develop]
 
     context = Core::ContextManager.get_context(state, gnis)
+
+    unless develop
 
     prepare_directories(state, context[:municipality_entry])
 
@@ -248,10 +238,6 @@ namespace :pipeline do
 
   private
 
-  # def self.should_scrape?(gnis_to_ignore, municipality_entry)
-  #  !gnis_to_ignore.include?(municipality_entry["gnis"]) &&
-  #    municipality_entry["website"].present? &&
-  #    # If there's only one source, it hasn't been scraped yet
-  #    (municipality_entry["meta_sources"].blank? || municipality_entry["meta_sources"].count == 1)
-  # end
+  def self.scrape(municipality_context)
+  end
 end

@@ -2,6 +2,7 @@ package docker
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -10,12 +11,14 @@ import (
 	"strings"
 	"time"
 
+	"civpatch/utils"
+
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/image"
+	"github.com/docker/docker/api/types/registry"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/archive"
-
-	"civpatch/utils"
 )
 
 // Client wraps Docker client operations
@@ -133,8 +136,8 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 		Cmd:   fullCmd,
 		Env:   env,
 	}, &container.HostConfig{
-		Binds:      binds,
-		AutoRemove: true,
+		Binds: binds,
+		// AutoRemove: true,
 	}, nil, nil, "")
 
 	if err != nil {
@@ -163,4 +166,147 @@ func (c *Client) RunContainer(ctx context.Context, image string, envVars []strin
 	}
 
 	return resp.ID, logs, logCancel, nil
+}
+func (c *Client) PullImage(ctx context.Context, imageTag string, username string, password string) error {
+	var authStr string
+
+	if username != "" && password != "" {
+		authConfig := registry.AuthConfig{
+			Username: username,
+			Password: password,
+		}
+		encodedJSON, err_marshal := json.Marshal(authConfig)
+		if err_marshal != nil {
+			return fmt.Errorf("error marshalling auth config for %s: %v", imageTag, err_marshal)
+		}
+		authStr = base64.URLEncoding.EncodeToString(encodedJSON)
+		fmt.Printf("Attempting to pull %s with provided credentials (username: %s).\n", imageTag, username)
+	} else {
+		fmt.Printf("Attempting to pull %s without explicit credentials (anonymous pull).\n", imageTag)
+	}
+
+	pullResp, err_pull := c.client.ImagePull(ctx, imageTag, image.PullOptions{ // Use new variable for this specific error
+		RegistryAuth: authStr, // Empty string if no auth provided
+	})
+	if err_pull != nil {
+		return fmt.Errorf("error initiating image pull for %s: %v", imageTag, err_pull)
+	}
+	defer pullResp.Close()
+
+	// Stream the pull output
+	decoder := json.NewDecoder(pullResp)
+	for {
+		var pullOutput struct {
+			Status         string `json:"status"`
+			Error          string `json:"error"`
+			Progress       string `json:"progress"`
+			ProgressDetail struct {
+				Current int `json:"current"`
+				Total   int `json:"total"`
+			} `json:"progressDetail"`
+			ID string `json:"id"`
+		}
+		// Use a new variable for decode error
+		err_decode := decoder.Decode(&pullOutput)
+		if err_decode != nil {
+			if err_decode == io.EOF {
+				break // End of stream
+			}
+			break
+		}
+
+		if pullOutput.Error != "" {
+			return fmt.Errorf("image pull error for %s: %s", imageTag, pullOutput.Error)
+		}
+
+		if pullOutput.Status != "" {
+			logMsg := fmt.Sprintf("Status: %s", pullOutput.Status)
+			if pullOutput.ID != "" {
+				logMsg += fmt.Sprintf(", ID: %s", pullOutput.ID)
+			}
+			if pullOutput.Progress != "" {
+				logMsg += fmt.Sprintf(", Progress: %s", pullOutput.Progress)
+			}
+			fmt.Println(logMsg)
+		}
+	}
+
+	// Verify the image exists locally
+	// Use a new variable for inspect error
+	_, _, err_inspect := c.client.ImageInspectWithRaw(ctx, imageTag)
+	if err_inspect != nil {
+		return fmt.Errorf("error verifying image %s locally after pull: %v", imageTag, err_inspect)
+	}
+
+	fmt.Printf("Successfully pulled image %s\n", imageTag)
+	return nil
+}
+
+// PushImage pushes a Docker image to a remote registry.
+// username and password must be provided.
+func (c *Client) PushImage(ctx context.Context, imageTag string, username string, password string) error {
+	if username == "" || password == "" {
+		return fmt.Errorf("username and password must be provided to push image %s", imageTag)
+	}
+
+	authConfig := registry.AuthConfig{
+		Username: username,
+		Password: password,
+	}
+	encodedJSON, err_marshal := json.Marshal(authConfig) // Use new variable for this specific error
+	if err_marshal != nil {
+		return fmt.Errorf("error marshalling auth config for %s: %v", imageTag, err_marshal)
+	}
+	authStr := base64.URLEncoding.EncodeToString(encodedJSON)
+
+	pushResp, err_push := c.client.ImagePush(ctx, imageTag, image.PushOptions{ // Use new variable for this specific error
+		RegistryAuth: authStr,
+	})
+	if err_push != nil {
+		return fmt.Errorf("error pushing image %s: %v", imageTag, err_push)
+	}
+	defer pushResp.Close()
+
+	// Stream the push output
+	decoder := json.NewDecoder(pushResp)
+	for {
+		var pushOutput struct {
+			Status         string `json:"status"`
+			Error          string `json:"error"`
+			Progress       string `json:"progress"`
+			ProgressDetail struct {
+				Current int `json:"current"`
+				Total   int `json:"total"`
+			} `json:"progressDetail"`
+		}
+		// Use a new variable for decode error
+		err_decode := decoder.Decode(&pushOutput)
+		if err_decode != nil {
+			if err_decode == io.EOF {
+				break // End of stream
+			}
+			break
+		}
+
+		if pushOutput.Error != "" {
+			if strings.Contains(strings.ToLower(pushOutput.Status), "unauthorized") || strings.Contains(strings.ToLower(pushOutput.Status), "denied") {
+				return fmt.Errorf("image push authorization error for %s: %s. Check credentials and permissions", imageTag, pushOutput.Status)
+			}
+			return fmt.Errorf("image push error for %s: %s", imageTag, pushOutput.Error)
+		}
+
+		if pushOutput.Status != "" {
+			if strings.Contains(strings.ToLower(pushOutput.Status), "unauthorized") || strings.Contains(strings.ToLower(pushOutput.Status), "denied") {
+				return fmt.Errorf("image push authorization error for %s: %s. Check credentials and permissions", imageTag, pushOutput.Status)
+			}
+			if pushOutput.Progress != "" {
+				fmt.Printf("Status: %s, Progress: %s\n", pushOutput.Status, pushOutput.Progress)
+			} else {
+				fmt.Printf("Status: %s\n", pushOutput.Status)
+			}
+		}
+	}
+
+	fmt.Printf("Successfully pushed image %s\n", imageTag)
+	return nil
 }

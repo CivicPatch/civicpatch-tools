@@ -17,7 +17,6 @@ type AuthType string
 
 const (
 	AuthTypeDeviceFlow AuthType = "device_flow"
-	AuthTypePKCE       AuthType = "pkce"
 )
 
 // TokenManager handles token caching and refresh for multiple services
@@ -36,8 +35,6 @@ type ServiceConfig struct {
 	ServiceName string
 	Config      *oauth2.Config
 	AuthType    AuthType
-	// For PKCE
-	CodeVerifier string
 	// For device flow
 	DeviceCode   string
 	UserCode     string

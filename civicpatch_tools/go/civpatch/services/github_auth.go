@@ -6,11 +6,16 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"time"
 
 	"github.com/google/go-github/v72/github"
 	"golang.org/x/oauth2"
+)
+
+const (
+	GITHUB_APP_CLIENT_ID = "Iv23lidh39jVrlDyygqV"
 )
 
 // DeviceFlowResponse represents the response from GitHub's device flow endpoint
@@ -41,7 +46,7 @@ func (e *DeviceFlowState) Error() string {
 }
 
 // NewGitHubDeviceFlow creates a new device flow handler
-func NewGitHubDeviceFlow(clientID string) (*DeviceFlow, error) {
+func NewGitHubDeviceFlow() (*DeviceFlow, error) {
 	tm, err := NewTokenManager()
 	if err != nil {
 		return nil, fmt.Errorf("failed to create token manager: %w", err)
@@ -49,7 +54,7 @@ func NewGitHubDeviceFlow(clientID string) (*DeviceFlow, error) {
 
 	// Create OAuth config with minimal required scopes
 	config := &oauth2.Config{
-		ClientID: clientID,
+		ClientID: GITHUB_APP_CLIENT_ID,
 		Endpoint: oauth2.Endpoint{
 			TokenURL: "https://github.com/login/oauth/access_token",
 		},
@@ -60,7 +65,7 @@ func NewGitHubDeviceFlow(clientID string) (*DeviceFlow, error) {
 	tm.AddService("github", config, AuthTypeDeviceFlow)
 
 	return &DeviceFlow{
-		clientID: clientID,
+		clientID: GITHUB_APP_CLIENT_ID,
 		client:   &http.Client{},
 		tm:       tm,
 		config:   config,
@@ -305,4 +310,35 @@ func (d *DeviceFlow) NewClient(ctx context.Context) (*github.Client, error) {
 	ts := oauth2.StaticTokenSource(token)
 	tc := oauth2.NewClient(ctx, ts)
 	return github.NewClient(tc), nil
+}
+
+func CheckGithubCredentials(ctx context.Context) (githubUsername, githubToken string, err error) {
+	if os.Getenv("GITHUB_TOKEN") == "" && os.Getenv("GITHUB_USERNAME") == "" {
+		return os.Getenv("GITHUB_USERNAME"), os.Getenv("GITHUB_TOKEN"), nil
+	}
+
+	// Go through device flow
+	deviceFlow, err := NewGitHubDeviceFlow()
+	if err != nil {
+		return "", "", fmt.Errorf("failed to create device flow: %w", err)
+	}
+
+	token, err := deviceFlow.GetToken(ctx)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to get token: %w", err)
+	}
+
+	client, err := deviceFlow.NewClient(ctx)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to get client: %w", err)
+	}
+
+	user, _, err := client.Users.Get(ctx, "")
+	if err != nil {
+		return "", "", fmt.Errorf("failed to get user: %w", err)
+	}
+
+	fmt.Printf("Authenticated as %s\n", *user.Login)
+
+	return *user.Login, token.AccessToken, nil
 }
