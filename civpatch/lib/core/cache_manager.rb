@@ -11,7 +11,16 @@ module Core
       cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
       cache_folders.each do |cache_folder|
-        unless urls_to_keep.any? { |url| cache_folder.include?(url) }
+        if urls_to_keep.any? { |url| cache_folder.include?(url) }
+          # Remove all but .md files
+          files = Dir.glob("#{cache_folder}/*")
+          files.each do |file|
+            next if file.end_with?(".md")
+
+            puts "Removing #{file} from cache"
+            File.delete(file)
+          end
+        else
           puts "Removing #{cache_folder} from cache"
           FileUtils.rm_rf(cache_folder)
         end
