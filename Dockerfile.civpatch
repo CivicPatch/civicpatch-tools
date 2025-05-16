@@ -12,12 +12,9 @@ RUN chown -R civicpatch_user:civicpatch_user /app && \
 
 USER civicpatch_user
 
-RUN git init --initial-branch=main && \
-  git remote add origin https://${GITHUB_TOKEN}:x-oauth-basic@github.com/CivicPatch/open-data.git
-
-RUN git sparse-checkout set package.json package-lock.json \
-  Gemfile Gemfile.lock && \
-  git pull origin main
+RUN chown=civicpatch_user package.json package-lock.json ./
+RUN chown=civicpatch_user Gemfile Gemfile.lock Rakefile ./
+RUN chown=civicpatch_user lib/ ./lib/
 
 RUN npm ci
 RUN bundle install
