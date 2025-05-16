@@ -268,6 +268,10 @@ namespace :one_off do
     Core::StateManager.update_municipalities(state, municipalities)
   end
 
+  task :remove_cached_files do
+    remove_cached_files
+  end
+
   def self.to_government_type(raw_government_type_string)
     government_type = nil
     formatted_raw_government_type_string = raw_government_type_string.downcase
@@ -289,5 +293,15 @@ namespace :one_off do
     # Capitalize the first letter of each word
     # Join the words back together
     name.split("_").map(&:capitalize).join(" ")
+  end
+
+  def self.remove_cached_files
+    file_path = "data_source/**/cache/**/*"
+    Dir.glob(file_path).each do |file|
+      next if File.directory?(file)
+
+      puts "Deleting #{file}"
+      File.delete(file) unless file.end_with?(".md")
+    end
   end
 end
