@@ -12,9 +12,9 @@ RUN chown -R civicpatch_user:civicpatch_user /app && \
 
 USER civicpatch_user
 
-RUN chown=civicpatch_user package.json package-lock.json ./
-RUN chown=civicpatch_user Gemfile Gemfile.lock Rakefile ./
-RUN chown=civicpatch_user lib/ ./lib/
+COPY --chown=civicpatch_user package.json package-lock.json ./
+COPY --chown=civicpatch_user Gemfile Gemfile.lock Rakefile ./
+COPY --chown=civicpatch_user lib/ ./lib/
 
 RUN npm ci
 RUN bundle install
