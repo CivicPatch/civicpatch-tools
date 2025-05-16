@@ -10,12 +10,18 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"os/exec"
 	"slices"
 	"strings"
 )
 
 const (
 	DATA_SOURCE_URL = "https://raw.githubusercontent.com/CivicPatch/open-data/refs/heads/main/data_source/<STATE>/municipalities.json"
+
+	imageName      = "ghcr.io/civicpatch/civpatch"
+	localImageTag  = "develop"
+	remoteImageTag = "latest"
 )
 
 type Municipality struct {
@@ -196,12 +202,25 @@ func prepareScrape(ctx context.Context, state string, gnis string, withCi bool, 
 	}
 
 	if develop {
-		if err := dockerClient.BuildImage(ctx, "Dockerfile.civpatch", localImageTag); err != nil {
-			return "", "", nil, fmt.Errorf("error building image: %w", err)
+		fmt.Println("Building image:", imageName+":"+localImageTag)
+		scriptPath, err := utils.FromProjectRoot("civpatch/build.sh")
+		if err != nil {
+			return "", "", nil, fmt.Errorf("error getting script path: %w", err)
+		}
+
+		cmd := exec.Command("bash", scriptPath)
+		cmd.Env = []string{
+			"IMAGE_NAME=" + imageName,
+			"RELEASE_VERSION=" + localImageTag,
+		}
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		if err := cmd.Run(); err != nil {
+			return "", "", nil, fmt.Errorf("error running script: %w", err)
 		}
 	} else {
-		fmt.Println("Pulling image:", remoteImageTag)
-		if err := dockerClient.PullImage(ctx, remoteImageTag, githubUsername, githubToken); err != nil {
+		fmt.Println("Pulling image:", imageName+":"+remoteImageTag)
+		if err := dockerClient.PullImage(ctx, imageName+":"+remoteImageTag, githubUsername, githubToken); err != nil {
 			return "", "", nil, fmt.Errorf("error pulling image: %w", err)
 		}
 	}

@@ -22,8 +22,7 @@ var (
 	develop   = scrapeCommand.Bool("develop", false, "Develop locally")
 	gnis      = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
 	withCi    = scrapeCommand.Bool("with-ci", false, "Run with CI")
-
-	// authClear = flag.NewFlagSet("auth-clear", flag.ExitOnError)
+	// TODO: IMPLEMENT
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
 )
 
@@ -64,8 +63,6 @@ func main() {
 		if err := scrapeCommands(ctx, *scrapePlan, *scrapeRun); err != nil {
 			handleError(err)
 		}
-	case "deploy":
-		commands.Deploy(ctx)
 	case "auth-clear":
 		commands.AuthClear()
 	}
