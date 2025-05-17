@@ -14,6 +14,9 @@ module Services
 
       repo_path = Core::PathHelper.project_path("..")
 
+      puts "REPO PATH LOOKS LIKE THIS"
+      puts repo_path
+
       if Dir.exist?(File.join(repo_path, ".git"))
         @local_repo = Git.open(repo_path)
         puts "LOCAL REPO LOOKS LIKE THIS"
@@ -50,9 +53,9 @@ module Services
     def create_branch(context)
       branch_name = branch_name(context)
 
-      if @local_repo.current_branch != branch_name
-        @local_repo.branch(branch_name).checkout
-      end
+      return unless @local_repo.current_branch != branch_name
+
+      @local_repo.branch(branch_name).checkout
     end
 
     def create_pull_request(context)
@@ -80,7 +83,6 @@ module Services
     def setup_local_repo(local_repo)
       puts "SETTING UP LOCAL REPO"
       puts local_repo.current_branch
-      if local_repo.current_branch == 
       local_repo.add_remote("origin", @repo) if local_repo.remotes.empty?
       local_repo.fetch("origin")
     end
