@@ -14,18 +14,12 @@ module Services
 
       repo_path = Core::PathHelper.project_path("..")
 
-      puts "REPO PATH LOOKS LIKE THIS"
-      puts repo_path
-
-      if Dir.exist?(File.join(repo_path, ".git"))
-        @local_repo = Git.open(repo_path)
-        puts "LOCAL REPO LOOKS LIKE THIS"
-        pp @local_repo
-        pull_from_remote
-      else
-        @local_repo = Git.init(repo_path)
-        pull_from_remote
-      end
+      @local_repo = if Dir.exist?(File.join(repo_path, ".git"))
+                      Git.open(repo_path)
+                    else
+                      Git.init(repo_path)
+                    end
+      pull_from_remote
     end
 
     def branch_name(context)
@@ -38,7 +32,6 @@ module Services
     end
 
     def pull_from_remote
-      puts "PULLING FROM REMOTE"
       setup_local_repo(@local_repo)
 
       temp_clone_dir = Core::PathHelper.project_path(File.join("tmp", "remote-clone"))
@@ -81,14 +74,11 @@ module Services
     private
 
     def setup_local_repo(local_repo)
-      puts "SETTING UP LOCAL REPO"
-      puts local_repo.current_branch
       local_repo.add_remote("origin", @repo) if local_repo.remotes.empty?
       local_repo.fetch("origin")
     end
 
     def setup_remote_repo(remote_repo, folders)
-      puts "SETTING UP REMOTE REPO"
       remote_repo.config("core.sparseCheckout", "true")
       sparse_checkout_file = File.join(remote_repo.dir.path, ".git", "info", "sparse-checkout")
       File.write(sparse_checkout_file, folders.join("\n"))
@@ -101,11 +91,11 @@ module Services
     def copy_remote_to_local(remote_repo, local_repo, folders_to_copy)
       folders_to_copy.each do |folder|
         source_folder = File.join(remote_repo.dir.path, folder)
-        destination_folder = File.join(local_repo.dir.path, folder)
+        destination_folder = File.join(local_repo.dir.path)
 
         next unless Dir.exist?(source_folder)
 
-        # FileUtils.rm_rf(destination_folder) if Dir.exist?(destination_folder)
+        FileUtils.rm_rf(destination_folder) if Dir.exist?(destination_folder)
         FileUtils.mkdir_p(destination_folder) unless Dir.exist?(destination_folder)
         FileUtils.cp_r(source_folder, destination_folder) if Dir.exist?(source_folder)
       end
