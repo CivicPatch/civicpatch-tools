@@ -29,13 +29,13 @@ module Services
        PR opened by the Municipal Officials - Scrape workflow.
       )
       branch_name = @local_repo.current_branch
-      # @client.create_pull_request(
-      #  "CivicPatch/civicpatch-tools",
-      #  "main",
-      #  branch_name,
-      #  "Municipality Officials: #{context[:municipality_entry]["name"]}, #{context[:state]}",
-      #  pull_request_body
-      # )
+      @client.create_pull_request(
+        "CivicPatch/civicpatch-tools",
+        "main",
+        branch_name,
+        "Municipality Officials: #{context[:municipality_entry]["name"]}, #{context[:state]}",
+        pull_request_body
+      )
     end
   end
 end
