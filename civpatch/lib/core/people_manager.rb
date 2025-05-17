@@ -10,10 +10,10 @@ module Core
   class PeopleManager
     def self.get_people(state, gnis, type = nil)
       if type.present?
-        people_file_path = PathHelper.get_people_candidates_file_path(state, gnis, type)
+        people_file_path = Core::PathHelper.get_people_candidates_file_path(state, gnis, type)
         content = JSON.parse(File.read(people_file_path))
       else
-        people_file_path = File.join(PathHelper.get_data_city_path(state, gnis), "people.yml")
+        people_file_path = File.join(Core::PathHelper.get_data_city_path(state, gnis), "people.yml")
         content = if File.exist?(people_file_path)
                     YAML.safe_load(File.read(people_file_path))
                   else
@@ -154,11 +154,11 @@ module Core
       city_entry = municipality_context[:municipality_entry]
 
       if directory_type.present?
-        city_people_path = PathHelper.get_people_candidates_file_path(state, city_entry["gnis"],
-                                                                      directory_type)
+        city_people_path = Core::PathHelper.get_people_candidates_file_path(state, city_entry["gnis"],
+                                                                            directory_type)
         content = JSON.pretty_generate(new_city_people)
       else
-        city_people_path = File.join(PathHelper.get_data_city_path(state, city_entry["gnis"]), "people.yml")
+        city_people_path = File.join(Core::PathHelper.get_data_city_path(state, city_entry["gnis"]), "people.yml")
         content = new_city_people.to_yaml
       end
 

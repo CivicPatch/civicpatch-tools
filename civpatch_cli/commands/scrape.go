@@ -81,15 +81,16 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	if develop {
 		fullImageName = localImageName
 		cmd = []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, develop, createPr)}
-		volumes = map[string]string{
-			"./civpatch": "/app",
-		}
+		//volumes = map[string]string{
+		//	"./civpatch": "/app",
+		//}
 	} else {
 		cmd = []string{
 			"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, develop, createPr),
 		}
 	}
 
+	fmt.Println("Running container with image:", fullImageName)
 	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx,
 		fullImageName,
 		utils.RequiredEnvVarsCI,
@@ -211,10 +212,11 @@ func prepareScrape(ctx context.Context, state string, gnis string, withCi bool, 
 		}
 
 		cmd := exec.Command("bash", scriptPath)
-		cmd.Env = []string{
-			"IMAGE_NAME=" + imageName,
-			"RELEASE_VERSION=" + localImageTag,
-		}
+		currentEnv := os.Environ()
+		cmd.Env = append(currentEnv,
+			"IMAGE_NAME="+imageName,
+			"RELEASE_VERSION="+localImageTag,
+		)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 

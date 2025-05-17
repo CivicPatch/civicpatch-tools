@@ -2,7 +2,7 @@
 
 require "test_helper"
 require "core/person_manager/utils"
-require "path_helper"
+require "core/path_helper"
 
 class CorePersonManagerUtilsTest < Minitest::Test
   def setup
@@ -27,7 +27,7 @@ class CorePersonManagerUtilsTest < Minitest::Test
       ]
     }
 
-    @loaded_config = YAML.load_file(PathHelper.project_path("config/government_types.yml"), aliases: true)
+    @loaded_config = YAML.load_file(Core::PathHelper.project_path("config/government_types.yml"), aliases: true)
     @selectmen_config = @loaded_config["government_types"]["select_board"]
 
     @people = [

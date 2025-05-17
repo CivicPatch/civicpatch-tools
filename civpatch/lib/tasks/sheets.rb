@@ -14,13 +14,13 @@ namespace :sheets do
   task :send_costs do
     spreadsheet_id = ENV["GOOGLE_SHEETS_SPREADSHEET_ID"]
 
-    if File.exist?(PathHelper.project_path("cost_llms.csv"))
-      send_csv_to_sheets_and_clear(spreadsheet_id, "Cost LLMs", PathHelper.project_path("cost_llms.csv"))
+    if File.exist?(Core::PathHelper.project_path("cost_llms.csv"))
+      send_csv_to_sheets_and_clear(spreadsheet_id, "Cost LLMs", Core::PathHelper.project_path("cost_llms.csv"))
     end
 
-    if File.exist?(PathHelper.project_path("cost_search_engine.csv"))
+    if File.exist?(Core::PathHelper.project_path("cost_search_engine.csv"))
       send_csv_to_sheets_and_clear(spreadsheet_id, "Cost Search Engines",
-                                   PathHelper.project_path("cost_search_engine.csv"))
+                                   Core::PathHelper.project_path("cost_search_engine.csv"))
     end
   end
 

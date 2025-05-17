@@ -19,7 +19,7 @@ module Core
 
     # TODO: -- robots.txt?
     def extract_content(url, destination_dir)
-      cached_file = PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
+      cached_file = Core::PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
 
       if File.exist?(cached_file)
         puts "Skipping page fetch to #{url} because cache file already exists"
@@ -41,19 +41,19 @@ module Core
 
       FileUtils.mkdir_p(destination_dir)
 
-      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_1_original_html.html")), html)
+      File.write(Core::PathHelper.project_path(File.join(destination_dir.to_s, "step_1_original_html.html")), html)
 
       sanitized_doc = sanitize_html(html)
 
-      File.write(PathHelper.project_path(File.join(destination_dir.to_s, "step_2_sanitized_html.html")),
+      File.write(Core::PathHelper.project_path(File.join(destination_dir.to_s, "step_2_sanitized_html.html")),
                  sanitized_doc.to_html)
 
       markdown_content = Markitdown.from_nokogiri(sanitized_doc)
-      markdown_content_file_path = PathHelper.project_path(File.join(destination_dir.to_s,
-                                                                     "step_3_markdown_content.md"))
+      markdown_content_file_path = Core::PathHelper.project_path(File.join(destination_dir.to_s,
+                                                                           "step_3_markdown_content.md"))
       File.write(markdown_content_file_path, markdown_content)
 
-      PathHelper.project_path(markdown_content_file_path)
+      Core::PathHelper.project_path(markdown_content_file_path)
       # [content_file_path, @image_map]
     end
 

@@ -27,8 +27,8 @@ namespace :pipeline do
     develop = args[:develop].to_s.downcase == "true"
     create_pr = args[:create_pr].to_s.downcase == "true"
 
-    context = Core::ContextManager.get_context(state, gnis)
     github = Services::GitHub.new(develop: develop)
+    context = Core::ContextManager.get_context(state, gnis)
 
     github.pull_and_create_branch(context) unless develop
 
@@ -156,7 +156,7 @@ namespace :pipeline do
   end
 
   def prepare_directories(state, municipality_entry)
-    cache_destination_dir = PathHelper.get_city_cache_path(state, municipality_entry["gnis"])
+    cache_destination_dir = Core::PathHelper.get_city_cache_path(state, municipality_entry["gnis"])
 
     # Remove cache folder if it exists
     FileUtils.rm_rf(cache_destination_dir) if Dir.exist?(cache_destination_dir)
@@ -169,7 +169,7 @@ namespace :pipeline do
     puts "Uploading images for #{municipality_entry["name"]}"
     puts "Source dirs: #{source_dirs.inspect}"
 
-    data_city_path = PathHelper.get_data_city_path(state, municipality_entry["gnis"])
+    data_city_path = Core::PathHelper.get_data_city_path(state, municipality_entry["gnis"])
     # Find last instance of data/ because repo could start with open-data/data/
     remote_city_path = data_city_path.rpartition("data/").last
 

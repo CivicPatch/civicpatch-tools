@@ -23,7 +23,7 @@ module Core
       municipality_entry = municipality_context[:municipality_entry]
       state = municipality_context[:state]
       gnis = municipality_entry["gnis"]
-      city_cache_path = PathHelper.get_city_cache_path(state, gnis)
+      city_cache_path = Core::PathHelper.get_city_cache_path(state, gnis)
       keyword_groups = Core::CityManager.get_search_keywords_as_array(municipality_context[:government_type])
 
       puts "#{llm_service_string}: Looking for #{municipality_context[:config]["scrape_exit_config"]}"
