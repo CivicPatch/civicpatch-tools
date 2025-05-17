@@ -17,7 +17,6 @@ module Core
           files.each do |file|
             next if file.end_with?(".md")
 
-            puts "Removing #{file} from cache"
             File.delete(file)
           end
         else

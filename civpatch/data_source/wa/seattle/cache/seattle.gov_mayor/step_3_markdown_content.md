@@ -45,7 +45,10 @@ Seattle, WA 98124-4749
 
 ## Press Releases
 
- Mayor's Office Press Releases  [City of Seattle, TAAF, Amazon, and CIDBIA Announce New Ambassadors Program to Improve Neighborhood Safety and Support Economic Revitalization in the Chinatown-International District](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e07033?wgt_ref=WASEATTLE_WIDGET_93)  
+ Mayor's Office Press Releases  [Rita Meher and Tasveer Film Festival and Market Honored with 2025 Mayor’s Film Award for Outstanding Achievement in Film](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e0a971?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/15/2025 07:45 PM PDT
+  [City of Seattle, TAAF, Amazon, and CIDBIA Announce New Ambassadors Program to Improve Neighborhood Safety and Support Economic Revitalization in the Chinatown-International District](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e07033?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 05/14/2025 12:34 PM PDT
   [TODAY: Mayor Harrell to Announce New Actions and Investments to Promote Safety and Economic Revitalization in Seattle’s Chinatown-International District](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e03ef5?wgt_ref=WASEATTLE_WIDGET_93)  
@@ -102,9 +105,6 @@ Seattle, WA 98124-4749
   [Mayor Bruce Harrell Announces Legislation to Build Light Rail Faster and Support Smooth Construction](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dda807?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 04/25/2025 10:59 AM PDT
-  [Mayor Harrell Proposes Infrastructure Cost-Sharing Legislation to Remove Barriers to Housing and Growth](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dd56ef?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/23/2025 02:00 PM PDT
 
 Receive Email Updates
 
