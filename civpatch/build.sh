@@ -38,8 +38,7 @@ if [ -n "${BUILD_ARGS}" ]; then
 fi
 
 # The Docker build command
-docker build ${BUILD_ARGS} -t "${IMAGE_NAME}:${RELEASE_VERSION}" -f "${DOCKERFILE_PATH}" "${BUILD_CONTEXT}"
-docker tag "${IMAGE_NAME}:${RELEASE_VERSION}" "${IMAGE_NAME}:latest"
+docker build ${BUILD_ARGS} -t "${IMAGE_NAME}:${RELEASE_VERSION}" -t "${IMAGE_NAME}:latest" -f "${DOCKERFILE_PATH}" "${BUILD_CONTEXT}"
 
 echo ""
 echo "Docker image built successfully: ${IMAGE_NAME}:${RELEASE_VERSION}"
