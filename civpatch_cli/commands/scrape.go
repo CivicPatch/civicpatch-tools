@@ -65,28 +65,25 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	}
 	defer dockerClient.Close()
 
-	fmt.Printf("Scraping with createPr: %t\n", createPr)
-
-	if develop {
-	}
+	fmt.Printf("Scraping %s %s with createPr: %t\n", state, gnis, createPr)
 
 	args := map[string]string{
 		"GITHUB_TOKEN":    githubToken,
 		"GITHUB_USERNAME": githubUsername,
 	}
 
-	cmd := []string{}
+	cmd := []string{
+		"./lib/tasks/scripts/checkout_scrape_branch.sh",
+		"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr),
+	}
+
 	volumes := map[string]string{}
 	fullImageName := remoteImageName
+
 	if develop {
 		fullImageName = localImageName
-		cmd = []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr)}
 		volumes = map[string]string{
 			"./civpatch/lib": "/app/lib",
-		}
-	} else {
-		cmd = []string{
-			"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr),
 		}
 	}
 

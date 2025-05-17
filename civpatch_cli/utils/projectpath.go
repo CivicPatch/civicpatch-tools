@@ -62,7 +62,7 @@ func ToBindMount(hostPath, containerPath string) (string, error) {
 		}
 		hostPath = absPath
 	}
-	return ToContainerPath(hostPath) + ":" + containerPath, nil
+	return ToContainerPath(hostPath) + ":" + containerPath + ":ro", nil
 }
 
 // ToBindMounts converts a map of host:container paths to bind mount format

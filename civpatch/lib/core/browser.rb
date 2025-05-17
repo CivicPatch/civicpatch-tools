@@ -2,6 +2,7 @@
 
 require "securerandom"
 require "utils/url_helper"
+require "core/path_helper"
 require_relative "../utils/image_helper"
 require "playwright"
 require "nokolexbor"
@@ -21,7 +22,7 @@ module Browser
 
   def self.with_browser
     Playwright.create(
-      playwright_cli_executable_path: "/app/node_modules/.bin/playwright"
+      playwright_cli_executable_path: Core::PathHelper.project_path(File.join("node_modules", ".bin", "playwright"))
     ) do |playwright|
       browser = playwright.chromium.launch(
         headless: true,

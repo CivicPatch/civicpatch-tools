@@ -2,7 +2,6 @@
 
 STATE_ARG=$1
 GNIS_ARG=$2
-CREATE_PR_ARG=$3
 
 if [ -z "$STATE_ARG" ]; then
   echo "Usage: $0 <state_code> <gnis_code>"
