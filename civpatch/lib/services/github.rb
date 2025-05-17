@@ -8,13 +8,13 @@ module Services
 
     FOLDERS_TO_COPY = ["civpatch/config", "civpatch/data", "civpatch/data_source"].freeze
 
-    def initialize(develop: false)
+    def initialize
       @client = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
       @repo = "https://#{ENV["GITHUB_USERNAME"]}:#{ENV["GITHUB_TOKEN"]}@github.com/CivicPatch/civicpatch-tools.git"
 
       repo_path = Core::PathHelper.project_path("..")
 
-      if develop
+      if Dir.exist?(File.join(repo_path, ".git"))
         @local_repo = Git.open(repo_path)
       else
         @local_repo = Git.init(repo_path)
@@ -32,6 +32,7 @@ module Services
     end
 
     def pull_from_remote
+      puts "PULLING FROM REMOTE"
       setup_local_repo(@local_repo)
 
       temp_clone_dir = Core::PathHelper.project_path(File.join("tmp", "remote-clone"))
@@ -40,12 +41,12 @@ module Services
       setup_remote_repo(remote_repo, FOLDERS_TO_COPY)
       copy_remote_to_local(remote_repo, @local_repo, FOLDERS_TO_COPY)
 
-      FileUtils.rm_rf(temp_clone_dir)
+      # FileUtils.rm_rf(temp_clone_dir)
     end
 
     def create_branch(context)
       branch_name = branch_name(context)
-      @local_repo.checkout("origin/main", new_branch: branch_name, force: true)
+      @local_repo.checkout("origin/main", new_branch: branch_name)
       puts "PULLING AND CREATING BRANCH"
     end
 
@@ -72,28 +73,34 @@ module Services
     private
 
     def setup_local_repo(local_repo)
-      local_repo.add_remote("origin", @repo)
+      puts "SETTING UP LOCAL REPO"
+      local_repo.add_remote("origin", @repo) if local_repo.remotes.empty?
       local_repo.fetch("origin")
     end
 
     def setup_remote_repo(remote_repo, folders)
+      puts "SETTING UP REMOTE REPO"
       remote_repo.config("core.sparseCheckout", "true")
       sparse_checkout_file = File.join(remote_repo.dir.path, ".git", "info", "sparse-checkout")
       File.write(sparse_checkout_file, folders.join("\n"))
 
-      remote_repo.add_remote("origin", @repo)
+      remote_repo.add_remote("origin", @repo) if remote_repo.remotes.empty?
       remote_repo.fetch("origin")
-      remote_repo.checkout("origin/main", new_branch: "main", force: true)
+      remote_repo.checkout("origin/main", new_branch: "main")
     end
 
     def copy_remote_to_local(remote_repo, local_repo, folders_to_copy)
+      puts "COPYING REMOTE TO LOCAL"
       folders_to_copy.each do |folder|
         source_folder = File.join(remote_repo.dir.path, folder)
         destination_folder = File.join(local_repo.dir.path, folder)
 
+        puts "SOURCE FOLDER: #{source_folder}"
+        puts "DESTINATION FOLDER: #{destination_folder}"
+
         next unless Dir.exist?(source_folder)
 
-        FileUtils.rm_rf(destination_folder) if Dir.exist?(destination_folder)
+        # FileUtils.rm_rf(destination_folder) if Dir.exist?(destination_folder)
         FileUtils.mkdir_p(destination_folder) unless Dir.exist?(destination_folder)
         FileUtils.cp_r(source_folder, destination_folder) if Dir.exist?(source_folder)
       end

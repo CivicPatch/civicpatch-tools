@@ -21,13 +21,12 @@ namespace :pipeline do
   end
 
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :gnis, :develop, :create_pr] do |_t, args|
+  task :fetch, [:state, :gnis, :create_pr] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
-    develop = args[:develop].to_s.downcase == "true"
     create_pr = args[:create_pr].to_s.downcase == "true"
 
-    github = Services::GitHub.new(develop: develop)
+    github = Services::GitHub.new
     context = Core::ContextManager.get_context(state, gnis)
 
     github.create_branch(context)

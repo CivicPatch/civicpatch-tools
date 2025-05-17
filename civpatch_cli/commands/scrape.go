@@ -80,13 +80,13 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	fullImageName := remoteImageName
 	if develop {
 		fullImageName = localImageName
-		cmd = []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, develop, createPr)}
-		//volumes = map[string]string{
-		//	"./civpatch": "/app",
-		//}
+		cmd = []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr)}
+		volumes = map[string]string{
+			"./civpatch/lib": "/app/lib",
+		}
 	} else {
 		cmd = []string{
-			"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, develop, createPr),
+			"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr),
 		}
 	}
 
