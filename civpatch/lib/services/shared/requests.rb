@@ -1,33 +1,35 @@
 module Services
-  class Requests
-    def with_progress_indicator
-      progress_thread = Thread.new do
-        loop do
-          print "."
-          sleep 2
+  module Shared
+    class Requests
+      def self.with_progress_indicator
+        progress_thread = Thread.new do
+          loop do
+            print "."
+            sleep 2
+          end
         end
+        yield
+      ensure
+        progress_thread.kill
+        puts
       end
-      yield
-    ensure
-      progress_thread.kill
-      puts
-    end
 
-    def with_model_fallback
-      retry_attempts = 0
-      current_model = MODELS[retry_attempts]
+      def self.with_model_fallback(models)
+        retry_attempts = 0
+        current_model = models[retry_attempts]
 
-      begin
-        yield(current_model)
-      rescue Net::ReadTimeout => e
-        return raise e if retry_attempts >= MAX_RETRIES
+        begin
+          yield(current_model)
+        rescue Net::ReadTimeout => e
+          return raise e if retry_attempts >= MAX_RETRIES
 
-        sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
-        puts "Timeout with #{current_model}. Falling back to next model in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
-        sleep sleep_time
-        retry_attempts += 1
-        current_model = MODELS[retry_attempts] || MODELS.last
-        retry
+          sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
+          puts "Timeout with #{current_model}. Falling back to next model in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
+          sleep sleep_time
+          retry_attempts += 1
+          current_model = models[retry_attempts] || models.last
+          retry
+        end
       end
     end
   end

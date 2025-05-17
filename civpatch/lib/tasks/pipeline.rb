@@ -13,6 +13,7 @@ require_relative "../resolvers/person_resolver"
 require_relative "../services/spaces"
 require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
+require_relative "../services/github"
 
 namespace :pipeline do
   task :hello do

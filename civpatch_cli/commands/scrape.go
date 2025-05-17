@@ -82,7 +82,7 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 		fullImageName = localImageName
 		cmd = []string{"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, develop, createPr)}
 		volumes = map[string]string{
-			".": "/app",
+			"./civpatch": "/app",
 		}
 	} else {
 		cmd = []string{

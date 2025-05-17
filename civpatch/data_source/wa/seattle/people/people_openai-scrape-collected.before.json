@@ -29,7 +29,7 @@
       {
         "data": "https://seattle.gov/mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the Office of the Mayor.",
+        "llm_confidence_reason": "Primary Office of the Mayor URL linked near the top.",
         "source": "https://seattle.gov/mayor/about"
       },
       {
@@ -43,12 +43,12 @@
       {
         "data": "2021",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected as mayor in 2021 as stated in the text.",
+        "llm_confidence_reason": "Text states 'Mayor Bruce Harrell was elected the 57th mayor of Seattle in 2021'.",
         "source": "https://seattle.gov/mayor/about"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Rob Saka",
@@ -87,7 +87,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Mark Solomon",
@@ -126,7 +126,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Joy Hollingsworth",
@@ -165,7 +165,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Maritza Rivera",
@@ -204,7 +204,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Cathy Moore",
@@ -243,7 +243,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Dan Strauss",
@@ -282,7 +282,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Robert Kettle",
@@ -321,7 +321,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Alexis Mercedes Rinck",
@@ -360,7 +360,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   },
   {
     "name": "Sara Nelson",
@@ -400,6 +400,6 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-15"
+    "updated_at": "2025-05-16"
   }
 ]

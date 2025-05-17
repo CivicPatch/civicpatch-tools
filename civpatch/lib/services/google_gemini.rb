@@ -63,7 +63,7 @@ module Services
     end
 
     def run_prompt(prompt, state, municipality_name, response_schema: nil, with_search: false)
-      Services::Shared::Requests.with_model_fallback do |model|
+      Services::Shared::Requests.with_model_fallback(MODELS) do |model|
         make_request(prompt, model, response_schema, with_search, state, municipality_name)
       end
     end
