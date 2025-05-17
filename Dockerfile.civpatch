@@ -13,9 +13,11 @@ RUN chown -R civicpatch_user:civicpatch_user /app && \
 
 USER civicpatch_user
 
-COPY --chown=civicpatch_user civpatch/package.json civpatch/package-lock.json ./
-COPY --chown=civicpatch_user civpatch/Gemfile civpatch/Gemfile.lock civpatch/Rakefile ./
-COPY --chown=civicpatch_user civpatch/lib/ ./lib/
+COPY --chown=civicpatch_user civpatch/package.json civpatch/package-lock.json ./civpatch/
+COPY --chown=civicpatch_user civpatch/Gemfile civpatch/Gemfile.lock civpatch/Rakefile ./civpatch/
+COPY --chown=civicpatch_user civpatch/lib/ ./civpatch/lib/
+
+WORKDIR /app/civpatch
 
 RUN ls -la
 

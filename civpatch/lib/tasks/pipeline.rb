@@ -30,7 +30,7 @@ namespace :pipeline do
     github = Services::GitHub.new(develop: develop)
     context = Core::ContextManager.get_context(state, gnis)
 
-    github.pull_and_create_branch(context) unless develop
+    github.create_branch(context)
 
     scrape(context)
 
