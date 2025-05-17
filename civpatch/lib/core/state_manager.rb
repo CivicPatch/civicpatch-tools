@@ -3,12 +3,12 @@
 module Core
   class StateManager
     def self.get_state_path(state)
-      PathHelper.project_path(File.join("data", state))
+      Core::PathHelper.project_path(File.join("data", state))
     end
 
     # each places must have a gnis key
     def self.get_municipalities_file(state)
-      PathHelper.project_path(File.join("data_source", state, "municipalities.json"))
+      Core::PathHelper.project_path(File.join("data_source", state, "municipalities.json"))
     end
 
     # TODO: fix broken get_state_places

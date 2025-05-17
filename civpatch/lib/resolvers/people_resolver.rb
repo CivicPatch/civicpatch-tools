@@ -12,7 +12,7 @@ module Resolvers
       state_source = municipality_context[:config]["source_directory_list"]["people"]
       people_config = municipality_context[:config]["people"]
 
-      sources_folder_path = PathHelper.get_people_sources_path(state, gnis)
+      sources_folder_path = Core::PathHelper.get_people_sources_path(state, gnis)
       source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
 
       sources = [{

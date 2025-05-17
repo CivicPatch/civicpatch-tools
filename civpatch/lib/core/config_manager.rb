@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "path_helper"
+require_relative "path_helper"
 
 module Core
   class ConfigManager
@@ -15,7 +15,7 @@ module Core
     }.freeze
 
     def self.config_path(state, gnis)
-      municipal_path = PathHelper.get_data_source_city_path(state, gnis)
+      municipal_path = Core::PathHelper.get_data_source_city_path(state, gnis)
       File.join(municipal_path, "config.yml")
     end
 

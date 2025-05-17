@@ -14,7 +14,6 @@ require "active_support/core_ext/object/blank"
 require "active_support/core_ext/string"
 require "active_support/core_ext/array"
 
-require_relative "lib/path_helper"
 require_relative "lib/open_data"
 
 OpenData.load_tasks

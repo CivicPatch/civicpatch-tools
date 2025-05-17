@@ -18,10 +18,10 @@ var (
 	gnisToIgnore = scrapeCommand.String("gnis-to-ignore", "", "GNIS IDs to ignore")
 
 	scrapeRun = scrapeCommand.Bool("run", false, "Run the scrapes")
-	createPr  = scrapeCommand.Bool("create-pr", false, "Create a PR")
-	develop   = scrapeCommand.Bool("develop", false, "Develop locally")
 	gnis      = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
+	createPr  = scrapeCommand.Bool("create-pr", false, "Create a PR")
 	withCi    = scrapeCommand.Bool("with-ci", false, "Run with CI")
+	develop   = scrapeCommand.Bool("develop", false, "Develop locally")
 	// TODO: IMPLEMENT
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
 	// withReleaseVersion = scrapeCommand.Bool("with-release-version", false, "With release version")
