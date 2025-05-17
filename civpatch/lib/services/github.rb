@@ -9,7 +9,6 @@ module Services
     FOLDERS_TO_COPY = ["civpatch/config", "civpatch/data", "civpatch/data_source"].freeze
 
     def initialize(develop: false)
-      puts "INITIALIZING GITHUB"
       @client = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
       @repo = "https://#{ENV["GITHUB_USERNAME"]}:#{ENV["GITHUB_TOKEN"]}@github.com/CivicPatch/civicpatch-tools.git"
 
@@ -19,7 +18,7 @@ module Services
         @local_repo = Git.open(repo_path)
       else
         @local_repo = Git.init(repo_path)
-        update_from_remote
+        pull_from_remote
       end
     end
 
