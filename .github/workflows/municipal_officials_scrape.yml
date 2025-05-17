@@ -1,4 +1,4 @@
-name: manual - Municipal Officials - Scrape
+name: ⚙️ manual - Municipal Officials - Scrape
 
 on:
   workflow_dispatch:

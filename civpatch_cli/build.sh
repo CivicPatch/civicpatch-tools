@@ -41,7 +41,7 @@ build_for_platform() {
 # Build for common platforms
 build_for_platform "linux" "amd64" "linux-amd64"
 build_for_platform "linux" "arm64" "linux-arm64"
-build_for_platform "windows" "amd64" "windows-amd64.exe"
+build_for_platform "windows" "amd64" "windows-amd64"
 build_for_platform "darwin" "amd64" "macos-intel"
 build_for_platform "darwin" "arm64" "macos-apple-silicon"
 
