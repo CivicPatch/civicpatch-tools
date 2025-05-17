@@ -16,6 +16,9 @@ module Services
 
       if Dir.exist?(File.join(repo_path, ".git"))
         @local_repo = Git.open(repo_path)
+        puts "LOCAL REPO LOOKS LIKE THIS"
+        pp @local_repo
+        pull_from_remote
       else
         @local_repo = Git.init(repo_path)
         pull_from_remote
@@ -46,34 +49,38 @@ module Services
 
     def create_branch(context)
       branch_name = branch_name(context)
-      @local_repo.checkout("origin/main", new_branch: branch_name)
-      puts "PULLING AND CREATING BRANCH"
+
+      if @local_repo.current_branch != branch_name
+        @local_repo.branch(branch_name).checkout
+      end
     end
 
     def create_pull_request(context)
-      state = context[:state]
-      municipality_name = context[:municipality_entry]["name"]
+      # state = context[:state]
+      # municipality_name = context[:municipality_entry]["name"]
 
-      @local_repo.add(FOLDERS_TO_COPY)
-      @local_repo.commit("Add municipal officials for #{municipality_name}, #{state}")
+      # @local_repo.add(FOLDERS_TO_COPY)
+      # @local_repo.commit("Add municipal officials for #{municipality_name}, #{state}")
 
-      pull_request_body = %(
-        PR opened by the Municipal Officials - Scrape workflow.
-      )
-      branch_name = branch_name(context)
-      @client.create_pull_request(
-        "CivicPatch/civicpatch-tools",
-        "main",
-        branch_name,
-        "Municipality Officials: #{context[:municipality_entry]["name"]}, #{context[:state]}",
-        pull_request_body
-      )
+      # pull_request_body = %(
+      #  PR opened by the Municipal Officials - Scrape workflow.
+      # )
+      # branch_name = branch_name(context)
+      # @client.create_pull_request(
+      #  "CivicPatch/civicpatch-tools",
+      #  "main",
+      #  branch_name,
+      #  "Municipality Officials: #{context[:municipality_entry]["name"]}, #{context[:state]}",
+      #  pull_request_body
+      # )
     end
 
     private
 
     def setup_local_repo(local_repo)
       puts "SETTING UP LOCAL REPO"
+      puts local_repo.current_branch
+      if local_repo.current_branch == 
       local_repo.add_remote("origin", @repo) if local_repo.remotes.empty?
       local_repo.fetch("origin")
     end
@@ -86,17 +93,13 @@ module Services
 
       remote_repo.add_remote("origin", @repo) if remote_repo.remotes.empty?
       remote_repo.fetch("origin")
-      remote_repo.checkout("origin/main", new_branch: "main")
+      remote_repo.branch("main").checkout
     end
 
     def copy_remote_to_local(remote_repo, local_repo, folders_to_copy)
-      puts "COPYING REMOTE TO LOCAL"
       folders_to_copy.each do |folder|
         source_folder = File.join(remote_repo.dir.path, folder)
         destination_folder = File.join(local_repo.dir.path, folder)
-
-        puts "SOURCE FOLDER: #{source_folder}"
-        puts "DESTINATION FOLDER: #{destination_folder}"
 
         next unless Dir.exist?(source_folder)
 

@@ -31,9 +31,9 @@ namespace :pipeline do
 
     github.create_branch(context)
 
-    scrape(context)
+    # scrape(context)
 
-    github.create_pull_request(context) if create_pr
+    # github.create_pull_request(context) if create_pr
   end
 
   desc "Fetch city officials from state source"
