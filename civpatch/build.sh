@@ -46,7 +46,7 @@ echo "Docker image built successfully: ${IMAGE_NAME}:${RELEASE_VERSION}"
 if [ -n "${PUSH_IMAGE}" ]; then
   echo $GITHUB_TOKEN | docker login -u$GITHUB_USERNAME --password-stdin $REGISTRY_HOST
   echo "Pushing image ${IMAGE_NAME}:${RELEASE_VERSION}..."
-  docker push "${IMAGE_NAME}:${RELEASE_VERSION}"
+  docker push --all-tags "${IMAGE_NAME}:${RELEASE_VERSION}"
   echo "Image pushed successfully."
 else
   echo "Image not pushed."
