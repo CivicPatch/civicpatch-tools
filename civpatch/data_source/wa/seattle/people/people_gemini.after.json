@@ -17,7 +17,31 @@
       "https://www.seattle.gov/elected-officials",
       "https://www.seattle.gov/mayor"
     ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
+  },
+  {
+    "name": "Sara Nelson",
+    "positions": [
+      "Council President",
+      "Council Member",
+      "Citywide",
+      "Position 9"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(206) 684-8809",
+    "email": "Sara.Nelson@seattle.gov",
+    "website": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://seattle.gov/council/meet-the-council",
+      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://www.seattle.gov/council/meet-the-council/sara-nelson"
+    ],
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Alexis Mercedes Rinck",
@@ -36,32 +60,11 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
       "https://seattle.gov/council/rinck",
       "https://www.seattle.gov/council/rinck"
     ],
-    "updated_at": "2025-05-16"
-  },
-  {
-    "name": "Sara Nelson",
-    "positions": [
-      "Council Member",
-      "Citywide",
-      "Position 9"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(206) 684-8809",
-    "email": "Sara.Nelson@seattle.gov",
-    "website": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://www.seattle.gov/council/meet-the-council/sara-nelson"
-    ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Rob Saka",
@@ -79,10 +82,11 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
       "https://seattle.gov/council/saka",
       "https://www.seattle.gov/council/saka"
     ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Mark Solomon",
@@ -100,10 +104,11 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
       "https://seattle.gov/council/solomon",
       "https://www.seattle.gov/council/solomon"
     ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Joy Hollingsworth",
@@ -121,10 +126,11 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
       "https://seattle.gov/council/hollingsworth",
       "https://www.seattle.gov/council/hollingsworth"
     ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Maritza Rivera",
@@ -142,10 +148,11 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
       "https://seattle.gov/council/rivera",
       "https://www.seattle.gov/council/rivera"
     ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Cathy Moore",
@@ -163,10 +170,11 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
       "https://seattle.gov/council/moore",
       "https://www.seattle.gov/council/moore"
     ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Dan Strauss",
@@ -184,28 +192,11 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/council",
       "https://seattle.gov/council/strauss",
       "https://www.seattle.gov/council/strauss"
     ],
-    "updated_at": "2025-05-16"
-  },
-  {
-    "name": "Bob Kettle",
-    "positions": [
-      "Council Member",
-      "District 7"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.seattle.gov/council/kettle",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.seattle.gov/elected-officials"
-    ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   },
   {
     "name": "Robert Kettle",
@@ -222,8 +213,10 @@
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/kettle"
+      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/kettle",
+      "https://www.seattle.gov/council/kettle"
     ],
-    "updated_at": "2025-05-16"
+    "updated_at": "2025-05-18"
   }
 ]
