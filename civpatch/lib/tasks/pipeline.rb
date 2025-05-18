@@ -14,6 +14,7 @@ require_relative "../services/spaces"
 require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
 require_relative "../services/github"
+require_relative "../services/google_sheets"
 
 namespace :pipeline do
   task :hello do
@@ -21,10 +22,11 @@ namespace :pipeline do
   end
 
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :gnis, :create_pr] do |_t, args|
+  task :fetch, [:state, :gnis, :create_pr, :send_costs] do |_t, args|
     state = args[:state]
     gnis = args[:gnis]
     create_pr = args[:create_pr].to_s.downcase == "true"
+    send_costs = args[:send_costs].to_s.downcase == "true"
 
     github = Services::GitHub.new
     context = Core::ContextManager.get_context(state, gnis)
@@ -32,6 +34,7 @@ namespace :pipeline do
     scrape(context)
 
     github.create_pull_request(context) if create_pr
+    Services::GoogleSheets.send_costs if send_costs
   end
 
   desc "Fetch city officials from state source"

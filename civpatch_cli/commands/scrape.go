@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	DATA_SOURCE_URL = "https://raw.githubusercontent.com/CivicPatch/open-data/refs/heads/main/data_source/<STATE>/municipalities.json"
+	DATA_SOURCE_URL = "https://raw.githubusercontent.com/CivicPatch/civicpatch-tools/refs/heads/main/civpatch/data_source/<STATE>/municipalities.json"
 
 	imageName       = "ghcr.io/civicpatch/civpatch"
 	localImageTag   = "develop"
@@ -58,7 +58,7 @@ func ScrapePlan(state string, numMunicipalities int, gnisToIgnore []string) (str
 	return string(jsonData), nil
 }
 
-func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, develop bool, withCi bool) error {
+func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, develop bool, withCi bool, sendCosts bool) error {
 	githubUsername, githubToken, dockerClient, err := prepareScrape(ctx, state, gnis, withCi, develop)
 	if err != nil {
 		return err
@@ -78,7 +78,7 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 		gnis,
 		"&&",
 		"rake",
-		fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr),
+		fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, createPr, sendCosts),
 	}
 
 	volumes := map[string]string{}
@@ -166,17 +166,18 @@ func shouldScrape(gnisToIgnore []string, municipality Municipality) bool {
 		(len(municipality.MetaSources) == 0 || len(municipality.MetaSources) == 1)
 }
 
-func checkScrapeInput(state string, gnis string, withCI bool) error {
+func checkScrapeInput(state string, gnis string, withCI bool, sendCosts bool) error {
+	requiredEnvVars := utils.RequiredEnvVars
+	if sendCosts {
+		requiredEnvVars = append(requiredEnvVars, utils.RequiredEnvVarsSendCosts...)
+	}
 	if withCI {
-		err := utils.CheckEnvironmentVariables(utils.RequiredEnvVarsCI)
-		if err != nil {
-			return err
-		}
-	} else {
-		err := utils.CheckEnvironmentVariables(utils.RequiredEnvVars)
-		if err != nil {
-			return err
-		}
+		requiredEnvVars = append(requiredEnvVars, utils.RequiredEnvVarsCI...)
+	}
+
+	err := utils.CheckEnvironmentVariables(requiredEnvVars)
+	if err != nil {
+		return err
 	}
 
 	if len(state) == 0 {
@@ -189,8 +190,8 @@ func checkScrapeInput(state string, gnis string, withCI bool) error {
 	return nil
 }
 
-func prepareScrape(ctx context.Context, state string, gnis string, withCi bool, develop bool) (string, string, *docker.Client, error) {
-	err := checkScrapeInput(state, gnis, withCi)
+func prepareScrape(ctx context.Context, state string, gnis string, withCi bool, develop bool, sendCosts bool) (string, string, *docker.Client, error) {
+	err := checkScrapeInput(state, gnis, withCi, sendCosts)
 	if err != nil {
 		return "", "", nil, err
 	}

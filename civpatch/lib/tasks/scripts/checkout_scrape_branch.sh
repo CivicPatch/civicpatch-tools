@@ -19,7 +19,7 @@ REPO_URL="https://github.com/CivicPatch/civicpatch-tools.git"
 
 cd /app
 mkdir -p ./tmp
-git clone $REPO_URL ./tmp/civicpatch-tools --depth 1
+git clone -b main --single-branch $REPO_URL ./tmp/civicpatch-tools --depth 1
 cp -rn ./tmp/civicpatch-tools/. /app
 rm -rf ./tmp
 cd /app/civpatch

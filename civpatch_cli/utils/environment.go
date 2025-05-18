@@ -18,14 +18,16 @@ var (
 		//"CLOUDFLARE_R2_SECRET_KEY",
 	}
 
-	RequiredEnvVarsCI = append(RequiredEnvVars,
+	RequiredEnvVarsCI = []string{
 		"GITHUB_TOKEN",
 		"GITHUB_USERNAME",
-	)
+	}
 
-	RequiredEnvVarsDeploy = []string{
-		"GITHUB_TOKEN",
-		"GITHUB_USERNAME",
+	RequiredEnvVarsSendCosts = []string{
+		"GOOGLE_SHEETS_SPREADSHEET_ID",
+		"GOOGLE_SHEETS_CLIENT_ID",
+		"GOOGLE_SHEETS_CLIENT_SECRET",
+		"GOOGLE_SHEETS_REFRESH_TOKEN",
 	}
 
 	requirementsText = map[string]string{

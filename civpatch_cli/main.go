@@ -22,6 +22,7 @@ var (
 	createPr  = scrapeCommand.Bool("create-pr", false, "Create a PR")
 	withCi    = scrapeCommand.Bool("with-ci", false, "Run with CI")
 	develop   = scrapeCommand.Bool("develop", false, "Develop locally")
+	sendCosts = scrapeCommand.Bool("send-costs", false, "Send costs to Google Sheets")
 	// TODO: IMPLEMENT
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
 	// withReleaseVersion = scrapeCommand.Bool("with-release-version", false, "With release version")
@@ -37,7 +38,7 @@ func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error 
 			return err
 		}
 	} else if scrapeRun {
-		err = commands.ScrapeRun(ctx, *state, *gnis, *createPr, *develop, *withCi)
+		err = commands.ScrapeRun(ctx, *state, *gnis, *createPr, *develop, *withCi, *sendCosts)
 		if err != nil {
 			return err
 		}

@@ -1,0 +1,138 @@
+name: ⚙️ - Municipal Officials - Scrape
+
+on:
+  workflow_dispatch:
+    inputs:
+      state:
+        description: 'Pick a state to pick up new cities for processing'
+        type: choice
+        required: true
+        options:
+          - nh
+          - or
+          - wa
+      num_cities:
+        description: 'Number of cities to process'
+        type: number
+        required: true
+        default: 2
+
+jobs:
+  get_cities_from_queue:
+    environment: 
+      name: env-${{ github.actor }}
+
+    runs-on: ubuntu-latest
+    outputs:
+      cities: ${{ steps.set-cities.outputs.cities }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24.3'
+      
+      - name: Build go task
+        run: |
+          cd ./civicpatch-tools/civpatch_cli
+          go build -o bin/cli
+
+      - name: Get scrape candidates from queue
+        id: set-municipalities
+        run: |
+          # Load the cities queue file and take the first N cities
+          # and ignore cities that already have PRs open
+          gnis_ids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
+
+          # Extract GNIS IDs from branch names like pipeline-city-scrapes-wa-king-federal_way-2410494-14096425230
+          gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-city-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
+
+          # Now the rake task returns JSON array of objects
+          cities_json=$(bin/cli scrape -plan -state ${{ github.event.inputs.state }} --num-scrapes ${{ github.event.inputs.num_cities }} --gnis-ids-to-ignore $gnis_ids)
+
+          # Output the JSON directly since it's already in the correct format
+          echo "cities=$cities_json" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  populate_city_directory:
+    environment: 
+      name: env-${{ github.actor }}
+    env:
+      OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
+      BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
+      GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
+      GOOGLE_SEARCH_API_KEY: ${{ secrets.GOOGLE_SEARCH_API_KEY }}
+      GOOGLE_SEARCH_ENGINE_ID: ${{ secrets.GOOGLE_SEARCH_ENGINE_ID }}
+      #CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
+      #CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+      #CLOUDFLARE_R2_SECRET_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_KEY }}
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    needs: get_cities_from_queue
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 5
+      fail-fast: false
+      matrix:
+        city_entry: ${{ fromJson(needs.get_cities_from_queue.outputs.cities) }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24.3'
+      
+      - name: Build go task
+        run: |
+          cd ./civicpatch-tools/civpatch_cli
+          go build -o bin/cli
+
+      - name: Generate GitHub App Token
+        id: generate-pipeline-token
+        uses: actions/create-github-app-token@v2
+        with:
+            app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+            private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+
+      - name: Scrape municipal officials
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: ${{ github.actor }}
+          GOOGLE_SHEETS_SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
+          GOOGLE_SHEETS_CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
+          GOOGLE_SHEETS_CLIENT_SECRET: ${{ secrets.GOOGLE_SHEETS_CLIENT_SECRET }}
+          GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
+        run: |
+          echo "Processing city: ${{ matrix.city_entry.gnis }}"
+          bin/cli scrape -run -state ${{ github.event.inputs.state }} -gnis ${{ matrix.city_entry.gnis }} -create-pr -with-ci -send-costs
+      
+      #- name: Open a pull request
+      #  run: |
+      #    git push --set-upstream origin ${{ env.BRANCH_NAME }}
+      #    CITY_DIRECTORY_LINK=$(bundle exec rake "github_pipeline:get_city_directory_link[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]")
+      #    CONFIG_LINK=$(bundle exec rake "github_pipeline:get_config_link[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]")
+      #    COMMENT=$(
+      #      cat <<EOF
+      #    PR opened by the Municipal Officials - Scrape workflow.
+      #    * people.yml - Make changes [here]($CITY_DIRECTORY_LINK) and validation workflows will re-run.
+      #    * config.yml - Make changes [here]($CONFIG_LINK) and the entire pipeline will re-run
+      #      (note: if you want the whole pipeline to re-run, do not make changes to people.yml)
+
+      #    EOF
+      #    )
+      #    gh pr create \
+      #      --base main \
+      #      --head ${{ env.BRANCH_NAME }} \
+      #      --title "Populate city info for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}" \
+      #      --body "$COMMENT" \
+      #      --label "env-${{ github.actor }}"
+      #  env:
+      #    GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
