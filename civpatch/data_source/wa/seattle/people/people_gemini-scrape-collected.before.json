@@ -257,8 +257,8 @@
       },
       {
         "data": "206-684-8803",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' and in the text near the email address.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with the person.",
         "source": "https://seattle.gov/council/hollingsworth"
       },
       {
@@ -269,12 +269,6 @@
       }
     ],
     "emails": [
-      {
-        "data": "Joy.Hollingsworth@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the text near the phone number.",
-        "source": "https://seattle.gov/council/hollingsworth"
-      },
       {
         "data": "Joy.Hollingsworth@seattle.gov",
         "llm_confidence": 0.98,
@@ -303,8 +297,8 @@
       },
       {
         "data": "https://seattle.gov/council/hollingsworth",
-        "llm_confidence": 0.97,
-        "llm_confidence_reason": "URL is the specific page for Joy Hollingsworth on the city council website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation and associated with the person's name.",
         "source": "https://seattle.gov/council/hollingsworth"
       },
       {
@@ -600,8 +594,8 @@
       },
       {
         "data": "(206) 684-8807",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly listed under 'Contact Us' section associated with the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section for Robert Kettle.",
         "source": "https://seattle.gov/council/kettle"
       },
       {
@@ -614,8 +608,8 @@
     "emails": [
       {
         "data": "Robert.Kettle@seattle.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly listed under 'Contact Us' section associated with the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section for Robert Kettle.",
         "source": "https://seattle.gov/council/kettle"
       },
       {
@@ -640,8 +634,8 @@
       },
       {
         "data": "https://seattle.gov/council/kettle",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The URL is the specific page for Robert Kettle.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page for Robert Kettle and is present in the text.",
         "source": "https://seattle.gov/council/kettle"
       },
       {
@@ -680,9 +674,9 @@
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "(206) 684-8808",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed in the 'Contact Us' section for the person.",
+        "data": "206-684-8808",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed in the text and under 'Contact Us'.",
         "source": "https://seattle.gov/council/rinck"
       },
       {
@@ -695,8 +689,8 @@
     "emails": [
       {
         "data": "AlexisMercedes.Rinck@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed in the 'Contact Us' section for the person.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed in the text and under 'Contact Us'.",
         "source": "https://seattle.gov/council/rinck"
       },
       {
@@ -727,8 +721,8 @@
       },
       {
         "data": "https://seattle.gov/council/rinck",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page is the person's profile page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Primary website URL for the individual's profile page.",
         "source": "https://seattle.gov/council/rinck"
       },
       {

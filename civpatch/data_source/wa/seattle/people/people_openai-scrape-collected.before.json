@@ -14,7 +14,7 @@
       {
         "data": "(206) 684-4000",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' under Mayor Bruce Harrell section.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Mayor Bruce Harrell's contact info.",
         "source": "https://seattle.gov/mayor/about"
       },
       {
@@ -29,21 +29,21 @@
       {
         "data": "https://seattle.gov/mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary Office of the Mayor URL linked at top of page.",
+        "llm_confidence_reason": "Primary official page URL for the Mayor's Office.",
         "source": "https://seattle.gov/mayor/about"
       },
       {
         "data": "https://seattle.gov/mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary official page URL for the Mayor's Office.",
+        "llm_confidence_reason": "Primary page URL for the Office of the Mayor.",
         "source": "https://seattle.gov/mayor"
       }
     ],
     "start_dates": [
       {
         "data": "2021",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Mayor Bruce Harrell was elected the 57th mayor of Seattle in 2021'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Elected as mayor in 2021 as stated in the text.",
         "source": "https://seattle.gov/mayor/about"
       }
     ],
@@ -65,7 +65,7 @@
       {
         "data": "(206) 684-8801",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Rob Saka.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -73,7 +73,7 @@
       {
         "data": "rob.saka@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Rob Saka.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -81,7 +81,7 @@
       {
         "data": "https://seattle.gov/council/saka",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Rob Saka.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -104,7 +104,7 @@
       {
         "data": "(206) 684-8802",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Mark Solomon.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -112,7 +112,7 @@
       {
         "data": "mark.solomon2@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Mark Solomon.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -120,7 +120,7 @@
       {
         "data": "https://seattle.gov/council/solomon",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Mark Solomon.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -143,7 +143,7 @@
       {
         "data": "(206) 684-8803",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Joy Hollingsworth.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -151,7 +151,7 @@
       {
         "data": "joy.hollingsworth@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Joy Hollingsworth.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -159,7 +159,7 @@
       {
         "data": "https://seattle.gov/council/hollingsworth",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Joy Hollingsworth.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -182,7 +182,7 @@
       {
         "data": "(206) 684-8804",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Maritza Rivera.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -190,7 +190,7 @@
       {
         "data": "maritza.rivera@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Maritza Rivera.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -198,7 +198,7 @@
       {
         "data": "https://seattle.gov/council/rivera",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Maritza Rivera.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -221,7 +221,7 @@
       {
         "data": "(206) 684-8805",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Cathy Moore.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -229,7 +229,7 @@
       {
         "data": "cathy.moore@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Cathy Moore.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -237,7 +237,7 @@
       {
         "data": "https://seattle.gov/council/moore",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Cathy Moore.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -260,7 +260,7 @@
       {
         "data": "(206) 684-8806",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Dan Strauss.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -268,7 +268,7 @@
       {
         "data": "dan.strauss@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Dan Strauss.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -276,7 +276,7 @@
       {
         "data": "https://seattle.gov/council/strauss",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Dan Strauss.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -299,7 +299,7 @@
       {
         "data": "(206) 684-8807",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Robert Kettle.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -307,7 +307,7 @@
       {
         "data": "robert.kettle@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Robert Kettle.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -315,7 +315,7 @@
       {
         "data": "https://seattle.gov/council/kettle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Robert Kettle.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -338,7 +338,7 @@
       {
         "data": "(206) 684-8808",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Alexis Mercedes Rinck.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -346,7 +346,7 @@
       {
         "data": "AlexisMercedes.Rinck@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Alexis Mercedes Rinck.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -354,7 +354,7 @@
       {
         "data": "https://seattle.gov/council/rinck",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Alexis Mercedes Rinck.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -378,7 +378,7 @@
       {
         "data": "(206) 684-8809",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed under contact for Sara Nelson.",
+        "llm_confidence_reason": "Phone number found under contact section near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -386,7 +386,7 @@
       {
         "data": "sara.nelson@seattle.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email listed under contact for Sara Nelson.",
+        "llm_confidence_reason": "Email found in mailto link near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -394,7 +394,7 @@
       {
         "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official council profile page linked for Sara Nelson.",
+        "llm_confidence_reason": "Profile page URL linked near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
