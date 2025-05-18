@@ -14,7 +14,7 @@
       {
         "data": "(206) 684-4000",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' under Mayor Bruce Harrell's contact info.",
+        "llm_confidence_reason": "Phone number listed under Mayor Bruce Harrell's contact information.",
         "source": "https://seattle.gov/mayor/about"
       },
       {
@@ -35,15 +35,15 @@
       {
         "data": "https://seattle.gov/mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the Office of the Mayor.",
+        "llm_confidence_reason": "Primary official page URL for the Mayor's Office.",
         "source": "https://seattle.gov/mayor"
       }
     ],
     "start_dates": [
       {
         "data": "2021",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Mayor Bruce Harrell was elected the 57th mayor of Seattle in 2021'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Elected as mayor in 2021 as stated in the text.",
         "source": "https://seattle.gov/mayor/about"
       }
     ],
