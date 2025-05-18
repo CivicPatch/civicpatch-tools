@@ -4,9 +4,10 @@
 /coverage/
 /doc/
 /pkg/
-/dist/
+/dist/**
 /node_modules/
 /vendor/
+/tmp/
 
 chat.txt
 costs.csv
