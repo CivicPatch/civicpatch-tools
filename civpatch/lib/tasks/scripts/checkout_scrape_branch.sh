@@ -18,8 +18,10 @@ echo "Calling rake pipeline:fetch[$STATE_ARG, $GNIS_ARG, $CREATE_PR_ARG]"
 REPO_URL="https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/CivicPatch/civicpatch-tools.git"
 
 cd /app
-git clone $REPO_URL .
-cd civicpatch-tools/civpatch
+git clone $REPO_URL ./tmp
+cp -rn ./tmp/civicpatch-tools/. /app
+# rm -rf ./tmp
+cd /app/civicpatch-tools/civpatch
 
 local_run_id=$(uuidgen)
 branch_name="local-city-scrape-${STATE_ARG}-county-${GNIS_ARG}-${local_run_id}"

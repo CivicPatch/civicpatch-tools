@@ -74,7 +74,11 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 
 	cmd := []string{
 		"./lib/tasks/scripts/checkout_scrape_branch.sh",
-		"rake", fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr),
+		state,
+		gnis,
+		"&&",
+		"rake",
+		fmt.Sprintf("pipeline:fetch[%s,%s,%t]", state, gnis, createPr),
 	}
 
 	volumes := map[string]string{}
