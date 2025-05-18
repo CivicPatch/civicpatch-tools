@@ -59,7 +59,7 @@ func ScrapePlan(state string, numMunicipalities int, gnisToIgnore []string) (str
 }
 
 func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, develop bool, withCi bool, sendCosts bool) error {
-	githubUsername, githubToken, dockerClient, err := prepareScrape(ctx, state, gnis, withCi, develop)
+	githubUsername, githubToken, dockerClient, err := prepareScrape(ctx, state, gnis, withCi, develop, sendCosts)
 	if err != nil {
 		return err
 	}
