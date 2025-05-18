@@ -15,11 +15,11 @@ fi
 
 echo "Calling rake pipeline:fetch[$STATE_ARG,$GNIS_ARG]"
 
-REPO_URL="https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/CivicPatch/civicpatch-tools.git"
+REPO_URL="https://github.com/CivicPatch/civicpatch-tools.git"
 
 cd /app
 mkdir -p ./tmp
-git clone $REPO_URL ./tmp/civicpatch-tools --depth 1
+git clone -b main --single-branch $REPO_URL ./tmp/civicpatch-tools --depth 1
 cp -rn ./tmp/civicpatch-tools/. /app
 rm -rf ./tmp
 cd /app/civpatch

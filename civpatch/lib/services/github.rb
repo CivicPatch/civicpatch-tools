@@ -6,11 +6,11 @@ module Services
   class GitHub
     attr_reader :local_repo
 
-    FOLDERS_TO_COPY = ["civpatch/config", "civpatch/data", "civpatch/data_source"].freeze
+    FOLDERS_TO_COPY = %w[config data data_source]
+                      .map { |folder| Core::PathHelper.project_path(folder) }
 
     def initialize
       @client = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
-      @repo = "https://#{ENV["GITHUB_USERNAME"]}:#{ENV["GITHUB_TOKEN"]}@github.com/CivicPatch/civicpatch-tools.git"
 
       repo_path = Core::PathHelper.project_path("..")
 
@@ -24,15 +24,15 @@ module Services
 
       @local_repo.add(FOLDERS_TO_COPY)
       @local_repo.commit("Add municipal officials for #{municipality_name}, #{state}")
+      @local_repo.push("origin", @local_repo.current_branch)
 
       pull_request_body = %(
        PR opened by the Municipal Officials - Scrape workflow.
       )
-      branch_name = @local_repo.current_branch
       @client.create_pull_request(
         "CivicPatch/civicpatch-tools",
         "main",
-        branch_name,
+        @local_repo.current_branch,
         "Municipality Officials: #{context[:municipality_entry]["name"]}, #{context[:state]}",
         pull_request_body
       )

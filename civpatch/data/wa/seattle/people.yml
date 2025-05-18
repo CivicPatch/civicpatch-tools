@@ -14,7 +14,7 @@
   - https://seattle.gov/mayor
   - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/mayor
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Sara Nelson
   positions:
   - Council President
@@ -30,9 +30,10 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council/sara-nelson
   - https://www.seattle.gov/council/meet-the-council/sara-nelson
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Rob Saka
   positions:
   - Council Member
@@ -47,9 +48,10 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/saka
   - https://www.seattle.gov/council/saka
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Mark Solomon
   positions:
   - Council Member
@@ -64,9 +66,10 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/solomon
   - https://www.seattle.gov/council/solomon
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Joy Hollingsworth
   positions:
   - Council Member
@@ -81,9 +84,10 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/hollingsworth
   - https://www.seattle.gov/council/hollingsworth
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Maritza Rivera
   positions:
   - Council Member
@@ -98,9 +102,10 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/rivera
   - https://www.seattle.gov/council/rivera
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Cathy Moore
   positions:
   - Council Member
@@ -115,9 +120,10 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/moore
   - https://www.seattle.gov/council/moore
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Dan Strauss
   positions:
   - Council Member
@@ -132,9 +138,10 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/strauss
   - https://www.seattle.gov/council/strauss
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'
 - name: Robert Kettle
   positions:
   - Council Member
@@ -148,8 +155,10 @@
   source_image:
   sources:
   - https://seattle.gov/council/meet-the-council
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/kettle
-  updated_at: '2025-05-16'
+  - https://www.seattle.gov/council/kettle
+  updated_at: '2025-05-18'
 - name: Alexis Mercedes Rinck
   positions:
   - Council Member
@@ -164,6 +173,7 @@
   sources:
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
   - https://seattle.gov/council/rinck
   - https://www.seattle.gov/council/rinck
-  updated_at: '2025-05-16'
+  updated_at: '2025-05-18'

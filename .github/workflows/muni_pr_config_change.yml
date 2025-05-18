@@ -1,0 +1,148 @@
+name: 🤖 auto - Municipal Officials - Pull Request - Config Change
+
+on:
+  pull_request:
+    types:
+      - synchronize
+    paths:
+      - '**/config.yml'
+
+jobs:
+  validate-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.check-label.outputs.env_name }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Find Env Label from PR Labels and Set Outputs
+        id: check-label
+        run: |
+          labels_json='${{ toJSON(github.event.pull_request.labels) }}'
+          # Use jq to find the first label name starting with 'env-'
+          env_label_name=$(echo "$labels_json" | jq -r '.[] | select(.name | startswith("env-")) | .name' | head -n 1)
+
+          if [[ -n "$env_label_name" ]]; then
+            echo "Matched label: '$env_label_name'"
+            echo "env_name=${env_label_name}" >> $GITHUB_OUTPUT
+          else
+            echo "No label starting with 'env-' found on the PR. Exiting."
+            exit 1
+          fi
+        shell: bash
+
+  validate-changes:
+    needs: validate-environment
+    runs-on: ubuntu-latest
+    outputs:
+      should-continue: ${{ steps.check-files.outputs.should-continue }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 2
+
+      - name: Check config.yml vs people.yml changes
+        id: check-files
+        run: |
+          # Get changed files
+          FILES=$(git diff --name-only HEAD^)
+
+          echo "Files changed: $FILES"
+          
+          # Simple grep checks
+          if echo "$FILES" | grep -q "config\.yml" && ! echo "$FILES" | grep -q "people\.yml"; then
+            echo "Config changed but people.yml did not"
+            echo "should-continue=true" >> $GITHUB_OUTPUT
+          else
+            echo "Either config.yml wasn't changed or people.yml was also changed"
+            echo "should-continue=false" >> $GITHUB_OUTPUT
+          fi
+  
+  run-pipeline-city-fetch:
+    needs: [validate-environment, validate-changes]
+    environment: ${{ needs.validate-environment.outputs.env_name }} 
+    if: needs.validate-changes.outputs.should-continue == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.2'
+          bundler-cache: true
+      
+      - name: Generate GitHub App Token
+        id: generate-pipeline-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+
+      - name: Install gem dependencies
+        run: |
+          bundle install
+      
+      - name: Install Playwright
+        run: |
+          npm install playwright
+          ./node_modules/.bin/playwright install
+
+      - name: Extract State and GNIS ID from Branch Name
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
+          GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $7}')
+
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "STATE=$STATE" >> $GITHUB_ENV
+          echo "GNIS=$GNIS" >> $GITHUB_ENV
+
+      - name: Scrape City
+        env:
+          OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
+          BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
+          GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
+          CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
+          CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          CLOUDFLARE_R2_SECRET_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_KEY }}
+          GOOGLE_SEARCH_API_KEY: ${{ secrets.GOOGLE_SEARCH_API_KEY }}
+          GOOGLE_SEARCH_ENGINE_ID: ${{ secrets.GOOGLE_SEARCH_ENGINE_ID }}
+        run: |
+          bundle exec rake pipeline:fetch[${{ env.STATE }},${{ env.GNIS }}]
+      
+      - name: Commit Changes to current branch
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
+        run: |
+          git config --global user.name "Civic Patch Pipeline Bot"
+          git config --global user.email "civic-patch-pipeline-bot[bot]@users.noreply.github.com"
+
+          git add .
+          git commit -m "Config changes for ${{ env.BRANCH_NAME }}"
+          git push
+
+  validate-pr:
+    needs: run-pipeline-city-fetch
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/partials_mo_pr_comment.yml
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+      head_sha: ${{ github.event.pull_request.head.sha }}
+      head_ref: ${{ github.head_ref }}
+    secrets:
+      GH_APP_BOT_PIPELINE_APP_ID: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+      GH_APP_BOT_PIPELINE_PRIVATE_KEY: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+      GH_APP_BOT_APPROVE_APP_ID: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
+      GH_APP_BOT_APPROVE_PRIVATE_KEY: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }}

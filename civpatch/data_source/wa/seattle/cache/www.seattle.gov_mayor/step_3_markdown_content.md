@@ -116,7 +116,11 @@ Copy the code below and paste it into your blog or Web page:
 
 ##  [Latest News - Mayor's Blog](https://harrell.seattle.gov) 
 
-  [City of Seattle, TAAF, Amazon, and CIDBIA Announce New Ambassadors Program to Improve Neighborhood Safety and Support Economic Revitalization in the Chinatown-International District 
+  [Mayor Harrell Statement on Pioneer Square Shooting 
+
+Seattle – Today, Mayor Bruce Harrell made the following statement after a shooting in Pioneer Square: “Last nigh...
+
+ Posted May. 17](https://harrell.seattle.gov/2025/05/17/mayor-harrell-statement-on-pioneer-square-shooting)   [City of Seattle, TAAF, Amazon, and CIDBIA Announce New Ambassadors Program to Improve Neighborhood Safety and Support Economic Revitalization in the Chinatown-International District 
 
 Mayor Harrell announces a combined $1 million investme...
 
@@ -128,11 +132,7 @@ Seattle – Today, Mayor Bruce Harrell joined Councilmem...
 
 Seattle has invested $16 million in child care workfor...
 
- Posted May. 01  ![SPP educators and students](https://harrell.seattle.gov/wp-content/uploads/sites/23/2024/09/SPP-Classroom-2-150x150.jpg)](https://harrell.seattle.gov/2025/05/01/nearly-5000-seattle-child-care-staff-receiving-retention-payments)   [Mayor Harrell Celebrates Significant Increase in Police Hiring in 2025 
-
-Seattle has hired 60 officers in 2025, a 500% improvem...
-
- Posted Apr. 28  ![Seattle skyline with Space Needle and snow covered mountains](https://harrell.seattle.gov/wp-content/uploads/sites/23/2024/10/271660677_10227508063912477_4799005216720843206_n-150x150.jpg)](https://harrell.seattle.gov/2025/04/28/mayor-harrell-celebrates-significant-increase-in-police-hiring-in-2025)  
+ Posted May. 01  ![SPP educators and students](https://harrell.seattle.gov/wp-content/uploads/sites/23/2024/09/SPP-Classroom-2-150x150.jpg)](https://harrell.seattle.gov/2025/05/01/nearly-5000-seattle-child-care-staff-receiving-retention-payments)  
 
 ## Requests and Services
 
