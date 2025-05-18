@@ -4,8 +4,8 @@ tmp_dir = "dist/tmp"
 [build]
 cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
 bin = "./dist/tmp/civpatch_cli"
-args_bin = ["scrape", "-run", "-state", "wa", "-gnis", "2411856", "-develop"]
-# args_bin = ["scrape", "-run", "-state", "wa", "-gnis", "2411856"]
+# args_bin = ["scrape", "-run", "-state", "wa", "-gnis", "2411856", "-develop"]
+args_bin = ["scrape", "-run", "-state", "wa", "-gnis", "2411856"]
 # args_bin = ["scrape", "-plan", "-state", "wa"]
 # args_bin = ["deploy"]
 # args_bin = ["auth-clear"]

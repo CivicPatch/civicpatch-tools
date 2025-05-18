@@ -13,15 +13,16 @@ if [ -z "$GNIS_ARG" ]; then
   exit 1
 fi
 
-echo "Calling rake pipeline:fetch[$STATE_ARG, $GNIS_ARG, $CREATE_PR_ARG]"
+echo "Calling rake pipeline:fetch[$STATE_ARG,$GNIS_ARG]"
 
 REPO_URL="https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/CivicPatch/civicpatch-tools.git"
 
 cd /app
-git clone $REPO_URL ./tmp
+mkdir -p ./tmp
+git clone $REPO_URL ./tmp/civicpatch-tools --depth 1
 cp -rn ./tmp/civicpatch-tools/. /app
-# rm -rf ./tmp
-cd /app/civicpatch-tools/civpatch
+rm -rf ./tmp
+cd /app/civpatch
 
 local_run_id=$(uuidgen)
 branch_name="local-city-scrape-${STATE_ARG}-county-${GNIS_ARG}-${local_run_id}"
