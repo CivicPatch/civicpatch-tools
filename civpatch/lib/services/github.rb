@@ -10,7 +10,6 @@ module Services
 
     def initialize
       @client = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
-      @repo = "https://#{ENV["GITHUB_USERNAME"]}:#{ENV["GITHUB_TOKEN"]}@github.com/CivicPatch/civicpatch-tools.git"
 
       repo_path = Core::PathHelper.project_path("..")
 

@@ -312,7 +312,7 @@ func (d *DeviceFlow) NewClient(ctx context.Context) (*github.Client, error) {
 }
 
 func CheckGithubCredentials(ctx context.Context) (githubUsername, githubToken string, err error) {
-	if os.Getenv("GITHUB_TOKEN") == "" && os.Getenv("GITHUB_USERNAME") == "" {
+	if len(os.Getenv("GITHUB_TOKEN")) > 0 && len(os.Getenv("GITHUB_USERNAME")) > 0 {
 		return os.Getenv("GITHUB_USERNAME"), os.Getenv("GITHUB_TOKEN"), nil
 	}
 
