@@ -182,9 +182,9 @@
         "source": "https://seattle.gov/council/solomon"
       },
       {
-        "data": "206-684-8802",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
+        "data": "(206) 684-8802",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under Contact Us section and in welcome message.",
         "source": "https://www.seattle.gov/council/solomon"
       }
     ],
@@ -194,6 +194,12 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section for Mark Solomon.",
         "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "Mark.Solomon2@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under Contact Us section and in welcome message.",
+        "source": "https://www.seattle.gov/council/solomon"
       }
     ],
     "websites": [
@@ -223,8 +229,8 @@
       },
       {
         "data": "https://www.seattle.gov/council/solomon",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is the specific page for Mark Solomon.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the specific page for Mark Solomon, linked multiple times.",
         "source": "https://www.seattle.gov/council/solomon"
       }
     ],
@@ -515,8 +521,8 @@
       },
       {
         "data": "(206) 684-8806",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Contact Us' section on the individual's page.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
@@ -529,8 +535,8 @@
     "emails": [
       {
         "data": "Dan.Strauss@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section associated with the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed under 'Contact Us' section on the individual's page.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
@@ -561,8 +567,8 @@
       },
       {
         "data": "https://seattle.gov/council/strauss",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The current page URL is a specific profile page for the individual.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL of the individual's profile page.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
@@ -774,8 +780,8 @@
       },
       {
         "data": "(206) 684-8809",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with the person.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with Sara Nelson.",
         "source": "https://www.seattle.gov/council/meet-the-council/sara-nelson"
       }
     ],
@@ -788,8 +794,8 @@
       },
       {
         "data": "Sara.Nelson@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section associated with the person.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section associated with Sara Nelson.",
         "source": "https://www.seattle.gov/council/meet-the-council/sara-nelson"
       }
     ],
@@ -820,8 +826,8 @@
       },
       {
         "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the specific profile page for the person, found in navigation and header.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation and header explicitly for Sara Nelson's page.",
         "source": "https://www.seattle.gov/council/meet-the-council/sara-nelson"
       }
     ],
