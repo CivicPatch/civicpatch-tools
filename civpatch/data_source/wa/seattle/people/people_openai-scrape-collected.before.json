@@ -14,13 +14,13 @@
       {
         "data": "(206) 684-4000",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near Mayor Bruce Harrell's contact info.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' under Mayor Bruce Harrell's contact info.",
         "source": "https://seattle.gov/mayor/about"
       },
       {
         "data": "(206) 684-4000",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near Mayor Bruce Harrell's name and contact section.",
+        "llm_confidence_reason": "Phone number labeled 'Phone' near Mayor Bruce Harrell's section.",
         "source": "https://seattle.gov/mayor"
       }
     ],
@@ -42,7 +42,7 @@
     "start_dates": [
       {
         "data": "2021",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Elected as mayor in 2021 as stated in the text.",
         "source": "https://seattle.gov/mayor/about"
       }
@@ -81,7 +81,7 @@
       {
         "data": "https://seattle.gov/council/saka",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -120,7 +120,7 @@
       {
         "data": "https://seattle.gov/council/solomon",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -159,7 +159,7 @@
       {
         "data": "https://seattle.gov/council/hollingsworth",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -198,7 +198,7 @@
       {
         "data": "https://seattle.gov/council/rivera",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -237,7 +237,7 @@
       {
         "data": "https://seattle.gov/council/moore",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -276,7 +276,7 @@
       {
         "data": "https://seattle.gov/council/strauss",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -315,7 +315,7 @@
       {
         "data": "https://seattle.gov/council/kettle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -354,7 +354,7 @@
       {
         "data": "https://seattle.gov/council/rinck",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
@@ -394,7 +394,7 @@
       {
         "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL linked near name.",
+        "llm_confidence_reason": "Official profile page URL.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],

@@ -257,8 +257,8 @@
       },
       {
         "data": "206-684-8803",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with the person.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' and in the text near the email address.",
         "source": "https://seattle.gov/council/hollingsworth"
       },
       {
@@ -269,6 +269,12 @@
       }
     ],
     "emails": [
+      {
+        "data": "Joy.Hollingsworth@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the text near the phone number.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
       {
         "data": "Joy.Hollingsworth@seattle.gov",
         "llm_confidence": 0.98,
@@ -297,8 +303,8 @@
       },
       {
         "data": "https://seattle.gov/council/hollingsworth",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary profile page URL found in navigation and associated with the person's name.",
+        "llm_confidence": 0.97,
+        "llm_confidence_reason": "URL is the specific page for Joy Hollingsworth on the city council website.",
         "source": "https://seattle.gov/council/hollingsworth"
       },
       {
@@ -509,8 +515,8 @@
       },
       {
         "data": "(206) 684-8806",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section for Dan Strauss.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
@@ -523,8 +529,8 @@
     "emails": [
       {
         "data": "Dan.Strauss@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section associated with the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section for Dan Strauss.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
@@ -556,7 +562,7 @@
       {
         "data": "https://seattle.gov/council/strauss",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The current page URL is a specific profile page for the individual.",
+        "llm_confidence_reason": "Primary URL for Dan Strauss's page, found in navigation and header.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
