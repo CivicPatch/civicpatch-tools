@@ -15,7 +15,7 @@ var (
 
 	scrapePlan   = scrapeCommand.Bool("plan", false, "Plan the scrapes")
 	numScrapes   = scrapeCommand.Int("num-scrapes", 1, "Number of scrapes to plan")
-	gnisToIgnore = scrapeCommand.String("gnis-to-ignore", "", "GNIS IDs to ignore")
+	gnisToIgnore = scrapeCommand.String("gnis-to-ignore", "", "Optional: GNIS IDs to ignore (comma-separated list)")
 
 	scrapeRun = scrapeCommand.Bool("run", false, "Run the scrapes")
 	gnis      = scrapeCommand.String("gnis", "", "GNIS ID to scrape")

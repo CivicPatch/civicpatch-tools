@@ -51,7 +51,13 @@ jobs:
           gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-municipal-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
 
           # Now the rake task returns JSON array of objects
-          municipalities_json=$(./civpatch_cli/bin/cli scrape -plan -state ${{ github.event.inputs.state }} --num-scrapes ${{ github.event.inputs.num_municipalities }} --gnis-ids-to-ignore $gnis_ids)
+          cmd="./civpatch_cli/bin/cli scrape -plan -state ${{ github.event.inputs.state }} -num-scrapes ${{ github.event.inputs.num_municipalities }}"
+
+          if [ -n "$gnis_ids" ]; then
+            cmd="$cmd -gnis-to-ignore $gnis_ids"
+          fi
+
+          municipalities_json=$($cmd)
 
           # Output the JSON directly since it's already in the correct format
           echo "municipalities=$municipalities_json" >> "$GITHUB_OUTPUT"
@@ -82,7 +88,7 @@ jobs:
       
       - name: Build go task
         run: |
-          cd ./civicpatch-tools/civpatch_cli
+          cd ./civpatch_cli
           go build -o bin/cli
 
       - name: Generate GitHub App Token
@@ -108,7 +114,7 @@ jobs:
           GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
         run: |
           echo "Processing municipality: ${{ matrix.municipality_entry.gnis }}"
-          bin/cli scrape -run -state ${{ github.event.inputs.state }} -gnis ${{ matrix.municipality_entry.gnis }} -create-pr -with-ci -send-costs
+          ./civpatch_cli/bin/cli scrape -run -state ${{ github.event.inputs.state }} -gnis ${{ matrix.municipality_entry.gnis }} -create-pr -with-ci -send-costs
       
       #- name: Open a pull request
       #  run: |
