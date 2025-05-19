@@ -8,7 +8,7 @@
  *  [Committees](https://www.seattle.gov/council/committees) 
  *  [Legislation & Research](https://www.seattle.gov/council/legislation-and-research) 
  *  [Calendar](https://www.seattle.gov/council/calendar) 
-  [### Focus on Public Safety](https://www.seattle.gov/council/issues/councils-focus-on-public-safety)   [### Protecting our Seattle](https://www.seattle.gov/council/issues/federal-changes-protecting-our-seattle)   [### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption)   [4 days ago  **  
+  [### Focus on Public Safety](https://www.seattle.gov/council/issues/councils-focus-on-public-safety)   [### Protecting our Seattle](https://www.seattle.gov/council/issues/federal-changes-protecting-our-seattle)   [### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption)   [5 days ago  **  
 
 ### Transportation Chair Saka bill sets up expansion of Traffic Safety Cameras
 
