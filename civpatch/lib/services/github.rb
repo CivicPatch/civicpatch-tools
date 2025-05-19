@@ -26,9 +26,7 @@ module Services
       @local_repo.commit("Add municipal officials for #{municipality_name}, #{state}")
       @local_repo.push("origin", @local_repo.current_branch)
 
-      pull_request_body = %(
-       PR opened by the Municipal Officials - Scrape workflow.
-      )
+      pull_request_body = "PR opened by the Municipal Officials - Scrape workflow."
       @client.create_pull_request(
         "CivicPatch/civicpatch-tools",
         "main",

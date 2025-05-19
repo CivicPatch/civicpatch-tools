@@ -7,20 +7,14 @@ module Utils
       # $0.40/1M input, $1.60/1M output
       "gpt-4.1-mini" => { input: 0.0000004, output: 0.0000016 },
       # $0.15/1M input, $0.60/1M output, with_search = $35 per 1000 requests
-      "gemini-2.5-flash-preview-04-17" => { input: 0.00000015, output: 0.0000006, with_search: 0.035 }
+      "gemini-2.5-flash-preview-04-17" => { input: 0.00000015, output: 0.0000006, with_search: 0.035 },
+      "gemini-2.0-flash" => { input: 0.00000010, output: 0.0000004, with_search: 0.035 }
       # Add other models and their costs here
     }.freeze
 
     def self.timestamp
       Time.now.in_time_zone("America/Los_Angeles").strftime("%Y-%m-%d")
     end
-
-    # def self.log_images_cost(state, municipality_name, image_size_in_mb)
-    #  timestamp = get_timestamp
-    #  cost =
-    #  row = [timestamp, state, municipality_name, image_size_in_mb, cost]
-    #  File.write("cost_images.csv", "#{row}\n", mode: "a")
-    # end
 
     # Max 10K requests per day -- 3333 cities hard limit
     def self.log_search_engine_call(state, municipality_name, search_engine)
