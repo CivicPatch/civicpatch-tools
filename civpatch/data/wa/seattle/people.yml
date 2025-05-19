@@ -66,6 +66,23 @@
   - https://seattle.gov/council/moore
   - https://www.seattle.gov/council/moore
   updated_at: '2025-05-19'
+- name: Dan Strauss
+  positions:
+  - Council Member
+  email: Dan.Strauss@seattle.gov
+  phone_number: "(206) 684-8806"
+  website: https://www.seattle.gov/council/strauss
+  start_date:
+  end_date:
+  image: https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg
+  source_image:
+  sources:
+  - https://seattle.gov/council/meet-the-council
+  - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/council
+  - https://seattle.gov/council/strauss
+  - https://www.seattle.gov/council/strauss
+  updated_at: '2025-05-19'
 - name: Maritza Rivera
   positions:
   - Council Member
@@ -151,22 +168,4 @@
   - https://www.seattle.gov/council
   - https://seattle.gov/council/hollingsworth
   - https://www.seattle.gov/council/hollingsworth
-  updated_at: '2025-05-19'
-- name: Dan Strauss
-  positions:
-  - Council Member
-  - District 6
-  email: Dan.Strauss@seattle.gov
-  phone_number: "(206) 684-8806"
-  website: https://www.seattle.gov/council/strauss
-  start_date:
-  end_date:
-  image: https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg
-  source_image:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council
-  - https://seattle.gov/council/strauss
-  - https://www.seattle.gov/council/strauss
   updated_at: '2025-05-19'

@@ -34,7 +34,7 @@
       {
         "data": "(206) 684-4000",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under 'Mayor Bruce Harrell' with phone number.",
+        "llm_confidence_reason": "Listed under Mayor Bruce Harrell section.",
         "source": "https://www.seattle.gov/mayor"
       }
     ],
@@ -60,8 +60,8 @@
       },
       {
         "data": "https://www.seattle.gov/mayor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to the Office of the Mayor.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to the Mayor's office page.",
         "source": "https://www.seattle.gov/mayor"
       }
     ],
@@ -151,7 +151,7 @@
       {
         "data": "https://www.seattle.gov/council/saka",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to council member page.",
+        "llm_confidence_reason": "Link to council member's page.",
         "source": "https://www.seattle.gov/council/saka"
       }
     ],
@@ -229,8 +229,8 @@
       },
       {
         "data": "https://council.seattle.gov/solomon",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appears to be the main profile page for Mark Solomon.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to Mark's Blog",
         "source": "https://seattle.gov/council/solomon"
       },
       {
@@ -286,7 +286,7 @@
         "source": "https://seattle.gov/council/hollingsworth"
       },
       {
-        "data": "206-684-8803",
+        "data": "(206) 684-8803",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed under Contact Us section.",
         "source": "https://www.seattle.gov/council/hollingsworth"
@@ -321,7 +321,7 @@
       {
         "data": "https://hollingsworth.seattle.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Joy's Blog",
+        "llm_confidence_reason": "Link to Joy's Blog under her profile.",
         "source": "https://www.seattle.gov/council/hollingsworth"
       }
     ],
@@ -481,13 +481,13 @@
       {
         "data": "https://seattle.gov/council/moore",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Cathy Moore's page on the Seattle.gov website.",
+        "llm_confidence_reason": "Link to council member page.",
         "source": "https://seattle.gov/council/moore"
       },
       {
         "data": "https://www.seattle.gov/council/moore",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page for Cathy Moore",
+        "llm_confidence_reason": "Link to council member's page.",
         "source": "https://www.seattle.gov/council/moore"
       }
     ],
@@ -507,8 +507,7 @@
       "https://www.seattle.gov/council/strauss"
     ],
     "positions": [
-      "Councilmember",
-      "Councilmember for District 6"
+      "Councilmember"
     ],
     "phone_numbers": [
       {
@@ -565,7 +564,7 @@
       {
         "data": "https://seattle.gov/council/strauss",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page for Dan Strauss on the Seattle City Council website.",
+        "llm_confidence_reason": "Link to council member page.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
@@ -608,7 +607,7 @@
       {
         "data": "(206) 684-8807",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Us section.",
+        "llm_confidence_reason": "Listed under Contact Us.",
         "source": "https://seattle.gov/council/kettle"
       },
       {
@@ -641,7 +640,7 @@
       {
         "data": "https://www.seattle.gov/council/kettle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to council page found under elected officials.",
+        "llm_confidence_reason": "Link to council member's page.",
         "source": "https://www.seattle.gov/council/kettle"
       }
     ],
@@ -801,13 +800,13 @@
       {
         "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and profile picture.",
+        "llm_confidence_reason": "Link associated with name and photo on the 'Meet the Council' page.",
         "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and photo.",
+        "llm_confidence_reason": "Link associated with name and profile picture.",
         "source": "https://www.seattle.gov/council/meet-the-council/sara-nelson"
       }
     ],

@@ -72,7 +72,7 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "206-684-8803",
+    "phone_number": "(206) 684-8803",
     "email": null,
     "website": "https://www.seattle.gov/council/hollingsworth",
     "start_date": null,
@@ -131,8 +131,7 @@
   {
     "name": "Dan Strauss",
     "positions": [
-      "Councilmember",
-      "Councilmember for District 6"
+      "Councilmember"
     ],
     "image": null,
     "source_image": null,
