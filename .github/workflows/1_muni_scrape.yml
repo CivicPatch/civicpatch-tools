@@ -51,7 +51,7 @@ jobs:
           gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-municipal-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
 
           # Now the rake task returns JSON array of objects
-          municipalities_json=$(bin/cli scrape -plan -state ${{ github.event.inputs.state }} --num-scrapes ${{ github.event.inputs.num_municipalities }} --gnis-ids-to-ignore $gnis_ids)
+          municipalities_json=$(./civpatch_cli/bin/cli scrape -plan -state ${{ github.event.inputs.state }} --num-scrapes ${{ github.event.inputs.num_municipalities }} --gnis-ids-to-ignore $gnis_ids)
 
           # Output the JSON directly since it's already in the correct format
           echo "municipalities=$municipalities_json" >> "$GITHUB_OUTPUT"
