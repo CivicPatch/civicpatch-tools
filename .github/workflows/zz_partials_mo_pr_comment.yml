@@ -1,4 +1,4 @@
-name: partial - PR Comment and Approval
+name: ZZ. partial
 
 on:
   workflow_call:

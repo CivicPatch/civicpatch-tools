@@ -80,6 +80,10 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	envVars["GITHUB_TOKEN"] = githubToken
 	envVars["GITHUB_USERNAME"] = githubUsername
 
+	if os.Getenv("GITHUB_ENV") != "" { // Determines what env shell we should use
+		envVars["GITHUB_ENV"] = os.Getenv("GITHUB_ENV")
+	}
+
 	cmd := []string{
 		"./lib/tasks/scripts/checkout_scrape_branch.sh",
 		state,

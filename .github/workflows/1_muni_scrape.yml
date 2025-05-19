@@ -1,4 +1,4 @@
-name: ⚙️ - Municipal Officials - Scrape
+name: 1. ⚙️ - Municipal Officials - Scrape
 
 on:
   workflow_dispatch:
@@ -11,20 +11,20 @@ on:
           - nh
           - or
           - wa
-      num_cities:
+      num_municipalities:
         description: 'Number of cities to process'
         type: number
         required: true
         default: 2
 
 jobs:
-  get_cities_from_queue:
+  get_municipalities_from_queue:
     environment: 
       name: env-${{ github.actor }}
 
     runs-on: ubuntu-latest
     outputs:
-      cities: ${{ steps.set-cities.outputs.cities }}
+      municipalities: ${{ steps.set-municipalities.outputs.municipalities }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -42,39 +42,33 @@ jobs:
       - name: Get scrape candidates from queue
         id: set-municipalities
         run: |
-          # Load the cities queue file and take the first N cities
-          # and ignore cities that already have PRs open
-          gnis_ids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-city-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
+          # Load the municipalities queue file and take the first N municipalities
+          # and ignore municipalities that already have PRs open
+          gnis_ids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-municipal-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
 
-          # Extract GNIS IDs from branch names like pipeline-city-scrapes-wa-king-federal_way-2410494-14096425230
-          gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-city-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
+          # Extract GNIS IDs from branch names like pipeline-municipal-scrapes-wa-king-federal_way-2410494-14096425230
+          gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-municipal-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
 
           # Now the rake task returns JSON array of objects
-          cities_json=$(bin/cli scrape -plan -state ${{ github.event.inputs.state }} --num-scrapes ${{ github.event.inputs.num_cities }} --gnis-ids-to-ignore $gnis_ids)
+          municipalities_json=$(bin/cli scrape -plan -state ${{ github.event.inputs.state }} --num-scrapes ${{ github.event.inputs.num_municipalities }} --gnis-ids-to-ignore $gnis_ids)
 
           # Output the JSON directly since it's already in the correct format
-          echo "cities=$cities_json" >> "$GITHUB_OUTPUT"
+          echo "municipalities=$municipalities_json" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   populate_city_directory:
-    environment: 
-      name: env-${{ github.actor }}
-    env:
-      #CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
-      #CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
-      #CLOUDFLARE_R2_SECRET_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_KEY }}
     timeout-minutes: 15
     permissions:
       contents: write
       pull-requests: write
-    needs: get_cities_from_queue
+    needs: get_municipalities_from_queue
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
       fail-fast: false
       matrix:
-        city_entry: ${{ fromJson(needs.get_cities_from_queue.outputs.cities) }}
+        municipality_entry: ${{ fromJson(needs.get_municipalities_from_queue.outputs.municipalities) }}
     
     steps:
       - name: Checkout code
@@ -99,6 +93,7 @@ jobs:
 
       - name: Scrape municipal officials
         env:
+          GITHUB_ENV: env-${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USER: ${{ github.actor }}
           OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
@@ -111,8 +106,8 @@ jobs:
           GOOGLE_SHEETS_CLIENT_SECRET: ${{ secrets.GOOGLE_SHEETS_CLIENT_SECRET }}
           GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
         run: |
-          echo "Processing city: ${{ matrix.city_entry.gnis }}"
-          bin/cli scrape -run -state ${{ github.event.inputs.state }} -gnis ${{ matrix.city_entry.gnis }} -create-pr -with-ci -send-costs
+          echo "Processing municipality: ${{ matrix.municipality_entry.gnis }}"
+          bin/cli scrape -run -state ${{ github.event.inputs.state }} -gnis ${{ matrix.municipality_entry.gnis }} -create-pr -with-ci -send-costs
       
       #- name: Open a pull request
       #  run: |

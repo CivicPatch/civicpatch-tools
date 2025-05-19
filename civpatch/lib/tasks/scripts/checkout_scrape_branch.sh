@@ -4,6 +4,7 @@ STATE_ARG=$1
 GNIS_ARG=$2
 CREATE_PR_ARG=${3:-false}
 SEND_COSTS_ARG=${4:-false}
+GITHUB_ENV=${GITHUB_ENV:-"env-local"}
 
 if [ -z "$STATE_ARG" ]; then
   echo "Usage: $0 <state_code> <gnis_code>"
@@ -32,7 +33,7 @@ rm -rf ./tmp
 cd /app/civpatch
 
 local_run_id=$(uuidgen)
-branch_name="local-city-scrape-${STATE_ARG}-county-${GNIS_ARG}-${local_run_id}"
+branch_name="pipeline-municipal-scrapes-${STATE_ARG}-${GNIS_ARG}-${local_run_id}"
 echo "Checking out new branch: ${branch_name}"
 git checkout -b ${branch_name}
 
