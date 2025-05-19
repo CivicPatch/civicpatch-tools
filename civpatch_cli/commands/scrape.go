@@ -59,7 +59,12 @@ func ScrapePlan(state string, numMunicipalities int, gnisToIgnore []string) (str
 }
 
 func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, develop bool, withCi bool, sendCosts bool) error {
-	githubUsername, githubToken, dockerClient, err := prepareScrape(ctx, state, gnis, withCi, develop, sendCosts)
+	requiredEnvVars, err := checkScrapeEnvs(state, gnis, withCi, sendCosts)
+	if err != nil {
+		return err
+	}
+
+	githubUsername, githubToken, dockerClient, err := prepareScrape(ctx, develop)
 	if err != nil {
 		return err
 	}
@@ -67,10 +72,13 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 
 	fmt.Printf("Scraping %s %s with createPr: %t\n", state, gnis, createPr)
 
-	args := map[string]string{
-		"GITHUB_TOKEN":    githubToken,
-		"GITHUB_USERNAME": githubUsername,
+	envVars := map[string]string{}
+
+	for _, envVar := range requiredEnvVars {
+		envVars[envVar] = os.Getenv(envVar)
 	}
+	envVars["GITHUB_TOKEN"] = githubToken
+	envVars["GITHUB_USERNAME"] = githubUsername
 
 	cmd := []string{
 		"./lib/tasks/scripts/checkout_scrape_branch.sh",
@@ -94,8 +102,7 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	fmt.Println("Running container with image:", fullImageName)
 	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx,
 		fullImageName,
-		utils.RequiredEnvVarsCI,
-		args,
+		envVars,
 		cmd,
 		volumes)
 	if err != nil {
@@ -166,7 +173,7 @@ func shouldScrape(gnisToIgnore []string, municipality Municipality) bool {
 		(len(municipality.MetaSources) == 0 || len(municipality.MetaSources) == 1)
 }
 
-func checkScrapeInput(state string, gnis string, withCI bool, sendCosts bool) error {
+func checkScrapeEnvs(state string, gnis string, withCI bool, sendCosts bool) ([]string, error) {
 	requiredEnvVars := utils.RequiredEnvVars
 	if sendCosts {
 		requiredEnvVars = append(requiredEnvVars, utils.RequiredEnvVarsSendCosts...)
@@ -177,25 +184,20 @@ func checkScrapeInput(state string, gnis string, withCI bool, sendCosts bool) er
 
 	err := utils.CheckEnvironmentVariables(requiredEnvVars)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if len(state) == 0 {
-		return fmt.Errorf("error: state is required")
+		return nil, fmt.Errorf("error: state is required")
 	}
 	if len(gnis) == 0 {
-		return fmt.Errorf("error: gnis is required")
+		return nil, fmt.Errorf("error: gnis is required")
 	}
 
-	return nil
+	return requiredEnvVars, nil
 }
 
-func prepareScrape(ctx context.Context, state string, gnis string, withCi bool, develop bool, sendCosts bool) (string, string, *docker.Client, error) {
-	err := checkScrapeInput(state, gnis, withCi, sendCosts)
-	if err != nil {
-		return "", "", nil, err
-	}
-
+func prepareScrape(ctx context.Context, develop bool) (string, string, *docker.Client, error) {
 	githubUsername, githubToken, err := services.CheckGithubCredentials(ctx)
 	if err != nil {
 		return "", "", nil, err

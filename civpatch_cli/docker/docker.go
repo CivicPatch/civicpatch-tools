@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"os"
 	"strings"
 	"time"
 
@@ -44,23 +43,20 @@ type ContainerLogs struct {
 }
 
 // RunContainer runs a container with the specified configuration and returns its logs
-func (c *Client) RunContainer(ctx context.Context, image string, envVars []string, args map[string]string, cmd []string, volumes map[string]string) (string, io.ReadCloser, context.CancelFunc, error) {
+func (c *Client) RunContainer(ctx context.Context, image string, envVars map[string]string, cmd []string, volumes map[string]string) (string, io.ReadCloser, context.CancelFunc, error) {
 	// Convert volume map to binds using projectpath package
 	binds, err := utils.ToBindMounts(volumes)
 	if err != nil {
 		return "", nil, nil, fmt.Errorf("error converting volumes to bind mounts: %v", err)
 	}
 
-	env := make([]string, len(envVars))
-	for i, envVar := range envVars {
-		if args[envVar] != "" {
-			env[i] = fmt.Sprintf("%s=%s", envVar, args[envVar])
-		} else {
-			env[i] = fmt.Sprintf("%s=%s", envVar, os.Getenv(envVar))
-		}
+	env := make([]string, 0, len(envVars))
+	for k, v := range envVars {
+		env = append(env, fmt.Sprintf("%s=%s", k, v))
 	}
 
-	fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ") + " || true ; tail -f /dev/null"}
+	// fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ") + " || true ; tail -f /dev/null"}
+	fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ")}
 
 	resp, err := c.client.ContainerCreate(ctx, &container.Config{
 		Image: image,
