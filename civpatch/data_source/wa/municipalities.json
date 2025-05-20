@@ -16,8 +16,8 @@
       "type": "First-class city",
       "population": 737015,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-05-18",
-      "meta_hash": "142ab9ecbec236bd06f755d00eccaea3",
+      "meta_updated_at": "2025-05-19",
+      "meta_hash": "29d1495e220d9a0961746baebc80c33b",
       "meta_sources": [
         "state_source",
         "gemini",
