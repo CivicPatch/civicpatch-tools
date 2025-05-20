@@ -19,8 +19,7 @@ on:
 
 jobs:
   get_municipalities_from_queue:
-    environment: 
-      name: env-${{ github.actor }}
+    environment: env-${{ github.actor }}
 
     runs-on: ubuntu-latest
     outputs:
@@ -65,6 +64,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   populate_city_directory:
+    environment: env-${{ github.actor }}
     timeout-minutes: 15
     permissions:
       contents: write
@@ -100,9 +100,8 @@ jobs:
 
       - name: Scrape municipal officials
         env:
-          GITHUB_ENV: env-${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
           BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
           GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
@@ -114,7 +113,11 @@ jobs:
           GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
         run: |
           echo "Processing municipality: ${{ matrix.municipality_entry.gnis }}"
-          ./civpatch_cli/bin/cli scrape -run -state ${{ github.event.inputs.state }} -gnis ${{ matrix.municipality_entry.gnis }} -create-pr -with-ci -send-costs
+          ./civpatch_cli/bin/cli scrape -run \
+            -state ${{ github.event.inputs.state }} \
+            -gnis ${{ matrix.municipality_entry.gnis }} 
+            -github-env env-${{ github.actor }} \
+            -create-pr -with-ci -send-costs
       
       #- name: Open a pull request
       #  run: |

@@ -33,8 +33,10 @@ namespace :pipeline do
 
     scrape(context)
 
-    github.create_pull_request(context) if create_pr
     Services::GoogleSheets.send_costs if send_costs
+
+    github.update_branch(context)
+    github.create_pull_request(context) if create_pr
   end
 
   desc "Fetch city officials from state source"

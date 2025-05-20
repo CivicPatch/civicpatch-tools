@@ -26,7 +26,6 @@ DOCKERFILE_PATH="./Dockerfile.civpatch"
 BUILD_CONTEXT="." 
 REGISTRY_HOST="ghcr.io"
 
-
 BUILD_ARGS="" # No extra ldbuild args by default
 
 # --- Main Build Logic ---

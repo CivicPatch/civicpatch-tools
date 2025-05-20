@@ -7,7 +7,7 @@
 /dist/**
 /node_modules/
 /vendor/
-/tmp/
+**/tmp/**
 
 chat.txt
 costs.csv

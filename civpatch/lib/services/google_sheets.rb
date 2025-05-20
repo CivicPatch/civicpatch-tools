@@ -3,8 +3,8 @@ require "google/apis/sheets_v4"
 require "csv"
 require "json"
 
-OOB_URI = "urn:ietf:wg:oauth:2.0:oob"
-APPLICATION_NAME = "CSV to Google Sheets"
+OOB_URI = "urn:ietf:wg:oauth:2.0:oob".freeze
+APPLICATION_NAME = "CSV to Google Sheets".freeze
 SCOPE = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
 
 module Services
@@ -13,7 +13,10 @@ module Services
       spreadsheet_id = ENV["GOOGLE_SHEETS_SPREADSHEET_ID"]
       service = setup_client
 
-      return if service.nil?
+      if service.nil?
+        puts "Error setting up Google Sheets client, skipping sending costs..."
+        return
+      end
 
       cost_file_paths = { "Cost LLMs" => Core::PathHelper.project_path("cost_llms.csv"),
                           "Cost Search Engines" => Core::PathHelper.project_path("cost_search_engine.csv") }

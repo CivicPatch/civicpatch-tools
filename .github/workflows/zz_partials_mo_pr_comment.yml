@@ -39,11 +39,15 @@ jobs:
         with:
           ref: ${{ inputs.head_sha }} # Checkout the specific commit
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Set up Go 
+        uses: actions/setup-go@v5
         with:
-          ruby-version: '3.4.2'
-          bundler-cache: true
+          go-version: 1.23.4
+
+      - name: Build go task
+        run: |
+          cd ./civpatch_cli
+          go build -o bin/cli
 
       - name: Generate GitHub App Pipeline Token
         id: generate-pipeline-token
@@ -58,10 +62,6 @@ jobs:
         with:
           app-id: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
           private-key: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }}
-
-      - name: Install dependencies
-        run: |
-          bundle install
 
       - name: Extract State and GNIS ID from Branch Name
         id: extract-vars # Added ID to reference outputs
@@ -85,7 +85,7 @@ jobs:
           BRANCH_NAME: ${{ steps.extract-vars.outputs.BRANCH_NAME }}
         run: |
           echo "Running validation..."
-          PR_DATA=$(bundle exec rake "github_pipeline:generate_pr_data[$STATE,$GNIS_ID,$BRANCH_NAME]")
+          PR_DATA=$(./civpatch_cli/bin/cli run-rake-task -state $STATE -gnis $GNIS_ID -command "github_pipeline:generate_pr_data[$STATE,$GNIS_ID]")
           echo "Validation response: $PR_DATA"
 
           # Parse JSON output

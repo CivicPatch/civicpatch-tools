@@ -75,11 +75,15 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          ruby-version: '3.4.2'
-          bundler-cache: true
+          go-version: '1.24.3'
+      
+      - name: Build go task
+        run: |
+          cd ./civpatch_cli
+          go build -o bin/cli
       
       - name: Generate GitHub App Token
         id: generate-pipeline-token
@@ -87,15 +91,6 @@ jobs:
         with:
           app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
           private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
-
-      - name: Install gem dependencies
-        run: |
-          bundle install
-      
-      - name: Install Playwright
-        run: |
-          npm install playwright
-          ./node_modules/.bin/playwright install
 
       - name: Extract State and GNIS ID from Branch Name
         run: |
@@ -109,34 +104,35 @@ jobs:
 
       - name: Scrape City
         env:
+          GITHUB_USER: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
           BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
           GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
-          CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
-          CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
-          CLOUDFLARE_R2_SECRET_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_KEY }}
           GOOGLE_SEARCH_API_KEY: ${{ secrets.GOOGLE_SEARCH_API_KEY }}
           GOOGLE_SEARCH_ENGINE_ID: ${{ secrets.GOOGLE_SEARCH_ENGINE_ID }}
+          GOOGLE_SHEETS_SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
+          GOOGLE_SHEETS_CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
+          GOOGLE_SHEETS_CLIENT_SECRET: ${{ secrets.GOOGLE_SHEETS_CLIENT_SECRET }}
+          GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
+          #CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
+          #CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          #CLOUDFLARE_R2_SECRET_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_KEY }}
         run: |
-          bundle exec rake pipeline:fetch[${{ env.STATE }},${{ env.GNIS }}]
-      
-      - name: Commit Changes to current branch
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
-        run: |
-          git config --global user.name "Civic Patch Pipeline Bot"
-          git config --global user.email "civic-patch-pipeline-bot[bot]@users.noreply.github.com"
-
-          git add .
-          git commit -m "Config changes for ${{ env.BRANCH_NAME }}"
-          git push
+          ./civpatch_cli/bin/cli scrape -run 
+            -state ${{ env.STATE }} \
+            -gnis ${{ env.GNIS }} \
+            -github-env env-${{ github.actor }} \
+            -pr-number ${{ github.event.pull_request.number }} \
+            -branch-name ${{ env.BRANCH_NAME }} \
+            -with-ci -send-costs
 
   validate-pr:
     needs: run-pipeline-city-fetch
     permissions:
       contents: read
       pull-requests: write
-    uses: ./.github/workflows/partials_mo_pr_comment.yml
+    uses: ./.github/workflows/zz_partials_mo_pr_comment.yml
     with:
       pr_number: ${{ github.event.pull_request.number }}
       head_sha: ${{ github.event.pull_request.head.sha }}

@@ -51,7 +51,7 @@ jobs:
     permissions:
       contents: read # From reusable workflow
       pull-requests: write # From reusable workflow
-    uses: ./.github/workflows/partials_mo_pr_comment.yml # Using main branch, consider pinning to a SHA
+    uses: ./.github/workflows/zz_partials_mo_pr_comment.yml # Using main branch, consider pinning to a SHA
     with:
       pr_number: ${{ github.event.pull_request.number }}
       head_sha: ${{ github.event.pull_request.head.sha }}

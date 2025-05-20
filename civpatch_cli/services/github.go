@@ -8,15 +8,25 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
+	"sync"
 	"time"
 
-	"github.com/google/go-github/v72/github"
+	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
 )
 
 const (
 	GITHUB_APP_CLIENT_ID = "Iv23lidh39jVrlDyygqV"
 )
+
+type GitHubService struct {
+	GithubClient *github.Client
+	clientID     string
+	httpClient   *http.Client
+	tm           *TokenManager
+	config       *oauth2.Config
+}
 
 // DeviceFlowResponse represents the response from GitHub's device flow endpoint
 type DeviceFlowResponse struct {
@@ -27,26 +37,21 @@ type DeviceFlowResponse struct {
 	Interval        int    `json:"interval"`
 }
 
-// DeviceFlow handles GitHub's device flow authentication
-type DeviceFlow struct {
-	clientID string
-	client   *http.Client
-	tm       *TokenManager
-	config   *oauth2.Config
-}
-
 // DeviceFlowState represents a state in the device flow
 type DeviceFlowState struct {
 	State string
 	Desc  string
 }
 
-func (e *DeviceFlowState) Error() string {
-	return fmt.Sprintf("%s: %s", e.State, e.Desc)
-}
+var (
+	githubService     *GitHubService
+	githubServiceOnce sync.Once
+	githubServiceErr  error
+)
 
-// NewGitHubDeviceFlow creates a new device flow handler
-func NewGitHubDeviceFlow() (*DeviceFlow, error) {
+// NewGitHubService creates a new device flow handler
+func NewGitHubService() (*GitHubService, error) {
+	fmt.Println("Creating github service")
 	tm, err := NewTokenManager()
 	if err != nil {
 		return nil, fmt.Errorf("failed to create token manager: %w", err)
@@ -58,22 +63,23 @@ func NewGitHubDeviceFlow() (*DeviceFlow, error) {
 		Endpoint: oauth2.Endpoint{
 			TokenURL: "https://github.com/login/oauth/access_token",
 		},
-		Scopes: []string{"public_repo"}, // Minimal scope needed for PRs
+		Scopes: []string{"public_repo"}, // Scope is never actually used because we're using Github App
 	}
 
 	// Add service to token manager
 	tm.AddService("github", config, AuthTypeDeviceFlow)
 
-	return &DeviceFlow{
-		clientID: GITHUB_APP_CLIENT_ID,
-		client:   &http.Client{},
-		tm:       tm,
-		config:   config,
+	return &GitHubService{
+		clientID:     GITHUB_APP_CLIENT_ID,
+		GithubClient: &github.Client{},
+		httpClient:   &http.Client{},
+		tm:           tm,
+		config:       config,
 	}, nil
 }
 
 // GetToken gets a valid token, either from cache or through device flow
-func (d *DeviceFlow) GetToken(ctx context.Context) (*oauth2.Token, error) {
+func (d *GitHubService) getToken(ctx context.Context) (*oauth2.Token, error) {
 	// Try to get token from cache first
 	token, err := d.tm.GetToken(ctx, "github")
 	if err == nil {
@@ -96,9 +102,9 @@ func (d *DeviceFlow) GetToken(ctx context.Context) (*oauth2.Token, error) {
 	fmt.Println("2. Enter this code:", resp.UserCode)
 	fmt.Println("\nWaiting for you to complete authentication...")
 	fmt.Println("(Press Ctrl+C to cancel)")
-	fmt.Println("=====================================\n")
+	fmt.Println("=====================================")
 
-	token, err = d.WaitForToken(ctx, resp.DeviceCode, resp.Interval)
+	token, err = d.waitForToken(ctx, resp.DeviceCode, resp.Interval)
 	if err != nil {
 		return nil, fmt.Errorf("waiting for token: %w", err)
 	}
@@ -112,7 +118,7 @@ func (d *DeviceFlow) GetToken(ctx context.Context) (*oauth2.Token, error) {
 }
 
 // Start initiates the device flow and returns the user code and verification URL
-func (d *DeviceFlow) Start(ctx context.Context) (*DeviceFlowResponse, error) {
+func (d *GitHubService) Start(ctx context.Context) (*DeviceFlowResponse, error) {
 	req, err := http.NewRequestWithContext(ctx, "POST",
 		"https://github.com/login/device/code",
 		nil)
@@ -123,10 +129,10 @@ func (d *DeviceFlow) Start(ctx context.Context) (*DeviceFlowResponse, error) {
 	// Use scopes from config
 	q := req.URL.Query()
 	q.Add("client_id", d.clientID)
-	q.Add("scope", d.config.Scopes[0]) // We only have one scope
+	q.Add("scopes", strings.Join(d.config.Scopes, ","))
 	req.URL.RawQuery = q.Encode()
 
-	resp, err := d.client.Do(req)
+	resp, err := d.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("making request: %w", err)
 	}
@@ -141,7 +147,7 @@ func (d *DeviceFlow) Start(ctx context.Context) (*DeviceFlowResponse, error) {
 }
 
 // parseDeviceFlowResponse parses the device flow response from the response body
-func (d *DeviceFlow) parseDeviceFlowResponse(body io.Reader) (*DeviceFlowResponse, error) {
+func (d *GitHubService) parseDeviceFlowResponse(body io.Reader) (*DeviceFlowResponse, error) {
 	data, err := io.ReadAll(body)
 	if err != nil {
 		return nil, fmt.Errorf("reading response: %w", err)
@@ -165,7 +171,7 @@ func (d *DeviceFlow) parseDeviceFlowResponse(body io.Reader) (*DeviceFlowRespons
 }
 
 // WaitForToken polls GitHub until the user completes the authentication
-func (d *DeviceFlow) WaitForToken(ctx context.Context, deviceCode string, interval int) (*oauth2.Token, error) {
+func (d *GitHubService) waitForToken(ctx context.Context, deviceCode string, interval int) (*oauth2.Token, error) {
 	fmt.Printf("Polling every %d seconds for authentication...\n", interval)
 	ticker := time.NewTicker(time.Duration(interval) * time.Second)
 	defer ticker.Stop()
@@ -200,7 +206,7 @@ func (d *DeviceFlow) WaitForToken(ctx context.Context, deviceCode string, interv
 }
 
 // pollForToken checks if the user has completed the authentication
-func (d *DeviceFlow) pollForToken(ctx context.Context, deviceCode string) (*oauth2.Token, error) {
+func (d *GitHubService) pollForToken(ctx context.Context, deviceCode string) (*oauth2.Token, error) {
 	req, err := http.NewRequestWithContext(ctx, "POST",
 		"https://github.com/login/oauth/access_token",
 		nil)
@@ -214,7 +220,7 @@ func (d *DeviceFlow) pollForToken(ctx context.Context, deviceCode string) (*oaut
 	q.Add("grant_type", "urn:ietf:params:oauth:grant-type:device_code")
 	req.URL.RawQuery = q.Encode()
 
-	resp, err := d.client.Do(req)
+	resp, err := d.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("making request: %w", err)
 	}
@@ -224,7 +230,7 @@ func (d *DeviceFlow) pollForToken(ctx context.Context, deviceCode string) (*oaut
 }
 
 // parseTokenResponse parses the token response and handles errors
-func (d *DeviceFlow) parseTokenResponse(resp *http.Response) (*oauth2.Token, error) {
+func (d *GitHubService) parseTokenResponse(resp *http.Response) (*oauth2.Token, error) {
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("reading response: %w", err)
@@ -247,7 +253,7 @@ func (d *DeviceFlow) parseTokenResponse(resp *http.Response) (*oauth2.Token, err
 }
 
 // checkTokenError checks for error responses in the token response
-func (d *DeviceFlow) checkTokenError(values url.Values) error {
+func (d *GitHubService) checkTokenError(values url.Values) error {
 	if error := values.Get("error"); error != "" {
 		errorDesc := values.Get("error_description")
 		switch error {
@@ -273,7 +279,7 @@ func (d *DeviceFlow) checkTokenError(values url.Values) error {
 }
 
 // createToken creates an oauth2.Token from the response values
-func (d *DeviceFlow) createToken(values url.Values) (*oauth2.Token, error) {
+func (d *GitHubService) createToken(values url.Values) (*oauth2.Token, error) {
 	accessToken := values.Get("access_token")
 	if accessToken == "" {
 		return nil, fmt.Errorf("no access token in response")
@@ -300,44 +306,66 @@ func (d *DeviceFlow) createToken(values url.Values) (*oauth2.Token, error) {
 }
 
 // NewClient creates a new GitHub client with the provided token
-func (d *DeviceFlow) NewClient(ctx context.Context) (*github.Client, error) {
-	token, err := d.GetToken(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("getting token: %w", err)
+func (d *GitHubService) setupService(ctx context.Context) error {
+	token := &oauth2.Token{}
+	var err error
+
+	if os.Getenv("GITHUB_TOKEN") != "" {
+		token = &oauth2.Token{
+			AccessToken: os.Getenv("GITHUB_TOKEN"),
+		}
+	} else {
+		token, err = d.getToken(ctx)
+		if err != nil {
+			return fmt.Errorf("getting token: %w", err)
+		}
 	}
 
 	ts := oauth2.StaticTokenSource(token)
-	tc := oauth2.NewClient(ctx, ts)
-	return github.NewClient(tc), nil
+	httpClient := oauth2.NewClient(ctx, ts)
+	githubClient := github.NewClient(httpClient)
+	d.GithubClient = githubClient
+	d.httpClient = httpClient
+
+	return nil
 }
 
-func CheckGithubCredentials(ctx context.Context) (githubUsername, githubToken string, err error) {
+func GetGithubService(ctx context.Context) (*GitHubService, error) {
+	githubServiceOnce.Do(func() {
+		githubService, githubServiceErr = NewGitHubService()
+		if err := githubService.setupService(ctx); err != nil {
+			githubServiceErr = err
+		}
+	})
+
+	return githubService, githubServiceErr
+}
+
+func GetGithubCredentials(ctx context.Context) (githubUsername, githubToken string, err error) {
 	if len(os.Getenv("GITHUB_TOKEN")) > 0 && len(os.Getenv("GITHUB_USERNAME")) > 0 {
 		return os.Getenv("GITHUB_USERNAME"), os.Getenv("GITHUB_TOKEN"), nil
 	}
 
-	// Go through device flow
-	deviceFlow, err := NewGitHubDeviceFlow()
+	githubService, err := GetGithubService(ctx)
 	if err != nil {
-		return "", "", fmt.Errorf("failed to create device flow: %w", err)
+		return "", "", fmt.Errorf("failed to get github service: %w", err)
 	}
 
-	token, err := deviceFlow.GetToken(ctx)
-	if err != nil {
-		return "", "", fmt.Errorf("failed to get token: %w", err)
-	}
-
-	client, err := deviceFlow.NewClient(ctx)
-	if err != nil {
-		return "", "", fmt.Errorf("failed to get client: %w", err)
-	}
-
-	user, _, err := client.Users.Get(ctx, "")
+	user, _, err := githubService.GithubClient.Users.Get(ctx, "")
 	if err != nil {
 		return "", "", fmt.Errorf("failed to get user: %w", err)
+	}
+
+	token, err := githubService.getToken(ctx)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to get token: %w", err)
 	}
 
 	fmt.Printf("Authenticated as %s\n", *user.Login)
 
 	return *user.Login, token.AccessToken, nil
+}
+
+func (e *DeviceFlowState) Error() string {
+	return fmt.Sprintf("%s: %s", e.State, e.Desc)
 }
