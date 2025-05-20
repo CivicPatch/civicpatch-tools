@@ -66,9 +66,9 @@ jobs:
   populate_city_directory:
     environment: env-${{ github.actor }}
     timeout-minutes: 15
-    permissions:
-      contents: write
-      pull-requests: write
+    #permissions:
+    #  contents: write
+    #  pull-requests: write
     needs: get_municipalities_from_queue
     runs-on: ubuntu-latest
     strategy:
@@ -100,8 +100,8 @@ jobs:
 
       - name: Scrape municipal officials
         env:
-          GITHUB_USER: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: civic-patch-pipeline-bot
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
           OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
           BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
           GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}

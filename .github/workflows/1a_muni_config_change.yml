@@ -104,8 +104,8 @@ jobs:
 
       - name: Scrape City
         env:
-          GITHUB_USER: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: civic-patch-pipeline-bot
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
           OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
           BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
           GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
