@@ -100,7 +100,7 @@ jobs:
 
       - name: Scrape municipal officials
         env:
-          GITHUB_USER: civic-patch-pipeline-bot
+          GITHUB_USERNAME: civic-patch-pipeline-bot
           GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
           OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
           BRAVE_TOKEN: ${{ secrets.BRAVE_TOKEN }}
