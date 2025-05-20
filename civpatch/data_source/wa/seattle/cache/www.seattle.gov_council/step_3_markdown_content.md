@@ -8,7 +8,7 @@
  *  [Committees](https://www.seattle.gov/council/committees) 
  *  [Legislation & Research](https://www.seattle.gov/council/legislation-and-research) 
  *  [Calendar](https://www.seattle.gov/council/calendar) 
-  [### Focus on Public Safety](https://www.seattle.gov/council/issues/councils-focus-on-public-safety)   [### Protecting our Seattle](https://www.seattle.gov/council/issues/federal-changes-protecting-our-seattle)   [### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption)   [4 days ago  **  
+  [### Focus on Public Safety](https://www.seattle.gov/council/issues/councils-focus-on-public-safety)   [### Protecting our Seattle](https://www.seattle.gov/council/issues/federal-changes-protecting-our-seattle)   [### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption)   [6 days ago  **  
 
 ### Transportation Chair Saka bill sets up expansion of Traffic Safety Cameras
 
@@ -44,15 +44,15 @@
 
 ## Recent Videos
 
-  [### Select Committee on Federal Administration & Policy Changes 5/16/2025
+  [### Select Committee on the Comprehensive Plan Public Hearing 5/19/2025 Session II
+
+ Public Hearing continues from Session IAgenda: Call to Order; Approval of the Agenda; Public Hearing on CB 120969: relating to land use and zoning - interim changes; Ad[...]](https://www.seattlechannel.org/video.asp?ID=2162545)   [### Select Committee on the Comprehensive Plan Public Hearing 5/19/2025 Session I
+
+ Agenda: Call to Order; Approval of the Agenda; Public Hearing on CB 120969: relating to land use and zoning - interim changes; Adjournment.Public Hearing continues in S[...]](https://www.seattlechannel.org/video.asp?ID=2162543)   [### Select Committee on Federal Administration & Policy Changes 5/16/2025
 
  Agenda: Call to Order; Approval of the Agenda; Public Comment; Update on Potential Federal Administration Impacts to the City of Seattle; Res 32168: Resolution reaffirm[...]](https://www.seattlechannel.org/video.asp?ID=2162541)   [### Select Committee on the Families, Education, Preschool & Promise (FEPP) Levy 5/15/2025
 
-Agenda: Call to Order; Public comment; CB 120981: Relating to property taxation and the Families Education, Preschool, and Promise Levy; Adjournment.](https://www.seattlechannel.org/video.asp?ID=2162539)   [### District 1 Community Safety Town Hall
-
- Councilmember Rob Saka (District 1) hosts a community town hall meeting focused on public safety in the North Delridge, Snake Hill, and High Point neighborhoods.  Speak[...]](https://www.seattlechannel.org/video.asp?ID=2162538)   [### Parks, Public Utilities & Technology Committee 5/14/2025
-
- Agenda: Call to the Order; Approval of the Agenda; Public Comment; Commence Astound Cable Franchise Renewal; CB 120966:  relating to Seattle Public Utilities; CB 120982[...]](https://www.seattlechannel.org/video.asp?ID=2782517)  
+Agenda: Call to Order; Public comment; CB 120981: Relating to property taxation and the Families Education, Preschool, and Promise Levy; Adjournment.](https://www.seattlechannel.org/video.asp?ID=2162539)  
 
 ## City Council
 
