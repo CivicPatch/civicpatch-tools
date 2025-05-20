@@ -17,12 +17,11 @@
       "https://www.seattle.gov/elected-officials",
       "https://www.seattle.gov/mayor"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Sara Nelson",
     "positions": [
-      "Council President",
       "Council Member",
       "Citywide",
       "Position 9"
@@ -30,41 +29,17 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8809",
-    "email": "Sara.Nelson@seattle.gov",
-    "website": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+    "email": null,
+    "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
       "https://www.seattle.gov/council/meet-the-council/sara-nelson"
     ],
-    "updated_at": "2025-05-18"
-  },
-  {
-    "name": "Alexis Mercedes Rinck",
-    "positions": [
-      "Council Member",
-      "Citywide",
-      "Position 8"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(206) 684-8808",
-    "email": "AlexisMercedes.Rinck@seattle.gov",
-    "website": "https://www.seattle.gov/council/rinck",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
-      "https://seattle.gov/council/rinck",
-      "https://www.seattle.gov/council/rinck"
-    ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Rob Saka",
@@ -75,18 +50,17 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8801",
-    "email": "Rob.Saka@seattle.gov",
+    "email": null,
     "website": "https://www.seattle.gov/council/saka",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/saka",
       "https://www.seattle.gov/council/saka"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Mark Solomon",
@@ -97,18 +71,17 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8802",
-    "email": "Mark.Solomon2@seattle.gov",
-    "website": "https://www.seattle.gov/council/solomon",
+    "email": null,
+    "website": "https://council.seattle.gov/solomon",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/solomon",
       "https://www.seattle.gov/council/solomon"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Joy Hollingsworth",
@@ -119,18 +92,17 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8803",
-    "email": "Joy.Hollingsworth@seattle.gov",
-    "website": "https://www.seattle.gov/council/hollingsworth",
+    "email": null,
+    "website": "https://hollingsworth.seattle.gov",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/hollingsworth",
       "https://www.seattle.gov/council/hollingsworth"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Maritza Rivera",
@@ -141,18 +113,17 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8804",
-    "email": "Maritza.Rivera@seattle.gov",
-    "website": "https://www.seattle.gov/council/rivera",
+    "email": null,
+    "website": "https://rivera.seattle.gov",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/rivera",
       "https://www.seattle.gov/council/rivera"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Cathy Moore",
@@ -163,18 +134,17 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8805",
-    "email": "Cathy.Moore@seattle.gov",
-    "website": "https://www.seattle.gov/council/moore",
+    "email": null,
+    "website": "https://seattle.gov/council/moore",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/moore",
       "https://www.seattle.gov/council/moore"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Dan Strauss",
@@ -185,38 +155,55 @@
     "image": null,
     "source_image": null,
     "phone_number": "(206) 684-8806",
-    "email": "Dan.Strauss@seattle.gov",
-    "website": "https://www.seattle.gov/council/strauss",
+    "email": null,
+    "website": "https://seattle.gov/council/strauss",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/strauss",
       "https://www.seattle.gov/council/strauss"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
-    "name": "Robert Kettle",
+    "name": "Bob Kettle",
     "positions": [
       "Council Member",
       "District 7"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(206) 684-8807",
-    "email": "Robert.Kettle@seattle.gov",
-    "website": "https://seattle.gov/council/kettle",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.seattle.gov/council/kettle",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.seattle.gov/elected-officials"
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [
+      "Council Member",
+      "Position 8"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(206) 684-8808",
+    "email": null,
+    "website": "https://seattle.gov/council/rinck",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/council",
-      "https://seattle.gov/council/kettle",
-      "https://www.seattle.gov/council/kettle"
+      "https://www.seattle.gov/elected-officials",
+      "https://seattle.gov/council/rinck",
+      "https://www.seattle.gov/council/rinck"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   }
 ]
