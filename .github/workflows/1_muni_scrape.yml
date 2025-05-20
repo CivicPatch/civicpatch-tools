@@ -44,16 +44,16 @@ jobs:
           ls -la
           # Load the municipalities queue file and take the first N municipalities
           # and ignore municipalities that already have PRs open
-          gnis_ids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-municipal-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
+          geoids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-municipal-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
 
-          # Extract GNIS IDs from branch names like pipeline-municipal-scrapes-wa-king-federal_way-2410494-14096425230
-          gnis_ids=$(echo $gnis_ids_to_ignore | sed -E 's/pipeline-municipal-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
+          # Extract GEOIDs from branch names like pipeline-municipal-scrapes-wa-king-federal_way-2410494-14096425230
+          geoids=$(echo $geoids_to_ignore | sed -E 's/pipeline-municipal-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
 
           # Now the rake task returns JSON array of objects
           cmd="./civpatch_cli/bin/cli scrape -plan -state ${{ github.event.inputs.state }} -num-scrapes ${{ github.event.inputs.num_municipalities }}"
 
-          if [ -n "$gnis_ids" ]; then
-            cmd="$cmd -gnis-to-ignore $gnis_ids"
+          if [ -n "$geoids" ]; then
+            cmd="$cmd -geoids-to-ignore $geoids"
           fi
 
           municipalities_json=$($cmd)
@@ -112,18 +112,18 @@ jobs:
           GOOGLE_SHEETS_CLIENT_SECRET: ${{ secrets.GOOGLE_SHEETS_CLIENT_SECRET }}
           GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
         run: |
-          echo "Processing municipality: ${{ matrix.municipality_entry.gnis }}"
+          echo "Processing municipality: ${{ matrix.municipality_entry.geoid }}"
           ./civpatch_cli/bin/cli scrape -run \
             -state ${{ github.event.inputs.state }} \
-            -gnis ${{ matrix.municipality_entry.gnis }} \
+            -geoid ${{ matrix.municipality_entry.geoid }} \
             -github-env env-${{ github.actor }} \
             -create-pr -with-ci -send-costs
       
       #- name: Open a pull request
       #  run: |
       #    git push --set-upstream origin ${{ env.BRANCH_NAME }}
-      #    CITY_DIRECTORY_LINK=$(bundle exec rake "github_pipeline:get_city_directory_link[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]")
-      #    CONFIG_LINK=$(bundle exec rake "github_pipeline:get_config_link[${{ github.event.inputs.state }},${{ matrix.city_entry.gnis }},${{ env.BRANCH_NAME }}]")
+      #    CITY_DIRECTORY_LINK=$(bundle exec rake "github_pipeline:get_city_directory_link[${{ github.event.inputs.state }},${{ matrix.city_entry.geoid }},${{ env.BRANCH_NAME }}]")
+      #    CONFIG_LINK=$(bundle exec rake "github_pipeline:get_config_link[${{ github.event.inputs.state }},${{ matrix.city_entry.geoid }},${{ env.BRANCH_NAME }}]")
       #    COMMENT=$(
       #      cat <<EOF
       #    PR opened by the Municipal Officials - Scrape workflow.

@@ -40,13 +40,13 @@ func CleanupContainers(ctx context.Context, containerId string) error {
 
 func RunRakeTask(ctx context.Context,
 	state string,
-	gnis string,
+	geoid string,
 	command string,
 	branchName string,
 	develop bool,
 ) (string, error) {
-	if state == "" || gnis == "" || command == "" {
-		return "", fmt.Errorf("error: state, gnis, and command are required")
+	if state == "" || geoid == "" || command == "" {
+		return "", fmt.Errorf("error: state, geoid, and command are required")
 	}
 
 	dockerClient, err := docker.NewClient()
@@ -74,7 +74,7 @@ func RunRakeTask(ctx context.Context,
 	commands := []string{
 		"./lib/tasks/scripts/checkout_branch.sh",
 		"&&",
-		fmt.Sprintf("rake 'github_pipeline:generate_pr_data[%s,%s]'", state, gnis),
+		fmt.Sprintf("rake 'github_pipeline:generate_pr_data[%s,%s]'", state, geoid),
 	}
 
 	taskResult, err := dockerClient.RunTask(ctx, docker.TaskOptions{

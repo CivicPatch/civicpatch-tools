@@ -41,7 +41,7 @@ module Scrapers
     end
 
     def self.fetch(state)
-      scraper = get_scraper(state)
+      # scraper = get_scraper(state)
       statefp = Services::Census::STATE_TO_STATEFP[state]
 
       raise "No statefp found for #{state}" if statefp.nil?
@@ -50,19 +50,19 @@ module Scrapers
       descending = -1
       municipalities_with_census_data = municipalities_with_census_data
                                         .sort_by { |m| m["population"] * descending }
-      additional_info_hash_by_municipality_name = scraper.fetch
+      # additional_info_hash_by_municipality_name = scraper.fetch
 
       municipalities_with_census_data.map do |m|
-        if additional_info_hash_by_municipality_name.nil?
-          puts "No additional info found for #{m["name"]}"
-          next m
-        end
+        # if additional_info_hash_by_municipality_name.nil?
+        #  puts "No additional info found for #{m["name"]}"
+        #  next m
+        # end
 
         # NOTE: Need to specify by county for states with duplicates.
         # See: Michigan
         {
-          **m,
-          **additional_info_hash_by_municipality_name[m["name"]]
+          **m
+          # **additional_info_hash_by_municipality_name[m["name"]]
           # Properties available:
           # address
           # phone_number
@@ -78,8 +78,8 @@ module Scrapers
       populations_hash = fetch_census_populations(statefp)
 
       census_municipality_codes.map do |census_municipality_code_data|
-        placefp = census_municipality_code_data["fips"].split("-").last
-        population = populations_hash[placefp]
+        geoid = census_municipality_code_data["geoid"]
+        population = populations_hash[geoid]
 
         {
           **census_municipality_code_data,
@@ -101,8 +101,10 @@ module Scrapers
         {
           "name" => name,
           "type" => type,
-          "fips" => "#{statefp}-#{municipality_codes["PLACEFP"]}",
-          "gnis" => format_gnis(municipality_codes["PLACENS"]),
+          # https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html
+          "geoid" => "#{statefp}#{municipality_codes["PLACEFP"]}",
+          # "fips" => "#{statefp}-#{municipality_codes["PLACEFP"]}",
+          # "gnis" => format_gnis(municipality_codes["PLACENS"]),
           "counties" => format_counties(municipality_codes["COUNTIES"])
         }
       end
@@ -112,13 +114,16 @@ module Scrapers
       response = HTTParty.get(county_subdivisions_txt_url)
       county_subdivisions_csv = CSV.parse(response.body, headers: true, col_sep: "|")
 
-      county_subdivisions = county_subdivisions_csv.map do |municipality_codes|
+      county_subdivisions = county_subdivisions_csv
+                            .select { |row| %w[A B].include?(row["FUNCSTAT"]) }
+                            .map do |municipality_codes|
         name, type = get_municipality_name_and_type(municipality_codes["COUSUBNAME"])
         {
           "name" => name,
           "type" => type,
-          "fips" => "#{statefp}-#{municipality_codes["COUSUBFP"]}",
-          "gnis" => format_gnis(municipality_codes["COUSUBNS"]),
+          "geoid" => "#{statefp}#{municipality_codes["COUNTYFP"]}#{municipality_codes["COUSUBFP"]}",
+          # "fips" => "#{statefp}-#{municipality_codes["COUSUBFP"]}",
+          # "gnis" => format_gnis(municipality_codes["COUSUBNS"]),
           "counties" => format_counties(municipality_codes["COUNTYNAME"])
         }
       end
@@ -146,15 +151,15 @@ module Scrapers
       places_json = JSON.parse(places_response.body)
 
       county_subdivisions_json.drop(1).each do |row|
-        placefp = row[4]
+        geoid = "#{statefp}#{row[3]}#{row[4]}"
         population = row[0]
-        hash_fips_to_population[placefp] = population.to_i
+        hash_fips_to_population[geoid] = population.to_i
       end
 
       places_json.drop(1).each do |row|
-        placefp = row[3]
+        geoid = "#{statefp}#{row[3]}"
         population = row[0]
-        hash_fips_to_population[placefp] = population.to_i
+        hash_fips_to_population[geoid] = population.to_i
       end
 
       hash_fips_to_population

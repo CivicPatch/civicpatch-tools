@@ -50,9 +50,9 @@ module Services
       if has_github_env
         branch_name = @local_repo.current_branch
         state = context[:state]
-        gnis = context[:municipality_entry]["gnis"]
+        geoid = context[:municipality_entry]["geoid"]
 
-        city_path = Core::PathHelper.get_data_city_path(state, gnis)
+        city_path = Core::PathHelper.get_data_city_path(state, geoid)
         data_relative_path = city_path[city_path.rindex("data/#{state}")..]
         data_source_relative_path = city_path[city_path.rindex("data_source/#{state}")..]
         config_link = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{data_source_relative_path}/config.yml"

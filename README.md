@@ -4,7 +4,7 @@
 ### Run Pipelines
 **Simple Setup (Login via Browser)**
 ```bash
-civicpatch scrape -state wa --gnis 2411856
+civicpatch scrape -state wa --geoid 2411856
 ```
 
 **CI Setup (Setup Environment Variables)**
@@ -14,7 +14,7 @@ civicpatch scrape -state wa --gnis 2411856
 * OPENAI_TOKEN
 * GOOGLE_GEMINI_TOKEN
 ```bash
-civicpatch scrape -state wa --gnis 2411856 --with-ci true --dry-run false
+civicpatch scrape -state wa --geoid 2411856 --with-ci true --dry-run false
 ```
 ####
 

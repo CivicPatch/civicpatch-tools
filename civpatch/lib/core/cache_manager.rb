@@ -2,10 +2,10 @@
 
 module Core
   class CacheManager
-    def self.clean(state, gnis, source_urls) # rubocop:disable Metrics/CyclomaticComplexity
+    def self.clean(state, geoid, source_urls) # rubocop:disable Metrics/CyclomaticComplexity
       urls_to_keep = source_urls.map { |source| Utils::UrlHelper.url_to_safe_folder_name(source) }
 
-      cache_dir = Core::PathHelper.get_city_cache_path(state, gnis)
+      cache_dir = Core::PathHelper.get_city_cache_path(state, geoid)
       return unless Dir.exist?(cache_dir)
 
       cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)

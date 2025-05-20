@@ -63,16 +63,16 @@ jobs:
           app-id: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
           private-key: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }}
 
-      - name: Extract State and GNIS ID from Branch Name
+      - name: Extract State and GEOID from Branch Name
         id: extract-vars # Added ID to reference outputs
         run: |
           BRANCH_NAME="${{ inputs.head_ref }}" # Use input
           STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
-          GNIS_ID=$(echo "$BRANCH_NAME" | awk -F'-' '{print $(NF-1)}')
+          GEOID=$(echo "$BRANCH_NAME" | awk -F'-' '{print $(NF-1)}')
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT # Use output instead of env
           echo "STATE=$STATE" >> $GITHUB_OUTPUT
-          echo "GNIS_ID=$GNIS_ID" >> $GITHUB_OUTPUT
+          echo "GEOID=$GEOID" >> $GITHUB_OUTPUT
 
       - name: Comment on PR
         id: comment-step # Added ID to reference approve output
@@ -81,11 +81,11 @@ jobs:
           PR_NUMBER: ${{ inputs.pr_number }} # Use input
           # Get vars from previous step output
           STATE: ${{ steps.extract-vars.outputs.STATE }}
-          GNIS_ID: ${{ steps.extract-vars.outputs.GNIS_ID }}
+          GEOID: ${{ steps.extract-vars.outputs.GEOID }}
           BRANCH_NAME: ${{ steps.extract-vars.outputs.BRANCH_NAME }}
         run: |
           echo "Running validation..."
-          PR_DATA=$(./civpatch_cli/bin/cli run-rake-task -state $STATE -gnis $GNIS_ID -branch-name $BRANCH_NAME -command "github_pipeline:generate_pr_data[$STATE,$GNIS_ID]")
+          PR_DATA=$(./civpatch_cli/bin/cli run-rake-task -state $STATE -geoid $GEOID -branch-name $BRANCH_NAME -command "github_pipeline:generate_pr_data[$STATE,$GEOID]")
           echo "Validation response: $PR_DATA"
 
           # Parse JSON output

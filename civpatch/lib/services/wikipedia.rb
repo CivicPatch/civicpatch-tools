@@ -84,10 +84,10 @@ module Services
       fips_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("fips") }
       fips = fips_row.present? ? without_superscripts(fips_row.css("td")).text : ""
 
-      gnis_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("gnis") }
-      gnis = gnis_row.present? ? without_superscripts(gnis_row.css("td")).text : ""
+      geoid_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("geoid") }
+      geoid = geoid_row.present? ? without_superscripts(geoid_row.css("td")).text : ""
 
-      [website, fips, gnis]
+      [website, fips, geoid]
     end
 
     # Clean up text

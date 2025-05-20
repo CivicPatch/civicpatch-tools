@@ -22,14 +22,14 @@ namespace :pipeline do
   end
 
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :gnis, :create_pr, :send_costs] do |_t, args|
+  task :fetch, [:state, :geoid, :create_pr, :send_costs] do |_t, args|
     state = args[:state]
-    gnis = args[:gnis]
+    geoid = args[:geoid]
     create_pr = args[:create_pr].to_s.downcase == "true"
     send_costs = args[:send_costs].to_s.downcase == "true"
 
     github = Services::GitHub.new
-    context = Core::ContextManager.get_context(state, gnis)
+    context = Core::ContextManager.get_context(state, geoid)
 
     scrape(context)
 
@@ -47,7 +47,7 @@ namespace :pipeline do
 
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
     municipalities.each do |municipality_entry|
-      context = Core::ContextManager.get_context(state, municipality_entry["gnis"])
+      context = Core::ContextManager.get_context(state, municipality_entry["geoid"])
       next unless municipality_entry["website"].present?
       next unless context[:config]["source_directory_list"]["type"] == "directory_list_default"
 
@@ -148,7 +148,7 @@ namespace :pipeline do
 
     officials_hash = Digest::MD5.hexdigest(people.to_yaml)
     Core::StateManager.update_municipalities(state, [
-                                               { "gnis" => municipality_entry["gnis"],
+                                               { "geoid" => municipality_entry["geoid"],
                                                  "meta_updated_at" => Time.now
                                                   .in_time_zone("America/Los_Angeles")
                                                   .strftime("%Y-%m-%d"),
@@ -158,7 +158,7 @@ namespace :pipeline do
   end
 
   def prepare_directories(state, municipality_entry)
-    cache_destination_dir = Core::PathHelper.get_city_cache_path(state, municipality_entry["gnis"])
+    cache_destination_dir = Core::PathHelper.get_city_cache_path(state, municipality_entry["geoid"])
 
     # Remove cache folder if it exists
     FileUtils.rm_rf(cache_destination_dir) if Dir.exist?(cache_destination_dir)
@@ -171,7 +171,7 @@ namespace :pipeline do
     puts "Uploading images for #{municipality_entry["name"]}"
     puts "Source dirs: #{source_dirs.inspect}"
 
-    data_city_path = Core::PathHelper.get_data_city_path(state, municipality_entry["gnis"])
+    data_city_path = Core::PathHelper.get_data_city_path(state, municipality_entry["geoid"])
     # Find last instance of data/ because repo could start with open-data/data/
     remote_city_path = data_city_path.rpartition("data/").last
 
@@ -211,8 +211,8 @@ namespace :pipeline do
   end
 
   def self.on_complete(municipality_context)
-    gnis = municipality_context[:municipality_entry]["gnis"]
-    people = Core::PeopleManager.get_people(municipality_context[:state], gnis)
+    geoid = municipality_context[:municipality_entry]["geoid"]
+    people = Core::PeopleManager.get_people(municipality_context[:state], geoid)
     state = municipality_context[:state]
 
     source_urls = people.flat_map do |person|
@@ -223,8 +223,8 @@ namespace :pipeline do
       .update_context_config(municipality_context,
                              scrape_sources: source_urls)
 
-    Core::CacheManager.clean(state, gnis, source_urls)
-    Core::ConfigManager.finalize_config(state, gnis, municipality_context[:config])
+    Core::CacheManager.clean(state, geoid, source_urls)
+    Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
   end
 
   private
