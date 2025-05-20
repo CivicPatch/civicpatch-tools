@@ -43,7 +43,9 @@ namespace :github_pipeline do
   end
 
   desc "Generate PR comment data for city people"
-  task :generate_pr_data, [:state, :gnis, :branch_name] do |_t, args|
+  task :generate_pr_data, [:state, :gnis] do |_t, args|
+    $stdout.sync = true
+
     state = args[:state]
     gnis = args[:gnis]
 

@@ -58,7 +58,22 @@ func ScrapePlan(state string, numMunicipalities int, gnisToIgnore []string) (str
 	return string(jsonData), nil
 }
 
-func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, develop bool, withCi bool, sendCosts bool) error {
+func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, develop bool, withCi bool, sendCosts bool, branchName string, githubEnv string, prNumber int) error {
+	if state == "" {
+		return fmt.Errorf("error: state is required")
+	}
+	if gnis == "" {
+		return fmt.Errorf("error: gnis is required")
+	}
+
+	if prNumber != 0 && createPr {
+		return fmt.Errorf("error: cannot create a PR and update an existing PR at the same time")
+	}
+
+	if prNumber != 0 && branchName == "" {
+		return fmt.Errorf("error: cannot update an existing PR without providing a branch name")
+	}
+
 	requiredEnvVars, err := checkScrapeEnvs(state, gnis, withCi, sendCosts)
 	if err != nil {
 		return err
@@ -80,8 +95,15 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	envVars["GITHUB_TOKEN"] = githubToken
 	envVars["GITHUB_USERNAME"] = githubUsername
 
-	if os.Getenv("GITHUB_ENV") != "" { // Determines what env shell we should use
-		envVars["GITHUB_ENV"] = os.Getenv("GITHUB_ENV")
+	// Note: these are usually set by the Github Actions pipeline
+	if branchName != "" {
+		envVars["BRANCH_NAME"] = branchName
+	}
+	if githubEnv != "" { // Determines what env shell we should use
+		envVars["GITHUB_ENV"] = githubEnv
+	}
+	if prNumber != 0 {
+		envVars["PR_NUMBER"] = fmt.Sprintf("%d", prNumber)
 	}
 
 	cmd := []string{
@@ -99,16 +121,22 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	if develop {
 		fullImageName = localImageName
 		volumes = map[string]string{
-			"./civpatch/lib": "/app/lib",
+			"./civpatch/lib": "/app/civpatch/lib",
 		}
 	}
 
 	fmt.Println("Running container with image:", fullImageName)
+	labels := map[string]string{
+		"state": state, // Assumption: we only run one container for state + gnis at a time
+		"gnis":  gnis,
+	}
+
 	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx,
 		fullImageName,
 		envVars,
 		cmd,
-		volumes)
+		volumes,
+		labels)
 	if err != nil {
 		return fmt.Errorf("error running container: %w", err)
 	}
@@ -202,7 +230,7 @@ func checkScrapeEnvs(state string, gnis string, withCI bool, sendCosts bool) ([]
 }
 
 func prepareScrape(ctx context.Context, develop bool) (string, string, *docker.Client, error) {
-	githubUsername, githubToken, err := services.CheckGithubCredentials(ctx)
+	githubUsername, githubToken, err := services.GetGithubCredentials(ctx)
 	if err != nil {
 		return "", "", nil, err
 	}

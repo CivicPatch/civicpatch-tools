@@ -22,6 +22,7 @@ module Resolvers
       }]
       source_files.each do |source_file|
         next if source_file.include?("before") # Discard unprocessed results
+        next unless source_file.include?("openai") || source_file.include?("gemini")
 
         source_people = JSON.parse(File.read(source_file))
         source_name = if source_file.include?("openai")
