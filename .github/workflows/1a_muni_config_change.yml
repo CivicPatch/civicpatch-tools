@@ -92,15 +92,15 @@ jobs:
           app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
           private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
 
-      - name: Extract State and GNIS ID from Branch Name
+      - name: Extract State and GEOID from Branch Name
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
-          GNIS=$(echo "$BRANCH_NAME" | awk -F'-' '{print $7}')
+          GEOID=$(echo "$BRANCH_NAME" | awk -F'-' '{print $7}')
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           echo "STATE=$STATE" >> $GITHUB_ENV
-          echo "GNIS=$GNIS" >> $GITHUB_ENV
+          echo "GEOID=$GEOID" >> $GITHUB_ENV
 
       - name: Scrape City
         env:
@@ -121,7 +121,7 @@ jobs:
         run: |
           ./civpatch_cli/bin/cli scrape -run 
             -state ${{ env.STATE }} \
-            -gnis ${{ env.GNIS }} \
+            -geoid ${{ env.GEOID }} \
             -github-env env-${{ github.actor }} \
             -pr-number ${{ github.event.pull_request.number }} \
             -branch-name ${{ env.BRANCH_NAME }} \

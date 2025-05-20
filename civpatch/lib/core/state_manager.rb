@@ -6,7 +6,7 @@ module Core
       Core::PathHelper.project_path(File.join("data", state))
     end
 
-    # each places must have a gnis key
+    # each places must have a geoid key
     def self.get_municipalities_file(state)
       Core::PathHelper.project_path(File.join("data_source", state, "municipalities.json"))
     end
@@ -34,10 +34,10 @@ module Core
       puts "Updating #{updated_municipalities.size} municipalities for #{state}"
 
       updated_municipalities.each do |updated_municipality|
-        next unless updated_municipality["gnis"].present?
+        next unless updated_municipality["geoid"].present?
 
         existing_municipality_index = municipalities["municipalities"].find_index do |m|
-          m["gnis"] == updated_municipality["gnis"]
+          m["geoid"] == updated_municipality["geoid"]
         end
         if existing_municipality_index
           existing_municipality = municipalities["municipalities"][existing_municipality_index]
@@ -54,9 +54,9 @@ module Core
       File.write(municipalities_file, JSON.pretty_generate(municipalities))
     end
 
-    def self.get_city_entry_by_gnis(state, gnis)
+    def self.get_city_entry_by_geoid(state, geoid)
       municipalities = get_municipalities(state)
-      municipalities["municipalities"].find { |municipality| municipality["gnis"] == gnis }
+      municipalities["municipalities"].find { |municipality| municipality["geoid"] == geoid }
     end
   end
 end

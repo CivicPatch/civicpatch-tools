@@ -23,7 +23,7 @@ const (
 
 type Municipality struct {
 	Name        string   `json:"name"`
-	GNIS        string   `json:"gnis"`
+	Geoid       string   `json:"geoid"`
 	Website     string   `json:"website"`
 	MetaSources []string `json:"meta_sources"`
 }
@@ -32,7 +32,7 @@ type MunicipalityResponse struct {
 	Data []Municipality `json:"municipalities"`
 }
 
-func ScrapePlan(state string, numMunicipalities int, gnisToIgnore []string) (string, error) {
+func ScrapePlan(state string, numMunicipalities int, geoidsToIgnore []string) (string, error) {
 	err := checkPlanInput(state)
 	if err != nil {
 		return "", err
@@ -43,7 +43,7 @@ func ScrapePlan(state string, numMunicipalities int, gnisToIgnore []string) (str
 		return "", err
 	}
 
-	selected := selectMunicipalities(municipalities, numMunicipalities, gnisToIgnore)
+	selected := selectMunicipalities(municipalities, numMunicipalities, geoidsToIgnore)
 
 	jsonData, err := json.Marshal(selected)
 	if err != nil {
@@ -53,12 +53,12 @@ func ScrapePlan(state string, numMunicipalities int, gnisToIgnore []string) (str
 	return string(jsonData), nil
 }
 
-func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, develop bool, withCi bool, sendCosts bool, branchName string, githubEnv string, prNumber int) error {
+func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, develop bool, withCi bool, sendCosts bool, branchName string, githubEnv string, prNumber int) error {
 	if state == "" {
 		return fmt.Errorf("error: state is required")
 	}
-	if gnis == "" {
-		return fmt.Errorf("error: gnis is required")
+	if geoid == "" {
+		return fmt.Errorf("error: geoid is required")
 	}
 
 	if prNumber != 0 && createPr {
@@ -69,7 +69,7 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 		return fmt.Errorf("error: cannot update an existing PR without providing a branch name")
 	}
 
-	requiredEnvVars, err := checkScrapeEnvs(state, gnis, withCi, sendCosts)
+	requiredEnvVars, err := checkScrapeEnvs(state, geoid, withCi, sendCosts)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	}
 	defer dockerClient.Close()
 
-	fmt.Printf("Scraping %s %s with createPr: %t\n", state, gnis, createPr)
+	fmt.Printf("Scraping %s %s with createPr: %t, develop: %t, withCi: %t, sendCosts: %t, branchName: %s, githubEnv: %s, prNumber: %d\n", state, geoid, createPr, develop, withCi, sendCosts, branchName, githubEnv, prNumber)
 
 	envVars := map[string]string{}
 
@@ -95,7 +95,7 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 		envVars["BRANCH_NAME"] = branchName
 	} else {
 		runId := fmt.Sprintf("%d", rand.Intn(1000000))
-		envVars["BRANCH_NAME"] = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, gnis, runId)
+		envVars["BRANCH_NAME"] = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, geoid, runId)
 	}
 
 	if prNumber != 0 { // Only populated if updating existing PR
@@ -108,12 +108,12 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	cmd := []string{
 		"./lib/tasks/scripts/checkout_branch.sh",
 		"&&",
-		fmt.Sprintf("rake 'pipeline:fetch[%s,%s,%t,%t]'", state, gnis, createPr, sendCosts),
+		fmt.Sprintf("rake 'pipeline:fetch[%s,%s,%t,%t]'", state, geoid, createPr, sendCosts),
 	}
 
 	labels := map[string]string{
-		"state": state, // Assumption: we only run one container for state + gnis at a time
-		"gnis":  gnis,
+		"state": state, // Assumption: we only run one container for state + geoid at a time
+		"geoid": geoid,
 	}
 
 	taskResult, err := dockerClient.RunTask(ctx, docker.TaskOptions{
@@ -163,11 +163,11 @@ func loadMunicipalities(state string) ([]Municipality, error) {
 	return municipalities.Data, nil
 }
 
-func selectMunicipalities(municipalities []Municipality, numMunicipalities int, gnisToIgnore []string) []Municipality {
+func selectMunicipalities(municipalities []Municipality, numMunicipalities int, geoidsToIgnore []string) []Municipality {
 	municipalitiesToScrape := []Municipality{}
 
 	for _, municipality := range municipalities {
-		if shouldScrape(gnisToIgnore, municipality) {
+		if shouldScrape(geoidsToIgnore, municipality) {
 			municipalitiesToScrape = append(municipalitiesToScrape, municipality)
 		}
 		if len(municipalitiesToScrape) >= numMunicipalities {
@@ -184,14 +184,14 @@ func checkPlanInput(state string) error {
 	return nil
 }
 
-func shouldScrape(gnisToIgnore []string, municipality Municipality) bool {
-	return !slices.Contains(gnisToIgnore, municipality.GNIS) &&
-		len(municipality.GNIS) > 0 &&
+func shouldScrape(geoidsToIgnore []string, municipality Municipality) bool {
+	return !slices.Contains(geoidsToIgnore, municipality.Geoid) &&
+		len(municipality.Geoid) > 0 &&
 		len(municipality.Website) > 0 &&
 		(len(municipality.MetaSources) == 0 || len(municipality.MetaSources) == 1)
 }
 
-func checkScrapeEnvs(state string, gnis string, withCI bool, sendCosts bool) ([]string, error) {
+func checkScrapeEnvs(state string, geoid string, withCI bool, sendCosts bool) ([]string, error) {
 	requiredEnvVars := utils.RequiredScrapeEnvVars
 	if sendCosts {
 		requiredEnvVars = append(requiredEnvVars, utils.RequiredEnvVarsSendCosts...)
@@ -208,8 +208,8 @@ func checkScrapeEnvs(state string, gnis string, withCI bool, sendCosts bool) ([]
 	if len(state) == 0 {
 		return nil, fmt.Errorf("error: state is required")
 	}
-	if len(gnis) == 0 {
-		return nil, fmt.Errorf("error: gnis is required")
+	if len(geoid) == 0 {
+		return nil, fmt.Errorf("error: geoid is required")
 	}
 
 	return requiredEnvVars, nil

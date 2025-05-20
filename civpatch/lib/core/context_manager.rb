@@ -2,9 +2,9 @@
 
 module Core
   class ContextManager
-    def self.get_context(state, gnis)
-      config = Core::ConfigManager.get_config(state, gnis)
-      municipality_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
+    def self.get_context(state, geoid)
+      config = Core::ConfigManager.get_config(state, geoid)
+      municipality_entry = Core::StateManager.get_city_entry_by_geoid(state, geoid)
       {
         state: state,
         municipality_entry: municipality_entry,

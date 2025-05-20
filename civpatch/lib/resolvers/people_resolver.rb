@@ -8,11 +8,11 @@ module Resolvers
 
     def self.resolve(municipality_context)
       state = municipality_context[:state]
-      gnis = municipality_context[:municipality_entry]["gnis"]
+      geoid = municipality_context[:municipality_entry]["geoid"]
       state_source = municipality_context[:config]["source_directory_list"]["people"]
       people_config = municipality_context[:config]["people"]
 
-      sources_folder_path = Core::PathHelper.get_people_sources_path(state, gnis)
+      sources_folder_path = Core::PathHelper.get_people_sources_path(state, geoid)
       source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
 
       sources = [{

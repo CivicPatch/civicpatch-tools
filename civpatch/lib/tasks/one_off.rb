@@ -23,17 +23,11 @@ namespace :one_off do
     end
   end
 
-  desc "Fix NH selectmen government type"
+  desc "Add NH census geoid"
   task :fix_nh do
     state = "nh"
-    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
-    updated_municipalities = municipalities.map do |municipality|
-      municipality["government_type"] = "select_board" if municipality["government_type"] == "selectmen"
-
-      municipality
-    end
-
-    Core::StateManager.update_municipalities(state, updated_municipalities)
+    municipalities = Scrapers::Municipalities.fetch(state)
+    Core::StateManager.update_municipalities(state, municipalities)
   end
 
   task :get_gov_types do

@@ -7,7 +7,7 @@
 # - Managing the GitHub repository
 #
 # Main tasks:
-# - github_pipeline:get_pr_comment[state,gnis,branch_name]# Generate markdown for PR
+# - github_pipeline:get_pr_comment[state,geoid,branch_name]# Generate markdown for PR
 
 require "github/municipality_officials"
 require "resolvers/people_resolver"
@@ -15,13 +15,13 @@ require_relative "../core/context_manager"
 
 namespace :github_pipeline do
   desc "Get people.yml link for pull request"
-  task :get_city_directory_link, [:state, :gnis, :branch_name] do |_t, args|
+  task :get_city_directory_link, [:state, :geoid, :branch_name] do |_t, args|
     state = args[:state]
-    gnis = args[:gnis]
+    geoid = args[:geoid]
     branch_name = args[:branch_name]
 
-    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-    city_path = Core::PathHelper.get_data_city_path(state, city_entry["gnis"])
+    city_entry = Core::StateManager.get_city_entry_by_geoid(state, geoid)
+    city_path = Core::PathHelper.get_data_city_path(state, city_entry["geoid"])
     relative_path = city_path[city_path.rindex("data/#{state}")..]
 
     directory_url = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{relative_path}/people.yml"
@@ -29,13 +29,13 @@ namespace :github_pipeline do
   end
 
   desc "Get config.yml link for pull request"
-  task :get_config_link, [:state, :gnis, :branch_name] do |_t, args|
+  task :get_config_link, [:state, :geoid, :branch_name] do |_t, args|
     state = args[:state]
-    gnis = args[:gnis]
+    geoid = args[:geoid]
     branch_name = args[:branch_name]
 
-    city_entry = Core::StateManager.get_city_entry_by_gnis(state, gnis)
-    city_path = Core::PathHelper.get_data_source_city_path(state, city_entry["gnis"])
+    city_entry = Core::StateManager.get_city_entry_by_geoid(state, geoid)
+    city_path = Core::PathHelper.get_data_source_city_path(state, city_entry["geoid"])
     relative_path = city_path[city_path.rindex("data_source/#{state}")..]
 
     config_url = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{relative_path}/config.yml"
@@ -43,13 +43,13 @@ namespace :github_pipeline do
   end
 
   desc "Generate PR comment data for city people"
-  task :generate_pr_data, [:state, :gnis] do |_t, args|
+  task :generate_pr_data, [:state, :geoid] do |_t, args|
     $stdout.sync = true
 
     state = args[:state]
-    gnis = args[:gnis]
+    geoid = args[:geoid]
 
-    context = Core::ContextManager.get_context(state, gnis)
+    context = Core::ContextManager.get_context(state, geoid)
 
     contested_people, missing_people, merged_people, agreement_score = generate_comparison(context)
     people_list_section = GitHub::MunicipalityOfficials.generate_people_list_markdown(context, merged_people,

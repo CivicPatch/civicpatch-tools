@@ -22,8 +22,8 @@ module Core
       page_fetcher ||= Core::PageFetcher.new
       municipality_entry = municipality_context[:municipality_entry]
       state = municipality_context[:state]
-      gnis = municipality_entry["gnis"]
-      city_cache_path = Core::PathHelper.get_city_cache_path(state, gnis)
+      geoid = municipality_entry["geoid"]
+      city_cache_path = Core::PathHelper.get_city_cache_path(state, geoid)
       keyword_groups = Core::CityManager.get_search_keywords_as_array(municipality_context[:government_type])
 
       puts "#{llm_service_string}: Looking for #{municipality_context[:config]["scrape_exit_config"]}"

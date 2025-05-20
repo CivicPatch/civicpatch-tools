@@ -15,13 +15,13 @@ var (
 
 	scrapePlan = scrapeCommand.Bool("plan", false, "Plan the scrapes")
 	// state: required
-	numScrapes   = scrapeCommand.Int("num-scrapes", 1, "Number of scrapes to plan")
-	gnisToIgnore = scrapeCommand.String("gnis-to-ignore", "", "Optional: GNIS IDs to ignore (comma-separated list)")
+	numScrapes     = scrapeCommand.Int("num-scrapes", 1, "Number of scrapes to plan")
+	geoidsToIgnore = scrapeCommand.String("geoids-to-ignore", "", "Optional: GEOIDs to ignore (comma-separated list)")
 
 	scrapeRun = scrapeCommand.Bool("run", false, "Run the scrapes")
 	// state: required
-	gnis     = scrapeCommand.String("gnis", "", "GNIS ID to scrape")
-	createPr = scrapeCommand.Bool("create-pr", false, "Create a PR")
+	scrapeGeoid = scrapeCommand.String("geoid", "", "GEOID to scrape")
+	createPr    = scrapeCommand.Bool("create-pr", false, "Create a PR")
 
 	sendCosts = scrapeCommand.Bool("send-costs", false, "Send costs to Google Sheets") // Optional -- only needed if recording costs
 	withCi    = scrapeCommand.Bool("with-ci", false, "Run with CI - noninteractive")   // Optional -- only needed if running non-interactively
@@ -37,7 +37,7 @@ var (
 	runRakeTask        = flag.NewFlagSet("run-rake-task", flag.ExitOnError)
 	runRakeTaskBranch  = runRakeTask.String("branch-name", "", "Branch name")
 	runRakeTaskState   = runRakeTask.String("state", "", "State")
-	runRakeTaskGnis    = runRakeTask.String("gnis", "", "GNIS ID")
+	runRakeTaskGeoid   = runRakeTask.String("geoid", "", "GEOID")
 	runRakeTaskCommand = runRakeTask.String("command", "", "Rake task to run")
 	runRakeTaskDevelop = runRakeTask.Bool("develop", false, "Develop locally") // Optional -- only needed if testing changes locally
 
@@ -50,12 +50,12 @@ func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error 
 	var err error
 
 	if scrapePlan {
-		output, err = commands.ScrapePlan(*state, *numScrapes, strings.Split(*gnisToIgnore, ","))
+		output, err = commands.ScrapePlan(*state, *numScrapes, strings.Split(*geoidsToIgnore, ","))
 		if err != nil {
 			return err
 		}
 	} else if scrapeRun {
-		err = commands.ScrapeRun(ctx, *state, *gnis, *createPr, *develop, *withCi, *sendCosts, *branchName, *githubEnv, *prNumber)
+		err = commands.ScrapeRun(ctx, *state, *scrapeGeoid, *createPr, *develop, *withCi, *sendCosts, *branchName, *githubEnv, *prNumber)
 		if err != nil {
 			return err
 		}
@@ -72,7 +72,7 @@ func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error 
 func runRakeTaskCommands(ctx context.Context) error {
 	output, err := commands.RunRakeTask(ctx,
 		*runRakeTaskState,
-		*runRakeTaskGnis,
+		*runRakeTaskGeoid,
 		*runRakeTaskCommand,
 		*runRakeTaskBranch,
 		*runRakeTaskDevelop,
