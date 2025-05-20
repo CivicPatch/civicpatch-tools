@@ -33,12 +33,13 @@ var (
 	prNumber   = scrapeCommand.Int("pr-number", 0, "PR number")         // Optional -- only needed if updating existing PR
 	// TODO: IMPLEMENT
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
-	// withReleaseVersion = scrapeCommand.Bool("with-release-version", false, "With release version")
 
 	runRakeTask        = flag.NewFlagSet("run-rake-task", flag.ExitOnError)
+	runRakeTaskBranch  = runRakeTask.String("branch-name", "", "Branch name")
 	runRakeTaskState   = runRakeTask.String("state", "", "State")
 	runRakeTaskGnis    = runRakeTask.String("gnis", "", "GNIS ID")
 	runRakeTaskCommand = runRakeTask.String("command", "", "Rake task to run")
+	runRakeTaskDevelop = runRakeTask.Bool("develop", false, "Develop locally") // Optional -- only needed if testing changes locally
 
 	cleanupCommand = flag.NewFlagSet("cleanup", flag.ExitOnError)
 	containerId    = cleanupCommand.String("container-id", "", "Container ID") // Leave blank to remove all civicpatch containers
@@ -69,7 +70,13 @@ func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error 
 }
 
 func runRakeTaskCommands(ctx context.Context) error {
-	output, err := commands.RunRakeTask(ctx, *runRakeTaskState, *runRakeTaskGnis, *runRakeTaskCommand)
+	output, err := commands.RunRakeTask(ctx,
+		*runRakeTaskState,
+		*runRakeTaskGnis,
+		*runRakeTaskCommand,
+		*runRakeTaskBranch,
+		*runRakeTaskDevelop,
+	)
 	if err != nil {
 		return err
 	}

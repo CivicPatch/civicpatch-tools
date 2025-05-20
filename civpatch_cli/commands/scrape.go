@@ -9,21 +9,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
-	"os/exec"
 	"slices"
 	"strings"
+	"time"
 )
 
 const (
 	DATA_SOURCE_URL = "https://raw.githubusercontent.com/CivicPatch/civicpatch-tools/refs/heads/main/civpatch/data_source/<STATE>/municipalities.json"
-
-	imageName       = "ghcr.io/civicpatch/civpatch"
-	localImageTag   = "develop"
-	remoteImageTag  = "latest"
-	localImageName  = imageName + ":" + localImageTag
-	remoteImageName = imageName + ":" + remoteImageTag
 )
 
 type Municipality struct {
@@ -96,56 +91,47 @@ func ScrapeRun(ctx context.Context, state string, gnis string, createPr bool, de
 	envVars["GITHUB_USERNAME"] = githubUsername
 
 	// Note: these are usually set by the Github Actions pipeline
-	if branchName != "" {
+	if branchName != "" { // Only populated if updating existing PR
 		envVars["BRANCH_NAME"] = branchName
+	} else {
+		runId := fmt.Sprintf("%d", rand.Intn(1000000))
+		envVars["BRANCH_NAME"] = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, gnis, runId)
+	}
+
+	if prNumber != 0 { // Only populated if updating existing PR
+		envVars["PR_NUMBER"] = fmt.Sprintf("%d", prNumber)
 	}
 	if githubEnv != "" { // Determines what env shell we should use
 		envVars["GITHUB_ENV"] = githubEnv
 	}
-	if prNumber != 0 {
-		envVars["PR_NUMBER"] = fmt.Sprintf("%d", prNumber)
-	}
 
 	cmd := []string{
-		"./lib/tasks/scripts/checkout_scrape_branch.sh",
-		state,
-		gnis,
+		"./lib/tasks/scripts/checkout_branch.sh",
 		"&&",
-		"rake",
-		fmt.Sprintf("pipeline:fetch[%s,%s,%t,%t]", state, gnis, createPr, sendCosts),
+		fmt.Sprintf("rake 'pipeline:fetch[%s,%s,%t,%t]'", state, gnis, createPr, sendCosts),
 	}
 
-	volumes := map[string]string{}
-	fullImageName := remoteImageName
-
-	if develop {
-		fullImageName = localImageName
-		volumes = map[string]string{
-			"./civpatch/lib": "/app/civpatch/lib",
-		}
-	}
-
-	fmt.Println("Running container with image:", fullImageName)
 	labels := map[string]string{
 		"state": state, // Assumption: we only run one container for state + gnis at a time
 		"gnis":  gnis,
 	}
 
-	containerID, logs, logCancel, err := dockerClient.RunContainer(ctx,
-		fullImageName,
-		envVars,
-		cmd,
-		volumes,
-		labels)
+	taskResult, err := dockerClient.RunTask(ctx, docker.TaskOptions{
+		EnvVars:      envVars,
+		Command:      strings.Join(cmd, " "),
+		Labels:       labels,
+		Timeout:      10 * time.Minute,
+		StreamOutput: true,
+	})
 	if err != nil {
 		return fmt.Errorf("error running container: %w", err)
 	}
 
-	defer logCancel()
+	defer taskResult.Cancel()
 
-	fmt.Println("Container started:", containerID)
+	fmt.Println("Container started:", taskResult.ContainerId)
 
-	scanner := bufio.NewScanner(logs)
+	scanner := bufio.NewScanner(taskResult.Logs)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
@@ -206,7 +192,7 @@ func shouldScrape(gnisToIgnore []string, municipality Municipality) bool {
 }
 
 func checkScrapeEnvs(state string, gnis string, withCI bool, sendCosts bool) ([]string, error) {
-	requiredEnvVars := utils.RequiredEnvVars
+	requiredEnvVars := utils.RequiredScrapeEnvVars
 	if sendCosts {
 		requiredEnvVars = append(requiredEnvVars, utils.RequiredEnvVarsSendCosts...)
 	}
@@ -240,32 +226,7 @@ func prepareScrape(ctx context.Context, develop bool) (string, string, *docker.C
 		return "", "", nil, fmt.Errorf("error creating docker client: %w", err)
 	}
 
-	if develop {
-		fmt.Println("Building image:", localImageName)
-		scriptPath, err := utils.FromProjectRoot("civpatch/build.sh")
-		if err != nil {
-			return "", "", nil, fmt.Errorf("error getting script path: %w", err)
-		}
-
-		cmd := exec.Command("bash", scriptPath)
-		currentEnv := os.Environ()
-		cmd.Env = append(currentEnv,
-			"IMAGE_NAME="+imageName,
-			"RELEASE_VERSION="+localImageTag,
-		)
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-
-		fmt.Println("Finished running script")
-		if err := cmd.Run(); err != nil {
-			return "", "", nil, fmt.Errorf("error running script: %w", err)
-		}
-	} else {
-		fmt.Println("Pulling image:", remoteImageName)
-		if err := dockerClient.PullImage(ctx, remoteImageName, githubUsername, githubToken); err != nil {
-			return "", "", nil, fmt.Errorf("error pulling image: %w", err)
-		}
-	}
+	dockerClient.PrepareContainer(ctx, develop)
 
 	return githubUsername, githubToken, dockerClient, nil
 }

@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	RequiredEnvVars = []string{
+	RequiredScrapeEnvVars = []string{
 		"OPENAI_TOKEN",
 		"BRAVE_TOKEN",
 		"GOOGLE_SEARCH_API_KEY",
