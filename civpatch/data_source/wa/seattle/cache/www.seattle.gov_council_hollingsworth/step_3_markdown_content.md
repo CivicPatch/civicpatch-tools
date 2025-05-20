@@ -696,6 +696,8 @@ Joy was born and raised in Seattle’s Central District, a neighborhood her fami
 
 ## Calendar
 
+  ![Loading](https://www.trumba.com/images/spinner_trumba.gif)  
+
   [### Committees & Calendar](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/committees-and-calendar)   [### Agenda Sign Up](https://www.seattle.gov/council/committees/agenda-sign-up)  
 
 ## Policies
