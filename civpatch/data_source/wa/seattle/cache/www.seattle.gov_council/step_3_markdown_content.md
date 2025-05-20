@@ -8,11 +8,11 @@
  *  [Committees](https://www.seattle.gov/council/committees) 
  *  [Legislation & Research](https://www.seattle.gov/council/legislation-and-research) 
  *  [Calendar](https://www.seattle.gov/council/calendar) 
-  [### Focus on Public Safety](https://www.seattle.gov/council/issues/councils-focus-on-public-safety)   [### Protecting our Seattle](https://www.seattle.gov/council/issues/federal-changes-protecting-our-seattle)   [### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption)   [4 days ago  **  
+  [### Focus on Public Safety](https://www.seattle.gov/council/issues/councils-focus-on-public-safety)   [### Protecting our Seattle](https://www.seattle.gov/council/issues/federal-changes-protecting-our-seattle)   [### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption)   [Today  **  
 
-### Transportation Chair Saka bill sets up expansion of Traffic Safety Cameras
+### Councilmember Moore announces proposed amendment to interim ‘Middle Housing’ legislation
 
- Source: News Releases Archives - Seattle City Council Blog](https://council.seattle.gov/2025/05/13/transportation-chair-saka-bill-sets-up-expansion-of-traffic-safety-cameras)   [### 2025 Comprehensive Plan](https://www.seattle.gov/council/issues/2025-comprehensive-plan)   [### 2026 Families, Education, Preschool, and Promise Levy Renewal](https://www.seattle.gov/council/issues/families-education-preschool-and-promise-(fepp)-levy)  
+ Source: News Releases Archives - Seattle City Council Blog](https://council.seattle.gov/2025/05/20/councilmember-moore-announces-proposed-amendment-to-interim-middle-housing-legislation)   [### 2025 Comprehensive Plan](https://www.seattle.gov/council/issues/2025-comprehensive-plan)   [### 2026 Families, Education, Preschool, and Promise Levy Renewal](https://www.seattle.gov/council/issues/families-education-preschool-and-promise-(fepp)-levy)  
 
   __Photo Credit__  __Photo Credit:__  [Seattle Parks and Recreation, TIA International Photography](https://www.flickr.com/photos/seattleparks)  
 
@@ -40,19 +40,19 @@
 
 ##  [Council Connection Blog](https://council.seattle.gov) 
 
-  [Council Connection Blog RSS Feed](https://council.seattle.gov/feed)  5/13  [Transportation Chair Saka bill sets up expansion of Traffic Safety Cameras](https://council.seattle.gov/2025/05/13/transportation-chair-saka-bill-sets-up-expansion-of-traffic-safety-cameras)  5/8  [Councilmember Moore: We need a more transparent and democratic Ethics Code](https://council.seattle.gov/2025/05/08/councilmember-moore-we-need-a-more-transparent-and-democratic-ethics-code)  5/8  [Council President Nelson introduces proposal for rollout of interactive kiosks](https://council.seattle.gov/2025/05/08/council-president-nelson-introduces-proposal-for-rollout-of-interactive-kiosks)  4/23  [Councilmember Rivera welcomes Mayor’s ‘Every Child Ready’ proposal](https://council.seattle.gov/2025/04/23/councilmember-rivera-welcomes-mayors-every-child-ready-proposal)  4/16  [Councilmember Alexis Mercedes Rinck addresses City’s $244 million budget shortfall, calls for serious look at new revenue solutions](https://council.seattle.gov/2025/04/16/councilmember-alexis-mercedes-rinck-addresses-citys-244-million-budget-shortfall-calls-for-serious-look-at-new-revenue-solutions)  
+  [Council Connection Blog RSS Feed](https://council.seattle.gov/feed)  5/20  [Councilmember Moore announces proposed amendment to interim ‘Middle Housing’ legislation](https://council.seattle.gov/2025/05/20/councilmember-moore-announces-proposed-amendment-to-interim-middle-housing-legislation)  5/13  [Transportation Chair Saka bill sets up expansion of Traffic Safety Cameras](https://council.seattle.gov/2025/05/13/transportation-chair-saka-bill-sets-up-expansion-of-traffic-safety-cameras)  5/8  [Councilmember Moore: We need a more transparent and democratic Ethics Code](https://council.seattle.gov/2025/05/08/councilmember-moore-we-need-a-more-transparent-and-democratic-ethics-code)  5/8  [Council President Nelson introduces proposal for rollout of interactive kiosks](https://council.seattle.gov/2025/05/08/council-president-nelson-introduces-proposal-for-rollout-of-interactive-kiosks)  4/23  [Councilmember Rivera welcomes Mayor’s ‘Every Child Ready’ proposal](https://council.seattle.gov/2025/04/23/councilmember-rivera-welcomes-mayors-every-child-ready-proposal)  
 
 ## Recent Videos
 
-  [### Select Committee on Federal Administration & Policy Changes 5/16/2025
+  [### Select Committee on the Comprehensive Plan Public Hearing 5/19/2025 Session II
+
+ Public Hearing continues from Session IAgenda: Call to Order; Approval of the Agenda; Public Hearing on CB 120969: relating to land use and zoning - interim changes; Ad[...]](https://www.seattlechannel.org/video.asp?ID=2162545)   [### Select Committee on the Comprehensive Plan Public Hearing 5/19/2025 Session I
+
+ Agenda: Call to Order; Approval of the Agenda; Public Hearing on CB 120969: relating to land use and zoning - interim changes; Adjournment.Public Hearing continues in S[...]](https://www.seattlechannel.org/video.asp?ID=2162543)   [### Select Committee on Federal Administration & Policy Changes 5/16/2025
 
  Agenda: Call to Order; Approval of the Agenda; Public Comment; Update on Potential Federal Administration Impacts to the City of Seattle; Res 32168: Resolution reaffirm[...]](https://www.seattlechannel.org/video.asp?ID=2162541)   [### Select Committee on the Families, Education, Preschool & Promise (FEPP) Levy 5/15/2025
 
-Agenda: Call to Order; Public comment; CB 120981: Relating to property taxation and the Families Education, Preschool, and Promise Levy; Adjournment.](https://www.seattlechannel.org/video.asp?ID=2162539)   [### District 1 Community Safety Town Hall
-
- Councilmember Rob Saka (District 1) hosts a community town hall meeting focused on public safety in the North Delridge, Snake Hill, and High Point neighborhoods.  Speak[...]](https://www.seattlechannel.org/video.asp?ID=2162538)   [### Parks, Public Utilities & Technology Committee 5/14/2025
-
- Agenda: Call to the Order; Approval of the Agenda; Public Comment; Commence Astound Cable Franchise Renewal; CB 120966:  relating to Seattle Public Utilities; CB 120982[...]](https://www.seattlechannel.org/video.asp?ID=2782517)  
+Agenda: Call to Order; Public comment; CB 120981: Relating to property taxation and the Families Education, Preschool, and Promise Levy; Adjournment.](https://www.seattlechannel.org/video.asp?ID=2162539)  
 
 ## City Council
 
