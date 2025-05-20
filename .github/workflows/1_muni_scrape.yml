@@ -115,7 +115,7 @@ jobs:
           echo "Processing municipality: ${{ matrix.municipality_entry.gnis }}"
           ./civpatch_cli/bin/cli scrape -run \
             -state ${{ github.event.inputs.state }} \
-            -gnis ${{ matrix.municipality_entry.gnis }} 
+            -gnis ${{ matrix.municipality_entry.gnis }} \
             -github-env env-${{ github.actor }} \
             -create-pr -with-ci -send-costs
       

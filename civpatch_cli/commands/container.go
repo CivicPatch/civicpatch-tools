@@ -2,8 +2,10 @@ package commands
 
 import (
 	"civpatch/docker"
+	"civpatch/services"
 	"context"
 	"fmt"
+	"strings"
 )
 
 func CleanupContainers(ctx context.Context, containerId string) error {
@@ -36,7 +38,13 @@ func CleanupContainers(ctx context.Context, containerId string) error {
 	return nil
 }
 
-func RunRakeTask(ctx context.Context, state string, gnis string, command string) (string, error) {
+func RunRakeTask(ctx context.Context,
+	state string,
+	gnis string,
+	command string,
+	branchName string,
+	develop bool,
+) (string, error) {
 	if state == "" || gnis == "" || command == "" {
 		return "", fmt.Errorf("error: state, gnis, and command are required")
 	}
@@ -46,24 +54,38 @@ func RunRakeTask(ctx context.Context, state string, gnis string, command string)
 		return "", fmt.Errorf("error creating docker client: %v", err)
 	}
 
-	containerId, err := dockerClient.GetContainerId(ctx, map[string]string{
-		"state": state,
-		"gnis":  gnis,
+	dockerClient.PrepareContainer(ctx, develop)
+
+	githubToken, githubUsername, err := services.GetGithubCredentials(ctx)
+	if err != nil {
+		return "", fmt.Errorf("error getting github credentials: %v", err)
+	}
+
+	envVars := map[string]string{}
+	envVars["GITHUB_TOKEN"] = githubToken
+	envVars["GITHUB_USERNAME"] = githubUsername
+
+	if branchName != "" {
+		envVars["BRANCH_NAME"] = branchName
+	} else {
+		envVars["BRANCH_NAME"] = "main"
+	}
+
+	commands := []string{
+		"./lib/tasks/scripts/checkout_branch.sh",
+		"&&",
+		fmt.Sprintf("rake 'github_pipeline:generate_pr_data[%s,%s]'", state, gnis),
+	}
+
+	taskResult, err := dockerClient.RunTask(ctx, docker.TaskOptions{
+		Develop:      develop,
+		Command:      strings.Join(commands, " "),
+		EnvVars:      envVars,
+		StreamOutput: false,
 	})
 	if err != nil {
-		return "", fmt.Errorf("error getting container id: %v", err)
+		return "", fmt.Errorf("error running task: %v", err)
 	}
 
-	cmd, err := dockerClient.ExecCommand(ctx, containerId, command)
-	if err != nil {
-		return "", fmt.Errorf("error executing command: %v", err)
-	}
-
-	if cmd.ExitCode != 0 {
-		return "", fmt.Errorf("error executing with exit code: %v with stderr: %v", cmd.ExitCode, cmd.Stderr)
-	}
-
-	fmt.Println("Command output:", cmd.Stdout)
-
-	return cmd.Stdout, nil
+	return taskResult.Output, nil
 }
