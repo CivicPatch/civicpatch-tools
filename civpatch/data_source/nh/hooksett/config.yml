@@ -1,0 +1,33 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Alexander Walczyk
+    positions:
+    - Council Member
+  - name: James Sullivan
+    positions:
+    - Council Member
+  - name: Jeff Nyhan
+    positions:
+    - Council Member
+  - name: Jodi Pinard
+    positions:
+    - Council Member
+  - name: Keith Judge
+    positions:
+    - Council Member
+  - name: Randall Lapierre
+    positions:
+    - Council Member
+  - name: Roger Duhaime
+    positions:
+    - Council Member
+  - name: Timothy Tsantoulis
+    positions:
+    - Council Member
+  - name: Vincent Lembo
+    positions:
+    - Council Member
+people: {}
