@@ -4,18 +4,17 @@
     "positions": [
       "Mayor"
     ],
-    "image": "https://seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+    "image": "https://seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
     "source_image": null,
     "phone_number": "(206) 684-4000",
     "email": null,
-    "website": "https://seattle.gov/mayor",
+    "website": "https://seattle.gov/mayor/about",
     "start_date": "2021",
     "end_date": null,
     "sources": [
-      "https://seattle.gov/mayor/about",
-      "https://seattle.gov/mayor"
+      "https://seattle.gov/mayor/about"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Sara Nelson",
@@ -34,7 +33,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Rob Saka",
@@ -52,7 +51,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Mark Solomon",
@@ -70,7 +69,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Joy Hollingsworth",
@@ -88,7 +87,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Maritza Rivera",
@@ -106,7 +105,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Cathy Moore",
@@ -124,7 +123,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Dan Strauss",
@@ -142,7 +141,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Robert Kettle",
@@ -160,7 +159,7 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Alexis Mercedes Rinck",
@@ -178,6 +177,6 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-20"
   }
 ]
