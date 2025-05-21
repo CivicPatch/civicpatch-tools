@@ -6,11 +6,6 @@ module Core
   class ConfigManager
     DEFAULT_CONFIG = {
       "scrape_sources" => [],
-      "source_directory_list" => {
-        "type" => "directory_list_default",
-        "people" => [nil, nil, nil, nil, nil], # Absolute default is 5 people
-        "key_position" => "mayor"
-      }, # Just defaults, need to overwrite
       "people" => {} # Maintain a list keyed by people names
     }.freeze
 

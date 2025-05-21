@@ -7,15 +7,15 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "phone_number": "(603) 669-6999",
+    "email": "ttsantoulis@hooksett.org",
+    "website": null,
     "start_date": null,
     "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "James Sullivan",
@@ -25,15 +25,15 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "phone_number": "(603) 315-0084",
+    "email": "jsullivan@hooksett.org",
+    "website": null,
     "start_date": null,
     "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Randall Lapierre",
@@ -43,32 +43,15 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "phone_number": "(603) 341-8311",
+    "email": "rlapierre@hooksett.org",
+    "website": null,
     "start_date": null,
     "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Jeff Nyhan",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": "2025-06-30",
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Roger Duhaime",
@@ -78,48 +61,14 @@
     "image": null,
     "source_image": null,
     "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "email": "rogerduhaime@hooksett.org",
+    "website": null,
     "start_date": null,
     "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Keith Judge",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": "2025-06-30",
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Alexander Walczyk",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": "2025-06-30",
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Lindsey Laliberte",
@@ -128,14 +77,65 @@
     ],
     "image": null,
     "source_image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "phone_number": "(603) 461-1805",
+    "email": "llaliberte@hooksett.gov",
+    "website": null,
     "start_date": null,
     "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Keith Judge",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 493-7991",
+    "email": "kjudge@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Alexander Walczyk",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(818) 446-6599",
+    "email": "awalczyk@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Jeff Nyhan",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 932-3775",
+    "email": "jnyhan@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-20"
   }
 ]

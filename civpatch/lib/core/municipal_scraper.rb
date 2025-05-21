@@ -16,6 +16,7 @@ module Core
       municipality_context,
       request_cache: {},
       page_fetcher: nil,
+      people_hint: [],
       seeded_urls: [] # Urls to scrape first
     )
       puts "Fetching with #{llm_service_string}"
@@ -33,7 +34,8 @@ module Core
         municipality_context: municipality_context,
         page_fetcher: page_fetcher,
         city_cache_path: city_cache_path,
-        request_cache: request_cache
+        request_cache: request_cache,
+        people_hint: people_hint
       }
 
       # Initialize combined data hash
@@ -129,7 +131,7 @@ module Core
       urls_to_process.each do |url|
         break if early_exit && !should_continue_scraping?(context, data)
 
-        content_dir, people = scrape_url_for_municipal_directory(context, url)
+        content_dir, people = scrape_url_for_municipal_directory(context, url, context[:people_hint])
 
         unless people.blank?
           accumulated_people, people_config = Services::Shared::People.collect_people(people_config,
@@ -174,6 +176,7 @@ module Core
           url_content_dir, people = scrape_url_for_municipal_directory(
             context,
             original_url,
+            [],
             person["name"]
           )
 
@@ -193,7 +196,7 @@ module Core
       [content_dirs, accumulated_people]
     end
 
-    def self.scrape_url_for_municipal_directory(context, url, person_name = "")
+    def self.scrape_url_for_municipal_directory(context, url, people_hint = [], person_name = "")
       llm_service_string = context[:llm_service_string]
       page_fetcher = context[:page_fetcher]
       cache_path = context[:city_cache_path]
@@ -206,7 +209,7 @@ module Core
       content_file = page_fetcher.extract_content(url, url_content_path)
       return [nil, nil] unless content_file.present?
 
-      people = llm_service.extract_city_people(municipality_context, content_file, url, person_name)
+      people = llm_service.extract_city_people(municipality_context, content_file, url, people_hint, person_name)
 
       unless people.present? && people.is_a?(Array) && people.count.positive?
         return [nil,
@@ -241,7 +244,6 @@ module Core
     def self.should_continue_scraping?(context, data)
       accumulated_officials = data[:accumulated_people]
       num_urls_scraped = data[:processed_urls].count
-      source_directory_list_config = context[:municipality_context][:config]["source_directory_list"]
 
       return false if num_urls_scraped >= MAX_URLS_TO_SCRAPE
 
@@ -250,7 +252,8 @@ module Core
         official["positions"].present? && Services::Shared::People.profile_data_points_present?(official)
       end
 
-      people_to_find = [source_directory_list_config["people"].count - 2, MIN_PEOPLE_TO_FIND].max
+      num_people_hint = context[:people_hint].present? ? context[:people_hint].count : 0
+      people_to_find = [num_people_hint - 2, MIN_PEOPLE_TO_FIND].max
       return true if valid_officials_count < people_to_find
 
       false

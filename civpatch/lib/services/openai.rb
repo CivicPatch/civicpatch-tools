@@ -19,7 +19,7 @@ module Services
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
     end
 
-    def extract_city_people(municipality_context, content_file, page_url, person_name = "")
+    def extract_city_people(municipality_context, content_file, page_url, people_hint = [], person_name = "")
       state = municipality_context[:state]
       municipality_entry = municipality_context[:municipality_entry]
 
@@ -28,6 +28,7 @@ module Services
       return { error: "Content for city council members are too long" } if content.split(" ").length > MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(municipality_context, content, page_url,
+                                                                         people_hint,
                                                                          person_name)
 
       messages = [
@@ -48,7 +49,7 @@ module Services
       end
     end
 
-    def generate_city_info_prompt(municipality_context, content, page_url, person_name = "") # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    def generate_city_info_prompt(municipality_context, content, page_url, people_hint = [], person_name = "") # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       state = municipality_context[:state]
       government_type = municipality_context[:government_type]
       government_types_config = Core::CityManager.get_config(government_type)
@@ -58,9 +59,7 @@ module Services
       municipality_entry = municipality_context[:municipality_entry]
       current_date = Date.today.strftime("%Y-%m-%d")
 
-      maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
-        person&.dig("name")
-      end
+      maybe_target_people = people_hint.map { |person| person&.dig("name") }.compact
 
       content_type = if person_name.present?
                        "First, determine if the content contains information about the target person."

@@ -338,65 +338,65 @@
    *  [Yiddish](https://www.hooksett.org) 
    *  [Yoruba](https://www.hooksett.org) 
    *  [Zulu](https://www.hooksett.org) 
-  **   ![social icon](https://www.hooksett.org/_assets_/images/social-1.png)   ![search icon](https://www.hooksett.org/_assets_/images/search-icon.png)   ![search icon](https://www.hooksett.org/_assets_/images/search-icon.png)  
-
- *  [![icon](https://www.hooksett.org/_assets_/images/scrollMenu-icon-1.png)Home](https://www.hooksett.org/) 
- *  [![icon](https://www.hooksett.org/Site%20Set%20Up/Scroll%20Menu/Link%20Icon%20for%20Menu%20.png)Quick Links](https://www.hooksett.org/) 
- *  [![icon](https://www.hooksett.org/Site%20Set%20Up/Scroll%20Menu/scrollMenu-icon-3.png)News](https://www.hooksett.org/) 
- *  [![icon](https://www.hooksett.org/Site%20Set%20Up/Scroll%20Menu/Event%20Icon%20for%20Menu.png)Calendar](https://www.hooksett.org/) 
- *  [![icon](https://www.hooksett.org/Site%20Set%20Up/Scroll%20Menu/Government%20Icon%20for%20Menu.png)Government](https://www.hooksett.org/) 
- *  [![icon](https://www.hooksett.org/Site%20Set%20Up/Scroll%20Menu/Information%20Icon%20for%20Menu.png)Information](https://www.hooksett.org/) 
- slide 1 of 2 
+  **   ![social icon](https://www.hooksett.org/_assets_/images/social-1.png)   ![search icon](https://www.hooksett.org/_assets_/images/search-icon.png)   ![search icon](https://www.hooksett.org/_assets_/images/search-icon.png)   **  **  slide 1 of 1 
 
  *  
- *  
- *  
- *  
-  **  **  
 
-## Quick Links
+ *  [Home](https://www.hooksett.org) 
+ *  [Government](https://www.hooksett.org/government/index.php) 
+ * Town Council
+ ![slider overlay](https://www.hooksett.org/_assets_/images/inner-slide-overlay.png)  
 
-  **  **  slide 1 to 4 of 5  [![qlink icon](https://www.hooksett.org/Site%20Set%20Up/Quick%20Links/Notifications%20Icon%20for%20Quick%20Links.png)__Subscribe to E-Alerts__](https://www.hooksett.org/enotify/index.php)  [![qlink icon](https://www.hooksett.org/Site%20Set%20Up/Quick%20Links/Working%20Together%20Icon%20for%20Quick%20Links.png)__Employment Opportunities__](https://www.hooksett.org/departments/human_resources___ada_coordinator/employment_volunteer_opportunities.php)   [![qlink icon](https://www.hooksett.org/Images/Government/Volunteer%20Icon%20for%20Quick%20Links.png)__Volunteer Opportunities__](https://www.hooksett.org/volunteer_opportunities/index.php)  [![qlink icon](https://www.hooksett.org/Site%20Set%20Up/Quick%20Links/Committee%20Icon%20for%20Quick%20Links.png)__Boards & Committees__](https://www.hooksett.org/government/boards_committees/index.php)   [![qlink icon](https://www.hooksett.org/Site%20Set%20Up/Quick%20Links/Map%20Icon%20for%20Quick%20Links.png)__GIS Map__](https://www.axisgis.com/HooksettNH)  [![qlink icon](https://www.hooksett.org/_assets_/images/qlink-1.png)__RFPs/Bids__](https://www.hooksett.org/government/rfps_bids.php)   [![qlink icon](https://www.hooksett.org/Site%20Set%20Up/Quick%20Links/Video%20Icon%20for%20Quick%20Links.png)__View Meeting Recordings__](https://hooksett.granicus.com/ViewPublisher.php?view_id=2)  [![qlink icon](https://www.hooksett.org/Site%20Set%20Up/Quick%20Links/Pay%20Icon%20for%20Quick%20Links.png)__Pay Online__](https://www.hooksett.org/how_do_i/pay_online.php)   [![qlink icon](https://www.hooksett.org/_assets_/images/qlink-1.png)__Public Hearings__](https://www.hooksett.org/public_hearings.php)  
+## Contact Us
 
-## Latest News
+#### Geralyn Ciardelli
 
- [See all news](https://www.hooksett.org/newslist.php)   **  **  slide 1 of 6 May 05, 2025 Green Grass & Clear Water  [Read more**](https://www.hooksett.org/news_detail_T10_R152.php)  March 06, 2025 March 11, 2025 Election Day Important Information  [Read more**](https://www.hooksett.org/news_detail_T10_R139.php)  March 05, 2025 Sample Ballot and other relevant information including the 2025/2026 Proposed Budget  [Read more**](https://www.hooksett.org/news_detail_T10_R130.php)  September 04, 2024 September 2024 Town Newsletter  [Read more**](https://www.hooksett.org/news_detail_T10_R83.php)  June 14, 2024 Notice: Lowering of the water level above the Amoskeag Dam in Manchester and Hooksett on July 5, July 12 and October 8-11, 2024  [Read more**](https://www.hooksett.org/news_detail_T10_R56.php)  May 20, 2024 Last Day to Change Party Affiliation - June 4, 2024  [Read more**](https://www.hooksett.org/news_detail_T10_R40.php)   [May 12, 2025Get the Scoop on Poop Read more **](https://www.hooksett.org/news_detail_T10_R154.php)  [May 06, 2025NHDOT Notice Public Hearing Read more **](https://www.hooksett.org/news_detail_T10_R142.php)  [April 21, 2025Hooksett Transfer Station Reminder - for residents of Hooksett only Read more **](https://www.hooksett.org/news_detail_T10_R148.php)  
+ Executive Assistant (603) 419-4007  ** Sub Menu 
 
-## Calendar
+## Related Pages
 
-  [Public Meetings](https:;)  [Community Events](https:;)   [See all events](https://www.hooksett.org/calendar.php)  todaymonth 
+ *  [Agendas and Minutes](https://www.hooksett.org/government/town_council/agendas_and_minutes.php) 
+ *  [Town Council Meeting Schedule FY 2024-2025](https://www.hooksett.org/24-25%20TOWN%20COUNCIL%20MEETING%20SCHEDULE.pdf) 
+ *  [Town Council Rules of Procedures](https://www.hooksett.org/Documents/Government/Town%20Council/TC%20Rules%20of%20Procedure%2010232024.pdf) 
+ *  [Town Charter](https://www.hooksett.org/Documents/Government/Town%20Council/2024%20Complete%20Town%20Charter.pdf) 
+ *  [Hooksett Youth Achiever](https://www.hooksett.org/hooksett_youth_achievement_award.pdf) 
+   *  [HYA Agendas and Minutes](https://www.hooksett.org/government/town_council/hya_agendas_and_minutes.php) 
 
-## May 2025
+# Town Council
 
-||Sun|Mon|Tue|Wed|Thu|Fri|Sat| |---|---|---|---|---|---|---||
-|---|---|---|---|---|---|---|---|
-||||||||| |---|---|---|---|---|---|---|      |27|28|29|30|1|2|3| |---|---|---|---|---|---|---| ||||||||      |||||||| |---|---|---|---|---|---|---|      |4|5|6|7|8|9|10| |---|---|---|---|---|---|---| ||||||||      |||||||| |---|---|---|---|---|---|---|      |11|12|13|14|15|16|17| |---|---|---|---|---|---|---| ||||||||      |||||||| |---|---|---|---|---|---|---|      |18|19|20|21|22|23|24| |---|---|---|---|---|---|---| ||||||||      |||||||| |---|---|---|---|---|---|---|      |25|26|27|28|29|30|31| |---|---|---|---|---|---|---| ||||||||      |||||||| |---|---|---|---|---|---|---|      |1|2|3|4|5|6|7| |---|---|---|---|---|---|---| |||||||||
+  __Meetings:__ Meetings are held on the second and fourth Wednesday of each month, at 6:00 pm, at the Municipal Building. The average meeting lasts three hours.
 
- todaymonth 
+Duties: Responsible for hiring a competent and qualified Town Administrator to run the Town Departments; Provide overall policy direction and guidance for the Administrator; Review and approve annual departmental budgets and Capital Improvement Plan items for Budget Committee and Annual Town Meeting approval; Responsible for negotiating collective bargaining agreements; Appoint qualified personnel for the appointed boards, committees and commissions; Membership in various Council subcommittees on different issues.
 
-## May 2025
+ __Other:__ The Board has the authority to create Ad Hoc Committees and Subcommittees to research special projects.
 
-||Sun|Mon|Tue|Wed|Thu|Fri|Sat| |---|---|---|---|---|---|---||
-|---|---|---|---|---|---|---|---|
-||||||||| |---|---|---|---|---|---|---|      |27|28|29|30|1|2|3| |---|---|---|---|---|---|---| |||||[4p Supervisor of the Checklist Meeting](https://www.hooksett.org/government/agendas___minutes.php)||| |[4:30p Heritage Commission](https://www.hooksett.org/government/agendas___minutes.php)|      |||||||| |---|---|---|---|---|---|---|      |4|5|6|7|8|9|10| |---|---|---|---|---|---|---| ||6p Planning Board|6:30p Heritage Commission|||||      |||||||| |---|---|---|---|---|---|---|      |11|12|13|14|15|16|17| |---|---|---|---|---|---|---| ||3p Heritage Commission Photograph Scanning Event|6:30p Zoning Board of Adjustment|[6p Town Council](https://www.hooksett.org/government/town_council/agendas_and_minutes.php)|6p NHDOT Public Hearing||| |4:30p Conservation Commission| |5:30p Library Trustees|      |||||||| |---|---|---|---|---|---|---|      |18|19|20|21|22|23|24| |---|---|---|---|---|---|---| ||6p Planning Board|6p Parks and Recreation Advisory Board Meeting|4:30p Economic Development Advisory Committee||||      |||||||| |---|---|---|---|---|---|---|      |25|26|27|28|29|30|31| |---|---|---|---|---|---|---| |||5p Heritage Commission|4:55p ZBA Site Walk - 35 Edgewater Dr|||| |6:30p Recycling & Transfer Advisory Board Meeting|6p Town Council|      |||||||| |---|---|---|---|---|---|---|      |1|2|3|4|5|6|7| |---|---|---|---|---|---|---| ||6p Planning Board|||||||
+ Administrative Code:  __Section 4.17:__ Consists of nine elected members, one from each District and three At-large members.  It is the governing body of the Town and directed by the specifications of the Town Charter.  Prepares and passes ordinances, submits a proposed budget to the Budget Committee and gives direction to the Town through the Town Administrator and appointed Boards and Committees.
 
- May 21, 2025 Economic Development Advisory Committee Read more **  May 27, 2025 Heritage Commission Read more **  May 27, 2025 Recycling & Transfer Advisory Board Meeting Read more **  todaymonth 
+|__First Name__|__Last Name__|__Position and Term Expiration__|__Email__|__Phone__|
+|---|---|---|---|---|
+|Timothy|Tsantoulis|Chair, 06/30/2025|ttsantoulis@hooksett.org|(603) 669-6999|
+|James|Sullivan|Vice-Chair, 06/30/2025|jsullivan@hooksett.org|(603) 315-0084|
+|Randall|Lapierre|Secretary  06/30/2025|rlapierre@hooksett.org|(603) 341-8311|
+|Roger |Duhaime|06/30/2025|rogerduhaime@hooksett.org| |
+| | | | | |
+|Lindsey |Laliberte|06/30/2025|llaliberte@hooksett.gov |(603) 461-1805|
+|Keith|Judge|06/30/2025|kjudge@hooksett.org|(603) 493-7991|
+|Alexander|Walczyk|06/30/2025|awalczyk@hooksett.org|(818) 446-6599|
+|Jeff |Nyhan|06/30/2025|jnyhan@hooksett.org|(603) 932-3775|
 
-## May 2025
+  ![share](https://www.hooksett.org/_assets_/images/share-icon.png)  Share this page 
 
-||Sun|Mon|Tue|Wed|Thu|Fri|Sat| |---|---|---|---|---|---|---||
-|---|---|---|---|---|---|---|---|
-||||||||| |---|---|---|---|---|---|---|      |27|28|29|30|1|2|3| |---|---|---|---|---|---|---| |6a Fellowship Church|||||||      |||||||| |---|---|---|---|---|---|---|      |4|5|6|7|8|9|10| |---|---|---|---|---|---|---| |6a Fellowship Church|||||||      |||||||| |---|---|---|---|---|---|---|      |11|12|13|14|15|16|17| |---|---|---|---|---|---|---| |6a Fellowship Church|||||||      |||||||| |---|---|---|---|---|---|---|      |18|19|20|21|22|23|24| |---|---|---|---|---|---|---| |6a Fellowship Church|||||||      |||||||| |---|---|---|---|---|---|---|      |25|26|27|28|29|30|31| |---|---|---|---|---|---|---| |6a Fellowship Church|||||||      |||||||| |---|---|---|---|---|---|---|      |1|2|3|4|5|6|7| |---|---|---|---|---|---|---| |6a Fellowship Church||||||||
+## Share this page
 
- May 25, 2025 Fellowship Church Read more **  June 1, 2025 Fellowship Church Read more **  June 8, 2025 Fellowship Church Read more **  
+ × 
 
-## Government
+Copy and paste this code into your website.
 
- [Learn More](https://www.hooksett.org/government/index.php)   **  **  slide 1 of 8  [Timothy Tsantoulis Chair 06/30/2025](https://www.hooksett.org)   [James Sullivan Vice-Chair 06/30/2025](https://www.hooksett.org)   [Randall Lapierre Secretary 06/30/2025](https://www.hooksett.org)   [Jeff Nyhan 06/30/2025](https://www.hooksett.org)   [Roger Duhaime 06/30/2025](https://www.hooksett.org)   [Keith Judge 06/30/2025](https://www.hooksett.org)   [Alexander Walczyk 06/30/2025](https://www.hooksett.org)   [Lindsey Laliberte 06/30/2025](https://www.hooksett.org)   **  **  slide 1 to 2 of 2 
+<a href="http://www.hooksett.org/government/town_council/index.php">Your Link Name</a> 
 
- *   [![government icon](https://www.hooksett.org/Images/Government/Town%20Council%20Icon%20for%20Government%20Link.png)__Town Council__](https://www.hooksett.org/government/town_council/index.php)  [![government icon](https://www.hooksett.org/Images/Government/Charter%20Icon%20for%20Government%20Link.png)__Town Charter__](https://www.hooksett.org/Documents/Departments/Administration/Policies%20And%20Regulations/Hooksett's%20Form%20of%20Government,%20Policies,%20and%20Regulations/Hooksett%20Town%20Charter/2024%20Complete%20Charter.pdf)  
- *   [![government icon](https://www.hooksett.org/Images/Government/Rules%20Icon%20for%20Government%20Link.png)__Town Council Rules of Procedures__](https://www.hooksett.org/Documents/Government/Town%20Council/TC%20Rules%20of%20Procedure%2010232024.pdf)  [![government icon](https://www.hooksett.org/Images/Government/Meeting%20Icon%20for%20Government%20Link.png)__Town Council Meeting Schedule__](https://www.hooksett.org/24-25%20TOWN%20COUNCIL%20MEETING%20SCHEDULE.pdf)  
-  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-1.png)   __ADDRESS:__  [35 Main St. Hooksett, NH 03106](https://www.google.com/maps/place/35+Main+St,+Hooksett,+NH+03106,+USA/@43.0905415,-71.465488,17z/data=!3m1!4b1!4m6!3m5!1s0x89e24410327bba29:0xb97f1217b218bbe5!8m2!3d43.0905376!4d-71.4629131!16s%2Fg%2F11bw3z5mc1?entry=ttu)   ![footer icon](https://cms3.revize.com/revize/hooksett/clock.png)   __HOURS:__  Mon: 8 AM - 4:30 PM
+Share this page on your favorite Social network
+
+  [**Facebook](https://www.facebook.com/sharer/sharer.php?u=http://www.hooksett.org/government/town_council/index.php)   [![twitter](https://www.hooksett.org/_assets_/images/twitter-x.png)Twitter](https://www.twitter.com/intent/tweet?url=http://www.hooksett.org/government/town_council/index.php)   [**Reddit](https://www.reddit.com/submit?url=http://www.hooksett.org/government/town_council/index.php)  Close  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-1.png)   __ADDRESS:__  [35 Main St. Hooksett, NH 03106](https://www.google.com/maps/place/35+Main+St,+Hooksett,+NH+03106,+USA/@43.0905415,-71.465488,17z/data=!3m1!4b1!4m6!3m5!1s0x89e24410327bba29:0xb97f1217b218bbe5!8m2!3d43.0905376!4d-71.4629131!16s%2Fg%2F11bw3z5mc1?entry=ttu)   ![footer icon](https://cms3.revize.com/revize/hooksett/clock.png)   __HOURS:__  Mon: 8 AM - 4:30 PM
 
 Tue: 8 AM - 4:30 PM
 
@@ -406,22 +406,10 @@ Thu: 8 AM - 4:30PM
 
 Fri: 8 AM - 12:00 PM
 
-Sat-Sun: Closed  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-2.png)   __PHONE:__ 603.485.8471  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-3.png)   __CONTACT US:__  [Department Directory](https://www.hooksett.org/government/staff_directory.php)   ![footer icon](https://www.hooksett.org/_assets_/images/logo.png)  © HOOKSETT, NH Powered by [revize.,](https://www.revize.com) the Government Website Experts. [Login](https://cms3.revize.com/revize/security/index.jsp?webspace=hooksett&filename=/index.php)   ![share](https://www.hooksett.org/_assets_/images/share-icon.png)  Share this page 
-
-## Share this page
-
- × 
-
-Copy and paste this code into your website.
-
-<a href="http://www.hooksett.org/">Your Link Name</a> 
-
-Share this page on your favorite Social network
-
-  [**Facebook](https://www.facebook.com/sharer/sharer.php?u=http://www.hooksett.org)   [![twitter](https://www.hooksett.org/_assets_/images/twitter-x.png)Twitter](https://www.twitter.com/intent/tweet?url=http://www.hooksett.org)   [**Reddit](https://www.reddit.com/submit?url=http://www.hooksett.org)  Close 
+Sat-Sun: Closed  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-2.png)   __PHONE:__ 603.485.8471  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-3.png)   __CONTACT US:__  [Department Directory](https://www.hooksett.org/government/staff_directory.php)   ![footer icon](https://www.hooksett.org/_assets_/images/logo.png)  © HOOKSETT, NH Powered by [revize.,](https://www.revize.com) the Government Website Experts. [Login](https://cms3.revize.com/revize/security/index.jsp?webspace=hooksett&filename=/government/town_council/index.php)  
 
 ## 
 
 ### 
 
- Close [Read More](https://www.hooksett.org)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ Close [Read More](https://www.hooksett.org/government/town_council/index.php)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
