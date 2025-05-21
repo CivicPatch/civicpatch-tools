@@ -19,6 +19,7 @@ module Browser
       end_string: ",onerror"
     }
   }.freeze
+  IGNORE_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"].freeze
 
   def self.with_browser
     Playwright.create(
@@ -50,12 +51,14 @@ module Browser
       end
 
       with_network_retry(url) do
+        return nil if IGNORE_EXTENSIONS.any? { |ext| url.end_with?(ext) }
+
         browser.goto(url)
+        content_type = browser.evaluate("document.contentType")
+        return nil unless html_page?(content_type)
       end
 
       sleep(options[:wait_for]) if options[:wait_for].present?
-
-      return nil unless html_page?(browser)
 
       yield(browser) if block_given?
 
@@ -118,9 +121,7 @@ module Browser
     puts "Browser fetch failed for #{url}: #{error.message}"
   end
 
-  private_class_method def self.html_page?(browser)
-    content_type = browser.evaluate("document.contentType")
-
+  private_class_method def self.html_page?(content_type)
     return false if content_type.blank?
 
     content_type.downcase.include?("text/html")

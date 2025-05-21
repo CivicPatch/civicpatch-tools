@@ -9,8 +9,8 @@ require_relative "shared/requests"
 module Services
   class GoogleGemini
     MODELS = %w[
-      gemini-2.0-flash
       gemini-2.5-flash-preview-04-17
+      gemini-2.0-flash
     ].freeze
 
     BASE_URI = "https://generativelanguage.googleapis.com"

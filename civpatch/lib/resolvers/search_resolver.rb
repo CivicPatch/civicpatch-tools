@@ -22,8 +22,9 @@ module Resolvers
 
     def self.do_municipal_search(municipality_context, query_keywords)
       SEARCH_SERVICES.each do |search_engine_name, search_service|
-        puts "Searching with #{search_engine_name} for #{query_keywords}"
-        results = search_service.municipal_search(municipality_context, query_keywords)
+        keyword_with_type = "#{municipality_context[:municipality_entry]["type"]} #{query_keywords}"
+        puts "Searching with #{search_engine_name} for #{keyword_with_type}"
+        results = search_service.municipal_search(municipality_context, keyword_with_type)
         Utils::CostsHelper.log_search_engine_call(municipality_context[:state],
                                                   municipality_context[:municipality_entry]["name"], search_engine_name)
         puts "Search successful with #{search_engine_name}."

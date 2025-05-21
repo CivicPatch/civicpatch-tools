@@ -117,7 +117,7 @@ module Services
             {
               "name": "Denyse McGriff",
               "positions": ["Mayor"],
-              "image": "images/cf3a4400bcf8e75eb5a9cd3748d7d7ac428cb1663c701fe42b89fb1dc8933f63.jpg",
+              "image": {"data": "https://www.orcity.org/headshot.jpg", "llm_confidence": 0.95, "llm_confidence_reason": "Found image labeled 'Mayor Denyse McGriff' near name."},
               "phone_number": {"data": "503-656-3912", "llm_confidence": 0.95, "llm_confidence_reason": "Found number labeled 'Home:' near name."},
               "email": {"data": "dmcgriff@orcity.org", "llm_confidence": 0.98, "llm_confidence_reason": "Extracted from mailto link text near name."},
               "website": {"data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff", "llm_confidence": 0.9, "llm_confidence_reason": "Primary page URL."},
@@ -126,7 +126,7 @@ module Services
             }, {
               "name": "Adam Marl",
               "positions": ["Commissioner"],
-              "image": "images/f7ac574487389ed707b5d516d17500f55ca16e63d4b8100ef310b0d792cce875.jpg",
+              "image": {"data": "https://www.orcity.org/images/f7ac574487389ed707b5d516d17500f55ca16e63d4b8100ef310b0d792cce875.jpg", "llm_confidence": 0.95, "llm_confidence_reason": "Found image labeled 'Commissioner Adam Marl' near name."},
               "phone_number": {"data": "503-406-8165", "llm_confidence": 0.95, "llm_confidence_reason": "Found number labeled 'Cell:' near name."},
               "email": {"data": "amarl@orcity.org", "llm_confidence": 0.98, "llm_confidence_reason": "Extracted from mailto link text near name."},
               "website": {"data": "https://www.orcity.org/1775/Commissioner-Adam-Marl", "llm_confidence": 0.9, "llm_confidence_reason": "Primary page URL."},
@@ -175,7 +175,7 @@ module Services
               - In addition to the ensured core membership role, also include all other distinct, active municipal roles or more specific titles found in the text, provided they match the `Key Roles` or `Examples` OR if they represent a clear representative role from the primary governing body to another board/commission. This includes specific committee assignments, liaison roles, or detailed versions of their main role if they add clarity beyond the core membership role (e.g., "Council Member, Ward 3", "Select Board Representative to Finance Committee").
             - **Clarity and Conciseness**:
               - When multiple terms in the text describe the exact same specific responsibility (e.g., "Board of Selectmen\'s Representative to Planning Board" and "Selectmen\'s Rep to Planning Board"), prefer the most complete, official-sounding, or consistently used term from the source for that specific responsibility. Avoid redundant listings *for the exact same specific role* if one is merely an abbreviation of the other. However, this does not override the rule to include both the core membership role and a more specific title if they represent different levels of detail (e.g., "Council Member" and "Council Member, District A").
-        - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style. URL should usually start \'images/\'. **The output for the 'image' field in the JSON must be the direct URL string or null; do NOT wrap it in an object with 'data' or 'llm_confidence'.**
+        - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
         - Contact Details (Phone/Email/Website):
           - Associate details logically if near the person's name/section.
           - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
