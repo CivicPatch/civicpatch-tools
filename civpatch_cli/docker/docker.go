@@ -105,7 +105,7 @@ func (c *Client) RunTask(ctx context.Context, opts TaskOptions) (*TaskResult, er
 	}
 
 	// fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ") + " || true ; tail -f /dev/null"}
-	fullCmd := []string{"/bin/sh", "-c", opts.Command}
+	fullCmd := []string{"/bin/sh", "-c", "set -e; " + opts.Command}
 
 	resp, err := c.client.ContainerCreate(ctx, &container.Config{
 		Image:  imageName,
