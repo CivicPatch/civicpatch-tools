@@ -23,7 +23,9 @@ git config --global user.name "$GITHUB_USERNAME"
 git config --global user.email "civicpatch-tools@civicpatch.org"
 # https://git-scm.com/docs/git#_options
 git clone -b main --single-branch $REPO_URL ./tmp/civicpatch-tools
-git -C ./tmp/civicpatch-tools remote set-url origin $REPO_URL
+git -C ./tmp/civicpatch-tools fetch origin $BRANCH_NAME || true  
+git -C ./tmp/civicpatch-tools checkout -B $BRANCH_NAME
+git -C ./tmp/civicpatch-tools pull origin $BRANCH_NAME || true
 
 cp -rn ./tmp/civicpatch-tools/. /app
 rm -rf ./tmp
