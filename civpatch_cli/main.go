@@ -36,9 +36,7 @@ var (
 
 	runTask        = flag.NewFlagSet("run-task", flag.ExitOnError)
 	runTaskBranch  = runTask.String("branch-name", "", "Branch name")
-	runTaskState   = runTask.String("state", "", "State")
-	runTaskGeoid   = runTask.String("geoid", "", "GEOID")
-	runTaskCommand = runTask.String("command", "", "Rake task to run")
+	runTaskCommand = runTask.String("command", "", "Task to run")
 	runTaskDevelop = runTask.Bool("develop", false, "Develop locally") // Optional -- only needed if testing changes locally
 
 	cleanupCommand = flag.NewFlagSet("cleanup", flag.ExitOnError)
@@ -71,10 +69,8 @@ func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error 
 
 func runTaskCommands(ctx context.Context) error {
 	output, err := commands.RunTask(ctx,
-		*runTaskState,
-		*runTaskGeoid,
-		*runTaskCommand,
 		*runTaskBranch,
+		*runTaskCommand,
 		*runTaskDevelop,
 	)
 	if err != nil {

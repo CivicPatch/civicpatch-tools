@@ -14,38 +14,21 @@ require "resolvers/people_resolver"
 require_relative "../core/context_manager"
 
 namespace :github_pipeline do
-  desc "Get people.yml link for pull request"
-  task :get_city_directory_link, [:state, :geoid, :branch_name] do |_t, args|
+  desc "Generate comment for people.yml"
+  task :generate_comment, [:state, :geoid] do |_t, args|
     state = args[:state]
     geoid = args[:geoid]
-    branch_name = args[:branch_name]
 
-    city_entry = Core::StateManager.get_city_entry_by_geoid(state, geoid)
-    city_path = Core::PathHelper.get_data_city_path(state, city_entry["geoid"])
-    relative_path = city_path[city_path.rindex("data/#{state}")..]
+    context = Core::ContextManager.get_context(state, geoid)
 
-    directory_url = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{relative_path}/people.yml"
-    puts directory_url
-  end
+    people = Resolvers::PeopleResolver.merge_people_across_sources(context)
+    people_comment = GitHub::MunicipalityOfficials.people_list(context, people)
 
-  desc "Get config.yml link for pull request"
-  task :get_config_link, [:state, :geoid, :branch_name] do |_t, args|
-    state = args[:state]
-    geoid = args[:geoid]
-    branch_name = args[:branch_name]
-
-    city_entry = Core::StateManager.get_city_entry_by_geoid(state, geoid)
-    city_path = Core::PathHelper.get_data_source_city_path(state, city_entry["geoid"])
-    relative_path = city_path[city_path.rindex("data_source/#{state}")..]
-
-    config_url = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{relative_path}/config.yml"
-    puts config_url
+    puts people_comment
   end
 
   desc "Generate PR comment data for city people"
   task :generate_pr_data, [:state, :geoid] do |_t, args|
-    $stdout.sync = true
-
     state = args[:state]
     geoid = args[:geoid]
 

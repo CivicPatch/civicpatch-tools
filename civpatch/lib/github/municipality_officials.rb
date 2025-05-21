@@ -29,8 +29,16 @@ module GitHub
       MARKDOWN
     end
 
-    def self.to_people_list(people) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+    def self.people_list(context, people) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+      municipality_name = context[:municipality_entry]["name"]
+      state = context[:state]
+      sources = people.map { |person| person["sources"] }.flatten.uniq.join("\n")
+
       <<~MARKDOWN
+        # #{municipality_name}, #{state.upcase}
+        ## Sources
+        #{sources}
+        ## People
         | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Term Dates** | **Image**     |
         |-----------|-------------------|---------------|---------------|---------------|----------------|---------------|
         #{people.map do |person|
