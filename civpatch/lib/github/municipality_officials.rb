@@ -2,32 +2,12 @@
 
 module GitHub
   class MunicipalityOfficials
-    def self.generate_people_list_markdown(municipality_context, merged_people, missing_people, contested_people) # rubocop:disable Metrics/AbcSize
-      city = municipality_context[:municipality_entry]["name"]
-      state = municipality_context[:state]
-      suggest_edit_details = Scrapers::MunicipalityOfficials.get_edit_detail(municipality_context)
-      action_items = generate_suggest_edit_markdown(merged_people, suggest_edit_details, missing_people,
-                                                    contested_people)
-      missing_people_comment = to_markdown_missing_people_table(missing_people)
-      sources = merged_people.map { |person| person["sources"] }.flatten.compact.uniq.join("\n")
-
-      <<~MARKDOWN
-        # #{city.capitalize}, #{state.upcase}
-        ## Action Items
-         - [ ] Review & Merge this PR
-           - [ ] (Optional) Make updates to people.yml if needed
-           - [ ] (Optional) Make updates to config.yml if needed
-           - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
-         #{action_items}
-        ## Missing People
-        #{missing_people_comment.present? ? missing_people_comment : "N/A"}
-        ## Sources
-        #{sources}
-        ## People
-        #{to_people_list(merged_people)}
-
-      MARKDOWN
-    end
+    # TODO: add this back under main comment
+    ## Action Items
+    #     - [ ] Review & Merge this PR
+    #       - [ ] (Optional) Make updates to people.yml if needed
+    #       - [ ] (Optional) Make updates to config.yml if needed
+    #       - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
 
     def self.people_list(context, people) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
       municipality_name = context[:municipality_entry]["name"]
@@ -85,7 +65,20 @@ module GitHub
       MARKDOWN
     end
 
-    def self.to_markdown_missing_people_table(missing_people)
+    def self.review_comment(merged_people, contested_people, missing_people, agreement_score)
+      missing_people_table = to_missing_people_table(missing_people)
+      disagreement_table = to_disagreement_table(contested_people, merged_people)
+      <<~MARKDOWN
+        # Agreement Score: #{agreement_score}
+        ---
+        ## Missing People
+        #{missing_people_table}
+        ## Disagreements
+        #{disagreement_table}
+      MARKDOWN
+    end
+
+    def self.to_missing_people_table(missing_people)
       return "" if missing_people.nil? || missing_people.empty?
 
       headers = ["Name", "Missing From"]
@@ -106,7 +99,21 @@ module GitHub
       markdown
     end
 
-    def self.to_markdown_disagreement_table(contested_fields, merged_person)
+    def self.to_disagreement_table(contested_people, merged_people)
+      table = ""
+      contested_people.each do |name, fields|
+        merged_person = merged_people.find { |person| person["name"] == name }
+        contested_people_markdown = GitHub::MunicipalityOfficials.to_disagreement_table_person(fields,
+                                                                                               merged_person)
+        table += "### #{name}\n\n"
+        table += contested_people_markdown
+        table += "\n\n---\n\n" # Add a separator between each person's table
+      end
+
+      table
+    end
+
+    def self.to_disagreement_table_person(contested_fields, merged_person)
       # Prepare source headers
       source_names = contested_fields.map { |_, field_data| field_data[:values].keys }.flatten.uniq
       headers = ["Field", "Disagreement Score"] + source_names
@@ -174,104 +181,82 @@ module GitHub
       end
     end
 
-    def self.generate_suggest_edit_markdown(
-      merged_people, suggest_edit_details, missing_people, contested_people
-    )
-      return "" if suggest_edit_details.nil?
+    # def self.generate_suggest_edit_markdown(
+    #  merged_people, suggest_edit_details, missing_people, contested_people
+    # )
+    #  return "" if suggest_edit_details.nil?
 
-      action_item_summary = generate_readable_updates_needed_list(
-        merged_people, missing_people, contested_people
-      )
-      return "" unless action_item_summary.present?
+    #  action_item_summary = generate_readable_updates_needed_list(
+    #    merged_people, missing_people, contested_people
+    #  )
+    #  return "" unless action_item_summary.present?
 
-      case suggest_edit_details[:type]
-      when "email"
-        email = suggest_edit_details[:data]
-        source_url = suggest_edit_details[:source_url]
-        <<~MARKDOWN
-          - [ ] (Optional) Notify the state source maintaners of any changes as needed
-              - [ ] Verify the state source data at [#{source_url}](#{source_url})
-              - [ ] Email the maintainer(s) at [#{email}](mailto:#{email})
-          #{action_item_summary}
-        MARKDOWN
-      when "url"
-        <<~MARKDOWN
-          - [ ] (Optional) Update the state source directory: #{suggest_edit_details[:data]}
-          #{action_item_summary}
-        MARKDOWN
-      end
-    end
+    #  case suggest_edit_details[:type]
+    #  when "email"
+    #    email = suggest_edit_details[:data]
+    #    source_url = suggest_edit_details[:source_url]
+    #    <<~MARKDOWN
+    #      - [ ] (Optional) Notify the state source maintaners of any changes as needed
+    #          - [ ] Verify the state source data at [#{source_url}](#{source_url})
+    #          - [ ] Email the maintainer(s) at [#{email}](mailto:#{email})
+    #      #{action_item_summary}
+    #    MARKDOWN
+    #  when "url"
+    #    <<~MARKDOWN
+    #      - [ ] (Optional) Update the state source directory: #{suggest_edit_details[:data]}
+    #      #{action_item_summary}
+    #    MARKDOWN
+    #  end
+    # end
 
-    def self.generate_readable_updates_needed_list(merged_people, missing_people, contested_people)
-      source_to_update = "state_source"
-      not_in_office_list = []
-      updates_needed_markdown = ""
+    # def self.generate_readable_updates_needed_list(merged_people, missing_people, contested_people)
+    #  source_to_update = "state_source"
+    #  not_in_office_list = []
+    #  updates_needed_markdown = ""
 
-      missing_people.each_key do |name|
-        not_in_office_list << name unless missing_people[name].include?(source_to_update)
-      end
-      not_in_office_markdown = not_in_office_list.map { |name| "- #{name}" }.join("\n")
+    #  missing_people.each_key do |name|
+    #    not_in_office_list << name unless missing_people[name].include?(source_to_update)
+    #  end
+    #  not_in_office_markdown = not_in_office_list.map { |name| "- #{name}" }.join("\n")
 
-      if not_in_office_markdown.present?
-        not_in_office_markdown = "The following officials are no longer in office:\n#{not_in_office_markdown}"
-      end
+    #  if not_in_office_markdown.present?
+    #    not_in_office_markdown = "The following officials are no longer in office:\n#{not_in_office_markdown}"
+    #  end
 
-      contested_people.each do |contested_person_name, contested_fields|
-        merged_person = merged_people.find { |person| person["name"] == contested_person_name }
+    #  contested_people.each do |contested_person_name, contested_fields|
+    #    merged_person = merged_people.find { |person| person["name"] == contested_person_name }
 
-        next if merged_person.nil?
+    #    next if merged_person.nil?
 
-        updates_needed = get_updates_needed(source_to_update, merged_person, contested_fields)
+    #    updates_needed = get_updates_needed(source_to_update, merged_person, contested_fields)
 
-        next unless updates_needed.present? && updates_needed.count.positive?
+    #    next unless updates_needed.present? && updates_needed.count.positive?
 
-        updates_needed_markdown += "**#{contested_person_name}**\n"
-        updates_needed.each do |update_needed|
-          updates_needed_markdown += "- #{update_needed}\n"
-        end
-      end
+    #    updates_needed_markdown += "**#{contested_person_name}**\n"
+    #    updates_needed.each do |update_needed|
+    #      updates_needed_markdown += "- #{update_needed}\n"
+    #    end
+    #  end
 
-      if updates_needed_markdown.present?
-        updates_needed_markdown = "The following officials may need updates to their records:\n#{
-          updates_needed_markdown
-        }"
-      end
+    #  if updates_needed_markdown.present?
+    #    updates_needed_markdown = "The following officials may need updates to their records:\n#{
+    #      updates_needed_markdown
+    #    }"
+    #  end
 
-      if not_in_office_markdown.present? || updates_needed_markdown.present?
-        <<~MARKDOWN
-          <blockquote><details>
-          <summary>Click to expand</summary>
+    #  if not_in_office_markdown.present? || updates_needed_markdown.present?
+    #    <<~MARKDOWN
+    #      <blockquote><details>
+    #      <summary>Click to expand</summary>
 
-          ```md
-          #{[not_in_office_markdown, updates_needed_markdown].compact.join("\n")}
-          ```
-          </details></blockquote>
-        MARKDOWN
-      else
-        ""
-      end
-    end
-
-    def self.get_updates_needed(source_to_update, merged_person, contested_fields)
-      updates_needed = []
-
-      contested_fields.each do |field_name, field_data|
-        source_value = field_data[:values][source_to_update]
-        next if source_value.nil?
-
-        next if values_match?(merged_person[field_name],
-                              source_value)
-
-        updates_needed << "#{
-          field_name
-        }: was: #{
-          source_value
-        }, now: #{
-          merged_person[field_name]
-        }"
-      end
-
-      updates_needed
-    end
+    #      ```md
+    #      #{[not_in_office_markdown, updates_needed_markdown].compact.join("\n")}
+    #      ```
+    #      </details></blockquote>
+    #    MARKDOWN
+    #  else
+    #    ""
+    #  end
+    # end
   end
 end
