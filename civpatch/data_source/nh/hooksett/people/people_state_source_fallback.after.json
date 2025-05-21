@@ -1,5 +1,12 @@
 [
   {
+    "name": null,
+    "positions": [
+      "Council Member"
+    ],
+    "updated_at": "2025-05-21"
+  },
+  {
     "name": "Alexander Walczyk",
     "positions": [
       "Council Member"
@@ -8,13 +15,6 @@
   },
   {
     "name": "James Sullivan",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Jeff Nyhan",
     "positions": [
       "Council Member"
     ],
