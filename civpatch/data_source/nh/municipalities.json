@@ -474,7 +474,14 @@
       "government_type": "mayor_council",
       "email": "agarron@hooksett.org",
       "website": "http://www.hooksett.org",
-      "geoid": "3301337300"
+      "geoid": "3301337300",
+      "meta_updated_at": "2025-05-20",
+      "meta_hash": "dcaca572b7f7a878a1089ddadc1c4079",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lebanon",
