@@ -14,7 +14,7 @@ require "resolvers/people_resolver"
 require_relative "../core/context_manager"
 
 namespace :github_pipeline do
-  desc "Generate comment for people.yml"
+  desc "Generate comment for a pull request"
   task :generate_comment, [:state, :geoid] do |_t, args|
     state = args[:state]
     geoid = args[:geoid]
@@ -25,6 +25,27 @@ namespace :github_pipeline do
     people_comment = GitHub::MunicipalityOfficials.people_list(context, people)
 
     puts people_comment
+  end
+
+  desc "Generate review for a pull request"
+  task :generate_review, [:state, :geoid] do |_t, args|
+    state = args[:state]
+    geoid = args[:geoid]
+
+    context = Core::ContextManager.get_context(state, geoid)
+
+    merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
+    comparison = Resolvers::PeopleResolver.compare_people_across_sources(context)
+
+    comment = GitHub::MunicipalityOfficials.review_comment(merged_people,
+                                                           comparison[:contested_people],
+                                                           comparison[:missing_people],
+                                                           comparison[:agreement_score])
+    review = {
+      "score" => comparison[:agreement_score],
+      "comment" => comment
+    }
+    puts JSON.generate(review)
   end
 
   desc "Generate PR comment data for city people"

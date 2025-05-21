@@ -51,9 +51,15 @@ bin = "./dist/tmp/civpatch_cli"
 # args_bin = ["auth-clear"]
 # args_bin = ["cleanup"]
 #rake "github_pipeline:generate_pr_data[wa,2411856]"
-# ===== Test PR comment ===== "
+# ===== PR comment ===== "
+#args_bin = [
+#  "run-task", 
+#  "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819", 
+#  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_comment.sh nh 3301337300 515\"", 
+#  "-develop"]
+# ===== PR review ===== " 
 args_bin = [
   "run-task", 
   "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819", 
-  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_comment.sh nh 3301337300 515\"", 
+  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_review.sh nh 3301337300 515\"", 
   "-develop"]
