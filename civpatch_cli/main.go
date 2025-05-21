@@ -34,12 +34,12 @@ var (
 	// TODO: IMPLEMENT
 	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
 
-	runRakeTask        = flag.NewFlagSet("run-rake-task", flag.ExitOnError)
-	runRakeTaskBranch  = runRakeTask.String("branch-name", "", "Branch name")
-	runRakeTaskState   = runRakeTask.String("state", "", "State")
-	runRakeTaskGeoid   = runRakeTask.String("geoid", "", "GEOID")
-	runRakeTaskCommand = runRakeTask.String("command", "", "Rake task to run")
-	runRakeTaskDevelop = runRakeTask.Bool("develop", false, "Develop locally") // Optional -- only needed if testing changes locally
+	runTask        = flag.NewFlagSet("run-task", flag.ExitOnError)
+	runTaskBranch  = runTask.String("branch-name", "", "Branch name")
+	runTaskState   = runTask.String("state", "", "State")
+	runTaskGeoid   = runTask.String("geoid", "", "GEOID")
+	runTaskCommand = runTask.String("command", "", "Rake task to run")
+	runTaskDevelop = runTask.Bool("develop", false, "Develop locally") // Optional -- only needed if testing changes locally
 
 	cleanupCommand = flag.NewFlagSet("cleanup", flag.ExitOnError)
 	containerId    = cleanupCommand.String("container-id", "", "Container ID") // Leave blank to remove all civicpatch containers
@@ -69,13 +69,13 @@ func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error 
 	return nil
 }
 
-func runRakeTaskCommands(ctx context.Context) error {
-	output, err := commands.RunRakeTask(ctx,
-		*runRakeTaskState,
-		*runRakeTaskGeoid,
-		*runRakeTaskCommand,
-		*runRakeTaskBranch,
-		*runRakeTaskDevelop,
+func runTaskCommands(ctx context.Context) error {
+	output, err := commands.RunTask(ctx,
+		*runTaskState,
+		*runTaskGeoid,
+		*runTaskCommand,
+		*runTaskBranch,
+		*runTaskDevelop,
 	)
 	if err != nil {
 		return err
@@ -99,9 +99,9 @@ func main() {
 		if err := scrapeCommands(ctx, *scrapePlan, *scrapeRun); err != nil {
 			handleError(err)
 		}
-	case "run-rake-task":
-		runRakeTask.Parse(args[1:])
-		err := runRakeTaskCommands(ctx)
+	case "run-task":
+		runTask.Parse(args[1:])
+		err := runTaskCommands(ctx)
 		if err != nil {
 			handleError(err)
 		}

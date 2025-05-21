@@ -7,7 +7,7 @@ cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
 bin = "./dist/tmp/civpatch_cli"
 # args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-develop"]
 args_bin = [
-  "run-rake-task",
+  "run-task",
   "-state",
   "wa",
   "-geoid",

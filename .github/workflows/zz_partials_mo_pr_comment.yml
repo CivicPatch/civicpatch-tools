@@ -85,7 +85,7 @@ jobs:
           BRANCH_NAME: ${{ steps.extract-vars.outputs.BRANCH_NAME }}
         run: |
           echo "Running validation..."
-          PR_DATA=$(./civpatch_cli/bin/cli run-rake-task -state $STATE -geoid $GEOID -branch-name $BRANCH_NAME -command "github_pipeline:generate_pr_data[$STATE,$GEOID]")
+          PR_DATA=$(./civpatch_cli/bin/cli run-task -state $STATE -geoid $GEOID -branch-name $BRANCH_NAME -command "github_pipeline:generate_pr_data[$STATE,$GEOID]")
           echo "Validation response: $PR_DATA"
 
           # Parse JSON output
