@@ -6,6 +6,18 @@ include_dir = ["civpatch_cli"]
 cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
 bin = "./dist/tmp/civpatch_cli"
 # args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-develop"]
+#args_bin = [
+#  "run-task",
+#  "-state",
+#  "wa",
+#  "-geoid",
+#  "5363000",
+#  "-branch-name",
+#  "pipeline-municipal-scrapes-wa-5363000-875051",
+#  "-command",
+#  "github_pipeline:generate_pr_data[wa,5363000]",
+#  "-develop",
+#]
 args_bin = [
   "run-task",
   "-state",
@@ -13,11 +25,11 @@ args_bin = [
   "-geoid",
   "5363000",
   "-branch-name",
-  "pipeline-municipal-scrapes-wa-5363000-875051",
+  "pipeline-municipal-scrapes-nh-3301337300-386819",
   "-command",
   "github_pipeline:generate_pr_data[wa,5363000]",
-  "-develop",
 ]
+PR_DATA=$(./civpatch_cli/bin/cli run-task -state wa -geoid 5363000 -branch-name pipeline-municipal-scrapes-nh-3301337300-386819 -command "github_pipeline:generate_pr_data[wa,5363000]")
 #args_bin = [
 #  "scrape", 
 #  "-run", 
