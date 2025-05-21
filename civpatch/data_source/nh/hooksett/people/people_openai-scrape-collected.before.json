@@ -4,250 +4,299 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
       "Chair",
       "Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
+        "data": "(603) 669-6999",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number found in the same row as name and email.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "emails": [
+      {
+        "data": "ttsantoulis@hooksett.org",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name and phone.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "James Sullivan",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
       "Vice-Chair",
       "Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
+        "data": "(603) 315-0084",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number found in the same row as name and email.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "emails": [
+      {
+        "data": "jsullivan@hooksett.org",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name and phone.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Randall Lapierre",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
       "Secretary",
       "Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
+        "data": "(603) 341-8311",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number found in the same row as name and email.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "emails": [
+      {
+        "data": "rlapierre@hooksett.org",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name and phone.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Jeff Nyhan",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Roger Duhaime",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
       "Council Member"
     ],
     "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "emails": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
+        "data": "rogerduhaime@hooksett.org",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Keith Judge",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Alexander Walczyk",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Lindsey Laliberte",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
       "Council Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "phone_numbers": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "URL near name on government page, likely profile or main council page.",
-        "source": "https://www.hooksett.org"
+        "data": "(603) 461-1805",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number found in the same row as name and email.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "emails": [
+      {
+        "data": "llaliberte@hooksett.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name and phone.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Date '06/30/2025' found next to name, interpreted as term end date.",
-        "source": "https://www.hooksett.org"
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Keith Judge",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 493-7991",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number found in the same row as name and email.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kjudge@hooksett.org",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name and phone.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Alexander Walczyk",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(818) 446-6599",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number found in the same row as name and email.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "awalczyk@hooksett.org",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name and phone.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Jeff Nyhan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 932-3775",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number found in the same row as name and email.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jnyhan@hooksett.org",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email found in the same row as name and phone.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration date extracted and converted from '06/30/2025'.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
   }
 ]

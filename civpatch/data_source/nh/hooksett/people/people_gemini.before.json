@@ -2,332 +2,155 @@
   {
     "name": "Timothy Tsantoulis",
     "positions": [
-      "Chair"
+      "Chair",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "phone_number": "(603) 669-6999",
+    "email": "ttsantoulis@hooksett.org",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "James Sullivan",
     "positions": [
-      "Vice-Chair"
+      "Vice-Chair",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "phone_number": "(603) 315-0084",
+    "email": "jsullivan@hooksett.org",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Randall Lapierre",
     "positions": [
-      "Secretary"
+      "Secretary",
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
+    "phone_number": "(603) 341-8311",
+    "email": "rlapierre@hooksett.org",
+    "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Jeff Nyhan",
-    "positions": [],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Roger Duhaime",
-    "positions": [],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Keith Judge",
-    "positions": [],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Alexander Walczyk",
-    "positions": [],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Lindsey Laliberte",
-    "positions": [],
-    "image": null,
-    "source_image": null,
-    "phone_number": "603.485.8471",
-    "email": null,
-    "website": "https://www.hooksett.org",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Keith Murphy",
     "positions": [
-      "Senator",
-      "Senator"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 271-4063",
-    "email": null,
-    "website": "https://gc.nh.gov/senate/members/webpages/district16.aspx",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Kelly Ayotte",
-    "positions": [
-      "Governor"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 271-2121",
-    "email": null,
-    "website": "https://www.governor.nh.gov",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Donald Trump",
-    "positions": [
-      "President"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(202) 456-1414",
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "JD Vance",
-    "positions": [
-      "Vice President"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(202) 456-2326",
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "John Stephen",
-    "positions": [
-      "District 4- Executive Councilor"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 271-3231",
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Chris Pappas",
-    "positions": [
-      "Congressman"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(202) 225-5456",
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Stephen Boyd",
-    "positions": [
-      "Representative"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 271-3125",
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "J.R. Hoell",
-    "positions": [
-      "Representative"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(603) 315-9002",
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Yury Polozov",
-    "positions": [
-      "Representative"
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
     "phone_number": null,
-    "email": null,
+    "email": "rogerduhaime@hooksett.org",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
-    "name": "Thomas Walsh",
+    "name": "Lindsey Laliberte",
     "positions": [
-      "Representative"
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(603) 623-4104",
-    "email": null,
+    "phone_number": "(603) 461-1805",
+    "email": "llaliberte@hooksett.gov",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
-    "name": "Carol McGuire",
+    "name": "Keith Judge",
     "positions": [
-      "Representative"
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(603) 782-4918",
-    "email": null,
+    "phone_number": "(603) 493-7991",
+    "email": "kjudge@hooksett.org",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2025-06-30",
     "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
-    "name": "John Leavitt",
+    "name": "Alexander Walczyk",
     "positions": [
-      "Representative"
+      "Council Member"
     ],
     "image": null,
     "source_image": null,
-    "phone_number": "(603) 274-3529",
+    "phone_number": "(818) 446-6599",
+    "email": "awalczyk@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Jeff Nyhan",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 932-3775",
+    "email": "jnyhan@hooksett.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-06-30",
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Geralyn Ciardelli",
+    "positions": [],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 419-4007",
     "email": null,
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   }
 ]

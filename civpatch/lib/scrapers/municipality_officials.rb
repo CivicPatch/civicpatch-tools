@@ -21,7 +21,7 @@ module Scrapers
       raise "No people found for #{city_name}, #{state}" if people.blank?
 
       {
-        "type" => "directory_list",
+        "type" => "state_source",
         "people" => people
       }
     rescue StandardError => e
@@ -50,7 +50,7 @@ module Scrapers
       response = gemini.search_for_people(municipality_context)
       people = response["people"]
       {
-        "type" => "directory_list_fallback",
+        "type" => "state_source_fallback",
         "people" => people
       }
     end

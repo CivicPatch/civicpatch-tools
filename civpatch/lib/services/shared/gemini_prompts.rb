@@ -53,7 +53,7 @@ module Services
       )
       end
 
-      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, person_name = "")
+      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, people, person_name = "")
         state = municipality_context[:state]
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]
@@ -63,9 +63,7 @@ module Services
         divisions = municipality_config["positions"].flat_map { |position| position["divisions"] }
         position_examples = municipality_config["position_examples"]
         current_date = Date.today.strftime("%Y-%m-%d")
-        maybe_target_people = municipality_context[:config]["source_directory_list"]["people"].compact.map do |person|
-          person&.dig("name")
-        end
+        maybe_target_people = people.map { |person| person&.dig("name") }.compact
 
         target_text = if person_name.present?
                         person_name

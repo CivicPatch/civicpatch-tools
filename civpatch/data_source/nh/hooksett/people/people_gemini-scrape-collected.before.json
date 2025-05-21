@@ -4,533 +4,321 @@
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
-      "Chair"
+      "Chair",
+      "Council Member"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
+        "data": "(603) 669-6999",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "emails": [],
-    "websites": [
+    "emails": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
+        "data": "ttsantoulis@hooksett.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
   },
   {
     "name": "James Sullivan",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
-      "Vice-Chair"
+      "Vice-Chair",
+      "Council Member"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
+        "data": "(603) 315-0084",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "emails": [],
-    "websites": [
+    "emails": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
+        "data": "jsullivan@hooksett.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Randall Lapierre",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [
-      "Secretary"
+      "Secretary",
+      "Council Member"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
+        "data": "(603) 341-8311",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "emails": [],
-    "websites": [
+    "emails": [
       {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
+        "data": "rlapierre@hooksett.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
+    "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Jeff Nyhan",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "positions": [],
-    "phone_numbers": [
+    "end_dates": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Roger Duhaime",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
-    "positions": [],
-    "phone_numbers": [
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
+        "data": "rogerduhaime@hooksett.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Keith Judge",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "positions": [],
-    "phone_numbers": [
+    "end_dates": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Alexander Walczyk",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org"
-    ],
-    "positions": [],
-    "phone_numbers": [
-      {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   },
   {
     "name": "Lindsey Laliberte",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org"
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 461-1805",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "llaliberte@hooksett.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Keith Judge",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 493-7991",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kjudge@hooksett.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Alexander Walczyk",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(818) 446-6599",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "awalczyk@hooksett.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Jeff Nyhan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
+    ],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 932-3775",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jnyhan@hooksett.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06-30",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term Expiration date listed in table next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
+      }
+    ],
+    "updated_at": "2025-05-20"
+  },
+  {
+    "name": "Geralyn Ciardelli",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/town_council/index.php"
     ],
     "positions": [],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Appears to be the general town phone number.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hooksett.org",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name.",
-        "source": "https://www.hooksett.org"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Keith Murphy",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Senator",
-      "Senator"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 271-4063",
+        "data": "(603) 419-4007",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://gc.nh.gov/senate/members/webpages/district16.aspx",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under Elected Officials column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Kelly Ayotte",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Governor"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 271-2121",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.governor.nh.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under Elected Officials column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Donald Trump",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "President"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(202) 456-1414",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
+        "llm_confidence_reason": "Phone number listed next to name.",
+        "source": "https://www.hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "JD Vance",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Vice President"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(202) 456-2326",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "John Stephen",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "District 4- Executive Councilor"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 271-3231",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Chris Pappas",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Congressman"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(202) 225-5456",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Stephen Boyd",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Representative"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 271-3125",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "J.R. Hoell",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Representative"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 315-9002",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Yury Polozov",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Representative"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Thomas Walsh",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Representative"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 623-4104",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Carol McGuire",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Representative"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 782-4918",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "John Leavitt",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/elected_officials.php"
-    ],
-    "positions": [
-      "Representative"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 274-3529",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed in table under phone column.",
-        "source": "https://www.hooksett.org/government/elected_officials.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
+    "updated_at": "2025-05-20"
   }
 ]

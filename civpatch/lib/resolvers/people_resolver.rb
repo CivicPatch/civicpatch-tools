@@ -9,26 +9,24 @@ module Resolvers
     def self.resolve(municipality_context)
       state = municipality_context[:state]
       geoid = municipality_context[:municipality_entry]["geoid"]
-      state_source = municipality_context[:config]["source_directory_list"]["people"]
       people_config = municipality_context[:config]["people"]
 
       sources_folder_path = Core::PathHelper.get_people_sources_path(state, geoid)
       source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
 
-      sources = [{
-        source_name: "state_source",
-        people: state_source,
-        confidence_score: 0.9
-      }]
+      sources = []
+
       source_files.each do |source_file|
-        next if source_file.include?("before") # Discard unprocessed results
-        next unless source_file.include?("openai") || source_file.include?("gemini")
+        next unless source_file.include?("after") # Discard unprocessed results
+        next if source_file.include?("state_source_fallback")
 
         source_people = JSON.parse(File.read(source_file))
         source_name = if source_file.include?("openai")
                         "openai"
                       elsif source_file.include?("gemini")
                         "gemini"
+                      elsif source_file.include?("state_source")
+                        "state_source"
                       end
 
         source = {
@@ -39,6 +37,8 @@ module Resolvers
                               0.7
                             when "gemini"
                               0.7
+                            when "state_source"
+                              0.9
                             else
                               0.0
                             end

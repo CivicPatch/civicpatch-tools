@@ -35,7 +35,7 @@ namespace :pipeline do
 
     Services::GoogleSheets.send_costs if send_costs
 
-    github.update_branch(context)
+    # github.update_branch(context)
     github.create_pull_request(context) if create_pr
   end
 
@@ -49,13 +49,10 @@ namespace :pipeline do
     municipalities.each do |municipality_entry|
       context = Core::ContextManager.get_context(state, municipality_entry["geoid"])
       next unless municipality_entry["website"].present?
-      next unless context[:config]["source_directory_list"]["type"] == "directory_list_default"
 
-      source_directory_list, people_config = fetch_with_state_source(context)
+      _, people_config = fetch_with_state_source(context)
       aggregate_sources(context, sources: %w[state_source])
-      context = Core::ContextManager.update_context_config(context,
-                                                           source_directory_list: source_directory_list,
-                                                           people: people_config)
+      context = Core::ContextManager.update_context_config(context, people: people_config)
       finalize(context)
     end
   end
@@ -83,19 +80,20 @@ namespace :pipeline do
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
     formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
                                                          positions_config)
-    source_directory_list["people"] = formatted_people
+    Core::PeopleManager.update_people(municipality_context, formatted_people, "#{source_directory_list["type"]}.after")
 
-    [source_directory_list, people_config]
+    [formatted_people, people_config]
   end
 
-  def fetch_with_scrape(municipality_context)
+  def fetch_with_scrape(municipality_context, people_hint)
     request_cache = {}
 
     # OpenAI - LLM call
     page_fetcher, source_urls, source_dirs, people, people_config = process_with_llm(
       municipality_context, "openai",
-      seeded_urls: municipality_context[:config]["scrape_sources"] || [],
-      request_cache: request_cache
+      seeded_urls: municipality_context[:config]["sources"] || [],
+      request_cache: request_cache,
+      people_hint: people_hint
     )
 
     municipality_context[:config]["people"] = people_config
@@ -109,13 +107,14 @@ namespace :pipeline do
     _, _, _, _, people_config = process_with_llm(municipality_context, "gemini",
                                                  page_fetcher: page_fetcher,
                                                  seeded_urls: source_urls,
-                                                 request_cache: request_cache)
+                                                 request_cache: request_cache,
+                                                 people_hint: people_hint)
 
     people_config
   end
 
   def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil,
-                       seeded_urls: [], request_cache: {})
+                       seeded_urls: [], request_cache: {}, people_hint: [])
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
     page_fetcher, source_dirs, accumulated_people, people_config = Core::MunicipalScraper.fetch(
@@ -123,7 +122,8 @@ namespace :pipeline do
       municipality_context,
       page_fetcher: page_fetcher,
       seeded_urls: seeded_urls,
-      request_cache: request_cache
+      request_cache: request_cache,
+      people_hint: people_hint
     )
 
     Core::PeopleManager.update_people(municipality_context, accumulated_people, "#{llm_service_string}.before")
@@ -221,7 +221,7 @@ namespace :pipeline do
 
     Core::ContextManager
       .update_context_config(municipality_context,
-                             scrape_sources: source_urls)
+                             sources: source_urls)
 
     Core::CacheManager.clean(state, geoid, source_urls)
     Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
@@ -234,13 +234,12 @@ namespace :pipeline do
     municipality_entry = context[:municipality_entry]
     prepare_directories(state, municipality_entry)
 
-    source_directory_list_config, people_config = fetch_with_state_source(context)
+    people_hint, people_config = fetch_with_state_source(context)
     context = Core::ContextManager
               .update_context_config(context,
-                                     source_directory_list: source_directory_list_config,
                                      people: people_config)
 
-    people_config = fetch_with_scrape(context)
+    people_config = fetch_with_scrape(context, people_hint)
     context = Core::ContextManager
               .update_context_config(context,
                                      people: people_config)
