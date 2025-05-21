@@ -75,47 +75,34 @@ jobs:
           echo "GEOID=$GEOID" >> $GITHUB_OUTPUT
 
       - name: Comment on PR
-        id: comment-step # Added ID to reference approve output
+        id: comment-step
         env:
           GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
-          PR_NUMBER: ${{ inputs.pr_number }} # Use input
-          # Get vars from previous step output
-          STATE: ${{ steps.extract-vars.outputs.STATE }}
-          GEOID: ${{ steps.extract-vars.outputs.GEOID }}
-          BRANCH_NAME: ${{ steps.extract-vars.outputs.BRANCH_NAME }}
+          GITHUB_USERNAME: civic-patch-pipeline-bot
         run: |
-          echo "Running validation..."
-          # Capture both stdout and stderr
-          PR_DATA=$(./civpatch_cli/bin/cli run-task -state $STATE -geoid $GEOID -branch-name $BRANCH_NAME -command "github_pipeline:generate_pr_data[$STATE,$GEOID]" 2>&1)
-          EXIT_CODE=$?
+          STATE=${{ steps.extract-vars.outputs.STATE }}
+          GEOID=${{ steps.extract-vars.outputs.GEOID }}
+          BRANCH_NAME=${{ steps.extract-vars.outputs.BRANCH_NAME }}
+          COMMAND="github_pipeline:generate_pr_data[$STATE,$GEOID]"
 
-          echo "Command exit code: $EXIT_CODE"
-          echo "Command output:"
-          echo "$PR_DATA"
+          PR_DATA=$(./civpatch_cli/bin/cli run-task -state $STATE -geoid $GEOID -branch-name $BRANCH_NAME -command $COMMAND 2>&1)
 
-          # Only proceed with JSON parsing if successful
-          if [ $EXIT_CODE -eq 0 ]; then
-              echo "Parsing JSON output..."
-              APPROVE=$(printf '%b' "$PR_DATA" | jq -r '.approve')
-              SCORE=$(printf '%b' "$PR_DATA" | jq -r '.score')
-              COMMENT=$(printf '%b' "$PR_DATA" | jq -r '.comment')
+          echo "Parsing JSON output..."
+          APPROVE=$(printf '%b' "$PR_DATA" | jq -r '.approve')
+          SCORE=$(printf '%b' "$PR_DATA" | jq -r '.score')
+          COMMENT=$(printf '%b' "$PR_DATA" | jq -r '.comment')
 
-              echo "$COMMENT"
+          echo "$COMMENT"
 
-              # Output approve status for the next step
-              echo "approve=$APPROVE" >> $GITHUB_OUTPUT
+          # Output approve status for the next step
+          echo "approve=$APPROVE" >> $GITHUB_OUTPUT
 
-              gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
-          else
-              echo "Command failed with exit code $EXIT_CODE"
-              exit 1
-          fi
+          gh pr comment ${{ inputs.pr_number }} --edit-last --create-if-none --body "$COMMENT"
 
       - name: Approve PR if Validated
         env:
           GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
-          PR_NUMBER: ${{ inputs.pr_number }} # Use input
-        # Use output from comment step
+          PR_NUMBER: ${{ inputs.pr_number }}
         if: steps.comment-step.outputs.approve == 'true'
         run: |
           echo "Checking if PR should be approved based on previous step..."
