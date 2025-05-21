@@ -29,7 +29,7 @@ module Scrapers
           table = html_doc.at_css("#tableCityProfiles")
           data_data = table["data-data"]
           data = JSON.parse(data_data)
-          matched_row = data.find { |row| row["CityName"].downcase == target_name }
+          matched_row = data.find { |row| row["CityName"].downcase == target_name.downcase }
           city_id = matched_row["CityID"]
           edit_url = "#{EDIT_OFFICIALS_URL}?cityID=#{city_id}"
 

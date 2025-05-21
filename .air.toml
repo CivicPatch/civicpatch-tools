@@ -6,27 +6,27 @@ include_dir = ["civpatch_cli"]
 cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
 bin = "./dist/tmp/civpatch_cli"
 # args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-develop"]
-#args_bin = [
-#  "run-rake-task",
-#  "-state",
-#  "wa",
-#  "-geoid",
-#  "3300334500",
-#  "-branch-name",
-#  "pipeline-municipal-scrapes-wa-2411856-207811",
-#  "-command",
-#  "github_pipeline:generate_pr_data[wa,2411856]",
-#  "-develop",
-#]
 args_bin = [
-  "scrape", 
-  "-run", 
-  "-state", "wa", 
-  "-geoid", "5363000", 
-  "-develop", 
-  "-create-pr",
-  #"-github-env", "env-shelltr"
+  "run-rake-task",
+  "-state",
+  "wa",
+  "-geoid",
+  "5363000",
+  "-branch-name",
+  "pipeline-municipal-scrapes-wa-5363000-875051",
+  "-command",
+  "github_pipeline:generate_pr_data[wa,5363000]",
+  "-develop",
 ]
+#args_bin = [
+#  "scrape", 
+#  "-run", 
+#  "-state", "wa", 
+#  "-geoid", "5363000", 
+#  "-develop", 
+#  "-create-pr",
+#  #"-github-env", "env-shelltr"
+#]
 # args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-github-env", "env-shelltr",  "-develop", "-create-pr"]
 # Update existing PR
 # args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-github-env", "env-shelltr", "-branch-name", "", "-pr-number", ""  "-develop", "-create-pr"]

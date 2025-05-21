@@ -25,13 +25,13 @@ module Scrapers
           # Fetch HTML, interacting to select "All" entries
           response = Browser.fetch_page_content(source_url) do |browser|
             # Create a Select object and choose the "All" option by its value ("-1")
-            page.select_option("select#dtCityContacts_length", value: "-1")
+            page.locator("select#dtCityContacts_length").select_option(value: "-1")
 
             # Wait briefly for the table to potentially update after changing pagination
             # A more robust wait might look for staleness or specific element changes
             # Example: wait for the first row of the table body to be present again
             sleep(2)
-            browser.query_selector("#dtCityContacts tbody tr")
+            browser.locator("#dtCityContacts tbody tr")
           end
           # Ensure response is not nil before parsing
           parse_html(response[:page_html])
