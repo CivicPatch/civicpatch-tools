@@ -238,21 +238,84 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Leeann Moynihan",
+    "name": "Keith Murphy",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Budget Committee Secretary"
+      "Senator",
+      "Senator"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(603) 271-4063",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://gc.nh.gov/senate/members/webpages/district16.aspx",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under Elected Officials column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-21"
+  },
+  {
+    "name": "Kelly Ayotte",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/elected_officials.php"
+    ],
+    "positions": [
+      "Governor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 271-2121",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.governor.nh.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under Elected Officials column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-21"
+  },
+  {
+    "name": "Donald Trump",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/elected_officials.php"
+    ],
+    "positions": [
+      "President"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(202) 456-1414",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -262,21 +325,21 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Elizabeth Spitzer",
+    "name": "JD Vance",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Member"
+      "Vice President"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(202) 456-2326",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -286,21 +349,21 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Germano Martins",
+    "name": "John Stephen",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Member"
+      "District 4- Executive Councilor"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(603) 271-3231",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -310,21 +373,21 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "William Lynch",
+    "name": "Chris Pappas",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Member"
+      "Congressman"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(202) 225-5456",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -334,21 +397,21 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Michael Jache",
+    "name": "Stephen Boyd",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Village Water Precinct Rep."
+      "Representative"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(603) 271-3125",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -358,21 +421,21 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Alyssa Ehl",
+    "name": "J.R. Hoell",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Member"
+      "Representative"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(603) 315-9002",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -382,21 +445,38 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Marianne Soucy",
+    "name": "Yury Polozov",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Member"
+      "Representative"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-21"
+  },
+  {
+    "name": "Thomas Walsh",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hooksett.org/government/elected_officials.php"
+    ],
+    "positions": [
+      "Representative"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(603) 623-4104",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -406,21 +486,21 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Michael Kowack",
+    "name": "Carol McGuire",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Member"
+      "Representative"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(603) 782-4918",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],
@@ -430,117 +510,21 @@
     "updated_at": "2025-05-21"
   },
   {
-    "name": "Ernie Bencivenga",
+    "name": "John Leavitt",
     "image": null,
     "source_image": null,
     "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+      "https://www.hooksett.org/government/elected_officials.php"
     ],
     "positions": [
-      "Member"
+      "Representative"
     ],
     "phone_numbers": [
       {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Evelyn Baker",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-    ],
-    "positions": [
-      "School Board Representative"
-    ],
-    "phone_numbers": [
-      {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Darren Greenberg",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-    ],
-    "positions": [
-      "Vice Chair"
-    ],
-    "phone_numbers": [
-      {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Abigail Shaine",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-    ],
-    "positions": [
-      "Chair"
-    ],
-    "phone_numbers": [
-      {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-      }
-    ],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-21"
-  },
-  {
-    "name": "Jodi Pinard",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
-    ],
-    "positions": [
-      "Town Council Representative"
-    ],
-    "phone_numbers": [
-      {
-        "data": "603.485.8471",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "Listed under footer with phone number for the town.",
-        "source": "https://www.hooksett.org/government/boards_committees/budget_committee/index.php"
+        "data": "(603) 274-3529",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in table under phone column.",
+        "source": "https://www.hooksett.org/government/elected_officials.php"
       }
     ],
     "emails": [],

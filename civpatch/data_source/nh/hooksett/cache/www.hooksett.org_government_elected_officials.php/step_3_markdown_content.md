@@ -344,53 +344,54 @@
 
  *  [Home](https://www.hooksett.org) 
  *  [Government](https://www.hooksett.org/government/index.php) 
- *  [Boards & Committees](https://www.hooksett.org/government/boards_committees/index.php) 
- * Budget Committee
+ * Elected Officials
  ![slider overlay](https://www.hooksett.org/_assets_/images/inner-slide-overlay.png)  
 
-## Contact Us
+# Elected Officials
 
-#### Leeann Moynihan
+ FEDERAL GOVERNMENT  ![Pres trump](https://www.hooksett.org/Pres%20trump.jpg)         ![VP vance](https://www.hooksett.org/VP%20vance.jpg) 
 
- Budget Committee Secretary  [lmoynihan@hooksett.org](mailto:lmoynihan@hooksett.org)   ** Sub Menu 
+              President Trump                                                   Vice President Vance
 
-## Related Pages
+ ![Gov KA](https://www.hooksett.org/Gov%20KA.jpg)               ![Hooksett Senator Keith Murpht](https://www.hooksett.org/Hooksett%20Senator%20Keith%20Murpht.jpg) 
 
- *  [Agendas & Minutes](https://www.hooksett.org/government/boards_committees/budget_committee/agendas_minutes.php) 
- *  [Meeting Schedule](https://www.hooksett.org/government/boards_committees/budget_committee/meeting_schedule.php) 
- *  [FY 2025-26 Proposed Budget](https://www.hooksett.org/departments/finance/fy_2025-26_budget_-_3_11_2025_town_meeting.php) 
- *  [FY 2024-25 Budget Town Meeting](https://www.hooksett.org/departments/finance/fy_2024_25_budget_town_meeting.php) 
- *  [Budget Committee Vacancy Procedure](https://www.hooksett.org/Documents/Forms%20and%20Documents/Budget%20Committee/vacancy_procedure_-_hooksett_budget_committee.pdf) 
-   *  [New Page](https://www.hooksett.org/index.php) 
+     NH State Governor Kelly Ayotte                            NH State Senator Keith Murphy 
 
-# Budget Committee
+                                                                                 District 16 representing Hooksett
 
-  __Composition:__ Nine elected members and four members appointed by the Town Council. The four appointed members consist of one representative from each of the following: Town Council, Village Water Precinct, Central Water Precinct and School Board.
+ NH House Merrimack County District 10 (Hooksett) - State Representatives 
 
- __Meetings:__ Meetings are held every Thursday during Budget Season, at 6:30 pm, at the Municipal Building.
+|![representative-leavitt-150x203](https://www.hooksett.org/Images/Government/Elected%20Officials/representative-leavitt-150x203.jpeg)|![Nh State Rep Yury Polozov](https://www.hooksett.org/Nh%20State%20Rep%20Yury%20Polozov.jpg)|![representative-walsh-150x188](https://www.hooksett.org/Images/Government/Elected%20Officials/representative-walsh-150x188.jpeg)|
+|---|---|---|
+|                John A Leavitt|                 Yury Polozov|               Thomas C Walsh|
 
- __Duties:__ To review the budget as provided in RSA 32:5 for submission to each annual meeting of the voters of the Town, the budgets of any school district within the Town; to confer with the Town Council and with other officers, department heads and other officials, relative to estimated costs, revenue anticipated, and services performed to the extent deemed necessary by the Budget Committee; to conduct public hearing required under RSA 32:5, I.; to forward copies of the final budgets to the clerk, as required by RSA 32:5, VI, and, in addition, to deliver two copies of such budgets and recommendations upon special warrant articles to the Town Council at least 20 days before the date set for the annual meeting, to be posted with the warrant.
+not pictured - Stephen E. Boyd
 
- __Administrative Code:__ 
+              
 
-Section 4.1: Review annual budgets submitted by the Town Council, School Board, all Precincts and the Sewer Department. Submit recommended budgets to the Town Voters and periodically review all expenditures.
+ Show 102550100 Search: 
 
-|__Name__|__Title__|
-|---|---|
-|[Leeann Moynihan](mailto:lmoynihan@hooksett.org)|Budget Committee Secretary|
-|[Elizabeth Spitzer](mailto:%20espitzer@hooksett.org)|Member (6/30/2027)|
-|[Germano Martins](mailto:%20gmartins@hooksett.org)|Member (6/30/2025)|
-|[William Lynch](mailto:%20wlynch@hooksett.org)|Member (6/30/2025)|
-|Michael Jache|Village Water Precinct Rep.|
-|[Alyssa Ehl](mailto:%20aehl@hooksett.org)|Member (6/30/2027)|
-|[Marianne Soucy](mailto:%20msoucy@hooksett.org)|Member (6/30/2027)|
-|[Michael Kowack](mailto:%20mkowack@hooksett.org)|Member (6/30/2026)|
-|[Ernie Bencivenga](mailto:%20ebencivenga@hooksett.org)|Member (6/30/2025)|
-|Evelyn Baker|School Board Representative|
-|[Darren Greenberg](mailto:%20dgreenberg@hooksett.org)|Vice Chair(06/30/2026)|
-|[Abigail Shaine](mailto:%20ashaine@hooksett.org)|Chair (06/30/2026)|
-|[Jodi Pinard](mailto:jpinard@hooksett.org)|Town Council Representative|
+|Department Name|First Name|Last Name|Profession|Email|Phone|
+|---|---|---|---|---|---|
+|[Elected Officials](https://gc.nh.gov/senate/members/webpages/district16.aspx)|Keith|Murphy|Senator|[Keith.Murphy@gc.nh.gov](mailto:Keith.Murphy@gc.nh.gov)|(603) 271-4063|
+|Elected Officials (107 North Main Street, Concord, NH 03301)|Kelly|Ayotte|Governor|[https://www.governor.nh.gov/](mailto:https://www.governor.nh.gov/)|(603) 271-2121|
+|Elected Officials (1600 Pennsylvania Avenue,Washington, DC 20500)|Donald|Trump|President|[president@whitehouse.gov](mailto:president@whitehouse.gov)|(202) 456-1414|
+|Elected Officials( 1600 Pennsylvania Avenue,Washington, DC 20500)|JD|Vance|Vice President|[vice.president@whitehouse.gov](mailto:vice.president@whitehouse.gov)|(202) 456-2326|
+|Elected Officials(  320 Currier Drive, Manchester, NH 03104|John|Stephen|District 4- Executive Councilor|[John.A.Stephen@nh.gov](mailto:John.A.Stephen@nh.gov)|(603) 271-3231|
+|Elected Officials(219 Cannon HOB Washington, DC 20515)|Chris|Pappas|Congressman||(202) 225-5456|
+|Elected Officials(Legislative Office Building, Room 103-A 33 North State Street Concord, NH 03301)|Keith|Murphy|Senator|[Keith.Murphy@leg.state.nh.us](mailto:Keith.Murphy@leg.state.nh.us)|(603) 271-4063|
+|GENERAL COURT (DISTRICT 24)|Stephen|Boyd|Representative|[seboyd2020@gmail.com](mailto:seboyd2020@gmail.com)|(603) 271-3125|
+|GENERAL COURT (DISTRICT 24)|J.R.|Hoell|Representative|[JR@JRHoell.com](mailto:JR@JRHoell.com)|(603) 315-9002|
+|GENERAL COURT (DISTRICT 24) 1465 Hooksett Road, Unit 393  Hooksett, NH 03106|Yury|Polozov|Representative|[Yury.Polozov@leg.state.nh.us](mailto:Yury.Polozov@leg.state.nh.us)||
+|GENERAL COURT (DISTRICT 24) 15 Berry Hill Road Hooksett, NH 03106|Thomas|Walsh|Representative|[Thomas.Walsh@leg.state.nh.us](mailto:Thomas.Walsh@leg.state.nh.us)|(603) 623-4104|
+|GENERAL COURT (DISTRICT 24) 700 Suncook Valley Highway Epsom, NH 03234|Carol|McGuire|Representative|[carol@mcguire4house.com](mailto:carol@mcguire4house.com)|(603) 782-4918|
+|GENERAL COURT (DISTRICT 24) P.O. Box 16278 Hooksett, NH 03106|John|Leavitt|Representative|[John.Leavitt@leg.state.nh.us](mailto:John.Leavitt@leg.state.nh.us)|(603) 274-3529|
 
+ Showing 1 to 13 of 13 
+
+ *  [← Previous](https://www.hooksett.org/) 
+ *  [1](https://www.hooksett.org) 
+ *  [Next →](https://www.hooksett.org/) 
   ![share](https://www.hooksett.org/_assets_/images/share-icon.png)  Share this page 
 
 ## Share this page
@@ -399,11 +400,11 @@ Section 4.1: Review annual budgets submitted by the Town Council, School Board, 
 
 Copy and paste this code into your website.
 
-<a href="http://www.hooksett.org/government/boards_committees/budget_committee/index.php">Your Link Name</a> 
+<a href="http://www.hooksett.org/government/elected_officials.php">Your Link Name</a> 
 
 Share this page on your favorite Social network
 
-  [**Facebook](https://www.facebook.com/sharer/sharer.php?u=http://www.hooksett.org/government/boards_committees/budget_committee/index.php)   [![twitter](https://www.hooksett.org/_assets_/images/twitter-x.png)Twitter](https://www.twitter.com/intent/tweet?url=http://www.hooksett.org/government/boards_committees/budget_committee/index.php)   [**Reddit](https://www.reddit.com/submit?url=http://www.hooksett.org/government/boards_committees/budget_committee/index.php)  Close  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-1.png)   __ADDRESS:__  [35 Main St. Hooksett, NH 03106](https://www.google.com/maps/place/35+Main+St,+Hooksett,+NH+03106,+USA/@43.0905415,-71.465488,17z/data=!3m1!4b1!4m6!3m5!1s0x89e24410327bba29:0xb97f1217b218bbe5!8m2!3d43.0905376!4d-71.4629131!16s%2Fg%2F11bw3z5mc1?entry=ttu)   ![footer icon](https://cms3.revize.com/revize/hooksett/clock.png)   __HOURS:__  Mon: 8 AM - 4:30 PM
+  [**Facebook](https://www.facebook.com/sharer/sharer.php?u=http://www.hooksett.org/government/elected_officials.php)   [![twitter](https://www.hooksett.org/_assets_/images/twitter-x.png)Twitter](https://www.twitter.com/intent/tweet?url=http://www.hooksett.org/government/elected_officials.php)   [**Reddit](https://www.reddit.com/submit?url=http://www.hooksett.org/government/elected_officials.php)  Close  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-1.png)   __ADDRESS:__  [35 Main St. Hooksett, NH 03106](https://www.google.com/maps/place/35+Main+St,+Hooksett,+NH+03106,+USA/@43.0905415,-71.465488,17z/data=!3m1!4b1!4m6!3m5!1s0x89e24410327bba29:0xb97f1217b218bbe5!8m2!3d43.0905376!4d-71.4629131!16s%2Fg%2F11bw3z5mc1?entry=ttu)   ![footer icon](https://cms3.revize.com/revize/hooksett/clock.png)   __HOURS:__  Mon: 8 AM - 4:30 PM
 
 Tue: 8 AM - 4:30 PM
 
@@ -413,10 +414,10 @@ Thu: 8 AM - 4:30PM
 
 Fri: 8 AM - 12:00 PM
 
-Sat-Sun: Closed  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-2.png)   __PHONE:__ 603.485.8471  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-3.png)   __CONTACT US:__  [Department Directory](https://www.hooksett.org/government/staff_directory.php)   ![footer icon](https://www.hooksett.org/_assets_/images/logo.png)  © HOOKSETT, NH Powered by [revize.,](https://www.revize.com) the Government Website Experts. [Login](https://cms3.revize.com/revize/security/index.jsp?webspace=hooksett&filename=/government/boards_committees/budget_committee/index.php)  
+Sat-Sun: Closed  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-2.png)   __PHONE:__ 603.485.8471  ![footer icon](https://www.hooksett.org/_assets_/images/footer-icon-3.png)   __CONTACT US:__  [Department Directory](https://www.hooksett.org/government/staff_directory.php)   ![footer icon](https://www.hooksett.org/_assets_/images/logo.png)  © HOOKSETT, NH Powered by [revize.,](https://www.revize.com) the Government Website Experts. [Login](https://cms3.revize.com/revize/security/index.jsp?webspace=hooksett&filename=/government/elected_officials.php)  
 
 ## 
 
 ### 
 
- Close [Read More](https://www.hooksett.org/government/boards_committees/budget_committee/index.php)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+ Close [Read More](https://www.hooksett.org/government/elected_officials.php)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
