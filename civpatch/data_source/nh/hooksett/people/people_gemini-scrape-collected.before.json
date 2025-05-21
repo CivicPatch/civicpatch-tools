@@ -7,21 +7,21 @@
     "images": [],
     "positions": [
       "Chair",
-      "Council Member"
+      "Town Council"
     ],
     "phone_numbers": [
       {
         "data": "(603) 669-6999",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the phone column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [
       {
         "data": "ttsantoulis@hooksett.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -30,8 +30,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -45,21 +45,21 @@
     "images": [],
     "positions": [
       "Vice-Chair",
-      "Council Member"
+      "Town Council"
     ],
     "phone_numbers": [
       {
         "data": "(603) 315-0084",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the phone column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [
       {
         "data": "jsullivan@hooksett.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -68,8 +68,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -82,21 +82,22 @@
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Secretary",
+      "Town Council"
     ],
     "phone_numbers": [
       {
         "data": "(603) 341-8311",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the phone column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [
       {
         "data": "rlapierre@hooksett.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -105,8 +106,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -119,14 +120,14 @@
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Town Council"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "rogerduhaime@hooksett.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -135,8 +136,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -149,21 +150,21 @@
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Town Council"
     ],
     "phone_numbers": [
       {
         "data": "(603) 461-1805",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the phone column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [
       {
         "data": "llaliberte@hooksett.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -172,8 +173,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -186,21 +187,21 @@
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Town Council"
     ],
     "phone_numbers": [
       {
         "data": "(603) 493-7991",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the phone column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [
       {
         "data": "kjudge@hooksett.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -209,8 +210,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -223,21 +224,21 @@
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Town Council"
     ],
     "phone_numbers": [
       {
         "data": "(818) 446-6599",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the phone column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [
       {
         "data": "awalczyk@hooksett.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -246,8 +247,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -260,21 +261,21 @@
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Town Council"
     ],
     "phone_numbers": [
       {
         "data": "(603) 932-3775",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the phone column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
     "emails": [
       {
         "data": "jnyhan@hooksett.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted from the email column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
@@ -283,8 +284,8 @@
     "end_dates": [
       {
         "data": "2025-06-30",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly extracted and formatted from the 'Position and Term Expiration' column in the Town Council table.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expiration date found directly in the table row for this person.",
         "source": "https://hooksett.org/government/town_council/index.php"
       }
     ],
