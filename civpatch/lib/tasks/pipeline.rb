@@ -35,7 +35,7 @@ namespace :pipeline do
 
     Services::GoogleSheets.send_costs if send_costs
 
-    # github.update_branch(context)
+    github.update_branch(context)
     github.create_pull_request(context) if create_pr
   end
 

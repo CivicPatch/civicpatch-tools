@@ -39,15 +39,18 @@ func CleanupContainers(ctx context.Context, containerId string) error {
 }
 
 func RunTask(ctx context.Context,
-	state string,
-	geoid string,
-	command string,
 	branchName string,
+	command string,
 	develop bool,
 ) (string, error) {
-	if state == "" || geoid == "" || command == "" {
-		return "", fmt.Errorf("error: state, geoid, and command are required")
+	if branchName == "" {
+		return "", fmt.Errorf("must use with -branch-name")
 	}
+
+	if command == "" {
+		return "", fmt.Errorf("must use with -command")
+	}
+
 	fmt.Printf("Running task: %s\n", command)
 
 	dockerClient, err := docker.NewClient()
@@ -57,14 +60,15 @@ func RunTask(ctx context.Context,
 
 	dockerClient.PrepareContainer(ctx, develop)
 
-	githubToken, githubUsername, err := services.GetGithubCredentials(ctx)
+	githubUsername, githubToken, err := services.GetGithubCredentials(ctx)
 	if err != nil {
 		return "", fmt.Errorf("error getting github credentials: %v", err)
 	}
 
 	envVars := map[string]string{}
-	envVars["GITHUB_TOKEN"] = githubToken
 	envVars["GITHUB_USERNAME"] = githubUsername
+	envVars["GITHUB_TOKEN"] = githubToken
+	envVars["GH_TOKEN"] = githubToken
 
 	if branchName != "" {
 		envVars["BRANCH_NAME"] = branchName
@@ -75,7 +79,7 @@ func RunTask(ctx context.Context,
 	commands := []string{
 		"./lib/tasks/scripts/checkout_branch.sh",
 		"&&",
-		fmt.Sprintf("rake '%s'", command),
+		command,
 	}
 
 	taskResult, err := dockerClient.RunTask(ctx, docker.TaskOptions{

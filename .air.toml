@@ -30,17 +30,17 @@ bin = "./dist/tmp/civpatch_cli"
 #  "github_pipeline:generate_pr_data[wa,5363000]",
 #]
 #PR_DATA=$(./civpatch_cli/bin/cli run-task -state wa -geoid 5363000 -branch-name pipeline-municipal-scrapes-nh-3301337300-386819 -command "github_pipeline:generate_pr_data[wa,5363000]")
-args_bin = [
-  "scrape", 
-  "-run", 
-  "-state", "nh", 
-  "-geoid", "3301337300", 
-  "-develop", 
-  #"-create-pr",
-  "-github-env", "env-shelltr",
-  "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819",
-  "-pr-number", "515"
-]
+#args_bin = [
+#  "scrape", 
+#  "-run", 
+#  "-state", "nh", 
+#  "-geoid", "3301337300", 
+#  "-develop", 
+#  #"-create-pr",
+#  "-github-env", "env-shelltr",
+#  "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819",
+#  "-pr-number", "515"
+#]
 # args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-github-env", "env-shelltr",  "-develop", "-create-pr"]
 # Update existing PR
 # args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-github-env", "env-shelltr", "-branch-name", "", "-pr-number", ""  "-develop", "-create-pr"]
@@ -51,3 +51,9 @@ args_bin = [
 # args_bin = ["auth-clear"]
 # args_bin = ["cleanup"]
 #rake "github_pipeline:generate_pr_data[wa,2411856]"
+# ===== Test PR comment ===== "
+args_bin = [
+  "run-task", 
+  "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819", 
+  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_comment.sh nh 3301337300 515\"", 
+  "-develop"]

@@ -6,10 +6,9 @@ module Resolvers
   class PeopleResolver
     DISAGREEMENT_THRESHOLD = 0.9
 
-    def self.resolve(municipality_context)
+    def self.resolve_sources(municipality_context)
       state = municipality_context[:state]
       geoid = municipality_context[:municipality_entry]["geoid"]
-      people_config = municipality_context[:config]["people"]
 
       sources_folder_path = Core::PathHelper.get_people_sources_path(state, geoid)
       source_files = Dir.glob(File.join(sources_folder_path, "*.json"))
@@ -46,15 +45,17 @@ module Resolvers
         sources << source
       end
 
-      {
-        compare_results: compare_people_across_sources(people_config, sources),
-        merged_sources: merge_people_across_sources(people_config, sources)
-      }
+      sources
+
+      # {
+      #  compare_results: compare_people_across_sources(people_config, sources),
+      #  merged_sources: merge_people_across_sources(people_config, sources)
+      # }
     end
 
-    def self.compare_people_across_sources(people_config, sources) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
-      File.write("scratch.json", JSON.pretty_generate(sources))
-
+    def self.compare_people_across_sources(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
+      sources = resolve_sources(context)
+      people_config = context[:config]["people"]
       fields = %w[positions email phone_number website start_date end_date] # Fields to compare
 
       unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
@@ -123,8 +124,9 @@ module Resolvers
       }
     end
 
-    def self.merge_people_across_sources(people_config, sources) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
-      return sources.first[:people] if sources.count == 1
+    def self.merge_people_across_sources(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
+      sources = resolve_sources(context)
+      people_config = context[:config]["people"]
 
       merged = []
 
