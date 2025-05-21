@@ -45,7 +45,10 @@ Seattle, WA 98124-4749
 
 ## Press Releases
 
- Mayor's Office Press Releases  [Rita Meher and Tasveer Film Festival and Market Honored with 2025 Mayor’s Film Award for Outstanding Achievement in Film](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e0a971?wgt_ref=WASEATTLE_WIDGET_93)  
+ Mayor's Office Press Releases  [Mayor Harrell to Nominate Chief Barnes for City Council Confirmation Following a Record-Setting First 100 Days ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e14651?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/20/2025 11:11 AM PDT
+  [Rita Meher and Tasveer Film Festival and Market Honored with 2025 Mayor’s Film Award for Outstanding Achievement in Film](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e0a971?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 05/15/2025 07:45 PM PDT
   [City of Seattle, TAAF, Amazon, and CIDBIA Announce New Ambassadors Program to Improve Neighborhood Safety and Support Economic Revitalization in the Chinatown-International District](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e07033?wgt_ref=WASEATTLE_WIDGET_93)  
@@ -102,9 +105,6 @@ Seattle, WA 98124-4749
   [City of Seattle Moves Fort Lawton Redevelopment Forward by Selecting Chief Seattle Club to Develop up to 100 Units of Permanent Supportive Housing](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dd8c0c?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 04/25/2025 12:00 PM PDT
-  [Mayor Bruce Harrell Announces Legislation to Build Light Rail Faster and Support Smooth Construction](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dda807?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/25/2025 10:59 AM PDT
 
 Receive Email Updates
 
