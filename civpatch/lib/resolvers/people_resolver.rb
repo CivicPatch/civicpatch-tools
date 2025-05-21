@@ -143,14 +143,12 @@ module Resolvers
 
         merged_person = { "name" => name }
 
-        %w[positions email phone_number website start_date end_date].each do |field|
+        %w[positions email phone_number website image start_date end_date].each do |field|
           values = person_records.map { |p| { value: p[field], confidence_score: p["confidence_score"] } }
 
           merged_person[field] = select_best_value(field, values)
         end
 
-        merged_person["image"] = person_records.map { |p| p["image"] }.compact.first
-        merged_person["source_image"] = person_records.map { |p| p["source_image"] }.compact.first
         merged_person["sources"] = person_records.map { |p| p["sources"] }.flatten.compact.uniq
 
         merged << merged_person

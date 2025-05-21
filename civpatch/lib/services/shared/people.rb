@@ -9,8 +9,6 @@ module Services
       def self.format_raw_data(person, source)
         formatted_person = {
           "name" => person["name"],
-          "image" => person["image"],
-          "source_image" => person["source_image"],
           "sources" => [source]
         }
 
@@ -19,6 +17,7 @@ module Services
         positions = person["positions"].present? ? person["positions"] : []
         positions = positions.map { |position| position.split(",").map(&:strip) }.flatten
 
+        formatted_person["images"] = data_point?(person["image"]) ? [person["image"]] : []
         formatted_person["positions"] = positions
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
@@ -38,8 +37,7 @@ module Services
         merged = person.dup
 
         merged["positions"] = (Array(person["positions"]) + Array(partial_person["positions"])).uniq
-        merged["image"] = partial_person["image"] || person["image"]
-        merged["source_image"] = partial_person["source_image"] || person["source_image"]
+        merged["images"] = (Array(person["images"]) + Array(partial_person["images"])).uniq
         merged["phone_numbers"] = (Array(person["phone_numbers"]) + Array(partial_person["phone_numbers"])).uniq
         merged["emails"] = (Array(person["emails"]) + Array(partial_person["emails"])).uniq
         merged["websites"] = (Array(person["websites"]) + Array(partial_person["websites"])).uniq
@@ -80,7 +78,9 @@ module Services
       end
 
       def self.valid_website?(url)
-        url.present? && url.to_s.strip.present? && url.to_s.strip.start_with?("http")
+        parsed_uri = Addressable::URI.parse(url)
+        has_path = parsed_uri.path.present? && parsed_uri.path != "/"
+        url.present? && url.to_s.strip.present? && url.to_s.strip.start_with?("http") && has_path
       end
 
       def self.valid_email?(email)
@@ -88,7 +88,7 @@ module Services
       end
 
       def self.data_points_with_source(person, source)
-        %w[phone_numbers emails websites start_dates end_dates].each do |data_point|
+        %w[phone_numbers emails websites start_dates images end_dates].each do |data_point|
           next unless person[data_point].present?
 
           person[data_point].each do |data_point_item|
@@ -193,6 +193,7 @@ module Services
           "phone_number" => pick_best_data_point(llm_person["phone_numbers"]),
           "email" => pick_best_data_point(llm_person["emails"]),
           "website" => pick_best_data_point(llm_person["websites"]),
+          "image" => pick_best_data_point(llm_person["images"]),
           **(term_date.present? ? term_date : {})
         }
 
@@ -201,8 +202,7 @@ module Services
         {
           "name" => llm_person["name"],
           "positions" => llm_person["positions"],
-          "image" => llm_person["image"],
-          "source_image" => llm_person["source_image"],
+          "image" => selected_data_points["image"].present? ? [selected_data_points["image"]] : [],
           "phone_number" => if selected_data_points["phone_number"].present?
                               selected_data_points["phone_number"]["data"]
                             end,

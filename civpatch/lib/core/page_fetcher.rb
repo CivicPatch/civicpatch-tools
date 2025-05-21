@@ -32,6 +32,8 @@ module Core
                                               wait_for: WAIT_TIME,
                                               include_api_content: true
                                             })
+      return nil if response.blank?
+
       html = response[:page_html]
 
       # @image_map = @image_map.merge(response[:image_map]) if response && response[:image_map].present?

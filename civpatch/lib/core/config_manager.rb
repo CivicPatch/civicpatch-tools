@@ -5,7 +5,7 @@ require_relative "path_helper"
 module Core
   class ConfigManager
     DEFAULT_CONFIG = {
-      "scrape_sources" => [],
+      "sources" => [],
       "people" => {} # Maintain a list keyed by people names
     }.freeze
 
