@@ -4,27 +4,20 @@
     "sources": [
       "https://www.seattle.gov/mayor",
       "https://www.seattle.gov/mayor/about",
-      "https://www.seattle.gov/mayor/contact",
       "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
     ],
     "images": [
       {
         "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' near name on official mayor page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' found near name on official mayor page.",
         "source": "https://www.seattle.gov/mayor"
       },
       {
         "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
-        "llm_confidence": 0.99,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page.",
         "source": "https://www.seattle.gov/mayor/about"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and 'bruce-harrell-contact.jpg' near the mayor's contact page.",
-        "source": "https://www.seattle.gov/mayor/contact"
       },
       {
         "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
@@ -41,27 +34,15 @@
     "websites": [
       {
         "data": "https://www.seattle.gov/mayor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official mayor page URL.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell.",
         "source": "https://www.seattle.gov/mayor"
       },
       {
         "data": "https://www.seattle.gov/mayor/about",
-        "llm_confidence": 0.95,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Page URL is the official mayor's about page.",
         "source": "https://www.seattle.gov/mayor/about"
-      },
-      {
-        "data": "https://www.seattle.gov/mayor/contact",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official mayor contact page.",
-        "source": "https://www.seattle.gov/mayor/contact"
-      },
-      {
-        "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official mayor's website page about Bruce Harrell.",
-        "source": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
       }
     ],
     "start_dates": [],
@@ -238,7 +219,7 @@
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name with council member context.",
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
