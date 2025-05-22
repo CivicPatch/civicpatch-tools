@@ -5,7 +5,7 @@
       "mayor",
       "Mayor"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-4000",
     "email": null,
     "website": "https://www.seattle.gov/mayor/about",
@@ -23,7 +23,7 @@
       "Council Member",
       "District 1"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-8801",
     "email": "rob.saka@seattle.gov",
     "website": "https://seattle.gov/council/saka",
@@ -49,9 +49,9 @@
       "District 2",
       "Councilmember"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-8802",
-    "email": "mark.solomon2@seattle.gov",
+    "email": "Mark.Solomon2@seattle.gov",
     "website": "https://seattle.gov/council/solomon",
     "start_date": "2025-01-27",
     "end_date": null,
@@ -74,7 +74,7 @@
       "Council Member",
       "District 3"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "206-684-8803",
     "email": "Joy.Hollingsworth@seattle.gov",
     "website": "https://seattle.gov/council/hollingsworth",
@@ -98,9 +98,9 @@
       "Council Member",
       "District 4"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-8804",
-    "email": "maritza.rivera@seattle.gov",
+    "email": "Maritza.Rivera@seattle.gov",
     "website": "https://seattle.gov/council/rivera",
     "start_date": null,
     "end_date": null,
@@ -122,7 +122,7 @@
       "Council Member",
       "District 5"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-8805",
     "email": "cathy.moore@seattle.gov",
     "website": "https://seattle.gov/council/moore",
@@ -146,7 +146,7 @@
       "Council Member",
       "District 6"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-8806",
     "email": "dan.strauss@seattle.gov",
     "website": "https://seattle.gov/council/strauss",
@@ -170,7 +170,7 @@
       "Council Member",
       "District 7"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-8807",
     "email": "robert.kettle@seattle.gov",
     "website": "https://seattle.gov/council/kettle",
@@ -196,7 +196,7 @@
       "Councilmember",
       "citywide"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "206-684-8808",
     "email": "AlexisMercedes.Rinck@seattle.gov",
     "website": "https://seattle.gov/council/rinck",
@@ -224,7 +224,7 @@
       "Position 9",
       "at-large"
     ],
-    "image": [],
+    "image": null,
     "phone_number": "(206) 684-8809",
     "email": "sara.nelson@seattle.gov",
     "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
