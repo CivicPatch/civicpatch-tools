@@ -5,7 +5,7 @@
   email: bruce.harrell@seattle.gov
   phone_number:
   website: https://www.seattle.gov/mayor
-  image: https://www.seattle.gov/elected-officials/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg
+  image: https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg
   start_date:
   end_date:
   sources:
@@ -21,7 +21,7 @@
   email: Sara.Nelson@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg
   start_date:
   end_date:
   sources:
@@ -34,12 +34,24 @@
   email: AlexisMercedes.Rinck@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png
   start_date:
   end_date:
   sources:
   - https://www.seattle.gov/elected-officials
   - https://seattle.gov/council/meet-the-council
+  updated_at: '2025-05-22'
+- name: Bob Kettle
+  positions:
+  - Council Member
+  email:
+  phone_number:
+  website:
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
   updated_at: '2025-05-22'
 - name: Cathy Moore
   positions:
@@ -47,7 +59,7 @@
   email: Cathy.Moore@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg
   start_date:
   end_date:
   sources:
@@ -60,7 +72,7 @@
   email: Dan.Strauss@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg
   start_date:
   end_date:
   sources:
@@ -73,7 +85,7 @@
   email: Joy.Hollingsworth@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg
   start_date:
   end_date:
   sources:
@@ -86,7 +98,7 @@
   email: Maritza.Rivera@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg
   start_date:
   end_date:
   sources:
@@ -99,7 +111,7 @@
   email: mark.solomon@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png
   start_date:
   end_date:
   sources:
@@ -112,7 +124,7 @@
   email: Rob.Saka@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg
   start_date:
   end_date:
   sources:
@@ -125,10 +137,9 @@
   email: Robert.Kettle@seattle.gov
   phone_number:
   website:
-  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
+  image: https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg
   start_date:
   end_date:
   sources:
-  - https://www.seattle.gov/elected-officials
   - https://seattle.gov/council/meet-the-council
   updated_at: '2025-05-22'

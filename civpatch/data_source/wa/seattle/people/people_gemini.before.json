@@ -2,8 +2,7 @@
   {
     "name": "Bruce Harrell",
     "positions": [
-      "Mayor",
-      "mayor"
+      "Mayor"
     ],
     "image": null,
     "phone_number": null,
@@ -122,7 +121,7 @@
     "updated_at": "2025-05-22"
   },
   {
-    "name": "Robert Kettle",
+    "name": "Bob Kettle",
     "positions": [
       "Council Member"
     ],
@@ -133,8 +132,7 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
-      "https://seattle.gov/council/meet-the-council"
+      "https://www.seattle.gov/elected-officials"
     ],
     "updated_at": "2025-05-22"
   },
@@ -169,6 +167,22 @@
     "end_date": null,
     "sources": [
       "https://www.seattle.gov/elected-officials",
+      "https://seattle.gov/council/meet-the-council"
+    ],
+    "updated_at": "2025-05-22"
+  },
+  {
+    "name": "Robert Kettle",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"

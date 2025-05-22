@@ -54,6 +54,22 @@
     "updated_at": "2025-05-22"
   },
   {
+    "name": "Bob Kettle",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.seattle.gov/elected-officials"
+    ],
+    "updated_at": "2025-05-22"
+  },
+  {
     "name": "Cathy Moore",
     "positions": [
       "Council Member"
@@ -167,7 +183,6 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"

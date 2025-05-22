@@ -4,7 +4,7 @@
     "positions": [
       "Mayor"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+    "image": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
     "phone_number": null,
     "email": null,
     "website": "https://www.seattle.gov/mayor",
@@ -18,12 +18,11 @@
     "updated_at": "2025-05-22"
   },
   {
-    "name": "Sara Nelson",
+    "name": "Alexis Mercedes Rinck",
     "positions": [
-      "Council President",
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
     "phone_number": null,
     "email": null,
     "website": null,
@@ -36,18 +35,17 @@
     "updated_at": "2025-05-22"
   },
   {
-    "name": "Alexis Mercedes Rinck",
+    "name": "Bob Kettle",
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
     "phone_number": null,
     "email": null,
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
       "https://www.seattle.gov/elected-officials"
     ],
     "updated_at": "2025-05-22"
@@ -57,7 +55,7 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
     "phone_number": null,
     "email": null,
     "website": null,
@@ -74,7 +72,7 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
     "phone_number": null,
     "email": null,
     "website": null,
@@ -91,7 +89,7 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
     "phone_number": null,
     "email": null,
     "website": null,
@@ -108,7 +106,7 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
     "phone_number": null,
     "email": null,
     "website": null,
@@ -125,7 +123,7 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
     "phone_number": null,
     "email": null,
     "website": null,
@@ -142,7 +140,7 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
     "phone_number": null,
     "email": null,
     "website": null,
@@ -159,7 +157,23 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+    "image": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://seattle.gov/council/meet-the-council"
+    ],
+    "updated_at": "2025-05-22"
+  },
+  {
+    "name": "Sara Nelson",
+    "positions": [
+      "Council Member"
+    ],
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
     "phone_number": null,
     "email": null,
     "website": null,

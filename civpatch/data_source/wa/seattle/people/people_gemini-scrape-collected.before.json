@@ -9,8 +9,7 @@
     ],
     "images": [],
     "positions": [
-      "Mayor",
-      "mayor"
+      "Mayor"
     ],
     "phone_numbers": [],
     "emails": [],
@@ -122,10 +121,9 @@
     "updated_at": "2025-05-22"
   },
   {
-    "name": "Robert Kettle",
+    "name": "Bob Kettle",
     "sources": [
-      "https://www.seattle.gov/elected-officials",
-      "https://seattle.gov/council/meet-the-council"
+      "https://www.seattle.gov/elected-officials"
     ],
     "images": [],
     "positions": [
@@ -164,6 +162,22 @@
     "images": [],
     "positions": [
       "Council President",
+      "Council Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-22"
+  },
+  {
+    "name": "Robert Kettle",
+    "sources": [
+      "https://seattle.gov/council/meet-the-council"
+    ],
+    "images": [],
+    "positions": [
       "Council Member"
     ],
     "phone_numbers": [],
