@@ -8,6 +8,7 @@ require "playwright"
 require "nokolexbor"
 
 module Browser
+  PLAYWRIGHT_SCRIPT = Core::PathHelper.project_path(File.join("lib", "core", "browser", "scraper.js"))
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
   BASE_SLEEP = 2  # Base sleep time for exponential backoff
   EXCLUDE_IMAGE_URLS = ["tile.openstreetmap.org"].freeze
@@ -39,7 +40,7 @@ module Browser
     end
   end
 
-  def self.fetch_page_content(url, options = {}) # rubocop:disable Metrics/AbcSize
+  def self.fetch_page_content(url, options = {})
     with_browser do |browser|
       api_data = []
 
@@ -66,15 +67,34 @@ module Browser
     end
   end
 
+  def self.get_page_source(url)
+    # BIG BUG: can't seem to get this working on some sites
+    # https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey
+    # maybe an issue with the client? Works fine in javascript
+    content = nil
+    exit_status = Open3.popen3("node", PLAYWRIGHT_SCRIPT, url) do |_stdin, stdout, stderr, wait_thr|
+      content = stdout.read
+
+      errors = stderr.read
+      puts errors if errors.present?
+
+      wait_thr.value.exitstatus
+    end
+
+    return content if exit_status.zero?
+
+    nil
+  end
+
   private_class_method def self.with_network_retry(url)
     retry_attempts = 0
 
     begin
       yield
-    rescue Net::ReadTimeout, Faraday::TooManyRequestsError
+    rescue Net::ReadTimeout, Faraday::TooManyRequestsError, Playwright::TimeoutError
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
-        puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
+        puts "Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
         sleep sleep_time
         retry_attempts += 1
         retry
@@ -87,16 +107,21 @@ module Browser
 
   private_class_method def self.process_page(browser, url, options, api_data)
     page_source = browser.content
+
     page_source = process_images(browser, page_source, options, url) if options[:image_dir].present?
-    format_page_html(page_source, api_data, url)
+    page_source = format_page_html(page_source, api_data, url) if api_data.present?
+
+    page_source
   end
 
   private_class_method def self.format_page_html(page_source, api_content, url)
-    formatted_html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
-    return formatted_html if api_content.empty?
+    html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
 
-    browser.evaluate("document.body.innerHTML += '#{api_content.join("\n")}'")
-    browser.content
+    doc = Nokolexbor::HTML(html)
+    body = doc.at_css("body")
+    body.add_child(Nokolexbor::HTML.fragment(api_content))
+
+    doc.to_html
   end
 
   private_class_method def self.log_error(url, error)
@@ -160,7 +185,9 @@ module Browser
     end
 
     # Remove image elements that aren't in the image_map
-    page_source = Nokolexbor::HTML(page_source).css("img").each do |img|
+    document = Nokolexbor::HTML(page_source)
+
+    document.css("img").each do |img|
       key = image_map.keys.find { |key| img["src"].present? && image_map[key].include?(img["src"]) }
 
       img.remove unless key.present?
@@ -169,7 +196,7 @@ module Browser
 
     save_image_map(image_dir, image_map)
 
-    page_source.to_html
+    document.to_html
   end
 
   private_class_method def self.save_image_map(image_dir, image_map)
@@ -217,7 +244,7 @@ module Browser
 
     [filename, absolute_src]
   rescue StandardError => e
-    puts "\t\t\t\t❌: Error processing image (#{src}): #{e.message}, removing image element"
+    # puts "\t\t\t\t❌: Error processing image (#{src}): #{e.message}, removing image element"
     file&.unlink
     nil
   end
@@ -227,12 +254,12 @@ module Browser
     return false if src.nil? || src.empty?
 
     if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
-      puts "Removed spinner image element with src: #{src}" # Optional logging
+      # puts "Removed spinner image element with src: #{src}" # Optional logging
       return true # Don't process this element further
     end
 
     if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
-      puts "Removed excluded image element with src: #{src}" # Optional logging
+      # puts "Removed excluded image element with src: #{src}" # Optional logging
       return true # Don't process this element further
     end
 
@@ -252,7 +279,7 @@ module Browser
     file = capture_image_as_browser_screenshot(img_element)
 
     if file.present?
-      puts "\t\t\t✅: Browser screenshot captured for #{absolute_src}"
+      # puts "\t\t\t✅: Browser screenshot captured for #{absolute_src}"
     else
       puts "\t\t\t❌: Screenshot capture failed for #{absolute_src}, giving up"
       return nil
@@ -311,13 +338,13 @@ module Browser
           next # Continue to the next loop iteration
         else
           # Handle other HTTP errors (4xx, 5xx)
-          puts "\t->HTTP request failed for #{encoded_url} with code: #{response.code}"
+          # puts "\t->HTTP request failed for #{encoded_url} with code: #{response.code}"
           temp_file.unlink
           return nil
         end
       rescue StandardError => e
         # Handle network errors, timeouts, etc.
-        puts "\t->HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
+        # puts "\t->HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
         temp_file.close
         temp_file.unlink
         return nil
@@ -333,7 +360,7 @@ module Browser
     content_type = Utils::ImageHelper.determine_mime_type(file.path)
     extension = Utils::ImageHelper.mime_type_to_extension(content_type)
     if extension.nil?
-      puts "\tUnknown file type for #{file.path}: #{content_type}"
+      # puts "\tUnknown file type for #{file.path}: #{content_type}"
       nil
     else
       extension

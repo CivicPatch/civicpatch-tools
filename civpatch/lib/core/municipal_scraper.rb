@@ -9,19 +9,19 @@ require "core/crawler"
 
 module Core
   class MunicipalScraper
-    MAX_URLS_TO_SCRAPE = 10
-    MIN_PEOPLE_TO_FIND = 3
+    MAX_URLS_TO_SCRAPE = 20
+    MIN_PEOPLE_TO_FIND = 5
 
     def self.fetch( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
       llm_service_string,
       municipality_context,
       request_cache: {},
-      page_fetcher: nil,
+      # page_fetcher: nil,
       people_hint: [],
       seeded_urls: [] # Urls to scrape first
     )
       puts "Fetching with #{llm_service_string}"
-      page_fetcher ||= Core::PageFetcher.new
+      # page_fetcher ||= Core::PageFetcher.new
       municipality_entry = municipality_context[:municipality_entry]
       state = municipality_context[:state]
       geoid = municipality_entry["geoid"]
@@ -34,7 +34,7 @@ module Core
         seeded_urls: seeded_urls,
         llm_service_string: llm_service_string,
         municipality_context: municipality_context,
-        page_fetcher: page_fetcher,
+        # page_fetcher: page_fetcher,
         city_cache_path: city_cache_path,
         request_cache: request_cache,
         people_hint: people_hint
@@ -91,7 +91,7 @@ module Core
         Services::Shared::People.format_person(official)
       end.compact
 
-      [page_fetcher, formatted_officials, data[:people_config]]
+      [formatted_officials, data[:people_config]]
     end
 
     def self.scrape_with_search(context, keyword_terms)
@@ -143,7 +143,7 @@ module Core
         processed_urls << url
         data[:processed_urls] = processed_urls
 
-        found_people = accumulated_people.map { |person| person["positions"] }
+        found_people = accumulated_people.map { |person| "#{person["name"]} (#{person["positions"].first})" }
         # num_urls_scraped = processed_urls.count
         # puts "#{context[:llm_service_string]}: Scraping #{url}: #{num_urls_scraped} of MAX (#{MAX_URLS_TO_SCRAPE})"
         puts "#{context[:llm_service_string]}: #{found_people.count} people found: #{found_people}"
@@ -191,15 +191,21 @@ module Core
 
     def self.scrape_url_for_municipal_directory(context, url, people_hint = [], person_name = "")
       llm_service_string = context[:llm_service_string]
-      page_fetcher = context[:page_fetcher]
+      # page_fetcher = context[:page_fetcher]
       cache_path = context[:city_cache_path]
       municipality_context = context[:municipality_context]
       llm_service = get_llm_service(llm_service_string)
 
+      if person_name.present?
+        puts "Scraping #{url} for #{person_name}"
+      else
+        puts "Scraping #{url} for people (#{people_hint.count})"
+      end
+
       url_content_path = File.join(cache_path, Utils::UrlHelper.url_to_safe_folder_name(url))
       FileUtils.mkdir_p(url_content_path)
 
-      content_file = page_fetcher.extract_content(url, url_content_path)
+      content_file = Core::PageFetcher.extract_content(url, url_content_path)
       return nil unless content_file.present?
 
       people = llm_service.extract_city_people(municipality_context, content_file, url, people_hint, person_name)

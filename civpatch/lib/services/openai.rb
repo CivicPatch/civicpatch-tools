@@ -62,20 +62,13 @@ module Services
       maybe_target_people = people_hint.map { |person| person&.dig("name") }.compact
 
       content_type = if person_name.present?
-                       "First, determine if the content contains information about the target person."
+                       "First, determine if the content contains information about the target person: #{person_name}."
                      else
-                       %(Your primary task is to identify and extract information for ALL members of
+                       %(Your primary task is to identify and extract information for the members of
                          the primary governing body (e.g., Town Council, City Council, Select Board,
-                         Board of Aldermen, Commissioners)
-                         of the target municipality found within the provided content.
+                         Board of Aldermen, Commissioners) of the target municipality found within the provided content.
                          Be cautious with other municipal boards (e.g., Planning Board, Zoning Board,
-                         Conservation Commission, etc.).
-                         Only extract individuals from these secondary boards if their listed role explicitly
-                         indicates they are also a representative FROM or TO the primary governing body
-                         (e.g., "Town Council Representative to the Planning Board", "Select Board Liaison").
-                         If their role on a secondary board does not clearly state a connection to
-                         the primary governing body, they should typically be excluded unless the content
-                         strongly suggests they are also primary governing body members.
+                         Conservation Commission, etc.) -- they are not the primary governing body.
 
                          As a helpful guide, the following people might be members of the primary governing body
                          based on previous data:
@@ -83,7 +76,7 @@ module Services
                          Use this list to aid identification, but DO NOT limit your search to only these names.
                          Extract information for EVERY relevant person you find in the content who is part of
                          the primary governing body, regardless of whether they were on the provided list.
-                         If the content does not appear to contain members of the primary governing body,
+                         If the content does not appear to contain any members of the primary governing body,
                          return an empty JSON array `[]`.
                          )
                      end
@@ -250,9 +243,7 @@ module Services
       json_output = response.dig("choices", 0, "message", "content")
 
       begin
-        response = JSON.parse(json_output)
-        File.write("openai_debug.json", JSON.pretty_generate(response), mode: "a")
-        response
+        JSON.parse(json_output)
       rescue JSON::ParserError => e
         puts "JSON Parsing Error for #{municipality_name}, #{state}: #{e.message}"
         puts "Problematic JSON string was:\n#{json_output}"
@@ -271,8 +262,6 @@ module Services
       else
         puts "[429] Too many requests. Max retries reached for #{url}."
       end
-      # rescue Faraday::BadRequestError => e
-      #  puts "[400] Bad request. #{e.message} #{e.backtrace}"
     end
 
     # Remove coordinates from geojson file
