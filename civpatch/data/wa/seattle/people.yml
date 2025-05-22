@@ -3,190 +3,132 @@
   positions:
   - Mayor
   email: bruce.harrell@seattle.gov
-  phone_number: "(206) 684-4000"
-  website: https://www.seattle.gov/mayor/about
-  image:
-  start_date: '2021'
+  phone_number:
+  website: https://www.seattle.gov/mayor
+  image: https://www.seattle.gov/elected-officials/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg
+  start_date:
   end_date:
   sources:
   - https://www.seattle.gov/mayor/about
+  - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/mayor
+  - https://www.seattle.gov
   updated_at: '2025-05-22'
 - name: Sara Nelson
   positions:
   - Council President
   - Council Member
-  - Citywide
-  - Position 9
   email: Sara.Nelson@seattle.gov
-  phone_number: "(206) 684-8809"
-  website: https://seattle.gov/council/meet-the-council/sara-nelson
-  image:
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg
   start_date:
   end_date:
   sources:
+  - https://www.seattle.gov/elected-officials
   - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  updated_at: '2025-05-22'
-- name: Rob Saka
-  positions:
-  - Council Member
-  - District 1
-  email: Rob.Saka@seattle.gov
-  phone_number: "(206) 684-8801"
-  website: https://seattle.gov/council/saka
-  image:
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/saka
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  updated_at: '2025-05-22'
-- name: Mark Solomon
-  positions:
-  - Council Member
-  - District 2
-  email: mark.solomon2@seattle.gov
-  phone_number: "(206) 684-8802"
-  website: https://seattle.gov/council/solomon
-  image:
-  start_date: '2025-01-27'
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  - https://council.seattle.gov/solomon
-  updated_at: '2025-05-22'
-- name: Joy Hollingsworth
-  positions:
-  - Council Member
-  - District 3
-  email: Joy.Hollingsworth@seattle.gov
-  phone_number: "(206) 684-8803"
-  website: https://seattle.gov/council/hollingsworth
-  image:
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  updated_at: '2025-05-22'
-- name: Maritza Rivera
-  positions:
-  - Council Member
-  - District 4
-  email: Maritza.Rivera@seattle.gov
-  phone_number: "(206) 684-8804"
-  website: https://seattle.gov/council/rivera
-  image:
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  updated_at: '2025-05-22'
-- name: Cathy Moore
-  positions:
-  - Council Member
-  - District 5
-  email: Cathy.Moore@seattle.gov
-  phone_number: "(206) 684-8805"
-  website: https://seattle.gov/council/moore
-  image:
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  updated_at: '2025-05-22'
-- name: Dan Strauss
-  positions:
-  - Council Member
-  - District 6
-  email: Dan.Strauss@seattle.gov
-  phone_number: "(206) 684-8806"
-  website: https://seattle.gov/council/strauss
-  image:
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  updated_at: '2025-05-22'
-- name: Robert Kettle
-  positions:
-  - Council Member
-  - District 7
-  email: Robert.Kettle@seattle.gov
-  phone_number: "(206) 684-8807"
-  website: https://seattle.gov/council/kettle
-  image:
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   updated_at: '2025-05-22'
 - name: Alexis Mercedes Rinck
   positions:
   - Council Member
-  - Position 8
   email: AlexisMercedes.Rinck@seattle.gov
-  phone_number: "(206) 684-8808"
-  website: https://seattle.gov/council/rinck
-  image:
-  start_date: '2024-12-03'
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png
+  start_date:
   end_date:
   sources:
+  - https://www.seattle.gov/elected-officials
   - https://seattle.gov/council/meet-the-council
-  - https://seattle.gov/council/meet-the-council/sara-nelson
-  - https://seattle.gov/council/solomon
-  - https://seattle.gov/council/hollingsworth
-  - https://seattle.gov/council/rivera
-  - https://seattle.gov/council/moore
-  - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/rinck
-  - https://council.seattle.gov/rinck
+  updated_at: '2025-05-22'
+- name: Cathy Moore
+  positions:
+  - Council Member
+  email: Cathy.Moore@seattle.gov
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/council/meet-the-council
+  updated_at: '2025-05-22'
+- name: Dan Strauss
+  positions:
+  - Council Member
+  email: Dan.Strauss@seattle.gov
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/council/meet-the-council
+  updated_at: '2025-05-22'
+- name: Joy Hollingsworth
+  positions:
+  - Council Member
+  email: Joy.Hollingsworth@seattle.gov
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/council/meet-the-council
+  updated_at: '2025-05-22'
+- name: Maritza Rivera
+  positions:
+  - Council Member
+  email: Maritza.Rivera@seattle.gov
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/council/meet-the-council
+  updated_at: '2025-05-22'
+- name: Mark Solomon
+  positions:
+  - Council Member
+  email: mark.solomon@seattle.gov
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/council/meet-the-council
+  updated_at: '2025-05-22'
+- name: Rob Saka
+  positions:
+  - Council Member
+  email: Rob.Saka@seattle.gov
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/council/meet-the-council
+  updated_at: '2025-05-22'
+- name: Robert Kettle
+  positions:
+  - Council Member
+  email: Robert.Kettle@seattle.gov
+  phone_number:
+  website:
+  image: https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/elected-officials
+  - https://seattle.gov/council/meet-the-council
   updated_at: '2025-05-22'
