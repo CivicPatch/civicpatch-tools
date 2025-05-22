@@ -11,19 +11,22 @@
     "start_date": "2021",
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/mayor/about"
+      "https://www.seattle.gov/mayor/about",
+      "https://www.seattle.gov/mayor"
     ],
     "updated_at": "2025-05-22"
   },
   {
     "name": "Sara Nelson",
     "positions": [
+      "Council President",
       "Council Member",
-      "At-large"
+      "Citywide",
+      "Position 9"
     ],
     "image": null,
     "phone_number": "(206) 684-8809",
-    "email": "Sara.Nelson@seattle.gov",
+    "email": "sara.nelson@seattle.gov",
     "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
     "start_date": null,
     "end_date": null,
@@ -72,7 +75,7 @@
     ],
     "image": null,
     "phone_number": "(206) 684-8801",
-    "email": "Rob.Saka@seattle.gov",
+    "email": "rob.saka@seattle.gov",
     "website": "https://seattle.gov/council/saka",
     "start_date": null,
     "end_date": null,
@@ -96,7 +99,7 @@
     ],
     "image": null,
     "phone_number": "(206) 684-8802",
-    "email": "Mark.Solomon2@seattle.gov",
+    "email": "mark.solomon2@seattle.gov",
     "website": "https://seattle.gov/council/solomon",
     "start_date": "2025-01-27",
     "end_date": null,
@@ -166,7 +169,7 @@
     ],
     "image": null,
     "phone_number": "(206) 684-8805",
-    "email": "Cathy.Moore@seattle.gov",
+    "email": "cathy.moore@seattle.gov",
     "website": "https://seattle.gov/council/moore",
     "start_date": null,
     "end_date": null,
@@ -189,7 +192,7 @@
     ],
     "image": null,
     "phone_number": "(206) 684-8806",
-    "email": null,
+    "email": "dan.strauss@seattle.gov",
     "website": "https://seattle.gov/council/strauss",
     "start_date": null,
     "end_date": null,
@@ -212,7 +215,7 @@
     ],
     "image": null,
     "phone_number": "(206) 684-8807",
-    "email": "Robert.Kettle@seattle.gov",
+    "email": "robert.kettle@seattle.gov",
     "website": "https://seattle.gov/council/kettle",
     "start_date": null,
     "end_date": null,

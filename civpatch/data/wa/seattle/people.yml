@@ -10,11 +10,14 @@
   end_date:
   sources:
   - https://www.seattle.gov/mayor/about
+  - https://www.seattle.gov/mayor
   updated_at: '2025-05-22'
 - name: Sara Nelson
   positions:
   - Council President
   - Council Member
+  - Citywide
+  - Position 9
   email: Sara.Nelson@seattle.gov
   phone_number: "(206) 684-8809"
   website: https://seattle.gov/council/meet-the-council/sara-nelson
@@ -54,7 +57,7 @@
   positions:
   - Council Member
   - District 2
-  email: Mark.Solomon2@seattle.gov
+  email: mark.solomon2@seattle.gov
   phone_number: "(206) 684-8802"
   website: https://seattle.gov/council/solomon
   image:
