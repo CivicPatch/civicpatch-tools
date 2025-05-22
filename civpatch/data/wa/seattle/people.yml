@@ -10,7 +10,6 @@
   end_date:
   sources:
   - https://www.seattle.gov/mayor/about
-  - https://www.seattle.gov/mayor
   updated_at: '2025-05-22'
 - name: Sara Nelson
   positions:
@@ -31,7 +30,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   updated_at: '2025-05-22'
 - name: Rob Saka
   positions:
@@ -52,7 +50,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   updated_at: '2025-05-22'
 - name: Mark Solomon
   positions:
@@ -72,7 +69,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   - https://council.seattle.gov/solomon
   updated_at: '2025-05-22'
 - name: Joy Hollingsworth
@@ -93,7 +89,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   updated_at: '2025-05-22'
 - name: Maritza Rivera
   positions:
@@ -113,7 +108,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   updated_at: '2025-05-22'
 - name: Cathy Moore
   positions:
@@ -133,7 +127,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   updated_at: '2025-05-22'
 - name: Dan Strauss
   positions:
@@ -153,7 +146,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   updated_at: '2025-05-22'
 - name: Robert Kettle
   positions:
@@ -193,7 +185,6 @@
   - https://seattle.gov/council/rivera
   - https://seattle.gov/council/moore
   - https://seattle.gov/council/strauss
-  - https://seattle.gov/council/kettle
   - https://seattle.gov/council/rinck
   - https://council.seattle.gov/rinck
   updated_at: '2025-05-22'

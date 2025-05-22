@@ -7,12 +7,11 @@
     "image": null,
     "phone_number": "(206) 684-4000",
     "email": null,
-    "website": "https://www.seattle.gov/mayor",
+    "website": "https://www.seattle.gov/mayor/about",
     "start_date": "2021",
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/mayor/about",
-      "https://www.seattle.gov/mayor"
+      "https://www.seattle.gov/mayor/about"
     ],
     "updated_at": "2025-05-22"
   },
@@ -21,7 +20,6 @@
     "positions": [
       "Council President",
       "Council Member",
-      "Citywide",
       "Position 9"
     ],
     "image": null,
