@@ -104,7 +104,7 @@ module Services
         Output Field Definitions & Structure:
         - name: (String) Full name only (no titles).
         - positions: (Array of Strings) Active municipal roles. Include specific division/district/position number (e.g., "Council Member, Position 1").
-        - image: (String or null) URL of the person's portrait/headshot (usually starts 'images/'). **IMPORTANT: This field must be a simple string (the URL) or null. It should NOT be an object and should NOT include confidence scores.**
+        - image: (Object or null) {data: "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}
         - phone_number: (Object or null) {data: "Formatted Number", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
         - email: (Object or null) {data: "email@example.com", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
         - website: (Object or null) {data: "http(s)://...", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
@@ -250,7 +250,9 @@ module Services
       json_output = response.dig("choices", 0, "message", "content")
 
       begin
-        JSON.parse(json_output)
+        response = JSON.parse(json_output)
+        File.write("openai_debug.json", JSON.pretty_generate(response), mode: "a")
+        response
       rescue JSON::ParserError => e
         puts "JSON Parsing Error for #{municipality_name}, #{state}: #{e.message}"
         puts "Problematic JSON string was:\n#{json_output}"
@@ -274,19 +276,19 @@ module Services
     end
 
     # Remove coordinates from geojson file
-    def extract_simplified_geojson(geojson_file_path)
-      file_size_mb = File.size(geojson_file_path) / 1024.0 / 1024.0
-      puts "Loading geojson file - #{file_size_mb} MB"
+    # def extract_simplified_geojson(geojson_file_path)
+    #  file_size_mb = File.size(geojson_file_path) / 1024.0 / 1024.0
+    #  puts "Loading geojson file - #{file_size_mb} MB"
 
-      json_data = JSON.parse(File.read(geojson_file_path))
+    #  json_data = JSON.parse(File.read(geojson_file_path))
 
-      json_data["features"][0, 3].map do |feature|
-        {
-          type: feature["type"],
-          properties: feature["properties"]
-        }
-      end
-    end
+    #  json_data["features"][0, 3].map do |feature|
+    #    {
+    #      type: feature["type"],
+    #      properties: feature["properties"]
+    #    }
+    #  end
+    # end
 
     def council_member_position?(position, position_misc)
       position.blank? && keywords_present?(position_misc)

@@ -62,8 +62,7 @@ module Browser
 
       yield(browser) if block_given?
 
-      # process_page(browser, url, options, api_data)
-      process_page(browser, url, api_data)
+      process_page(browser, url, options, api_data)
     end
   end
 
@@ -86,16 +85,10 @@ module Browser
     end
   end
 
-  # private_class_method def self.process_page(browser, url, options, api_data)
-  private_class_method def self.process_page(browser, url, api_data)
+  private_class_method def self.process_page(browser, url, options, api_data)
     page_source = browser.content
-    # page_source, image_map = maybe_download_images(browser, page_source, options, url)
-    formatted_html = format_page_html(page_source, api_data, url)
-
-    {
-      page_html: formatted_html
-      # image_map: image_map
-    }.compact
+    page_source = process_images(browser, page_source, options, url) if options[:image_dir].present?
+    format_page_html(page_source, api_data, url)
   end
 
   private_class_method def self.format_page_html(page_source, api_content, url)
@@ -105,16 +98,6 @@ module Browser
     browser.evaluate("document.body.innerHTML += '#{api_content.join("\n")}'")
     browser.content
   end
-
-  # private_class_method def self.maybe_download_images(browser, page_source, options, url)
-  #  return [page_source, nil] unless options[:image_dir]
-
-  #  image_dir = options[:image_dir]
-  #  FileUtils.mkdir_p(image_dir)
-  #  base_url = Utils::UrlHelper.extract_page_base_url(page_source, url)
-  #  page_source, image_map = download_images(browser, page_source, image_dir, base_url)
-  #  [page_source, image_map]
-  # end
 
   private_class_method def self.log_error(url, error)
     puts error.backtrace
@@ -160,62 +143,48 @@ module Browser
     nil
   end
 
-  # private_class_method def self.download_images(browser, page_source, image_dir, base_url)
-  #  image_elements = browser.locator("img").all
+  private_class_method def self.process_images(browser, page_source, options, url)
+    image_dir = options[:image_dir]
+    FileUtils.mkdir_p(image_dir)
+    base_url = Utils::UrlHelper.extract_page_base_url(page_source, url)
+    image_elements = browser.locator("img").all
 
-  #  image_map = {}
+    image_map = {}
 
-  #  image_elements.each do |image_element|
-  #    image_excluded = maybe_exclude_image(image_element)
-  #    next if image_excluded
+    image_elements.each do |image_element|
+      image_excluded = maybe_exclude_image(image_element)
+      next if image_excluded
 
-  #    key, source_image = process_image(browser, image_dir, base_url, image_element)
-  #    image_map[key] = source_image if key.present? && source_image.present?
-  #  end
+      key, source_image_url = process_image(browser, image_dir, base_url, image_element)
+      image_map[key] = source_image_url if key.present? && source_image_url.present?
+    end
 
-  #  html = Nokolexbor::HTML(page_source)
-  #  html.css("img").each do |img|
-  #    image_map_key = image_map.keys.find { |key| image_map[key].include?(img["src"]) }
-  #    if image_map_key.present?
-  #      img["src"] = "images/#{image_map_key}"
-  #    else
-  #      img.remove
-  #    end
-  #  end
+    # Remove image elements that aren't in the image_map
+    page_source = Nokolexbor::HTML(page_source).css("img").each do |img|
+      key = image_map.keys.find { |key| img["src"].present? && image_map[key].include?(img["src"]) }
 
-  #  page_source = html.to_html
+      img.remove unless key.present?
+      img["src"] = image_map[key]
+    end
 
-  #  [page_source, image_map]
-  # end
+    save_image_map(image_dir, image_map)
+
+    page_source.to_html
+  end
+
+  private_class_method def self.save_image_map(image_dir, image_map)
+    file_path = File.join(image_dir, "image_map.json")
+    if File.exist?(file_path)
+      existing_map = JSON.parse(File.read(file_path))
+      image_map = existing_map.merge(image_map)
+    end
+
+    File.write(file_path, JSON.generate(image_map))
+  end
 
   private_class_method def self.generate_filename(src, file_type)
     hash = Digest::SHA256.hexdigest(src)
     "#{hash}.#{file_type}"
-  end
-
-  # TODO: broken until playwright is figured out
-  private_class_method def self.capture_image_as_data_url(_page, img_element)
-    img_element.evaluate("
-      async (img) => {
-        // Add crossorigin attribute to allow canvas operations
-        img.setAttribute('crossorigin', 'anonymous');
-
-        // Small delay to let browser apply the attribute
-        await new Promise(resolve => setTimeout(resolve, 100));
-
-        try {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.naturalWidth || 300;
-          canvas.height = img.naturalHeight || 150;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          return canvas.toDataURL('image/jpeg');
-        } catch (e) {
-          // Return error message if canvas is tainted
-          return 'ERROR: ' + e.message;
-        }
-      }
-    ")
   end
 
   private_class_method def self.capture_image_as_browser_screenshot(img_element)

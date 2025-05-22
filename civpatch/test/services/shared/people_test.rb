@@ -413,6 +413,114 @@ module Services
         assert final_config.key?("Brand New Person"), "Config should have key for new person"
         assert final_config.key?(@kimmi_canonical), "Config should still have original person key"
       end
+
+      def test_format_person_with_valid_image
+        llm_person = {
+          "name" => "John Doe",
+          "positions" => ["Mayor"],
+          "images" => [
+            {
+              "data" => "images/valid-image.jpg",
+              "source" => "https://example.com",
+              "llm_confidence" => 0.9
+            }
+          ],
+          "sources" => ["https://example.com"]
+        }
+
+        result = People.format_person(llm_person)
+
+        assert_equal "images/valid-image.jpg", result["image"]
+        assert_includes result["sources"], "https://example.com"
+      end
+
+      def test_format_person_with_no_image
+        llm_person = {
+          "name" => "John Doe",
+          "positions" => ["Mayor"],
+          "images" => [],
+          "sources" => ["https://example.com"]
+        }
+
+        result = People.format_person(llm_person)
+
+        assert_nil result["image"]
+      end
+
+      def test_format_person_with_invalid_image
+        llm_person = {
+          "name" => "John Doe",
+          "positions" => ["Mayor"],
+          "images" => [
+            {
+              "data" => nil,
+              "source" => "https://example.com"
+            }
+          ],
+          "sources" => ["https://example.com"]
+        }
+
+        result = People.format_person(llm_person)
+
+        assert_nil result["image"]
+      end
+
+      def test_format_person_with_multiple_images
+        llm_person = {
+          "name" => "John Doe",
+          "positions" => ["Mayor"],
+          "images" => [
+            {
+              "data" => "images/image1.jpg",
+              "source" => "https://example.com/1",
+              "llm_confidence" => 0.5
+            },
+            {
+              "data" => "images/image2.jpg",
+              "source" => "https://example.com/2",
+              "llm_confidence" => 0.9
+            },
+            {
+              "data" => "images/image3.jpg",
+              "source" => "https://example.com/3",
+              "llm_confidence" => 0.7
+            }
+          ],
+          "sources" => ["https://example.com/1", "https://example.com/2", "https://example.com/3"]
+        }
+
+        result = People.format_person(llm_person)
+
+        # Should pick the image with highest confidence
+        assert_equal "images/image2.jpg", result["image"]
+        assert_includes result["sources"], "https://example.com/2"
+      end
+
+      def test_format_person_with_duplicate_images
+        llm_person = {
+          "name" => "John Doe",
+          "positions" => ["Mayor"],
+          "images" => [
+            {
+              "data" => "images/same-image.jpg",
+              "source" => "https://example.com/1",
+              "llm_confidence" => 0.5
+            },
+            {
+              "data" => "images/same-image.jpg",
+              "source" => "https://example.com/2",
+              "llm_confidence" => 0.9
+            }
+          ],
+          "sources" => ["https://example.com/1", "https://example.com/2"]
+        }
+
+        result = People.format_person(llm_person)
+
+        # Should pick the image with highest confidence even if it's a duplicate
+        assert_equal "images/same-image.jpg", result["image"]
+        assert_includes result["sources"], "https://example.com/2"
+      end
     end
   end
 end
