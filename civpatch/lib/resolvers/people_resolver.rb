@@ -46,11 +46,6 @@ module Resolvers
       end
 
       sources
-
-      # {
-      #  compare_results: compare_people_across_sources(people_config, sources),
-      #  merged_sources: merge_people_across_sources(people_config, sources)
-      # }
     end
 
     def self.compare_people_across_sources(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity

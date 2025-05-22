@@ -202,7 +202,7 @@ module Services
         {
           "name" => llm_person["name"],
           "positions" => llm_person["positions"],
-          "image" => selected_data_points["image"].present? ? [selected_data_points["image"]] : [],
+          "image" => selected_data_points["image"].present? ? selected_data_points["image"]["data"] : nil,
           "phone_number" => if selected_data_points["phone_number"].present?
                               selected_data_points["phone_number"]["data"]
                             end,

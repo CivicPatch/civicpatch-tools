@@ -31,6 +31,7 @@ module Core
       puts "#{llm_service_string}: Looking for #{municipality_context[:config]["scrape_exit_config"]}"
 
       context = {
+        seeded_urls: seeded_urls,
         llm_service_string: llm_service_string,
         municipality_context: municipality_context,
         page_fetcher: page_fetcher,
@@ -40,15 +41,16 @@ module Core
       }
 
       # Initialize combined data hash
-      data = { accumulated_people: [], processed_urls: [], content_dirs: [],
+      data = { accumulated_people: [], processed_urls: [],
                people_config: municipality_context[:config]["people"] }
       exit_early = false
 
       avoid_keywords = %w[alerts news event calendar archive]
 
       %w[seeded search crawler].each do |scrape_with|
-        puts "Scraping with #{scrape_with}"
         break unless should_continue_scraping?(context, data)
+
+        puts "Scraping with #{scrape_with}"
 
         case scrape_with
         when "seeded"
@@ -79,8 +81,8 @@ module Core
         data = scrape_urls(context, data, urls_to_process: urls, early_exit: exit_early)
       end
 
-      profile_content_dirs, accumulated_people = scrape_profiles(context, data[:accumulated_people],
-                                                                 data[:processed_urls])
+      accumulated_people = scrape_profiles(context, data[:accumulated_people],
+                                           data[:processed_urls])
 
       Core::PeopleManager.update_people(municipality_context, accumulated_people,
                                         "#{llm_service_string}-scrape-collected.before")
@@ -89,9 +91,7 @@ module Core
         Services::Shared::People.format_person(official)
       end.compact
 
-      content_dirs = data[:content_dirs] + profile_content_dirs
-
-      [page_fetcher, content_dirs, formatted_officials, data[:people_config]]
+      [page_fetcher, formatted_officials, data[:people_config]]
     end
 
     def self.scrape_with_search(context, keyword_terms)
@@ -122,7 +122,6 @@ module Core
       return data if urls_to_process.blank?
 
       accumulated_people = data[:accumulated_people] || []
-      content_dirs = []
       processed_urls = data[:processed_urls] || []
       people_config = data[:people_config]
       urls_to_process = urls_to_process.reject do |url|
@@ -132,24 +131,21 @@ module Core
       urls_to_process.each do |url|
         break if early_exit && !should_continue_scraping?(context, data)
 
-        content_dir, people = scrape_url_for_municipal_directory(context, url, context[:people_hint])
+        people = scrape_url_for_municipal_directory(context, url, context[:people_hint])
 
         unless people.blank?
           accumulated_people, people_config = Services::Shared::People.collect_people(people_config,
                                                                                       accumulated_people, people)
-          content_dirs << content_dir
           data[:accumulated_people] = accumulated_people
           data[:people_config] = people_config
-          data[:content_dirs] = content_dirs
         end
 
         processed_urls << url
         data[:processed_urls] = processed_urls
 
         found_people = accumulated_people.map { |person| person["positions"] }
-        num_urls_scraped = processed_urls.count
-
-        puts "#{context[:llm_service_string]}: Scraping #{url}: #{num_urls_scraped} of MAX (#{MAX_URLS_TO_SCRAPE})"
+        # num_urls_scraped = processed_urls.count
+        # puts "#{context[:llm_service_string]}: Scraping #{url}: #{num_urls_scraped} of MAX (#{MAX_URLS_TO_SCRAPE})"
         puts "#{context[:llm_service_string]}: #{found_people.count} people found: #{found_people}"
       end
 
@@ -159,9 +155,8 @@ module Core
     def self.scrape_profiles(context, accumulated_people, processed_urls)
       profile_processed_urls = processed_urls.dup
       people_config = context[:municipality_context][:config]["people"]
-      content_dirs = []
 
-      accumulated_people = accumulated_people.map do |person|
+      accumulated_people.map do |person|
         next person if Services::Shared::People.all_contact_data_points_present?(person) && person["image"].present?
         next person if person["websites"].blank?
 
@@ -174,7 +169,7 @@ module Core
 
           puts "Fetching from #{original_url} for #{person["name"]}"
           profile_processed_urls << original_url
-          url_content_dir, people = scrape_url_for_municipal_directory(
+          people = scrape_url_for_municipal_directory(
             context,
             original_url,
             [],
@@ -187,14 +182,11 @@ module Core
 
           next if person_with_website_data.blank?
 
-          content_dirs << url_content_dir
           person = Services::Shared::People.merge_person(person, person_with_website_data)
         end
 
         person
       end
-
-      [content_dirs, accumulated_people]
     end
 
     def self.scrape_url_for_municipal_directory(context, url, people_hint = [], person_name = "")
@@ -208,30 +200,14 @@ module Core
       FileUtils.mkdir_p(url_content_path)
 
       content_file = page_fetcher.extract_content(url, url_content_path)
-      return [nil, nil] unless content_file.present?
+      return nil unless content_file.present?
 
       people = llm_service.extract_city_people(municipality_context, content_file, url, people_hint, person_name)
 
-      unless people.present? && people.is_a?(Array) && people.count.positive?
-        return [nil,
-                nil]
-      end
+      return nil unless people.present? && people.is_a?(Array) && people.count.positive?
 
-      # people_with_images = people.map do |person|
-      #  maybe_add_source_image_to_person(person, image_map)
-      # end
-
-      # [url_content_path, people_with_images]
-      [url_content_path, people]
+      people
     end
-
-    # def self.maybe_add_source_image_to_person(person, image_map)
-    #  return person if person["image"].blank?
-
-    #  image_key = person["image"].gsub("images/", "")
-    #  person["source_image"] = image_map[image_key]
-    #  person
-    # end
 
     def self.get_llm_service(llm_service_string)
       case llm_service_string
@@ -246,7 +222,8 @@ module Core
       accumulated_officials = data[:accumulated_people]
       num_urls_scraped = data[:processed_urls].count
 
-      return false if num_urls_scraped >= MAX_URLS_TO_SCRAPE
+      num_seeded_urls = context[:seeded_urls].present? ? context[:seeded_urls].count : 0
+      return false if num_urls_scraped >= [MAX_URLS_TO_SCRAPE, num_seeded_urls].max
 
       valid_officials_count = accumulated_officials.count do |official|
         # TODO: should only check if the positions are relevant

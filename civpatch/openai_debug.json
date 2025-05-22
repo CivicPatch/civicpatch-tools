@@ -1,0 +1,5141 @@
+{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Mayor Bruce Harrell's contact information."
+      },
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL for the Office of the Mayor."
+      },
+      "start_date": {
+        "data": "2021",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Text states Bruce Harrell was elected mayor in 2021."
+      },
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member, District 1"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8801",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Rob Saka's contact section."
+      },
+      "email": {
+        "data": "rob.saka@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Rob Saka's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Rob Saka."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member, District 2"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8802",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Mark Solomon's contact section."
+      },
+      "email": {
+        "data": "mark.solomon2@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Mark Solomon's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Mark Solomon."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member, District 3"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8803",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Joy Hollingsworth's contact section."
+      },
+      "email": {
+        "data": "joy.hollingsworth@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Joy Hollingsworth's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Joy Hollingsworth."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member, District 4"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8804",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Maritza Rivera's contact section."
+      },
+      "email": {
+        "data": "maritza.rivera@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Maritza Rivera's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Maritza Rivera."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member, District 5"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8805",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Cathy Moore's contact section."
+      },
+      "email": {
+        "data": "cathy.moore@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Cathy Moore's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Cathy Moore."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member, District 6"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8806",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Dan Strauss's contact section."
+      },
+      "email": {
+        "data": "dan.strauss@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Dan Strauss's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Dan Strauss."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member, District 7"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8807",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Robert Kettle's contact section."
+      },
+      "email": {
+        "data": "robert.kettle@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Robert Kettle's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Robert Kettle."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member, Position 8"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8808",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Alexis Mercedes Rinck's contact section."
+      },
+      "email": {
+        "data": "AlexisMercedes.Rinck@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Alexis Mercedes Rinck's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Alexis Mercedes Rinck."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council President",
+        "Council Member, Position 9"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8809",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Sara Nelson's contact section."
+      },
+      "email": {
+        "data": "sara.nelson@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Sara Nelson's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Sara Nelson."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Mayor Bruce Harrell's section."
+      },
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL and official Mayor's Office page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member, District 1"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8801",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled 'Phone' near name and contact section."
+      },
+      "email": {
+        "data": "Rob.Saka@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted from mailto link text near name."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL for Rob Saka on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member, District 2"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8802",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed near name and contact section."
+      },
+      "email": {
+        "data": "Mark.Solomon2@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed near name and contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Mark Solomon on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member, District 3"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8803",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and contact section."
+      },
+      "email": {
+        "data": "Joy.Hollingsworth@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address extracted from mailto link and text near name."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL for Joy Hollingsworth."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member, District 4"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8804",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone' near name and contact section."
+      },
+      "email": {
+        "data": "Maritza.Rivera@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address clearly shown as mailto link near name and contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Maritza Rivera."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member, District 5"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8805",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed under Contact Us section near name."
+      },
+      "email": {
+        "data": "Cathy.Moore@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed under Contact Us section and in text near name."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Cathy Moore on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member, District 6"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8806",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Dan Strauss contact section."
+      },
+      "email": {
+        "data": "Dan.Strauss@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email labeled 'Email:' near Dan Strauss contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Dan Strauss."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member, District 7"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8807",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Robert Kettle's contact section."
+      },
+      "email": {
+        "data": "Robert.Kettle@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address labeled 'Email:' near Robert Kettle's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Robert Kettle."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member, Position 8"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8808",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed near name and contact section."
+      },
+      "email": {
+        "data": "AlexisMercedes.Rinck@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed near name and contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Alexis Mercedes Rinck."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member",
+        "Citywide"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8809",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Sara Nelson's contact section."
+      },
+      "email": {
+        "data": "Sara.Nelson@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address labeled 'Email:' near Sara Nelson's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Sara Nelson on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Mayor Bruce Harrell's contact information."
+      },
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL for the Office of the Mayor."
+      },
+      "start_date": {
+        "data": "2021",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Text states Bruce Harrell was elected mayor in 2021."
+      },
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member, District 1"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8801",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Rob Saka's contact section."
+      },
+      "email": {
+        "data": "rob.saka@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Rob Saka's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Rob Saka."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member, District 2"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8802",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Mark Solomon's contact section."
+      },
+      "email": {
+        "data": "mark.solomon2@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Mark Solomon's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Mark Solomon."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member, District 3"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8803",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Joy Hollingsworth's contact section."
+      },
+      "email": {
+        "data": "joy.hollingsworth@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Joy Hollingsworth's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Joy Hollingsworth."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member, District 4"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8804",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Maritza Rivera's contact section."
+      },
+      "email": {
+        "data": "maritza.rivera@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Maritza Rivera's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Maritza Rivera."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member, District 5"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8805",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Cathy Moore's contact section."
+      },
+      "email": {
+        "data": "cathy.moore@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Cathy Moore's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Cathy Moore."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member, District 6"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8806",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Dan Strauss's contact section."
+      },
+      "email": {
+        "data": "dan.strauss@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Dan Strauss's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Dan Strauss."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member, District 7"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8807",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Robert Kettle's contact section."
+      },
+      "email": {
+        "data": "robert.kettle@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Robert Kettle's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Robert Kettle."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member, Position 8"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8808",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Alexis Mercedes Rinck's contact section."
+      },
+      "email": {
+        "data": "AlexisMercedes.Rinck@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Alexis Mercedes Rinck's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Alexis Mercedes Rinck."
+      },
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council President",
+        "Council Member, Position 9"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8809",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Sara Nelson's contact section."
+      },
+      "email": {
+        "data": "sara.nelson@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email listed under Sara Nelson's contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page linked for Sara Nelson."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Mayor Bruce Harrell's name and contact section."
+      },
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL is the official Mayor's Office page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member, District 1"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8801",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled 'Phone' near name and contact section."
+      },
+      "email": {
+        "data": "Rob.Saka@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted from mailto link text near name."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL for Rob Saka on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member, District 2"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8802",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed near name and contact section."
+      },
+      "email": {
+        "data": "Mark.Solomon2@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed near name and contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Mark Solomon on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member, District 3"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8803",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and contact section."
+      },
+      "email": {
+        "data": "Joy.Hollingsworth@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address extracted from mailto link and text near name."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL for Joy Hollingsworth on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member, District 4"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "206-684-8804",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone' and near name and contact info."
+      },
+      "email": {
+        "data": "Maritza.Rivera@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address clearly shown near name and contact info."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Maritza Rivera."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member, District 5"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8805",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed near name and contact section."
+      },
+      "email": {
+        "data": "Cathy.Moore@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed near name and contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Cathy Moore on Seattle.gov."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member, District 6"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-8806",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Dan Strauss contact section."
+      },
+      "email": {
+        "data": "Dan.Strauss@seattle.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email labeled 'Email:' near Dan Strauss contact section."
+      },
+      "website": {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Dan Strauss."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": null,
+      "phone_number": {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Mayor Bruce Harrell's contact information."
+      },
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official Office of the Mayor page URL linked at top and in content."
+      },
+      "start_date": {
+        "data": "2021",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Text states Bruce Harrell was elected mayor in 2021."
+      },
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/mayor/about/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a portrait on the official mayor about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Alexis Mercedes Rinck' near name and consistent with council member images."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/council/meet-the-council/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Mayor' near name Bruce Harrell on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Rob Saka' near council member role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Seattle Council Member Mark Solomon' on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Joy Hollingsworth' near council member role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Maritza Rivera' near council member role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Cathy Moore' near council member role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Dan Strauss' near council member role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Bob Kettle' near council member role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Alexis Mercedes Rinck' near council member role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council President",
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/elected-officials/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Sara Nelson' near council president role on official elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/mayor/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found image labeled 'Mayor Bruce Harrell' near name on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL clearly labeled with 'MayorHarrell' and 'bruce_harrell_headshot' near the name Bruce Harrell."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_saka_circle' near the name Rob Saka."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_Solomon_circle2' near the name Mark Solomon."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_hollingsworth_circle' near the name Joy Hollingsworth."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_rivera_circle' near the name Maritza Rivera."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_moore_circle' near the name Cathy Moore."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_struass_circle' near the name Dan Strauss."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Bob Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_kettle_circle' near the name Bob Kettle."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'council_rinck_154x154' near the name Alexis Mercedes Rinck."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL labeled with 'cp_nelson_154' near the name Sara Nelson."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Mayor' near name Bruce Harrell on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Rob Saka' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Seattle Council Member Mark Solomon' on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Joy Hollingsworth' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Maritza Rivera' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Cathy Moore' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Dan Strauss' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Bob Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Bob Kettle' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Alexis Mercedes Rinck' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Sara Nelson' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear portrait on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name with council member context."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Mayor' near name Bruce Harrell on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Rob Saka' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Seattle Council Member Mark Solomon' on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Joy Hollingsworth' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Maritza Rivera' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Cathy Moore' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Dan Strauss' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Bob Kettle' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Alexis Mercedes Rinck' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Sara Nelson' near council member role on official Seattle.gov elected officials page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' found near name on official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Mayor' near name Bruce Harrell on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Rob Saka' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Seattle Council Member Mark Solomon' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Joy Hollingsworth' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Maritza Rivera' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Cathy Moore' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Dan Strauss' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Bob Kettle' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Alexis Mercedes Rinck' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image labeled 'Sara Nelson' near council member photos on official Seattle government page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear portrait on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear portrait on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and 'bruce-harrell-contact.jpg' indicating it is a portrait of Bruce Harrell, the Mayor."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official contact page for the Mayor of Seattle."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Rob Saka' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Mark Solomon' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Joy Hollingsworth' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Maritza Rivera' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Cathy Moore' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Dan Strauss' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Robert Kettle' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Alexis Mercedes Rinck' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Sara Nelson' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is labeled 'Mayor Harrell speaks at AI House Press Conference' and is on the mayor's official site."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official mayor's website URL hosting the content."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and is near the mayor's contact page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor contact page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is labeled 'Mayor Harrell speaks at AI House Press Conference' and is on the mayor's official site."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor's site and article about Mayor Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' near name on official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official mayor page URL."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and 'bruce-harrell-contact.jpg' near the mayor's contact page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor contact page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name with council member context."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is labeled 'Mayor Harrell speaks at AI House Press Conference' and is on the mayor's official site."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor's website page about Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Seattle."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' found near name on official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is labeled 'Mayor Harrell speaks at AI House Press Conference' and is on the mayor's official site."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://harrell.seattle.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official mayor website domain from the URL."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' near name on official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear portrait on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear portrait on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' found near name on official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and 'bruce-harrell-contact.jpg' indicating it is a portrait of Bruce Harrell, the Mayor."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official contact page for the Mayor of Seattle, Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Rob Saka' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Mark Solomon' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Joy Hollingsworth' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Maritza Rivera' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Cathy Moore' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Dan Strauss' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Robert Kettle' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Alexis Mercedes Rinck' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Sara Nelson' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found image URL labeled with 'MayorHarrell' and 'bruce_harrell_headshot' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Homepage URL of Seattle government likely includes mayor's official page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is labeled 'Mayor Harrell' and is prominently displayed on the mayor's official page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor's website and article about Mayor Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Seattle."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor about page, representing Bruce Harrell's profile."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and 'bruce-harrell-contact.jpg' near the mayor's contact page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor contact page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Rob Saka' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Mark Solomon' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Joy Hollingsworth' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Maritza Rivera' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Cathy Moore' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Dan Strauss' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Robert Kettle' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Alexis Mercedes Rinck' near the image and consistent with council member images."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image alt text and URL clearly label 'Councilmember Sara Nelson' near the image."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is on the official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image alt text and page context identify Bruce Harrell as Mayor; image near name and page about Mayor Bruce Harrell."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is official mayor's site and article about Mayor Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' found near name on official mayor page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": [
+    {
+      "name": "Bruce Harrell",
+      "positions": [
+        "Mayor"
+      ],
+      "image": {
+        "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear official portrait on the mayor's about page."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page."
+      },
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": []
+}{
+  "people": [
+    {
+      "name": "Rob Saka",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Rob Saka' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Mark Solomon",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Mark Solomon' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Joy Hollingsworth",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Joy Hollingsworth' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Maritza Rivera",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Maritza Rivera' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Cathy Moore",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Cathy Moore' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Dan Strauss",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Dan Strauss' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Robert Kettle",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Robert Kettle' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Alexis Mercedes Rinck",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Alexis Mercedes Rinck' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "name": "Sara Nelson",
+      "positions": [
+        "Council Member"
+      ],
+      "image": {
+        "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image alt text 'Councilmember Sara Nelson' and proximity to name."
+      },
+      "phone_number": null,
+      "email": null,
+      "website": null,
+      "start_date": null,
+      "end_date": null
+    }
+  ]
+}{
+  "people": []
+}{
+  "people": []
+}

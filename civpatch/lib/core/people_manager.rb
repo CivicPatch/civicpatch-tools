@@ -7,6 +7,8 @@ require "utils/phone_helper"
 require "core/person_manager/utils"
 
 module Core
+  KEY_ORDER = %w[name positions image cdn_image email phone_number website sources]
+
   class PeopleManager
     def self.get_people(state, geoid, type = nil)
       if type.present?
@@ -56,7 +58,7 @@ module Core
           Utils::UrlHelper.format_url(source)
         end
 
-        person
+        person.sort_by { |key, _| KEY_ORDER.index(key) || KEY_ORDER.length }.to_h
       end
 
       filtered_people = people.reject { |person| person["positions"].count.zero? }

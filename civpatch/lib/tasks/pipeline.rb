@@ -17,10 +17,6 @@ require_relative "../services/github"
 require_relative "../services/google_sheets"
 
 namespace :pipeline do
-  task :hello do
-    puts "Hello, world!"
-  end
-
   desc "Scrape council members for a specific municipality"
   task :fetch, [:state, :geoid, :create_pr, :send_costs] do |_t, args|
     state = args[:state]
@@ -89,7 +85,8 @@ namespace :pipeline do
     request_cache = {}
 
     # OpenAI - LLM call
-    page_fetcher, source_urls, source_dirs, people, people_config = process_with_llm(
+    # This is also the only call that gathers images
+    page_fetcher, source_urls, people_config = process_with_llm(
       municipality_context, "openai",
       seeded_urls: municipality_context[:config]["sources"] || [],
       request_cache: request_cache,
@@ -98,17 +95,12 @@ namespace :pipeline do
 
     municipality_context[:config]["people"] = people_config
 
-    # openai is the only call that scrapes images; arbitrarily choose openai for this
-    # since it's the first call
-    # people_with_images = process_images(municipality_context, source_dirs, people)
-    # Core::PeopleManager.update_people(municipality_context, people_with_images, "openai.after")
-
     # Gemini - LLM call
-    _, _, _, _, people_config = process_with_llm(municipality_context, "gemini",
-                                                 page_fetcher: page_fetcher,
-                                                 seeded_urls: source_urls,
-                                                 request_cache: request_cache,
-                                                 people_hint: people_hint)
+    _, _, people_config = process_with_llm(municipality_context, "gemini",
+                                           page_fetcher: page_fetcher,
+                                           seeded_urls: source_urls,
+                                           request_cache: request_cache,
+                                           people_hint: people_hint)
 
     people_config
   end
@@ -117,7 +109,7 @@ namespace :pipeline do
                        seeded_urls: [], request_cache: {}, people_hint: [])
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
-    page_fetcher, source_dirs, accumulated_people, people_config = Core::MunicipalScraper.fetch(
+    page_fetcher, accumulated_people, people_config = Core::MunicipalScraper.fetch(
       llm_service_string,
       municipality_context,
       page_fetcher: page_fetcher,
@@ -132,29 +124,30 @@ namespace :pipeline do
 
     source_urls = people.map { |person| person["sources"] }.flatten.uniq
 
-    [page_fetcher, source_urls, source_dirs, people, people_config]
+    [page_fetcher, source_urls, people_config]
   end
 
-  def aggregate_sources(municipality_context, sources: [])
-    state = municipality_context[:state]
-    municipality_entry = municipality_context[:municipality_entry]
-    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
-    people_config = municipality_context[:config]["people"]
-    validated_result = Resolvers::PeopleResolver.resolve(municipality_context)
+  def aggregate_sources(context, sources: [])
+    state = context[:state]
+    positions_config = Core::CityManager.get_config(context[:government_type])
+    people_config = context[:config]["people"]
+    merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
 
-    people = Core::PeopleManager.format_people(people_config, validated_result[:merged_sources], positions_config)
+    people = process_images(context, merged_people)
+    people = Core::PeopleManager.format_people(people_config, people, positions_config)
 
-    Core::PeopleManager.update_people(municipality_context, people)
+    Core::PeopleManager.update_people(context, people)
 
-    officials_hash = Digest::MD5.hexdigest(people.to_yaml)
+    people_hash = Digest::MD5.hexdigest(people.to_yaml)
     Core::StateManager.update_municipalities(state, [
-                                               { "geoid" => municipality_entry["geoid"],
+                                               { "geoid" => context["geoid"],
                                                  "meta_updated_at" => Time.now
                                                   .in_time_zone("America/Los_Angeles")
                                                   .strftime("%Y-%m-%d"),
-                                                 "meta_hash" => officials_hash,
+                                                 "meta_hash" => people_hash,
                                                  "meta_sources" => sources }
                                              ])
+    people
   end
 
   def prepare_directories(state, municipality_entry)
@@ -165,46 +158,35 @@ namespace :pipeline do
     FileUtils.mkdir_p(cache_destination_dir)
   end
 
-  def process_images(municipality_context, source_dirs, people)
+  def process_images(municipality_context, people)
     state = municipality_context[:state]
     municipality_entry = municipality_context[:municipality_entry]
-    puts "Uploading images for #{municipality_entry["name"]}"
-    puts "Source dirs: #{source_dirs.inspect}"
+
+    city_cache_path = Core::PathHelper.get_city_cache_path(state, municipality_entry["geoid"])
+    image_map_path = File.join(city_cache_path, "images", "image_map.json")
+
+    return people unless File.exist?(image_map_path)
+
+    image_map = JSON.parse(File.read(image_map_path))
 
     data_city_path = Core::PathHelper.get_data_city_path(state, municipality_entry["geoid"])
     # Find last instance of data/ because repo could start with open-data/data/
     remote_city_path = data_city_path.rpartition("data/").last
 
-    images_in_use = people.map { |person| person["image"] }.compact
+    source_images_dir = File.join(city_cache_path, "images")
 
-    source_dirs.each do |source_dir|
-      # Get list of images in dir
-      source_images_dir = File.join(source_dir, "images")
-      source_dir_images = Dir.entries(source_images_dir)
-
-      filtered_images = source_dir_images.select do |image_filename|
-        images_in_use.any? { |image_path| File.basename(image_path) == File.basename(image_filename) }
-      end
-
-      filtered_images.each do |filtered_image|
-        file_path = File.join(source_images_dir, filtered_image)
-        file_key = File.join(remote_city_path, "images", filtered_image)
-        puts "Uploading #{file_path} to remote #{file_key}"
-        content_type = Utils::ImageHelper.determine_mime_type(file_path)
-        Services::Spaces.put_object(file_key, file_path, content_type)
-      end
-
-      # Cleanup images
-      FileUtils.rm_rf(source_images_dir)
-      Dir.mkdir(source_images_dir)
-    end
-
-    # Update sources with remote URLs
     people.map do |person|
-      next person if person["image"].blank?
+      next person unless person["image"].present?
 
-      key = File.join(remote_city_path, "images", File.basename(person["image"]))
-      person["image"] = Utils::ImageHelper.get_cdn_url(key)
+      image_key = image_map.keys.find { |key| image_map[key] == person["image"] }
+      next person unless image_key.present?
+
+      file_path = File.join(source_images_dir, image_key)
+      file_key = File.join(remote_city_path, "images", image_key)
+      puts "Uploading #{file_path} to remote #{file_key}"
+      content_type = Utils::ImageHelper.determine_mime_type(file_path)
+      Services::Spaces.put_object(file_key, file_path, content_type)
+      person["cdn_image"] = Utils::ImageHelper.get_cdn_url(file_key)
 
       person
     end
@@ -219,12 +201,12 @@ namespace :pipeline do
       person["sources"]
     end.uniq
 
-    Core::ContextManager
-      .update_context_config(municipality_context,
-                             sources: source_urls)
+    context = Core::ContextManager
+              .update_context_config(municipality_context,
+                                     sources: source_urls)
 
     Core::CacheManager.clean(state, geoid, source_urls)
-    Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
+    Core::ConfigManager.finalize_config(state, geoid, context[:config])
   end
 
   private

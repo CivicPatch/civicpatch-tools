@@ -1,0 +1,1 @@
+ ![Google Translate logo]()  ![](https://www.google.com/images/cleardot.gif)  ![](https://www.google.com/images/cleardot.gif)  ![](https://www.google.com/images/cleardot.gif)  ![Mayor Bruce Harrell](https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-banner2.jpg)  ![Mayor Bruce Harrell](https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg)  ![]() 
