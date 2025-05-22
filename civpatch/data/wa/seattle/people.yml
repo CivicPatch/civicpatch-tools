@@ -4,13 +4,20 @@
   - Mayor
   email: bruce.harrell@seattle.gov
   phone_number: "(206) 684-4000"
-  website: https://www.seattle.gov/mayor/about
+  website: https://seattle.gov/mayor
   image:
+  - data: https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg
+    llm_confidence: 1
+    llm_confidence_reason: Image is a clear headshot labeled 'Mayor Bruce Harrell'
+      near the name.
+    source: https://www.seattle.gov/mayor/about
   start_date: '2021'
   end_date:
   sources:
   - https://www.seattle.gov/mayor/about
-  - https://www.seattle.gov/mayor
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/mayor
   updated_at: '2025-05-22'
 - name: Sara Nelson
   positions:
@@ -22,6 +29,8 @@
   phone_number: "(206) 684-8809"
   website: https://seattle.gov/council/meet-the-council/sara-nelson
   image:
+  - data: https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:
@@ -44,7 +53,9 @@
   phone_number: "(206) 684-8801"
   website: https://seattle.gov/council/saka
   image:
-  start_date:
+  - data: https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg
+    source: https://seattle.gov/council/meet-the-council
+  start_date: https://seattle.gov/council/saka
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
@@ -66,6 +77,8 @@
   phone_number: "(206) 684-8802"
   website: https://seattle.gov/council/solomon
   image:
+  - data: https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:
@@ -88,6 +101,8 @@
   phone_number: "(206) 684-8803"
   website: https://seattle.gov/council/hollingsworth
   image:
+  - data: https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:
@@ -110,6 +125,8 @@
   phone_number: "(206) 684-8804"
   website: https://seattle.gov/council/rivera
   image:
+  - data: https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:
@@ -132,6 +149,8 @@
   phone_number: "(206) 684-8805"
   website: https://seattle.gov/council/moore
   image:
+  - data: https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:
@@ -154,6 +173,8 @@
   phone_number: "(206) 684-8806"
   website: https://seattle.gov/council/strauss
   image:
+  - data: https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:
@@ -176,6 +197,8 @@
   phone_number: "(206) 684-8807"
   website: https://seattle.gov/council/kettle
   image:
+  - data: https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:
@@ -198,6 +221,8 @@
   phone_number: "(206) 684-8808"
   website: https://seattle.gov/council/rinck
   image:
+  - data: https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg
+    source: https://seattle.gov/council/meet-the-council
   start_date:
   end_date:
   sources:

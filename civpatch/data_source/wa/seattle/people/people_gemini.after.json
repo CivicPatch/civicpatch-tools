@@ -7,12 +7,14 @@
     "image": [],
     "phone_number": "(206) 684-4000",
     "email": null,
-    "website": "https://www.seattle.gov/mayor/about",
+    "website": "https://seattle.gov/mayor",
     "start_date": "2021",
     "end_date": null,
     "sources": [
       "https://www.seattle.gov/mayor/about",
-      "https://www.seattle.gov/mayor"
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/mayor"
     ],
     "updated_at": "2025-05-22"
   },
@@ -75,13 +77,15 @@
     "name": "Rob Saka",
     "positions": [
       "Council Member",
-      "District 1"
+      "Citywide",
+      "District 1",
+      "Position 9"
     ],
     "image": [],
     "phone_number": "(206) 684-8801",
     "email": "Rob.Saka@seattle.gov",
     "website": "https://seattle.gov/council/saka",
-    "start_date": null,
+    "start_date": "https://seattle.gov/council/saka",
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
@@ -209,7 +213,7 @@
     ],
     "image": [],
     "phone_number": "(206) 684-8806",
-    "email": "dan.strauss@seattle.gov",
+    "email": "Dan.Strauss@seattle.gov",
     "website": "https://seattle.gov/council/strauss",
     "start_date": null,
     "end_date": null,
