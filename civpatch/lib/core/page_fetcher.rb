@@ -13,7 +13,7 @@ module Core
   class PageFetcher
     WAIT_TIME = 2
 
-    def extract_content(url, destination_dir)
+    def self.extract_content(url, destination_dir)
       cached_file = Core::PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
 
       if File.exist?(cached_file)
@@ -49,7 +49,7 @@ module Core
       Core::PathHelper.project_path(markdown_content_file_path)
     end
 
-    def sanitize_html(html)
+    def self.sanitize_html(html)
       sanitized_html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
       nokogiri_doc = Nokogiri::HTML(sanitized_html)
       nokogiri_doc.css("script, style").remove

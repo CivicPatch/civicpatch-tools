@@ -89,7 +89,6 @@ module Services
 
         if response.success?
           log_usage(response, model, with_search, state, municipality_name)
-          File.write("gemini_debug.json", JSON.pretty_generate(response), mode: "a")
           parse_response(response)
         else
           log_error(response)

@@ -86,7 +86,7 @@ namespace :pipeline do
 
     # OpenAI - LLM call
     # This is also the only call that gathers images
-    page_fetcher, source_urls, people_config = process_with_llm(
+    seeded_urls, people_config = process_with_llm(
       municipality_context, "openai",
       seeded_urls: municipality_context[:config]["sources"] || [],
       request_cache: request_cache,
@@ -96,23 +96,21 @@ namespace :pipeline do
     municipality_context[:config]["people"] = people_config
 
     # Gemini - LLM call
-    _, _, people_config = process_with_llm(municipality_context, "gemini",
-                                           page_fetcher: page_fetcher,
-                                           seeded_urls: source_urls,
-                                           request_cache: request_cache,
-                                           people_hint: people_hint)
+    _, people_config = process_with_llm(municipality_context, "gemini",
+                                        seeded_urls: seeded_urls,
+                                        request_cache: request_cache,
+                                        people_hint: people_hint)
 
     people_config
   end
 
-  def process_with_llm(municipality_context, llm_service_string, page_fetcher: nil,
+  def process_with_llm(municipality_context, llm_service_string,
                        seeded_urls: [], request_cache: {}, people_hint: [])
     positions_config = Core::CityManager.get_config(municipality_context[:government_type])
 
-    page_fetcher, accumulated_people, people_config = Core::MunicipalScraper.fetch(
+    accumulated_people, people_config = Core::MunicipalScraper.fetch(
       llm_service_string,
       municipality_context,
-      page_fetcher: page_fetcher,
       seeded_urls: seeded_urls,
       request_cache: request_cache,
       people_hint: people_hint
@@ -124,7 +122,7 @@ namespace :pipeline do
 
     source_urls = people.map { |person| person["sources"] }.flatten.uniq
 
-    [page_fetcher, source_urls, people_config]
+    [source_urls, people_config]
   end
 
   def aggregate_sources(context, sources: [])
@@ -201,12 +199,8 @@ namespace :pipeline do
       person["sources"]
     end.uniq
 
-    context = Core::ContextManager
-              .update_context_config(municipality_context,
-                                     sources: source_urls)
-
     Core::CacheManager.clean(state, geoid, source_urls)
-    Core::ConfigManager.finalize_config(state, geoid, context[:config])
+    Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
   end
 
   private
