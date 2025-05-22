@@ -2,7 +2,8 @@
   {
     "name": "Bruce Harrell",
     "positions": [
-      "Mayor"
+      "Mayor",
+      "mayor"
     ],
     "image": null,
     "phone_number": null,
@@ -12,9 +13,12 @@
     "end_date": null,
     "sources": [
       "https://www.seattle.gov/mayor",
-      "https://www.seattle.gov/elected-officials",
       "https://www.seattle.gov/mayor/about",
-      "https://harrell.seattle.gov"
+      "https://www.seattle.gov/mayor/contact",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://harrell.seattle.gov",
+      "https://www.seattle.gov",
+      "https://www.seattle.gov/mayor/team"
     ],
     "updated_at": "2025-05-22"
   },
@@ -30,7 +34,6 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"
@@ -47,7 +50,6 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"
@@ -64,7 +66,6 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"
@@ -81,7 +82,6 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"
@@ -98,7 +98,6 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"
@@ -115,64 +114,42 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/elected-officials",
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Bob Kettle",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.seattle.gov/elected-officials"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Alexis Mercedes Rinck",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.seattle.gov/elected-officials",
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Sara Nelson",
-    "positions": [
-      "Council President",
-      "Council Member"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.seattle.gov/elected-officials",
       "https://seattle.gov/council/meet-the-council"
     ],
     "updated_at": "2025-05-22"
   },
   {
     "name": "Robert Kettle",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://seattle.gov/council/meet-the-council"
+    ],
+    "updated_at": "2025-05-22"
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://seattle.gov/council/meet-the-council"
+    ],
+    "updated_at": "2025-05-22"
+  },
+  {
+    "name": "Sara Nelson",
     "positions": [
       "Council Member"
     ],

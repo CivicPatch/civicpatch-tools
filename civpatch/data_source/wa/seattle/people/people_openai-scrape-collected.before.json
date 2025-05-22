@@ -3,27 +3,34 @@
     "name": "Bruce Harrell",
     "sources": [
       "https://www.seattle.gov/mayor",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/mayor/about"
+      "https://www.seattle.gov/mayor/about",
+      "https://www.seattle.gov/mayor/contact",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
     ],
     "images": [
       {
         "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' found near name on official mayor page.",
+        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page.",
         "source": "https://www.seattle.gov/mayor"
       },
       {
-        "data": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Mayor' near name Bruce Harrell on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
         "data": "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",
-        "llm_confidence": 1.0,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is a clear portrait on the official mayor page.",
         "source": "https://www.seattle.gov/mayor/about"
+      },
+      {
+        "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and 'bruce-harrell-contact.jpg' indicating it is a portrait of Bruce Harrell, the Mayor.",
+        "source": "https://www.seattle.gov/mayor/contact"
+      },
+      {
+        "data": "https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/03/IMG_2337-scaled.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is labeled 'Mayor Harrell speaks at AI House Press Conference' and is on the mayor's official site.",
+        "source": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
       }
     ],
     "positions": [
@@ -40,9 +47,21 @@
       },
       {
         "data": "https://www.seattle.gov/mayor/about",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Page URL is the official mayor about page.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official mayor's about page.",
         "source": "https://www.seattle.gov/mayor/about"
+      },
+      {
+        "data": "https://www.seattle.gov/mayor/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official contact page for the Mayor of Seattle.",
+        "source": "https://www.seattle.gov/mayor/contact"
+      },
+      {
+        "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official mayor's website URL hosting the content.",
+        "source": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
       }
     ],
     "start_dates": [],
@@ -52,21 +71,14 @@
   {
     "name": "Rob Saka",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Rob Saka' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Rob Saka' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Rob Saka' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -82,21 +94,14 @@
   {
     "name": "Mark Solomon",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Mark Solomon' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Mark Solomon' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Seattle Council Member Mark Solomon' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -112,21 +117,14 @@
   {
     "name": "Joy Hollingsworth",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Joy Hollingsworth' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Joy Hollingsworth' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Joy Hollingsworth' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -142,21 +140,14 @@
   {
     "name": "Maritza Rivera",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Maritza Rivera' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Maritza Rivera' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Maritza Rivera' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -172,21 +163,14 @@
   {
     "name": "Cathy Moore",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Cathy Moore' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Cathy Moore' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_moore_circle.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Cathy Moore' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -202,21 +186,14 @@
   {
     "name": "Dan Strauss",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Dan Strauss' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Dan Strauss' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Dan Strauss' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -232,21 +209,14 @@
   {
     "name": "Robert Kettle",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Robert Kettle' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Robert Kettle' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Bob Kettle' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -262,21 +232,14 @@
   {
     "name": "Alexis Mercedes Rinck",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name.",
+        "llm_confidence_reason": "Image alt text 'Alexis Mercedes Rinck' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.png",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Alexis Mercedes Rinck' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [
@@ -292,21 +255,14 @@
   {
     "name": "Sara Nelson",
     "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials"
+      "https://seattle.gov/council/meet-the-council"
     ],
     "images": [
       {
         "data": "https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Councilmember Sara Nelson' near name.",
+        "llm_confidence_reason": "Image alt text 'Councilmember Sara Nelson' and proximity to name.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/cp_nelson_154.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image labeled 'Sara Nelson' near council member photos on official Seattle government page.",
-        "source": "https://www.seattle.gov/elected-officials"
       }
     ],
     "positions": [

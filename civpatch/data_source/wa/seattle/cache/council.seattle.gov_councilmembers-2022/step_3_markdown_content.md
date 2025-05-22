@@ -1,1 +1,0 @@
- ![Seattle City Council Blog](https://council.seattle.gov/wp-content/uploads/2023/01/Untitled-design-6-e1673458549882.png)  ![Seattle City Council Blog](https://council.seattle.gov/wp-content/uploads/2023/01/Untitled-design-7.png)  ![logo](https://council.seattle.gov/wp-content/uploads/2023/01/Untitled-design-e1672876128520.png) 
