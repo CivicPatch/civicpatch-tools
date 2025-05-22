@@ -22,7 +22,7 @@ module GitHub
         | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Term Dates** | **Image**     |
         |-----------|-------------------|---------------|---------------|---------------|----------------|---------------|
         #{people.map do |person|
-          image = person["image"]
+          image = person["cdn_image"]
           email = person["email"]
           phone = person["phone_number"]
           website = person["website"]
@@ -72,9 +72,9 @@ module GitHub
         ## Agreement Score: #{agreement_score}
         ---
         ### Missing People
-        #{missing_people_table}
+        #{missing_people_table || "N/A"}
         ### Disagreements
-        #{disagreement_table}
+        #{disagreement_table || "N/A"}
       MARKDOWN
     end
 
