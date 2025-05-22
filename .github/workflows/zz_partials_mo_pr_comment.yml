@@ -75,25 +75,26 @@ jobs:
           echo "GEOID=$GEOID" >> $GITHUB_OUTPUT
 
       - name: Comment on PR
-        id: comment-step
         env:
-          GITHUB_APPROVE_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
           GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
           GITHUB_USERNAME: civic-patch-pipeline-bot
         run: |
           STATE=${{ steps.extract-vars.outputs.STATE }}
           GEOID=${{ steps.extract-vars.outputs.GEOID }}
           BRANCH_NAME=${{ steps.extract-vars.outputs.BRANCH_NAME }}
-          COMMAND="github_pipeline:generate_pr_data[$STATE,$GEOID]"
+          PR_NUMBER=${{ inputs.pr_number }}
+          COMMAND="/app/civpatch/lib/tasks/scripts/pull_request_comment.sh $STATE $GEOID $PR_NUMBER"
 
-          ./civpatch_cli/bin/cli run-task -state $STATE -geoid $GEOID -branch-name $BRANCH_NAME -command $COMMAND
+          ./civpatch_cli/bin/cli run-task -branch-name $BRANCH_NAME -command $COMMAND
 
       - name: Approve PR if Validated
         env:
           GITHUB_USERNAME: civic-patch-approve-bot
           GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
-          PR_NUMBER: ${{ inputs.pr_number }}
-        if: steps.comment-step.outputs.approve == 'true'
         run: |
-          echo "Checking if PR should be approved based on previous step..."
-          gh pr review $PR_NUMBER --approve --body "Approved by Bot - agreement score looks good" 
+          STATE=${{ steps.extract-vars.outputs.STATE }}
+          GEOID=${{ steps.extract-vars.outputs.GEOID }}
+          BRANCH_NAME=${{ steps.extract-vars.outputs.BRANCH_NAME }}
+          PR_NUMBER=${{ inputs.pr_number }}
+          COMMAND="/app/civpatch/lib/tasks/scripts/pull_request_review.sh $STATE $GEOID $PR_NUMBER" 
+          ./civpatch_cli/bin/cli run-task -branch-name $BRANCH_NAME -command $COMMAND

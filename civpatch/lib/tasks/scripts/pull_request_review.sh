@@ -20,13 +20,20 @@ if [ -z "$GH_TOKEN" ]; then
   exit 1
 fi
 
-REVIEW=$(rake github_pipeline:generate_review[$STATE,$GEOID])
-echo $REVIEW
-SCORE=$(printf '%b' "$REVIEW" | jq -r '.score')
-COMMENT=$(printf '%b' "$REVIEW" | jq -r '.comment')
+REVIEW=$(rake "github_pipeline:generate_review[$STATE,$GEOID]")
+SCORE=$(printf "$REVIEW" | jq '.score' )
+COMMENT=$(printf "$REVIEW" | jq --raw-output '.comment' | tr -d '"')
 
-
-
-
+APPROVED_COMMENT="Approved by Bot based on a high agreement score (>70%)."
+REJECTED_COMMENT="Rejected by Bot - please manually review."
 
 # gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
+APPROVAL_SCORE=70
+if ["$SCORE" -gt "$APPROVAL_SCORE" ]; then
+  COMMENT_BODY=$(printf "# Pass ✅\n%s\n\n%s" "$APPROVED_COMMENT" "$COMMENT")
+  gh pr review $PR_NUMBER --approve -b "$COMMENT_BODY"
+else
+  COMMENT_BODY=$(printf "# Rejected ❌\n%s\n\n%s" "$REJECTED_COMMENT" "$COMMENT")
+  gh pr review $PR_NUMBER --request-changes -b "$COMMENT_BODY"
+fi
+

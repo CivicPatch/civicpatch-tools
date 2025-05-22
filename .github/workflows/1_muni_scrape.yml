@@ -66,9 +66,6 @@ jobs:
   populate_city_directory:
     environment: env-${{ github.actor }}
     timeout-minutes: 15
-    #permissions:
-    #  contents: write
-    #  pull-requests: write
     needs: get_municipalities_from_queue
     runs-on: ubuntu-latest
     strategy:
@@ -118,26 +115,3 @@ jobs:
             -geoid ${{ matrix.municipality_entry.geoid }} \
             -github-env env-${{ github.actor }} \
             -create-pr -with-ci -send-costs
-      
-      #- name: Open a pull request
-      #  run: |
-      #    git push --set-upstream origin ${{ env.BRANCH_NAME }}
-      #    CITY_DIRECTORY_LINK=$(bundle exec rake "github_pipeline:get_city_directory_link[${{ github.event.inputs.state }},${{ matrix.city_entry.geoid }},${{ env.BRANCH_NAME }}]")
-      #    CONFIG_LINK=$(bundle exec rake "github_pipeline:get_config_link[${{ github.event.inputs.state }},${{ matrix.city_entry.geoid }},${{ env.BRANCH_NAME }}]")
-      #    COMMENT=$(
-      #      cat <<EOF
-      #    PR opened by the Municipal Officials - Scrape workflow.
-      #    * people.yml - Make changes [here]($CITY_DIRECTORY_LINK) and validation workflows will re-run.
-      #    * config.yml - Make changes [here]($CONFIG_LINK) and the entire pipeline will re-run
-      #      (note: if you want the whole pipeline to re-run, do not make changes to people.yml)
-
-      #    EOF
-      #    )
-      #    gh pr create \
-      #      --base main \
-      #      --head ${{ env.BRANCH_NAME }} \
-      #      --title "Populate city info for ${{ matrix.city_entry.name }}, ${{ github.event.inputs.state }}" \
-      #      --body "$COMMENT" \
-      #      --label "env-${{ github.actor }}"
-      #  env:
-      #    GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
