@@ -35,22 +35,6 @@
     "updated_at": "2025-05-22"
   },
   {
-    "name": "Bob Kettle",
-    "positions": [
-      "Council Member"
-    ],
-    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.seattle.gov/elected-officials"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
     "name": "Cathy Moore",
     "positions": [
       "Council Member"
@@ -157,14 +141,15 @@
     "positions": [
       "Council Member"
     ],
-    "image": "https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg",
+    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
     "phone_number": null,
     "email": null,
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://seattle.gov/council/meet-the-council",
+      "https://www.seattle.gov/elected-officials"
     ],
     "updated_at": "2025-05-22"
   },
