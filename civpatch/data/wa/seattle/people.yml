@@ -5,13 +5,14 @@
   email: bruce.harrell@seattle.gov
   phone_number:
   website: https://www.seattle.gov/mayor
-  image: https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg
+  image: https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg
   start_date:
   end_date:
   sources:
-  - https://www.seattle.gov/mayor/about
-  - https://www.seattle.gov/elected-officials
   - https://www.seattle.gov/mayor
+  - https://www.seattle.gov/elected-officials
+  - https://www.seattle.gov/mayor/about
+  - https://harrell.seattle.gov
   updated_at: '2025-05-22'
 - name: Sara Nelson
   positions:

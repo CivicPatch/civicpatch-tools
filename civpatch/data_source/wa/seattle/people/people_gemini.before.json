@@ -11,9 +11,10 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/mayor/about",
+      "https://www.seattle.gov/mayor",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/mayor"
+      "https://www.seattle.gov/mayor/about",
+      "https://harrell.seattle.gov"
     ],
     "updated_at": "2025-05-22"
   },

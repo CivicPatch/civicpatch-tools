@@ -4,16 +4,16 @@
     "positions": [
       "Mayor"
     ],
-    "image": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+    "image": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
     "phone_number": null,
     "email": null,
     "website": "https://www.seattle.gov/mayor",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.seattle.gov/mayor/about",
+      "https://www.seattle.gov/mayor",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/mayor"
+      "https://www.seattle.gov/mayor/about"
     ],
     "updated_at": "2025-05-22"
   },

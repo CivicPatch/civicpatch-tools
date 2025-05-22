@@ -2,9 +2,10 @@
   {
     "name": "Bruce Harrell",
     "sources": [
-      "https://www.seattle.gov/mayor/about",
+      "https://www.seattle.gov/mayor",
       "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/mayor"
+      "https://www.seattle.gov/mayor/about",
+      "https://harrell.seattle.gov"
     ],
     "images": [],
     "positions": [
