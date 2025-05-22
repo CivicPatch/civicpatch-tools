@@ -10,8 +10,8 @@
     "images": [
       {
         "data": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is labeled 'Mayor Bruce Harrell' and is prominently displayed on the official mayor page.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Mayor Bruce Harrell' near name on official mayor page.",
         "source": "https://www.seattle.gov/mayor"
       },
       {
@@ -23,7 +23,7 @@
       {
         "data": "https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-contact.jpg",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and is near the mayor's contact page.",
+        "llm_confidence_reason": "Image URL contains 'MayorHarrell' and 'bruce-harrell-contact.jpg' near the mayor's contact page.",
         "source": "https://www.seattle.gov/mayor/contact"
       },
       {
@@ -41,8 +41,8 @@
     "websites": [
       {
         "data": "https://www.seattle.gov/mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Page URL is the official mayor page for Bruce Harrell.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official mayor page URL.",
         "source": "https://www.seattle.gov/mayor"
       },
       {
@@ -60,7 +60,7 @@
       {
         "data": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official mayor's site and article about Mayor Bruce Harrell.",
+        "llm_confidence_reason": "Page URL is the official mayor's website page about Bruce Harrell.",
         "source": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
       }
     ],
@@ -238,7 +238,7 @@
       {
         "data": "https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name.",
+        "llm_confidence_reason": "Image alt text and URL label 'Alexis Mercedes Rinck' near name with council member context.",
         "source": "https://seattle.gov/council/meet-the-council"
       }
     ],

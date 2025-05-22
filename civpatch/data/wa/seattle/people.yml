@@ -16,6 +16,7 @@
   - https://harrell.seattle.gov
   - https://www.seattle.gov
   - https://www.seattle.gov/mayor/team
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/headshotwebcrop.jpg
   updated_at: '2025-05-22'
 - name: Alexis Mercedes Rinck
   positions:
@@ -28,6 +29,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/rinck_300.jpg
   updated_at: '2025-05-22'
 - name: Cathy Moore
   positions:
@@ -40,6 +42,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/moore_300.jpg
   updated_at: '2025-05-22'
 - name: Dan Strauss
   positions:
@@ -52,6 +55,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/Struass-2022-headshot_square.jpg
   updated_at: '2025-05-22'
 - name: Joy Hollingsworth
   positions:
@@ -64,6 +68,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/hollingsworth_300.jpg
   updated_at: '2025-05-22'
 - name: Maritza Rivera
   positions:
@@ -76,6 +81,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/rivera_300.jpg
   updated_at: '2025-05-22'
 - name: Mark Solomon
   positions:
@@ -88,6 +94,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/mark-solomon.jpg
   updated_at: '2025-05-22'
 - name: Rob Saka
   positions:
@@ -100,6 +107,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/saka_300.jpg
   updated_at: '2025-05-22'
 - name: Robert Kettle
   positions:
@@ -112,6 +120,7 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/kettle_300.jpg
   updated_at: '2025-05-22'
 - name: Sara Nelson
   positions:
@@ -124,4 +133,5 @@
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/nelson_300x300.jpg
   updated_at: '2025-05-22'
