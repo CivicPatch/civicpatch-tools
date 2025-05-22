@@ -7,14 +7,12 @@
     "image": [],
     "phone_number": "(206) 684-4000",
     "email": null,
-    "website": "https://seattle.gov/mayor",
+    "website": "https://www.seattle.gov/mayor/about",
     "start_date": "2021",
     "end_date": null,
     "sources": [
       "https://www.seattle.gov/mayor/about",
-      "https://seattle.gov/council/moore",
-      "https://seattle.gov/council/strauss",
-      "https://seattle.gov/mayor"
+      "https://www.seattle.gov/mayor"
     ],
     "updated_at": "2025-05-22"
   },
@@ -23,7 +21,7 @@
     "positions": [
       "Council President",
       "Council Member",
-      "Citywide",
+      "At-large",
       "Position 9"
     ],
     "image": [],
@@ -35,14 +33,12 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://seattle.gov/council/kettle"
     ],
     "updated_at": "2025-05-22"
   },
@@ -57,6 +53,32 @@
     "phone_number": "(206) 684-8808",
     "email": "AlexisMercedes.Rinck@seattle.gov",
     "website": "https://seattle.gov/council/rinck",
+    "start_date": "2024-12-03",
+    "end_date": null,
+    "sources": [
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck",
+      "https://council.seattle.gov/rinck"
+    ],
+    "updated_at": "2025-05-22"
+  },
+  {
+    "name": "Rob Saka",
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "image": [],
+    "phone_number": "(206) 684-8801",
+    "email": "rob.saka@seattle.gov",
+    "website": "https://seattle.gov/council/saka",
     "start_date": null,
     "end_date": null,
     "sources": [
@@ -68,36 +90,7 @@
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Rob Saka",
-    "positions": [
-      "Council Member",
-      "Citywide",
-      "District 1",
-      "Position 9"
-    ],
-    "image": [],
-    "phone_number": "(206) 684-8801",
-    "email": "Rob.Saka@seattle.gov",
-    "website": "https://seattle.gov/council/saka",
-    "start_date": "https://seattle.gov/council/saka",
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council",
-      "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
-      "https://seattle.gov/council/solomon",
-      "https://seattle.gov/council/hollingsworth",
-      "https://seattle.gov/council/rivera",
-      "https://seattle.gov/council/moore",
-      "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://seattle.gov/council/kettle"
     ],
     "updated_at": "2025-05-22"
   },
@@ -109,21 +102,20 @@
     ],
     "image": [],
     "phone_number": "(206) 684-8802",
-    "email": "Mark.Solomon2@seattle.gov",
+    "email": "mark.solomon2@seattle.gov",
     "website": "https://seattle.gov/council/solomon",
-    "start_date": null,
+    "start_date": "2025-01-27",
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
       "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://council.seattle.gov/solomon"
     ],
     "updated_at": "2025-05-22"
   },
@@ -135,21 +127,19 @@
     ],
     "image": [],
     "phone_number": "(206) 684-8803",
-    "email": "joy.hollingsworth@seattle.gov",
+    "email": "Joy.Hollingsworth@seattle.gov",
     "website": "https://seattle.gov/council/hollingsworth",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://seattle.gov/council/kettle"
     ],
     "updated_at": "2025-05-22"
   },
@@ -168,14 +158,12 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://seattle.gov/council/kettle"
     ],
     "updated_at": "2025-05-22"
   },
@@ -194,14 +182,12 @@
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://seattle.gov/council/kettle"
     ],
     "updated_at": "2025-05-22"
   },
@@ -213,21 +199,19 @@
     ],
     "image": [],
     "phone_number": "(206) 684-8806",
-    "email": "Dan.Strauss@seattle.gov",
+    "email": "dan.strauss@seattle.gov",
     "website": "https://seattle.gov/council/strauss",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://seattle.gov/council/kettle"
     ],
     "updated_at": "2025-05-22"
   },
@@ -239,21 +223,19 @@
     ],
     "image": [],
     "phone_number": "(206) 684-8807",
-    "email": "Robert.Kettle@seattle.gov",
+    "email": "robert.kettle@seattle.gov",
     "website": "https://seattle.gov/council/kettle",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://seattle.gov/council/kettle",
-      "https://seattle.gov/council/rinck"
+      "https://seattle.gov/council/kettle"
     ],
     "updated_at": "2025-05-22"
   }

@@ -672,11 +672,9 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Photo of Councilmember Alexis Mercedes Rinck smiling](https://seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg)  
-
 ### Alexis Mercedes Rinck
 
-  [About Alexis](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/about-alexis)   [![Tim Lennon](https://seattle.gov/images/images/Council/Members/Rinck/Staff/Tim-Lennon-CMAMR.jpg)### Tim LennonChief of Staff](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [![Photo of Rachel Alger](https://seattle.gov/images/images/Council/Members/Rinck/Staff/Rachel.jpg)### Rachel AlgerPolicy Director](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [![Photo of Kaiden Cook](https://seattle.gov/images/images/Council/Members/Rinck/Staff/Kaiden.jpg)### Kaiden CookOperations Manager / Policy Aide](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [![Photo of Kenney Tran](https://seattle.gov/images/images/Council/Members/Rinck/Staff/Kenney.jpg)### Kenney TranExternal Affairs / Policy Analyst](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [Staff](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)  
+  [About Alexis](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/about-alexis)   [### Tim LennonChief of Staff](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [### Rachel AlgerPolicy Director](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [### Kaiden CookOperations Manager / Policy Aide](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [### Kenney TranExternal Affairs / Policy Analyst](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)   [Staff](https://seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff)  
 
 ## Calendar
 

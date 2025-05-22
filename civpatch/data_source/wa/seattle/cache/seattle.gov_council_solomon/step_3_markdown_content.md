@@ -666,11 +666,9 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Mark Solomon](https://seattle.gov/images//images/Council/Members/Solomon/mark-solomon.jpg)  
-
 ### Mark Solomon
 
-  [![Sarah Mayes](https://seattle.gov/images/images/Council/Members/Solomon/sarah.mayes.png)### Sarah MayesChief of Staff](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [![Murphy Bush](https://seattle.gov/images/images/Council/Members/Solomon/murphy-bush-a_165912.png)### Murphy BushDirector of External Affairs](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [![Thaddaeus Gregory](https://seattle.gov/images/images/Council/Members/Solomon/thaddaeus-gregory.png)### Thaddaeus GregoryPolicy Director](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [![Christine Hendrickson](https://seattle.gov/images/images/Council/Members/Solomon/christine-hendrickson.png)### Christine HendricksonOutreach and Communications Director](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [Staff](https://seattle.gov/council/meet-the-council/mark-solomon/staff)  
+  [### Sarah MayesChief of Staff](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [### Murphy BushDirector of External Affairs](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [### Thaddaeus GregoryPolicy Director](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [### Christine HendricksonOutreach and Communications Director](https://seattle.gov/council/meet-the-council/mark-solomon/staff)   [Staff](https://seattle.gov/council/meet-the-council/mark-solomon/staff)  
 
 ## Calendar
 

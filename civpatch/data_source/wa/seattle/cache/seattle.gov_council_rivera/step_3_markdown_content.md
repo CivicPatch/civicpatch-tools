@@ -678,13 +678,11 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Councilmember Maritza Rivera](https://seattle.gov/images//images/Council/Members/SquareHeadshots/rivera_300.jpg)  
-
 ### Maritza Rivera
 
 Maritza Rivera grew up in New York City, and attended Bronx High School of Science, followed by Skidmore College on a full-ride scholarship, then Fordham Law School, before accepting a position in the White House as President Clinton’s Hispanic liaison. She later served as a Vice-President of the National Hispanic Chamber of Commerce, where she worked closely with Hispanic small businesses from across the country.
 
-  [About Maritza](https://seattle.gov/council/meet-the-council/maritza-rivera/about-maritza)   [![Wendy Sykes](https://seattle.gov/images/images/Council/Members/Rivera/wendy-sykes.jpg)### Wendy SykesLegislative Aide, Operations Lead](https://seattle.gov/council/meet-the-council/maritza-rivera/staff)   [![Nicole Muñoz-Casalduc](https://seattle.gov/images/images/Council/Members/Rivera/nicole-mu%C3%B1oz-casalduc.jpg)### Nicole Muñoz-CasalducLegislative Assistant](https://seattle.gov/council/meet-the-council/maritza-rivera/staff)   [Staff](https://seattle.gov/council/meet-the-council/maritza-rivera/staff)  
+  [About Maritza](https://seattle.gov/council/meet-the-council/maritza-rivera/about-maritza)   [### Wendy SykesLegislative Aide, Operations Lead](https://seattle.gov/council/meet-the-council/maritza-rivera/staff)   [### Nicole Muñoz-CasalducLegislative Assistant](https://seattle.gov/council/meet-the-council/maritza-rivera/staff)   [Staff](https://seattle.gov/council/meet-the-council/maritza-rivera/staff)  
 
 ## Calendar
 

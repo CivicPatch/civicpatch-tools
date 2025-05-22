@@ -670,13 +670,11 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Councilmember Robert Kettle](https://seattle.gov/images//images/Council/Members/SquareHeadshots/kettle_300.jpg)  
-
 ### Robert Kettle
 
 Bob Kettle is a career Naval Officer with leadership and management experience in naval, joint service, interagency, and multinational assignments supporting U.S. interests in Europe, Asia, and Africa. Bob has been a leader over the past decade within veteran service and non-profit organizations. He has served on the board of the Queen Anne Community Council, where he stood up and chaired its Public Safety Committee, and was also a board member of the World Affairs Council.
 
-  [About Robert](https://seattle.gov/council/meet-the-council/robert-kettle/about-robert)   [![Steve Smith](https://seattle.gov/images/images/Council/Members/Kettle/Steven-Smith.png)### Steve SmithChief of Staff](https://seattle.gov/council/meet-the-council/robert-kettle/staff)   [![Brent-Lo](https://seattle.gov/images/images/Council/Members/Kettle/Brent-Lo.png)### Brent LoPolicy Director](https://seattle.gov/council/meet-the-council/robert-kettle/staff)   [![Rebecca Duran](https://seattle.gov/images/images/Council/Members/Kettle/Rebecca-Duran.png)### Rebecca DuranExecutive Aide and District Director of Constituent Affairs](https://seattle.gov/council/meet-the-council/robert-kettle/staff)   [Staff](https://seattle.gov/council/meet-the-council/robert-kettle/staff)  
+  [About Robert](https://seattle.gov/council/meet-the-council/robert-kettle/about-robert)   [### Steve SmithChief of Staff](https://seattle.gov/council/meet-the-council/robert-kettle/staff)   [### Brent LoPolicy Director](https://seattle.gov/council/meet-the-council/robert-kettle/staff)   [### Rebecca DuranExecutive Aide and District Director of Constituent Affairs](https://seattle.gov/council/meet-the-council/robert-kettle/staff)   [Staff](https://seattle.gov/council/meet-the-council/robert-kettle/staff)  
 
 ## Calendar
 

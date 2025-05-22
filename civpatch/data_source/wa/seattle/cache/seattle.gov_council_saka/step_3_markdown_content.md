@@ -676,13 +676,11 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Councilmember Rob Saka](https://seattle.gov/images//images/Council/Members/SquareHeadshots/saka_300.jpg)  
-
 ### Rob Saka
 
 Rob Saka is a father of three, attorney, justice reform advocate, Air Force Veteran, and West Seattle resident. His father taught him the importance of hard work and selfless service – guiding principles that are pillars in his everyday life.
 
-  [About Rob](https://seattle.gov/council/meet-the-council/rob-saka/about-rob)   [![Elaine Ikoma Ko](https://seattle.gov/images/images/Council/Members/Saka/elaine-ko.jpeg)### Elaine Ikoma KoChief of Staff](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [![Ian Griswold](https://seattle.gov/images/images/Council/Members/Saka/ian-griswold.jpg)### Ian GriswoldLegislative Director](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [![Erik Schmidt](https://seattle.gov/images/images/Council/Members/Saka/erik-schmidt.jpg)### Erik SchmidtDistrict 1 Director](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [![Erik Schmidt](https://seattle.gov/images/images/Council/Members/Saka/logan-duling.jpg)### Logan DulingLegislative Assistant](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [Staff](https://seattle.gov/council/meet-the-council/rob-saka/staff)  
+  [About Rob](https://seattle.gov/council/meet-the-council/rob-saka/about-rob)   [### Elaine Ikoma KoChief of Staff](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [### Ian GriswoldLegislative Director](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [### Erik SchmidtDistrict 1 Director](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [### Logan DulingLegislative Assistant](https://seattle.gov/council/meet-the-council/rob-saka/staff)   [Staff](https://seattle.gov/council/meet-the-council/rob-saka/staff)  
 
 ## Calendar
 

@@ -25,7 +25,7 @@
  * District 7 - [Robert Kettle](https://seattle.gov/council/meet-the-council) 
  * Position 8 - [Alexis Mercedes Rinck](https://seattle.gov/council/meet-the-council) 
  * Position 9 - [Sara Nelson](https://seattle.gov/council/meet-the-council) 
- Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov)   ![Councilmember Rob Saka](https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg)  
+ Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov)  
 
 ##  [Rob Saka](https://seattle.gov/council/saka) 
 
@@ -42,7 +42,7 @@ District 1 // West Seattle, South Park, Georgetown, Pioneer Square
  *  [Ian Griswold](mailto:ian.griswold@seattle.gov) 
  *  [Erik Schmidt](mailto:erik.schmidt@seattle.gov) 
  *  [Logan Duling](mailto:logan.duling@seattle.gov) 
- [Get Rob's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Rob's Website](https://seattle.gov/council/saka)   ![Councilmember Mark Solomon](https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg)  
+ [Get Rob's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Rob's Website](https://seattle.gov/council/saka)  
 
 ##  [Mark Solomon](https://seattle.gov/council/solomon) 
 
@@ -59,7 +59,7 @@ District 2 // Yesler Terrace to Rainier Beach
  *  [Murphy Bush](mailto:Murphy.Bush@seattle.gov) 
  *  [Thaddaeus Gregory](mailto:Thaddaeus.Gregory@seattle.gov) 
  *  [Christine Hendrickson](mailto:Christine.Hendrickson@seattle.gov) 
- [Get Mark's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Mark's Website](https://seattle.gov/council/solomon)   ![Councilmember Joy Hollingsworth](https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg)  
+ [Get Mark's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Mark's Website](https://seattle.gov/council/solomon)  
 
 ##  [Joy Hollingsworth](https://seattle.gov/council/hollingsworth) 
 
@@ -75,7 +75,7 @@ District 3 // Central Seattle
  *  [Anthony Derrick](mailto:Anthony.Derrick@seattle.gov) 
  *  [Alex Altshuler](mailto:Alex.Altshuler@seattle.gov) 
  *  [Nina Park](mailto:Nina.Park@seattle.gov) 
- [Get Joy's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Joy's Website](https://seattle.gov/council/hollingsworth)   ![Councilmember Maritza Rivera](https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg)  
+ [Get Joy's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Joy's Website](https://seattle.gov/council/hollingsworth)  
 
 ##  [Maritza Rivera](https://seattle.gov/council/rivera) 
 
@@ -90,7 +90,7 @@ District 4 // Northeast Seattle
 
  *  [Wendy Sykes](mailto:Wendy.Sykes@seattle.gov) 
  *  [Nicole Muñoz-Casalduc](mailto:nicole.munoz-casalduc@seattle.gov) 
- [Get Maritza's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Maritza's Website](https://seattle.gov/council/rivera)   ![Councilmember Cathy Moore](https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg)  
+ [Get Maritza's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Maritza's Website](https://seattle.gov/council/rivera)  
 
 ##  [Cathy Moore](https://seattle.gov/council/moore) 
 
@@ -107,7 +107,7 @@ District 5 // North Seattle
  *  [Newell Aldrich](mailto:Newell.Aldrich2@seattle.gov) 
  *  [Melisa Beckerman](mailto:Melisa.Beckerman@seattle.gov) 
  *  [Henry Pollet](mailto:henry.pollet@seattle.gov) 
- [Get Cathy's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Cathy's Website](https://seattle.gov/council/moore)   ![Councilmember Dan Strauss](https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg)  
+ [Get Cathy's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Cathy's Website](https://seattle.gov/council/moore)  
 
 ##  [Dan Strauss](https://seattle.gov/council/strauss) 
 
@@ -125,7 +125,7 @@ District 6 // Northwest Seattle
  *  [Anthony Rodriguez](mailto:Anthony.Rodriguez@seattle.gov) 
  *  [Jesse Franz](mailto:Jesse.Franz@seattle.gov) 
  *  [Cameron Yonan](mailto:cameron.yonan@seattle.gov) 
- [Get Dan's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Dan's Website](https://seattle.gov/council/strauss)   ![Councilmember Robert Kettle](https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg)  
+ [Get Dan's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Dan's Website](https://seattle.gov/council/strauss)  
 
 ##  [Robert Kettle](https://seattle.gov/council/kettle) 
 
@@ -141,7 +141,7 @@ District 7 // Downtown to Magnolia
  *  [Steve Smith](mailto:mailto:Steven.Smith@seattle.gov) 
  *  [Rebecca Duran](mailto:Rebecca.Duran@seattle.gov) 
  *  [Brent Lo](mailto:Brent.Lo@seattle.gov) 
- [Get Robert's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Robert's Website](https://seattle.gov/council/kettle)   ![Alexis Mercedes Rinck](https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg)  
+ [Get Robert's Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Robert's Website](https://seattle.gov/council/kettle)  
 
 ##  [Alexis Mercedes Rinck](https://seattle.gov/council/rinck) 
 
@@ -158,7 +158,7 @@ Position 8 // Citywide
  *  [Rachel Alger](mailto:rachel.alger@seattle.gov) 
  *  [Kaiden Cook](mailto:kaiden.cook@seattle.gov) 
  *  [Kenney Tran](mailto:kenney.tran@seattle.gov) 
- [Get Alexis' Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Alexis' Website](https://seattle.gov/council/rinck)   ![Councilmember Sara Nelson](https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg)  
+ [Get Alexis' Email Updates](https://seattle.gov/council/meet-the-council/newsletter-signup)  [Visit Alexis' Website](https://seattle.gov/council/rinck)  
 
 ##  [Sara Nelson](https://seattle.gov/council/meet-the-council/sara-nelson) 
 

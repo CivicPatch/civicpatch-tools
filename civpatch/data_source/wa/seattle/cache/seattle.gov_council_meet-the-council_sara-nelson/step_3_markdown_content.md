@@ -1,4 +1,4 @@
-  ![Councilmember Sara Nelson - Position 9, Citywide](https://seattle.gov/images/images/Council/Members/Nelson/nelson_300x300.jpg)  This is an official government website. Here's how you know  __Official websites use.gov__ 
+ This is an official government website. Here's how you know  __Official websites use.gov__ 
 
 Website addresses ending in.gov belong to official government organizations in the United States.  __Secure.gov websites use HTTPS__ 
 
@@ -672,13 +672,11 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Councilmember Sara Nelson](https://seattle.gov/images//images/Council/Members/Nelson/nelson_300x300.jpg)  
-
 ### Sara Nelson
 
 Councilmember Sara Nelson is a small business owner, former public servant, and policy nerd who watches the Seattle Channel for fun. She brings a pragmatic, collaborative approach to addressing our current challenges and improving quality of life for all Seattleites.
 
-  [About Sara](https://seattle.gov/council/meet-the-council/sara-nelson/about-sara)   [![Jeremy Mohn](https://seattle.gov/images/images/Council/Members/Nelson/jeremy-mohn.jpg)### Jeremy MohnChief of Staff](https://seattle.gov/council/meet-the-council/sara-nelson/staff)   [![Taemin Um](https://seattle.gov/images/images/Council/Members/Nelson/taemin-um.jpg)### Taemin UmLegislative Assistant](https://seattle.gov/council/meet-the-council/sara-nelson/staff)   [![Erik Nielsen portrait](https://seattle.gov/images/images/Council/Members/Nelson/Erik-Nielsen-SN.jpg)### Erik NielsenPolicy Director](https://seattle.gov/council/meet-the-council/sara-nelson/staff)   [Staff](https://seattle.gov/council/meet-the-council/sara-nelson/staff)  
+  [About Sara](https://seattle.gov/council/meet-the-council/sara-nelson/about-sara)   [### Jeremy MohnChief of Staff](https://seattle.gov/council/meet-the-council/sara-nelson/staff)   [### Taemin UmLegislative Assistant](https://seattle.gov/council/meet-the-council/sara-nelson/staff)   [### Erik NielsenPolicy Director](https://seattle.gov/council/meet-the-council/sara-nelson/staff)   [Staff](https://seattle.gov/council/meet-the-council/sara-nelson/staff)  
 
 ## Calendar
 

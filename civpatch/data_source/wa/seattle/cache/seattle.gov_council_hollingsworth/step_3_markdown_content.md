@@ -678,13 +678,11 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Councilmember Joy Hollingsworth](https://seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg)  
-
 ### Joy Hollingsworth
 
 Joy was born and raised in Seattle’s Central District, a neighborhood her family has called home since the 1940’s. The product of a long line of educators and civil rights leaders, Joy's mother spent her career connecting vulnerable neighbors with housing options, while her father worked for equity in South Seattle as a longtime Parks Department employee, and her grandmother, Dorothy Hollingsworth, was a fierce advocate for families and opportunity.
 
-  [About Joy](https://seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy)   [![Anthony Derrick](https://seattle.gov/images/images/Council/Members/Hollingsworth/anthony-derrick.jpg)### Anthony DerrickChief of Staff](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)   [![Alex Altshuler](https://seattle.gov/images/images/Council/Members/Hollingsworth/alex-altshuler.jpg)### Alex AltshulerDistrict Director](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)   [![Nina Park](https://seattle.gov/images/images/Council/Members/Hollingsworth/nina-park.jpg)### Nina ParkPolicy Director](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)   [Staff](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)  
+  [About Joy](https://seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy)   [### Anthony DerrickChief of Staff](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)   [### Alex AltshulerDistrict Director](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)   [### Nina ParkPolicy Director](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)   [Staff](https://seattle.gov/council/meet-the-council/joy-hollingsworth/staff)  
 
 ## Calendar
 

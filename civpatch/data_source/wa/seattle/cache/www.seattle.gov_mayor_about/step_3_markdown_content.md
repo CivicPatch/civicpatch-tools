@@ -10,9 +10,7 @@
 
 # About Mayor Bruce Harrell
 
- Mayor Bruce Harrell was elected the 57th mayor of Seattle in 2021 and was sworn in as Seattle’s 54th mayor for an interim period in 2017. Learn more about his background and priorities.  ![Mayor Bruce Harrell](https://www.seattle.gov/images//images/MayorHarrell/bruce-harrell-banner2.jpg)  
-
- ![Mayor Bruce Harrell](https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg) 
+ Mayor Bruce Harrell was elected the 57th mayor of Seattle in 2021 and was sworn in as Seattle’s 54th mayor for an interim period in 2017. Learn more about his background and priorities. 
 
 Bruce Harrell was born in Seattle to an African American father who was one of the first Black union lineman at Seattle City Light, and a Japanese American mother who had been incarcerated at Minidoka during World War II. His mother "Rose" worked for the Seattle Public Library and was elected to the Seattle City Credit Union Board of Directors. He is Seattle's first Asian American and first biracial mayor and Seattle's second Black mayor.    
 

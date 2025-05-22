@@ -565,8 +565,6 @@ North Seattle is a dynamic and diverse area with many strengths. It also faces t
 
 More specifically for District 5, we have our share of unique needs which include the Aurora Avenue corridor redesign, human trafficking on Aurora, the ongoing redevelopment of the Northgate Mall and surrounding area, mandated density around the coming 130th Street light rail station, east/west transit, the future plan for the Lake City Community Center, sidewalks, the Thornton Creek watershed, and parks and open spaces. 
 
- ![District 5 map](https://seattle.gov/images/Departments/Redistricting/District%20Maps/D5-web.jpg) 
-
 With your help, I am dedicated to ensuring all in our community live with dignity, safety, and opportunity. Contact my team at [Cathy.Moore@seattle.gov](mailto:Cathy.Moore@seattle.gov) or (206) 684-8805 with comments, suggestions, and requests for assistance.
 
  Receive Updates from Councilmember Cathy Moore
@@ -672,13 +670,11 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Councilmember Cathy Moore](https://seattle.gov/images//images/Council/Members/SquareHeadshots/moore_300.jpg)  
-
 ### Cathy Moore
 
 Cathy Moore grew up in Seattle, in the Lake City and Capitol Hill neighborhoods. Following in her mother’s public service footprints, Cathy fought for Seattle residents as a public defender with the Seattle Defender Association immediately after law school, later fighting for children and families as a family law attorney.
 
-  [About Cathy](https://seattle.gov/council/meet-the-council/cathy-moore/about-cathy)   [![Hannah Thoreson](https://seattle.gov/images/images/Council/Members/Moore/hannah-thoreson_square.jpg)### Hannah ThoresonChief of Staff](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [![Newell Aldrich](https://seattle.gov/images/images/Council/Members/Moore/newell-aldrich.jpg)### Newell AldrichPolicy Director](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [![Melisa Beckerman](https://seattle.gov/images/images/Council/Members/Moore/melisa-beckerman_square.jpg)### Melisa BeckermanLegislative Assistant](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [![Henry Pollett](https://seattle.gov/images/images/Council/Members/Moore/henry-pollet.jpg)### Henry PolletDistrict 5 Liaison](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [Staff](https://seattle.gov/council/meet-the-council/cathy-moore/staff)  
+  [About Cathy](https://seattle.gov/council/meet-the-council/cathy-moore/about-cathy)   [### Hannah ThoresonChief of Staff](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [### Newell AldrichPolicy Director](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [### Melisa BeckermanLegislative Assistant](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [### Henry PolletDistrict 5 Liaison](https://seattle.gov/council/meet-the-council/cathy-moore/staff)   [Staff](https://seattle.gov/council/meet-the-council/cathy-moore/staff)  
 
 ## Calendar
 

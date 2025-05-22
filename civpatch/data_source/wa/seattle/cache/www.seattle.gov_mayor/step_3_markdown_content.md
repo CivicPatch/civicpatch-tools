@@ -1,19 +1,17 @@
  
 
-#  [Office of the Mayor](https://seattle.gov/mayor) 
+#  [Office of the Mayor](https://www.seattle.gov/mayor) 
 
- *  [One Seattle Initiatives](https://seattle.gov/mayor/one-seattle-initiatives) 
- *  [Contact](https://seattle.gov/mayor/contact) 
- *  [Mayor's Team](https://seattle.gov/mayor/team) 
- *  [About the Mayor](https://seattle.gov/mayor/about) 
+ *  [One Seattle Initiatives](https://www.seattle.gov/mayor/one-seattle-initiatives) 
+ *  [Contact](https://www.seattle.gov/mayor/contact) 
+ *  [Mayor's Team](https://www.seattle.gov/mayor/team) 
+ *  [About the Mayor](https://www.seattle.gov/mayor/about) 
 
 ## Stay up-to-date with the latest news
 
  Receive the latest updates from the Mayor’s Office as they happen – directly from the source. Sign up below to receive future newsletters from Mayor Harrell.  [Subscribe to Mayor's Newsletter](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/new?topic_id=WASEATTLE_389)  
 
 ## A Message from Mayor Harrell
-
- ![Mayor Bruce Harrell](https://seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg) 
 
 Seattle is a global destination and leader in industry, innovation, and creativity. As your Mayor, I am committed to uniting our diverse communities around shared priorities and meaningful progress on our biggest challenges. Through our focus on a back-to-basics approach like restoring public safety, helping people move indoors, keeping parks open and welcoming, and fixing potholes, we can build a strong foundation and bright future for our city and our families.
 
@@ -25,7 +23,7 @@ That’s my vision for * __One Seattle__* , to turn our city’s pioneering spir
 
 ## Mayor Bruce Harrell
 
- Phone:(206) 684-4000 Address: [Office](https://seattle.gov/)  |  [Mailing](https://seattle.gov/)  
+ Phone:(206) 684-4000 Address: [Office](https://www.seattle.gov/)  |  [Mailing](https://www.seattle.gov/)  
 
 ### Follow Us
 
@@ -112,7 +110,7 @@ Receive Email Updates
 
 Copy the code below and paste it into your blog or Web page:
 
-<script id="govd_widget_js_waseattle_waseattle_widget_93" src="https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE_WIDGET_93.js" type="text/javascript"></script> [close](https://seattle.gov)  
+<script id="govd_widget_js_waseattle_waseattle_widget_93" src="https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE_WIDGET_93.js" type="text/javascript"></script> [close](https://www.seattle.gov)  
 
 ##  [Latest News - Mayor's Blog](https://harrell.seattle.gov) 
 
@@ -138,12 +136,12 @@ Mayor Harrell announces a combined $1 million investme...
 
 ## Requests and Services
 
-  [Send a Message to the Mayor](https://seattlegov.powerappsportals.us/contact-mayor)   [Request the Mayor to Attend an Event](https://web8.seattle.gov/MORequest)   [Service on Legal Documents on the City of Seattle](https://seattle.gov/mayor/service-of-legal-documents)   [Request Proclamation or Letter](https://forms.office.com/Pages/ResponsePage.aspx?id=RR7meOtrCUCPmTWdi1T0GyBsffvOIRZHo10mP-LPxldUNTFUQ1EwOERRRjM3STFZSTNRVTRIR09aSC4u)  
+  [Send a Message to the Mayor](https://seattlegov.powerappsportals.us/contact-mayor)   [Request the Mayor to Attend an Event](https://web8.seattle.gov/MORequest)   [Service on Legal Documents on the City of Seattle](https://www.seattle.gov/mayor/service-of-legal-documents)   [Request Proclamation or Letter](https://forms.office.com/Pages/ResponsePage.aspx?id=RR7meOtrCUCPmTWdi1T0GyBsffvOIRZHo10mP-LPxldUNTFUQ1EwOERRRjM3STFZSTNRVTRIR09aSC4u)  
 
- *  [About Seattle](https://seattle.gov/opcd/population-and-demographics/about-seattle) 
- *  [Downtown Campus Map](https://seattle.gov/customer-service-bureau/downtown-campus-map) 
+ *  [About Seattle](https://www.seattle.gov/opcd/population-and-demographics/about-seattle) 
+ *  [Downtown Campus Map](https://www.seattle.gov/customer-service-bureau/downtown-campus-map) 
  *  [City Jobs](https://www.governmentjobs.com/careers/seattle) 
- *  [Seattle Facts](https://seattle.gov/cityarchives/seattle-facts) 
+ *  [Seattle Facts](https://www.seattle.gov/cityarchives/seattle-facts) 
 
 ## Mayor Bruce Harrell
 
@@ -161,26 +159,26 @@ Sign up for the latest updates from Mayor Bruce Harrell
 
 ## Citywide Information
 
- *  [Elected Officials](https://seattle.gov/elected-officials) 
+ *  [Elected Officials](https://www.seattle.gov/elected-officials) 
  *  [Open Data Portal](https://data.seattle.gov) 
- *  [Public Records](https://seattle.gov/public-records) 
- *  [City Holidays and Closures](https://seattle.gov/holidays-and-closures) 
+ *  [Public Records](https://www.seattle.gov/public-records) 
+ *  [City Holidays and Closures](https://www.seattle.gov/holidays-and-closures) 
 
  *  [City News Feed](https://news.seattle.gov) 
- *  [City Event Calendar](https://seattle.gov/event-calendar) 
+ *  [City Event Calendar](https://www.seattle.gov/event-calendar) 
  *  [All City Newsletters](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/topics?qsp=CODE_RED) 
- *  [View the Departments & Agencies List](https://seattle.gov/departments) 
+ *  [View the Departments & Agencies List](https://www.seattle.gov/departments) 
 
 ### Popular Pages
 
- 1.  [Power Outages](https://seattle.gov/city-light/outages) 
- 1.  [Police Jobs](https://seattle.gov/police/police-jobs) 
- 1.  [Pay My Ticket](https://seattle.gov/courts/tickets-and-payments/pay-my-ticket) 
- 1.  [Adopt a Pet](https://seattle.gov/animal-shelter/find-an-animal/adopt) 
- 1.  [Utility Bills & Payments](https://seattle.gov/utilities/your-services/accounts-and-payments/bills-and-payments) 
+ 1.  [Power Outages](https://www.seattle.gov/city-light/outages) 
+ 1.  [Police Jobs](https://www.seattle.gov/police/police-jobs) 
+ 1.  [Pay My Ticket](https://www.seattle.gov/courts/tickets-and-payments/pay-my-ticket) 
+ 1.  [Adopt a Pet](https://www.seattle.gov/animal-shelter/find-an-animal/adopt) 
+ 1.  [Utility Bills & Payments](https://www.seattle.gov/utilities/your-services/accounts-and-payments/bills-and-payments) 
 
 Seattle's Mayor is the head of the Executive department. The Mayor directs and controls all City offices and departments except where that authority is granted to another office by the City Charter.
 
 ## Policies
 
-  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+  [About Our Digital Properties](https://www.seattle.gov/about-our-digital-properties)   [Privacy Policy](https://www.seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://www.seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

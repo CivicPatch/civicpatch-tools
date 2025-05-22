@@ -670,15 +670,13 @@ Seattle, WA 98124-4025  [See All Members](https://seattle.gov/council/meet-the-c
 
 ## Staff
 
-  ![Councilmember Dan Strauss](https://seattle.gov/images//images/Council/Members/Strauss/Struass-2022-headshot_square.jpg)  
-
 ### Dan Strauss
 
 Councilmember Dan Strauss has been helping to build up community his whole life. 
 
 Beginning in his first ever job as a paperboy for the Ballard News Tribune, Strauss has focused his career in public service. Most recently, Strauss served as a senior policy advisor for former Seattle City Councilmember Sally Bagshaw, and as a legislative assistant to Senator David Frockt. 
 
-  [About Dan](https://seattle.gov/council/meet-the-council/dan-strauss/about-dan)   [![Joel  Raphael](https://seattle.gov/images/images/Council/Members/Strauss/Joel-Raphael-Headshot.png)### Joel RaphaelDistrict Director](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [![Megan Bartol headshot](https://seattle.gov/images/images/Council/Members/Strauss/Megan-Bartol-Headshot.png)### Megan BartolOperations Manager and Deputy District Director](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [![Noah An](https://seattle.gov/images/images/Council/Members/Strauss/anthony-rodriguez.jpg)### Anthony RodriguezPolicy Advisor](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [![Jesse Franz headshot](https://seattle.gov/images/images/Council/Members/Strauss/jesse_franz.png)### Jesse FranzPolicy and Communications Director](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [![Peter Nguyen](https://seattle.gov/images/images/Council/Members/Strauss/Cameron-Yonan.jpg)### Cameron YonanLegislative Aide](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [Staff](https://seattle.gov/council/meet-the-council/dan-strauss/staff)  
+  [About Dan](https://seattle.gov/council/meet-the-council/dan-strauss/about-dan)   [### Joel RaphaelDistrict Director](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [### Megan BartolOperations Manager and Deputy District Director](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [### Anthony RodriguezPolicy Advisor](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [### Jesse FranzPolicy and Communications Director](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [### Cameron YonanLegislative Aide](https://seattle.gov/council/meet-the-council/dan-strauss/staff)   [Staff](https://seattle.gov/council/meet-the-council/dan-strauss/staff)  
 
 ## Calendar
 
