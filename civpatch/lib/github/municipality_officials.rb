@@ -69,11 +69,11 @@ module GitHub
       missing_people_table = to_missing_people_table(missing_people)
       disagreement_table = to_disagreement_table(contested_people, merged_people)
       <<~MARKDOWN
-        # Agreement Score: #{agreement_score}
+        ## Agreement Score: #{agreement_score}
         ---
-        ## Missing People
+        ### Missing People
         #{missing_people_table}
-        ## Disagreements
+        ### Disagreements
         #{disagreement_table}
       MARKDOWN
     end

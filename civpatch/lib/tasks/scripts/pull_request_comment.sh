@@ -20,6 +20,14 @@ if [ -z "$GH_TOKEN" ]; then
   exit 1
 fi
 
-COMMENT=$(rake github_pipeline:generate_comment[$STATE,$GEOID])
+# Get the JSON output, parse it with jq, and format with awk
+COMMENT=$(rake github_pipeline:generate_comment[$STATE,$GEOID] | jq -r '.comment' | awk '{printf "%s\\n", $0}')
 
+# Verify we got a valid comment
+if [ -z "$COMMENT" ]; then
+  echo "Error: Failed to generate comment"
+  exit 1
+fi
+
+# Post the comment to the PR
 gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
