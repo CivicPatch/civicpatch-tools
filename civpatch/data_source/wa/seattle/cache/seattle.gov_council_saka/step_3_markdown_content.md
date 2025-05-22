@@ -1,4 +1,4 @@
-  ![Councilmember Rob Saka]()   ![Councilmember Rob Saka]()   ![Councilmember Rob Saka]()  This is an official government website. Here's how you know  __Official websites use.gov__ 
+ This is an official government website. Here's how you know  __Official websites use.gov__ 
 
 Website addresses ending in.gov belong to official government organizations in the United States.  __Secure.gov websites use HTTPS__ 
 
@@ -6,7 +6,7 @@ A lock () or https:// means you've safely connected to the.gov website. Only sha
 
 Seattle
 
-  ![Google Translate logo]()  English 
+ English 
 
  * English
  * Español
@@ -515,13 +515,7 @@ Cancel
        *  [Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy](https://seattle.gov/council/committees/fepp-levy) 
        *  [Select Committee on Federal Administration and Policy Changes](https://seattle.gov/council/committees/select-committee-on-federal-administration-and-policy-changes) 
        *  [Select Committee on the Comprehensive Plan](https://seattle.gov/council/committees/select-committee-on-the-comprehensive-plan) 
-       *  [Select Budget Committee](https://seattle.gov/council/committees/select-budget-committee) 
-         *  [Mayor's 2023-2024 Proposed Budget](https://www.seattle.gov/city-budget-office/budget-archives/2023-2024-proposed-budget) 
-         *  [Mayor's 2023-2028 Proposed Capital Improvement Program](https://www.seattle.gov/city-budget-office/capital-improvement-program-archives/2023-2028-proposed-cip) 
-         *  [Budget Glossary of Terms](https://seattle.gov/council/committees/select-budget-committee/glossary-of-terms) 
        *  [Budget](https://seattle.gov/x11967.xml) 
-       *  [Select Committee on Citywide Mandatory Housing Affordability](https://seattle.gov/council/committees/citywidemha) 
-         *  [Citywide MHA Amendments](https://seattle.gov/council/committees/citywidemha/citywide-mha-amendments) 
        *  [Finance, Native Communities & Tribal Governments](https://seattle.gov/council/committees/finance-native-communities-and-tribal-governments) 
        *  [Governance, Accountability & Economic Development](https://seattle.gov/council/committees/governance-accountability-and-economic-development) 
        *  [Housing & Human Services](https://seattle.gov/council/committees/housing-and-human-services) 
@@ -531,9 +525,7 @@ Cancel
        *  [Public Safety](https://seattle.gov/council/committees/public-safety) 
        *  [Sustainability, City Light, Arts & Culture](https://seattle.gov/council/committees/sustainability-city-light-arts-and-culture) 
        *  [Transportation](https://seattle.gov/council/committees/transportation) 
-       *  [Select Committee on the 2024 Transportation Levy](https://seattle.gov/council/committees/select-committee-on-the-2024-transportation-levy) 
        *  [Select Labor Committee for 2024-25](https://seattle.gov/council/committees/select-labor-committee-for-2024-25) 
-       *  [2024 Select Budget Committee](https://seattle.gov/council/committees/2024-select-budget-committee) 
        *  [2025 Select Budget Committee](https://seattle.gov/council/committees/2025-select-budget-committee) 
      *  [Agenda Sign Up](https://seattle.gov/council/committees/agenda-sign-up) 
      *  [Public Comment](https://seattle.gov/council/committees/public-comment) 
@@ -698,4 +690,4 @@ Rob Saka is a father of three, attorney, justice reform advocate, Air Force Vete
 
 ## Policies
 
-  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+  [About Our Digital Properties](https://seattle.gov/about-our-digital-properties)   [Privacy Policy](https://seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

@@ -45,7 +45,13 @@ Seattle, WA 98124-4749
 
 ## Press Releases
 
- Mayor's Office Press Releases  [Rita Meher and Tasveer Film Festival and Market Honored with 2025 Mayor’s Film Award for Outstanding Achievement in Film](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e0a971?wgt_ref=WASEATTLE_WIDGET_93)  
+ Mayor's Office Press Releases  [Mayor Harrell Announces New Summer Safety Strategy to Enhance Security, Reduce Crime in Seattle Parks and Public Spaces](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e17f4c?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/21/2025 11:15 AM PDT
+  [Mayor Harrell to Nominate Chief Barnes for City Council Confirmation Following a Record-Setting First 100 Days ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e14651?wgt_ref=WASEATTLE_WIDGET_93)  
+
+ * 05/20/2025 11:11 AM PDT
+  [Rita Meher and Tasveer Film Festival and Market Honored with 2025 Mayor’s Film Award for Outstanding Achievement in Film](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e0a971?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 05/15/2025 07:45 PM PDT
   [City of Seattle, TAAF, Amazon, and CIDBIA Announce New Ambassadors Program to Improve Neighborhood Safety and Support Economic Revitalization in the Chinatown-International District](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e07033?wgt_ref=WASEATTLE_WIDGET_93)  
@@ -99,12 +105,6 @@ Seattle, WA 98124-4749
   [Monday: Mayor Harrell Celebrates Significant Increase in Police Hiring in 2025 ](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ddaeef?wgt_ref=WASEATTLE_WIDGET_93)  
 
  * 04/25/2025 01:33 PM PDT
-  [City of Seattle Moves Fort Lawton Redevelopment Forward by Selecting Chief Seattle Club to Develop up to 100 Units of Permanent Supportive Housing](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dd8c0c?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/25/2025 12:00 PM PDT
-  [Mayor Bruce Harrell Announces Legislation to Build Light Rail Faster and Support Smooth Construction](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3dda807?wgt_ref=WASEATTLE_WIDGET_93)  
-
- * 04/25/2025 10:59 AM PDT
 
 Receive Email Updates
 
@@ -116,7 +116,15 @@ Copy the code below and paste it into your blog or Web page:
 
 ##  [Latest News - Mayor's Blog](https://harrell.seattle.gov) 
 
-  [Mayor Harrell Statement on Pioneer Square Shooting 
+  [Mayor Harrell Announces New Summer Safety Strategy to Enhance Security, Reduce Crime in Seattle Parks and Public Spaces 
+
+Seattle – Today, Mayor Bruce Harrell released new deta...
+
+ Posted May. 21  ![Person paddleboarding on Elliott Bay](https://harrell.seattle.gov/wp-content/uploads/sites/23/2023/12/DSC_6955-Edit-150x150.jpg)](https://harrell.seattle.gov/2025/05/21/mayor-harrell-announces-new-summer-safety-strategy-to-enhance-security-reduce-crime-in-seattle-parks-and-public-spaces)   [Mayor Harrell to Nominate Chief Barnes for City Council Confirmation Following a Record-Setting First 100 Days     
+
+Seattle – Today, Mayor Bruce Harrell announced that he...
+
+ Posted May. 20  ![Headshot of Chief Shon Barnes](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/01/Barnes-headshot-150x150.jpg)](https://harrell.seattle.gov/2025/05/20/mayor-harrell-to-nominate-chief-barnes-for-city-council-confirmation-following-a-record-setting-first-100-days)   [Mayor Harrell Statement on Pioneer Square Shooting 
 
 Seattle – Today, Mayor Bruce Harrell made the following statement after a shooting in Pioneer Square: “Last nigh...
 
@@ -124,15 +132,7 @@ Seattle – Today, Mayor Bruce Harrell made the following statement after a shoo
 
 Mayor Harrell announces a combined $1 million investme...
 
- Posted May. 14  ![](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/05/DSC1702-150x150.jpg)](https://harrell.seattle.gov/2025/05/14/city-of-seattle-taaf-amazon-and-cidbia-announce-new-ambassadors-program-to-improve-neighborhood-safety-and-support-economic-revitalization-in-the-chinatown-international-district)   [Mayor Harrell Signs Suite of Downtown Activation Plan Legislation to Fill Vacant Storefronts, Extend Housing Permits 
-
-Seattle – Today, Mayor Bruce Harrell joined Councilmem...
-
- Posted May. 06  ![Mayor Harrell signs Downtown Activation Plan legislation with leaders and community stakeholders behind him.](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/05/20250506_172833100_iOS-1-150x150.jpg)](https://harrell.seattle.gov/2025/05/06/mayor-harrell-signs-suite-of-downtown-activation-plan-legislation-to-fill-vacant-storefronts-extend-housing-permits)   [Nearly 5,000 Seattle Child Care Staff Receiving Retention Payments 
-
-Seattle has invested $16 million in child care workfor...
-
- Posted May. 01  ![SPP educators and students](https://harrell.seattle.gov/wp-content/uploads/sites/23/2024/09/SPP-Classroom-2-150x150.jpg)](https://harrell.seattle.gov/2025/05/01/nearly-5000-seattle-child-care-staff-receiving-retention-payments)  
+ Posted May. 14  ![](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/05/DSC1702-150x150.jpg)](https://harrell.seattle.gov/2025/05/14/city-of-seattle-taaf-amazon-and-cidbia-announce-new-ambassadors-program-to-improve-neighborhood-safety-and-support-economic-revitalization-in-the-chinatown-international-district)  
 
 ## Requests and Services
 
@@ -183,4 +183,4 @@ Seattle's Mayor is the head of the Executive department. The Mayor directs and c
 
 ## Policies
 
-  [About Our Digital Properties](https://www.seattle.gov/about-our-digital-properties)   [Privacy Policy](https://www.seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://www.seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)   ![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)  Original text Rate this translation Your feedback will be used to help improve Google Translate 
+  [About Our Digital Properties](https://www.seattle.gov/about-our-digital-properties)   [Privacy Policy](https://www.seattle.gov/tech/data-privacy/privacy-statement)   [Title II: Americans with Disabilities Act](https://www.seattle.gov/americans-with-disabilities-act)   [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)   [Sitemap](https://www.seattle.gov/sitemap)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

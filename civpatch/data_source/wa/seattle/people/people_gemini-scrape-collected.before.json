@@ -1,62 +1,40 @@
 [
   {
     "name": "Bruce Harrell",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://seattle.gov/mayor/about",
-      "https://seattle.gov/mayor",
-      "https://www.seattle.gov/elected-officials",
+      "https://www.seattle.gov/mayor/about",
       "https://www.seattle.gov/mayor"
     ],
+    "images": [],
     "positions": [
-      "mayor",
-      "Mayor"
+      "mayor"
     ],
     "phone_numbers": [
       {
         "data": "(206) 684-4000",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed and labeled.",
-        "source": "https://seattle.gov/mayor/about"
-      },
-      {
-        "data": "(206) 684-4000",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed next to the person's name and title.",
-        "source": "https://seattle.gov/mayor"
+        "llm_confidence_reason": "Phone number explicitly listed under 'Mayor Bruce Harrell'.",
+        "source": "https://www.seattle.gov/mayor/about"
       },
       {
         "data": "(206) 684-4000",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed directly under 'Mayor Bruce Harrell'.",
+        "llm_confidence_reason": "Phone number explicitly listed next to Mayor Bruce Harrell's name.",
         "source": "https://www.seattle.gov/mayor"
       }
     ],
     "emails": [],
     "websites": [
       {
-        "data": "https://seattle.gov/mayor/about",
+        "data": "https://www.seattle.gov/mayor/about",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page is dedicated to the mayor's biography.",
-        "source": "https://seattle.gov/mayor/about"
-      },
-      {
-        "data": "https://seattle.gov/mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary website for the Office of the Mayor, associated with the person.",
-        "source": "https://seattle.gov/mayor"
+        "llm_confidence_reason": "Link to 'About the Mayor' page found in the navigation/links section.",
+        "source": "https://www.seattle.gov/mayor/about"
       },
       {
         "data": "https://www.seattle.gov/mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/mayor/about",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to 'About the Mayor' page found under the main Mayor's Office section.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is dedicated to the Office of the Mayor and Bruce Harrell.",
         "source": "https://www.seattle.gov/mayor"
       }
     ],
@@ -64,27 +42,28 @@
       {
         "data": "2021",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as elected mayor in 2021.",
-        "source": "https://seattle.gov/mayor/about"
+        "llm_confidence_reason": "Explicitly stated 'elected the 57th mayor of Seattle in 2021'.",
+        "source": "https://www.seattle.gov/mayor/about"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Rob Saka",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
       "https://seattle.gov/council/saka",
-      "https://www.seattle.gov/council/saka"
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
-      "Transportation Chair",
       "Council Member",
       "District 1"
     ],
@@ -92,27 +71,27 @@
       {
         "data": "(206) 684-8801",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "(206) 684-8801",
+        "data": "206-684-8801",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us'.",
         "source": "https://seattle.gov/council/saka"
-      },
-      {
-        "data": "(206) 684-8801",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
-        "source": "https://www.seattle.gov/council/saka"
       }
     ],
     "emails": [
       {
+        "data": "rob.saka@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
         "data": "Rob.Saka@seattle.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and as mailto link text.",
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the welcome text.",
         "source": "https://seattle.gov/council/saka"
       }
     ],
@@ -120,51 +99,77 @@
       {
         "data": "https://seattle.gov/council/saka",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Rob's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "https://www.seattle.gov/council/saka",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/saka",
+        "data": "https://seattle.gov/council/saka",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
+        "llm_confidence_reason": "Profile page URL found in navigation for Rob Saka.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://seattle.gov/council/saka",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Primary URL for Rob Saka's page on the official city council website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation and header.",
         "source": "https://seattle.gov/council/saka"
       },
       {
-        "data": "https://www.seattle.gov/council/saka",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Primary URL for Rob Saka's page on the official city council website.",
-        "source": "https://www.seattle.gov/council/saka"
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Mark Solomon",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
       "https://seattle.gov/council/solomon",
-      "https://www.seattle.gov/council/solomon"
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
       "Council Member",
       "District 2"
     ],
@@ -172,85 +177,105 @@
       {
         "data": "(206) 684-8802",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "(206) 684-8802",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section for Mark Solomon.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
         "source": "https://seattle.gov/council/solomon"
-      },
-      {
-        "data": "(206) 684-8802",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under Contact Us section and in welcome message.",
-        "source": "https://www.seattle.gov/council/solomon"
       }
     ],
     "emails": [
       {
-        "data": "Mark.Solomon2@seattle.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section for Mark Solomon.",
-        "source": "https://seattle.gov/council/solomon"
+        "data": "mark.solomon2@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "Mark.Solomon2@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under Contact Us section and in welcome message.",
-        "source": "https://www.seattle.gov/council/solomon"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/solomon"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/solomon",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Mark's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/council/solomon",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/solomon",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
       },
       {
         "data": "https://seattle.gov/council/solomon",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary webpage URL for Mark Solomon found in navigation and header.",
+        "llm_confidence_reason": "Profile page URL found in navigation for Mark Solomon.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL found in navigation menu.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is a person-specific profile page.",
         "source": "https://seattle.gov/council/solomon"
       },
       {
-        "data": "https://www.seattle.gov/council/solomon",
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL of the specific page for Mark Solomon, linked multiple times.",
-        "source": "https://www.seattle.gov/council/solomon"
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Joy Hollingsworth",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
       "https://seattle.gov/council/hollingsworth",
-      "https://www.seattle.gov/council/hollingsworth"
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
       "Council Member",
       "District 3"
     ],
@@ -258,85 +283,105 @@
       {
         "data": "(206) 684-8803",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "206-684-8803",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' and in the text near the email address.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us'.",
         "source": "https://seattle.gov/council/hollingsworth"
-      },
-      {
-        "data": "206-684-8803",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section and in text.",
-        "source": "https://www.seattle.gov/council/hollingsworth"
       }
     ],
     "emails": [
       {
-        "data": "Joy.Hollingsworth@seattle.gov",
+        "data": "joy.hollingsworth@seattle.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the text near the phone number.",
-        "source": "https://seattle.gov/council/hollingsworth"
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "Joy.Hollingsworth@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section and in text.",
-        "source": "https://www.seattle.gov/council/hollingsworth"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in text.",
+        "source": "https://seattle.gov/council/hollingsworth"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/hollingsworth",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Joy's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "https://www.seattle.gov/council/hollingsworth",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/hollingsworth",
+        "data": "https://seattle.gov/council/hollingsworth",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
+        "llm_confidence_reason": "Profile page URL found in navigation for Joy Hollingsworth.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://seattle.gov/council/hollingsworth",
-        "llm_confidence": 0.97,
-        "llm_confidence_reason": "URL is the specific page for Joy Hollingsworth on the city council website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL found in navigation menu.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
         "source": "https://seattle.gov/council/hollingsworth"
       },
       {
-        "data": "https://www.seattle.gov/council/hollingsworth",
+        "data": "https://seattle.gov/council/hollingsworth",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the page dedicated to Joy Hollingsworth.",
-        "source": "https://www.seattle.gov/council/hollingsworth"
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Maritza Rivera",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
       "https://seattle.gov/council/rivera",
-      "https://www.seattle.gov/council/rivera"
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
       "Council Member",
       "District 4"
     ],
@@ -344,85 +389,105 @@
       {
         "data": "(206) 684-8804",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "206-684-8804",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed in the contact section and mentioned in the text.",
-        "source": "https://seattle.gov/council/rivera"
-      },
-      {
         "data": "(206) 684-8804",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us'.",
-        "source": "https://www.seattle.gov/council/rivera"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' and in the main text.",
+        "source": "https://seattle.gov/council/rivera"
       }
     ],
     "emails": [
       {
-        "data": "Maritza.Rivera@seattle.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed in the contact section and mentioned in the text.",
-        "source": "https://seattle.gov/council/rivera"
+        "data": "maritza.rivera@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "Maritza.Rivera@seattle.gov",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the main text.",
-        "source": "https://www.seattle.gov/council/rivera"
+        "source": "https://seattle.gov/council/rivera"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/rivera",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Maritza's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "https://www.seattle.gov/council/rivera",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/rivera",
+        "data": "https://seattle.gov/council/rivera",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
+        "llm_confidence_reason": "Profile page URL found in navigation for Maritza Rivera.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://seattle.gov/council/rivera",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL of the specific profile page for Maritza Rivera.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL found in navigation menu.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu and page header.",
         "source": "https://seattle.gov/council/rivera"
       },
       {
-        "data": "https://www.seattle.gov/council/rivera",
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the specific page for Maritza Rivera on the city council website.",
-        "source": "https://www.seattle.gov/council/rivera"
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Cathy Moore",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
       "https://seattle.gov/council/moore",
-      "https://www.seattle.gov/council/moore"
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
       "Council Member",
       "District 5"
     ],
@@ -430,85 +495,105 @@
       {
         "data": "(206) 684-8805",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "(206) 684-8805",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' and in the main text.",
-        "source": "https://seattle.gov/council/moore"
       },
       {
         "data": "(206) 684-8805",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
-        "source": "https://www.seattle.gov/council/moore"
+        "source": "https://seattle.gov/council/moore"
       }
     ],
     "emails": [
       {
-        "data": "Cathy.Moore@seattle.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the main text.",
-        "source": "https://seattle.gov/council/moore"
+        "data": "cathy.moore@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "Cathy.Moore@seattle.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section and as a mailto link.",
-        "source": "https://www.seattle.gov/council/moore"
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/moore"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/moore",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Cathy's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "https://www.seattle.gov/council/moore",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/moore",
+        "data": "https://seattle.gov/council/moore",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
+        "llm_confidence_reason": "Profile page URL found in navigation for Cathy Moore.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://seattle.gov/council/moore",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is the specific page for Cathy Moore on the city council website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL found in navigation menu.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is the profile page for this person.",
         "source": "https://seattle.gov/council/moore"
       },
       {
-        "data": "https://moore.seattle.gov",
+        "data": "https://seattle.gov/council/moore",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website linked as 'Cathy's Blog' on her official page.",
-        "source": "https://www.seattle.gov/council/moore"
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Dan Strauss",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
       "https://seattle.gov/council/strauss",
-      "https://www.seattle.gov/council/strauss"
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
       "Council Member",
       "District 6"
     ],
@@ -516,249 +601,320 @@
       {
         "data": "(206) 684-8806",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "(206) 684-8806",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed under 'Contact Us' section on the individual's page.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
         "source": "https://seattle.gov/council/strauss"
-      },
-      {
-        "data": "(206) 684-8806",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section for Dan Strauss.",
-        "source": "https://www.seattle.gov/council/strauss"
       }
     ],
     "emails": [
       {
-        "data": "Dan.Strauss@seattle.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address listed under 'Contact Us' section on the individual's page.",
-        "source": "https://seattle.gov/council/strauss"
-      },
-      {
-        "data": "Dan.Strauss@seattle.gov",
+        "data": "dan.strauss@seattle.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section for Dan Strauss.",
-        "source": "https://www.seattle.gov/council/strauss"
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/strauss",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Dan's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "https://www.seattle.gov/council/strauss",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/strauss",
+        "data": "https://seattle.gov/council/strauss",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
+        "llm_confidence_reason": "Profile page URL found in navigation for Dan Strauss.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://seattle.gov/council/strauss",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL of the individual's profile page.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL found in navigation menu and text mentions District 6.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official profile page for the person.",
         "source": "https://seattle.gov/council/strauss"
       },
       {
-        "data": "https://www.seattle.gov/council/strauss",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the specific page dedicated to Dan Strauss.",
-        "source": "https://www.seattle.gov/council/strauss"
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Robert Kettle",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/council",
-      "https://seattle.gov/council/kettle",
-      "https://www.seattle.gov/council/kettle"
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
       "Council Member",
-      "District 7"
+      "District 7",
+      "Councilmember"
     ],
     "phone_numbers": [
       {
         "data": "(206) 684-8807",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "(206) 684-8807",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section for Robert Kettle.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Us'.",
         "source": "https://seattle.gov/council/kettle"
-      },
-      {
-        "data": "(206) 684-8807",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
-        "source": "https://www.seattle.gov/council/kettle"
       }
     ],
     "emails": [
       {
-        "data": "Robert.Kettle@seattle.gov",
+        "data": "robert.kettle@seattle.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section for Robert Kettle.",
-        "source": "https://seattle.gov/council/kettle"
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "Robert.Kettle@seattle.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
-        "source": "https://www.seattle.gov/council/kettle"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Us'.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/kettle",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Robert's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
-      },
-      {
-        "data": "https://www.seattle.gov/council/kettle",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
       },
       {
         "data": "https://seattle.gov/council/kettle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the page for Robert Kettle and is present in the text.",
-        "source": "https://seattle.gov/council/kettle"
+        "llm_confidence_reason": "Profile page URL found in navigation for Robert Kettle.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
-        "data": "https://www.seattle.gov/council/kettle",
+        "data": "https://seattle.gov/council/kettle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the URL of the person's dedicated profile page.",
-        "source": "https://www.seattle.gov/council/kettle"
+        "llm_confidence_reason": "Profile page URL found in navigation menu.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Current page URL, appears to be a personal profile.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Alexis Mercedes Rinck",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
-      "https://seattle.gov/council/rinck",
-      "https://www.seattle.gov/council/rinck"
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
       "Council Member",
       "Position 8",
+      "Citywide",
       "citywide"
     ],
     "phone_numbers": [
       {
         "data": "(206) 684-8808",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "206-684-8808",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed in the text and under 'Contact Us'.",
-        "source": "https://seattle.gov/council/rinck"
-      },
-      {
-        "data": "(206) 684-8808",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
-        "source": "https://www.seattle.gov/council/rinck"
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' and in the introductory paragraph.",
+        "source": "https://seattle.gov/council/rinck"
       }
     ],
     "emails": [
       {
         "data": "AlexisMercedes.Rinck@seattle.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed in the text and under 'Contact Us'.",
-        "source": "https://seattle.gov/council/rinck"
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "AlexisMercedes.Rinck@seattle.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
-        "source": "https://www.seattle.gov/council/rinck"
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the introductory paragraph.",
+        "source": "https://seattle.gov/council/rinck"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/rinck",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Alexis' Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "https://www.seattle.gov/council/rinck",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/rinck",
+        "data": "https://seattle.gov/council/rinck",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
+        "llm_confidence_reason": "Profile page URL found in navigation for Alexis Mercedes Rinck.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://seattle.gov/council/rinck",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Primary website URL for the individual's profile page.",
-        "source": "https://seattle.gov/council/rinck"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL found in navigation menu.",
+        "source": "https://seattle.gov/council/saka"
       },
       {
-        "data": "https://www.seattle.gov/council/rinck",
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page is a person-specific profile page.",
-        "source": "https://www.seattle.gov/council/rinck"
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current page, which is the council member's profile page.",
+        "source": "https://seattle.gov/council/rinck"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   },
   {
     "name": "Sara Nelson",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://seattle.gov/council/meet-the-council",
-      "https://www.seattle.gov/elected-officials",
-      "https://www.seattle.gov/council",
       "https://seattle.gov/council/meet-the-council/sara-nelson",
-      "https://www.seattle.gov/council/meet-the-council/sara-nelson"
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle"
     ],
+    "images": [],
     "positions": [
       "Council President",
       "Council Member",
@@ -769,92 +925,82 @@
       {
         "data": "(206) 684-8809",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' for the person.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
         "data": "(206) 684-8809",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with the name.",
-        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
-      },
-      {
-        "data": "(206) 684-8809",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section associated with Sara Nelson.",
-        "source": "https://www.seattle.gov/council/meet-the-council/sara-nelson"
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section for Sara Nelson.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       }
     ],
     "emails": [
       {
-        "data": "Sara.Nelson@seattle.gov",
+        "data": "sara.nelson@seattle.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section associated with the name.",
-        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
-      },
-      {
-        "data": "Sara.Nelson@seattle.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section associated with Sara Nelson.",
-        "source": "https://www.seattle.gov/council/meet-the-council/sara-nelson"
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
       }
     ],
     "websites": [
       {
         "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Website URL explicitly linked under 'Visit Sara's Website'.",
+        "llm_confidence_reason": "Website URL explicitly linked as the person's website.",
         "source": "https://seattle.gov/council/meet-the-council"
       },
       {
-        "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
-      },
-      {
-        "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
-        "source": "https://www.seattle.gov/council"
+        "llm_confidence_reason": "Primary profile page URL found in navigation and header for Sara Nelson.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
       },
       {
         "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the specific profile page for Sara Nelson.",
-        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+        "llm_confidence_reason": "Profile page URL found in navigation menu.",
+        "source": "https://seattle.gov/council/saka"
       },
       {
-        "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL found in navigation and header explicitly for Sara Nelson's page.",
-        "source": "https://www.seattle.gov/council/meet-the-council/sara-nelson"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-18"
-  },
-  {
-    "name": "Bob Kettle",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.seattle.gov/elected-officials"
-    ],
-    "positions": [],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+        "llm_confidence_reason": "URL found in navigation menu linked to the person's name.",
+        "source": "https://seattle.gov/council/solomon"
+      },
       {
-        "data": "https://www.seattle.gov/council/kettle",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked from the person's name and title.",
-        "source": "https://www.seattle.gov/elected-officials"
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary profile page URL found in navigation.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in the navigation menu.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL found in navigation menu under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly from 'Meet the Council' section.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name, appears to be a personal profile page.",
+        "source": "https://seattle.gov/council/kettle"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-18"
+    "updated_at": "2025-05-22"
   }
 ]
