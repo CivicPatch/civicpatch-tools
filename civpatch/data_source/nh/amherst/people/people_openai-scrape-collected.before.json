@@ -1,0 +1,215 @@
+[
+  {
+    "name": "Tom Grella",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen",
+      "https://www.amherstnh.gov/user/3684/contact"
+    ],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number found near contact section for Tom Grella, likely town office main line.",
+        "source": "https://www.amherstnh.gov/user/3684/contact"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/3684/contact",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile/contact page URL linked from name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      },
+      {
+        "data": "https://www.amherstnh.gov/users/tgrella",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "User profile page URL linked near name.",
+        "source": "https://www.amherstnh.gov/user/3684/contact"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end year extracted from '(2026)' next to name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Pam Coughlin",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen",
+      "https://www.amherstnh.gov/user/7301/contact"
+    ],
+    "positions": [
+      "Select Board Member",
+      "Clerk"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number found near contact section for Pam Coughlin, likely town office main line.",
+        "source": "https://www.amherstnh.gov/user/7301/contact"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/7301/contact",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile/contact page URL linked from name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      },
+      {
+        "data": "https://www.amherstnh.gov/users/pcoughlin",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL linked from the contact page for Pam Coughlin.",
+        "source": "https://www.amherstnh.gov/user/7301/contact"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end year extracted from '(2028)' next to name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Danielle Pray",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen",
+      "https://www.amherstnh.gov/people/danielle-pray"
+    ],
+    "positions": [
+      "Select Board Member",
+      "Chair",
+      "Board of Selectmen",
+      "Zoning Board of Adjustment",
+      "BOS Non-Voting Member",
+      "Cemetery Trustees",
+      "BOS Ex-Officio Non-Voting Member",
+      "Library Trustees"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number found at bottom of page labeled with Town of Amherst contact number, likely main office number associated with official roles.",
+        "source": "https://www.amherstnh.gov/people/danielle-pray"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/people/danielle-pray",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      },
+      {
+        "data": "https://www.amherstnh.gov/people/danielle-pray",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is a profile page for Danielle Pray.",
+        "source": "https://www.amherstnh.gov/people/danielle-pray"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end year extracted from '(2027)' next to name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Chair position on Board of Selectmen listed with year 2027, indicating term end year.",
+        "source": "https://www.amherstnh.gov/people/danielle-pray"
+      }
+    ],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Cynthia Dokmo",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen"
+    ],
+    "positions": [
+      "Select Board Member",
+      "Vice Chair"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/4454/contact",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile/contact page URL linked from name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end year extracted from '(2027)' next to name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "John D'Angelo",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen",
+      "https://www.amherstnh.gov/user/2313/contact"
+    ],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/2313/contact",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile/contact page URL linked from name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end year extracted from '(2028)' next to name.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-23"
+  }
+]

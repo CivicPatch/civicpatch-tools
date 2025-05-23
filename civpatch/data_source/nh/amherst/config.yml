@@ -1,0 +1,9 @@
+---
+scrape_sources: []
+source_directory_list:
+  type: directory_list_fallback
+  people:
+  - name: Rob Small
+    positions:
+    - Mayor
+people: {}
