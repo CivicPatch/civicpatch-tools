@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Tom Grella",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen"
+    ],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 673-6041 x209",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Phone number listed under Staff Contacts, associated with Board of Selectmen.  Lincoln Daley is listed with the phone number, but Tom Grella is a board member.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/3684/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to contact page found in Board Members table.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Pam Coughlin",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen"
+    ],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 673-6041 x209",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Phone number listed under Staff Contacts, associated with Board of Selectmen.  Lincoln Daley is listed with the phone number, but Pam Coughlin is a board member.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/7301/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to contact page found in Board Members table.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Danielle Pray",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen",
+      "https://www.amherstnh.gov/people/danielle-pray"
+    ],
+    "positions": [
+      "Chair",
+      "Select Board Member",
+      "Zoning Board of Adjustment",
+      "Board of Selectmen",
+      "BOS Non-Voting Member",
+      "Cemetery Trustees",
+      "BOS Ex-Officio Non-Voting Member",
+      "Library Trustees"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 673-6041 x209",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Phone number listed under Staff Contacts, associated with Board of Selectmen.  Lincoln Daley is listed with the phone number, but Danielle Pray is a board member.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      },
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed at the bottom of the page.",
+        "source": "https://www.amherstnh.gov/people/danielle-pray"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/people/danielle-pray",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to contact page found in Board Members table.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      },
+      {
+        "data": "https://www.amherstnh.gov/people/danielle-pray",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the main page for Danielle Pray.",
+        "source": "https://www.amherstnh.gov/people/danielle-pray"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Cynthia Dokmo",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen"
+    ],
+    "positions": [
+      "Vice Chair",
+      "Select Board Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 673-6041 x209",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Phone number listed under Staff Contacts, associated with Board of Selectmen.  Lincoln Daley is listed with the phone number, but Cynthia Dokmo is a board member.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/4454/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to contact page found in Board Members table.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "John D'Angelo",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.amherstnh.gov/board-selectmen"
+    ],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 673-6041 x209",
+        "llm_confidence": 0.75,
+        "llm_confidence_reason": "Phone number listed under Staff Contacts, associated with Board of Selectmen.  Lincoln Daley is listed with the phone number, but John D'Angelo is a board member.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.amherstnh.gov/user/2313/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to contact page found in Board Members table.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  }
+]

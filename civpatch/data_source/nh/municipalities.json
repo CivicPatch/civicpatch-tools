@@ -591,7 +591,14 @@
       "government_type": "select_board",
       "email": "dshankle@amherstnh.gov",
       "website": "http://www.amherstnh.gov/",
-      "geoid": "3301101300"
+      "geoid": "3301101300",
+      "meta_updated_at": "2025-05-23",
+      "meta_hash": "0aefe87cfc247a07edd84745dc3eb037",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Raymond",
