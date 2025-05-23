@@ -22,7 +22,7 @@ if [ -z "${IMAGE_NAME}" ]; then
   exit 1
 fi
 
-DOCKERFILE_PATH="./Dockerfile.civpatch"
+DOCKERFILE_PATH="./Dockerfile"
 BUILD_CONTEXT="." 
 REGISTRY_HOST="ghcr.io"
 
