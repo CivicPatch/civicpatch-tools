@@ -1,0 +1,210 @@
+[
+  {
+    "name": "Athos Rassias",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard"
+    ],
+    "positions": [
+      "Selectboard Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-643-0701",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Listed under Selectboard contact information.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hanovernh.org/directory.aspx?eid=130",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found under name.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Joanna Whitcomb",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=131"
+    ],
+    "positions": [
+      "Vice-Chair",
+      "Selectboard Vice-Chair"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-643-0701",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Listed under Selectboard contact information.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Joanna.Whitcomb@hanovernh.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email directly associated with name.",
+        "source": "https://www.hanovernh.org/directory.aspx?eid=131"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.hanovernh.org/directory.aspx?eid=131",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found under name.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Jarett Berke",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=136"
+    ],
+    "positions": [
+      "Secretary",
+      "Selectboard"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-643-0701",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Listed under Selectboard contact information.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "603-643-4123",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town phone number listed in the footer. Associated because no other contact info is available.",
+        "source": "https://www.hanovernh.org/directory.aspx?eid=136"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.hanovernh.org/directory.aspx?eid=136",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found under name.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "https://www.hanovernh.org/Directory.aspx?DID=46",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Link to Selectboard directory page is listed under the name.",
+        "source": "https://www.hanovernh.org/directory.aspx?eid=136"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Carey Callaghan",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=132"
+    ],
+    "positions": [
+      "Chair",
+      "Selectboard Chair",
+      "Selectboard"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-643-0701",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Listed under Selectboard contact information.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "603-643-4123",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Found general town hall phone number in the same document.",
+        "source": "https://www.hanovernh.org/directory.aspx?eid=132"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Carey.Callaghan@hanovernh.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email directly associated with name.",
+        "source": "https://www.hanovernh.org/directory.aspx?eid=132"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.hanovernh.org/directory.aspx?eid=132",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found under name.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Jennie Chamberlain",
+    "image": null,
+    "source_image": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=134"
+    ],
+    "positions": [
+      "Selectboard Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-643-0701",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Listed under Selectboard contact information.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "603-643-4123",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town hall phone number listed on the page. Could be associated with her if she is the main contact.",
+        "source": "https://www.hanovernh.org/directory.aspx?eid=134"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Jennie.Chamberlain@hanovernh.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed directly under name and title.",
+        "source": "https://www.hanovernh.org/directory.aspx?eid=134"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.hanovernh.org/directory.aspx?eid=134",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found under name.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-23"
+  }
+]
