@@ -3,7 +3,7 @@
 module Services
   module Shared
     class GeminiPrompts
-      def self.gemini_generate_search_for_people_prompt(state, municipality_entry)
+      def self.search_for_people_prompt(state, municipality_entry)
         city_name = municipality_entry["name"]
 
         %(
@@ -53,7 +53,7 @@ module Services
       )
       end
 
-      def self.gemini_generate_municipal_directory_prompt(municipality_context, content, people, person_name = "")
+      def self.municipal_directory_prompt(municipality_context, content, people, person_name = "")
         state = municipality_context[:state]
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]

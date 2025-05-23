@@ -13,8 +13,8 @@ module Core
       cache_folders.each do |cache_folder|
         next if urls_to_keep.any? { |url| cache_folder.include?(url) }
 
-        puts "Removing #{cache_folder} from cache"
-        FileUtils.rm_rf(cache_folder)
+        puts "TODO: Removing #{cache_folder} from cache"
+        # FileUtils.rm_rf(cache_folder)
       end
     end
   end

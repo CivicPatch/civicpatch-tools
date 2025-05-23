@@ -27,9 +27,14 @@ module Services
       municipality_entry = municipality_context[:municipality_entry]
 
       prompt = Services::Shared::GeminiPrompts
-               .gemini_generate_search_for_people_prompt(state, municipality_entry)
+               .search_for_people_prompt(state, municipality_entry)
 
-      response = run_prompt(prompt, state, municipality_entry["name"], with_search: true)
+      response = run_prompt(
+        prompt: prompt,
+        state: state,
+        municipality_name: municipality_entry["name"],
+        with_search: true
+      )
 
       return nil if response.blank?
 
@@ -41,14 +46,15 @@ module Services
       municipality_name = municipality_context[:municipality_entry]["name"]
       content = File.read(content_file)
 
-      # TODO: check if input is too long
-      # return { error: "Content for city council members are too long" } if content.split(" ").length > @@MAX_TOKENS
-
       prompt = Services::Shared::GeminiPrompts
-               .gemini_generate_municipal_directory_prompt(municipality_context, content, people_hint, person_name)
+               .municipal_directory_prompt(municipality_context, content, people_hint, person_name)
 
-      response = run_prompt(prompt, state, municipality_name,
-                            response_schema: Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA)
+      response = run_prompt(
+        prompt: prompt,
+        state: state,
+        municipality_name: municipality_name,
+        response_schema: Services::Shared::ResponseSchemas::GEMINI_PEOPLE_ARRAY_SCHEMA
+      )
 
       return nil if response.blank?
 
@@ -62,9 +68,9 @@ module Services
       end
     end
 
-    def run_prompt(prompt, state, municipality_name, response_schema: nil, with_search: false)
+    def run_prompt(request_options)
       Services::Shared::Requests.with_model_fallback(MODELS) do |model|
-        make_request(prompt, model, response_schema, with_search, state, municipality_name)
+        make_request(model, request_options)
       end
     end
 
@@ -80,15 +86,15 @@ module Services
 
     private
 
-    def make_request(prompt, model, response_schema, with_search, state, municipality_name)
+    def make_request(model, request_options)
       Services::Shared::Requests.with_progress_indicator do
         response = HTTParty.post(
           "#{BASE_URI}/v1beta/models/#{model}:generateContent?key=#{@api_key}",
-          request_options(prompt, response_schema, with_search)
+          request_options(request_options)
         )
 
         if response.success?
-          log_usage(response, model, with_search, state, municipality_name)
+          log_usage(response, model, request_options)
           parse_response(response)
         else
           log_error(response)
@@ -97,33 +103,33 @@ module Services
       end
     end
 
-    def request_options(prompt, response_schema, with_search)
+    def request_options(request_options)
       {
-        body: build_payload(prompt, response_schema, with_search).to_json,
+        body: build_payload(request_options).to_json,
         headers: { "Content-Type" => "application/json" },
         timeout: DEFAULT_TIMEOUT
       }
     end
 
-    def build_payload(prompt, response_schema, with_search)
+    def build_payload(request_options)
       {
-        contents: [{ parts: [{ text: prompt }] }],
+        contents: [{ parts: [{ text: request_options[:prompt] }] }],
         generationConfig: {
           temperature: 0,
-          responseMimeType: with_search ? nil : "application/json",
-          responseSchema: with_search ? nil : response_schema
+          responseMimeType: request_options[:with_search] ? nil : "application/json",
+          responseSchema: request_options[:with_search] ? nil : request_options[:response_schema]
         },
-        tools: with_search ? { googleSearch: {} } : nil
+        tools: request_options[:with_search] ? { googleSearch: {} } : nil
       }.compact
     end
 
-    def log_usage(response, model, with_search, state, municipality_name)
+    def log_usage(response, model, request_options)
       usage = response["usageMetadata"]
       Utils::CostsHelper.log_llm_cost(
-        state, municipality_name, "google_gemini",
+        request_options[:state], request_options[:municipality_name], "google_gemini",
         usage["promptTokenCount"],
         usage["candidatesTokenCount"] + usage["thoughtsTokenCount"].to_i,
-        model, with_search: with_search
+        model, with_search: request_options[:with_search]
       )
     end
 
