@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Carey Callaghan",
+    "positions": [
+      "Chair"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 643-0701",
+    "email": "Carey.Callaghan@hanovernh.org",
+    "website": "https://www.hanovernh.org/directory.aspx?eid=132",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=132"
+    ],
+    "updated_at": "2025-05-23"
+  },
+  {
+    "name": "Joanna Whitcomb",
+    "positions": [
+      "Vice Chair"
+    ],
+    "image": null,
+    "source_image": null,
+    "phone_number": "(603) 643-0701",
+    "email": "Joanna.Whitcomb@hanovernh.org",
+    "website": "https://www.hanovernh.org/directory.aspx?eid=131",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=131"
+    ],
+    "updated_at": "2025-05-23"
+  }
+]
