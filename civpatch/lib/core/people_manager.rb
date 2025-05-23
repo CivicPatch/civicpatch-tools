@@ -29,7 +29,7 @@ module Core
     def self.format_people(people_config, people, positions_config)
       people_config ||= {}
 
-      people.map do |person|
+      people = people.map do |person|
         name = person["name"]&.squeeze(" ")
         canonical_name = Resolvers::PersonResolver.get_canonical_name(people_config, person)
         person["name"] = if canonical_name.present?
@@ -42,9 +42,9 @@ module Core
         person["positions"] = Core::PersonManager::Utils
                               .sort_positions(person["positions"], positions_config)
                               .map do |position|
-                                Core::PersonManager::Utils
-                                  .format_position(position)
-                              end
+          Core::PersonManager::Utils
+            .format_position(position)
+        end
 
         person["website"] = Utils::UrlHelper.format_url(person["website"]) if person["website"].present?
         if person["phone_number"].present?

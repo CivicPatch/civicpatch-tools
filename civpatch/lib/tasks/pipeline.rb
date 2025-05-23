@@ -127,12 +127,9 @@ namespace :pipeline do
 
   def aggregate_sources(context, sources: [])
     state = context[:state]
-    positions_config = Core::CityManager.get_config(context[:government_type])
-    people_config = context[:config]["people"]
     merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
 
     people = process_images(context, merged_people)
-    people = Core::PeopleManager.format_people(people_config, people, positions_config)
 
     Core::PeopleManager.update_people(context, people)
 
