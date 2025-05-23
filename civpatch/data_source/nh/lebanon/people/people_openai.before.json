@@ -45,15 +45,15 @@
       "Councilor At-Large",
       "Mayor"
     ],
-    "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=1724",
+    "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724",
     "phone_number": "603-448-4220",
     "email": "tim.mcnamara@lebanonnh.gov",
-    "website": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
+    "website": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
     "start_date": "2015",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
+      "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
     ],
     "updated_at": "2025-05-23"
   },
@@ -61,8 +61,7 @@
     "name": "Nicole Ford Burley",
     "positions": [
       "Council Member",
-      "Ward 3",
-      "Councilor"
+      "Ward 3"
     ],
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=20203",
     "phone_number": "603-448-4220",
@@ -99,8 +98,7 @@
     "name": "George Sykes",
     "positions": [
       "Council Member",
-      "Ward 2",
-      "Councilor"
+      "Ward 2"
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=10403",
     "phone_number": "603-448-4220",
