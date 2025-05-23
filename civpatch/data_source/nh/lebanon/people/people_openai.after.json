@@ -29,7 +29,7 @@
     "phone_number": null,
     "email": "doug.whittlesey@lebanonnh.gov",
     "website": "https://www.lebanonnh.gov/1484",
-    "start_date": "2021",
+    "start_date": "2025",
     "end_date": "2027-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -82,12 +82,12 @@
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=16174",
     "phone_number": null,
     "email": "chris.simon@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/844",
+    "website": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
     "start_date": "2022",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/844"
+      "https://www.lebanonnh.gov/844/Councilor-Chris-Simon"
     ],
     "updated_at": "2025-05-22"
   },
@@ -118,12 +118,12 @@
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=10403",
     "phone_number": null,
     "email": "george.sykes@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/1017",
+    "website": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
     "start_date": "2019",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/1017"
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes"
     ],
     "updated_at": "2025-05-22"
   },
