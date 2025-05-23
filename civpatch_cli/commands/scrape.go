@@ -136,6 +136,14 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 		fmt.Println(scanner.Text())
 	}
 
+	if err := scanner.Err(); err != nil {
+		return fmt.Errorf("error reading container logs: %w", err)
+	}
+
+	if err := taskResult.Wait(); err != nil {
+		return fmt.Errorf("container error: %w", err)
+	}
+
 	return nil
 }
 

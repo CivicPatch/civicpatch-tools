@@ -10,14 +10,17 @@ import (
 )
 
 var (
+	// ================================ Scrape Commands ================================
 	scrapeCommand = flag.NewFlagSet("scrape", flag.ExitOnError)
 	state         = scrapeCommand.String("state", "", "State to scrape")
 
+	// =================== Scrape Plan Commands ===================
 	scrapePlan = scrapeCommand.Bool("plan", false, "Plan the scrapes")
 	// state: required
 	numScrapes     = scrapeCommand.Int("num-scrapes", 1, "Number of scrapes to plan")
 	geoidsToIgnore = scrapeCommand.String("geoids-to-ignore", "", "Optional: GEOIDs to ignore (comma-separated list)")
 
+	// =================== Scrape Run Commands ===================
 	scrapeRun = scrapeCommand.Bool("run", false, "Run the scrapes")
 	// state: required
 	scrapeGeoid = scrapeCommand.String("geoid", "", "GEOID to scrape")
@@ -31,9 +34,8 @@ var (
 
 	branchName = scrapeCommand.String("branch-name", "", "Branch name") // Optional -- only needed if updating existing PR
 	prNumber   = scrapeCommand.Int("pr-number", 0, "PR number")         // Optional -- only needed if updating existing PR
-	// TODO: IMPLEMENT
-	// geoid         = scrapeCommand.String("geoid", "", "GEOID to scrape") TODO: FIX
 
+	// ================================ Run Task Commands ================================
 	runTask        = flag.NewFlagSet("run-task", flag.ExitOnError)
 	runTaskBranch  = runTask.String("branch-name", "", "Branch name")
 	runTaskCommand = runTask.String("command", "", "Task to run")

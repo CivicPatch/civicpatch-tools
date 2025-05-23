@@ -1,6 +1,7 @@
 package docker
 
 import (
+	"civpatch/utils"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -8,8 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"time"
-
-	"civpatch/utils"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
@@ -27,6 +26,10 @@ type TaskResult struct {
 	Output      string
 	Logs        io.ReadCloser
 	Cancel      context.CancelFunc
+	client      *Client // Needed to grab exit code
+	done        chan error
+	exitCodeCh  chan int64
+	exitCode    int64
 }
 
 type TaskOptions struct {
@@ -156,11 +159,51 @@ func (c *Client) RunTask(ctx context.Context, opts TaskOptions) (*TaskResult, er
 		}, nil
 	}
 
+	done := make(chan error, 1)
+
+	go func() {
+		statusCh, errCh := c.client.ContainerWait(context.Background(), resp.ID, container.WaitConditionNotRunning)
+		select {
+		case err := <-errCh:
+			done <- fmt.Errorf("error waiting for container: %v", err)
+		case status := <-statusCh:
+			if status.StatusCode != 0 {
+				done <- fmt.Errorf("container exited with status %d", status.StatusCode)
+			} else {
+				done <- nil
+			}
+		}
+	}()
+
 	return &TaskResult{
 		ContainerId: resp.ID,
 		Logs:        logs,
 		Cancel:      logCancel,
+		client:      c,
+		done:        make(chan error),
 	}, nil
+}
+
+func (tr *TaskResult) Wait() error {
+	err := <-tr.done
+	if err != nil {
+		// Get the exit code if available
+		select {
+		case exitCode := <-tr.exitCodeCh:
+			tr.exitCode = exitCode
+			if exitCode != 0 {
+				// Read any remaining logs
+				if tr.Logs != nil {
+					output, _ := io.ReadAll(tr.Logs)
+					if len(output) > 0 {
+						return fmt.Errorf("%v\nContainer logs:\n%s", err, string(output))
+					}
+				}
+			}
+		default:
+		}
+	}
+	return err
 }
 
 func (c *Client) PrepareContainer(ctx context.Context,
@@ -195,31 +238,6 @@ func (c *Client) PrepareContainer(ctx context.Context,
 
 	return nil
 }
-
-//func (c *Client) TaskOutput(ctx context.Context, taskOptions TaskOptions) (*ExecResult, error) {
-//
-//	cmd := []string{"bundle", "exec", "rake", taskOptions.Command}
-//
-//	exec, err := c.client.ContainerExecCreate(ctx, container.ExecOptions{
-//		AttachStdout: true,
-//		AttachStderr: true,
-//		Cmd:          cmd,
-//	})
-//	if err != nil {
-//		return nil, fmt.Errorf("error creating container exec: %v", err)
-//	}
-//
-//	inspectResp, err := InspectExecResp(ctx, exec.ID)
-//	if err != nil {
-//		return nil, fmt.Errorf("error inspecting container exec: %v", err)
-//	}
-//
-//	return &ExecResult{
-//		Stdout:   inspectResp.Stdout,
-//		Stderr:   inspectResp.Stderr,
-//		ExitCode: inspectResp.ExitCode,
-//	}, nil
-//}
 
 func (c *Client) CleanupContainer(ctx context.Context, containerId string) error {
 	err := c.client.ContainerStop(ctx, containerId, container.StopOptions{})

@@ -58,8 +58,8 @@ bin = "./dist/tmp/civpatch_cli"
 #  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_comment.sh nh 3301337300 515\"", 
 #  "-develop"]
 # ===== PR review ===== " 
-args_bin = [
-  "run-task", 
-  "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819", 
-  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_review.sh nh 3301337300 515\"", 
-  "-develop"]
+#args_bin = [
+#  "run-task", 
+#  "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819", 
+#  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_review.sh nh 3301337300 515\"", 
+#  "-develop"]
