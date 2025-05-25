@@ -67,25 +67,6 @@ module Browser
     end
   end
 
-  def self.get_page_source(url)
-    # BIG BUG: can't seem to get this working on some sites
-    # https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey
-    # maybe an issue with the client? Works fine in javascript
-    content = nil
-    exit_status = Open3.popen3("node", PLAYWRIGHT_SCRIPT, url) do |_stdin, stdout, stderr, wait_thr|
-      content = stdout.read
-
-      errors = stderr.read
-      puts errors if errors.present?
-
-      wait_thr.value.exitstatus
-    end
-
-    return content if exit_status.zero?
-
-    nil
-  end
-
   private_class_method def self.with_network_retry(url)
     retry_attempts = 0
 

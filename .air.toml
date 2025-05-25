@@ -5,7 +5,15 @@ tmp_dir = "dist/tmp"
 include_dir = ["civpatch_cli"]
 cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
 bin = "./dist/tmp/civpatch_cli"
-# args_bin = ["scrape", "-run", "-state", "wa", "-geoid", "2411856", "-develop"]
+
+# ===== Run Scrape ====="
+args_bin = [
+  "scrape", 
+  "-run", 
+  "-state", "wa", 
+  "-geoid", "5363000", 
+  "-create-pr",
+  "-develop"]
 #args_bin = [
 #  "run-task",
 #  "-state",

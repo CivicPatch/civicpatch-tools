@@ -83,14 +83,16 @@ func RunTask(ctx context.Context,
 	}
 
 	taskResult, err := dockerClient.RunTask(ctx, docker.TaskOptions{
-		Develop:      develop,
-		Command:      strings.Join(commands, " "),
-		EnvVars:      envVars,
-		StreamOutput: false,
+		Develop: develop,
+		Command: strings.Join(commands, " "),
+		EnvVars: envVars,
+		Output: docker.TaskOptionsOutput{
+			StreamOutput: false,
+		},
 	})
 	if err != nil {
 		return "", fmt.Errorf("error running task: %v", err)
 	}
 
-	return taskResult.Output, nil
+	return string(taskResult.Output), nil
 }

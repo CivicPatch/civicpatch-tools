@@ -8,6 +8,30 @@ module GitHub
     #       - [ ] (Optional) Make updates to people.yml if needed
     #       - [ ] (Optional) Make updates to config.yml if needed
     #       - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
+    #
+    #
+    def self.generate_pull_request_body(context, has_github_env)
+      if has_github_env
+        branch_name = @local_repo.current_branch
+        state = context[:state]
+        geoid = context[:municipality_entry]["geoid"]
+
+        city_path = Core::PathHelper.get_data_city_path(state, geoid)
+        data_relative_path = city_path[city_path.rindex("data/#{state}")..]
+        data_source_relative_path = city_path[city_path.rindex("data_source/#{state}")..]
+        config_link = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{data_source_relative_path}/config.yml"
+        people_link = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{data_relative_path}/people.yml"
+
+        <<~PR_BODY
+          PR opened by the Municipal Officials - Scrape workflow.
+          * people.yml - Make changes [here](#{people_link}) and validation workflows will re-run.
+          * config.yml - Make changes [here](#{config_link}) and the entire pipeline will re-run
+          (note: if you want the whole pipeline to re-run, do not make changes to people.yml)
+        PR_BODY
+      else
+        "PR opened by the Municipal Officials - Scrape workflow."
+      end
+    end
 
     def self.people_list(context, people) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
       municipality_name = context[:municipality_entry]["name"]

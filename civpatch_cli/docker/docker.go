@@ -1,9 +1,11 @@
 package docker
 
 import (
+	"bytes"
 	"civpatch/utils"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -14,6 +16,7 @@ import (
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/client"
+	"github.com/docker/docker/pkg/archive"
 )
 
 // Client wraps Docker client operations
@@ -23,24 +26,24 @@ type Client struct {
 
 type TaskResult struct {
 	ContainerId string
-	Output      string
-	Logs        io.ReadCloser
-	Cancel      context.CancelFunc
-	client      *Client // Needed to grab exit code
-	done        chan error
-	exitCodeCh  chan int64
-	exitCode    int64
+	ExitCode    int
+	Output      []byte // If not streaming, capture output here
+	Error       error  // If the container itself exited with an error
 }
 
 type TaskOptions struct {
-	Develop bool
-	// Image        string
 	Command string
 	EnvVars map[string]string
-	// Volumes      map[string]string
-	Labels       map[string]string
-	Timeout      time.Duration
+	Develop bool
+	Output  TaskOptionsOutput
+}
+
+type TaskOptionsOutput struct {
 	StreamOutput bool
+
+	// Mutually exclusive with StreamOutput
+	CopyOutputFrom  []string
+	CopyOutputToDir string
 }
 
 const (
@@ -51,7 +54,6 @@ const (
 	RemoteImageName = ImageName + ":" + RemoteImageTag
 )
 
-// NewClient creates a new Docker client
 func NewClient() (*Client, error) {
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
@@ -60,32 +62,77 @@ func NewClient() (*Client, error) {
 	return &Client{client: cli}, nil
 }
 
-// Close closes the Docker client
 func (c *Client) Close() error {
 	return c.client.Close()
 }
 
-// ContainerLogs represents the output streams from a container
-type ContainerLogs struct {
-	Stdout io.ReadCloser
-	Stderr io.ReadCloser
-}
-
-// RunContainer runs a container with the specified configuration and returns its logs
 func (c *Client) RunTask(ctx context.Context, opts TaskOptions) (*TaskResult, error) {
-	var imageName string
-	if opts.Develop {
-		imageName = LocalImageName
-	} else {
-		imageName = RemoteImageName
-	}
-
+	imageName := toImage(opts.Develop)
 	fmt.Println("Running container with image:", imageName)
 
+	env := make([]string, 0, len(opts.EnvVars))
+	for k, v := range opts.EnvVars {
+		env = append(env, fmt.Sprintf("%s=%s", k, v))
+	}
+
+	binds, err := toBindMounts(opts.Develop)
+	if err != nil {
+		return nil, err
+	}
+
+	autoRemove := len(opts.Output.CopyOutputFrom) == 0
+
+	containerID, err := c.createAndStartContainer(ctx, imageName, opts.Command, env, binds, opts.Output.StreamOutput, autoRemove)
+	if err != nil {
+		return nil, err
+	}
+
+	if !autoRemove {
+		defer c.cleanupContainer(containerID)
+	}
+
+	logsDone, containerDone, errCh, outputBuffer := c.monitorContainer(ctx, containerID, opts.Output.StreamOutput)
+
+	exitCode, finalErr := c.orchestrateResults(containerID, logsDone, containerDone, errCh)
+
+	// Maybe copy files
+	if finalErr == nil && len(opts.Output.CopyOutputFrom) > 0 {
+		fmt.Printf("Copying output from container %s to host directory %s...\n", containerID, opts.Output.CopyOutputToDir)
+		for _, containerPath := range opts.Output.CopyOutputFrom {
+			if copyErr := c.copyFromContainer(ctx, containerID, containerPath, opts.Output.CopyOutputToDir); copyErr != nil {
+				// We continue with other files, but report the first copy error
+				if finalErr == nil {
+					finalErr = fmt.Errorf("failed to copy %s from container %s: %w", containerPath, containerID, copyErr)
+				}
+				fmt.Printf("Warning: %v\n", copyErr) // Log warning for each failed copy
+			}
+		}
+	}
+
+	result := &TaskResult{
+		ExitCode: exitCode,
+		Error:    finalErr,
+	}
+	if !opts.Output.StreamOutput {
+		result.Output = outputBuffer.Bytes()
+	}
+
+	return result, finalErr
+
+}
+
+func toImage(develop bool) string {
+	if develop {
+		return LocalImageName
+	}
+	return RemoteImageName
+}
+
+func toBindMounts(develop bool) ([]string, error) {
 	// Convert volume map to binds using projectpath package
 	volumes := map[string]string{}
 
-	if opts.Develop {
+	if develop {
 		volumes = map[string]string{
 			"./civpatch/lib": "/app/civpatch/lib",
 		}
@@ -95,115 +142,184 @@ func (c *Client) RunTask(ctx context.Context, opts TaskOptions) (*TaskResult, er
 		return nil, fmt.Errorf("error converting volumes to bind mounts: %v", err)
 	}
 
-	env := make([]string, 0, len(opts.EnvVars))
-	for k, v := range opts.EnvVars {
-		env = append(env, fmt.Sprintf("%s=%s", k, v))
-	}
+	return binds, nil
+}
 
+func (c *Client) createAndStartContainer(
+	ctx context.Context,
+	imageName, command string,
+	env, binds []string,
+	streamOutput, autoRemove bool,
+) (string, error) {
 	containerLabels := map[string]string{
 		"civicpatch": "true",
 	}
-	for k, v := range opts.Labels {
-		containerLabels[k] = v
-	}
 
-	// fullCmd := []string{"/bin/sh", "-c", strings.Join(cmd, " ") + " || true ; tail -f /dev/null"}
-	fullCmd := []string{"/bin/sh", "-c", "set -e; " + opts.Command}
+	// fullCmd := []string{"/bin/sh", "-c", "set -e; " + command + " || true ; tail -f /dev/null"}
+	fullCmd := []string{"/bin/sh", "-c", "set -e; " + command}
 
 	resp, err := c.client.ContainerCreate(ctx, &container.Config{
 		Image:  imageName,
 		Cmd:    fullCmd,
 		Env:    env,
 		Labels: containerLabels,
+		Tty:    streamOutput,
 	}, &container.HostConfig{
 		Binds:      binds,
-		AutoRemove: true,
+		AutoRemove: autoRemove,
 	}, nil, nil, "")
-
 	if err != nil {
-		return nil, fmt.Errorf("error creating container: %v", err)
+		return "", fmt.Errorf("error creating container: %w", err)
 	}
 
-	err = c.client.ContainerStart(ctx, resp.ID, container.StartOptions{})
+	containerID := resp.ID
+	err = c.client.ContainerStart(ctx, containerID, container.StartOptions{})
 	if err != nil {
-		return nil, fmt.Errorf("error starting container: %v", err)
+		return "", fmt.Errorf("error starting container %s: %w", containerID, err)
 	}
-
-	// Get container logs
-	timeout := 1 * time.Minute
-	if opts.Timeout > 0 {
-		timeout = opts.Timeout
-	}
-	logCtx, logCancel := context.WithTimeout(ctx, timeout)
-	logs, err := c.client.ContainerLogs(logCtx, resp.ID, container.LogsOptions{
-		ShowStdout: true,
-		ShowStderr: true,
-		Follow:     true,
-		Timestamps: false,
-		Tail:       "all",
-	})
-	if err != nil {
-		logCancel()
-		return nil, fmt.Errorf("error getting container logs: %v", err)
-	}
-
-	if !opts.StreamOutput {
-		output, err := io.ReadAll(logs)
-		if err != nil {
-			logCancel()
-			return nil, fmt.Errorf("error reading container logs: %v", err)
-		}
-		logCancel()
-		return &TaskResult{
-			Output: string(output),
-		}, nil
-	}
-
-	done := make(chan error, 1)
-
-	go func() {
-		statusCh, errCh := c.client.ContainerWait(context.Background(), resp.ID, container.WaitConditionNotRunning)
-		select {
-		case err := <-errCh:
-			done <- fmt.Errorf("error waiting for container: %v", err)
-		case status := <-statusCh:
-			if status.StatusCode != 0 {
-				done <- fmt.Errorf("container exited with status %d", status.StatusCode)
-			} else {
-				done <- nil
-			}
-		}
-	}()
-
-	return &TaskResult{
-		ContainerId: resp.ID,
-		Logs:        logs,
-		Cancel:      logCancel,
-		client:      c,
-		done:        make(chan error),
-	}, nil
+	fmt.Printf("Container %s started successfully with image: %s\n", containerID, imageName)
+	return containerID, nil
 }
 
-func (tr *TaskResult) Wait() error {
-	err := <-tr.done
-	if err != nil {
-		// Get the exit code if available
+func (c *Client) monitorContainer(
+	ctx context.Context,
+	containerID string,
+	streamOutput bool,
+) (logsDone chan error, containerDone chan container.WaitResponse, errCh chan error, outputBuffer bytes.Buffer) {
+
+	logsDone = make(chan error, 1)
+	containerDone = make(chan container.WaitResponse, 1)
+	errCh = make(chan error, 1) // For errors from ContainerWait API call
+
+	go func() {
+		logOptions := container.LogsOptions{
+			ShowStdout: true,
+			ShowStderr: true,
+			Follow:     true,
+			Timestamps: false,
+		}
+		logsReader, err := c.client.ContainerLogs(ctx, containerID, logOptions)
+		if err != nil {
+			logsDone <- fmt.Errorf("error getting container logs stream for %s: %w", containerID, err)
+			return
+		}
+		defer logsReader.Close()
+
+		var writer io.Writer
+		if streamOutput {
+			writer = os.Stdout
+		} else {
+			writer = &outputBuffer
+		}
+
+		_, err = io.Copy(writer, logsReader)
+		if err != nil && !errors.Is(err, context.Canceled) { // Ignore context canceled error for logs
+			logsDone <- fmt.Errorf("error copying container logs for %s: %w", containerID, err)
+			return
+		}
+		logsDone <- nil
+	}()
+
+	go func() {
+		statusCh, errStatusCh := c.client.ContainerWait(ctx, containerID, container.WaitConditionNotRunning)
 		select {
-		case exitCode := <-tr.exitCodeCh:
-			tr.exitCode = exitCode
-			if exitCode != 0 {
-				// Read any remaining logs
-				if tr.Logs != nil {
-					output, _ := io.ReadAll(tr.Logs)
-					if len(output) > 0 {
-						return fmt.Errorf("%v\nContainer logs:\n%s", err, string(output))
-					}
-				}
+		case s := <-statusCh:
+			containerDone <- s
+		case err := <-errStatusCh:
+			errCh <- fmt.Errorf("error waiting for container %s: %w", containerID, err)
+		case <-ctx.Done():
+			errCh <- ctx.Err()
+		}
+	}()
+	return
+}
+
+func (c *Client) orchestrateResults(
+	containerID string,
+	logsDone chan error,
+	containerDone chan container.WaitResponse,
+	errCh chan error,
+) (exitCode int, err error) {
+	exitCode = -1 // Default to indicate not set
+
+	select {
+	case status := <-containerDone:
+		// Container finished, now wait for logs to ensure everything is flushed
+		logStreamErr := <-logsDone
+		if logStreamErr != nil {
+			err = fmt.Errorf("container %s exited, but error occurred during log streaming: %w", containerID, logStreamErr)
+		}
+
+		exitCode = int(status.StatusCode)
+		if status.Error != nil {
+			err = fmt.Errorf("container %s exited with status %d and error message: %s", containerID, status.StatusCode, status.Error.Message)
+		} else if exitCode != 0 {
+			err = fmt.Errorf("container %s exited with non-zero status: %d", containerID, exitCode)
+		}
+
+	case err := <-errCh:
+		// Attempt to read logs in case there's any buffered output before stopping
+		<-logsDone
+		// If context was canceled, ensure the container is stopped
+		if errors.Is(err, context.Canceled) {
+			fmt.Printf("Context canceled. Stopping container %s...\n", containerID)
+			stopCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second) // Give it time to stop
+			defer cancel()
+			if stopErr := c.client.ContainerStop(stopCtx, containerID, container.StopOptions{}); stopErr != nil {
+				fmt.Printf("Warning: failed to stop container %s on context cancellation: %v\n", containerID, stopErr)
 			}
-		default:
+		}
+
+	case logStreamErr := <-logsDone:
+		// Logs finished before container exited
+		if logStreamErr != nil {
+			err = fmt.Errorf("error during log streaming for container %s before it exited: %w", containerID, logStreamErr)
+		}
+		status := <-containerDone
+		exitCode = int(status.StatusCode)
+		if status.Error != nil {
+			err = fmt.Errorf("container %s exited with status %d and error message: %s", containerID, status.StatusCode, status.Error.Message)
+		} else if exitCode != 0 {
+			err = fmt.Errorf("container %s exited with non-zero status: %d", containerID, exitCode)
 		}
 	}
-	return err
+	return exitCode, err
+}
+
+func (c *Client) cleanupContainer(containerID string) {
+	fmt.Printf("Attempting to remove container %s...\n", containerID)
+	removeCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second) // Give it a little time
+	defer cancel()
+	if rmErr := c.client.ContainerRemove(removeCtx, containerID, container.RemoveOptions{}); rmErr != nil {
+		fmt.Printf("Warning: failed to remove container %s: %v\n", containerID, rmErr)
+	} else {
+		fmt.Printf("Successfully removed container %s.\n", containerID)
+	}
+}
+
+func (c *Client) copyFromContainer(ctx context.Context, containerID, containerPath, hostDirPath string) error {
+	// Create the host directory if it doesn't exist
+	if err := os.MkdirAll(hostDirPath, 0755); err != nil {
+		return fmt.Errorf("failed to create host directory %s: %w", hostDirPath, err)
+	}
+
+	// Get file content from container as a tar archive
+	reader, _, err := c.client.CopyFromContainer(ctx, containerID, containerPath)
+	if err != nil {
+		return fmt.Errorf("failed to copy path '%s' from container '%s': %w", containerPath, containerID, err)
+	}
+	defer reader.Close()
+
+	// Extract the tar archive to the host directory
+	if err := archive.CopyTo(reader, archive.CopyInfo{
+		Path:  containerPath,
+		IsDir: false,
+	}, hostDirPath); err != nil {
+		return fmt.Errorf("failed to extract tar archive from container path '%s' to '%s': %w", containerPath, hostDirPath, err)
+	}
+
+	fmt.Printf("Successfully copied '%s' from container '%s' to '%s'\n", containerPath, containerID, hostDirPath)
+	return nil
 }
 
 func (c *Client) PrepareContainer(ctx context.Context,

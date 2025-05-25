@@ -15,25 +15,35 @@ var (
 	state         = scrapeCommand.String("state", "", "State to scrape")
 
 	// =================== Scrape Plan Commands ===================
-	scrapePlan = scrapeCommand.Bool("plan", false, "Plan the scrapes")
-	// state: required
+	// -state: required
+	// -num-scrapes: optional
+	// -geoids-to-ignore: optional
+	scrapePlan     = scrapeCommand.Bool("plan", false, "Plan the scrapes")
 	numScrapes     = scrapeCommand.Int("num-scrapes", 1, "Number of scrapes to plan")
 	geoidsToIgnore = scrapeCommand.String("geoids-to-ignore", "", "Optional: GEOIDs to ignore (comma-separated list)")
 
 	// =================== Scrape Run Commands ===================
-	scrapeRun = scrapeCommand.Bool("run", false, "Run the scrapes")
-	// state: required
+	// -state: required
+	// -geoid: required
+	// -branch-name: optional, for updating existing PRs
+	// -pr-number: optional, for updating existing PRs
+	// -create-pr: optional
+	// -send-costs: optional, for recording costs with Google Sheets
+	// -with-ci: optional TODO remove this, don't care about github token retrieval via Device flow
+	// -github-env: only for CivicPatch-run pipelines
+	// -develop: optional
+	scrapeRun   = scrapeCommand.Bool("run", false, "Run the scrapes")
 	scrapeGeoid = scrapeCommand.String("geoid", "", "GEOID to scrape")
 	createPr    = scrapeCommand.Bool("create-pr", false, "Create a PR")
 
-	sendCosts = scrapeCommand.Bool("send-costs", false, "Send costs to Google Sheets") // Optional -- only needed if recording costs
-	withCi    = scrapeCommand.Bool("with-ci", false, "Run with CI - noninteractive")   // Optional -- only needed if running non-interactively
+	branchName = scrapeCommand.String("branch-name", "", "Branch name")
+	prNumber   = scrapeCommand.Int("pr-number", 0, "PR number")
 
-	develop   = scrapeCommand.Bool("develop", false, "Develop locally")      // Optional -- only needed if testing changes locally
-	githubEnv = scrapeCommand.String("github-env", "", "Github environment") // Optional -- only needed if running from GitHub Actions
+	sendCosts = scrapeCommand.Bool("send-costs", false, "Send costs to Google Sheets")
+	withCi    = scrapeCommand.Bool("with-ci", false, "Run with CI - noninteractive")
 
-	branchName = scrapeCommand.String("branch-name", "", "Branch name") // Optional -- only needed if updating existing PR
-	prNumber   = scrapeCommand.Int("pr-number", 0, "PR number")         // Optional -- only needed if updating existing PR
+	githubEnv = scrapeCommand.String("github-env", "", "Github environment")
+	develop   = scrapeCommand.Bool("develop", false, "Develop locally")
 
 	// ================================ Run Task Commands ================================
 	runTask        = flag.NewFlagSet("run-task", flag.ExitOnError)
@@ -41,8 +51,9 @@ var (
 	runTaskCommand = runTask.String("command", "", "Task to run")
 	runTaskDevelop = runTask.Bool("develop", false, "Develop locally") // Optional -- only needed if testing changes locally
 
+	// ================================ Misc Commands ================================
 	cleanupCommand = flag.NewFlagSet("cleanup", flag.ExitOnError)
-	containerId    = cleanupCommand.String("container-id", "", "Container ID") // Leave blank to remove all civicpatch containers
+	containerId    = cleanupCommand.String("container-id", "", "Container ID") // Leave blank to remove all civicpatch tagged containers
 )
 
 func scrapeCommands(ctx context.Context, scrapePlan bool, scrapeRun bool) error {

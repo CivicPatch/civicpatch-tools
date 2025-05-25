@@ -27,7 +27,6 @@ COMMENT=$(printf "$REVIEW" | jq --raw-output '.comment' | tr -d '"')
 APPROVED_COMMENT="Approved by Bot based on a high agreement score (>70%)."
 REJECTED_COMMENT="Rejected by Bot - please manually review."
 
-# gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
 APPROVAL_SCORE=70
 if ["$SCORE" -gt "$APPROVAL_SCORE" ]; then
   COMMENT_BODY=$(printf "# Pass ✅\n%s\n\n%s" "$APPROVED_COMMENT" "$COMMENT")
