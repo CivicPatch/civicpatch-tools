@@ -8,72 +8,169 @@
       "https://www.seattle.gov/mayor/team",
       "https://www.seattle.gov",
       "https://www.seattle.gov/mayor/contact",
-      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/mayor",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rinck"
     ],
     "images": [],
     "positions": [
-      "Mayor",
-      "mayor"
+      "mayor",
+      "Mayor"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-4000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the Mayor's name.",
+        "source": "https://www.seattle.gov/mayor"
+      },
+      {
+        "data": "(206) 684-4000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Mayor Bruce Harrell'.",
+        "source": "https://www.seattle.gov/mayor/about"
+      },
+      {
+        "data": "(206) 684-4000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed under the person's name.",
+        "source": "https://www.seattle.gov/mayor/team"
+      },
+      {
+        "data": "(206) 684-4000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the Mayor's name and office.",
+        "source": "https://www.seattle.gov/mayor/contact"
+      },
+      {
+        "data": "(206) 684-4000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the person's name.",
+        "source": "https://seattle.gov/mayor"
+      }
+    ],
     "emails": [],
-    "websites": [],
-    "start_dates": [],
+    "websites": [
+      {
+        "data": "https://www.seattle.gov/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found a clear 'About the Mayor' link associated with the Mayor's section.",
+        "source": "https://www.seattle.gov/mayor/team"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated 'elected the 57th mayor of Seattle in 2021'.",
+        "source": "https://www.seattle.gov/mayor/about"
+      }
+    ],
     "end_dates": [],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Rob Saka",
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "images": [],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Mark Solomon",
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "images": [],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
     "name": "Joy Hollingsworth",
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck"
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Council Member",
+      "District 3"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8803",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "206-684-8803",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' and in the main text.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Joy.Hollingsworth@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' and in the main text.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Joy's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current page, which is the official profile.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/hollingsworth",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link found in navigation menu associated with the name, likely a profile page.",
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
-    "name": "Maritza Rivera",
+    "name": "Bob Kettle",
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
     ],
     "images": [],
     "positions": [
@@ -84,84 +181,901 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
     "name": "Cathy Moore",
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck"
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Council Member",
+      "District 5"
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8805",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "(206) 684-8805",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/moore"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Cathy.Moore@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/moore"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Cathy's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/moore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Dan Strauss",
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "images": [],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Robert Kettle",
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "images": [],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Alexis Mercedes Rinck",
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "images": [],
-    "positions": [],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
     "name": "Sara Nelson",
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck"
     ],
     "images": [],
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Position 9",
+      "Citywide"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8809",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "(206) 684-8809",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Sara.Nelson@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Sara's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Current page URL is a person-specific profile page.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck",
+      "https://council.seattle.gov/rinck"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Position 8",
+      "citywide"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8808",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "206-684-8808",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us'.",
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
+    "emails": [
+      {
+        "data": "AlexisMercedes.Rinck@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us'.",
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked under Elected Officials.",
+        "source": "https://harrell.seattle.gov"
+      },
+      {
+        "data": "https://council.seattle.gov/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly to the name under 'Elected Officials'.",
+        "source": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Alexis' Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://council.seattle.gov/rinck",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL explicitly listed as 'Alexis' Blog'.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current page, which is the person's profile.",
+        "source": "https://seattle.gov/council/rinck"
+      },
+      {
+        "data": "https://seattle.gov/council/rinck",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link labeled 'Visit her website' found near her name.",
+        "source": "https://council.seattle.gov/rinck"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Maritza Rivera",
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "District 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8804",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "206-684-8804",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Us' and in the text.",
+        "source": "https://seattle.gov/council/rivera"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Maritza.Rivera@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Us' and in the text.",
+        "source": "https://seattle.gov/council/rivera"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Maritza's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Rob Saka",
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "District 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8801",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "206-684-8801",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Rob.Saka@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/saka"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Rob's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/saka",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link found in navigation menu associated with the name, likely a profile page.",
+        "source": "https://seattle.gov/council/rinck"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Mark Solomon",
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck",
+      "https://council.seattle.gov/solomon"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8802",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "(206) 684-8802",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Mark.Solomon2@seattle.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/solomon"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://council.seattle.gov/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked under Elected Officials.",
+        "source": "https://harrell.seattle.gov"
+      },
+      {
+        "data": "https://council.seattle.gov/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked directly to the name under 'Elected Officials'.",
+        "source": "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Mark's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://council.seattle.gov/solomon",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL explicitly listed as 'Mark's Blog'.",
+        "source": "https://seattle.gov/council/solomon"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link found in navigation menu associated with the name, likely a profile page.",
+        "source": "https://seattle.gov/council/rinck"
+      },
+      {
+        "data": "https://seattle.gov/council/solomon",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicit link provided as 'Visit his website'.",
+        "source": "https://council.seattle.gov/solomon"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-27",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated appointment date 'January 27, 2025'.",
+        "source": "https://council.seattle.gov/solomon"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Dan Strauss",
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Chair",
+      "District 6"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8806",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "(206) 684-8806",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found directly under 'Contact Us' section associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Dan.Strauss@seattle.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found directly under 'Contact Us' section associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Dan's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/strauss",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Tim Burgess",
+    "sources": [
+      "https://www.seattle.gov/mayor/team"
+    ],
+    "images": [],
+    "positions": [
+      "Deputy Mayor"
     ],
     "phone_numbers": [],
-    "emails": [],
+    "emails": [
+      {
+        "data": "tim.burgess@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found in mailto link text associated with the person.",
+        "source": "https://www.seattle.gov/mayor/team"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Jessyn Farrell",
+    "sources": [
+      "https://www.seattle.gov/mayor/team"
+    ],
+    "images": [],
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jessyn.farrell@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found in mailto link text associated with the person.",
+        "source": "https://www.seattle.gov/mayor/team"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Tiffany Washington",
+    "sources": [
+      "https://www.seattle.gov/mayor/team"
+    ],
+    "images": [],
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tiffany.washington@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found in mailto link text associated with the person.",
+        "source": "https://www.seattle.gov/mayor/team"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Greg Wong",
+    "sources": [
+      "https://www.seattle.gov/mayor/team"
+    ],
+    "images": [],
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "greg.wong@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address found in mailto link text associated with the person.",
+        "source": "https://www.seattle.gov/mayor/team"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Robert Kettle",
+    "sources": [
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "District 7"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 684-8807",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number listed directly under 'Contact' section for the person.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "(206) 684-8807",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/kettle"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Robert.Kettle@seattle.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Us' section.",
+        "source": "https://seattle.gov/council/kettle"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Website URL extracted from markdown link text explicitly labeled 'Visit Robert's Website'.",
+        "source": "https://seattle.gov/council/meet-the-council"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Extracted from navigation link associated with the person's name under 'Meet the Council'.",
+        "source": "https://seattle.gov/council/meet-the-council/sara-nelson"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the dedicated page for the individual.",
+        "source": "https://seattle.gov/council/saka"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL found in navigation links.",
+        "source": "https://seattle.gov/council/hollingsworth"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile link associated with the name.",
+        "source": "https://seattle.gov/council/rivera"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation structure.",
+        "source": "https://seattle.gov/council/moore"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary profile page URL found in navigation associated with the name.",
+        "source": "https://seattle.gov/council/strauss"
+      },
+      {
+        "data": "https://seattle.gov/council/kettle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current page, which is the individual's profile.",
+        "source": "https://seattle.gov/council/kettle"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-25"
   }
 ]
