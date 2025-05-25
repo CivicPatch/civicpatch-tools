@@ -1,0 +1,30 @@
+name: 0. 🐳 - Docker - Build and Push
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'civpatch/lib/**'
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: "ghcr.io/civicpatch/civpatch"
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build-and-push-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and push civpatch image
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ github.actor }}
+        run:
+          RELEASE_VERSION=$(date +%Y-%m-%d) PUSH_IMAGE=true ./civpatch/build.sh
+

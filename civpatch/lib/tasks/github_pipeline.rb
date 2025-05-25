@@ -14,6 +14,28 @@ require "resolvers/people_resolver"
 require_relative "../core/context_manager"
 
 namespace :github_pipeline do
+  desc "Generate pull request details"
+  task :pr_details, [:state, :geoid] do |_t, args|
+    state = args[:state]
+    geoid = args[:geoid]
+    has_github_env = ENV["GITHUB_ENV"].present?
+
+    context = Core::ContextManager.get_context(state, geoid)
+
+    comment = GitHub::MunicipalityOfficials.generate_pull_request_body(context, has_github_env)
+    puts comment
+
+    title = "Add municipal officials for "
+    commit_message = "Add municipal officials for "
+
+    data = {
+      "commit_message" => commit_message,
+      "pr_title" => title,
+      "pr_body" => comment
+    }
+    puts JSON.generate(data)
+  end
+
   desc "Generate comment for a pull request"
   task :generate_comment, [:state, :geoid] do |_t, args|
     state = args[:state]

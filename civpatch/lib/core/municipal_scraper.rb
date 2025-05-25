@@ -78,6 +78,9 @@ module Core
           avoid_keywords.any? { |keyword| url.include?(keyword) }
         end
 
+        puts "#{llm_service_string}: URLs to scrape:"
+        puts urls.join("\n")
+
         data = scrape_urls(context, data, urls_to_process: urls, early_exit: exit_early)
       end
 

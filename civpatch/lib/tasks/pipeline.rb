@@ -13,26 +13,22 @@ require_relative "../resolvers/person_resolver"
 require_relative "../services/spaces"
 require_relative "../scrapers/municipalities"
 require_relative "../scrapers/municipality_officials"
-require_relative "../services/github"
 require_relative "../services/google_sheets"
 
 namespace :pipeline do
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :geoid, :create_pr, :send_costs] do |_t, args|
+  task :fetch, [:state, :geoid, :create_pr] do |_t, args|
     state = args[:state]
     geoid = args[:geoid]
-    create_pr = args[:create_pr].to_s.downcase == "true"
-    send_costs = args[:send_costs].to_s.downcase == "true"
+    create_pr = args[:create_pr] == "true"
 
-    github = Services::GitHub.new
     context = Core::ContextManager.get_context(state, geoid)
 
     scrape(context)
 
-    Services::GoogleSheets.send_costs if send_costs
-
-    github.update_branch(context)
-    github.create_pull_request(context) if create_pr
+    # If we're not creating a PR, let's copy the people.yml file
+    # to the output directoryfor the docker container to copy to the host
+    container_output(context) unless create_pr
   end
 
   desc "Fetch city officials from state source"
@@ -128,8 +124,7 @@ namespace :pipeline do
   def aggregate_sources(context, sources: [])
     state = context[:state]
     merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
-
-    people = process_images(context, merged_people)
+    people = process_images(context, merged_people) if Services::Spaces.enabled?
 
     Core::PeopleManager.update_people(context, people)
 
@@ -151,6 +146,42 @@ namespace :pipeline do
     # Remove cache folder if it exists
     FileUtils.rm_rf(cache_destination_dir) if Dir.exist?(cache_destination_dir)
     FileUtils.mkdir_p(cache_destination_dir)
+  end
+
+  private
+
+  def self.scrape(context)
+    state = context[:state]
+    municipality_entry = context[:municipality_entry]
+    prepare_directories(state, municipality_entry)
+
+    people_hint, people_config = fetch_with_state_source(context)
+    context = Core::ContextManager
+              .update_context_config(context,
+                                     people: people_config)
+
+    people_config = fetch_with_scrape(context, people_hint)
+    context = Core::ContextManager
+              .update_context_config(context,
+                                     people: people_config)
+
+    aggregate_sources(context,
+                      sources: %w[state_source gemini openai])
+
+    on_scrape_complete(context)
+  end
+
+  def self.on_scrape_complete(municipality_context)
+    geoid = municipality_context[:municipality_entry]["geoid"]
+    people = Core::PeopleManager.get_people(municipality_context[:state], geoid)
+    state = municipality_context[:state]
+
+    source_urls = people.flat_map do |person|
+      person["sources"]
+    end.uniq
+
+    Core::CacheManager.clean(state, geoid, source_urls)
+    Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
   end
 
   def process_images(municipality_context, people)
@@ -187,39 +218,13 @@ namespace :pipeline do
     end
   end
 
-  def self.on_complete(municipality_context)
-    geoid = municipality_context[:municipality_entry]["geoid"]
-    people = Core::PeopleManager.get_people(municipality_context[:state], geoid)
-    state = municipality_context[:state]
-
-    source_urls = people.flat_map do |person|
-      person["sources"]
-    end.uniq
-
-    Core::CacheManager.clean(state, geoid, source_urls)
-    Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
-  end
-
-  private
-
-  def self.scrape(context)
+  def self.container_output(context)
     state = context[:state]
-    municipality_entry = context[:municipality_entry]
-    prepare_directories(state, municipality_entry)
+    geoid = context[:municipality_entry]["geoid"]
 
-    people_hint, people_config = fetch_with_state_source(context)
-    context = Core::ContextManager
-              .update_context_config(context,
-                                     people: people_config)
-
-    people_config = fetch_with_scrape(context, people_hint)
-    context = Core::ContextManager
-              .update_context_config(context,
-                                     people: people_config)
-
-    aggregate_sources(context,
-                      sources: %w[state_source gemini openai])
-
-    on_complete(context)
+    destination_dir = File.join(Core::PathHelper.project_path(".."), "output")
+    source_file = File.join(Core::PathHelper.get_data_city_path(state, geoid), "people.yml")
+    puts "Copying #{source_file} to #{destination_dir}"
+    FileUtils.cp(source_file, destination_dir)
   end
 end

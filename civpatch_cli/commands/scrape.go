@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"bufio"
 	"civpatch/docker"
 	"civpatch/services"
 	"civpatch/utils"
@@ -14,11 +13,12 @@ import (
 	"os"
 	"slices"
 	"strings"
-	"time"
 )
 
 const (
 	DATA_SOURCE_URL = "https://raw.githubusercontent.com/CivicPatch/civicpatch-tools/refs/heads/main/civpatch/data_source/<STATE>/municipalities.json"
+
+	hostOutputDir = "./output"
 )
 
 type Municipality struct {
@@ -91,11 +91,13 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 	envVars["GITHUB_USERNAME"] = githubUsername
 
 	// Note: these are usually set by the Github Actions pipeline
-	if branchName != "" { // Only populated if updating existing PR
-		envVars["BRANCH_NAME"] = branchName
-	} else {
-		runId := fmt.Sprintf("%d", rand.Intn(1000000))
-		envVars["BRANCH_NAME"] = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, geoid, runId)
+	if createPr {
+		if branchName != "" { // Only populated if updating existing PR
+			envVars["BRANCH_NAME"] = branchName
+		} else {
+			runId := fmt.Sprintf("%d", rand.Intn(1000000))
+			envVars["BRANCH_NAME"] = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, geoid, runId)
+		}
 	}
 
 	if prNumber != 0 { // Only populated if updating existing PR
@@ -108,40 +110,34 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 	cmd := []string{
 		"./lib/tasks/scripts/checkout_branch.sh",
 		"&&",
-		fmt.Sprintf("rake 'pipeline:fetch[%s,%s,%t,%t]'", state, geoid, createPr, sendCosts),
+		fmt.Sprintf("rake 'pipeline:fetch[%s,%s,%t]'", state, geoid, createPr),
 	}
 
-	labels := map[string]string{
-		"state": state, // Assumption: we only run one container for state + geoid at a time
-		"geoid": geoid,
-	}
-
-	taskResult, err := dockerClient.RunTask(ctx, docker.TaskOptions{
-		EnvVars:      envVars,
-		Command:      strings.Join(cmd, " "),
-		Labels:       labels,
-		Timeout:      10 * time.Minute,
+	output := docker.TaskOptionsOutput{
 		StreamOutput: true,
+	}
+
+	if createPr {
+		cmd = append(cmd, "&&", "./lib/tasks/scripts/create_pull_request.sh %s $s", state, geoid)
+	} else {
+		output = docker.TaskOptionsOutput{
+			StreamOutput:    false,
+			CopyOutputFrom:  []string{"/app/output"},
+			CopyOutputToDir: hostOutputDir,
+		}
+	}
+
+	_, err = dockerClient.RunTask(ctx, docker.TaskOptions{
+		EnvVars: envVars,
+		Command: strings.Join(cmd, " "),
+		Develop: develop,
+		Output:  output,
 	})
 	if err != nil {
-		return fmt.Errorf("error running container: %w", err)
-	}
-
-	defer taskResult.Cancel()
-
-	fmt.Println("Container started:", taskResult.ContainerId)
-
-	scanner := bufio.NewScanner(taskResult.Logs)
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
-
-	if err := scanner.Err(); err != nil {
-		return fmt.Errorf("error reading container logs: %w", err)
-	}
-
-	if err := taskResult.Wait(); err != nil {
-		return fmt.Errorf("container error: %w", err)
+		if ctx.Err() != nil {
+			return fmt.Errorf("task timed out: %w", err)
+		}
+		return fmt.Errorf("task failed: %w", err)
 	}
 
 	return nil

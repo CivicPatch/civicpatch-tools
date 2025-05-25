@@ -8,6 +8,12 @@ module Services
     ACCESS_KEY_ID = ENV["CLOUDFLARE_R2_ACCESS_KEY_ID"]
     SECRET_KEY = ENV["CLOUDFLARE_R2_SECRET_KEY"]
 
+    def self.enabled?
+      ENV["CLOUDFLARE_R2_ENDPOINT"].present? &&
+        ENV["CLOUDFLARE_R2_ACCESS_KEY_ID"].present? &&
+        ENV["CLOUDFLARE_R2_SECRET_KEY"].present?
+    end
+
     def self.client
       @client ||= Aws::S3::Client.new(
         access_key_id: ACCESS_KEY_ID,
