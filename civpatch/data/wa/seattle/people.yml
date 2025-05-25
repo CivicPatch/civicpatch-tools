@@ -3,10 +3,10 @@
   positions:
   - Mayor
   email: bruce.harrell@seattle.gov
-  phone_number:
-  website: https://www.seattle.gov/mayor
-  image: https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg
-  start_date:
+  phone_number: "(206) 684-4000"
+  website: https://www.seattle.gov/mayor/about
+  image: https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/05/DSC1702-150x150.jpg
+  start_date: '2021'
   end_date:
   sources:
   - https://www.seattle.gov/mayor
@@ -16,122 +16,281 @@
   - https://www.seattle.gov
   - https://www.seattle.gov/mayor/contact
   - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/076894b214bb793dd71e4f78e1305a309d345db8a31a070a61984f98ac945d28.jpg
-  updated_at: '2025-05-22'
-- name: Alexis Mercedes Rinck
-  positions:
-  - Council Member
-  email: AlexisMercedes.Rinck@seattle.gov
-  phone_number:
-  website:
-  image: https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/7eb9fb28062d84d67ac7937b4a2067ccc66696d0f3043d542fff1d8834941150.jpg
-  updated_at: '2025-05-22'
-- name: Cathy Moore
-  positions:
-  - Council Member
-  email: Cathy.Moore@seattle.gov
-  phone_number:
-  website:
-  image: https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/bd9de566519f157a5ec5077eb045e907fe730ca42298ad947f734a2e20e4af31.jpg
-  updated_at: '2025-05-22'
+  - https://seattle.gov/mayor
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/rinck
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/82cf7c04352ea8dcfa0dea772e2a6bc6032d4f4a73edf3f5f5d0997a5bee236e.jpg
+  updated_at: '2025-05-25'
 - name: Dan Strauss
   positions:
   - Council Member
+  - District 6
   email: Dan.Strauss@seattle.gov
-  phone_number:
-  website:
+  phone_number: "(206) 684-8806"
+  website: https://seattle.gov/council/strauss
   image: https://seattle.gov/images/Council/Members/Strauss/Struass-2022-headshot_square.jpg
   start_date:
   end_date:
   sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
   - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
   cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/010ebab91772811b230af48933a32fda79f23b9b4ec132cabd6f906f28a5669e.jpg
-  updated_at: '2025-05-22'
-- name: Joy Hollingsworth
+  updated_at: '2025-05-25'
+- name: Greg Wong
   positions:
-  - Council Member
-  email: Joy.Hollingsworth@seattle.gov
+  - Deputy Mayor
+  email: greg.wong@seattle.gov
   phone_number:
   website:
-  image: https://seattle.gov/images/Council/Members/SquareHeadshots/hollingsworth_300.jpg
+  image:
   start_date:
   end_date:
   sources:
-  - https://seattle.gov/council/meet-the-council
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/2890e576a35420a6c03257eedf7c6f5575155f741de92e7c1beadba8cc4fb3b2.jpg
-  updated_at: '2025-05-22'
-- name: Maritza Rivera
+  - https://www.seattle.gov/mayor/team
+  updated_at: '2025-05-25'
+- name: Jessyn Farrell
   positions:
-  - Council Member
-  email: Maritza.Rivera@seattle.gov
+  - Deputy Mayor
+  email: jessyn.farrell@seattle.gov
   phone_number:
   website:
-  image: https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg
+  image:
   start_date:
   end_date:
   sources:
-  - https://seattle.gov/council/meet-the-council
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/a9791e22ece7c7348d0f6a26512d655413f5f06f474ac805a3a720a8f7ba495c.jpg
-  updated_at: '2025-05-22'
-- name: Mark Solomon
+  - https://www.seattle.gov/mayor/team
+  updated_at: '2025-05-25'
+- name: Tiffany Washington
   positions:
-  - Council Member
-  email: mark.solomon@seattle.gov
+  - Deputy Mayor
+  email: tiffany.washington@seattle.gov
   phone_number:
   website:
-  image: https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg
+  image:
   start_date:
   end_date:
   sources:
+  - https://www.seattle.gov/mayor/team
+  updated_at: '2025-05-25'
+- name: Tim Burgess
+  positions:
+  - Deputy Mayor
+  email: tim.burgess@seattle.gov
+  phone_number:
+  website:
+  image:
+  start_date:
+  end_date:
+  sources:
+  - https://www.seattle.gov/mayor/team
+  updated_at: '2025-05-25'
+- name: Alexis Mercedes Rinck
+  positions:
+  - Council Member
+  - Position 8
+  email: AlexisMercedes.Rinck@seattle.gov
+  phone_number: "(206) 684-8808"
+  website: https://council.seattle.gov/rinck
+  image: https://seattle.gov/images/Council/Members/SquareHeadshots/rinck_300.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
   - https://seattle.gov/council/meet-the-council
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/94f084cde85e524a30c334b24dcadb72c5174946c95be86d3c788822fab84521.jpg
-  updated_at: '2025-05-22'
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
+  - https://council.seattle.gov/rinck
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/7eb9fb28062d84d67ac7937b4a2067ccc66696d0f3043d542fff1d8834941150.jpg
+  updated_at: '2025-05-25'
+- name: Sara Nelson
+  positions:
+  - Council Member
+  - Position 9
+  - Council President
+  email: Sara.Nelson@seattle.gov
+  phone_number: "(206) 684-8809"
+  website: https://seattle.gov/council/meet-the-council/sara-nelson
+  image: https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
+  - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/3d45ebecc1545388803afec7dcd259bf3e31c7f87f9945ada3faec53ddeed62a.jpg
+  updated_at: '2025-05-25'
 - name: Rob Saka
   positions:
   - Council Member
+  - District 1
   email: Rob.Saka@seattle.gov
-  phone_number:
-  website:
+  phone_number: "(206) 684-8801"
+  website: https://seattle.gov/council/saka
   image: https://seattle.gov/images/Council/Members/SquareHeadshots/saka_300.jpg
   start_date:
   end_date:
   sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
   - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/rinck
   cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/2ad67dfc12988e26ee821c260f0e4b57948aa567b46750dc4df50fd75169ecc3.jpg
-  updated_at: '2025-05-22'
+  updated_at: '2025-05-25'
+- name: Mark Solomon
+  positions:
+  - Council Member
+  - District 2
+  email: Mark.Solomon2@seattle.gov
+  phone_number: "(206) 684-8802"
+  website: https://council.seattle.gov/solomon
+  image: https://seattle.gov/images/Council/Members/Solomon/mark-solomon.jpg
+  start_date: '2025-01-27'
+  end_date:
+  sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
+  - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
+  - https://council.seattle.gov/solomon
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/94f084cde85e524a30c334b24dcadb72c5174946c95be86d3c788822fab84521.jpg
+  updated_at: '2025-05-25'
+- name: Joy Hollingsworth
+  positions:
+  - Council Member
+  - District 3
+  email: Joy.Hollingsworth@seattle.gov
+  phone_number: "(206) 684-8803"
+  website: https://seattle.gov/council/hollingsworth
+  image: https://seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
+  - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/94f575f5671bdefa2539bd478a8317887b67f117bf9ac60e0370c6b0c7b8f5fc.jpg
+  updated_at: '2025-05-25'
+- name: Maritza Rivera
+  positions:
+  - Council Member
+  - District 4
+  email: Maritza.Rivera@seattle.gov
+  phone_number: "(206) 684-8804"
+  website: https://seattle.gov/council/rivera
+  image: https://seattle.gov/images/Council/Members/SquareHeadshots/rivera_300.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
+  - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/a9791e22ece7c7348d0f6a26512d655413f5f06f474ac805a3a720a8f7ba495c.jpg
+  updated_at: '2025-05-25'
+- name: Cathy Moore
+  positions:
+  - Council Member
+  - District 5
+  email: Cathy.Moore@seattle.gov
+  phone_number: "(206) 684-8805"
+  website: https://seattle.gov/council/moore
+  image: https://seattle.gov/images/Council/Members/SquareHeadshots/moore_300.jpg
+  start_date:
+  end_date:
+  sources:
+  - https://harrell.seattle.gov
+  - https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs
+  - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/bd9de566519f157a5ec5077eb045e907fe730ca42298ad947f734a2e20e4af31.jpg
+  updated_at: '2025-05-25'
 - name: Robert Kettle
   positions:
   - Council Member
+  - District 7
   email: Robert.Kettle@seattle.gov
-  phone_number:
-  website:
+  phone_number: "(206) 684-8807"
+  website: https://seattle.gov/council/kettle
   image: https://seattle.gov/images/Council/Members/SquareHeadshots/kettle_300.jpg
   start_date:
   end_date:
   sources:
   - https://seattle.gov/council/meet-the-council
+  - https://seattle.gov/council/meet-the-council/sara-nelson
+  - https://seattle.gov/council/saka
+  - https://seattle.gov/council/solomon
+  - https://seattle.gov/council/hollingsworth
+  - https://seattle.gov/council/rivera
+  - https://seattle.gov/council/moore
+  - https://seattle.gov/council/strauss
+  - https://seattle.gov/council/kettle
+  - https://seattle.gov/council/rinck
   cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/06f4f0ac03a7cda3755817cc149eaff666ee27714da0fb869bdc5b0c95671ad4.jpg
-  updated_at: '2025-05-22'
-- name: Sara Nelson
-  positions:
-  - Council Member
-  email: Sara.Nelson@seattle.gov
-  phone_number:
-  website:
-  image: https://seattle.gov/images/Council/Members/Nelson/nelson_300x300.jpg
-  start_date:
-  end_date:
-  sources:
-  - https://seattle.gov/council/meet-the-council
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/images/3d45ebecc1545388803afec7dcd259bf3e31c7f87f9945ada3faec53ddeed62a.jpg
-  updated_at: '2025-05-22'
+  updated_at: '2025-05-25'

@@ -2,14 +2,14 @@
   {
     "name": "Bruce Harrell",
     "positions": [
-      "Mayor",
-      "mayor"
+      "mayor",
+      "Mayor"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "(206) 684-4000",
     "email": null,
-    "website": null,
-    "start_date": null,
+    "website": "https://www.seattle.gov/mayor/about",
+    "start_date": "2021",
     "end_date": null,
     "sources": [
       "https://www.seattle.gov/mayor",
@@ -18,60 +18,44 @@
       "https://www.seattle.gov/mayor/team",
       "https://www.seattle.gov",
       "https://www.seattle.gov/mayor/contact",
-      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/mayor",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/rinck"
     ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Rob Saka",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Mark Solomon",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
     "name": "Joy Hollingsworth",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Councilmember",
+      "District 3"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
+    "phone_number": "(206) 684-8803",
+    "email": "Joy.Hollingsworth@seattle.gov",
+    "website": "https://seattle.gov/council/hollingsworth",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
     ],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
-    "name": "Maritza Rivera",
+    "name": "Bob Kettle",
     "positions": [
       "Council Member"
     ],
@@ -82,86 +66,307 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs"
     ],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
     "name": "Cathy Moore",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Councilmember",
+      "District 5"
     ],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
+    "phone_number": "(206) 684-8805",
+    "email": "Cathy.Moore@seattle.gov",
+    "website": "https://seattle.gov/council/moore",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
     ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Dan Strauss",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Robert Kettle",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "updated_at": "2025-05-22"
-  },
-  {
-    "name": "Alexis Mercedes Rinck",
-    "positions": [],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://seattle.gov/council/meet-the-council"
-    ],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
   },
   {
     "name": "Sara Nelson",
     "positions": [
-      "Council Member"
+      "Council Member",
+      "Councilmember",
+      "Position 9",
+      "Citywide"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8809",
+    "email": "Sara.Nelson@seattle.gov",
+    "website": "https://seattle.gov/council/meet-the-council/sara-nelson",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Alexis Mercedes Rinck",
+    "positions": [
+      "Council Member",
+      "Councilmember",
+      "Position 8",
+      "citywide"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8808",
+    "email": "AlexisMercedes.Rinck@seattle.gov",
+    "website": "https://council.seattle.gov/rinck",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck",
+      "https://council.seattle.gov/rinck"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Maritza Rivera",
+    "positions": [
+      "Council Member",
+      "Councilmember",
+      "District 4"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8804",
+    "email": "Maritza.Rivera@seattle.gov",
+    "website": "https://seattle.gov/council/rivera",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Rob Saka",
+    "positions": [
+      "Council Member",
+      "Councilmember",
+      "District 1"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8801",
+    "email": "Rob.Saka@seattle.gov",
+    "website": "https://seattle.gov/council/saka",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/rinck"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Mark Solomon",
+    "positions": [
+      "Council Member",
+      "Councilmember",
+      "District 2"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8802",
+    "email": "Mark.Solomon2@seattle.gov",
+    "website": "https://council.seattle.gov/solomon",
+    "start_date": "2025-01-27",
+    "end_date": null,
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck",
+      "https://council.seattle.gov/solomon"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Dan Strauss",
+    "positions": [
+      "Council Member",
+      "Chair",
+      "Councilmember",
+      "District 6"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8806",
+    "email": null,
+    "website": "https://seattle.gov/council/strauss",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://harrell.seattle.gov",
+      "https://harrell.seattle.gov/2025/03/27/mayor-bruce-harrell-and-city-of-seattle-launch-groundbreaking-ai-incubator-to-propel-the-next-generation-of-ai-entrepreneurs",
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Tim Burgess",
+    "positions": [
+      "Deputy Mayor"
     ],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "tim.burgess@seattle.gov",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://seattle.gov/council/meet-the-council"
+      "https://www.seattle.gov/mayor/team"
     ],
-    "updated_at": "2025-05-22"
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Jessyn Farrell",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "jessyn.farrell@seattle.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.seattle.gov/mayor/team"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Tiffany Washington",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "tiffany.washington@seattle.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.seattle.gov/mayor/team"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Greg Wong",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "greg.wong@seattle.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.seattle.gov/mayor/team"
+    ],
+    "updated_at": "2025-05-25"
+  },
+  {
+    "name": "Robert Kettle",
+    "positions": [
+      "Councilmember",
+      "Council Member",
+      "District 7"
+    ],
+    "image": null,
+    "phone_number": "(206) 684-8807",
+    "email": "Robert.Kettle@seattle.gov",
+    "website": "https://seattle.gov/council/kettle",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://seattle.gov/council/meet-the-council",
+      "https://seattle.gov/council/meet-the-council/sara-nelson",
+      "https://seattle.gov/council/saka",
+      "https://seattle.gov/council/solomon",
+      "https://seattle.gov/council/hollingsworth",
+      "https://seattle.gov/council/rivera",
+      "https://seattle.gov/council/moore",
+      "https://seattle.gov/council/strauss",
+      "https://seattle.gov/council/kettle",
+      "https://seattle.gov/council/rinck"
+    ],
+    "updated_at": "2025-05-25"
   }
 ]
