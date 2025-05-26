@@ -21,6 +21,14 @@ module Browser
     }
   }.freeze
   IGNORE_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"].freeze
+  USER_AGENTS = [
+    "Mozilla/5.0 (Linux; Android 5.1; HUAWEI LUA-L03) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.96 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 7.0; SM-J730F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.101 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 10; RMX2195) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 8.1.0; 8082 Build/O11019) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.181 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36,gzip(gfe)",
+    "Mozilla/5.0 (Linux; Android 9; Mi A1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.99 Mobile Safari/537.36"
+  ]
 
   def self.with_browser
     Playwright.create(
@@ -31,7 +39,7 @@ module Browser
         args: ["--single-process"] # Started happening after upgrading Docker https://github.com/microsoft/playwright/issues/4303
       )
       context = browser.new_context(
-        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" # rubocop:disable Metrics/LineLength
+        userAgent: USER_AGENTS.sample
       )
 
       browser_page = context.new_page
@@ -72,9 +80,10 @@ module Browser
 
     begin
       yield
-    rescue Net::ReadTimeout, Faraday::TooManyRequestsError, Playwright::TimeoutError
+    rescue StandardError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
+        puts "Error trying to fetch page: #{e.message}"
         puts "Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
         sleep sleep_time
         retry_attempts += 1
@@ -225,7 +234,7 @@ module Browser
 
     [filename, absolute_src]
   rescue StandardError => e
-    # puts "\t\t\t\t❌: Error processing image (#{src}): #{e.message}, removing image element"
+    puts "\t\t\t\t❌: Error processing image (#{absolute_src}): #{e.message}, removing image element"
     file&.unlink
     nil
   end
@@ -245,6 +254,9 @@ module Browser
     end
 
     false # Don't process this element further
+  rescue StandardError => e
+    puts "maybe_exclude_image err: #{e.message}"
+    false
   end
 
   private_class_method def self.remove_image_element(img_element)
