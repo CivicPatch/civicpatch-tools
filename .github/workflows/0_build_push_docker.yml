@@ -1,4 +1,4 @@
-name: 0. 🐳 - Docker - Build and Push
+name: 0. 🤖 - Docker - Build and Push
 
 on:
   push:

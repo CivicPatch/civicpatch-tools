@@ -1,4 +1,4 @@
-name: 0. ✨ - CLI - Create Release
+name: 0. 🤖 - CLI - Create Release
 
 on:
   push:
