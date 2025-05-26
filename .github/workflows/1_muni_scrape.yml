@@ -24,6 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       municipalities: ${{ steps.set-municipalities.outputs.municipalities }}
+    defaults:
+      run:
+        working-directory: ./civpatch_cli
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,7 +38,6 @@ jobs:
       
       - name: Build go task
         run: |
-          cd ./civpatch_cli
           go build -o bin/cli
 
       - name: Get scrape candidates from queue
@@ -50,7 +52,7 @@ jobs:
           geoids=$(echo $geoids_to_ignore | sed -E 's/pipeline-municipal-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
 
           # Now the rake task returns JSON array of objects
-          cmd="./civpatch_cli/bin/cli scrape -plan -state ${{ github.event.inputs.state }} -num-scrapes ${{ github.event.inputs.num_municipalities }}"
+          cmd="./bin/cli scrape -plan -state ${{ github.event.inputs.state }} -num-scrapes ${{ github.event.inputs.num_municipalities }}"
 
           if [ -n "$geoids" ]; then
             cmd="$cmd -geoids-to-ignore $geoids"
@@ -73,19 +75,20 @@ jobs:
       fail-fast: false
       matrix:
         municipality_entry: ${{ fromJson(needs.get_municipalities_from_queue.outputs.municipalities) }}
-    
+    defaults:
+      run:
+        working-directory: ./civpatch_cli
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: '1.24.3'
       
       - name: Build go task
         run: |
-          cd ./civpatch_cli
           go build -o bin/cli
 
       - name: Generate GitHub App Token
@@ -108,9 +111,12 @@ jobs:
           GOOGLE_SHEETS_CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
           GOOGLE_SHEETS_CLIENT_SECRET: ${{ secrets.GOOGLE_SHEETS_CLIENT_SECRET }}
           GOOGLE_SHEETS_REFRESH_TOKEN: ${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
+          CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
+          CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          CLOUDFLARE_R2_SECRET_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_KEY }}
         run: |
           echo "Processing municipality: ${{ matrix.municipality_entry.geoid }}"
-          ./civpatch_cli/bin/cli scrape -run \
+          ./bin/cli scrape -run \
             -state ${{ github.event.inputs.state }} \
             -geoid ${{ matrix.municipality_entry.geoid }} \
             -github-env env-${{ github.actor }} \
