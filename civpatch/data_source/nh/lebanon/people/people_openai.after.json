@@ -8,15 +8,15 @@
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724",
     "email": "tim.mcnamara@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
-    "website": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
+    "phone_number": null,
+    "website": "https://www.lebanonnh.gov/847",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
+      "https://www.lebanonnh.gov/847"
     ],
     "start_date": "2015",
     "end_date": "2026-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "Douglas Whittlesey",
@@ -27,15 +27,15 @@
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=14113",
     "email": "doug.whittlesey@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://www.lebanonnh.gov/1484",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
       "https://www.lebanonnh.gov/1484"
     ],
-    "start_date": "2021",
+    "start_date": "2025",
     "end_date": "2027-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "Erling Heistad",
@@ -45,7 +45,7 @@
     ],
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=1720",
     "email": "erling.heistad@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -53,7 +53,7 @@
     ],
     "start_date": "2010",
     "end_date": "2026-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "Laurel Stavis",
@@ -63,7 +63,7 @@
     ],
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=20959",
     "email": "laurel.stavis@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -71,7 +71,7 @@
     ],
     "start_date": "2025",
     "end_date": "2027-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "Chris Simon",
@@ -81,7 +81,7 @@
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=16174",
     "email": "chris.simon@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://www.lebanonnh.gov/844",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -89,7 +89,7 @@
     ],
     "start_date": "2022",
     "end_date": "2026-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "Devin R. Wilkie",
@@ -99,7 +99,7 @@
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=14114",
     "email": "devin.wilkie@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://www.lebanonnh.gov/1483",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -107,7 +107,7 @@
     ],
     "start_date": "2021",
     "end_date": "2027-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "George Sykes",
@@ -117,7 +117,7 @@
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=10403",
     "email": "george.sykes@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://www.lebanonnh.gov/1017",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -125,7 +125,7 @@
     ],
     "start_date": "2019",
     "end_date": "2026-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "Karen Zook",
@@ -135,7 +135,7 @@
     ],
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=6253",
     "email": "karen.zook@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://lebanonnh.gov/1178",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -143,7 +143,7 @@
     ],
     "start_date": "2018",
     "end_date": "2026-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   },
   {
     "name": "Nicole Ford Burley",
@@ -153,7 +153,7 @@
     ],
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=20203",
     "email": "nicole.ford.burley@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -161,6 +161,6 @@
     ],
     "start_date": "2025",
     "end_date": "2027-03",
-    "updated_at": "2025-05-23"
+    "updated_at": "2025-05-26"
   }
 ]
