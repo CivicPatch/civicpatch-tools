@@ -92,13 +92,12 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 
 	// Note: these are usually set by the Github Actions pipeline
 	if createPr {
-		if branchName != "" { // Only populated if updating existing PR
-			envVars["BRANCH_NAME"] = branchName
-		} else {
+		if branchName == "" { // Only populated if updating existing PR
 			runId := fmt.Sprintf("%d", rand.Intn(1000000))
-			envVars["BRANCH_NAME"] = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, geoid, runId)
+			branchName = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, geoid, runId)
 		}
 	}
+	envVars["BRANCH_NAME"] = branchName
 
 	if prNumber != 0 { // Only populated if updating existing PR
 		envVars["PR_NUMBER"] = fmt.Sprintf("%d", prNumber)
@@ -118,7 +117,7 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 	}
 
 	if createPr {
-		cmd = append(cmd, "&&", "./lib/tasks/scripts/create_pull_request.sh %s $s", state, geoid)
+		cmd = append(cmd, "&&", fmt.Sprintf("./lib/tasks/scripts/create_pull_request.sh %s %s %s", state, geoid, branchName))
 	} else {
 		output = docker.TaskOptionsOutput{
 			StreamOutput:    false,

@@ -11,7 +11,7 @@ args_bin = [
   "scrape", 
   "-run", 
   "-state", "wa", 
-  "-geoid", "5363000", 
+  "-geoid", "5367000", 
   "-create-pr",
   "-develop"]
 #args_bin = [

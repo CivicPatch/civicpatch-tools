@@ -242,25 +242,20 @@ module Services
 
       json_output = response.dig("choices", 0, "message", "content")
 
-      begin
-        JSON.parse(json_output)
-      rescue JSON::ParserError => e
-        puts "JSON Parsing Error for #{municipality_name}, #{state}: #{e.message}"
-        puts "Problematic JSON string was:\n#{json_output}"
-        nil
-      rescue StandardError => e
-        puts "Other StandardError during JSON processing for #{municipality_name}, #{state}: #{e.message}"
-        nil
-      end
-    rescue Faraday::TooManyRequestsError
+      JSON.parse(json_output)
+    rescue JSON::ParserError => e
+      puts "JSON Parsing Error for #{municipality_name}, #{state}: #{e.message}"
+      puts "Problematic JSON string was:\n#{json_output}"
+      nil
+    rescue StandardError => e
       if retry_attempts < MAX_RETRIES
         sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
-        puts "[429] Rate limited. Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
+        puts "#{e.message} - Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
         sleep sleep_time
         retry_attempts += 1
         retry
       else
-        puts "[429] Too many requests. Max retries reached for #{url}."
+        puts "Max retries reached for #{url}."
       end
     end
 

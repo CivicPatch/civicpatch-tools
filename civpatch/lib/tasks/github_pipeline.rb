@@ -23,7 +23,6 @@ namespace :github_pipeline do
     context = Core::ContextManager.get_context(state, geoid)
 
     comment = GitHub::MunicipalityOfficials.generate_pull_request_body(context, has_github_env)
-    puts comment
 
     title = "Add municipal officials for "
     commit_message = "Add municipal officials for "
