@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Lisa Brown",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "mayor@spokanecity.org",
+    "updated_at": "2025-05-26"
+  },
+  {
+    "name": "Betsy Wilkerson",
+    "positions": [
+      "Council President"
+    ],
+    "email": "bwilkerson@spokanecity.org",
+    "updated_at": "2025-05-26"
+  },
+  {
+    "name": "Jonathan Bingle",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jbingle@spokanecity.org",
+    "updated_at": "2025-05-26"
+  },
+  {
+    "name": "Kitty Klitzke",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "kklitzke@spokanecity.org",
+    "updated_at": "2025-05-26"
+  },
+  {
+    "name": "Lili Navarrete",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "lnavarrete@spokanecity.org",
+    "updated_at": "2025-05-26"
+  },
+  {
+    "name": "Michael Cathcart",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "mcathcart@spokanecity.org",
+    "updated_at": "2025-05-26"
+  },
+  {
+    "name": "Paul Dillon",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "pdillon@spokanecity.org",
+    "updated_at": "2025-05-26"
+  },
+  {
+    "name": "Zack Zappone",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "zzappone@spokanecity.org",
+    "updated_at": "2025-05-26"
+  }
+]

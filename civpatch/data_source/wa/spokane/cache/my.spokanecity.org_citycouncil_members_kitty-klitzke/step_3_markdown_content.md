@@ -48,6 +48,8 @@ Browser cookies and javascript are enabled.
 
 ##  Kitty Klitzke 
 
+  ![Kitty Klitzke](https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/3x4/medium/kitty-klitzke.jpg)  
+
  *City Council Member, District 3* 
 
 Term: 2024-2027
