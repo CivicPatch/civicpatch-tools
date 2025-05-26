@@ -21,11 +21,12 @@ namespace :github_pipeline do
     has_github_env = ENV["GITHUB_ENV"].present?
 
     context = Core::ContextManager.get_context(state, geoid)
+    municipality_name = context[:municipality_entry]["name"]
 
     comment = GitHub::MunicipalityOfficials.generate_pull_request_body(context, has_github_env)
 
-    title = "Add municipal officials for "
-    commit_message = "Add municipal officials for "
+    title = "Add municipal officials for #{municipality_name}, #{state}"
+    commit_message = "Add municipal officials for #{municipality_name}, #{state}"
 
     data = {
       "commit_message" => commit_message,

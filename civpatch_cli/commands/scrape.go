@@ -117,7 +117,7 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 	}
 
 	if createPr {
-		cmd = append(cmd, "&&", fmt.Sprintf("./lib/tasks/scripts/create_pull_request.sh %s %s %s", state, geoid, branchName))
+		cmd = append(cmd, "&&", fmt.Sprintf("./lib/tasks/scripts/create_pull_request.sh %s %s", state, geoid))
 	} else {
 		output = docker.TaskOptionsOutput{
 			StreamOutput:    false,
