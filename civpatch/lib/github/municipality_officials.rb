@@ -10,17 +10,16 @@ module GitHub
     #       - [ ] (Optional) Leave a comment if the data cannot be fixed by making updates to the YAML files
     #
     #
-    def self.generate_pull_request_body(context, has_github_env)
+    def self.generate_pull_request_body(context, has_github_env, current_branch)
       if has_github_env
-        branch_name = @local_repo.current_branch
         state = context[:state]
         geoid = context[:municipality_entry]["geoid"]
 
         city_path = Core::PathHelper.get_data_city_path(state, geoid)
         data_relative_path = city_path[city_path.rindex("data/#{state}")..]
         data_source_relative_path = city_path[city_path.rindex("data_source/#{state}")..]
-        config_link = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{data_source_relative_path}/config.yml"
-        people_link = "https://github.com/CivicPatch/open-data/edit/#{branch_name}/#{data_relative_path}/people.yml"
+        config_link = "https://github.com/CivicPatch/open-data/edit/#{current_branch}/#{data_source_relative_path}/config.yml"
+        people_link = "https://github.com/CivicPatch/open-data/edit/#{current_branch}/#{data_relative_path}/people.yml"
 
         <<~PR_BODY
           PR opened by the Municipal Officials - Scrape workflow.

@@ -15,15 +15,16 @@ require_relative "../core/context_manager"
 
 namespace :github_pipeline do
   desc "Generate pull request details"
-  task :pr_details, [:state, :geoid] do |_t, args|
+  task :pr_details, [:state, :geoid, :current_branch] do |_t, args|
     state = args[:state]
     geoid = args[:geoid]
+    current_branch = args[:current_branch]
     has_github_env = ENV["GITHUB_ENV"].present?
 
     context = Core::ContextManager.get_context(state, geoid)
     municipality_name = context[:municipality_entry]["name"]
 
-    comment = GitHub::MunicipalityOfficials.generate_pull_request_body(context, has_github_env)
+    comment = GitHub::MunicipalityOfficials.generate_pull_request_body(context, has_github_env, current_branch)
 
     title = "Add municipal officials for #{municipality_name}, #{state}"
     commit_message = "Add municipal officials for #{municipality_name}, #{state}"
