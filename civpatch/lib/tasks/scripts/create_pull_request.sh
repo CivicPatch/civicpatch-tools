@@ -19,10 +19,9 @@ PULL_REQUEST_DETAILS=$(rake "github_pipeline:pr_details[$STATE,$GEOID]")
 
 PR_TITLE=$(printf "$PULL_REQUEST_DETAILS" | jq '.pr_title' )
 PR_BODY=$(printf "$PULL_REQUEST_DETAILS" | jq '.pr_body' )
-HEAD="$GITHUB_USER:$BRANCH_NAME"
 
 if [[ -n $GITHUB_ENV ]]; then
-  gh pr create --title "$PR_TITLE" --body "$PR_BODY" --label "$GITHUB_ENV" --head "$HEAD"
+  gh pr create --title "$PR_TITLE" --body "$PR_BODY" --label "$GITHUB_ENV"
 else
-  gh pr create --title "$PR_TITLE" --body "$PR_BODY" --head "$HEAD"
+  gh pr create --title "$PR_TITLE" --body "$PR_BODY"
 fi
