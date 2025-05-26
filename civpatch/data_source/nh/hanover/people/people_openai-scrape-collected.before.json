@@ -10,19 +10,12 @@
       "Selectboard Member",
       "Select Board Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-643-0701",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General Selectboard phone number listed; no direct personal number found.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "Athos.Rassias@hanovernh.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -36,7 +29,7 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=130",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -62,19 +55,12 @@
       "Select Board Member",
       "Select Board Vice-Chair"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-643-0701",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General Selectboard phone number listed; no direct personal number found.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "Joanna.Whitcomb@hanovernh.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -88,7 +74,7 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=131",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -114,19 +100,12 @@
       "Select Board Member",
       "Select Board Chair"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-643-0701",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General Selectboard phone number listed; no direct personal number found.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "Carey.Callaghan@hanovernh.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -140,13 +119,13 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=132",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=132",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the profile page for Carey Callaghan.",
+        "llm_confidence_reason": "Primary page URL for Carey Callaghan's directory entry.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=132"
       }
     ],
@@ -165,25 +144,18 @@
       "Selectboard Member",
       "Select Board Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-643-0701",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General Selectboard phone number listed; no direct personal number found.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address explicitly shown near the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly shown near name with mailto link.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=134"
       }
     ],
@@ -191,13 +163,13 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=134",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=134",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is a directory profile page for Jennie Chamberlain.",
+        "llm_confidence_reason": "Page URL is a profile page for Jennie Chamberlain.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=134"
       }
     ],
@@ -216,19 +188,12 @@
       "Secretary",
       "Select Board Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-643-0701",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General Selectboard phone number listed; no direct personal number found.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "Jarett.Berke@hanovernh.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -242,13 +207,13 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=136",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=136",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Page URL is the profile page for Jarett Berke.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=136"
       }
     ],

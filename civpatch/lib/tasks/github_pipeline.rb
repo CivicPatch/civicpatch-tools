@@ -47,7 +47,11 @@ namespace :github_pipeline do
     people = Resolvers::PeopleResolver.merge_people_across_sources(context)
     people_comment = GitHub::MunicipalityOfficials.people_list(context, people)
 
-    puts people_comment
+    data = {
+      "comment" => people_comment.gsub(/\n/, '\n')
+    }
+
+    puts JSON.generate(data)
   end
 
   desc "Generate review for a pull request"

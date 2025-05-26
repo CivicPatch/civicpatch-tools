@@ -15,17 +15,13 @@ if [ -z "$GITHUB_TOKEN" ]; then
   exit 1
 fi
 
-if [ -z "$GH_TOKEN" ]; then
-  echo "GH_TOKEN is not set; required for commenting on PRs"
-  exit 1
-fi
-
-# Get the JSON output, parse it with jq, and format with awk
-COMMENT=$(rake github_pipeline:generate_comment[$STATE,$GEOID] | jq -r '.comment' | awk '{printf "%s\\n", $0}')
+echo "Generating comment for $STATE $GEOID"
+DATA=$(rake "github_pipeline:generate_comment[$STATE,$GEOID]")
+COMMENT=$(printf "$DATA" | jq -r '.comment' | tr -d '"')
 
 # Verify we got a valid comment
 if [ -z "$COMMENT" ]; then
-  echo "Error: Failed to generate comment"
+  echo "Error: Failed to generate comment for $STATE $GEOID"
   exit 1
 fi
 

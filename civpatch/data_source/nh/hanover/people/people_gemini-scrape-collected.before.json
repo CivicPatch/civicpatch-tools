@@ -45,7 +45,7 @@
       {
         "data": "Joanna.Whitcomb@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link associated with the name.",
+        "llm_confidence_reason": "Email address is explicitly listed next to the name and title.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=131"
       }
     ],
@@ -76,7 +76,7 @@
       {
         "data": "Jarett.Berke@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=136"
       }
     ],
@@ -138,8 +138,8 @@
     "emails": [
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly linked to the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly listed next to the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=134"
       }
     ],
