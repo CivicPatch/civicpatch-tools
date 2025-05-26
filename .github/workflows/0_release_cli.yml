@@ -26,6 +26,8 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.24.3
+          cache-dependency-path: |
+            civpatch_cli/go.sum
       
       - name: Build and release civpatch_cli
         env:
@@ -33,6 +35,6 @@ jobs:
         run: |
           TIMESTAMP=$(date +%Y-%m-%d)
           RELEASE_VERSION=${TIMESTAMP}-${GITHUB_RUN_ID}
-          ./civpatch_cli/build.sh
+          ./civpatch_cli/build.sh $RELEASE_VERSION
           gh release create ${RELEASE_VERSION} --generate-notes ./dist/*
 
