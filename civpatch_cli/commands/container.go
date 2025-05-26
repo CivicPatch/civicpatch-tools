@@ -68,7 +68,6 @@ func RunTask(ctx context.Context,
 	envVars := map[string]string{}
 	envVars["GITHUB_USERNAME"] = githubUsername
 	envVars["GITHUB_TOKEN"] = githubToken
-	envVars["GH_TOKEN"] = githubToken
 
 	if branchName != "" {
 		envVars["BRANCH_NAME"] = branchName
@@ -87,7 +86,7 @@ func RunTask(ctx context.Context,
 		Command: strings.Join(commands, " "),
 		EnvVars: envVars,
 		Output: docker.TaskOptionsOutput{
-			StreamOutput: false,
+			StreamOutput: true,
 		},
 	})
 	if err != nil {
