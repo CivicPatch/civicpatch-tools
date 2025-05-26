@@ -2,72 +2,69 @@
 
 Loading
 
-  [Skip to Main Content](#cc0c438c27-1067-4c0c-847d-a6ecf1d336f3)   ![Lebanon, NH](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11893)  
+  [Skip to Main Content](#cc0c438c27-1067-4c0c-847d-a6ecf1d336f3)   ![Lebanon, NH](https://lebanonnh.gov/ImageRepository/Document?documentID=11893)  
 
  [Create a Website Account](/MyAccount/ProfileCreate)  - Manage notification subscriptions, save form progress and more.    
 
  *  [Website Sign In](/MyAccount) 
-  ![Homepage](https://www.lebanonnh.gov/ImageRepository/Document?documentID=12264)  
+  ![Homepage](https://lebanonnh.gov/ImageRepository/Document?documentID=12264)  
 
  1.  [Your Government](/27/Your-Government) 
  1.  [Resident Resources](/101/Resident-Resources) 
  1.  [Business Resources](/35/Business-Resources) 
  1.  [Life in Lebanon](/31/Life-in-Lebanon) 
  1.  [How Do I?](/9/How-Do-I) 
-  ![Search](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11892)  
+  ![Search](https://lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://lebanonnh.gov/ImageRepository/Document?documentID=12744)  
 
  1.  [Home](/) 
  1.  [Your Government](/27/Your-Government) 
  1.  [Boards & Committees](/245/Boards-Committees) 
  1.  [City Council](/337/City-Council) 
- 1. Mayor Douglas Whittlesey
+ 1. Councilor Timothy J. McNamara
 
-# Mayor Douglas Whittlesey
+# Councilor Timothy J. McNamara
 
- 1.  ![Doug Whittlesey](https://www.lebanonnh.gov/ImageRepository/Document?documentID=14113)    
+ 1.  ![Timothy McNamara](https://lebanonnh.gov/ImageRepository/Document?documentID=1724)    
 
-#### Douglas Whittlesey   
+#### Timothy J. McNamara   
 
- Mayor, Councilor, Ward 1 (Term expires 3/23)  [Email Mayor Whittlesey](mailto:doug.whittlesey@lebanonnh.gov)     
+ Councilor At-Large (Term expires (3/27)  [Email Councilor McNamara](mailto:tim.mcnamara@lebanonnh.gov)     
 
- __Address__ :   
+Address:    
 
-17 Green Street West   
+ 9 Deer Run Lane    
 
-West Lebanon, NH 03784   
+ Lebanon, NH 03766   
 
- __Elected to Council:__   2021   
+ __Elected to Council: __ 2015   
 
- __Served as Mayor__ : 2025 - Present   
+ __Served as Mayor__ : 2019 - 2025   
 
  __Board/Committee Representative:__    
 
-    *  [Economic Development Commission](/1328) 
-    *  [Joint School District/City Council Task Force](/652) 
-    *  [Planning Board](/577) (alternate)    
+    *  [Governance Committee](https://lebanonnh.gov/496/Governance-Committee) 
+    *  [Joint School District/City Council Task Force](/652/School-DistrictCity-Task-Force)     
 
 ### Educational/ Professional Background
 
- * Master of Accounting, Honors, University of North Carolina
- * Master of Business Administration, Honors, University of North Carolina
- * Bachelor of Arts, Cum Laude, Hamilton College
- * Certified Public Accountant, 2022
- * Greenbelt, Lean Six Sigma, 2014
- * Chartered Financial Analyst, 2011
-
-Doug Whittlesey is a seasoned financial professional with over two decades of comprehensive experience in diverse sectors, including both for-profit and not-for-profit healthcare finance and accounting, research financial management, and investment management. In his various professional roles, Doug has led budgetary, accounting, and financial planning & analysis functions and teams for both large and small organizations.
+ * Bachelor of Arts -Dartmouth College (1978)
+ * Master of Science - Antioch England Graduate School (1983)
+ * Master of Business Administration - Plymouth State University (2013)
+ * Retired Navy Reserve Intelligence Officer (1985-2006)
+ * Environmental and Land Use Planning Consultant (1984-2000)
+ * Associate Director of Real Estate/Associate Director of Facilities Operations and Management at Dartmouth College (2001-2024).
 
 ###  What motivated you to serve on the City Council? 
 
- With the retirement of one of our long-serving Ward 1 Councilors, I thought joining the Council would be a great opportunity to serve my community. I felt that I could leverage my experience in finance and accounting to contribute to the growth and vibrance of our City. 
+As a native of Lebanon, I felt, and feel, an obligation to serve the community that I love in the best way possible.
 
 ###  What are your focus areas or priorities while serving on City Council? 
 
-I continue to focus on the financial sustainability of the City while ensuring we continue to meet our infrastructure and service needs. This cuts across all areas of the City, but with a primary focus on housing, annual budgets, and tax appropriations.
+Economic vitality, maintaining an economically diverse population by helping to ensure that living in Lebanon is affordable, helping to promote a high quality of life for all of our residents, and environmental protection.
 
 ### What do you enjoy most about being part of the Lebanon community?
 
-Lebanon, to me, is the quintessential New England city with a vibrant, thriving community. The City has a wonderful close-knit feel as well as an excellent school system.
+Great people living in a beautiful environment. 
 
  1.   [Agendas and Minutes](https://lebanonnh.portal.civicclerk.com/?category_id=26)  
  1.   [City Council Resolutions](/1836/City-Council-Resolutions)  
@@ -94,7 +91,7 @@ and LebAlerts](/1239/Alerts-Notifications)   [Pay Your
 
 Bill Online](/pay)  
 
- 1.   ![City of Lebanon](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11897)  
+ 1.   ![City of Lebanon](https://lebanonnh.gov/ImageRepository/Document?documentID=11897)  
 
 ### Contact Us
 
