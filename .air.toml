@@ -7,13 +7,13 @@ cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
 bin = "./dist/tmp/civpatch_cli"
 
 # ===== Run Scrape ====="
-args_bin = [
-  "scrape", 
-  "-run", 
-  "-state", "wa", 
-  "-geoid", "5367000", 
-  "-create-pr",
-  "-develop"]
+#args_bin = [
+#  "scrape", 
+#  "-run", 
+#  "-state", "wa", 
+#  "-geoid", "5367000", 
+#  "-create-pr",
+#  "-develop"]
 #args_bin = [
 #  "run-task",
 #  "-state",
@@ -60,11 +60,11 @@ args_bin = [
 # args_bin = ["cleanup"]
 #rake "github_pipeline:generate_pr_data[wa,2411856]"
 # ===== PR comment ===== "
-#args_bin = [
-#  "run-task", 
-#  "-branch-name", "pipeline-municipal-scrapes-nh-3301337300-386819", 
-#  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_comment.sh nh 3301337300 515\"", 
-#  "-develop"]
+args_bin = [
+  "run-task", 
+  "-branch-name", "pipeline-municipal-scrapes-nh-3300933860-47873", 
+  "-develop",
+  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_comment.sh nh 3300933860 526\""]
 # ===== PR review ===== " 
 #args_bin = [
 #  "run-task", 
