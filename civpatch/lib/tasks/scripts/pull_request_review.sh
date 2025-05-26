@@ -15,11 +15,6 @@ if [ -z "$GITHUB_TOKEN" ]; then
   exit 1
 fi
 
-if [ -z "$GH_TOKEN" ]; then
-  echo "GH_TOKEN is not set; required for commenting on PRs"
-  exit 1
-fi
-
 REVIEW=$(rake "github_pipeline:generate_review[$STATE,$GEOID]")
 SCORE=$(printf "$REVIEW" | jq '.score' )
 COMMENT=$(printf "$REVIEW" | jq --raw-output '.comment' | tr -d '"')

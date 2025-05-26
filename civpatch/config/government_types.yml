@@ -99,12 +99,15 @@ government_types:
         - select board chairwoman
         - chairman
         - chairwoman
+        - selectboard chair
       - role: vice chair
         aliases:
         - select board vice chairman
         - select board vice chairwoman
         - select board vice-chairman
         - select board vice-chairwoman
+        - selectboard vice-chair
+        - select board vice-chair
         - vice-chair
         - vice chairman
         - vice-chairman
@@ -118,6 +121,8 @@ government_types:
         - select board
         - board of selectmen
         - select board representative
+        - selectboard
+        - selectboard member
     search_keywords:
       selectmen:
         - board of selectmen
