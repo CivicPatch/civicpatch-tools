@@ -14,7 +14,9 @@ fi
 echo "Creating pull request for $STATE $GEOID"
 source "$(dirname "$0")/update_branch.sh" $STATE $GEOID
 
-PULL_REQUEST_DETAILS=$(rake "github_pipeline:pr_details[$STATE,$GEOID]")
+BRANCH_NAME=$(git branch --show-current)
+
+PULL_REQUEST_DETAILS=$(rake "github_pipeline:pr_details[$STATE,$GEOID,$BRANCH_NAME]")
 
 PR_TITLE=$(printf "$PULL_REQUEST_DETAILS" | jq '.pr_title' )
 PR_BODY=$(printf "$PULL_REQUEST_DETAILS" | jq '.pr_body' )

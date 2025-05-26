@@ -30,4 +30,4 @@ echo "Committing changes (if any) to branch ($CURRENT_BRANCH): ${FOLDERS_TO_COPY
 
 git add "${FOLDERS_TO_COPY[@]}"
 git commit -m "$COMMIT_MESSAGE"
-git push origin $CURRENT_BRANCH
+git push -u origin $CURRENT_BRANCH
