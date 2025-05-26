@@ -1,50 +1,52 @@
-  ![Loading...](images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg) 
+ 
 
 #####  Checking Your Browser 
 
- One Moment...  [Continue]()  
+ Starting Session... Continue 
 
-Ensure browser cookies and javascript are enabled.
+Browser cookies and javascript are enabled.
 
- *  [City of Spokane](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson) 
- *  [spokanecity](https://my.spokanecity.org/website/map) 
- *  [Site Menu](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson)  
-   *  [live](https://my.spokanecity.org/live) 
-   *  [work](https://my.spokanecity.org/work) 
-   *  [enjoy](https://my.spokanecity.org/enjoy) 
-   *  [engage](https://my.spokanecity.org/engage)  
- *  [Search](https://my.spokanecity.org/search) 
- *  [My Account](https://my.spokanecity.org/account) 
-  [Menu](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson)  
+ Garbage, recycling, and yard waste services will be a day late all week, with Friday’s pickup occurring on Saturday due to the Memorial Day holiday. Please have your carts out at the point of collection by 6 AM on your collection day. [See more information](/news/releases/2025/05/20/city-closures-planned-for-memorial-day/) regarding city closures. 
 
- *  [City Council](https://my.spokanecity.org/citycouncil)   [More]() 
-   *  [Council Members](https://my.spokanecity.org/citycouncil/members) 
-   *  [Items of Interest](https://my.spokanecity.org/citycouncil/items-of-interest) 
-   *  [Meetings](https://my.spokanecity.org/citycouncil/meetings) 
-   *  [Documents](https://my.spokanecity.org/citycouncil/documents) 
-   *  [FAQs](https://my.spokanecity.org/citycouncil/faqs) 
-   *  [Video Programs](https://my.spokanecity.org/citycouncil/videos) 
- *  [Council Members](https://my.spokanecity.org/citycouncil/members)   [More]() 
-   *  [Betsy Wilkerson](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson) 
-   *  [Jonathan Bingle](https://my.spokanecity.org/citycouncil/members/jonathan-bingle) 
-   *  [Michael Cathcart](https://my.spokanecity.org/citycouncil/members/michael-cathcart) 
-   *  [Paul Dillon](https://my.spokanecity.org/citycouncil/members/paul-dillon) 
-   *  [Lili Navarrete](https://my.spokanecity.org/citycouncil/members/lili-navarrete) 
-   *  [Zack Zappone](https://my.spokanecity.org/citycouncil/members/zack-zappone) 
-   *  [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/kitty-klitzke) 
- *  [Betsy Wilkerson](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson) 
+ *  [City of Spokane](/) 
+ *  [spokanecity](/website/map/) 
+ *  [Site Menu](/)  
+   *  [live](/live/) 
+   *  [work](/work/) 
+   *  [enjoy](/enjoy/) 
+   *  [engage](/engage/)  
+ *  [Search](/search/) 
+ *  [My Account](/account/) 
+  [Menu](#)  
+
+ *  [City Council](/citycouncil/)  More 
+   *  [Council Members](/citycouncil/members/) 
+   *  [Items of Interest](/citycouncil/items-of-interest/) 
+   *  [Meetings](/citycouncil/meetings/) 
+   *  [Documents](/citycouncil/documents/) 
+   *  [FAQs](/citycouncil/faqs/) 
+   *  [Blogs](/citycouncil/blogs/) 
+   *  [Video Programs](/citycouncil/videos/) 
+ *  [Council Members](/citycouncil/members/)  More 
+   *  [Betsy Wilkerson](/citycouncil/members/betsy-wilkerson/) 
+   *  [Jonathan Bingle](/citycouncil/members/jonathan-bingle/) 
+   *  [Michael Cathcart](/citycouncil/members/michael-cathcart/) 
+   *  [Paul Dillon](/citycouncil/members/paul-dillon/) 
+   *  [Lili Navarrete](/citycouncil/members/lili-navarrete/) 
+   *  [Zack Zappone](/citycouncil/members/zack-zappone/) 
+   *  [Kitty Klitzke](/citycouncil/members/kitty-klitzke/) 
+   *  [Vacancy](/citycouncil/members/vacancy/) 
+ *  [Betsy Wilkerson](/citycouncil/members/betsy-wilkerson/) 
 
 #  [City Council](https://my.spokanecity.org/citycouncil/default.aspx) 
 
-  ![City of Spokane, Washington](images/0bdfba5e20522ff5adf6d7c619f4747137cf82bde903596334d97633cccfddba.svg)   ![Loading...](images/cef9bd8b599615b3e982ccc59b51403136ce387bb670484f0a57ac9468f2dad8.svg)  
+  ![City of Spokane, Washington](https://static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/Full/clock-tower-and-pavilion.jpg)  
 
  * 
- *  [Previous]() 
- *  [Next]() 
+ *  Previous 
+ *  Next 
 
 ##  Betsy Wilkerson 
-
-  ![Betsy Wilkerson](images/96267627447dcce8ca33fee048320cad132790724184951fadc852d36f5161ad.jpg)  
 
  *City Council President* 
 
@@ -64,30 +66,30 @@ Stay updated and follow Betsy on [Facebook](https://www.facebook.com/CouncilPres
 
 ####  Current Council Related Boards, Committees and Commissions 
 
- *  [Finance and Administration Committee](https://my.spokanecity.org/bcc/committees/finance-and-administration) , Member
-   *  [Aging and Long Term Care](https://my.spokanecity.org/bcc/boards/aging-and-long-term-care-of-eastern-washington) 
+ *  [Finance and Administration Committee](/bcc/committees/finance-and-administration/) , Member
+   *  [Aging and Long Term Care](/bcc/boards/aging-and-long-term-care-of-eastern-washington/) 
    * Council Office Operations Workgroup
-   *  [Lodging Tax Advisory Committee](https://my.spokanecity.org/bcc/committees/lodging-tax-advisory-committee) 
-   *  [Police Pension Board](https://my.spokanecity.org/bcc/boards/police-pension-board) 
-   *  [University District PDA](https://www.spokaneudistrict.org) 
-   *  [University District Development Association](https://www.spokaneudistrict.org) 
-   *  [West Plains PDA/S3R3](https://my.spokanecity.org/bcc/boards/west-plains-area-pda) 
- *  [Public Infrastructure, Environment and Sustainability Committee](https://my.spokanecity.org/bcc/committees/public-infrastructure-environment-and-sustainability) , Member
-   *  [Spokane Airport Board](https://my.spokanecity.org/bcc/boards/spokane-airport-board) 
-   *  [Transportation Commission](https://my.spokanecity.org/bcc/commissions/transportation-commission) Liaison
- *  [Public Safety & Community Health Committee](https://my.spokanecity.org/bcc/committees/public-safety-and-community-health) , Vice Chair
- *  [Urban Experience Committee](https://my.spokanecity.org/bcc/committees/urban-development) , Member
-   *  [Community Assembly](https://my.spokanecity.org/bcc/commissions/community-assembly) 
+   *  [Lodging Tax Advisory Committee](/bcc/committees/lodging-tax-advisory-committee/) 
+   *  [Police Pension Board](/bcc/boards/police-pension-board/) 
+   *  [University District PDA](https://www.spokaneudistrict.org/) 
+   *  [University District Development Association](https://www.spokaneudistrict.org/) 
+   *  [West Plains PDA/S3R3](/bcc/boards/west-plains-area-pda/) 
+ *  [Public Infrastructure, Environment and Sustainability Committee](/bcc/committees/public-infrastructure-environment-and-sustainability/) , Member
+   *  [Spokane Airport Board](/bcc/boards/spokane-airport-board/) 
+   *  [Transportation Commission](/bcc/commissions/transportation-commission/) Liaison
+ *  [Public Safety & Community Health Committee](/bcc/committees/public-safety-and-community-health/) , Vice Chair
+ *  [Urban Experience Committee](/bcc/committees/urban-development/) , Member
+   *  [Community Assembly](/bcc/commissions/community-assembly/) 
 
 ####  Legislative Assistant 
 
 Mark Carlos
 
- [509.625.6269]() 
+509.625.6269
 
  [mcarlos@spokanecity.org](mailto:mcarlos@spokanecity.org) 
 
-  ![Mark Carlos](images/8d3722bde06310cd53dcb75c79a53659a66c4a21524d7a1ed927317fb1d5577d.jpg)  
+  ![Mark Carlos](https://static.spokanecity.org/photos/2021/12/09/mark-carlos/3x4/medium/mark-carlos.jpg)  
 
 As Council President Betsy Wilkerson’s Legislative Assistant, Mark Carlos is proud to be the first Man of Color to hold the position on Council and aims to help her bring leadership opportunities to not only Communities of Color but those in the parts of Spokane that have felt left out and underrepresented. He is passionate about regional issues, Equitable Access to Broadband, and engaging working class youth and young adults who often find shift work to be a barrier to participating in the community.
 
@@ -101,18 +103,18 @@ When he finds time Mark likes to go out with friends, attempt his hand at garden
 
 |Date|Description|Vote|
 |---|---|---|
-|[04/14/25](https://my.spokanecity.org/citycouncil/meetings/2025/04/14/legislative-meeting)|__Resolution 2025-0018__- Approving settlement of claim for damages of Dan Eakin-$125,821.49.|Yea|
-|[04/14/25](https://my.spokanecity.org/citycouncil/meetings/2025/04/14/legislative-meeting)|__Resolution 2025-0023__- Related to the Spokane County aquifer Protection Area (APA) and placing the APA reauthorization before City voters.|Yea|
-|[04/14/25](https://my.spokanecity.org/citycouncil/meetings/2025/04/14/legislative-meeting)|__Resolution 2025-0025__- Expressing Opposition to Any Proposed Federal or State Cuts to Medicaid.|Yea|
-|[04/14/25](https://my.spokanecity.org/citycouncil/meetings/2025/04/14/legislative-meeting)|__Special Budget Ordinance C36662__- Ordinance amending Ordinance No. C36626, passed by the City Council December 9, 2024, and entitled in part, "An Ordinance Adopting a Biennial Budget for the City of Spokane,” making appropriation adjustments for year 2025, and declaring an emergency. Arises from the need to accept the Washington State Department of Commerce Coordinating Low-Income Housing Planning (CLIHP) grant.|Yea|
-|[04/14/25](https://my.spokanecity.org/citycouncil/meetings/2025/04/14/legislative-meeting)|__Special Budget Ordinance C36671__- Ordinance amending Ordinance No. C36626, passed by the City Council December 9, 2024, and entitled in part, "An Ordinance Adopting a Biennial Budget for the City of Spokane,” making appropriation adjustments for year 2025, and declaring an emergency. Arises from the need to take receipt of the State and Local Cyber Security Grant award.|Yea|
-|[03/31/25](https://my.spokanecity.org/citycouncil/meetings/2025/03/31/legislative-meeting)|__Ordinance C36641__- Relating to the mid-biennial review process; amending Sections 07.01.020, 07.14.010, and 07.14.030 of the Spokane Municipal Code; repealing Section 07.14.040 of the Spokane Municipal Code.|Yea|
-|[03/31/25](https://my.spokanecity.org/citycouncil/meetings/2025/03/31/legislative-meeting)|__Ordinance C36647__- Recodifying a section relating to animals into the correct chapter; repealing SMC Chapter 10.24 and Section SMC 10.24.060; and adopting new Section 10.74.075 of the Spokane Municipal Code.|Yea|
-|[03/31/25](https://my.spokanecity.org/citycouncil/meetings/2025/03/31/legislative-meeting)|__Ordinance C36648__- Relating to mechanical newspaper dispensers; repealing Section 08.02.0212 and Chapter 10.38 of the Spokane Municipal Code.|Yea|
-|[03/31/25](https://my.spokanecity.org/citycouncil/meetings/2025/03/31/legislative-meeting)|__Ordinance C36649__- Relating to the Purchasing & Contracts department and Director of Purchasing and Contracts; amending Sections 03.01A.315, 07.06.020, 07.06.030, 07.06.035, 07.06.097, 07.06.155, 07.06.160, 07.06.170, 07.06.173, 07.06.190, 07.06.200, 07.06.220, 07.06.270, 07.06.290, 07.06.310, and 07.06.330 of the Spokane Municipal Code.|Yea|
-|[03/31/25](https://my.spokanecity.org/citycouncil/meetings/2025/03/31/legislative-meeting)|__Ordinance C36651__- Consolidating the general business license and regulatory business license codes into a single code section; clarifying licensing requirements under state law; eliminating conflicting and duplicative code and regulatory requirements; repealing SMC Chapter 04.04 and SMC Sections 08.01.025, 08.01.110, 08.01.130, 08.01.200, 08.01.210, 08.01.230, and 08.01.320; adopting a new SMC Section 08.01.321; amending SMC Sections 08.01.020, 08.01.070, 08.01.090, 08.01.120, 08.01.150, 08.01.160, and 08.01.220 of the Spokane Municipal Code.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Emergency Ordinance C36697__- Modifying section 17G.061.310 of the Spokane Municipal Code to correct errors in the application of decision criteria to the review of plats, short plats, and binding site plans; and declaring an emergency.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Emergency Ordinance C36698__- Modifying section 04.12.080 of the Spokane Municipal Code to clarify the role of the Plan Commission and City Council with respect to emergency or interim actions related to Title 17 of the Spokane Municipal Code; and declaring an emergency.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Ordinance C36676__- Authorizing and supporting the creation of a play streets and neighborhood block party program; adopting a new section 16A.84.090 of the Spokane Municipal Code.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Resolution 2025-0032__- Joint Resolution with Spokane County in the matter of authorizing the Spokane Airport Board to purchase property located on Spokane County Assessor Tax Parcel No. 14011.1411 comprising of approximately 1.62 acres of land located at 5410 S. Hayford Road in Spokane County, Washington.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Resolution 2025-0033__- Supporting the Spokane Regional Continuum of Care 2025-2030 5-year Strategic Plan to Prevent and End Homelessness.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Resolution 2025-0034__- Approving the appointment of Heather Hamlin as the Director of the Office of Neighborhood Services for the City of Spokane.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Resolution 2025-0036__- Approving settlement of claim for damages of Kelli True - $90,000. (May be increased to, but will not exceed, $180,000)|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Special Budget Ordinance C36678__- Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to accept a grant from Department of Ecology for installation of ten Level 2 charging stations.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Special Budget Ordinance C36684__- Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to pay the Northeast Public Development Authority (NEPDA) for a development incentive.|Yea|
+|[05/19/25](/citycouncil/meetings/2025/05/19/legislative-meeting/)|__Special Budget Ordinance C36685__- Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to transfer funding from Facilities Capital to Fire Capital for equipment purchases.|Yea|
 
- Showing 1 to 10 of 1,272 entries  [Previous]()   [1]()  [2]()  [3]()  [4]()  [5]()  …  [128]()   [Next]()   ![Spokane Mountain Silhouette](images/4dbbc18feab7452144b3a4355bb455b5cfbc6fc122ae3765ea9f8a2d21182c23.svg)   ![Spokane Landmarks](images/87b6240c887806d59b6b23de0dd8910399bdae1451d56425879ba86df2947352.svg)  
+ Showing 1 to 10 of 1,306 entries Previous 12345 … 131 Next 
 
  *The City of Choice* 
 
@@ -124,119 +126,119 @@ When he finds time Mark likes to go out with friends, attempt his hand at garden
 
 Spokane, WA 99201
 
- [509.625.6255]() 
+509.625.6255
 
  *  [X/Twitter](https://twitter.com/spokane_council) 
- *  [Facebook](https://facebook.com/spokanecitycouncil) 
+ *  [Facebook](https://facebook.com/spokanecitycouncil/) 
  *  [Vimeo](https://vimeo.com/spokanecitycouncil) 
 
- *  [spokanecity]() 
+ *  spokanecity 
 
- *  [Business & Development](https://my.spokanecity.org/business) 
-   *  [Commercial](https://my.spokanecity.org/business/commercial) 
-   *  [Residential](https://my.spokanecity.org/business/residential) 
-   *  [Resources](https://my.spokanecity.org/business/resources) 
- *  [City Hall](https://my.spokanecity.org/cityhall) 
-   *  [Mayor](https://my.spokanecity.org/mayor) 
-   *  [City Council](https://my.spokanecity.org/citycouncil) 
-   *  [Hearing Examiner](https://my.spokanecity.org/hearingexaminer) 
- *  [Library](http://www.spokanelibrary.org) 
-   *  [Locations](http://www.spokanelibrary.org/open) 
-   *  [Digital Branch](http://www.spokanelibrary.org/digital) 
-   *  [Services](http://www.spokanelibrary.org/services) 
-   *  [Events](http://www.spokanelibrary.org/calendar) 
- *  [CityCable5](https://my.spokanecity.org/citycable5) 
-   *  [Programs](https://my.spokanecity.org/citycable5/programs) 
-   *  [Schedule](https://my.spokanecity.org/citycable5/schedule) 
-   *  [Videos](https://my.spokanecity.org/citycable5/videos) 
-   *  [Live](https://my.spokanecity.org/citycable5/live) 
- *  [Parks & Recreation](https://my.spokanecity.org/parksrec) 
-   *  [Parks](https://my.spokanecity.org/parks) 
-   *  [Recreation](https://my.spokanecity.org/recreation) 
-   *  [Riverfront Spokane](https://my.spokanecity.org/riverfrontspokane) 
-   *  [Golf](https://my.spokanecity.org/golf) 
- *  [Police Department](https://my.spokanecity.org/police) 
-   *  [Patrol](https://my.spokanecity.org/police/patrol) 
-   *  [Investigations](https://my.spokanecity.org/police/investigations) 
-   *  [Prevention](https://my.spokanecity.org/police/prevention) 
- *  [Courts](https://my.spokanecity.org/courts) 
-   *  [Municipal Court](https://my.spokanecity.org/courts/municipal-court) 
-   *  [Probation](https://my.spokanecity.org/courts/probation) 
-   *  [Public Defender](https://my.spokanecity.org/courts/public-defender) 
- *  [Fire Department](https://my.spokanecity.org/fire) 
-   *  [Operations](https://my.spokanecity.org/fire/operations) 
-   *  [Prevention](https://my.spokanecity.org/fire/prevention) 
-   *  [Training](https://my.spokanecity.org/fire/training) 
- *  [Community](https://my.spokanecity.org/community) 
-   *  [CHHS](https://my.spokanecity.org/chhs) 
-   *  [Neighborhoods](https://my.spokanecity.org/neighborhoods) 
-   *  [Code Enforcement](https://my.spokanecity.org/codeenforcement) 
- *  [Public Works & Utilities](https://my.spokanecity.org/publicworks) 
-   *  [Streets](https://my.spokanecity.org/streets) 
-   *  [Household](https://my.spokanecity.org/household) 
-   *  [Utilities](https://my.spokanecity.org/publicworks/utility-billing) 
-   *  [Environment](https://my.spokanecity.org/publicworks/environmental) 
- *  [OpenData](https://my.spokanecity.org/opendata) 
-   *  [Charter](https://my.spokanecity.org/charter) 
-   *  [Municipal Code](https://my.spokanecity.org/smc) 
-   *  [Maps](https://my.spokanecity.org/opendata/gis) 
- *  [Administrative](https://my.spokanecity.org/administrative) 
-   *  [Legal](https://my.spokanecity.org/administrative/legal) 
-   *  [Claims](https://my.spokanecity.org/administrative/claims) 
-   *  [Public Records](https://my.spokanecity.org/administrative/public-records) 
-
-***
-
- *  [Live](https://my.spokanecity.org/live) 
- *  [Community](https://my.spokanecity.org/community) 
- *  [Get There](https://my.spokanecity.org/getthere) 
- *  [Household Services](https://my.spokanecity.org/household) 
- *  [Parking](https://my.spokanecity.org/parking) 
- *  [Neighborhoods](https://my.spokanecity.org/neighborhoods) 
- *  [Public Safety](https://my.spokanecity.org/publicsafety) 
-
- *  [Work](https://my.spokanecity.org/work) 
- *  [Doing Business](https://my.spokanecity.org/business/doing-business) 
- *  [Jobs & Employment](https://my.spokanecity.org/jobs) 
- *  [Projects](https://my.spokanecity.org/projects) 
- *  [Get Started...](https://my.spokanecity.org/getstarted) 
- *  [Permits](https://my.spokanecity.org/permits) 
- *  [Purchasing](https://my.spokanecity.org/administrative/purchasing) 
-
- *  [Enjoy](https://my.spokanecity.org/enjoy) 
- *  [Arts & Culture](https://my.spokanecity.org/arts) 
- *  [Riverfront Spokane](https://my.spokanecity.org/riverfrontspokane) 
- *  [Golf](https://my.spokanecity.org/golf) 
- *  [Parks](https://my.spokanecity.org/parks) 
- *  [Recreation](https://my.spokanecity.org/recreation) 
- *  [Visit Spokane](http://www.visitspokane.com) 
-
- *  [Engage](https://my.spokanecity.org/engage) 
- *  [Get Involved](https://my.spokanecity.org/getinvolved) 
- *  [Mayor Brown](https://my.spokanecity.org/mayor) 
- *  [City Council](https://my.spokanecity.org/citycouncil) 
- *  [Police Ombuds](https://my.spokanecity.org/opo) 
- *  [Budget & Performance](https://my.spokanecity.org/budget) 
- *  [Elections](https://my.spokanecity.org/elections) 
+ *  [Business & Development](/business/) 
+   *  [Commercial](/business/commercial/) 
+   *  [Residential](/business/residential/) 
+   *  [Resources](/business/resources/) 
+ *  [City Hall](/cityhall/) 
+   *  [Mayor](/mayor/) 
+   *  [City Council](/citycouncil/) 
+   *  [Hearing Examiner](/hearingexaminer/) 
+ *  [Library](http://www.spokanelibrary.org/) 
+   *  [Locations](http://www.spokanelibrary.org/open/) 
+   *  [Digital Branch](http://www.spokanelibrary.org/digital/) 
+   *  [Services](http://www.spokanelibrary.org/services/) 
+   *  [Events](http://www.spokanelibrary.org/calendar/) 
+ *  [CityCable5](/citycable5/) 
+   *  [Programs](/citycable5/programs/) 
+   *  [Schedule](/citycable5/schedule/) 
+   *  [Videos](/citycable5/videos/) 
+   *  [Live](/citycable5/live/) 
+ *  [Parks & Recreation](/parksrec/) 
+   *  [Parks](/parks/) 
+   *  [Recreation](/recreation/) 
+   *  [Riverfront Spokane](/riverfrontspokane/) 
+   *  [Golf](/golf/) 
+ *  [Police Department](/police/) 
+   *  [Patrol](/police/patrol/) 
+   *  [Investigations](/police/investigations/) 
+   *  [Prevention](/police/prevention/) 
+ *  [Courts](/courts/) 
+   *  [Municipal Court](/courts/municipal-court/) 
+   *  [Probation](/courts/probation/) 
+   *  [Public Defender](/courts/public-defender/) 
+ *  [Fire Department](/fire/) 
+   *  [Operations](/fire/operations/) 
+   *  [Prevention](/fire/prevention/) 
+   *  [Training](/fire/training/) 
+ *  [Community](/community/) 
+   *  [CHHS](/chhs/) 
+   *  [Neighborhoods](/neighborhoods/) 
+   *  [Code Enforcement](/codeenforcement/) 
+ *  [Public Works & Utilities](/publicworks/) 
+   *  [Streets](/streets/) 
+   *  [Household](/household/) 
+   *  [Utilities](/publicworks/utility-billing/) 
+   *  [Environment](/publicworks/environmental/) 
+ *  [OpenData](/opendata/) 
+   *  [Charter](/charter/) 
+   *  [Municipal Code](/smc/) 
+   *  [Maps](/opendata/gis/) 
+ *  [Administrative](/administrative/) 
+   *  [Legal](/administrative/legal/) 
+   *  [Claims](/administrative/claims/) 
+   *  [Public Records](/administrative/public-records/) 
 
 ***
 
- *  [X/Twitter](https://twitter.com/spokanecity) 
- *  [Facebook](https://facebook.com/spokanecity) 
- *  [YouTube](https://youtube.com/cityofspokane) 
- *  [Vimeo](https://vimeo.com/spokanecity) 
- *  [Instagram](https://instagram.com/spokanecity) 
-  [Back Top](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson#Top)  
+ *  [Live](/live/) 
+ *  [Community](/community/) 
+ *  [Get There](/getthere/) 
+ *  [Household Services](/household/) 
+ *  [Parking](/parking/) 
+ *  [Neighborhoods](/neighborhoods/) 
+ *  [Public Safety](/publicsafety/) 
 
- *  [Terms of Use](https://my.spokanecity.org/website/terms) 
- * 
- *  [Your Privacy](https://my.spokanecity.org/website/privacy) 
- * 
- *  [Legal Notices]() 
+ *  [Work](/work/) 
+ *  [Doing Business](/business/doing-business/) 
+ *  [Jobs & Employment](/jobs/) 
+ *  [Projects](/projects/) 
+ *  [Get Started...](/getstarted/) 
+ *  [Permits](/permits/) 
+ *  [Purchasing](/administrative/purchasing/) 
 
- *  [City of Spokane](https://my.spokanecity.org/about) 
+ *  [Enjoy](/enjoy/) 
+ *  [Arts & Culture](/arts/) 
+ *  [Riverfront Spokane](/riverfrontspokane/) 
+ *  [Golf](/golf/) 
+ *  [Parks](/parks/) 
+ *  [Recreation](/recreation/) 
+ *  [Visit Spokane](http://www.visitspokane.com/) 
+
+ *  [Engage](/engage/) 
+ *  [Get Involved](/getinvolved/) 
+ *  [Mayor Brown](/mayor/) 
+ *  [City Council](/citycouncil/) 
+ *  [Police Ombuds](/opo/) 
+ *  [Budget & Performance](/budget/) 
+ *  [Elections](/elections/) 
+
+***
+
+ *  [X/Twitter](https://twitter.com/spokanecity/) 
+ *  [Facebook](https://facebook.com/spokanecity/) 
+ *  [YouTube](https://youtube.com/cityofspokane/) 
+ *  [Vimeo](https://vimeo.com/spokanecity/) 
+ *  [Instagram](https://instagram.com/spokanecity/) 
+  [Back Top](#Top)  
+
+ *  [Terms of Use](/website/terms/) 
  * 
- *  [Washington](https://access.wa.gov) 
+ *  [Your Privacy](/website/privacy/) 
  * 
- *  [USA](https://www.usa.gov) 
+ *  Legal Notices 
+
+ *  [City of Spokane](/about/) 
+ * 
+ *  [Washington](https://access.wa.gov/) 
+ * 
+ *  [USA](https://www.usa.gov/) 
  
