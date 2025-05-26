@@ -31,8 +31,8 @@ namespace :github_pipeline do
 
     data = {
       "commit_message" => commit_message,
-      "pr_title" => title,
-      "pr_body" => comment
+      "pr_title" => title.gsub(/\n/, '\n'),
+      "pr_body" => comment.gsub(/\n/, '\n')
     }
     puts JSON.generate(data)
   end

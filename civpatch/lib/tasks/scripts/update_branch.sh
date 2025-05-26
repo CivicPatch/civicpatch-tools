@@ -12,9 +12,9 @@ if [ -z "$STATE" ] || [ -z "$GEOID" ]; then
 fi
 
 FOLDERS_TO_COPY=(
-  "/app/civpatch/config"
-  "/app/civpatch/data"
-  "/app/civpatch/data_source"
+  "./config"
+  "./data"
+  "./data_source"
 )
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
