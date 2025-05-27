@@ -117,8 +117,6 @@ module Core
     end
 
     def self.same_domain?(base_url, href)
-      puts "BASE URL: #{base_url}"
-      puts "HREF: #{href}"
       base_uri = Addressable::URI.parse(base_url)
       link_uri = Addressable::URI.parse(href)
 
