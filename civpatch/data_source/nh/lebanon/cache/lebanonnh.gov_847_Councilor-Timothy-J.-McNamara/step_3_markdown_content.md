@@ -2,19 +2,19 @@
 
 Loading
 
-  [Skip to Main Content](#cc0c438c27-1067-4c0c-847d-a6ecf1d336f3)   ![Lebanon, NH](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11893)  
+  [Skip to Main Content](#cc0c438c27-1067-4c0c-847d-a6ecf1d336f3)   ![Lebanon, NH](https://lebanonnh.gov/ImageRepository/Document?documentID=11893)  
 
  [Create a Website Account](/MyAccount/ProfileCreate)  - Manage notification subscriptions, save form progress and more.    
 
  *  [Website Sign In](/MyAccount) 
-  ![Homepage](https://www.lebanonnh.gov/ImageRepository/Document?documentID=12264)  
+  ![Homepage](https://lebanonnh.gov/ImageRepository/Document?documentID=12264)  
 
  1.  [Your Government](/27/Your-Government) 
  1.  [Resident Resources](/101/Resident-Resources) 
  1.  [Business Resources](/35/Business-Resources) 
  1.  [Life in Lebanon](/31/Life-in-Lebanon) 
  1.  [How Do I?](/9/How-Do-I) 
-  ![Search](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://www.lebanonnh.gov/ImageRepository/Document?documentID=12744)  
+  ![Search](https://lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://lebanonnh.gov/ImageRepository/Document?documentID=12745)  
 
  1.  [Home](/) 
  1.  [Your Government](/27/Your-Government) 
@@ -24,7 +24,7 @@ Loading
 
 # Councilor Timothy J. McNamara
 
- 1.  ![Timothy McNamara](https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724)    
+ 1.  ![Timothy McNamara](https://lebanonnh.gov/ImageRepository/Document?documentID=1724)    
 
 #### Timothy J. McNamara   
 
@@ -91,7 +91,7 @@ and LebAlerts](/1239/Alerts-Notifications)   [Pay Your
 
 Bill Online](/pay)  
 
- 1.   ![City of Lebanon](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11897)  
+ 1.   ![City of Lebanon](https://lebanonnh.gov/ImageRepository/Document?documentID=11897)  
 
 ### Contact Us
 
