@@ -653,7 +653,14 @@
       "government_type": "mayor_council",
       "email": "sfournier@newmarketnh.gov",
       "website": "http://www.newmarketnh.gov",
-      "geoid": "3301552340"
+      "geoid": "3301552340",
+      "meta_updated_at": "2025-05-27",
+      "meta_hash": "71e5a9ca8e904225daf5fc88d4e40774",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Berlin",
