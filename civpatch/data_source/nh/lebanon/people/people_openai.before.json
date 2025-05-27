@@ -9,7 +9,7 @@
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=14113",
     "phone_number": null,
     "email": "doug.whittlesey@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
+    "website": "https://www.lebanonnh.gov/1484",
     "start_date": "2021",
     "end_date": "2027-03",
     "sources": [
@@ -42,13 +42,12 @@
     "positions": [
       "Council Member",
       "At-Large",
-      "Councilor At-Large",
       "Mayor"
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724",
     "phone_number": null,
     "email": "tim.mcnamara@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
+    "website": "https://www.lebanonnh.gov/847",
     "start_date": "2015",
     "end_date": "2026-03",
     "sources": [
@@ -61,7 +60,8 @@
     "name": "Nicole Ford Burley",
     "positions": [
       "Council Member",
-      "Ward 3"
+      "Ward 3",
+      "Councilor"
     ],
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=20203",
     "phone_number": null,
@@ -104,7 +104,7 @@
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=10403",
     "phone_number": null,
     "email": "george.sykes@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+    "website": "https://www.lebanonnh.gov/1017",
     "start_date": "2019",
     "end_date": "2026-03",
     "sources": [
