@@ -5,7 +5,7 @@
       "Chair",
       "Select Board Member"
     ],
-    "image": null,
+    "image": "https://www.amherstnh.gov/sites/g/files/vyhlif4116/f/styles/custom_masthead_slideshow/public/galleries/fb8_2071-hdr.jpg?itok=gfj3sQBK",
     "email": null,
     "phone_number": "(603) 673-6041",
     "website": "https://www.amherstnh.gov/people/danielle-pray",
@@ -25,11 +25,10 @@
     ],
     "image": null,
     "email": null,
-    "phone_number": "(603) 673-6041",
+    "phone_number": null,
     "website": "https://www.amherstnh.gov/user/4454/contact",
     "sources": [
-      "https://www.amherstnh.gov/board-selectmen",
-      "https://www.amherstnh.gov/user/4454/contact"
+      "https://www.amherstnh.gov/board-selectmen"
     ],
     "start_date": null,
     "end_date": "2027",
@@ -42,10 +41,11 @@
     ],
     "image": null,
     "email": null,
-    "phone_number": null,
+    "phone_number": "(603) 673-6041",
     "website": "https://www.amherstnh.gov/user/2313/contact",
     "sources": [
-      "https://www.amherstnh.gov/board-selectmen"
+      "https://www.amherstnh.gov/board-selectmen",
+      "https://www.amherstnh.gov/user/2313/contact"
     ],
     "start_date": null,
     "end_date": "2028",
@@ -59,7 +59,7 @@
     "image": null,
     "email": null,
     "phone_number": "(603) 673-6041",
-    "website": "https://www.amherstnh.gov/user/7301/contact",
+    "website": "https://www.amherstnh.gov/users/pcoughlin",
     "sources": [
       "https://www.amherstnh.gov/board-selectmen",
       "https://www.amherstnh.gov/user/7301/contact"
