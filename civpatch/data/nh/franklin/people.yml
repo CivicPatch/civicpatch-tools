@@ -6,7 +6,7 @@
   phone_number: "(603) 293-6423"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/styles/group_main_image/public/departments/mclaughlin_2025.jpg?itok=KhZZZ_cW
-  start_date: 2026-01
+  start_date:
   end_date: 2026-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -20,7 +20,7 @@
   phone_number: "(603) 455-7124"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/carrier_2025-155x180.jpg
-  start_date: 2028-01
+  start_date:
   end_date: 2028-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -34,7 +34,7 @@
   phone_number: "(603) 934-4693"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/tedstarkweather_002-155x180.jpg
-  start_date: 2026-01
+  start_date:
   end_date: 2026-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -48,7 +48,7 @@
   phone_number: "(603) 934-6404"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/johnston_2025-155x180.jpg
-  start_date: 2027-01
+  start_date:
   end_date: 2027-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -62,7 +62,7 @@
   phone_number: "(603) 934-4297"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/zink_2025-155x180.jpg
-  start_date: 2026-01
+  start_date:
   end_date: 2026-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -76,7 +76,7 @@
   phone_number: "(603) 496-0656"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/susan-145x180.jpg
-  start_date: 2027-01
+  start_date:
   end_date: 2027-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -90,7 +90,7 @@
   phone_number: "(603) 783-6643"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/boyce_2025-155x180.jpg
-  start_date: 2028-01
+  start_date:
   end_date: 2028-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -104,7 +104,7 @@
   phone_number: "(603) 705-8783"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/warner_2025-155x180.jpg
-  start_date: 2028-01
+  start_date:
   end_date: 2028-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -118,7 +118,7 @@
   phone_number: "(603) 934-6802"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/prive_2025-155x180.jpg
-  start_date: 2027-01
+  start_date:
   end_date: 2027-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
@@ -132,7 +132,7 @@
   phone_number: "(603) 934-8222"
   website:
   image: https://www.franklinnh.org/sites/g/files/vyhlif601/f/resize/imce/webb_2025-155x180.jpg
-  start_date: 2026-01
+  start_date:
   end_date: 2026-01
   sources:
   - https://www.franklinnh.org/city-council-mayor
