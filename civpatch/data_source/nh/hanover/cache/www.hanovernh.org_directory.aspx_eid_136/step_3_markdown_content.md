@@ -22,18 +22,18 @@ Loading
  1.  [Calendar](/Calendar.aspx)  
 
  1.  [Forms](/FormCenter)  
- /QuickLinks.aspx  ![](https://www.hanovernh.org/ImageRepository/Document?documentID=68)  
+ /QuickLinks.aspx  ![](https://www.hanovernh.org/ImageRepository/Document?documentID=69)  
 
  1.  [Home](/) 
  1. Staff Directory
 
-# Jennie Chamberlain
+# Jarett Berke
 
    [Selectboard](/Directory.aspx?DID=46) 
 
-Title: Selectboard Member
+Title: Secretary
 
- [Jennie.Chamberlain@hanovernh.org](mailto:Jennie.Chamberlain@hanovernh.org)  
+ [Jarett.Berke@hanovernh.org](mailto:Jarett.Berke@hanovernh.org)  
 
  [Return to Staff Directory](/Directory.aspx) 
 

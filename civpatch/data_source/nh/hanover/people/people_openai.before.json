@@ -6,7 +6,7 @@
       "Select Board Member"
     ],
     "image": null,
-    "phone_number": "603-643-0701",
+    "phone_number": null,
     "email": "Athos.Rassias@hanovernh.org",
     "website": "https://www.hanovernh.org/directory.aspx?eid=130",
     "start_date": null,
@@ -26,7 +26,7 @@
       "Select Board Member"
     ],
     "image": null,
-    "phone_number": "603-643-0701",
+    "phone_number": null,
     "email": "Joanna.Whitcomb@hanovernh.org",
     "website": "https://www.hanovernh.org/directory.aspx?eid=131",
     "start_date": null,
@@ -42,11 +42,10 @@
     "positions": [
       "Selectboard Chair",
       "Selectboard Member",
-      "Select Board Chair",
       "Select Board Member"
     ],
     "image": null,
-    "phone_number": "603-643-0701",
+    "phone_number": null,
     "email": "Carey.Callaghan@hanovernh.org",
     "website": "https://www.hanovernh.org/directory.aspx?eid=132",
     "start_date": null,
@@ -64,7 +63,7 @@
       "Select Board Member"
     ],
     "image": null,
-    "phone_number": "603-643-0701",
+    "phone_number": null,
     "email": "Jennie.Chamberlain@hanovernh.org",
     "website": "https://www.hanovernh.org/directory.aspx?eid=134",
     "start_date": null,
@@ -78,17 +77,19 @@
   {
     "name": "Jarett Berke",
     "positions": [
-      "Selectboard Secretary",
-      "Selectboard Member"
+      "Secretary",
+      "Selectboard Member",
+      "Select Board Member"
     ],
     "image": null,
-    "phone_number": "603-643-0701",
+    "phone_number": null,
     "email": "Jarett.Berke@hanovernh.org",
     "website": "https://www.hanovernh.org/directory.aspx?eid=136",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.hanovernh.org/518/Selectboard"
+      "https://www.hanovernh.org/518/Selectboard",
+      "https://www.hanovernh.org/directory.aspx?eid=136"
     ],
     "updated_at": "2025-05-27"
   }
