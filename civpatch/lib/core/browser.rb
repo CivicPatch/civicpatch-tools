@@ -89,7 +89,7 @@ module Browser
         retry_attempts += 1
         retry
       else
-        puts "[429] Too many requests. Max retries reached for #{url}."
+        puts "Too many requests. Max retries reached for #{url}."
         nil
       end
     end
