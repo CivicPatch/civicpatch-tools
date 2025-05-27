@@ -6,18 +6,31 @@
     ],
     "images": [],
     "positions": [
-      "Member",
       "Select Board Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general phone number for the town is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bos@amherstnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general email for the full board is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year explicitly listed next to name in 'Board Members' table.",
+        "llm_confidence_reason": "Year of term end is explicitly listed next to the name in the table.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
@@ -30,17 +43,32 @@
     ],
     "images": [],
     "positions": [
+      "Clerk",
       "Select Board Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general phone number for the town is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bos@amherstnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general email for the full board is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year explicitly listed next to name in 'Board Members' table.",
+        "llm_confidence_reason": "Year of term end is explicitly listed next to the name in the table.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
@@ -59,15 +87,29 @@
       "Zoning Board of Adjustment",
       "Board of Selectmen"
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general phone number for the town is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bos@amherstnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general email for the full board is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year explicitly listed next to name in 'Board Members' table.",
+        "llm_confidence_reason": "Year of term end is explicitly listed next to the name in the table.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       },
       {
@@ -89,15 +131,29 @@
       "Vice Chair",
       "Select Board Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general phone number for the town is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bos@amherstnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general email for the full board is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year explicitly listed next to name in 'Board Members' table.",
+        "llm_confidence_reason": "Year of term end is explicitly listed next to the name in the table.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
@@ -110,18 +166,31 @@
     ],
     "images": [],
     "positions": [
-      "Member",
       "Select Board Member"
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general phone number for the town is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bos@amherstnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general email for the full board is provided, not specific to the individual.",
+        "source": "https://www.amherstnh.gov/board-selectmen"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year explicitly listed next to name in 'Board Members' table.",
+        "llm_confidence_reason": "Year of term end is explicitly listed next to the name in the table.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
