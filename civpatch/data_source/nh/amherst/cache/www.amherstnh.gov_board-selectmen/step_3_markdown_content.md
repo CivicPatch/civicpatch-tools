@@ -121,7 +121,7 @@
    *  [Public Works](/public-works) 
      *  [Bid DPW05-25](/public-works/files/bid-dpw05-25) 
      *  [Bid02-25 AWARD](/public-works/files/bid02-25-award) 
-     *  [Bid03-25 AWARD](/public-works/files/bid03-25-award) 
+     *  [Bid03-25 Line Striping](/public-works/files/bid03-25-line-striping) 
      *  [Boards and Commissions](/public-works/pages/boards-and-commissions) 
        *  [Road Commission](/public-works/roads-bridges-commission) 
        *  [Stormwater Committee](/stormwater-committee) 
