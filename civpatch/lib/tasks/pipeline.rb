@@ -121,25 +121,6 @@ namespace :pipeline do
     [source_urls, people_config]
   end
 
-  def aggregate_sources(context, sources: [])
-    state = context[:state]
-    merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
-    people = process_images(context, merged_people) if Services::Spaces.enabled?
-
-    Core::PeopleManager.update_people(context, people)
-
-    people_hash = Digest::MD5.hexdigest(people.to_yaml)
-    Core::StateManager.update_municipalities(state, [
-                                               { "geoid" => context["geoid"],
-                                                 "meta_updated_at" => Time.now
-                                                  .in_time_zone("America/Los_Angeles")
-                                                  .strftime("%Y-%m-%d"),
-                                                 "meta_hash" => people_hash,
-                                                 "meta_sources" => sources }
-                                             ])
-    people
-  end
-
   def prepare_directories(state, municipality_entry)
     cache_destination_dir = Core::PathHelper.get_city_cache_path(state, municipality_entry["geoid"])
 
@@ -150,7 +131,7 @@ namespace :pipeline do
 
   private
 
-  def self.scrape(context)
+  def scrape(context)
     state = context[:state]
     municipality_entry = context[:municipality_entry]
     prepare_directories(state, municipality_entry)
@@ -171,7 +152,26 @@ namespace :pipeline do
     on_scrape_complete(context)
   end
 
-  def self.on_scrape_complete(municipality_context)
+  def aggregate_sources(context, sources: [])
+    state = context[:state]
+    merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
+    people = process_images(context, merged_people) if Services::Spaces.enabled?
+
+    Core::PeopleManager.update_people(context, people)
+
+    people_hash = Digest::MD5.hexdigest(people.to_yaml)
+    Core::StateManager.update_municipalities(state, [
+                                               { "geoid" => context["geoid"],
+                                                 "meta_updated_at" => Time.now
+                                                  .in_time_zone("America/Los_Angeles")
+                                                  .strftime("%Y-%m-%d"),
+                                                 "meta_hash" => people_hash,
+                                                 "meta_sources" => sources }
+                                             ])
+    people
+  end
+
+  def on_scrape_complete(municipality_context)
     geoid = municipality_context[:municipality_entry]["geoid"]
     people = Core::PeopleManager.get_people(municipality_context[:state], geoid)
     state = municipality_context[:state]
@@ -218,7 +218,7 @@ namespace :pipeline do
     end
   end
 
-  def self.container_output(context)
+  def container_output(context)
     state = context[:state]
     geoid = context[:municipality_entry]["geoid"]
 
