@@ -161,7 +161,7 @@ namespace :pipeline do
 
     people_hash = Digest::MD5.hexdigest(people.to_yaml)
     Core::StateManager.update_municipalities(state, [
-                                               { "geoid" => context["geoid"],
+                                               { "geoid" => context[:geoid],
                                                  "meta_updated_at" => Time.now
                                                   .in_time_zone("America/Los_Angeles")
                                                   .strftime("%Y-%m-%d"),

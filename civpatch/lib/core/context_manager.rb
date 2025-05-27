@@ -7,6 +7,7 @@ module Core
       municipality_entry = Core::StateManager.get_city_entry_by_geoid(state, geoid)
       {
         state: state,
+        geoid: geoid,
         municipality_entry: municipality_entry,
         government_type: municipality_entry["government_type"] || "mayor_council",
         config: config
