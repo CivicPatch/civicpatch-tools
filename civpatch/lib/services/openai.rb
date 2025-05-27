@@ -139,7 +139,7 @@ module Services
         }
 
         Extraction Guidelines:
-        - General: Today is #{current_date}. Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field\'s data.
+        - General: Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field\'s data.
         - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in \'positions\'.
         - Positions:
           - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
@@ -185,12 +185,14 @@ module Services
             - If the source date matches `MM/DD/YYYY` (e.g., "01/31/2025"), convert it to `YYYY-MM-DD` (e.g., "2025-01-31").
             - Use numerical months (01-12) for conversions.
             - **DO NOT** add default days (like '-01', '-31') if they are not explicitly present in the source and required by the `YYYY-MM-DD` format. Do not add default months if only `YYYY` is present.
+          - Today's date is #{current_date}. Use it to infer whether a mentioned date is likely a term start or end especially if only one date is mentioned.
           - **Identifying the Correct Term's Start Date**:
             - When multiple dates or events (e.g., appointment, election, term beginning) are mentioned for the start of a council member's service:
               - **PRIORITY 1 for Start Date**: If an **"elected" date** (e.g., "elected in November 2024", "elected [Month YYYY]") is explicitly stated for the current or upcoming term, that "elected" date should be used as the `start_date`.
               - **PRIORITY 2 for Start Date**: If no "elected" date is available for the current/upcoming term, but an "appointed" date is, use the "appointed" date.
               - **PRIORITY 3 for Start Date**: If neither "elected" nor "appointed" dates are specified for the current/upcoming term, use the date when the term officially "began" or "started" (e.g., "term beginning January 2025").
-            - Ensure the chosen `start_date` corresponds to the **most recent term that is currently active or the next term set to begin as of #{current_date}**, following the priority above.
+            - Ensure the chosen `start_date` corresponds to the **most recent term that is currently active#{" "}
+              or the next term set to begin as of #{current_date}**, following the priority above.
             - This also means if a resignation has occurred, the term is no longer considered active or upcoming for that individual.
             - Example: If text says "appointed June 2023, elected November 2023 for term starting January 2024", the `start_date` should be based on "elected November 2023" (converted to YYYY-MM).
           - **PRIORITY 1: Specific Term Formats**:
