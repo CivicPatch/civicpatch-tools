@@ -607,7 +607,14 @@
       "government_type": "select_board",
       "email": "phammond@raymondnh.gov",
       "website": "http://www.raymondnh.gov",
-      "geoid": "3301564020"
+      "geoid": "3301564020",
+      "meta_updated_at": "2025-05-27",
+      "meta_hash": "fda95c283aa9e913aaf670bd98255584",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Conway",

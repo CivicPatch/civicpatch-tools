@@ -14,7 +14,7 @@
       {
         "data": "pbridgeo@raymondnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link in the Board Members table near name.",
+        "llm_confidence_reason": "Email explicitly listed next to name in Board Members table.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -22,7 +22,7 @@
       {
         "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -31,7 +31,7 @@
       {
         "data": "2026",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term Expires 2026 listed in the Board Members table.",
+        "llm_confidence_reason": "Term Expires column lists 2026.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -52,7 +52,7 @@
       {
         "data": "dmerryman@raymondnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link in the Board Members table near name.",
+        "llm_confidence_reason": "Email explicitly listed next to name in Board Members table.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -60,7 +60,7 @@
       {
         "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -69,7 +69,7 @@
       {
         "data": "2026",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term Expires 2026 listed in the Board Members table.",
+        "llm_confidence_reason": "Term Expires column lists 2026.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -89,7 +89,7 @@
       {
         "data": "dvogel@raymondnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link in the Board Members table near name.",
+        "llm_confidence_reason": "Email explicitly listed next to name in Board Members table.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -97,7 +97,7 @@
       {
         "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -106,7 +106,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term Expires 2027 listed in the Board Members table.",
+        "llm_confidence_reason": "Term Expires column lists 2027.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -126,7 +126,7 @@
       {
         "data": "aclements@raymondnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link in the Board Members table near name.",
+        "llm_confidence_reason": "Email explicitly listed next to name in Board Members table.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -134,7 +134,7 @@
       {
         "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -143,7 +143,7 @@
       {
         "data": "2028",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term Expires 2028 listed in the Board Members table.",
+        "llm_confidence_reason": "Term Expires column lists 2028.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -163,7 +163,7 @@
       {
         "data": "mevans@raymondnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link in the Board Members table near name.",
+        "llm_confidence_reason": "Email explicitly listed next to name in Board Members table.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -171,7 +171,7 @@
       {
         "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
@@ -180,7 +180,7 @@
       {
         "data": "2028",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term Expires 2028 listed in the Board Members table.",
+        "llm_confidence_reason": "Term Expires column lists 2028.",
         "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
       }
     ],
