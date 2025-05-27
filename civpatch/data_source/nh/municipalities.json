@@ -805,7 +805,14 @@
       "government_type": "select_board",
       "email": "townhall@litchfieldnh.gov",
       "website": "http://litchfieldnh.gov",
-      "geoid": "3301142260"
+      "geoid": "3301142260",
+      "meta_updated_at": "2025-05-27",
+      "meta_hash": "69468178aa620c6fd068b9f02ee767d3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Seabrook",
