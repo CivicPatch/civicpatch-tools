@@ -782,7 +782,14 @@
       "government_type": "mayor_council",
       "email": "citymgr@franklinnh.org",
       "website": "http://www.franklinnh.org",
-      "geoid": "3327380"
+      "geoid": "3327380",
+      "meta_updated_at": "2025-05-27",
+      "meta_hash": "13f39567aca44924f53def6c193ca33c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Litchfield",
