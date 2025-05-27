@@ -11,6 +11,7 @@
 
 require "github/municipality_officials"
 require "resolvers/people_resolver"
+require "core/people_manager"
 require_relative "../core/context_manager"
 
 namespace :github_pipeline do
@@ -44,7 +45,7 @@ namespace :github_pipeline do
 
     context = Core::ContextManager.get_context(state, geoid)
 
-    people = Resolvers::PeopleResolver.merge_people_across_sources(context)
+    people = Core::PeopleManager.get_people(state, geoid)
     people_comment = GitHub::MunicipalityOfficials.people_list(context, people)
 
     data = {
@@ -61,7 +62,7 @@ namespace :github_pipeline do
 
     context = Core::ContextManager.get_context(state, geoid)
 
-    merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
+    merged_people = Core::PeopleManager.get_people(state, geoid)
     comparison = Resolvers::PeopleResolver.compare_people_across_sources(context)
 
     comment = GitHub::MunicipalityOfficials.review_comment(merged_people,
