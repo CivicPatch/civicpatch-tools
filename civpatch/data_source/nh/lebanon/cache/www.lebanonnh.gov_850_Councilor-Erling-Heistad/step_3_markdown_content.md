@@ -14,7 +14,7 @@ Loading
  1.  [Business Resources](/35/Business-Resources) 
  1.  [Life in Lebanon](/31/Life-in-Lebanon) 
  1.  [How Do I?](/9/How-Do-I) 
-  ![Search](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://www.lebanonnh.gov/ImageRepository/Document?documentID=12744)  
+  ![Search](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://www.lebanonnh.gov/ImageRepository/Document?documentID=12745)  
 
  1.  [Home](/) 
  1.  [Your Government](/27/Your-Government) 
