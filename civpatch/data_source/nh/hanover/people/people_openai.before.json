@@ -15,14 +15,14 @@
       "https://www.hanovernh.org/518/Selectboard",
       "https://www.hanovernh.org/directory.aspx?eid=130"
     ],
-    "updated_at": "2025-05-26"
+    "updated_at": "2025-05-27"
   },
   {
     "name": "Joanna Whitcomb",
     "positions": [
       "Selectboard Vice-Chair",
-      "Select Board Member",
-      "Select Board Vice-Chair"
+      "Selectboard Member",
+      "Select Board Member"
     ],
     "image": null,
     "phone_number": null,
@@ -34,14 +34,15 @@
       "https://www.hanovernh.org/518/Selectboard",
       "https://www.hanovernh.org/directory.aspx?eid=131"
     ],
-    "updated_at": "2025-05-26"
+    "updated_at": "2025-05-27"
   },
   {
     "name": "Carey Callaghan",
     "positions": [
       "Selectboard Chair",
-      "Select Board Member",
-      "Select Board Chair"
+      "Selectboard Member",
+      "Select Board Chair",
+      "Select Board Member"
     ],
     "image": null,
     "phone_number": null,
@@ -53,7 +54,7 @@
       "https://www.hanovernh.org/518/Selectboard",
       "https://www.hanovernh.org/directory.aspx?eid=132"
     ],
-    "updated_at": "2025-05-26"
+    "updated_at": "2025-05-27"
   },
   {
     "name": "Jennie Chamberlain",
@@ -71,12 +72,13 @@
       "https://www.hanovernh.org/518/Selectboard",
       "https://www.hanovernh.org/directory.aspx?eid=134"
     ],
-    "updated_at": "2025-05-26"
+    "updated_at": "2025-05-27"
   },
   {
     "name": "Jarett Berke",
     "positions": [
-      "Secretary",
+      "Selectboard Secretary",
+      "Selectboard Member",
       "Select Board Member"
     ],
     "image": null,
@@ -89,6 +91,6 @@
       "https://www.hanovernh.org/518/Selectboard",
       "https://www.hanovernh.org/directory.aspx?eid=136"
     ],
-    "updated_at": "2025-05-26"
+    "updated_at": "2025-05-27"
   }
 ]
