@@ -1,0 +1,322 @@
+[
+  {
+    "name": "Robert Cone",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/people/robert-cone",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Mayor",
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-752-2340",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      },
+      {
+        "data": "(603) 752-7532",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Contact Info'.",
+        "source": "https://www.berlinnh.gov/people/robert-cone"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      },
+      {
+        "data": "https://www.berlinnh.gov/people/robert-cone",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found as a 'Skip to main content' link, indicating a personal profile page.",
+        "source": "https://www.berlinnh.gov/people/robert-cone"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'January 2026' next to the Mayor position, interpreted as term end date.",
+        "source": "https://www.berlinnh.gov/people/robert-cone"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Diana Berthiaume",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-723-2861",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Robert Theberge",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-331-1805",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Peter Morency",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-752-7325",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Brian Valerino",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-723-7247",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Peter Higbee",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-616-6161",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Mia Qualls",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-723-3771",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Steven Korzen",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-723-2834",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Paul Grenier",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/people/paul-grenier",
+      "https://www.berlinnh.gov/city-council/pages/city-council-committees"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member"
+    ],
+    "phone_numbers": [
+      {
+        "data": "603-752-4693",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly in the table row for this person.",
+        "source": "https://www.berlinnh.gov/city-council"
+      },
+      {
+        "data": "603-752-4693",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the person's name.",
+        "source": "https://www.berlinnh.gov/people/paul-grenier"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.berlinnh.gov/city-council",
+        "llm_confidence": 0.1,
+        "llm_confidence_reason": "No specific website found for this person. Providing the general council page.",
+        "source": "https://www.berlinnh.gov/city-council"
+      },
+      {
+        "data": "https://www.berlinnh.gov/people/paul-grenier",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL provided as 'Skip to main content' link, indicating a profile page.",
+        "source": "https://www.berlinnh.gov/people/paul-grenier"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Member (January 2028)' in the table.",
+        "source": "https://www.berlinnh.gov/people/paul-grenier"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  }
+]
