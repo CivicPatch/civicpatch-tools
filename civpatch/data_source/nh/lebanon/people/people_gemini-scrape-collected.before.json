@@ -19,10 +19,16 @@
     "positions": [
       "Mayor",
       "Ward 1",
-      "Councilor",
-      "Council Member"
+      "Councilor"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "603-448-4220",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General City Hall phone number found in Contact Us section, not explicitly linked to the person.",
+        "source": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
+      }
+    ],
     "emails": [
       {
         "data": "doug.whittlesey@lebanonnh.gov",
@@ -32,14 +38,14 @@
       },
       {
         "data": "doug.whittlesey@lebanonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly provided in mailto link text.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link text.",
         "source": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
       },
       {
         "data": "doug.whittlesey@lebanonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly provided in a mailto link associated with the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found as a mailto link text directly under the person's name and title.",
         "source": "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
       }
     ],
@@ -52,21 +58,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
@@ -75,29 +75,41 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
+        "data": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "llm_confidence_reason": "Specific profile page URL found in navigation and text.",
+        "source": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
       }
     ],
     "start_dates": [
       {
-        "data": "2021",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2021'.",
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Served as Mayor: 2025 - Present'.",
         "source": "https://www.lebanonnh.gov/1484"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date '2025' explicitly listed for the current 'Served as Mayor' role.",
+        "source": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
       },
       {
         "data": "2025",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Served as Mayor: 2025 - Present'.",
-        "source": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
-      },
-      {
-        "data": "2025",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated 'Served as Mayor: 2025 - Present'. Also 'Elected to Council: 2021' is present, but 2025 is the start date for his current primary role as Mayor.",
         "source": "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
       }
     ],
@@ -110,14 +122,20 @@
       },
       {
         "data": "2023-03",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Term expiration date '3/23' is explicitly mentioned, but is in the past (today is 2025-05-27) and contradicts the '2025 - Present' mayor role, suggesting the information might be outdated or refer to a previous term. Extracting as found but with low confidence in its current relevance.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Term expiry date '3/23' is listed next to 'Councilor, Ward 1'. Confidence is slightly lower as it's a past date and might not be the primary end date.",
         "source": "https://www.lebanonnh.gov/1484"
       },
       {
         "data": "2023-03",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "An end date '3/23' is listed next to 'Councilor, Ward 1', but this date is in the past (2023) relative to today (2025-05-27), which contradicts his current role as Mayor (2025-Present). This date likely refers to a previous term or is outdated information. Extracting it with low confidence as it's explicitly present but contextually questionable for his current status.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "End date '3/23' explicitly listed next to 'Councilor, Ward 1' role. Converted to YYYY-MM format.",
+        "source": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
+      },
+      {
+        "data": "2023-03",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Explicitly stated 'Term expires 3/23' next to the 'Councilor, Ward 1' position. This position is not considered current as of 2025-05-27.",
         "source": "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
       }
     ],
@@ -148,8 +166,8 @@
     "emails": [
       {
         "data": "devin.wilkie@lebanonnh.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address extracted directly from mailto link text.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from mailto link.",
         "source": "https://www.lebanonnh.gov/1483"
       },
       {
@@ -161,7 +179,7 @@
       {
         "data": "devin.wilkie@lebanonnh.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address found directly in a mailto link associated with the name.",
+        "llm_confidence_reason": "Explicitly listed as email link text.",
         "source": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
       }
     ],
@@ -174,21 +192,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
@@ -197,29 +209,29 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current profile page.",
+        "source": "https://www.lebanonnh.gov/1483"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
       },
       {
         "data": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
         "llm_confidence": 0.98,
         "llm_confidence_reason": "The URL of the current page is a person-specific profile page.",
         "source": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
-      },
-      {
-        "data": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in navigation clearly linking to the person's profile page.",
-        "source": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
       }
     ],
     "start_dates": [
       {
-        "data": "2021",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date '2021' explicitly stated as 'Elected to Council: 2021'.",
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Served as Assistant Mayor: 2025'.",
         "source": "https://www.lebanonnh.gov/1483"
       },
       {
@@ -230,8 +242,8 @@
       },
       {
         "data": "2025",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Served as Assistant Mayor: 2025 - Present'.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as start year for Assistant Mayor role.",
         "source": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
       }
     ],
@@ -244,8 +256,14 @@
       },
       {
         "data": "2025-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term expires 3/25'.",
+        "source": "https://www.lebanonnh.gov/1483"
+      },
+      {
+        "data": "2025-03",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated 'Term expires 3/25' for the Councilor role. Note: This position is expired as of today's date (2025-05-27), but the end date was explicitly stated.",
+        "llm_confidence_reason": "Explicitly listed as term expiration date for the Councilor role. Note: This date is in the past relative to today's date (2025-05-27).",
         "source": "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
       }
     ],
@@ -264,40 +282,33 @@
       "https://lebanonnh.gov/1178",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
       "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-      "https://lebanonnh.gov/847/Councilor-Timothy-J.-McNamara"
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
     ],
     "images": [],
     "positions": [
       "Councilor",
       "At-Large",
-      "Councilor At-Large"
+      "Council Member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "tim.mcnamara@lebanonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly provided and linked.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly associated with name via mailto link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "tim.mcnamara@lebanonnh.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided in mailto link.",
+        "llm_confidence_reason": "Email address explicitly provided in mailto link text associated with the name.",
         "source": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
-      },
-      {
-        "data": "tim.mcnamara@lebanonnh.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided in a mailto link.",
-        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
       },
       {
         "data": "tim.mcnamara@lebanonnh.gov",
         "llm_confidence": 0.85,
         "llm_confidence_reason": "Extracted from mailto link associated with the person.",
-        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J.-McNamara"
+        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
       }
     ],
     "websites": [
@@ -309,21 +320,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/847/Councilor-Timothy-J.-McNamara",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
@@ -332,48 +337,42 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
       },
       {
-        "data": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page URL is the profile page for the person.",
-        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
+        "data": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
       },
       {
         "data": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "The current page URL is the person's profile page.",
-        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J.-McNamara"
+        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
       }
     ],
     "start_dates": [
       {
         "data": "2015",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start year '2015' explicitly provided as 'Elected to Council'.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Elected to Council: 2015'.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "2015",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2015'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start year 'Elected to Council: 2015' explicitly stated.",
         "source": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
       },
       {
         "data": "2015",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start year '2015' explicitly stated as 'Elected to Council'.",
-        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
-      },
-      {
-        "data": "2015",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2015'.",
-        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J.-McNamara"
+        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
       }
     ],
     "end_dates": [
@@ -386,14 +385,14 @@
       {
         "data": "2027-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term expires (3/27)'.",
-        "source": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
+        "llm_confidence_reason": "Explicitly stated as 'Term expires (3/27)'.",
+        "source": "https://www.lebanonnh.gov/847"
       },
       {
-        "data": "2027",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Term end year '27' is explicitly mentioned, interpreted as 2027 based on context of term dates.",
-        "source": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
+        "data": "2027-03",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term expiry date '(3/27)' explicitly stated. Interpreted as March 2027.",
+        "source": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
       }
     ],
     "updated_at": "2025-05-27"
@@ -416,20 +415,21 @@
     "positions": [
       "Councilor",
       "Ward 3",
+      "City Councilor",
       "Council Member"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "nicole.ford.burley@lebanonnh.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address found directly in mailto link text associated with the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found in mailto link text directly associated with the name.",
         "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       },
       {
         "data": "nicole.ford.burley@lebanonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly associated with the name and labeled 'Email Nicole Ford Burley'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicit email address provided as a mailto link.",
         "source": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       }
     ],
@@ -442,21 +442,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
@@ -465,28 +459,34 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
       },
       {
         "data": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL found associated with the person's name and title, appears to be a profile page.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
         "source": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       }
     ],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicit start year 'Elected to Council: 2025' found associated with the person.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2025'.",
         "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       },
       {
         "data": "2025",
-        "llm_confidence": 0.98,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2025'.",
         "source": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       }
@@ -519,8 +519,7 @@
     "images": [],
     "positions": [
       "Councilor",
-      "Ward 1",
-      "Council Member"
+      "Ward 1"
     ],
     "phone_numbers": [],
     "emails": [
@@ -529,6 +528,12 @@
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.lebanonnh.gov/844"
+      },
+      {
+        "data": "chris.simon@lebanonnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "source": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon"
       },
       {
         "data": "chris.simon@lebanonnh.gov",
@@ -546,21 +551,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/844/Councilor-Chris-Simon",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/844/Councilor-Chris-Simon",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
@@ -569,10 +568,16 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/844/Councilor-Chris-Simon",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
       }
     ],
     "start_dates": [
@@ -581,6 +586,12 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Year elected explicitly stated.",
         "source": "https://www.lebanonnh.gov/844"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Elected to Council: 2022'.",
+        "source": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon"
       },
       {
         "data": "2022",
@@ -601,6 +612,12 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Term expiration date '3/26' explicitly stated and converted to YYYY-MM format.",
         "source": "https://www.lebanonnh.gov/844"
+      },
+      {
+        "data": "2026-03",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Term expiration date '3/26' found. Assuming M/YY format implies Month YYYY and converting to YYYY-MM.",
+        "source": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon"
       },
       {
         "data": "2026-03",
@@ -629,16 +646,21 @@
     "images": [],
     "positions": [
       "Councilor",
-      "Ward 2",
-      "Council Member"
+      "Ward 2"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "george.sykes@lebanonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.lebanonnh.gov/1017"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a mailto link associated with the name.",
+        "source": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes"
+      },
+      {
+        "data": "george.sykes@lebanonnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated and linked.",
+        "source": "https://lebanonnh.gov/1017/Councilor-George-Sykes"
       }
     ],
     "websites": [
@@ -650,21 +672,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/1017/Councilor-George-Sykes",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/1017/Councilor-George-Sykes",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
@@ -673,30 +689,42 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/1017/Councilor-George-Sykes",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
       },
       {
         "data": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in navigation breadcrumbs and linked to the person's name.",
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL of the specific page dedicated to this person.",
         "source": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes"
       },
       {
         "data": "https://lebanonnh.gov/1017/Councilor-George-Sykes",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Specific profile page URL found.",
         "source": "https://lebanonnh.gov/1017/Councilor-George-Sykes"
       }
     ],
     "start_dates": [
       {
         "data": "2019",
-        "llm_confidence": 0.95,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2019'.",
-        "source": "https://www.lebanonnh.gov/1017"
+        "source": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes"
+      },
+      {
+        "data": "2019",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated year elected.",
+        "source": "https://lebanonnh.gov/1017/Councilor-George-Sykes"
       }
     ],
     "end_dates": [
@@ -708,9 +736,15 @@
       },
       {
         "data": "2026-03",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Explicitly stated 'Term expires 3/26'. Assuming 2026 based on context of current council listing, but year is not explicitly written.",
-        "source": "https://www.lebanonnh.gov/1017"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term expires 3/26'.",
+        "source": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes"
+      },
+      {
+        "data": "2026-03",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Explicit date '3/26' found, interpreted as March 2026 based on context 'Term expires'.",
+        "source": "https://lebanonnh.gov/1017/Councilor-George-Sykes"
       }
     ],
     "updated_at": "2025-05-27"
@@ -733,8 +767,7 @@
     "images": [],
     "positions": [
       "Councilor",
-      "Ward 3",
-      "Council Member"
+      "Ward 3"
     ],
     "phone_numbers": [],
     "emails": [
@@ -766,21 +799,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook",
@@ -789,21 +816,27 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
       },
       {
         "data": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL for the specific councilor's page found in navigation and implied by page title.",
+        "llm_confidence_reason": "URL for the specific councilor's page found in the navigation list.",
         "source": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook"
       },
       {
         "data": "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL for the specific councilor's page found in the navigation and main content.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL of the specific page dedicated to this person.",
         "source": "https://lebanonnh.gov/1178/Councilor-Karen-Zook"
       }
     ],
@@ -816,7 +849,7 @@
       },
       {
         "data": "2018",
-        "llm_confidence": 1.0,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2018'.",
         "source": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook"
       },
@@ -837,13 +870,13 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date '3/26' explicitly listed next to the position.",
+        "llm_confidence_reason": "Explicitly stated 'Term expires 3/26' which converts to 2026-03.",
         "source": "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook"
       },
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term expires 3/26' which is interpreted as March 2026.",
+        "llm_confidence_reason": "Term expiration date '3/26' explicitly stated next to the position. Converted Month/YY to YYYY-MM.",
         "source": "https://lebanonnh.gov/1178/Councilor-Karen-Zook"
       }
     ],
@@ -867,7 +900,6 @@
     "positions": [
       "Councilor",
       "At-Large",
-      "Council Member",
       "At-large"
     ],
     "phone_numbers": [],
@@ -875,14 +907,8 @@
       {
         "data": "erling.heistad@lebanonnh.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found in a mailto link directly associated with the name.",
+        "llm_confidence_reason": "Email address found directly associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "erling.heistad@lebanonnh.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link associated with the name.",
-        "source": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad"
       }
     ],
     "websites": [
@@ -894,21 +920,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL extracted from link text associated with the name.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad",
@@ -917,24 +937,30 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found a specific profile page URL associated with the person's name in the navigation.",
+        "source": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad"
       }
     ],
     "start_dates": [
       {
         "data": "2010",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Elected to Council' year found.",
+        "llm_confidence_reason": "Explicit 'Elected to Council: 2010' date found.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "2010",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2010'.",
-        "source": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad"
       }
     ],
     "end_dates": [
@@ -946,15 +972,9 @@
       },
       {
         "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit term expiration date '3/26' found next to the position.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term expiration date '3/26' found explicitly mentioned next to the position.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date '3/26' explicitly stated next to the position. Converted '3/26' to '2026-03'.",
-        "source": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad"
       }
     ],
     "updated_at": "2025-05-27"
@@ -976,15 +996,14 @@
     "images": [],
     "positions": [
       "Councilor",
-      "At-Large",
-      "Council Member"
+      "At-Large"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "laurel.stavis@lebanonnh.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found in mailto link text directly associated with the name.",
         "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
@@ -1003,21 +1022,15 @@
       },
       {
         "data": "https://www.lebanonnh.gov/1856/Councilor-Laurel-Stavis",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL for the person's profile page found in navigation links.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name/profile link.",
         "source": "https://www.lebanonnh.gov/847"
       },
       {
         "data": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL found in a link associated with the person's name and title.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in navigation link associated with the name.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
-      },
-      {
-        "data": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Current page URL is the person's profile page.",
-        "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
         "data": "https://www.lebanonnh.gov/1856/Councilor-Laurel-Stavis",
@@ -1026,17 +1039,23 @@
         "source": "https://www.lebanonnh.gov/844"
       },
       {
-        "data": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL found in navigation link associated with the person's name.",
-        "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
+        "data": "https://www.lebanonnh.gov/1856/Councilor-Laurel-Stavis",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from navigation link associated with name.",
+        "source": "https://www.lebanonnh.gov/1483"
+      },
+      {
+        "data": "https://www.lebanonnh.gov/1856/Councilor-Laurel-Stavis",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from person-specific URL.",
+        "source": "https://www.lebanonnh.gov/1017"
       }
     ],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Election year '2025' explicitly stated.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2025' near the name and position.",
         "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
@@ -1055,8 +1074,8 @@
       },
       {
         "data": "2027-03",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date '3/27' explicitly stated and converted to YYYY-MM format.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 3/27' near the name and position.",
         "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       },
       {
