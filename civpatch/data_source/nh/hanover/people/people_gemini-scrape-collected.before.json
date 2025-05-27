@@ -13,8 +13,8 @@
     "emails": [
       {
         "data": "Athos.Rassias@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -24,14 +24,7 @@
         "source": "https://www.hanovernh.org/directory.aspx?eid=130"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.hanovernh.org/directory.aspx?eid=130",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'More Information' found next to the name, likely a profile page.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-27"
@@ -44,14 +37,16 @@
     ],
     "images": [],
     "positions": [
+      "Selectboard Member",
+      "Vice-Chair",
       "Selectboard Vice-Chair"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "Joanna.Whitcomb@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -61,14 +56,7 @@
         "source": "https://www.hanovernh.org/directory.aspx?eid=131"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.hanovernh.org/directory.aspx?eid=131",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'More Information' found next to the name, likely a profile page.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-27"
@@ -82,31 +70,25 @@
     "images": [],
     "positions": [
       "Selectboard Member",
-      "Secretary"
+      "Secretary",
+      "Selectboard"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "Jarett.Berke@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Jarett.Berke@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed and associated with the name.",
+        "llm_confidence_reason": "Email address directly associated with the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=136"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.hanovernh.org/directory.aspx?eid=136",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'More Information' found next to the name, likely a profile page.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-27"
@@ -119,32 +101,26 @@
     ],
     "images": [],
     "positions": [
-      "Selectboard Chair",
-      "Selectboard"
+      "Selectboard Member",
+      "Chair",
+      "Selectboard Chair"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "Carey.Callaghan@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Carey.Callaghan@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link associated with the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=132"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.hanovernh.org/directory.aspx?eid=132",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'More Information' found next to the name, likely a profile page.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-27"
@@ -163,25 +139,18 @@
     "emails": [
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name and title.",
+        "llm_confidence_reason": "Email address directly associated with the name and title.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=134"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.hanovernh.org/directory.aspx?eid=134",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link labeled 'More Information' found next to the name, likely a profile page.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      }
-    ],
+    "websites": [],
     "start_dates": [],
     "end_dates": [],
     "updated_at": "2025-05-27"

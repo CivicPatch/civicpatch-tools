@@ -7,7 +7,7 @@
     "image": null,
     "phone_number": null,
     "email": "Athos.Rassias@hanovernh.org",
-    "website": "https://www.hanovernh.org/directory.aspx?eid=130",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
@@ -19,12 +19,14 @@
   {
     "name": "Joanna Whitcomb",
     "positions": [
+      "Selectboard Member",
+      "Vice-Chair",
       "Selectboard Vice-Chair"
     ],
     "image": null,
     "phone_number": null,
     "email": "Joanna.Whitcomb@hanovernh.org",
-    "website": "https://www.hanovernh.org/directory.aspx?eid=131",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
@@ -37,12 +39,13 @@
     "name": "Jarett Berke",
     "positions": [
       "Selectboard Member",
-      "Secretary"
+      "Secretary",
+      "Selectboard"
     ],
     "image": null,
     "phone_number": null,
     "email": "Jarett.Berke@hanovernh.org",
-    "website": "https://www.hanovernh.org/directory.aspx?eid=136",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
@@ -54,13 +57,14 @@
   {
     "name": "Carey Callaghan",
     "positions": [
-      "Selectboard Chair",
-      "Selectboard"
+      "Selectboard Member",
+      "Chair",
+      "Selectboard Chair"
     ],
     "image": null,
     "phone_number": null,
     "email": "Carey.Callaghan@hanovernh.org",
-    "website": "https://www.hanovernh.org/directory.aspx?eid=132",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
@@ -77,7 +81,7 @@
     "image": null,
     "phone_number": null,
     "email": "Jennie.Chamberlain@hanovernh.org",
-    "website": "https://www.hanovernh.org/directory.aspx?eid=134",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
