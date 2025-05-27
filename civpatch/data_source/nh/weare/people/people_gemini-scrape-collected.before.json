@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Benji Knapp",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "images": [],
+    "positions": [
+      "Vice Chairman",
+      "Selectman",
+      "Select Board Vice Chairman"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bknapp@wearenh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly next to the name in the Board Members table.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      },
+      {
+        "data": "bknapp@wearenh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly associated with the name in a table.",
+        "source": "https://www.weare.nh.gov/cemetery-trustees"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end year listed directly next to the name and title in the Board Members table.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "James Drury",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "images": [],
+    "positions": [
+      "Selectman"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jdrury@wearenh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly next to the name in the Board Members table.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      },
+      {
+        "data": "jdrury@wearenh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly associated with the name in a table.",
+        "source": "https://www.weare.nh.gov/cemetery-trustees"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end year listed directly next to the name and title in the Board Members table.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Bruce Fillmore",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "images": [],
+    "positions": [
+      "Selectman"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bfillmore@wearenh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly next to the name in the Board Members table.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      },
+      {
+        "data": "bfillmore@wearenh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly associated with the name in a table.",
+        "source": "https://www.weare.nh.gov/cemetery-trustees"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end year listed directly next to the name and title in the Board Members table.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Naomi Bolton",
+    "sources": [
+      "https://www.weare.nh.gov/contacts-directory"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "boardmembers@wearenh.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email address listed directly next to the Board of Selectmen entry in the table.",
+        "source": "https://www.weare.nh.gov/contacts-directory"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-27"
+  }
+]

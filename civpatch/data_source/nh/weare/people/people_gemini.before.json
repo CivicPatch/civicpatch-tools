@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Benji Knapp",
+    "positions": [
+      "Vice Chairman",
+      "Selectman",
+      "Select Board Vice Chairman"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "bknapp@wearenh.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "James Drury",
+    "positions": [
+      "Selectman"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "jdrury@wearenh.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2027",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Bruce Fillmore",
+    "positions": [
+      "Selectman"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "bfillmore@wearenh.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Naomi Bolton",
+    "positions": [
+      "Select Board Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "boardmembers@wearenh.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.weare.nh.gov/contacts-directory"
+    ],
+    "updated_at": "2025-05-27"
+  }
+]
