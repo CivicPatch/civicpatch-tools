@@ -11,6 +11,7 @@ module Core
       cache_folders = Pathname.new(cache_dir).children.select(&:directory?).collect(&:to_s)
 
       cache_folders.each do |cache_folder|
+        next if cache_folder.include?("images")
         next if urls_to_keep.any? { |url| cache_folder.include?(url) }
 
         FileUtils.rm_rf(cache_folder)
