@@ -2,7 +2,8 @@
   {
     "name": "Carey Callaghan",
     "positions": [
-      "Chair"
+      "Chair",
+      "Select Board Member"
     ],
     "image": null,
     "email": "Carey.Callaghan@hanovernh.org",
@@ -19,7 +20,8 @@
   {
     "name": "Joanna Whitcomb",
     "positions": [
-      "Vice Chair"
+      "Vice Chair",
+      "Select Board Member"
     ],
     "image": null,
     "email": "Joanna.Whitcomb@hanovernh.org",
@@ -60,8 +62,7 @@
     "phone_number": null,
     "website": null,
     "sources": [
-      "https://www.hanovernh.org/518/Selectboard",
-      "https://www.hanovernh.org/directory.aspx?eid=136"
+      "https://www.hanovernh.org/518/Selectboard"
     ],
     "start_date": null,
     "end_date": null,

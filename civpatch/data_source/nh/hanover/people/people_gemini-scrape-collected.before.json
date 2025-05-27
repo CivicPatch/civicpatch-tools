@@ -13,8 +13,14 @@
     "emails": [
       {
         "data": "Athos.Rassias@hanovernh.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "Athos.Rassias@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link associated with the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=130"
       }
     ],
@@ -31,6 +37,8 @@
     ],
     "images": [],
     "positions": [
+      "Selectboard Member",
+      "Vice-Chair",
       "Selectboard Vice-Chair"
     ],
     "phone_numbers": [],
@@ -38,7 +46,13 @@
       {
         "data": "Joanna.Whitcomb@hanovernh.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "Joanna.Whitcomb@hanovernh.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=131"
       }
     ],
@@ -50,8 +64,7 @@
   {
     "name": "Jarett Berke",
     "sources": [
-      "https://www.hanovernh.org/518/Selectboard",
-      "https://www.hanovernh.org/directory.aspx?eid=136"
+      "https://www.hanovernh.org/518/Selectboard"
     ],
     "images": [],
     "positions": [
@@ -62,9 +75,9 @@
     "emails": [
       {
         "data": "Jarett.Berke@hanovernh.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
-        "source": "https://www.hanovernh.org/directory.aspx?eid=136"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
       }
     ],
     "websites": [],
@@ -80,14 +93,23 @@
     ],
     "images": [],
     "positions": [
+      "Selectboard Member",
+      "Chair",
+      "Selectboard",
       "Selectboard Chair"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "Carey.Callaghan@hanovernh.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "Carey.Callaghan@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=132"
       }
     ],
@@ -110,8 +132,14 @@
     "emails": [
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name in the contact section.",
+        "source": "https://www.hanovernh.org/518/Selectboard"
+      },
+      {
+        "data": "Jennie.Chamberlain@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address directly associated with the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=134"
       }
     ],
