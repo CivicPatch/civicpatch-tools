@@ -1,0 +1,160 @@
+[
+  {
+    "name": "Robert Cone",
+    "positions": [
+      "Mayor",
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "603-752-2340",
+    "email": null,
+    "website": "https://www.berlinnh.gov/people/robert-cone",
+    "start_date": null,
+    "end_date": "2026-01",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/people/robert-cone",
+      "https://www.berlinnh.gov/berlin-airport-authority"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Diana Berthiaume",
+    "positions": [
+      "Councilor"
+    ],
+    "image": null,
+    "phone_number": "603-723-2861",
+    "email": null,
+    "website": "https://www.berlinnh.gov/city-council",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/traffic-safety-committee"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Robert Theberge",
+    "positions": [],
+    "image": null,
+    "phone_number": "603-331-1805",
+    "email": null,
+    "website": "https://www.berlinnh.gov/city-council",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.berlinnh.gov/city-council"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Peter Morency",
+    "positions": [
+      "Council Member",
+      "Chair",
+      "Councilor"
+    ],
+    "image": null,
+    "phone_number": "603-752-7325",
+    "email": null,
+    "website": "https://www.berlinnh.gov/city-council",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/berlin-airport-authority",
+      "https://www.berlinnh.gov/traffic-safety-committee"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Brian Valerino",
+    "positions": [
+      "Council Member",
+      "Councilor"
+    ],
+    "image": null,
+    "phone_number": "603-723-7247",
+    "email": null,
+    "website": "https://www.berlinnh.gov/city-council",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/berlin-airport-authority",
+      "https://www.berlinnh.gov/traffic-safety-committee"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Peter Higbee",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "603-616-6161",
+    "email": null,
+    "website": "https://www.berlinnh.gov/city-council",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/berlin-airport-authority"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Mia Qualls",
+    "positions": [
+      "Councilor"
+    ],
+    "image": null,
+    "phone_number": "603-723-3771",
+    "email": null,
+    "website": "https://www.berlinnh.gov/city-council",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/traffic-safety-committee"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Steven Korzen",
+    "positions": [
+      "Councilor"
+    ],
+    "image": null,
+    "phone_number": "603-723-2834",
+    "email": null,
+    "website": "https://www.berlinnh.gov/city-council",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/traffic-safety-committee"
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Paul Grenier",
+    "positions": [
+      "Council Member"
+    ],
+    "image": null,
+    "phone_number": "603-752-4693",
+    "email": null,
+    "website": "https://www.berlinnh.gov/people/paul-grenier",
+    "start_date": null,
+    "end_date": "2028-01",
+    "sources": [
+      "https://www.berlinnh.gov/city-council",
+      "https://www.berlinnh.gov/people/paul-grenier",
+      "https://www.berlinnh.gov/berlin-airport-authority"
+    ],
+    "updated_at": "2025-05-27"
+  }
+]

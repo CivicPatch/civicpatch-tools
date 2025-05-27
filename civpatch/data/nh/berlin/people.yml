@@ -1,0 +1,109 @@
+---
+- name: Robert Cone
+  positions:
+  - Mayor
+  email:
+  phone_number: "(603) 752-2340"
+  website: https://www.berlinnh.gov/people/robert-cone
+  image:
+  start_date: 2026-01
+  end_date: 2026-01
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/people/robert-cone
+  - https://www.berlinnh.gov/berlin-airport-authority
+  updated_at: '2025-05-27'
+- name: Peter Morency
+  positions:
+  - Council Member
+  email:
+  phone_number: "(603) 752-7325"
+  website: https://www.berlinnh.gov/city-council
+  image:
+  start_date: 2026-01
+  end_date:
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/berlin-airport-authority
+  - https://www.berlinnh.gov/traffic-safety-committee
+  updated_at: '2025-05-27'
+- name: Brian Valerino
+  positions:
+  - Council Member
+  email:
+  phone_number: "(603) 723-7247"
+  website: https://www.berlinnh.gov/city-council
+  image:
+  start_date: 2026-01
+  end_date:
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/berlin-airport-authority
+  - https://www.berlinnh.gov/traffic-safety-committee
+  updated_at: '2025-05-27'
+- name: Diana Berthiaume
+  positions:
+  - Council Member
+  email:
+  phone_number: "(603) 723-2861"
+  website: https://www.berlinnh.gov/city-council
+  image:
+  start_date: 2026-01
+  end_date:
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/traffic-safety-committee
+  updated_at: '2025-05-27'
+- name: Mia Qualls
+  positions:
+  - Council Member
+  email:
+  phone_number: "(603) 723-3771"
+  website: https://www.berlinnh.gov/city-council
+  image:
+  start_date: 2028-01
+  end_date:
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/traffic-safety-committee
+  updated_at: '2025-05-27'
+- name: Paul Grenier
+  positions:
+  - Council Member
+  email:
+  phone_number: "(603) 752-4693"
+  website: https://www.berlinnh.gov/people/paul-grenier
+  image:
+  start_date: 2026-01
+  end_date: 2028-01
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/people/paul-grenier
+  - https://www.berlinnh.gov/berlin-airport-authority
+  updated_at: '2025-05-27'
+- name: Peter Higbee
+  positions:
+  - Council Member
+  email:
+  phone_number: "(603) 616-6161"
+  website: https://www.berlinnh.gov/city-council
+  image:
+  start_date: 2028-01
+  end_date:
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/berlin-airport-authority
+  updated_at: '2025-05-27'
+- name: Steven Korzen
+  positions:
+  - Council Member
+  email:
+  phone_number: "(603) 723-2834"
+  website: https://www.berlinnh.gov/city-council
+  image:
+  start_date: 2028-01
+  end_date:
+  sources:
+  - https://www.berlinnh.gov/city-council
+  - https://www.berlinnh.gov/traffic-safety-committee
+  updated_at: '2025-05-27'
