@@ -15,13 +15,13 @@
       {
         "data": "Athos.Rassias@hanovernh.org",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name on official page.",
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Athos.Rassias@hanovernh.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly shown near the name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address explicitly shown as mailto link near the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=130"
       }
     ],
@@ -29,12 +29,12 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=130",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=130",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Page URL is the profile page for Athos Rassias.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=130"
       }
@@ -52,7 +52,6 @@
     "images": [],
     "positions": [
       "Selectboard Vice-Chair",
-      "Selectboard Member",
       "Select Board Member"
     ],
     "phone_numbers": [],
@@ -60,13 +59,13 @@
       {
         "data": "Joanna.Whitcomb@hanovernh.org",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name on official page.",
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Joanna.Whitcomb@hanovernh.org",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email address clearly shown as mailto link near the name.",
+        "llm_confidence_reason": "Email address explicitly shown near the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=131"
       }
     ],
@@ -74,12 +73,12 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=131",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=131",
-        "llm_confidence": 0.9,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Page URL is the profile page for Joanna Whitcomb.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=131"
       }
@@ -97,16 +96,15 @@
     "images": [],
     "positions": [
       "Selectboard Chair",
-      "Selectboard Member",
-      "Select Board Chair",
-      "Select Board Member"
+      "Select Board Member",
+      "Select Board Chair"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "Carey.Callaghan@hanovernh.org",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name on official page.",
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -120,7 +118,7 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=132",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
@@ -150,13 +148,13 @@
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name on official page.",
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email address explicitly shown near name with mailto link.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=134"
       }
     ],
@@ -164,13 +162,13 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=134",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=134",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the person.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the profile page for Jennie Chamberlain.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=134"
       }
     ],
@@ -186,8 +184,7 @@
     ],
     "images": [],
     "positions": [
-      "Selectboard Secretary",
-      "Selectboard Member",
+      "Secretary",
       "Select Board Member"
     ],
     "phone_numbers": [],
@@ -195,13 +192,13 @@
       {
         "data": "Jarett.Berke@hanovernh.org",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed near name on official page.",
+        "llm_confidence_reason": "Email extracted from mailto link near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "Jarett.Berke@hanovernh.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly shown as mailto link near the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=136"
       }
     ],
@@ -209,12 +206,12 @@
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=136",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "More Information link associated with person.",
+        "llm_confidence_reason": "Profile page URL linked as 'More Information' near name.",
         "source": "https://www.hanovernh.org/518/Selectboard"
       },
       {
         "data": "https://www.hanovernh.org/directory.aspx?eid=136",
-        "llm_confidence": 0.9,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Page URL is the profile page for Jarett Berke.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=136"
       }
