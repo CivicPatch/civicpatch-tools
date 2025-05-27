@@ -5,8 +5,8 @@
   - Council Member
   - Ward 1
   email: doug.whittlesey@lebanonnh.gov
-  phone_number:
-  website: https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey
+  phone_number: "(603) 448-4220"
+  website: https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey
   image: https://www.lebanonnh.gov/ImageRepository/Document?documentID=14113
   start_date: '2025'
   end_date: 2023-03
@@ -30,7 +30,7 @@
   - At-large
   email: erling.heistad@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/850/Councilor-Erling-Heistad
+  website: https://www.lebanonnh.gov/850/Councilor-Erling-Heistad
   image: https://lebanonnh.gov/ImageRepository/Document?documentID=1720
   start_date: '2010'
   end_date: 2026-03
@@ -52,7 +52,7 @@
   - At-large
   email: laurel.stavis@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/1856/Councilor-Laurel-Stavis
+  website: https://www.lebanonnh.gov/1856/Councilor-Laurel-Stavis
   image: https://lebanonnh.gov/ImageRepository/Document?documentID=20959
   start_date: '2025'
   end_date: 2027-03
@@ -74,10 +74,10 @@
   - At-large
   email: tim.mcnamara@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara
+  website: https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara
   image: https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724
   start_date: '2015'
-  end_date: 2026-03
+  end_date: 2027-03
   sources:
   - https://www.lebanonnh.gov/337/City-Council
   - https://www.lebanonnh.gov/847
@@ -90,7 +90,6 @@
   - https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley
   - https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara
   - https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara
-  - https://lebanonnh.gov/847/Councilor-Timothy-J.-McNamara
   updated_at: '2025-05-27'
 - name: Chris Simon
   positions:
@@ -98,7 +97,7 @@
   - Ward 1
   email: chris.simon@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/844/Councilor-Chris-Simon
+  website: https://www.lebanonnh.gov/844/Councilor-Chris-Simon
   image: https://www.lebanonnh.gov/ImageRepository/Document?documentID=16174
   start_date: '2022'
   end_date: 2026-03
@@ -121,10 +120,10 @@
   - Ward 2
   email: devin.wilkie@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie
+  website: https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie
   image: https://www.lebanonnh.gov/ImageRepository/Document?documentID=14114
   start_date: '2025'
-  end_date: 2027-03
+  end_date: 2025-03
   sources:
   - https://www.lebanonnh.gov/337/City-Council
   - https://www.lebanonnh.gov/847
@@ -144,7 +143,7 @@
   - Ward 2
   email: george.sykes@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/1017/Councilor-George-Sykes
+  website: https://www.lebanonnh.gov/1017/Councilor-George-Sykes
   image: https://www.lebanonnh.gov/ImageRepository/Document?documentID=10403
   start_date: '2019'
   end_date: 2026-03
@@ -167,7 +166,7 @@
   - Ward 3
   email: karen.zook@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/1178/Councilor-Karen-Zook
+  website: https://www.lebanonnh.gov/1178/Councilor-Karen-Zook
   image: https://lebanonnh.gov/ImageRepository/Document?documentID=6253
   start_date: '2018'
   end_date: 2026-03
@@ -191,7 +190,7 @@
   - Ward 3
   email: nicole.ford.burley@lebanonnh.gov
   phone_number:
-  website: https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley
+  website: https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley
   image: https://lebanonnh.gov/ImageRepository/Document?documentID=20203
   start_date: '2025'
   end_date: 2027-03

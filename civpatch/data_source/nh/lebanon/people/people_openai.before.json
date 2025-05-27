@@ -10,7 +10,7 @@
     "phone_number": null,
     "email": "doug.whittlesey@lebanonnh.gov",
     "website": "https://www.lebanonnh.gov/1484",
-    "start_date": "2025",
+    "start_date": "2021",
     "end_date": "2027-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -42,6 +42,7 @@
     "positions": [
       "Council Member",
       "At-Large",
+      "Councilor At-Large",
       "Mayor"
     ],
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724",
@@ -60,8 +61,7 @@
     "name": "Nicole Ford Burley",
     "positions": [
       "Council Member",
-      "Ward 3",
-      "City Councilor"
+      "Ward 3"
     ],
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=20203",
     "phone_number": null,
