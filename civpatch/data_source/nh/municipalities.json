@@ -720,7 +720,14 @@
       "government_type": "select_board",
       "email": "administration@barrington.nh.gov",
       "website": "http://www.barrington.nh.gov",
-      "geoid": "3301703460"
+      "geoid": "3301703460",
+      "meta_updated_at": "2025-05-27",
+      "meta_hash": "29a5911291e9ead883663336c8a53fb8",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Weare",
