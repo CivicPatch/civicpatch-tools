@@ -8,7 +8,7 @@
     ],
     "image": null,
     "email": "doug.whittlesey@lebanonnh.gov",
-    "phone_number": "(603) 448-4220",
+    "phone_number": null,
     "website": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -24,8 +24,36 @@
       "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
       "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
     ],
-    "start_date": "2025",
+    "start_date": "2021",
     "end_date": "2023-03",
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Devin R. Wilkie",
+    "positions": [
+      "Mayor Pro Tempore",
+      "Council Member",
+      "Ward 2"
+    ],
+    "image": null,
+    "email": "devin.wilkie@lebanonnh.gov",
+    "phone_number": null,
+    "website": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
+    "sources": [
+      "https://www.lebanonnh.gov/337/City-Council",
+      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
+      "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
+      "https://www.lebanonnh.gov/844",
+      "https://www.lebanonnh.gov/1483",
+      "https://www.lebanonnh.gov/1017",
+      "https://lebanonnh.gov/1178",
+      "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
+      "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
+      "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
+    ],
+    "start_date": "2021",
+    "end_date": "2027-03",
     "updated_at": "2025-05-27"
   },
   {
@@ -135,33 +163,6 @@
     "updated_at": "2025-05-27"
   },
   {
-    "name": "Devin R. Wilkie",
-    "positions": [
-      "Council Member",
-      "Ward 2"
-    ],
-    "image": null,
-    "email": "devin.wilkie@lebanonnh.gov",
-    "phone_number": null,
-    "website": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-    "sources": [
-      "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
-      "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
-      "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
-      "https://www.lebanonnh.gov/844",
-      "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
-      "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-      "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-      "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
-    ],
-    "start_date": "2025",
-    "end_date": "2025-03",
-    "updated_at": "2025-05-27"
-  },
-  {
     "name": "George Sykes",
     "positions": [
       "Council Member",
@@ -224,7 +225,7 @@
     "image": null,
     "email": "nicole.ford.burley@lebanonnh.gov",
     "phone_number": null,
-    "website": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
+    "website": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
       "https://www.lebanonnh.gov/847",

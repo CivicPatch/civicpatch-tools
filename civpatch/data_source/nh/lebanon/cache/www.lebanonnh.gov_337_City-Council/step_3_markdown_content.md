@@ -14,7 +14,7 @@ Loading
  1.  [Business Resources](/35/Business-Resources) 
  1.  [Life in Lebanon](/31/Life-in-Lebanon) 
  1.  [How Do I?](/9/How-Do-I) 
-  ![Search](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11892)  
+  ![Search](https://www.lebanonnh.gov/ImageRepository/Document?documentID=11895) Search  ![](https://www.lebanonnh.gov/ImageRepository/Document?documentID=12744)  
 
  1.  [Home](/) 
  1.  [Your Government](/27/Your-Government) 
@@ -127,6 +127,11 @@ To contact the Lebanon City Council, please use our [Boards and Committees Conta
 
 #### Tue, May 27   
 
+  __ [Test Item](/Calendar.aspx?EID=4922)__  
+ 1.    
+
+#### Tue, May 27   
+
   __ [Planning Board Work Session](/Calendar.aspx?EID=4590)__  
  1.    
 
@@ -143,12 +148,12 @@ To contact the Lebanon City Council, please use our [Boards and Committees Conta
 #### Wed, May 28   
 
   __ [Economic Development Commission Meeting - CANCELED](/Calendar.aspx?EID=4517)__  
+
  1.    
 
 #### Thu, May 29   
 
   __ [LEAC: Electric Vehicle Subcommittee Meeting- Special Meeting](/Calendar.aspx?EID=4921)__  
-
  1.    
 
 #### Thu, May 29   
@@ -174,11 +179,6 @@ To contact the Lebanon City Council, please use our [Boards and Committees Conta
 #### Wed, Jun. 4   
 
   __ [City Council Meeting](/Calendar.aspx?EID=4494)__  
- 1.    
-
-#### Mon, Jun. 9   
-
-  __ [Planning Board Meeting](/Calendar.aspx?EID=4579)__  
   [View All Events](/calendar.aspx?CID=31)  /Calendar.aspx 
 
  1.    

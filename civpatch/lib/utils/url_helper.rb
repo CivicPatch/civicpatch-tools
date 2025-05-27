@@ -6,6 +6,10 @@ require "uri"
 
 module Utils
   class UrlHelper
+    def self.is_same?(url1, url2)
+      normalize_for_comparison(url1) == normalize_for_comparison(url2)
+    end
+
     def self.url_to_safe_folder_name(url)
       # get rid of protocol
       url = url.gsub(%r{^https?://}, "")

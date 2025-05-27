@@ -4,13 +4,14 @@
     "positions": [
       "Mayor",
       "Ward 1",
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
-    "phone_number": "603-448-4220",
+    "phone_number": null,
     "email": "doug.whittlesey@lebanonnh.gov",
     "website": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
-    "start_date": "2025",
+    "start_date": "2021",
     "end_date": "2023-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
@@ -33,14 +34,15 @@
     "positions": [
       "Assistant Mayor",
       "Ward 2",
+      "Mayor Pro Tempore",
       "Councilor"
     ],
     "image": null,
     "phone_number": null,
     "email": "devin.wilkie@lebanonnh.gov",
     "website": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-    "start_date": "2025",
-    "end_date": "2025-03",
+    "start_date": "2021",
+    "end_date": "2027-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
       "https://www.lebanonnh.gov/847",
@@ -59,9 +61,10 @@
   {
     "name": "Timothy J. McNamara",
     "positions": [
-      "Councilor",
+      "Council Member",
       "At-Large",
-      "Council Member"
+      "Councilor At-Large",
+      "Councilor"
     ],
     "image": null,
     "phone_number": null,
@@ -87,15 +90,14 @@
   {
     "name": "Nicole Ford Burley",
     "positions": [
-      "Councilor",
+      "Council Member",
       "Ward 3",
-      "City Councilor",
-      "Council Member"
+      "Councilor"
     ],
     "image": null,
     "phone_number": null,
     "email": "nicole.ford.burley@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
+    "website": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
     "start_date": "2025",
     "end_date": "2027-03",
     "sources": [
@@ -115,8 +117,9 @@
   {
     "name": "Chris Simon",
     "positions": [
-      "Councilor",
-      "Ward 1"
+      "Council Member",
+      "Ward 1",
+      "Councilor"
     ],
     "image": null,
     "phone_number": null,
@@ -142,8 +145,9 @@
   {
     "name": "George Sykes",
     "positions": [
-      "Councilor",
-      "Ward 2"
+      "Council Member",
+      "Ward 2",
+      "Councilor"
     ],
     "image": null,
     "phone_number": null,
@@ -169,8 +173,9 @@
   {
     "name": "Karen Zook",
     "positions": [
-      "Councilor",
-      "Ward 3"
+      "Council Member",
+      "Ward 3",
+      "Councilor"
     ],
     "image": null,
     "phone_number": null,
@@ -196,9 +201,10 @@
   {
     "name": "Erling Heistad",
     "positions": [
-      "Councilor",
+      "Council Member",
       "At-Large",
-      "At-large"
+      "At-large",
+      "Councilor"
     ],
     "image": null,
     "phone_number": null,
@@ -223,8 +229,9 @@
   {
     "name": "Laurel Stavis",
     "positions": [
-      "Councilor",
-      "At-Large"
+      "Council Member",
+      "At-Large",
+      "Councilor"
     ],
     "image": null,
     "phone_number": null,

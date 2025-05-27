@@ -7,15 +7,9 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Mayor Doug Whittlesey, identified as Mayor and Ward 1 Councilor.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=14113",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image is a headshot near the name 'Douglas Whittlesey' and title 'Mayor'.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is a headshot near the name 'Douglas Whittlesey' and labeled 'Doug Whittlesey'.",
         "source": "https://www.lebanonnh.gov/1484"
       }
     ],
@@ -29,20 +23,20 @@
       {
         "data": "doug.whittlesey@lebanonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly given as 'Email Mayor Whittlesey' mailto link near name.",
+        "llm_confidence_reason": "Extracted from mailto link labeled 'Email Mayor Whittlesey' near the name.",
         "source": "https://www.lebanonnh.gov/1484"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonnh.gov/1484",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with Douglas Whittlesey on City Council page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from name on City Council page, likely official profile.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
         "data": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Page URL and link text indicate this is the official profile page.",
         "source": "https://www.lebanonnh.gov/1484"
       }
@@ -50,8 +44,8 @@
     "start_dates": [
       {
         "data": "2021",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected to Council in 2021, no more specific elected date given.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Elected to Council in 2021; no more recent elected date for mayoral term given, so earliest elected date used.",
         "source": "https://www.lebanonnh.gov/1484"
       }
     ],
@@ -64,8 +58,8 @@
       },
       {
         "data": "2023-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expires 3/23 interpreted as March 2023.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expires 3/23 for Council Member, Ward 1 position.",
         "source": "https://www.lebanonnh.gov/1484"
       }
     ],
@@ -78,12 +72,6 @@
       "https://www.lebanonnh.gov/1483"
     ],
     "images": [
-      {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Assistant Mayor Devin Wilkie.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
       {
         "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=14114",
         "llm_confidence": 0.99,
@@ -101,21 +89,21 @@
       {
         "data": "devin.wilkie@lebanonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name and role.",
+        "llm_confidence_reason": "Email address is explicitly provided near the name and role.",
         "source": "https://www.lebanonnh.gov/1483"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonnh.gov/1483",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with Devin R. Wilkie on City Council page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from name on City Council page, likely official profile.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
         "data": "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL corresponds to the profile page of Devin R. Wilkie as Assistant Mayor.",
+        "llm_confidence_reason": "Page URL corresponds to Devin R. Wilkie's profile.",
         "source": "https://www.lebanonnh.gov/1483"
       }
     ],
@@ -123,7 +111,7 @@
       {
         "data": "2021",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected to Council in 2021, no more specific elected date provided.",
+        "llm_confidence_reason": "Elected to Council in 2021 as stated.",
         "source": "https://www.lebanonnh.gov/1483"
       }
     ],
@@ -137,7 +125,7 @@
       {
         "data": "2025-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expires March 2025, converted to YYYY-MM format.",
+        "llm_confidence_reason": "Term expires March 2025 as stated.",
         "source": "https://www.lebanonnh.gov/1483"
       }
     ],
@@ -151,14 +139,8 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Councilor Tim McNamara.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Image is a portrait near the name 'Timothy J. McNamara' and labeled as such.",
         "source": "https://www.lebanonnh.gov/847"
       }
@@ -181,13 +163,13 @@
     "websites": [
       {
         "data": "https://www.lebanonnh.gov/847",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with Timothy J. McNamara on City Council page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from name on City Council page, likely official profile.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
         "data": "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Page URL and link labeled with his name.",
         "source": "https://www.lebanonnh.gov/847"
       }
@@ -196,7 +178,7 @@
       {
         "data": "2015",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected to Council in 2015, no more recent elected date provided.",
+        "llm_confidence_reason": "Elected to Council: 2015 indicates start of service.",
         "source": "https://www.lebanonnh.gov/847"
       }
     ],
@@ -209,8 +191,8 @@
       },
       {
         "data": "2027-03-27",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expires 3/27 interpreted as 2027-03-27.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term expires (3/27) interpreted as March 27, 2027.",
         "source": "https://www.lebanonnh.gov/847"
       }
     ],
@@ -224,15 +206,9 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Councilor Nicole Ford Burley.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://lebanonnh.gov/ImageRepository/Document?documentID=20203",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image is a portrait near the name 'Nicole Ford Burley' on the Councilor page.",
+        "llm_confidence_reason": "Image is a portrait near the name 'Nicole Ford Burley' and labeled as such.",
         "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       }
     ],
@@ -245,21 +221,21 @@
       {
         "data": "nicole.ford.burley@lebanonnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link near the name.",
+        "llm_confidence_reason": "Extracted from mailto link text near the name.",
         "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       }
     ],
     "websites": [
       {
         "data": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct profile link for Nicole Ford Burley.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official profile URL linked from name.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
         "data": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "This is the URL of the page dedicated to Nicole Ford Burley as a Councilor.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL for the councilor's profile.",
         "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       }
     ],
@@ -267,7 +243,7 @@
       {
         "data": "2025",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Text states 'Elected to Council: 2025' indicating term start year.",
+        "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2025' indicating term start year.",
         "source": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
       }
     ],
@@ -289,15 +265,9 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Councilor Chris Simon.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=16174",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found a portrait image near the name 'Councilor Chris Simon' on the page.",
+        "llm_confidence_reason": "Found image labeled '2022-03-23_C.Simon' near name 'Councilor Chris Simon'.",
         "source": "https://www.lebanonnh.gov/844"
       }
     ],
@@ -310,30 +280,30 @@
     "emails": [
       {
         "data": "chris.simon@lebanonnh.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Councilor Simon' near the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Extracted from mailto link text near name.",
         "source": "https://www.lebanonnh.gov/844"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonnh.gov/844",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with Chris Simon on City Council page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from name on City Council page, likely official profile.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
-        "data": "https://www.lebanonnh.gov/844",
+        "data": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary profile page URL for Chris Simon.",
+        "llm_confidence_reason": "Primary page URL for Councilor Chris Simon.",
         "source": "https://www.lebanonnh.gov/844"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Elected to Council: 2022' indicating start of current term.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted 'Elected to Council: 2022' indicating start of current term.",
         "source": "https://www.lebanonnh.gov/844"
       }
     ],
@@ -346,8 +316,8 @@
       },
       {
         "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term expires 3/26' interpreted as March 2026.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted 'Term expires 3/26' converted to 2026-03.",
         "source": "https://www.lebanonnh.gov/844"
       }
     ],
@@ -361,15 +331,9 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Councilor George Sykes.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=10403",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image is a portrait labeled 'Lebanon Councilor George Sykes' near the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Image is a portrait near the name 'Councilor George Sykes' on the page.",
         "source": "https://www.lebanonnh.gov/1017"
       }
     ],
@@ -382,22 +346,22 @@
     "emails": [
       {
         "data": "george.sykes@lebanonnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email extracted from mailto link labeled 'Email Councilor Sykes' near name.",
         "source": "https://www.lebanonnh.gov/1017"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonnh.gov/1017",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with George Sykes on City Council page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from name on City Council page, likely official profile.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
         "data": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is a profile page for Councilor George Sykes.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and link to 'Councilor George Sykes' profile on Lebanon NH site.",
         "source": "https://www.lebanonnh.gov/1017"
       }
     ],
@@ -405,7 +369,7 @@
       {
         "data": "2019",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected to Council: 2019 explicitly stated.",
+        "llm_confidence_reason": "Explicitly stated 'Elected to Council: 2019' indicating start of current service.",
         "source": "https://www.lebanonnh.gov/1017"
       }
     ],
@@ -418,8 +382,8 @@
       },
       {
         "data": "2026-03",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expires 3/26 interpreted as March 2026.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration stated as 'Term expires 3/26', interpreted as March 2026.",
         "source": "https://www.lebanonnh.gov/1017"
       }
     ],
@@ -433,15 +397,9 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Councilor Karen Zook.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://lebanonnh.gov/ImageRepository/Document?documentID=6253",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image is a headshot labeled 'Lebanon City Councilor Karen Zook' near the name.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Image is a portrait labeled 'Lebanon City Councilor Karen Zook' near the name.",
         "source": "https://lebanonnh.gov/1178"
       }
     ],
@@ -463,13 +421,13 @@
       {
         "data": "https://lebanonnh.gov/1178",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with Karen Zook on City Council page.",
+        "llm_confidence_reason": "Official profile URL linked from name.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
         "data": "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL and link text indicate this is the profile page for Karen Zook.",
+        "llm_confidence_reason": "Page URL and link text indicate this is the profile page.",
         "source": "https://lebanonnh.gov/1178"
       }
     ],
@@ -505,14 +463,8 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Councilor Erling Heistad.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://lebanonnh.gov/ImageRepository/Document?documentID=1720",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Image is a portrait near the name 'Erling Heistad' on the councilor page.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
       }
@@ -536,7 +488,7 @@
       {
         "data": "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with Erling Heistad on City Council page.",
+        "llm_confidence_reason": "Official profile URL linked from name.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
@@ -550,7 +502,7 @@
       {
         "data": "2010",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected to Council: 2010 explicitly stated.",
+        "llm_confidence_reason": "Elected to Council: 2010 stated; no more specific date given.",
         "source": "https://lebanonnh.gov/850/Councilor-Erling-Heistad"
       }
     ],
@@ -578,15 +530,9 @@
     ],
     "images": [
       {
-        "data": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=21071",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image of City Council group photo includes Councilor Laurel Stavis.",
-        "source": "https://www.lebanonnh.gov/337/City-Council"
-      },
-      {
         "data": "https://lebanonnh.gov/ImageRepository/Document?documentID=20959",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image is a portrait near the name 'Laurel Stavis' and labeled as 'Councilor Laurel Stavis'.",
+        "llm_confidence_reason": "Image is a portrait near the name 'Laurel Stavis' and labeled as 'Laurel Stavis'.",
         "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       }
     ],
@@ -608,13 +554,13 @@
       {
         "data": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile link labeled with Laurel Stavis on City Council page.",
+        "llm_confidence_reason": "Official profile URL linked from name.",
         "source": "https://www.lebanonnh.gov/337/City-Council"
       },
       {
         "data": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for the councilor's profile.",
+        "llm_confidence_reason": "Page URL is the profile page for Laurel Stavis.",
         "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       }
     ],
@@ -635,8 +581,8 @@
       },
       {
         "data": "2027-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration given as 'Term Expires 3/27', interpreted as March 2027.",
+        "llm_confidence": 0.97,
+        "llm_confidence_reason": "Term expiration stated as 'Term Expires 3/27', interpreted as March 2027.",
         "source": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis"
       }
     ],

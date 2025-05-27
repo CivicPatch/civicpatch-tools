@@ -204,7 +204,7 @@ namespace :pipeline do
     people.map do |person|
       next person unless person["image"].present?
 
-      image_key = image_map.keys.find { |key| image_map[key] == person["image"] }
+      image_key = image_map.keys.find { |key| Utils::UrlHelper.is_same?(image_map[key], person["image"]) }
       next person unless image_key.present?
 
       file_path = File.join(source_images_dir, image_key)
