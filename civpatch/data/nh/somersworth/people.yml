@@ -10,10 +10,12 @@
   end_date: 2026-01
   sources:
   - https://www.somersworthnh.gov/mayor-city-council
+  - https://www.somersworthnh.gov/people/david-witham-0
   - https://www.somersworthnh.gov/people/nancie-cameron
   - https://www.somersworthnh.gov/people/paul-goodwin
   - https://www.somersworthnh.gov/people/crystal-paradis-catanzaro
   - https://www.somersworthnh.gov/people/richard-r-michaud
+  - https://www.somersworth.com/people/laura-barry-0
   - https://www.somersworthnh.gov/people/ken-vincent
   - https://www.somersworthnh.gov/people/robert-gibson
   cdn_image: https://cdn.civicpatch.org/open-data/nh/somersworth/images/6626db1ca0303cca7287b257b415b6763ddc3993fa6943c754bf37a0203e5061.jpg
@@ -31,6 +33,7 @@
   end_date: 2026-01
   sources:
   - https://www.somersworthnh.gov/mayor-city-council
+  - https://www.somersworthnh.gov/people/david-witham-0
   cdn_image: https://cdn.civicpatch.org/open-data/nh/somersworth/images/0d4253bc46d46f563dab77f5692c8fd382a67d03febb8118a3a3bd45eee80969.jpg
   updated_at: '2025-05-27'
 - name: Laura Barry
@@ -45,6 +48,7 @@
   end_date: 2026-01
   sources:
   - https://www.somersworthnh.gov/mayor-city-council
+  - https://www.somersworth.com/people/laura-barry-0
   cdn_image: https://cdn.civicpatch.org/open-data/nh/somersworth/images/7863ea07f34d20aa7d615b1dc3f6613c2687a7ccfd02fac711d068db0ed0b9d5.jpg
   updated_at: '2025-05-27'
 - name: Nancie Cameron

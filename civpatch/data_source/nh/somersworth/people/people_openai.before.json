@@ -114,7 +114,11 @@
     "positions": [
       "Deputy Mayor",
       "Council Member",
-      "At-Large"
+      "At-Large",
+      "At-large",
+      "Chair",
+      "Finance Committee",
+      "Public Works & Environment Committee"
     ],
     "image": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_david_a._witham-175x201.jpg",
     "phone_number": "(603) 692-4086",
@@ -123,7 +127,8 @@
     "start_date": null,
     "end_date": "2026-01",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council"
+      "https://www.somersworthnh.gov/mayor-city-council",
+      "https://www.somersworthnh.gov/people/david-witham-0"
     ],
     "updated_at": "2025-05-27"
   },
@@ -131,7 +136,8 @@
     "name": "Laura Barry",
     "positions": [
       "Council Member",
-      "At-Large"
+      "At-Large",
+      "At-large"
     ],
     "image": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/laura_barry-180x201.jpg",
     "phone_number": "(406) 698-1795",
@@ -140,7 +146,8 @@
     "start_date": null,
     "end_date": "2026-01",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council"
+      "https://www.somersworthnh.gov/mayor-city-council",
+      "https://www.somersworth.com/people/laura-barry-0"
     ],
     "updated_at": "2025-05-27"
   },
@@ -176,13 +183,7 @@
       "Chair",
       "Economic Development Committee",
       "At-large",
-      "Historic District Commission",
-      "Government Operations",
-      "Eyes on 30",
-      "Mayor's Commission on Culture",
-      "Ethnicity",
-      "and the Arts",
-      "Mayor's Housing Task Force"
+      "Eyes on 30"
     ],
     "image": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/paul_goodwin-175x201.jpg",
     "phone_number": "(603) 692-6016",

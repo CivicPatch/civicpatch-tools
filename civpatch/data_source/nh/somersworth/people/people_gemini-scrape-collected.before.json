@@ -3,10 +3,12 @@
     "name": "Matt Gerding",
     "sources": [
       "https://www.somersworthnh.gov/mayor-city-council",
+      "https://www.somersworthnh.gov/people/david-witham-0",
       "https://www.somersworthnh.gov/people/nancie-cameron",
       "https://www.somersworthnh.gov/people/paul-goodwin",
       "https://www.somersworthnh.gov/people/crystal-paradis-catanzaro",
       "https://www.somersworthnh.gov/people/richard-r-michaud",
+      "https://www.somersworth.com/people/laura-barry-0",
       "https://www.somersworthnh.gov/people/ken-vincent",
       "https://www.somersworthnh.gov/people/robert-gibson"
     ],
@@ -200,7 +202,8 @@
   {
     "name": "David A. Witham",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council"
+      "https://www.somersworthnh.gov/mayor-city-council",
+      "https://www.somersworthnh.gov/people/david-witham-0"
     ],
     "images": [],
     "positions": [
@@ -224,11 +227,14 @@
   {
     "name": "Laura Barry",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council"
+      "https://www.somersworthnh.gov/mayor-city-council",
+      "https://www.somersworth.com/people/laura-barry-0"
     ],
     "images": [],
     "positions": [
-      "Councilor At-Large"
+      "Councilor At-Large",
+      "City Councilor",
+      "At-large"
     ],
     "phone_numbers": [
       {
@@ -236,6 +242,12 @@
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed under Mayor & City Council and in table.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
+      },
+      {
+        "data": "(406) 698-1795",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.somersworth.com/people/laura-barry-0"
       }
     ],
     "emails": [],

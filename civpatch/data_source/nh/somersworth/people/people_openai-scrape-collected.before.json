@@ -8,7 +8,7 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/mattgerdingmayor-250x250.jpeg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled 'Mayor Matt Gerding' near name and mayor section.",
+        "llm_confidence_reason": "Image labeled 'Mayor Matt Gerding' near name and position.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -27,7 +27,7 @@
       {
         "data": "mgerding@somersworthnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:mgerding@somersworthnh.gov' near Mayor Matt Gerding.",
+        "llm_confidence_reason": "Email address explicitly provided near Mayor Matt Gerding.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -44,7 +44,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Mayor Matt Gerding.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -59,7 +59,7 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_martin_pepin-151x229.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor Martin Pepin' near name and ward 1 councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor Martin Pepin' near name and ward.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -71,7 +71,7 @@
       {
         "data": "(603) 692-4436",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Martin Pepin.",
+        "llm_confidence_reason": "Phone number listed near Martin Pepin's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -79,7 +79,7 @@
       {
         "data": "mpepin@comcast.net",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:mpepin@comcast.net' near Councilor Martin Pepin.",
+        "llm_confidence_reason": "Email address explicitly provided near Martin Pepin.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -87,7 +87,7 @@
       {
         "data": "https://www.somersworthnh.gov/people/marty-pepin",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Martin Pepin.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -96,7 +96,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Martin Pepin.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -112,7 +112,7 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_kenneth_s._vincent-164x165.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor Kenneth S. Vincent' near name and ward 2 councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor Kenneth S. Vincent' near name and ward.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -124,13 +124,13 @@
       {
         "data": "(603) 396-4120",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Kenneth S. Vincent.",
+        "llm_confidence_reason": "Phone number listed near Kenneth S. Vincent's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "603-692-6596",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number labeled near name and contact info.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name Ken Vincent.",
         "source": "https://www.somersworthnh.gov/people/ken-vincent"
       }
     ],
@@ -138,7 +138,7 @@
       {
         "data": "thevince@comcast.net",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:thevince@comcast.net' near Councilor Kenneth S. Vincent.",
+        "llm_confidence_reason": "Email address explicitly provided near Kenneth S. Vincent.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -146,14 +146,8 @@
       {
         "data": "https://www.somersworthnh.gov/people/ken-vincent",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Kenneth Vincent.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
-      },
-      {
-        "data": "https://www.somersworthnh.gov/people/ken-vincent",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the profile page for Ken Vincent.",
-        "source": "https://www.somersworthnh.gov/people/ken-vincent"
       }
     ],
     "start_dates": [],
@@ -161,7 +155,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Kenneth Vincent.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -177,7 +171,7 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/bob_gibson_0-188x250.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor Robert G. Gibson' near name and ward 3 councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor Robert G. Gibson' near name and ward.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -190,13 +184,13 @@
       {
         "data": "(603) 841-0541",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Robert G. Gibson.",
+        "llm_confidence_reason": "Phone number listed near Robert G. Gibson's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "(603) 405-8343",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed near name as 'Phone: (603) 405-8343'.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Robert Gibson's name.",
         "source": "https://www.somersworthnh.gov/people/robert-gibson"
       }
     ],
@@ -204,7 +198,7 @@
       {
         "data": "rgibson@somersworthnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:rgibson@somersworthnh.gov' near Councilor Robert G. Gibson.",
+        "llm_confidence_reason": "Email address explicitly provided near Robert G. Gibson.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -212,15 +206,21 @@
       {
         "data": "https://www.somersworthnh.gov/people/robert-gibson",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Robert Gibson.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
+      },
+      {
+        "data": "https://www.somersworthnh.gov/people/robert-gibson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the profile page for Robert Gibson.",
+        "source": "https://www.somersworthnh.gov/people/robert-gibson"
       }
     ],
     "start_dates": [
       {
         "data": "2022-09-26",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed as 'September 26, 2022' for Mayor & City Council membership; converted to YYYY-MM-DD.",
+        "llm_confidence_reason": "Extracted from 'Mayor & City Council' department membership date served 'September 26, 2022' and status 'Active Membership'.",
         "source": "https://www.somersworthnh.gov/people/robert-gibson"
       }
     ],
@@ -228,7 +228,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Robert Gibson.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -244,7 +244,7 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/crystal-pc_002-188x252.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor Crystal Paradis-Catanzaro' near name and ward 4 councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor Crystal Paradis-Catanzaro' near name and ward.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -258,7 +258,7 @@
       {
         "data": "(603) 205-1561",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Crystal Paradis-Catanzaro.",
+        "llm_confidence_reason": "Phone number listed near Crystal Paradis-Catanzaro's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
@@ -272,7 +272,7 @@
       {
         "data": "crystal@somersworthnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:crystal@somersworthnh.gov' near Councilor Crystal Paradis-Catanzaro.",
+        "llm_confidence_reason": "Email address explicitly provided near Crystal Paradis-Catanzaro.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -280,7 +280,7 @@
       {
         "data": "https://www.somersworthnh.gov/people/crystal-paradis-catanzaro",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Crystal Paradis-Catanzaro.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -289,7 +289,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Crystal Paradis-Catanzaro.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -305,13 +305,13 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_richard_r._michaud-226x169-181x174.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor Richard R. Michaud' near name and ward 5 councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor Richard R. Michaud' near name and ward.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/styles/news_image/public/people/councilor_richard_r._michaud-200x150.jpg?itok=VXX2dFQu",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image is a portrait near the name Richard R. Michaud and labeled accordingly.",
+        "llm_confidence_reason": "Image is a portrait near the name 'Richard R. Michaud' on the page.",
         "source": "https://www.somersworthnh.gov/people/richard-r-michaud"
       }
     ],
@@ -325,13 +325,13 @@
       {
         "data": "(603) 692-4612",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Richard R. Michaud.",
+        "llm_confidence_reason": "Phone number listed near Richard R. Michaud's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "(603) 692-4612",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near the name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly next to Richard R. Michaud's name.",
         "source": "https://www.somersworthnh.gov/people/richard-r-michaud"
       }
     ],
@@ -339,7 +339,7 @@
       {
         "data": "rmichaud@somersworthnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:rmichaud@somersworthnh.gov' near Councilor Richard R. Michaud.",
+        "llm_confidence_reason": "Email address explicitly provided near Richard R. Michaud.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -347,7 +347,7 @@
       {
         "data": "https://www.somersworthnh.gov/people/richard-r-michaud",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Richard R. Michaud.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
@@ -361,7 +361,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Start date extracted from 'Ward 5 Councilor January 1, 2024 Active Membership Elected'.",
+        "llm_confidence_reason": "Start date 'January 1, 2024' listed for Ward 5 Councilor position.",
         "source": "https://www.somersworthnh.gov/people/richard-r-michaud"
       }
     ],
@@ -369,7 +369,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Richard R. Michaud.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -378,34 +378,45 @@
   {
     "name": "David A. Witham",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council"
+      "https://www.somersworthnh.gov/mayor-city-council",
+      "https://www.somersworthnh.gov/people/david-witham-0"
     ],
     "images": [
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_david_a._witham-175x201.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor David A. Witham (Deputy Mayor)' near name and at-large councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor David A. Witham (Deputy Mayor)' near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
     "positions": [
       "Deputy Mayor",
       "Council Member",
-      "At-Large"
+      "At-Large",
+      "At-large",
+      "Chair",
+      "Finance Committee",
+      "Public Works & Environment Committee"
     ],
     "phone_numbers": [
       {
         "data": "(603) 692-4086",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor David A. Witham.",
+        "llm_confidence_reason": "Phone number listed near David A. Witham's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
+      },
+      {
+        "data": "(603) 692-4262",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under City of Somersworth contact info near David Witham's section.",
+        "source": "https://www.somersworthnh.gov/people/david-witham-0"
       }
     ],
     "emails": [
       {
         "data": "dwitham@somersworthnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:dwitham@somersworthnh.gov' near Councilor David A. Witham.",
+        "llm_confidence_reason": "Email address explicitly provided near David A. Witham.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -413,8 +424,14 @@
       {
         "data": "https://www.somersworthnh.gov/people/david-witham-0",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near David A. Witham.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
+      },
+      {
+        "data": "https://www.somersworthnh.gov/people/david-witham-0",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the profile page for David Witham.",
+        "source": "https://www.somersworthnh.gov/people/david-witham-0"
       }
     ],
     "start_dates": [],
@@ -422,7 +439,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near David A. Witham.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -431,33 +448,41 @@
   {
     "name": "Laura Barry",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council"
+      "https://www.somersworthnh.gov/mayor-city-council",
+      "https://www.somersworth.com/people/laura-barry-0"
     ],
     "images": [
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/laura_barry-180x201.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor Laura Barry' near name and at-large councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor Laura Barry' near name and at-large position.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
     "positions": [
       "Council Member",
-      "At-Large"
+      "At-Large",
+      "At-large"
     ],
     "phone_numbers": [
       {
         "data": "(406) 698-1795",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Laura Barry.",
+        "llm_confidence_reason": "Phone number listed near Laura Barry's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
+      },
+      {
+        "data": "(406) 698-1795",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Laura Barry's name.",
+        "source": "https://www.somersworth.com/people/laura-barry-0"
       }
     ],
     "emails": [
       {
         "data": "lbarry@somersworthnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:lbarry@somersworthnh.gov' near Councilor Laura Barry.",
+        "llm_confidence_reason": "Email address explicitly provided near Laura Barry.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -465,8 +490,14 @@
       {
         "data": "https://www.somersworth.com/people/laura-barry-0",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Laura Barry.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
+      },
+      {
+        "data": "https://www.somersworth.com/people/laura-barry-0",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Laura Barry.",
+        "source": "https://www.somersworth.com/people/laura-barry-0"
       }
     ],
     "start_dates": [],
@@ -474,7 +505,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Laura Barry.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -490,7 +521,7 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_nancie_cameron-153x230.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Councilor Nancie Cameron' near name and at-large councilor section.",
+        "llm_confidence_reason": "Image labeled 'Councilor Nancie Cameron' near name and at-large position.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -507,21 +538,21 @@
       {
         "data": "(603) 781-5302",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Nancie Cameron.",
+        "llm_confidence_reason": "Phone number listed near Nancie Cameron's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "(603) 781-5302",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number found near name labeled 'Phone:'",
+        "llm_confidence_reason": "Phone number labeled near name and contact info.",
         "source": "https://www.somersworthnh.gov/people/nancie-cameron"
       }
     ],
     "emails": [
       {
         "data": "bballmom824@yahoo.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email link text 'mailto:bballmom824@yahoo.com' near Councilor Nancie Cameron.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly provided near Nancie Cameron.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -529,13 +560,13 @@
       {
         "data": "https://www.somersworthnh.gov/people/nancie-cameron",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Nancie Cameron.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "https://www.somersworthnh.gov/people/nancie-cameron",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is the profile page for Nancie Cameron",
+        "llm_confidence_reason": "Page URL is the profile page for Nancie Cameron.",
         "source": "https://www.somersworthnh.gov/people/nancie-cameron"
       }
     ],
@@ -543,7 +574,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date for council and committee roles explicitly stated as January 1, 2024",
+        "llm_confidence_reason": "Start date for multiple roles listed as January 1, 2024, converted to 2024-01-01.",
         "source": "https://www.somersworthnh.gov/people/nancie-cameron"
       }
     ],
@@ -551,7 +582,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Nancie Cameron.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -567,7 +598,7 @@
       {
         "data": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/paul_goodwin-175x201.jpg",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image labeled 'Paul Goodwin' near name and at-large councilor section.",
+        "llm_confidence_reason": "Image labeled 'Paul Goodwin' near name and at-large position.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -578,25 +609,19 @@
       "Chair",
       "Economic Development Committee",
       "At-large",
-      "Historic District Commission",
-      "Government Operations",
-      "Eyes on 30",
-      "Mayor's Commission on Culture",
-      "Ethnicity",
-      "and the Arts",
-      "Mayor's Housing Task Force"
+      "Eyes on 30"
     ],
     "phone_numbers": [
       {
         "data": "(603) 692-6016",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilor Paul Goodwin.",
+        "llm_confidence_reason": "Phone number listed near Paul Goodwin's name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "(603) 692-4262",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Phone number found in City of Somersworth contact info near the page but not explicitly linked to Paul Goodwin; likely main city hall number.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number listed under City of Somersworth contact info, likely main city hall number associated with council members.",
         "source": "https://www.somersworthnh.gov/people/paul-goodwin"
       }
     ],
@@ -604,7 +629,7 @@
       {
         "data": "pgoodwin@somersworthnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'mailto:pgoodwin@somersworthnh.gov' near Councilor Paul Goodwin.",
+        "llm_confidence_reason": "Email address explicitly provided near Paul Goodwin.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
@@ -612,12 +637,12 @@
       {
         "data": "https://www.somersworthnh.gov/people/paul-goodwin",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page linked as 'View Committee Memberships' near Paul Goodwin.",
+        "llm_confidence_reason": "Committee memberships page linked near name.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       },
       {
         "data": "https://www.somersworthnh.gov/people/paul-goodwin",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Page URL is the profile page for Paul Goodwin.",
         "source": "https://www.somersworthnh.gov/people/paul-goodwin"
       }
@@ -626,7 +651,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Start date explicitly stated as 'January 1, 2024' for At-Large Councilor position.",
+        "llm_confidence_reason": "Start date explicitly stated as January 1, 2024 for At-Large Councilor position.",
         "source": "https://www.somersworthnh.gov/people/paul-goodwin"
       }
     ],
@@ -634,7 +659,7 @@
       {
         "data": "2026-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: January 2026' near Paul Goodwin.",
+        "llm_confidence_reason": "Term Expires: January 2026 converted to 2026-01.",
         "source": "https://www.somersworthnh.gov/mayor-city-council"
       }
     ],
