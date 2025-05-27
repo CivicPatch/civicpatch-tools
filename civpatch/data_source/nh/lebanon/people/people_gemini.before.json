@@ -4,27 +4,28 @@
     "positions": [
       "Mayor",
       "Ward 1",
-      "Councilor"
+      "Councilor",
+      "Council Member"
     ],
     "image": null,
-    "phone_number": "603-448-4220",
+    "phone_number": null,
     "email": "doug.whittlesey@lebanonnh.gov",
     "website": "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
     "start_date": "2025",
     "end_date": "2023-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://www.lebanonnh.gov/1484",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-      "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
-      "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
+      "https://lebanonnh.gov/1484/Mayor-Douglas-Whittlesey",
+      "https://www.lebanonnh.gov/1484/Mayor-Douglas-Whittlesey"
     ],
     "updated_at": "2025-05-27"
   },
@@ -33,7 +34,8 @@
     "positions": [
       "Assistant Mayor",
       "Ward 2",
-      "Councilor"
+      "Deputy Mayor",
+      "Mayor Pro Tempore"
     ],
     "image": null,
     "phone_number": null,
@@ -43,16 +45,16 @@
     "end_date": "2025-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-      "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
-      "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
+      "https://lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie",
+      "https://www.lebanonnh.gov/1483/Assistant-Mayor-Devin-R-Wilkie"
     ],
     "updated_at": "2025-05-27"
   },
@@ -61,7 +63,8 @@
     "positions": [
       "Councilor",
       "At-Large",
-      "Council Member"
+      "Council Member",
+      "at-large"
     ],
     "image": null,
     "phone_number": null,
@@ -71,16 +74,16 @@
     "end_date": "2027-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-      "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
-      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
+      "https://www.lebanonnh.gov/847",
+      "https://www.lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
     ],
     "updated_at": "2025-05-27"
   },
@@ -89,24 +92,23 @@
     "positions": [
       "Councilor",
       "Ward 3",
-      "City Councilor",
       "Council Member"
     ],
     "image": null,
     "phone_number": null,
     "email": "nicole.ford.burley@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
+    "website": "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
     "start_date": "2025",
     "end_date": "2027-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
       "https://www.lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley"
     ],
@@ -116,26 +118,27 @@
     "name": "Chris Simon",
     "positions": [
       "Councilor",
-      "Ward 1"
+      "Ward 1",
+      "Council Member"
     ],
     "image": null,
     "phone_number": null,
     "email": "chris.simon@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
+    "website": "https://lebanonnh.gov/844/Councilor-Chris-Simon",
     "start_date": "2022",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-      "https://www.lebanonnh.gov/844/Councilor-Chris-Simon",
-      "https://lebanonnh.gov/844/Councilor-Chris-Simon"
+      "https://lebanonnh.gov/844/Councilor-Chris-Simon",
+      "https://www.lebanonnh.gov/844/Councilor-Chris-Simon"
     ],
     "updated_at": "2025-05-27"
   },
@@ -143,7 +146,8 @@
     "name": "George Sykes",
     "positions": [
       "Councilor",
-      "Ward 2"
+      "Ward 2",
+      "Council Member"
     ],
     "image": null,
     "phone_number": null,
@@ -153,15 +157,15 @@
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
-      "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
       "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
+      "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
+      "https://www.lebanonnh.gov/1017",
       "https://lebanonnh.gov/1017/Councilor-George-Sykes"
     ],
     "updated_at": "2025-05-27"
@@ -170,7 +174,8 @@
     "name": "Karen Zook",
     "positions": [
       "Councilor",
-      "Ward 3"
+      "Ward 3",
+      "Council Member"
     ],
     "image": null,
     "phone_number": null,
@@ -180,16 +185,16 @@
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
-      "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook",
-      "https://lebanonnh.gov/1178/Councilor-Karen-Zook"
+      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1178/Councilor-Karen-Zook"
     ],
     "updated_at": "2025-05-27"
   },
@@ -198,23 +203,24 @@
     "positions": [
       "Councilor",
       "At-Large",
+      "Council Member",
       "At-large"
     ],
     "image": null,
     "phone_number": null,
     "email": "erling.heistad@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad",
+    "website": "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
     "start_date": "2010",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
       "https://www.lebanonnh.gov/850/Councilor-Erling-Heistad"
     ],
@@ -224,23 +230,24 @@
     "name": "Laurel Stavis",
     "positions": [
       "Councilor",
-      "At-Large"
+      "At-Large",
+      "Council Member"
     ],
     "image": null,
     "phone_number": null,
     "email": "laurel.stavis@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/1856/Councilor-Laurel-Stavis",
+    "website": "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
     "start_date": "2025",
     "end_date": "2027-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847",
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
       "https://lebanonnh.gov/850/Councilor-Erling-Heistad",
       "https://lebanonnh.gov/1856/Councilor-Laurel-Stavis",
       "https://www.lebanonnh.gov/844",
       "https://www.lebanonnh.gov/1483",
-      "https://www.lebanonnh.gov/1017",
-      "https://lebanonnh.gov/1178",
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
       "https://lebanonnh.gov/1855/Councilor-Nicole-Ford-Burley",
       "https://www.lebanonnh.gov/1856/Councilor-Laurel-Stavis"
     ],

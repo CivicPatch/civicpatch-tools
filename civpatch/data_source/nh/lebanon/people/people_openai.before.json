@@ -45,15 +45,15 @@
       "Councilor At-Large",
       "Mayor"
     ],
-    "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=1724",
+    "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=1724",
     "phone_number": null,
     "email": "tim.mcnamara@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/847",
+    "website": "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara",
     "start_date": "2015",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/847"
+      "https://lebanonnh.gov/847/Councilor-Timothy-J-McNamara"
     ],
     "updated_at": "2025-05-27"
   },
@@ -104,12 +104,12 @@
     "image": "https://www.lebanonnh.gov/ImageRepository/Document?documentID=10403",
     "phone_number": null,
     "email": "george.sykes@lebanonnh.gov",
-    "website": "https://www.lebanonnh.gov/1017",
+    "website": "https://www.lebanonnh.gov/1017/Councilor-George-Sykes",
     "start_date": "2019",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://www.lebanonnh.gov/1017"
+      "https://www.lebanonnh.gov/1017/Councilor-George-Sykes"
     ],
     "updated_at": "2025-05-27"
   },
@@ -123,12 +123,12 @@
     "image": "https://lebanonnh.gov/ImageRepository/Document?documentID=6253",
     "phone_number": null,
     "email": "karen.zook@lebanonnh.gov",
-    "website": "https://lebanonnh.gov/1178",
+    "website": "https://lebanonnh.gov/1178/Councilor-Karen-Zook",
     "start_date": "2018",
     "end_date": "2026-03",
     "sources": [
       "https://www.lebanonnh.gov/337/City-Council",
-      "https://lebanonnh.gov/1178"
+      "https://lebanonnh.gov/1178/Councilor-Karen-Zook"
     ],
     "updated_at": "2025-05-27"
   },
