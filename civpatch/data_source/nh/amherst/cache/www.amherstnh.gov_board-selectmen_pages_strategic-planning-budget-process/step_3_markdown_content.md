@@ -121,7 +121,7 @@
    *  [Public Works](/public-works) 
      *  [Bid DPW05-25](/public-works/files/bid-dpw05-25) 
      *  [Bid02-25 AWARD](/public-works/files/bid02-25-award) 
-     *  [Bid03-25 AWARD](/public-works/files/bid03-25-award) 
+     *  [Bid03-25 Line Striping](/public-works/files/bid03-25-line-striping) 
      *  [Boards and Commissions](/public-works/pages/boards-and-commissions) 
        *  [Road Commission](/public-works/roads-bridges-commission) 
        *  [Stormwater Committee](/stormwater-committee) 
@@ -370,26 +370,86 @@
 ## You are here
 
  1.  [Home](/) ››
- 1.  [Zoning Board of Adjustment](/zoning-board-adjustment) 
+ 1.  [Boards & Committees](/boards) ››
+ 1.  [Board of Selectmen](/board-selectmen) 
 
-# Danielle Pray
+# Strategic Planning
 
-### Board Memberships
+### Creating a Desired Future: An Integrated Approach to Strategic Thinking and Planning
 
-|Board/Committee|Job title|Membership Status|This contact is|
-|---|---|---|---|
+Updating departmental strategic plans launched in 2013 and has been a top priority for all departments within the Amherst Town Government. Each year, department heads collaborate with their personnel to develop a range of multi-year plans and budgets – showing alternative tradeoffs in outcomes and expenditures required to deliver them. Department heads refresh those plans each year based on changes in legislation, technology, best practices, demand for services, etc. Each Fall presentations are shared publicly at Board of Selectmen meetings.
 
-|Board/Committee|Job title|Membership Status|This contact is|
-|---|---|---|---|
-|[Zoning Board of Adjustment](/zoning-board-adjustment)|Chair (2028)|Active Membership|Elected|
-|[Board of Selectmen](/board-selectmen)|Chair (2027)|Active Membership|Elected|
-|[Cemetery Trustees](/cemetery-trustees)|BOS Non-Voting Member|Active Membership|Appointed|
-|[Library Trustees](/library-trustees)|BOS Ex-Officio Non-Voting Member|Active Membership|Appointed|
+The presentations can be viewed on the Zoom recording of the Board of Selectmen Meeting at which they were presented.
 
- *  [2017 Zoning Board of Adjustment Handbook](/zoning-board-adjustment/files/2017-zoning-board-adjustment-handbook) 
- *  [2025 Zoning Board of Adjustment Meeting Schedule & Deadlines for Applications](/zoning-board-adjustment/pages/2025-zoning-board-adjustment-meeting-schedule-deadlines-applications) 
- *  [ZBA Rules of Procedure](/zoning-board-adjustment/files/zba-rules-procedure) 
- *  [ZONING CHART](/zoning-board-adjustment/files/zoning-chart) 
+  __FY26__  
+
+ *  [FY26 Administration and Finance](https://www.amherstnh.gov/board-selectmen/files/fy26-administration-and-finance-strategic-plan) 
+ *  [FY26 Bicycle &Pedestrian Committee](https://www.amherstnh.gov/board-selectmen/files/fy26-bpac-strategic-plan-presentation-20) 
+ *  [FY26 Community Development](https://www.amherstnh.gov/board-selectmen/files/fy26-community-development-strategic-plan) 
+ *  [FY26 Conservation Committee](https://www.amherstnh.gov/board-selectmen/files/fy26-conservation-commission-strategic-plan-compressed) 
+ *  [FY26 Fire Rescue](https://www.amherstnh.gov/board-selectmen/files/fy26-fire-rescue-strategic-update-mc-992024) 
+ *  [FY26 Library](https://www.amherstnh.gov/board-selectmen/files/fy26-library-strategic-plan) 
+ *  [FY26 Police and Communications](https://www.amherstnh.gov/board-selectmen/files/fy26-police-strategic-plan) 
+ *  [FY26 Public Works](https://www.amherstnh.gov/board-selectmen/files/fy26-public-works-strategic-plan) 
+ *  [FY26 Recreation](https://www.amherstnh.gov/board-selectmen/files/fy26-recreation-strategic-plan) 
+ *  [FY26 Tax and Assessing](https://www.amherstnh.gov/board-selectmen/files/fy26-tax-and-assessing-strategic-plan) 
+
+ _ __ FY25___ 
+
+ *  [FY25 Administration and Finance](https://www.amherstnh.gov/board-selectmen/files/fy25-administration-and-finance-strategic-plan) 
+ *  [FY25 Bicycle &Pedestrian Committee](https://www.amherstnh.gov/board-selectmen/files/fy25-bicycle-pedestrian-strategic-plan) 
+ *  [FY25 Community Development](https://www.amherstnh.gov/board-selectmen/files/fy25-community-development-strategic-plan) 
+ *  [FY25 Conservation Committee](https://www.amherstnh.gov/board-selectmen/files/fy25-conservation-commission-strategic-plan) 
+ *  [FY25 Fire Rescue](https://www.amherstnh.gov/board-selectmen/files/fy25-fire-rescue-strategic-plan) 
+ *  [FY25 Library](https://www.amherstnh.gov/board-selectmen/files/fy25-library-strategic-plan) 
+ *  [FY25 Police and Communications](https://www.amherstnh.gov/board-selectmen/files/private/fy25-police-and-communications-strategic-plan) 
+ *  [FY25 Public Works](https://www.amherstnh.gov/board-selectmen/files/fy25-public-works-strategic-plan) 
+ *  [FY25 Recreation](https://www.amherstnh.gov/board-selectmen/files/fy25-recreation-strategic-plan) 
+ *  [FY25 Tax and Assessing](https://www.amherstnh.gov/board-selectmen/files/fy25-tax-and-assessing-strategic-plan) 
+
+ _ __ FY24___ 
+
+ *  [FY24 Administration and Finance Strategic Plan](https://www.amherstnh.gov/amherst-board-selectmen/files/fy24-administration-and-finance-strategic-plan) 
+ *  [FY24 Bicycle and Pedestrian Strategic Plan](https://www.amherstnh.gov/home/files/fy24-bike-ped-strategic-plan) 
+ *  [FY24 Community Development Strategic Plan](https://www.amherstnh.gov/board-selectmen/files/fy24-community-development-strategic-plan) 
+ *  [FY24 Conservation Commission Strategic Plan](https://www.amherstnh.gov/amherst-board-selectmen/files/fy24-conservation-commission-strategic-plan) 
+ *  [FY24 Fire Rescue Strategic Plan](https://www.amherstnh.gov/amherst-board-selectmen/files/fy24-fire-rescue-strategic-plan) 
+ *  [FY24 Library Strategic Plan](https://www.amherstnh.gov/amherst-board-selectmen/files/fy24-library-strategic-plan) 
+ *  [FY24 Police - Communications Strategic Plan](https://www.amherstnh.gov/amherst-board-selectmen/files/fy24-police-communications-strategic-plan) 
+ *   [FY24 Public Works Strategic Plan](https://www.amherstnh.gov/home/files/fy24-bike-ped-strategic-plan) 
+ *  [FY24 Recreation Strategic Plan](https://www.amherstnh.gov/amherst-board-selectmen/files/fy24-recreation-strategic-plan) 
+ *  [FY24 Tax and Assessing Strategic Plan](https://www.amherstnh.gov/amherst-board-selectmen/files/fy24-tax-and-assessing-strategic-plan) 
+
+  _ __ FY23___  
+
+ *  [Administration and Finance FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/admins-and-finance-fy23-strategic-plan) 
+ *  [Community Development FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/community-development-fy23-strategic-plan) 
+ *  [Fire Rescue FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/fire-rescue-fy23-strategic-plan) 
+ *  [Library FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/library-fy23-strategic-plan) 
+ *  [Police and Communications FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/police-and-communications-fy23-strategic-plan) 
+ *  [Public Works FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/public-works-fy23-strategic-plan) 
+ *  [Recreation FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/recreation-fy23-strategic-plan) 
+ *  [Tax and Assessing FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/tax-and-assessing-fy23-strategic-plan) 
+ *  [Bicylcle and Pedestrian Committee FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/bike-ped-fy23-strategic-plan) 
+ *  [Conservation Commission FY23 Presentation](https://www.amherstnh.gov/amherst-board-selectmen/files/conservation-commission-fy23-strategic-paln) 
+
+ 
+
+ *  [2025 Board of Selectmen Meeting Calendar](/board-selectmen/files/2025-board-selectmen-meeting-calendar) 
+ *  [2025 Election Information](/board-selectmen/pages/2025-election-information) 
+ *  [Amherst Impact Fee Report and Schedule 2023](/board-selectmen/pages/amherst-impact-fee-report-and-schedule-2023) 
+ *  [Amherst Impact Fee Reporting and Expenditure Policy, DRAFT v1.1 (with B Mayberry Letter)](/amherst-board-selectmen/files/amherst-impact-fee-reporting-and-expenditure-policy-draft-v11-b) 
+ *  [Annual Town Reports](/board-selectmen/pages/annual-town-reports) 
+ *  [BOS Rules of Order, Revised and Approved 2024.08.26](/board-selectmen/files/bos-rules-order-revised-and-approved-20240826) 
+ *  [Board of Selectmen Initiatives](/board-selectmen/pages/board-selectmen-initiatives) 
+ *  [Budget Perpetual Calendar and FY26 Schedule](/board-selectmen/pages/budget-perpetual-calendar-and-fy26-schedule) 
+ *  [FY25 Town Deliberative Presentation, February 7, 2024](/board-selectmen/files/fy25-town-deliberative-presentation-february-7-2024) 
+ *  [PFAS Occurrence in Amherst and Funding Opportunities](/amherst-board-selectmen/files/pfas-occurrence-amherst-and-funding-opportunities) 
+ *  [Rules, Regulations, & Ordinances](/board-selectmen/pages/rules-regulations-ordinances) 
+ *  [Strategic Planning](/board-selectmen/pages/strategic-planning-budget-process) 
+ *  [Town & Selectmen Policies](/board-selectmen/pages/town-selectmen-policies) 
+ *  [Town Common/ Village Green Use Request Form and Policy, Revised May 2024](/board-selectmen/files/town-common-village-green-use-request-form-and-policy-revised-may-2024) 
+ *  [Village Streets Study](/board-selectmen/pages/village-streets-study) 
 
  Town of Amherst, 2 Main Street, Amherst NH 03031  603-673-6041 
 
@@ -397,5 +457,5 @@
 
  [Government Websites by CivicPlus ®](https://www.civicplus.com) 
 
- *  [Login](/user/login?current=node/76321) 
+ *  [Login](/user/login?current=node/1876) 
  

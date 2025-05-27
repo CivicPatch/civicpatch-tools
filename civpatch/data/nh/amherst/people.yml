@@ -3,24 +3,22 @@
   positions:
   - Chair
   - Select Board Member
-  email: bos@amherstnh.gov
+  email:
   phone_number: "(603) 673-6041"
-  website: https://www.amherstnh.gov/node/76321
-  image: https://www.amherstnh.gov/sites/g/files/vyhlif4116/f/styles/custom_masthead_slideshow/public/galleries/fb8_2071-hdr.jpg?itok=gfj3sQBK
+  website: https://www.amherstnh.gov/people/danielle-pray
+  image:
   start_date:
   end_date: '2027'
   sources:
   - https://www.amherstnh.gov/board-selectmen
   - https://www.amherstnh.gov/people/danielle-pray
-  - https://www.amherstnh.gov/node/76321
-  cdn_image: https://cdn.civicpatch.org/open-data/nh/amherst/images/95c45a861117546a8e787ddb4b7a50e201f42646b3841ed5363f7f3bf19e820b.jpg
   updated_at: '2025-05-27'
 - name: Cynthia Dokmo
   positions:
   - Vice Chair
   - Select Board Member
-  email: bos@amherstnh.gov
-  phone_number: "(603) 673-6041"
+  email:
+  phone_number:
   website: https://www.amherstnh.gov/user/4454/contact
   image:
   start_date:
@@ -31,8 +29,8 @@
 - name: John D'Angelo
   positions:
   - Select Board Member
-  email: bos@amherstnh.gov
-  phone_number: "(603) 673-6041"
+  email:
+  phone_number:
   website: https://www.amherstnh.gov/user/2313/contact
   image:
   start_date:
@@ -44,9 +42,9 @@
 - name: Pam Coughlin
   positions:
   - Select Board Member
-  email: bos@amherstnh.gov
+  email:
   phone_number: "(603) 673-6041"
-  website: https://www.amherstnh.gov/users/pcoughlin
+  website: https://www.amherstnh.gov/user/7301/contact
   image:
   start_date:
   end_date: '2028'
@@ -57,8 +55,8 @@
 - name: Tom Grella
   positions:
   - Select Board Member
-  email: bos@amherstnh.gov
-  phone_number: "(603) 673-6041"
+  email:
+  phone_number:
   website: https://www.amherstnh.gov/user/3684/contact
   image:
   start_date:

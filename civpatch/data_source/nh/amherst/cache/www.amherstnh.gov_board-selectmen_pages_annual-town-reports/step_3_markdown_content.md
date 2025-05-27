@@ -370,26 +370,48 @@
 ## You are here
 
  1.  [Home](/) ››
- 1.  [Zoning Board of Adjustment](/zoning-board-adjustment) 
+ 1.  [Boards & Committees](/boards) ››
+ 1.  [Board of Selectmen](/board-selectmen) 
 
-# Danielle Pray
+# Annual Town Reports
 
-### Board Memberships
+Each year at election time the Town of Amherst publishes the annual town report.  
 
-|Board/Committee|Job title|Membership Status|This contact is|
-|---|---|---|---|
+The book, available to all residents, contains financial information as well as information from all town departments and boards, committees and commissions for work completed the year passed and projections for the upcoming year.
 
-|Board/Committee|Job title|Membership Status|This contact is|
-|---|---|---|---|
-|[Zoning Board of Adjustment](/zoning-board-adjustment)|Chair (2028)|Active Membership|Elected|
-|[Board of Selectmen](/board-selectmen)|Chair (2027)|Active Membership|Elected|
-|[Cemetery Trustees](/cemetery-trustees)|BOS Non-Voting Member|Active Membership|Appointed|
-|[Library Trustees](/library-trustees)|BOS Ex-Officio Non-Voting Member|Active Membership|Appointed|
+The book can be picked up at Town Hall approximately one week before election day, or a number of places throughout town and on election day at the polls.
 
- *  [2017 Zoning Board of Adjustment Handbook](/zoning-board-adjustment/files/2017-zoning-board-adjustment-handbook) 
- *  [2025 Zoning Board of Adjustment Meeting Schedule & Deadlines for Applications](/zoning-board-adjustment/pages/2025-zoning-board-adjustment-meeting-schedule-deadlines-applications) 
- *  [ZBA Rules of Procedure](/zoning-board-adjustment/files/zba-rules-procedure) 
- *  [ZONING CHART](/zoning-board-adjustment/files/zoning-chart) 
+Below is a list of books from previous years, each contains a link to the corresponding report.
+
+ *  [2024 Annual Town Report](https://www.amherstnh.gov/board-selectmen/files/2024-annual-town-report) 
+ *  [2023 Annual Town Report](https://www.amherstnh.gov/board-selectmen/files/2023-annual-town-report) 
+ *  [2022 Annual Town Report](https://www.amherstnh.gov/board-selectmen/files/2022-annual-town-report) 
+ *  [2021 Annual Town Report](https://www.amherstnh.gov/amherst-board-selectmen/files/2021-annual-town-report) 
+ *  [2020 Annual Town Report](https://www.amherstnh.gov/amherst-board-selectmen/files/2020-annual-town-report) 
+ *  [2012 Annual Town Report](https://www.amherstnh.gov/board-selectmen/files/2012-amherst-town-report) 
+ *  [2013 Annual Town Report](https://www.amherstnh.gov/board-selectmen/files/2013-amherst-town-report) 
+ *  [2014 Annual Town Report](https://www.amherstnh.gov/board-selectmen/files/2014-amherst-town-report) 
+ *  [2015 Annual Town Report](https://www.amherstnh.gov/amherst-board-selectmen/files/2015-annual-town-report) 
+ *  [2016 Annual Town Report](https://www.amherstnh.gov/amherst-board-selectmen/files/2016-annual-town-report) 
+ *  [2017 Annual Town Report](https://www.amherstnh.gov/amherst-board-selectmen/files/2017-annual-town-report) 
+ *  [2018 Annual Town Report](https://www.amherstnh.gov/amherst-board-selectmen/files/2018-annual-town-report) 
+ *  [2019 Annual Town Report](https://www.amherstnh.gov/amherst-board-selectmen/files/2019-annual-town-report) 
+
+ *  [2025 Board of Selectmen Meeting Calendar](/board-selectmen/files/2025-board-selectmen-meeting-calendar) 
+ *  [2025 Election Information](/board-selectmen/pages/2025-election-information) 
+ *  [Amherst Impact Fee Report and Schedule 2023](/board-selectmen/pages/amherst-impact-fee-report-and-schedule-2023) 
+ *  [Amherst Impact Fee Reporting and Expenditure Policy, DRAFT v1.1 (with B Mayberry Letter)](/amherst-board-selectmen/files/amherst-impact-fee-reporting-and-expenditure-policy-draft-v11-b) 
+ *  [Annual Town Reports](/board-selectmen/pages/annual-town-reports) 
+ *  [BOS Rules of Order, Revised and Approved 2024.08.26](/board-selectmen/files/bos-rules-order-revised-and-approved-20240826) 
+ *  [Board of Selectmen Initiatives](/board-selectmen/pages/board-selectmen-initiatives) 
+ *  [Budget Perpetual Calendar and FY26 Schedule](/board-selectmen/pages/budget-perpetual-calendar-and-fy26-schedule) 
+ *  [FY25 Town Deliberative Presentation, February 7, 2024](/board-selectmen/files/fy25-town-deliberative-presentation-february-7-2024) 
+ *  [PFAS Occurrence in Amherst and Funding Opportunities](/amherst-board-selectmen/files/pfas-occurrence-amherst-and-funding-opportunities) 
+ *  [Rules, Regulations, & Ordinances](/board-selectmen/pages/rules-regulations-ordinances) 
+ *  [Strategic Planning](/board-selectmen/pages/strategic-planning-budget-process) 
+ *  [Town & Selectmen Policies](/board-selectmen/pages/town-selectmen-policies) 
+ *  [Town Common/ Village Green Use Request Form and Policy, Revised May 2024](/board-selectmen/files/town-common-village-green-use-request-form-and-policy-revised-may-2024) 
+ *  [Village Streets Study](/board-selectmen/pages/village-streets-study) 
 
  Town of Amherst, 2 Main Street, Amherst NH 03031  603-673-6041 
 
@@ -397,5 +419,5 @@
 
  [Government Websites by CivicPlus ®](https://www.civicplus.com) 
 
- *  [Login](/user/login?current=node/76321) 
+ *  [Login](/user/login?current=node/42703) 
  

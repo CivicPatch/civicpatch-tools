@@ -370,26 +370,63 @@
 ## You are here
 
  1.  [Home](/) ››
- 1.  [Zoning Board of Adjustment](/zoning-board-adjustment) 
+ 1.  [Boards & Committees](/boards) ››
+ 1.  [Board of Selectmen](/board-selectmen) 
 
-# Danielle Pray
+# Town & Selectmen Policies
 
-### Board Memberships
+### Selectmen’s Handbook
 
-|Board/Committee|Job title|Membership Status|This contact is|
-|---|---|---|---|
+ *  [Town Code of Conduct](https://www.amherstnh.gov/board-selectmen/files/town-code-conduct) 
+ *  [Conflict of Interest Policy](https://www.amherstnh.gov/board-selectmen/files/conflict-interest-policy) : Adopted July 12, 2004
+ *  [Selectmen’s Authority](https://www.amherstnh.gov/board-selectmen/files/selectmen%E2%80%99s-authority) 
+ *  [Board of Selectmen – Rules of Procedure](https://www.amherstnh.gov/board-selectmen/files/board-selectmen-rules-procedure) 
+ *  [Legal Counsel Policy](https://www.amherstnh.gov/board-selectmen/files/legal-counsel-policy) : Adopted July 12, 2004
+ *  [Regulations of Hawkers & Peddlers](https://www.amherstnh.gov/board-selectmen/files/hawkers-and-peddlers-ordinance-and-application-fillabe)  Revised Nov 2024 (Please contact the Police Department at 603-673-4900)
+ *  [Credit Card Policy](https://www.amherstnh.gov/board-selectmen/files/credit-card-policy) : Draft
+ *  [Deposit Policy](https://www.amherstnh.gov/board-selectmen/files/deposit-policy) : Adopted January 17, 2012
+ *  [Trustees of the Trust Fund Policy](https://www.amherstnh.gov/board-selectmen/files/trustees-trust-fund-policy) : Approved by the Trustees December 4, 2008
+ *  [Common Trust Fund – Investment Policy](https://www.amherstnh.gov/board-selectmen/files/common-trust-fund) : Approved by the Trustees December 4, 2008
+ *  [Fund Balance Policy](https://www.amherstnh.gov/board-selectmen/files/20230724-fund-balance-policy-revised) : Adopted February 24, 2012, Revised July 24, 2023
+ *  [Investment Policy](https://www.amherstnh.gov/board-selectmen/files/investment-policy-revised-january-22-2024) : Adopted January 22, 2024
+ *  [Purchasing Policy](https://www.amherstnh.gov/board-selectmen/files/purchasing-policy-revised-january-22-2024) : Adopted May 21, 2001, Amended January 22, 2024
+ *  [Recreation Revolving Account Policy](https://www.amherstnh.gov/board-selectmen/files/recreation-revolving-account-policy-0) : Amended May 22, 2017
+ *  [Town Owned Vehicle Use Policy](https://www.amherstnh.gov/board-selectmen/files/town-owned-vehicle-use-policy) : Adopted August 23, 2004
+ *  [Winter Operations Policy, Department of Public Works: Revised November 2019](https://www.amherstnh.gov/amherst-board-selectmen/files/2020-winter-operations-plan) 
+ *  [Baboosic Lake Community Septic System Rules & Regulations](https://www.amherstnh.gov/amherst-board-selectmen/files/baboosic-lake-community-septic-system-rules-regulations) :  Revised February 4, 2008 
+ *  [Community Access Television Policy & Procedures](https://www.amherstnh.gov/board-selectmen/files/community-access-television-policy-procedures) : Adopted April 12, 2005
+ *  [Town Commons Policy](https://www.amherstnh.gov/board-selectmen/files/town-common-policy-revised-may-28-2024) : Adopted May 10, 2010, revised May 28, 2024
+ *  [Public Safety Complex – Car Washing Guidelines](https://www.amherstnh.gov/board-selectmen/files/public-safety-complex-car-washing-guidelines) : Adopted April 26, 2010
+ *  [Snow Removal and Ice Control (Standard Operating Procedure DPW Department)](https://www.amherstnh.gov/board-selectmen/files/snow-removal-and-ice-control-0) : Revised January 2017
+ *  [Information Security Policy](https://www.amherstnh.gov/board-selectmen/files/information-security-policy) : Adopted June 23, 2014
+ *  [Audit Services Policy](https://www.amherstnh.gov/board-selectmen/files/audit-services-policy) : Adopted September 22, 2014
+ *  [Transfer Station Campaigning and Fund Raising Policy](https://www.amherstnh.gov/amherst-board-selectmen/files/campaigning-and-fundraising-transfer-station-policy) :  Updated March 14, 2022
+ *  [ORHV Ordinance](https://www.amherstnh.gov/board-selectmen/files/orhv-ordinance-revised-05232016) :  Revised May 23, 2016
+ *  [Employee Cash Merit Awards Policy](https://www.amherstnh.gov/board-selectmen/files/employee-merit-cash-awards-policy) :  Adopted December 14, 2015
+ *  [Naming Rights Policy](https://www.amherstnh.gov/board-selectmen/files/naming-rights-policy) :  Adopted August 14, 2017
+ *  [Capital Assets Policy](https://www.amherstnh.gov/amherst-board-selectmen/files/capital-assets-policy) :  Adopted January 13, 2020
+ *  [Accounts Payable Policy](https://www.amherstnh.gov/amherst-board-selectmen/files/accounts-payable-policy) :  Adopted March 9, 2020
+ *  [Swap Shop Operating Policy](https://www.amherstnh.gov/amherst-board-selectmen/files/swap-shop-operating-policy) Revised November 22, 2021
 
-|Board/Committee|Job title|Membership Status|This contact is|
-|---|---|---|---|
-|[Zoning Board of Adjustment](/zoning-board-adjustment)|Chair (2028)|Active Membership|Elected|
-|[Board of Selectmen](/board-selectmen)|Chair (2027)|Active Membership|Elected|
-|[Cemetery Trustees](/cemetery-trustees)|BOS Non-Voting Member|Active Membership|Appointed|
-|[Library Trustees](/library-trustees)|BOS Ex-Officio Non-Voting Member|Active Membership|Appointed|
+### Employee Policies Handbook
 
- *  [2017 Zoning Board of Adjustment Handbook](/zoning-board-adjustment/files/2017-zoning-board-adjustment-handbook) 
- *  [2025 Zoning Board of Adjustment Meeting Schedule & Deadlines for Applications](/zoning-board-adjustment/pages/2025-zoning-board-adjustment-meeting-schedule-deadlines-applications) 
- *  [ZBA Rules of Procedure](/zoning-board-adjustment/files/zba-rules-procedure) 
- *  [ZONING CHART](/zoning-board-adjustment/files/zoning-chart) 
+ *  [Employee Policies Handbook](https://www.amherstnh.gov/human-resources/files/town-amherst-employee-policies-handbook) 
+
+ *  [2025 Board of Selectmen Meeting Calendar](/board-selectmen/files/2025-board-selectmen-meeting-calendar) 
+ *  [2025 Election Information](/board-selectmen/pages/2025-election-information) 
+ *  [Amherst Impact Fee Report and Schedule 2023](/board-selectmen/pages/amherst-impact-fee-report-and-schedule-2023) 
+ *  [Amherst Impact Fee Reporting and Expenditure Policy, DRAFT v1.1 (with B Mayberry Letter)](/amherst-board-selectmen/files/amherst-impact-fee-reporting-and-expenditure-policy-draft-v11-b) 
+ *  [Annual Town Reports](/board-selectmen/pages/annual-town-reports) 
+ *  [BOS Rules of Order, Revised and Approved 2024.08.26](/board-selectmen/files/bos-rules-order-revised-and-approved-20240826) 
+ *  [Board of Selectmen Initiatives](/board-selectmen/pages/board-selectmen-initiatives) 
+ *  [Budget Perpetual Calendar and FY26 Schedule](/board-selectmen/pages/budget-perpetual-calendar-and-fy26-schedule) 
+ *  [FY25 Town Deliberative Presentation, February 7, 2024](/board-selectmen/files/fy25-town-deliberative-presentation-february-7-2024) 
+ *  [PFAS Occurrence in Amherst and Funding Opportunities](/amherst-board-selectmen/files/pfas-occurrence-amherst-and-funding-opportunities) 
+ *  [Rules, Regulations, & Ordinances](/board-selectmen/pages/rules-regulations-ordinances) 
+ *  [Strategic Planning](/board-selectmen/pages/strategic-planning-budget-process) 
+ *  [Town & Selectmen Policies](/board-selectmen/pages/town-selectmen-policies) 
+ *  [Town Common/ Village Green Use Request Form and Policy, Revised May 2024](/board-selectmen/files/town-common-village-green-use-request-form-and-policy-revised-may-2024) 
+ *  [Village Streets Study](/board-selectmen/pages/village-streets-study) 
 
  Town of Amherst, 2 Main Street, Amherst NH 03031  603-673-6041 
 
@@ -397,5 +434,5 @@
 
  [Government Websites by CivicPlus ®](https://www.civicplus.com) 
 
- *  [Login](/user/login?current=node/76321) 
+ *  [Login](/user/login?current=node/1886) 
  
