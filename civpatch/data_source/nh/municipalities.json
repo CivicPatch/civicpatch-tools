@@ -589,7 +589,14 @@
       "government_type": "mayor_council",
       "email": "mmears@somersworthnh.gov",
       "website": "http://www.somersworthnh.gov",
-      "geoid": "3369940"
+      "geoid": "3369940",
+      "meta_updated_at": "2025-05-27",
+      "meta_hash": "94c72a1553c580899a2231307b7846e3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Amherst",

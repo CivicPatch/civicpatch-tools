@@ -36,11 +36,7 @@
     "name": "Kenneth S. Vincent",
     "positions": [
       "Council Member",
-      "Ward 2",
-      "Finance Committee Member",
-      "Public Works & Environment Committee Member",
-      "Public Safety Committee Member",
-      "Zoning Board of Adjustment Member"
+      "Ward 2"
     ],
     "image": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_kenneth_s._vincent-164x165.jpg",
     "phone_number": "(603) 396-4120",
@@ -58,7 +54,8 @@
     "name": "Robert G. Gibson",
     "positions": [
       "Council Member",
-      "Ward 3"
+      "Ward 3",
+      "Ward 3 City Councilor"
     ],
     "image": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/bob_gibson_0-188x250.jpg",
     "phone_number": "(603) 841-0541",
@@ -117,12 +114,7 @@
     "positions": [
       "Deputy Mayor",
       "Council Member",
-      "At-Large",
-      "At-large",
-      "Chair",
-      "Finance Committee",
-      "Public Works & Environment Committee",
-      "Mayor's Housing Task Force"
+      "At-Large"
     ],
     "image": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_david_a._witham-175x201.jpg",
     "phone_number": "(603) 692-4086",
@@ -131,8 +123,7 @@
     "start_date": null,
     "end_date": "2026-01",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council",
-      "https://www.somersworthnh.gov/people/david-witham-0"
+      "https://www.somersworthnh.gov/mayor-city-council"
     ],
     "updated_at": "2025-05-27"
   },
@@ -140,8 +131,7 @@
     "name": "Laura Barry",
     "positions": [
       "Council Member",
-      "At-Large",
-      "At-large"
+      "At-Large"
     ],
     "image": "https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/laura_barry-180x201.jpg",
     "phone_number": "(406) 698-1795",
@@ -150,8 +140,7 @@
     "start_date": null,
     "end_date": "2026-01",
     "sources": [
-      "https://www.somersworthnh.gov/mayor-city-council",
-      "https://www.somersworth.com/people/laura-barry-0"
+      "https://www.somersworthnh.gov/mayor-city-council"
     ],
     "updated_at": "2025-05-27"
   },
