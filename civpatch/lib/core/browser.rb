@@ -99,15 +99,14 @@ module Browser
     page_source = browser.content
 
     page_source = process_images(browser, page_source, options, url) if options[:image_dir].present?
+    page_source = Utils::UrlHelper.format_links_to_absolute(page_source, url)
     page_source = format_page_html(page_source, api_data, url) if api_data.present?
 
     page_source
   end
 
   private_class_method def self.format_page_html(page_source, api_content, url)
-    html = Utils::UrlHelper.format_links_to_absolute(page_source, url)
-
-    doc = Nokolexbor::HTML(html)
+    doc = Nokolexbor::HTML(page_source)
     body = doc.at_css("body")
     body.add_child(Nokolexbor::HTML.fragment(api_content))
 

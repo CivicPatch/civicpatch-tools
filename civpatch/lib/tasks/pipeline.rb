@@ -69,6 +69,7 @@ namespace :pipeline do
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
     people = source_directory_list["people"]
+    Core::PeopleManager.update_people(municipality_context, people, "#{source_directory_list["type"]}.before")
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
     formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
                                                          positions_config)
