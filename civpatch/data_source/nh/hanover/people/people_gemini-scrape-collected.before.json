@@ -13,12 +13,6 @@
     "emails": [
       {
         "data": "Athos.Rassias@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in the contact list.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      },
-      {
-        "data": "Athos.Rassias@hanovernh.org",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=130"
@@ -41,12 +35,6 @@
     ],
     "phone_numbers": [],
     "emails": [
-      {
-        "data": "Joanna.Whitcomb@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in the contact list.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      },
       {
         "data": "Joanna.Whitcomb@hanovernh.org",
         "llm_confidence": 0.95,
@@ -74,12 +62,6 @@
     "emails": [
       {
         "data": "Jarett.Berke@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in the contact list.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      },
-      {
-        "data": "Jarett.Berke@hanovernh.org",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly listed next to the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=136"
@@ -98,21 +80,14 @@
     ],
     "images": [],
     "positions": [
-      "Selectboard Chair",
-      "Selectboard Member"
+      "Selectboard Chair"
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "Carey.Callaghan@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in the contact list.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      },
-      {
-        "data": "Carey.Callaghan@hanovernh.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address directly associated with the name.",
         "source": "https://www.hanovernh.org/directory.aspx?eid=132"
       }
     ],
@@ -133,12 +108,6 @@
     ],
     "phone_numbers": [],
     "emails": [
-      {
-        "data": "Jennie.Chamberlain@hanovernh.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in the contact list.",
-        "source": "https://www.hanovernh.org/518/Selectboard"
-      },
       {
         "data": "Jennie.Chamberlain@hanovernh.org",
         "llm_confidence": 1.0,

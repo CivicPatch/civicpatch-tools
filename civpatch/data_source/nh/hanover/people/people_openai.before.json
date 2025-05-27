@@ -21,7 +21,6 @@
     "name": "Joanna Whitcomb",
     "positions": [
       "Selectboard Vice-Chair",
-      "Selectboard Member",
       "Select Board Member"
     ],
     "image": null,
@@ -40,9 +39,8 @@
     "name": "Carey Callaghan",
     "positions": [
       "Selectboard Chair",
-      "Selectboard Member",
-      "Select Board Chair",
-      "Select Board Member"
+      "Select Board Member",
+      "Select Board Chair"
     ],
     "image": null,
     "phone_number": null,
@@ -77,8 +75,7 @@
   {
     "name": "Jarett Berke",
     "positions": [
-      "Selectboard Secretary",
-      "Selectboard Member",
+      "Secretary",
       "Select Board Member"
     ],
     "image": null,
