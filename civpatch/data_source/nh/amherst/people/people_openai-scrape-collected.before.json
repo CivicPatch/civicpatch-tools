@@ -13,7 +13,7 @@
     "websites": [
       {
         "data": "https://www.amherstnh.gov/user/3684/contact",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "URL is a contact page linked directly from the name on the Board of Selectmen page.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
@@ -23,7 +23,7 @@
       {
         "data": "2026",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year (2026) is listed next to the name.",
+        "llm_confidence_reason": "Term year (2026) is shown in parentheses next to the name.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
@@ -43,8 +43,8 @@
     "phone_numbers": [
       {
         "data": "603-673-6041",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Phone number found near contact form for Pam Coughlin, likely town office main line.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number found near contact section for Pam Coughlin; likely town office main line.",
         "source": "https://www.amherstnh.gov/user/7301/contact"
       }
     ],
@@ -52,14 +52,14 @@
     "websites": [
       {
         "data": "https://www.amherstnh.gov/user/7301/contact",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "URL is a contact page linked directly from the name on the Board of Selectmen page.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       },
       {
         "data": "https://www.amherstnh.gov/users/pcoughlin",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked from contact page for Pam Coughlin.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page URL linked from 'View' tab for Pam Coughlin.",
         "source": "https://www.amherstnh.gov/user/7301/contact"
       }
     ],
@@ -68,7 +68,7 @@
       {
         "data": "2028",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year (2028) is listed next to the name.",
+        "llm_confidence_reason": "Term year (2028) is shown in parentheses next to the name.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
@@ -80,21 +80,29 @@
       "https://www.amherstnh.gov/board-selectmen",
       "https://www.amherstnh.gov/people/danielle-pray"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.amherstnh.gov/sites/g/files/vyhlif4116/f/styles/custom_masthead_slideshow/public/galleries/fb8_2071-hdr.jpg?itok=gfj3sQBK",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found a photo near the name 'Danielle Pray' labeled as 'Photo by Jeff Hall Photography' on the page.",
+        "source": "https://www.amherstnh.gov/people/danielle-pray"
+      }
+    ],
     "positions": [
       "Chair",
       "Select Board Member",
       "Board of Selectmen",
       "Zoning Board of Adjustment",
-      "Select Board Representative",
+      "BOS Non-Voting Member",
       "Cemetery Trustees",
+      "BOS Ex-Officio Non-Voting Member",
       "Library Trustees"
     ],
     "phone_numbers": [
       {
         "data": "603-673-6041",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number found at bottom of page associated with Town of Amherst; no direct personal phone found but likely main contact number.",
+        "llm_confidence_reason": "Phone number found at the bottom of the page associated with Town of Amherst contact info.",
         "source": "https://www.amherstnh.gov/people/danielle-pray"
       }
     ],
@@ -102,14 +110,14 @@
     "websites": [
       {
         "data": "https://www.amherstnh.gov/people/danielle-pray",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "URL is a profile page linked directly from the name on the Board of Selectmen page.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       },
       {
         "data": "https://www.amherstnh.gov/people/danielle-pray",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Page URL is the official profile page for Danielle Pray.",
+        "llm_confidence_reason": "This is the profile page URL for Danielle Pray.",
         "source": "https://www.amherstnh.gov/people/danielle-pray"
       }
     ],
@@ -118,14 +126,8 @@
       {
         "data": "2027",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year (2027) is listed next to the name.",
+        "llm_confidence_reason": "Term year (2027) is shown in parentheses next to the name.",
         "source": "https://www.amherstnh.gov/board-selectmen"
-      },
-      {
-        "data": "2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Chair of Board of Selectmen term explicitly stated as (2027) indicating term end year.",
-        "source": "https://www.amherstnh.gov/people/danielle-pray"
       }
     ],
     "updated_at": "2025-05-27"
@@ -133,35 +135,21 @@
   {
     "name": "Cynthia Dokmo",
     "sources": [
-      "https://www.amherstnh.gov/board-selectmen",
-      "https://www.amherstnh.gov/user/4454/contact"
+      "https://www.amherstnh.gov/board-selectmen"
     ],
     "images": [],
     "positions": [
       "Vice Chair",
       "Select Board Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "603-673-6041",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number found near contact section for Cynthia Dokmo, likely town main line.",
-        "source": "https://www.amherstnh.gov/user/4454/contact"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.amherstnh.gov/user/4454/contact",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "URL is a contact page linked directly from the name on the Board of Selectmen page.",
         "source": "https://www.amherstnh.gov/board-selectmen"
-      },
-      {
-        "data": "https://www.amherstnh.gov/users/cdokmo",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Profile page URL for Cynthia Dokmo linked near name.",
-        "source": "https://www.amherstnh.gov/user/4454/contact"
       }
     ],
     "start_dates": [],
@@ -169,7 +157,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year (2027) is listed next to the name.",
+        "llm_confidence_reason": "Term year (2027) is shown in parentheses next to the name.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
@@ -178,20 +166,34 @@
   {
     "name": "John D'Angelo",
     "sources": [
-      "https://www.amherstnh.gov/board-selectmen"
+      "https://www.amherstnh.gov/board-selectmen",
+      "https://www.amherstnh.gov/user/2313/contact"
     ],
     "images": [],
     "positions": [
       "Select Board Member"
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "603-673-6041",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number found near contact form for John D'Angelo, likely town office main line.",
+        "source": "https://www.amherstnh.gov/user/2313/contact"
+      }
+    ],
     "emails": [],
     "websites": [
       {
         "data": "https://www.amherstnh.gov/user/2313/contact",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "URL is a contact page linked directly from the name on the Board of Selectmen page.",
         "source": "https://www.amherstnh.gov/board-selectmen"
+      },
+      {
+        "data": "https://www.amherstnh.gov/users/jdangelo",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "User profile URL linked from contact page for John D'Angelo.",
+        "source": "https://www.amherstnh.gov/user/2313/contact"
       }
     ],
     "start_dates": [],
@@ -199,7 +201,7 @@
       {
         "data": "2028",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration year (2028) is listed next to the name.",
+        "llm_confidence_reason": "Term year (2028) is shown in parentheses next to the name.",
         "source": "https://www.amherstnh.gov/board-selectmen"
       }
     ],
