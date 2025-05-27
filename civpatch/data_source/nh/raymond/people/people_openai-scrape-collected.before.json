@@ -1,0 +1,189 @@
+[
+  {
+    "name": "Patricia Bridgeo",
+    "sources": [
+      "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+    ],
+    "images": [],
+    "positions": [
+      "Chair",
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "pbridgeo@raymondnh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed in the Board Members table next to name.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term Expires column lists 2026 for Patricia Bridgeo.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Rani Merryman",
+    "sources": [
+      "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+    ],
+    "images": [],
+    "positions": [
+      "Vice Chair",
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dmerryman@raymondnh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed in the Board Members table next to name.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term Expires column lists 2026 for Rani Merryman.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Doug Vogel",
+    "sources": [
+      "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dvogel@raymondnh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed in the Board Members table next to name.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term Expires column lists 2027 for Doug Vogel.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Anthony Clements",
+    "sources": [
+      "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "aclements@raymondnh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed in the Board Members table next to name.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term Expires column lists 2028 for Anthony Clements.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  },
+  {
+    "name": "Michael Evans",
+    "sources": [
+      "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mevans@raymondnh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed in the Board Members table next to name.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen where member is listed.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term Expires column lists 2028 for Michael Evans.",
+        "source": "https://www.raymondnh.gov/boards_committees/board_of_selectmen/index.php"
+      }
+    ],
+    "updated_at": "2025-05-27"
+  }
+]
