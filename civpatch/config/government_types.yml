@@ -126,6 +126,8 @@ government_types:
     search_keywords:
       selectmen:
         - board of selectmen
+        - departments
+        - select board
       mayor:
         - mayor and city council
         - about mayor

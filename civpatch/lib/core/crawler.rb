@@ -97,13 +97,6 @@ module Core
     end
 
     def self.fetch_page(url)
-      uri = URI(url)
-      response = HTTParty.get(uri)
-      raise "HTTP request failed: #{response.code}" unless response.success?
-
-      formatted_html = Utils::UrlHelper.format_links_to_absolute(response.body, url)
-      Nokogiri::HTML(formatted_html)
-    rescue StandardError
       html = Browser.fetch_page_content(url)
       Nokogiri::HTML(html)
     end
@@ -124,6 +117,8 @@ module Core
     end
 
     def self.same_domain?(base_url, href)
+      puts "BASE URL: #{base_url}"
+      puts "HREF: #{href}"
       base_uri = Addressable::URI.parse(base_url)
       link_uri = Addressable::URI.parse(href)
 
@@ -136,6 +131,8 @@ module Core
       core_link_host = link_host.start_with?("www.") ? link_host[4..] : link_host
 
       core_base_host == core_link_host
+    rescue StandardError
+      false
     end
 
     def self.text_match?(text, keywords)
