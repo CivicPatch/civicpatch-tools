@@ -18,13 +18,13 @@
   {
     "name": "Pam Coughlin",
     "positions": [
-      "Clerk",
-      "Select Board Member"
+      "Select Board Member",
+      "Clerk"
     ],
     "image": null,
     "phone_number": "603-673-6041",
     "email": null,
-    "website": "https://www.amherstnh.gov/users/pcoughlin",
+    "website": "https://www.amherstnh.gov/user/7301/contact",
     "start_date": null,
     "end_date": "2028",
     "sources": [
@@ -36,16 +36,12 @@
   {
     "name": "Danielle Pray",
     "positions": [
-      "Chair",
       "Select Board Member",
+      "Chair",
       "Board of Selectmen",
-      "Zoning Board of Adjustment",
-      "BOS Non-Voting Member",
-      "Cemetery Trustees",
-      "BOS Ex-Officio Non-Voting Member",
-      "Library Trustees"
+      "Zoning Board of Adjustment"
     ],
-    "image": "https://www.amherstnh.gov/sites/g/files/vyhlif4116/f/styles/custom_masthead_slideshow/public/galleries/fb8_2071-hdr.jpg?itok=gfj3sQBK",
+    "image": null,
     "phone_number": "603-673-6041",
     "email": null,
     "website": "https://www.amherstnh.gov/people/danielle-pray",
@@ -60,8 +56,8 @@
   {
     "name": "Cynthia Dokmo",
     "positions": [
-      "Vice Chair",
-      "Select Board Member"
+      "Select Board Member",
+      "Vice Chair"
     ],
     "image": null,
     "phone_number": null,
@@ -80,7 +76,7 @@
       "Select Board Member"
     ],
     "image": null,
-    "phone_number": "603-673-6041",
+    "phone_number": null,
     "email": null,
     "website": "https://www.amherstnh.gov/user/2313/contact",
     "start_date": null,
