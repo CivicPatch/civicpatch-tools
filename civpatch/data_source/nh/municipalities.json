@@ -844,7 +844,14 @@
       "government_type": "select_board",
       "email": "administration@hollisnh.org",
       "website": "http://www.hollisnh.org",
-      "geoid": "3301137140"
+      "geoid": "3301137140",
+      "meta_updated_at": "2025-05-28",
+      "meta_hash": "6c82f11d315cff717b3807231cbb1e8e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bow",
