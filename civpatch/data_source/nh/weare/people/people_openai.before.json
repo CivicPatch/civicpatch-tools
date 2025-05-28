@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Benji Knapp",
+    "positions": [
+      "Vice Chairman",
+      "Select Board Member"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "bknapp@wearenh.gov",
+    "website": "https://www.weare.nh.gov/board-of-selectmen",
+    "start_date": null,
+    "end_date": "2026",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen"
+    ],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "James Drury",
+    "positions": [
+      "Select Board Member",
+      "Board of Selectmen Member",
+      "Selectman"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "jdrury@wearenh.gov",
+    "website": "https://www.weare.nh.gov/board-of-selectmen",
+    "start_date": null,
+    "end_date": "2027",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "Bruce Fillmore",
+    "positions": [
+      "Select Board Member",
+      "Board of Selectmen Member",
+      "Selectman"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "bfillmore@wearenh.gov",
+    "website": "https://www.weare.nh.gov/board-of-selectmen",
+    "start_date": null,
+    "end_date": "2028",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "Benji Knapp",
+    "positions": [
+      "Vice Chairman",
+      "Select Board Member",
+      "Board of Selectmen Member",
+      "Board of Selectmen Vice Chairman",
+      "Board of Selectmen Exofficio"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "bknapp@wearenh.gov",
+    "website": "https://www.weare.nh.gov/board-of-selectmen",
+    "start_date": null,
+    "end_date": "2026",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "updated_at": "2025-05-28"
+  }
+]

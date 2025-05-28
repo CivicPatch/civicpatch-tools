@@ -1,0 +1,186 @@
+[
+  {
+    "name": "Benji Knapp",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen"
+    ],
+    "images": [],
+    "positions": [
+      "Vice Chairman",
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bknapp@wearenh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.weare.nh.gov/board-of-selectmen",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed as 2026 next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "James Drury",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member",
+      "Board of Selectmen Member",
+      "Selectman"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jdrury@wearenh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      },
+      {
+        "data": "jdrury@wearenh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to name in Board of Selectmen section.",
+        "source": "https://www.weare.nh.gov/cemetery-trustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.weare.nh.gov/board-of-selectmen",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed as 2027 next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "Bruce Fillmore",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member",
+      "Board of Selectmen Member",
+      "Selectman"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bfillmore@wearenh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      },
+      {
+        "data": "bfillmore@wearenh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to name in Board of Selectmen section.",
+        "source": "https://www.weare.nh.gov/cemetery-trustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.weare.nh.gov/board-of-selectmen",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed as 2028 next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "Benji Knapp",
+    "sources": [
+      "https://www.weare.nh.gov/board-of-selectmen",
+      "https://www.weare.nh.gov/cemetery-trustees"
+    ],
+    "images": [],
+    "positions": [
+      "Vice Chairman",
+      "Select Board Member",
+      "Board of Selectmen Member",
+      "Board of Selectmen Vice Chairman",
+      "Board of Selectmen Exofficio"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bknapp@wearenh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      },
+      {
+        "data": "bknapp@wearenh.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to name in Board of Selectmen section and Cemetery Advisory Committee section.",
+        "source": "https://www.weare.nh.gov/cemetery-trustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.weare.nh.gov/board-of-selectmen",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary page URL for Board of Selectmen members.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly listed as 2026 next to name.",
+        "source": "https://www.weare.nh.gov/board-of-selectmen"
+      },
+      {
+        "data": "2026",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "End date 2026 explicitly listed for Exofficio role on Cemetery Advisory Committee.",
+        "source": "https://www.weare.nh.gov/cemetery-trustees"
+      }
+    ],
+    "updated_at": "2025-05-28"
+  }
+]

@@ -743,7 +743,14 @@
       "government_type": "select_board",
       "email": "nbolton@weare.nh.gov",
       "website": "http://www.weare.nh.gov",
-      "geoid": "3301179780"
+      "geoid": "3301179780",
+      "meta_updated_at": "2025-05-28",
+      "meta_hash": "9a9b01bbc19e828a7e5096b0748e00ff",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hampstead",
