@@ -35,10 +35,10 @@ RUN npm ci
 RUN bundle install
 
 USER root
-RUN ./node_modules/.bin/playwright install-deps
+RUN ./node_modules/.bin/patchright install-deps
 
 USER civicpatch_user
-RUN ./node_modules/.bin/playwright install chromium
+RUN ./node_modules/.bin/patchright install chromium
 
 COPY --chown=civicpatch_user civpatch/lib/ /app/civpatch/lib/
 
