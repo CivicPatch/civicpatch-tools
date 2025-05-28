@@ -66,8 +66,8 @@ module Utils
 
           link["src"] = format_url(Addressable::URI.join(base_url, src).to_s)
         end
-      rescue StandardError => e
-        puts "Error formatting link: #{href} - #{e.message}"
+      rescue StandardError
+        # Error formatting link -- might be invalid
       end
 
       nokolexbor_html.to_html

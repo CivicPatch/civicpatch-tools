@@ -43,9 +43,9 @@ module Core
         visited.add(current[:url])
         puts "Crawling: #{current[:url]} (#{visited.size}/#{max_pages})"
 
-        process_keyword_groups(
+        results, visited = process_keyword_groups(
           base_url, visited, current, keyword_groups,
-          max_depth, avoid_keywords, max_pages, results, queue
+          max_depth, avoid_keywords, results
         )
       end
 
@@ -54,37 +54,42 @@ module Core
 
     private_class_method def self.process_keyword_groups(
       base_url, visited, current, keyword_groups,
-      max_depth, avoid_keywords, max_pages, results, queue
+      max_depth, avoid_keywords, results
     )
+      found_links = []
       keyword_groups.each do |keyword_group|
-        found_links = follow_links(
+        new_found_links, visited = follow_links(
           base_url, visited, current[:url],
           keyword_group[:keywords], max_depth,
           current[:depth] + 1, avoid_keywords
         )
-
-        remaining_slots = max_pages - visited.size
-        found_links = found_links.first(remaining_slots) if remaining_slots < found_links.size
+        found_links.concat(new_found_links.reject do |new_found_link|
+          found_links.any? do |found_link|
+            found_link == new_found_link
+          end
+        end)
 
         results[keyword_group[:name]].concat(found_links) unless found_links.empty?
-
-        add_to_queue(queue, found_links, current[:depth]) if visited.size < max_pages
       end
-    end
 
-    private_class_method def self.add_to_queue(queue, links, current_depth)
-      queue.concat(links.map { |url| { url: url, depth: current_depth + 1 } })
+      [results, visited]
     end
 
     def self.follow_links(base_url, visited, url, keywords, max_depth, depth, avoid_keywords)
       return [] if depth > max_depth
 
       page = fetch_page(url)
+      visited.add(url)
       return [] unless page
 
       links = extract_links(page, base_url)
 
       valid_links = links.select do |link|
+        puts "KEYWORDS: #{keywords}"
+        puts "FOUND LINK: #{link[:href]}, match? #{text_match?(link[:text],
+                                                               keywords) || url_match?(link[:href],
+                                                                                       keywords)}, avoid_keywords: #{avoid_keywords},
+                                                                                       text: #{link[:text]}, url: #{link[:href]}"
         next false if IGNORE_SUFFIXES.any? { |suffix| link[:href].end_with?(suffix) }
         next false if text_match?(link[:text], avoid_keywords) ||
                       url_match?(link[:href], avoid_keywords)
@@ -93,7 +98,8 @@ module Core
           url_match?(link[:href], keywords)
       end
 
-      valid_links.map { |link| link[:href] }.reject { |link_href| visited.include?(link_href) }
+      found_links = valid_links.map { |link| link[:href] }.reject { |link_href| visited.include?(link_href) }
+      [found_links, visited]
     end
 
     def self.fetch_page(url)
@@ -141,13 +147,11 @@ module Core
 
     def self.url_match?(href, keywords)
       normalized_url = normalize_text(href)
-      keywords.any? { |kw| normalized_url.include?(normalize_text(kw, remove_spaces: true)) }
+      keywords.any? { |kw| normalize_text(normalized_url).include?(kw) }
     end
 
-    def self.normalize_text(text, remove_spaces: false)
-      text = text.downcase.gsub(/[^a-z0-9\s]/, "") # Remove non-alphanumeric except spaces
-      text.gsub!(/\s+/, "") if remove_spaces # Remove spaces if specified
-      text
+    def self.normalize_text(text)
+      text.downcase.gsub(/[^a-z0-9\s]/, " ") # Replace non-alphanumeric with spaces
     end
   end
 end

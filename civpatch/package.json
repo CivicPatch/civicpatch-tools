@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "playwright": "^1.52.0"
+    "playwright": "npm:patchright@1.52.4",
+    "playwright-core": "npm:patchright-core@1.52.4"
   }
 }
