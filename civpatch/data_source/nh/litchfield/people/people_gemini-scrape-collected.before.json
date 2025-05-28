@@ -1,0 +1,119 @@
+[
+  {
+    "name": "John Brunelle",
+    "sources": [
+      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+    ],
+    "images": [],
+    "positions": [
+      "Chairman",
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jbrunelle@litchfieldnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
+        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "G. Stephen Gannon",
+    "sources": [
+      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+    ],
+    "images": [],
+    "positions": [
+      "Vice Chairman",
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "sgannon@litchfieldnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
+        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "F. Robert Leary",
+    "sources": [
+      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rleary@litchfieldnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
+        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "Kim Queenan",
+    "sources": [
+      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kqueenan@litchfieldnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
+        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-28"
+  },
+  {
+    "name": "Dianne Plansky",
+    "sources": [
+      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+    ],
+    "images": [],
+    "positions": [
+      "Select Board Member"
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dplansky@litchfieldnh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
+        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-28"
+  }
+]
