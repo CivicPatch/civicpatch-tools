@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Salim Nice",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "salim.nice@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "David Rosenbaum",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "email": "david.rosenbaum@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Lisa Anderl",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "lisa.anderl@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Craig Reynolds",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "craig.reynolds@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Wendy Weiker",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "wendy.weiker@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Ted Weinberg",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "ted.weinberg@mercerisland.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Allison Spietz",
+    "positions": [
+      "Chief of Administration"
+    ],
+    "email": "ali.spietz@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jason Kintner",
+    "positions": [
+      "Chief of Operations/Public Works Director"
+    ],
+    "email": "jason.kintner@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Bio Park",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "bio.park@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Andrea Larson",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "andrea.larson@mercerisland.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Patrick Yamashita",
+    "positions": [
+      "City Engineer"
+    ],
+    "email": "patrick.yamashita@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jessi Bon",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "jessi.bon@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jeff Thomas",
+    "positions": [
+      "Community Planning/Development Director"
+    ],
+    "email": "jeff.thomas@mercerisland.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Matt Mornick",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "matt.mornick@mercergov.org",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jeff Gregory",
+    "positions": [
+      "Municipal Court Judge"
+    ],
+    "email": "jeff.gregory@mercerisland.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Chris Sutter",
+    "positions": [
+      "Police Chief"
+    ],
+    "email": "chris.sutter@mercerisland.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Alanna DeRogatis",
+    "positions": [
+      "Sustainability Analyst"
+    ],
+    "email": "alanna.derogatis@mercerisland.gov",
+    "updated_at": "2025-05-29"
+  }
+]

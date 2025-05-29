@@ -1,0 +1,468 @@
+[
+  {
+    "name": "Salim Nice",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+      "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+    ],
+    "images": [],
+    "positions": [
+      "Mayor",
+      "Position 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-275-7997",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Phone:'.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      }
+    ],
+    "emails": [
+      {
+        "data": "salim.nice@mercerisland.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed and provided as a mailto link.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the profile page for this person.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL provided in a list of council members, likely the person's profile page.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL linked from the list of council members.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Person-specific URL found in the sidebar navigation.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the name in the council list.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as '1/1/2022' for the current term.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as '12/31/2025' in the text.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "David Rosenbaum",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+      "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+    ],
+    "images": [],
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-275-7996",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under contact information for the person.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL extracted from sidebar navigation link associated with the name and title.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the current page and appears to be the person's profile page.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL linked from the list of council members.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Person-specific URL found in the sidebar navigation.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the name in the council list.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Lisa Anderl",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+      "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 6"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-275-7994",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "emails": [
+      {
+        "data": "lisa.anderl@mercerisland.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL extracted from sidebar navigation link associated with the name and title.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL provided in a list of council members, likely the person's profile page.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL linked from the list of council members.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Person-specific URL found in the sidebar navigation.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is a person-specific profile page.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Term 1/1/2022 - 12/31/2025'.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Term 1/1/2022 - 12/31/2025'.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Craig Reynolds",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+      "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 5"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-275-7991",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      }
+    ],
+    "emails": [
+      {
+        "data": "craig.reynolds@mercerisland.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL extracted from sidebar navigation link associated with the name and title.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL provided in a list of council members, likely the person's profile page.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL linked from the list of council members.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the current page and is person-specific.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the name in the council list.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit term start date '1/1/2024' found associated with the person's current term.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit term end date '12/31/2027' found associated with the person.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Wendy Weiker",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+      "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-275-7992",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name and title.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      }
+    ],
+    "emails": [
+      {
+        "data": "wendy.weiker@mercerisland.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to name and title.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL extracted from sidebar navigation link associated with the name and title.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL provided in a list of council members, likely the person's profile page.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is the profile page for this person.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Person-specific URL found in the sidebar navigation.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the name in the council list.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start date explicitly listed for the current term.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End date explicitly listed for the current term.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Ted Weinberg",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+      "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Council Member",
+      "Position 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-275-7993",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ted.weinberg@mercerisland.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL extracted from sidebar navigation link associated with the name and title.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL provided in a list of council members, likely the person's profile page.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page URL linked from the list of council members.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the URL of the profile page for the person.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Person-specific URL found in the sidebar navigation.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+      },
+      {
+        "data": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the name in the council list.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Start date '1/1/2022' explicitly listed as part of the term.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "End date '12/31/2025' explicitly listed as part of the term.",
+        "source": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  }
+]
