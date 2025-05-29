@@ -704,7 +704,14 @@
       "government_type": "mayor_council",
       "email": "info@berlinnh.gov",
       "website": "http://www.berlinnh.gov",
-      "geoid": "3305140"
+      "geoid": "3305140",
+      "meta_updated_at": "2025-05-29",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Barrington",
