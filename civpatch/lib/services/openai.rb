@@ -269,21 +269,6 @@ module Services
       end
     end
 
-    # Remove coordinates from geojson file
-    # def extract_simplified_geojson(geojson_file_path)
-    #  file_size_mb = File.size(geojson_file_path) / 1024.0 / 1024.0
-    #  puts "Loading geojson file - #{file_size_mb} MB"
-
-    #  json_data = JSON.parse(File.read(geojson_file_path))
-
-    #  json_data["features"][0, 3].map do |feature|
-    #    {
-    #      type: feature["type"],
-    #      properties: feature["properties"]
-    #    }
-    #  end
-    # end
-
     def council_member_position?(position, position_misc)
       position.blank? && keywords_present?(position_misc)
     end

@@ -21,6 +21,15 @@ module Browser
     }
   }.freeze
   IGNORE_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"].freeze
+  USER_AGENTS = [
+    "Mozilla/5.0 (Linux; Android 10; SM-N960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 7.0; VFD 610 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/93.0.4577.62 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 11; CPH2021) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.85 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 9; SM-G892A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.110 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 10; MED-LX9N; HMSCore 6.0.1.305) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 HuaweiBrowser/11.0.8.303 Mobile Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0 Waterfox/56.2.10"
+  ].freeze
 
   def self.with_browser
     Playwright.create(
@@ -28,9 +37,14 @@ module Browser
     ) do |playwright|
       browser = playwright.chromium.launch(
         headless: true,
-        args: ["--single-process"] # Started happening after upgrading Docker https://github.com/microsoft/playwright/issues/4303
+        args: ["--single-process"] # for headless only -- https://github.com/microsoft/playwright/issues/4303
+        # user_data_dir: Core::PathHelper.project_path(File.join("tmp", "browser_data")),
+        # channel: "chrome",
+        # headless: false,
+        # viewport: nil
       )
-      context = browser.new_context
+
+      context = browser.new_context(userAgent: USER_AGENTS.sample)
 
       browser_page = context.new_page
 
@@ -93,6 +107,10 @@ module Browser
     page_source = format_page_html(page_source, api_data, url) if api_data.present?
 
     page_source
+  rescue StandardError => e
+    puts "Error processing page: #{e.message}, skipping"
+    puts e.backtrace
+    nil
   end
 
   private_class_method def self.format_page_html(page_source, api_content, url)

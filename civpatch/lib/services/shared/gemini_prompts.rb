@@ -5,6 +5,10 @@ module Services
     class GeminiPrompts
       def self.search_for_people_prompt(state, municipality_entry)
         city_name = municipality_entry["name"]
+        government_types = Core::CityManager.government_types
+        positions_by_government_type = government_types.map do |government_type|
+          Core::CityManager.get_config(government_type)["positions"].map { |p| p["role"] }.join(", ")
+        end
 
         %(
         Provide the current elected Mayor and City Council Members for the specified city,
@@ -15,17 +19,20 @@ module Services
 
         Instructions:
 
-        First, determine the total number of elected officials on the City Council for #{city_name}.
+        1. Figure out the government type of the city. Available government types: #{government_types.join(", ")}
+
+        2. Determine the total number of elected officials on the City Council for #{city_name}.
         This total number includes the Mayor (only if available).
 
-        Create a JSON object with a single top-level key "people". The value of "people" must be an array.
+        3. Create a JSON object with a single top-level key "people". The value of "people" must be an array.
 
-        This array must contain exactly the total number of elected officials determined in step 1.
+        4. This array must contain exactly the total number of elected officials determined in step 1.
 
-        Within the array, include one entry for the Mayor (only if available)
-        and the remaining entries for "Council Member" positions.
+        5. Within the array, include one entry for the Mayor (or equivalent, only if available)
+        and the remaining entries for "Council Member (or equivalent)" positions. The full list of positions for
+        each government type are: #{positions_by_government_type.join(", ")}
 
-        For each entry in the array, provide the current elected official's name
+        6 .For each entry in the array, provide the current elected official's name
         only if you are highly certain based on your training data or search results.
 
         If you are not highly certain of the current name for any specific position,
@@ -36,6 +43,7 @@ module Services
         can be parsed directly.
         Pay close attention to matching brackets `[]` for arrays and braces `{}` for objects.
         {
+          "government_type": The government type of the city (string),
           "people": [{
             "name": The official's name (string) or null,
             "positions": The position held (array of strings),

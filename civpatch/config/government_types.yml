@@ -85,7 +85,7 @@ government_types:
         - bios
         - meet
         - about
-  town_meeting: # Not handling this
+  # town_meeting: # Not handling this
   select_board:
     positions:
       - role: mayor # Optional, not always present

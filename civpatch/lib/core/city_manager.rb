@@ -11,6 +11,10 @@ module Core
       @config ||= YAML.load_file(CONFIG_PATH, aliases: true)
     end
 
+    def self.government_types
+      config["government_types"].keys
+    end
+
     def self.get_config(government_type)
       config.dig("government_types", government_type)
     end
