@@ -813,8 +813,8 @@
       "email": "townhall@litchfieldnh.gov",
       "website": "http://litchfieldnh.gov",
       "geoid": "3301142260",
-      "meta_updated_at": "2025-05-28",
-      "meta_hash": "6bfac128b587baccbf9f2d0a0c64f32d",
+      "meta_updated_at": "2025-05-29",
+      "meta_hash": "b3f3b9369a0c66015402b6d5b689e675",
       "meta_sources": [
         "state_source",
         "gemini",

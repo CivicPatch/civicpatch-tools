@@ -13,7 +13,7 @@ Loading
  1.  [Departments](https://www.litchfieldnh.gov/101/Departments) 
  1.  [Community](https://www.litchfieldnh.gov/31/Community) 
  1.  [How Do I...](https://www.litchfieldnh.gov/9/How-Do-I) 
-  ![](https://www.litchfieldnh.gov/ImageRepository/Document?documentID=68)  
+  ![](https://www.litchfieldnh.gov/ImageRepository/Document?documentID=69)  
 
  1.  [Home](https://www.litchfieldnh.gov) 
  1.  [Government](https://www.litchfieldnh.gov/27/Government) 
