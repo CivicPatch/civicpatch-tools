@@ -14,14 +14,14 @@
       {
         "data": "jbrunelle@litchfieldnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address found directly next to name with mailto link.",
+        "llm_confidence_reason": "Email address explicitly listed next to name with mailto link.",
         "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-28"
+    "updated_at": "2025-05-29"
   },
   {
     "name": "G. Stephen Gannon",
@@ -38,14 +38,14 @@
       {
         "data": "sgannon@litchfieldnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address found directly next to name with mailto link.",
+        "llm_confidence_reason": "Email address explicitly listed next to name with mailto link.",
         "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-28"
+    "updated_at": "2025-05-29"
   },
   {
     "name": "F. Robert Leary",
@@ -61,14 +61,14 @@
       {
         "data": "rleary@litchfieldnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address found directly next to name with mailto link.",
+        "llm_confidence_reason": "Email address explicitly listed next to name with mailto link.",
         "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-28"
+    "updated_at": "2025-05-29"
   },
   {
     "name": "Kim Queenan",
@@ -84,14 +84,14 @@
       {
         "data": "kqueenan@litchfieldnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address found directly next to name with mailto link.",
+        "llm_confidence_reason": "Email address explicitly listed next to name with mailto link.",
         "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-28"
+    "updated_at": "2025-05-29"
   },
   {
     "name": "Dianne Plansky",
@@ -107,13 +107,13 @@
       {
         "data": "dplansky@litchfieldnh.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address found directly next to name with mailto link.",
+        "llm_confidence_reason": "Email address explicitly listed next to name with mailto link.",
         "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-28"
+    "updated_at": "2025-05-29"
   }
 ]
