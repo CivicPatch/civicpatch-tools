@@ -3972,16 +3972,6 @@
       "geoid": "3300565700"
     },
     {
-      "name": "Hale's",
-      "type": "location",
-      "fips": "33-32500",
-      "gnis": "0871993",
-      "counties": [
-        "Carroll"
-      ],
-      "population": 132
-    },
-    {
       "name": "Ellsworth",
       "type": "town",
       "fips": "33-23860",
@@ -4011,16 +4001,6 @@
       "email": "smallesttown@gmail.com",
       "website": "http://www.hartslocation.com",
       "geoid": "3300334500"
-    },
-    {
-      "name": "Millsfield",
-      "type": "township",
-      "fips": "33-48260",
-      "gnis": "0873667",
-      "counties": [
-        "Coos"
-      ],
-      "population": 25
     },
     {
       "name": "Cambridge",
