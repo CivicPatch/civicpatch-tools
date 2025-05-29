@@ -6,6 +6,56 @@ require "core/config_manager"
 require "scrapers/municipalities"
 
 namespace :one_off do
+  task "count_municipalities" do
+    state = "nh"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    puts municipalities.length
+
+    puts "diff from census?"
+
+    census_municipalities = File.read(Core::PathHelper.project_path(File.join("data", state, ".maps",
+                                                                              "municipalities.geojson")))
+    census_map = JSON.parse(census_municipalities)
+    census_features = census_map["features"]
+
+    municipalities.each do |municipality|
+      has_entry = census_features.any? { |feature| feature["properties"]["geoid"] == municipality["geoid"] }
+
+      puts "Could not find municipality: #{municipality["name"]} - #{municipality["geoid"]}" unless has_entry
+    end
+
+    puts "Municipalities: #{municipalities.length} features..."
+    puts "Census: #{census_features.length} features..."
+
+    puts "Diff: #{census_features.length - municipalities.length} features..."
+  end
+
+  task "cleanup_wa" do
+    state = "wa"
+    municipalities = File.read(Core::PathHelper.project_path(File.join("data_source", state, "municipalities.json")))
+    munic_json = JSON.parse(municipalities)
+    munic = munic_json["municipalities"]
+    munic.each do |municipality|
+      next unless municipality["geoid"].blank?
+
+      found_dupe = munic.find do |m|
+        m["name"].capitalize == municipality["name"].capitalize && m["geoid"].present?
+      end
+
+      if found_dupe
+        puts "Found dupe: #{found_dupe["name"]} - #{found_dupe["geoid"]}"
+        munic.delete(municipality)
+      else
+        puts "No dupe found: #{municipality["name"]} - #{municipality["geoid"]}" unless municipality["geoid"].present?
+      end
+    end
+
+    munic_json["municipalities"] = munic
+
+    File.write(Core::PathHelper.project_path(File.join("data_source", state, "municipalities.json")),
+               JSON.pretty_generate(munic_json))
+  end
+
   desc "Scrape city offficials from a state-level source"
   task :fetch_from_state_source, [:state] do |_t, args|
     state = args[:state]

@@ -145,29 +145,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:everett",
-        "ocd-division/country:us/state:wa/county:snohomish/place:everett"
-      ],
-      "name": "everett",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "https://everettwa.gov",
-      "fips": "53-22640",
-      "gnis": "1512198",
-      "type": "First-class city",
-      "population": 110629,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-17",
-      "meta_hash": "0f15376d36a1963e0330d302af7347db",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:renton",
         "ocd-division/country:us/state:wa/county:king/place:renton"
       ],
@@ -401,29 +378,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:marysville",
-        "ocd-division/country:us/state:wa/county:snohomish/place:marysville"
-      ],
-      "name": "marysville",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://www.marysvillewa.gov",
-      "fips": "53-43955",
-      "gnis": "1512435",
-      "type": "Code city",
-      "population": 70714,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-17",
-      "meta_hash": "fa24807b1216ca369ca076210a431522",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:sammamish",
         "ocd-division/country:us/state:wa/county:king/place:sammamish"
       ],
@@ -517,52 +471,6 @@
         "openai"
       ],
       "geoid": "5363960"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:olympia",
-        "ocd-division/country:us/state:wa/county:thurston/place:olympia"
-      ],
-      "name": "olympia",
-      "counties": [
-        "thurston"
-      ],
-      "website": "https://olympiawa.gov",
-      "fips": "53-51300",
-      "gnis": "1533353",
-      "type": "Code city",
-      "population": 55605,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-18",
-      "meta_hash": "080ac473eb348682f9aa2ab88d643d73",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:lacey",
-        "ocd-division/country:us/state:wa/county:thurston/place:lacey"
-      ],
-      "name": "lacey",
-      "counties": [
-        "thurston"
-      ],
-      "website": "https://cityoflacey.org",
-      "fips": "53-36745",
-      "gnis": "1512362",
-      "type": "Code city",
-      "population": 53526,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-17",
-      "meta_hash": "510f3bb62444dee2e4d56031b6e7063a",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
     },
     {
       "ocd_ids": [
@@ -664,29 +572,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:edmonds",
-        "ocd-division/country:us/state:wa/county:snohomish/place:edmonds"
-      ],
-      "name": "edmonds",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://edmondswa.gov",
-      "fips": "53-20750",
-      "gnis": "1512180",
-      "type": "Code city",
-      "population": 42853,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-20",
-      "meta_hash": "0a47e6cf3e3970470eb2c36d0e776e3c",
-      "meta_sources": [
-        "state_source",
-        "emini",
-        "openai"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:issaquah",
         "ocd-division/country:us/state:wa/county:king/place:issaquah"
       ],
@@ -711,29 +596,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:lynnwood",
-        "ocd-division/country:us/state:wa/county:snohomish/place:lynnwood"
-      ],
-      "name": "lynnwood",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://www.lynnwoodwa.gov",
-      "fips": "53-40840",
-      "gnis": "1512414",
-      "type": "Code city",
-      "population": 38568,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-22",
-      "meta_hash": "b44ba392f62346bd8d21c7e28cda97ec",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:longview",
         "ocd-division/country:us/state:wa/county:cowlitz/place:longview"
       ],
@@ -755,29 +617,6 @@
         "openai"
       ],
       "geoid": "5340245"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:lake_stevens",
-        "ocd-division/country:us/state:wa/county:snohomish/place:lake_stevens"
-      ],
-      "name": "lake stevens",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://lakestevenswa.gov",
-      "fips": "53-37900",
-      "gnis": "1512695",
-      "type": "Code city",
-      "population": 35630,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-05-09",
-      "meta_hash": "65f7925f01ab5b5d988a715c8d291349",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
     },
     {
       "ocd_ids": [
@@ -1007,27 +846,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:tumwater",
-        "ocd-division/country:us/state:wa/county:thurston/place:tumwater"
-      ],
-      "name": "tumwater",
-      "counties": [
-        "thurston"
-      ],
-      "website": "http://www.ci.tumwater.wa.us",
-      "fips": "53-72905",
-      "gnis": "1512742",
-      "type": "Code city",
-      "population": 25350,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "9373498af1f1f7260b71333ed47e1455",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:moses_lake",
         "ocd-division/country:us/state:wa/county:grant/place:moses_lake"
       ],
@@ -1160,27 +978,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:mukilteo",
-        "ocd-division/country:us/state:wa/county:snohomish/place:mukilteo"
-      ],
-      "name": "mukilteo",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://mukilteowa.gov",
-      "fips": "53-47735",
-      "gnis": "1512491",
-      "type": "Code city",
-      "population": 21538,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "e3bab8b821b0a5f6fe4e4b79c26e8f7a",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:mountlake_terrace",
         "ocd-division/country:us/state:wa/county:snohomish/place:mountlake_terrace"
       ],
@@ -1189,34 +986,12 @@
         "snohomish"
       ],
       "website": "http://cityofmlt.com",
-      "fips": "53-47490",
-      "gnis": "1512488",
+      "geoid": "5347490",
       "type": "Code city",
       "population": 21286,
       "government_type": "mayor_council",
       "meta_updated_at": "2025-04-19",
       "meta_hash": "17b6bbd1e43954a05c65f37a4077637a",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:mill_creek",
-        "ocd-division/country:us/state:wa/county:snohomish/place:mill_creek"
-      ],
-      "name": "mill creek",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "https://www.cityofmillcreek.com",
-      "fips": "53-45865",
-      "gnis": "1534566",
-      "type": "Code city",
-      "population": 20926,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "d2356079408eef0c7f545df33cd9f041",
       "meta_sources": [
         "state_source"
       ]
@@ -1289,37 +1064,15 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:arlington",
-        "ocd-division/country:us/state:wa/county:snohomish/place:arlington"
-      ],
-      "name": "arlington",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://www.arlingtonwa.gov",
-      "fips": "53-02585",
-      "gnis": "1515947",
-      "type": "Code city",
-      "population": 19868,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "af63d215783fd2cc9346439e94dc9c1d",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:monroe",
         "ocd-division/country:us/state:wa/county:snohomish/place:monroe"
       ],
-      "name": "monroe",
+      "name": "Monroe",
       "counties": [
-        "snohomish"
+        "Snohomish"
       ],
       "website": "http://www.ci.monroe.wa.us",
-      "fips": "53-46685",
-      "gnis": "1523319",
+      "geoid": "5346685",
       "type": "Code city",
       "population": 19699,
       "government_type": "mayor_council",
@@ -1592,27 +1345,6 @@
         "state_source"
       ],
       "geoid": "5337270"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:cheney",
-        "ocd-division/country:us/state:wa/county:spokane/place:cheney"
-      ],
-      "name": "cheney",
-      "counties": [
-        "spokane"
-      ],
-      "website": "http://www.cityofcheney.org",
-      "fips": "53-11825",
-      "gnis": "1531416",
-      "type": "Code city",
-      "population": 13255,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "4357f2da796411ca813280a2b7552a87",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -1904,27 +1636,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:yelm",
-        "ocd-division/country:us/state:wa/county:thurston/place:yelm"
-      ],
-      "name": "yelm",
-      "counties": [
-        "thurston"
-      ],
-      "website": "https://ci.yelm.wa.us",
-      "fips": "53-80220",
-      "gnis": "1512817",
-      "type": "Code city",
-      "population": 10617,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "890817cac89b29d5b37fbb951d8ce29b",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:shelton",
         "ocd-division/country:us/state:wa/county:mason/place:shelton"
       ],
@@ -2013,27 +1724,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:snohomish",
-        "ocd-division/country:us/state:wa/county:snohomish/place:snohomish"
-      ],
-      "name": "snohomish",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "https://www.snohomishwa.gov",
-      "fips": "53-65170",
-      "gnis": "1531910",
-      "type": "Code city",
-      "population": 10126,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "15e86b716779b6caca41ff48ad7f6c45",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:college_place",
         "ocd-division/country:us/state:wa/county:walla_walla/place:college_place"
       ],
@@ -2053,27 +1743,6 @@
         "state_source"
       ],
       "geoid": "5313855"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:burlington",
-        "ocd-division/country:us/state:wa/county:skagit/place:burlington"
-      ],
-      "name": "burlington",
-      "counties": [
-        "skagit"
-      ],
-      "website": "http://burlingtonwa.gov",
-      "fips": "53-08920",
-      "gnis": "1512052",
-      "type": "Code city",
-      "population": 9152,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "a7e35e14a627019f9a103ce70ee9beda",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -2274,27 +1943,6 @@
         "state_source"
       ],
       "geoid": "5363385"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:stanwood",
-        "ocd-division/country:us/state:wa/county:snohomish/place:stanwood"
-      ],
-      "name": "stanwood",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "https://stanwoodwa.org",
-      "fips": "53-67455",
-      "gnis": "1512690",
-      "type": "Code city",
-      "population": 7705,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "9b8e0acc8e468a9c514e57445d858039",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -2520,27 +2168,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:brier",
-        "ocd-division/country:us/state:wa/county:snohomish/place:brier"
-      ],
-      "name": "brier",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://www.ci.brier.wa.us",
-      "fips": "53-07940",
-      "gnis": "1512029",
-      "type": "Code city",
-      "population": 6560,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "3ddb4f85b8ed0c5868c75de3aa7f4b8d",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:woodland",
         "ocd-division/country:us/state:wa/county:cowlitz/place:woodland",
         "ocd-division/country:us/state:wa/county:clark/place:woodland"
@@ -2628,27 +2255,6 @@
         "state_source"
       ],
       "geoid": "5314485"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:sultan",
-        "ocd-division/country:us/state:wa/county:snohomish/place:sultan"
-      ],
-      "name": "sultan",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://ci.sultan.wa.us",
-      "fips": "53-68260",
-      "gnis": "1526700",
-      "type": "Code city",
-      "population": 5146,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "e0bc896e6d423e3189b105764b34691d",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -2781,27 +2387,6 @@
         "state_source"
       ],
       "geoid": "5376125"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:granite_falls",
-        "ocd-division/country:us/state:wa/county:snohomish/place:granite_falls"
-      ],
-      "name": "granite falls",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "http://granitefallswa.gov",
-      "fips": "53-27995",
-      "gnis": "1520218",
-      "type": "Code city",
-      "population": 4450,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "db698abfab9d1e2ba808c8c3d3760b93",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -3399,27 +2984,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:gold_bar",
-        "ocd-division/country:us/state:wa/county:snohomish/place:gold_bar"
-      ],
-      "name": "gold bar",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "https://cityofgoldbar.us",
-      "fips": "53-27365",
-      "gnis": "1520077",
-      "type": "Code city",
-      "population": 2403,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "133fa8f4fcf28101eacdea09bcde7ab4",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:okanogan",
         "ocd-division/country:us/state:wa/county:okanogan/place:okanogan"
       ],
@@ -3439,27 +3003,6 @@
         "state_source"
       ],
       "geoid": "5350920"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:rainier",
-        "ocd-division/country:us/state:wa/county:thurston/place:rainier"
-      ],
-      "name": "rainier",
-      "counties": [
-        "thurston"
-      ],
-      "website": "http://cityofrainierwa.org",
-      "fips": "53-57220",
-      "gnis": "1507707",
-      "type": "Code city",
-      "population": 2369,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "fa512872a6aa7805d8334cde8335c5be",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -3727,27 +3270,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:tenino",
-        "ocd-division/country:us/state:wa/county:thurston/place:tenino"
-      ],
-      "name": "tenino",
-      "counties": [
-        "thurston"
-      ],
-      "website": "https://cityoftenino.us",
-      "fips": "53-70630",
-      "gnis": "1512718",
-      "type": "Code city",
-      "population": 1870,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "975f6246f2548e554d657a7fb97009cb",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:oroville",
         "ocd-division/country:us/state:wa/county:okanogan/place:oroville"
       ],
@@ -3833,27 +3355,6 @@
         "state_source"
       ],
       "geoid": "5365625"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:davenport",
-        "ocd-division/country:us/state:wa/county:lincoln/place:davenport"
-      ],
-      "name": "davenport",
-      "counties": [
-        "lincoln"
-      ],
-      "website": "https://davenportwa.us",
-      "fips": "53-16795",
-      "gnis": "1504329",
-      "type": "Second-class city",
-      "population": 1703,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "90bc25788d34ee2d83cce7142ef5b83b",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -4184,27 +3685,6 @@
         "state_source"
       ],
       "geoid": "5322010"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:woodway",
-        "ocd-division/country:us/state:wa/county:snohomish/place:woodway"
-      ],
-      "name": "woodway",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "https://www.townofwoodway.com",
-      "fips": "53-79835",
-      "gnis": "1512815",
-      "type": "Code city",
-      "population": 1318,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "32441c3115c463052d1ee189b20777fa",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -4630,37 +4110,15 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:odessa",
-        "ocd-division/country:us/state:wa/county:lincoln/place:odessa"
-      ],
-      "name": "odessa",
-      "counties": [
-        "lincoln"
-      ],
-      "website": "http://odessawa.org",
-      "fips": "53-50745",
-      "gnis": "1507143",
-      "type": "Town",
-      "population": 896,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "32344dff36ace8c93040af94ade6d090",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:wilbur",
         "ocd-division/country:us/state:wa/county:lincoln/place:wilbur"
       ],
-      "name": "wilbur",
+      "name": "Wilbur",
       "counties": [
-        "lincoln"
+        "Lincoln"
       ],
       "website": "http://wilburwa.com",
-      "fips": "53-78680",
-      "gnis": "1509502",
+      "geoid": "5378680",
       "type": "Town",
       "population": 895,
       "government_type": "mayor_council",
@@ -4680,8 +4138,6 @@
         "Whitman"
       ],
       "website": "http://www.tekoawa.com",
-      "fips": "53-70560",
-      "gnis": "2412043",
       "type": "city",
       "population": 817,
       "government_type": "mayor_council",
@@ -4867,27 +4323,6 @@
         "state_source"
       ],
       "geoid": "5353930"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:reardan",
-        "ocd-division/country:us/state:wa/county:lincoln/place:reardan"
-      ],
-      "name": "reardan",
-      "counties": [
-        "lincoln"
-      ],
-      "website": "",
-      "fips": "53-57465",
-      "gnis": "1507746",
-      "type": "Town",
-      "population": 637,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "8a190c1833a3800085bef3f53c75cd7f",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -5111,27 +4546,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:south_cle_elum",
-        "ocd-division/country:us/state:wa/county:kittitas/place:south_cle_elum"
-      ],
-      "name": "south cle elum",
-      "counties": [
-        "kittitas"
-      ],
-      "website": "https://southcleelum.org",
-      "fips": "53-65765",
-      "gnis": "1526142",
-      "type": "Town",
-      "population": 559,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "c243fccfc5f8ddd14e604137d9208067",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:albion",
         "ocd-division/country:us/state:wa/county:whitman/place:albion"
       ],
@@ -5264,27 +4678,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:sprague",
-        "ocd-division/country:us/state:wa/county:lincoln/place:sprague"
-      ],
-      "name": "sprague",
-      "counties": [
-        "lincoln"
-      ],
-      "website": "https://sprague-wa.us",
-      "fips": "53-67175",
-      "gnis": "1508614",
-      "type": "Code city",
-      "population": 495,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "e8657864a22381e23c4e4d024d75ecaa",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:hunts_point",
         "ocd-division/country:us/state:wa/county:king/place:hunts_point"
       ],
@@ -5304,27 +4697,6 @@
         "state_source"
       ],
       "geoid": "5332755"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:harrington",
-        "ocd-division/country:us/state:wa/county:lincoln/place:harrington"
-      ],
-      "name": "harrington",
-      "counties": [
-        "lincoln"
-      ],
-      "website": "http://www.harringtonbiz.com",
-      "fips": "53-29745",
-      "gnis": "1505401",
-      "type": "Code city",
-      "population": 429,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "713a0fe89406288f7acf488b42f66240",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -5545,27 +4917,6 @@
         "state_source"
       ],
       "geoid": "5342800"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:almira",
-        "ocd-division/country:us/state:wa/county:lincoln/place:almira"
-      ],
-      "name": "almira",
-      "counties": [
-        "lincoln"
-      ],
-      "website": "",
-      "fips": "53-01500",
-      "gnis": "1503007",
-      "type": "Town",
-      "population": 318,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "8ad3887d606e5407bbd091906b7a2895",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -5811,27 +5162,6 @@
     },
     {
       "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:creston",
-        "ocd-division/country:us/state:wa/county:lincoln/place:creston"
-      ],
-      "name": "creston",
-      "counties": [
-        "lincoln"
-      ],
-      "website": "",
-      "fips": "53-15710",
-      "gnis": "1504274",
-      "type": "Town",
-      "population": 213,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "32c82332aa865b88aa4b3795f9c40eeb",
-      "meta_sources": [
-        "state_source"
-      ]
-    },
-    {
-      "ocd_ids": [
         "ocd-division/country:us/state:wa/place:washtucna",
         "ocd-division/country:us/state:wa/county:adams/place:washtucna"
       ],
@@ -6005,27 +5335,6 @@
         "state_source"
       ],
       "geoid": "5364855"
-    },
-    {
-      "ocd_ids": [
-        "ocd-division/country:us/state:wa/place:index",
-        "ocd-division/country:us/state:wa/county:snohomish/place:index"
-      ],
-      "name": "index",
-      "counties": [
-        "snohomish"
-      ],
-      "website": "",
-      "fips": "53-33175",
-      "gnis": "1521157",
-      "type": "Town",
-      "population": 155,
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "97f8a3eb70bc587d3cbff7bc80686743",
-      "meta_sources": [
-        "state_source"
-      ]
     },
     {
       "ocd_ids": [
@@ -6237,7 +5546,6 @@
       "name": "Lacey",
       "type": "city",
       "geoid": "5336745",
-      "gnis": "2411588",
       "counties": [
         "Thurston"
       ],
@@ -6294,16 +5602,6 @@
       "population": 21538
     },
     {
-      "name": "Mountlake Terrace",
-      "type": "city",
-      "geoid": "5347490",
-      "gnis": "2411187",
-      "counties": [
-        "Snohomish"
-      ],
-      "population": 21286
-    },
-    {
       "name": "Mill Creek",
       "type": "city",
       "geoid": "5345865",
@@ -6322,16 +5620,6 @@
         "Snohomish"
       ],
       "population": 19868
-    },
-    {
-      "name": "Monroe",
-      "type": "city",
-      "geoid": "5346685",
-      "gnis": "2411137",
-      "counties": [
-        "Snohomish"
-      ],
-      "population": 19699
     },
     {
       "name": "Aberdeen",
@@ -6482,16 +5770,6 @@
         "Lincoln"
       ],
       "population": 896
-    },
-    {
-      "name": "Wilbur",
-      "type": "town",
-      "geoid": "5378680",
-      "gnis": "2413487",
-      "counties": [
-        "Lincoln"
-      ],
-      "population": 895
     },
     {
       "name": "Reardan",
