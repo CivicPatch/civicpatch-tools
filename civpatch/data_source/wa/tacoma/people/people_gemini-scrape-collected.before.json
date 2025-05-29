@@ -1,0 +1,601 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/mayor-victoria-woodards",
+      "https://tacoma.gov/profile/council-member-sandesh-sadalge"
+    ],
+    "images": [],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to 'Mayor' under the Contact section.",
+        "source": "https://tacoma.gov/profile/mayor-victoria-woodards"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/mayor-victoria-woodards",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/mayor-victoria-woodards",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in the 'Skip to main content' link and matches the profile page structure for the mayor.",
+        "source": "https://tacoma.gov/profile/mayor-victoria-woodards"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2018",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'began serving as the mayor in 2018'.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "2018",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'began serving as the mayor in 2018'.",
+        "source": "https://tacoma.gov/profile/mayor-victoria-woodards"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expiration: December 31, 2025'.",
+        "source": "https://tacoma.gov/profile/mayor-victoria-woodards"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "John Hines",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-john-hines"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Position 1",
+      "District 1",
+      "Chair",
+      "Government Performance and Finance Committee",
+      "Commissioner",
+      "Pierce Transit"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed under 'Contact' section with name and photo.",
+        "source": "https://tacoma.gov/profile/council-member-john-hines"
+      }
+    ],
+    "emails": [
+      {
+        "data": "HCampbell2@tacoma.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email address found in a mailto link for 'Make a Request', not explicitly listed as the council member's direct email.",
+        "source": "https://tacoma.gov/profile/council-member-john-hines"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-john-hines",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-john-hines",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL of the profile page itself.",
+        "source": "https://tacoma.gov/profile/council-member-john-hines"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated 'reelected in 2023'. Month/day not specified.",
+        "source": "https://tacoma.gov/profile/council-member-john-hines"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated 'Term expiration: December 31, 2027'.",
+        "source": "https://tacoma.gov/profile/council-member-john-hines"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-sarah-rumbaugh"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Position 2",
+      "District 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 229-2508",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed directly under her name and position in the contact section.",
+        "source": "https://tacoma.gov/profile/council-member-sarah-rumbaugh"
+      }
+    ],
+    "emails": [
+      {
+        "data": "NBernik@tacoma.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The 'Email' link goes to a survey, not an email address. However, the 'Make a Request' link is a mailto link to NBernik@tacoma.gov, which might be her assistant or a general contact for requests related to her.",
+        "source": "https://tacoma.gov/profile/council-member-sarah-rumbaugh"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-sarah-rumbaugh",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-sarah-rumbaugh",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is her profile page.",
+        "source": "https://tacoma.gov/profile/council-member-sarah-rumbaugh"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected in November 2021'.",
+        "source": "https://tacoma.gov/profile/council-member-sarah-rumbaugh"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expiration: December 31, 2025'.",
+        "source": "https://tacoma.gov/profile/council-member-sarah-rumbaugh"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jamika Scott",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-jamika-scott"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Position 3",
+      "District 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed directly next to the name and position under the 'Contact' section.",
+        "source": "https://tacoma.gov/profile/council-member-jamika-scott"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-jamika-scott",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-jamika-scott",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the profile page for Jamika Scott.",
+        "source": "https://tacoma.gov/profile/council-member-jamika-scott"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected in 2023'.",
+        "source": "https://tacoma.gov/profile/council-member-jamika-scott"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expiration: December 31, 2027'.",
+        "source": "https://tacoma.gov/profile/council-member-jamika-scott"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-sandesh-sadalge"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "District 4",
+      "Position 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 355-1276",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed directly under the name and photo in the contact section.",
+        "source": "https://tacoma.gov/profile/council-member-sandesh-sadalge"
+      }
+    ],
+    "emails": [
+      {
+        "data": "NBernik@tacoma.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The 'Make a Request' link is a mailto link to this address, which might be an assistant's email rather than the council member's direct email. The 'Email' links go to a survey.",
+        "source": "https://tacoma.gov/profile/council-member-sandesh-sadalge"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-sandesh-sadalge",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-sandesh-sadalge",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the profile page for this person.",
+        "source": "https://tacoma.gov/profile/council-member-sandesh-sadalge"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'appointed... in July 2024'.",
+        "source": "https://tacoma.gov/profile/council-member-sandesh-sadalge"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expiration: December 31, 2025'.",
+        "source": "https://tacoma.gov/profile/council-member-sandesh-sadalge"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Chanjolee Bushnell",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "District 5",
+      "Position 5",
+      "Vice Chair",
+      "Government",
+      "Performance",
+      "and Finance Committee"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 312-0550, (253) 591-5100",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone numbers listed directly under the council member's name and photo in the contact section.",
+        "source": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell"
+      }
+    ],
+    "emails": [
+      {
+        "data": "NBernik@tacoma.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found in a mailto link associated with making a request to the council member.",
+        "source": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the current page is the council member's profile page.",
+        "source": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit election date found in the text.",
+        "source": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit term expiration date found in the contact section.",
+        "source": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Kiara Daniels",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-kiara-daniels"
+    ],
+    "images": [],
+    "positions": [
+      "Deputy Mayor",
+      "Council Member",
+      "At-Large Position 6"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the 'Contact' section next to the person's name and photo.",
+        "source": "https://tacoma.gov/profile/council-member-kiara-daniels"
+      }
+    ],
+    "emails": [
+      {
+        "data": "HCampbell2@tacoma.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email address found in a mailto link associated with making a request to the person, likely an assistant's email.",
+        "source": "https://tacoma.gov/profile/council-member-kiara-daniels"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-kiara-daniels",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-kiara-daniels",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the profile page for the person.",
+        "source": "https://tacoma.gov/profile/council-member-kiara-daniels"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit 'elected in November 2021' date provided.",
+        "source": "https://tacoma.gov/profile/council-member-kiara-daniels"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit 'Term Expiration' date provided.",
+        "source": "https://tacoma.gov/profile/council-member-kiara-daniels"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Olgy Diaz",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-olgy-diaz"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "At-Large",
+      "At-Large Position 7",
+      "Vice Chair",
+      "Infrastructure",
+      "Planning and Sustainability Committee",
+      "Economic Development Committee"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 533-0980",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed phone number associated with the person in multiple places.",
+        "source": "https://tacoma.gov/profile/council-member-olgy-diaz"
+      }
+    ],
+    "emails": [
+      {
+        "data": "odiaz@tacoma.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed email address associated with the person.",
+        "source": "https://tacoma.gov/profile/council-member-olgy-diaz"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-olgy-diaz",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-olgy-diaz",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The URL of the profile page for the person.",
+        "source": "https://tacoma.gov/profile/council-member-olgy-diaz"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'elected to a full term in 2023'. Using the most recent election date.",
+        "source": "https://tacoma.gov/profile/council-member-olgy-diaz"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated 'Term Expiration: December 31, 2027'.",
+        "source": "https://tacoma.gov/profile/council-member-olgy-diaz"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Kristina Walker",
+    "sources": [
+      "https://www.cityoftacoma.org/government/city_council",
+      "https://tacoma.gov/profile/council-member-kristina-walker"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Position 8",
+      "At-Large Position 8",
+      "Chair",
+      "Pierce Transit Commission"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(253) 591-5100",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "General City Council phone number listed in the contact section, not explicitly tied to the individual.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "(253) 312-7734",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Contact' section associated with the person's name.",
+        "source": "https://tacoma.gov/profile/council-member-kristina-walker"
+      }
+    ],
+    "emails": [
+      {
+        "data": "HCampbell2@tacoma.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from mailto link text associated with 'Make a Request'.",
+        "source": "https://tacoma.gov/profile/council-member-kristina-walker"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://tacoma.gov/profile/council-member-kristina-walker",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name/photo.",
+        "source": "https://www.cityoftacoma.org/government/city_council"
+      },
+      {
+        "data": "https://tacoma.gov/profile/council-member-kristina-walker",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the profile page itself, linked from the main title.",
+        "source": "https://tacoma.gov/profile/council-member-kristina-walker"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'elected... in 2019'.",
+        "source": "https://tacoma.gov/profile/council-member-kristina-walker"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration: December 31, 2027'.",
+        "source": "https://tacoma.gov/profile/council-member-kristina-walker"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  }
+]
