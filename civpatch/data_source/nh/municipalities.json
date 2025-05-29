@@ -904,7 +904,14 @@
       "government_type": "select_board",
       "email": "gcolby@plaistow.com",
       "website": "http://www.plaistow.com",
-      "geoid": "3301562500"
+      "geoid": "3301562500",
+      "meta_updated_at": "2025-05-29",
+      "meta_hash": "364b1b7ba2cac0ec6c863fc273f8a717",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Gilford",
