@@ -1,0 +1,1345 @@
+[
+  {
+    "name": "Steve Hogan",
+    "sources": [
+      "https://www.cityofcamas.us/mayor/page/mayor-steve-hogan",
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/mayor",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as the phone number for the Office of the Mayor.",
+        "source": "https://www.cityofcamas.us/mayor/page/mayor-steve-hogan"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Contact Information' for the 'Office of the Mayor'.",
+        "source": "https://www.cityofcamas.us/mayor"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city hall phone number is provided, not specific to the mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Phone number not explicitly stated for the person, but general city hall number is listed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall phone number provided, not specific to the mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city clerk email is provided, not specific to the mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "mayor@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email not explicitly stated on this page, but common pattern for mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall email provided, not specific to the mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name and title.",
+        "source": "https://www.cityofcamas.us/mayor/page/mayor-steve-hogan"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name/title.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL linked from the person's name/title.",
+        "source": "https://www.cityofcamas.us/mayor"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked from the individual's name/title.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website URL found linked to the name and title.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link to the mayor's office page found in the navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name 'Mayor Steve Hogan'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name and image.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the Mayor's name and image.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the mayor's name/title.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term: January 1, 2024 - ...'.",
+        "source": "https://www.cityofcamas.us/mayor/page/mayor-steve-hogan"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term: January 1, 2024 - ...'.",
+        "source": "https://www.cityofcamas.us/mayor"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date not explicitly stated on this page, but common term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms starting in 2024, but not explicitly stated for the mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term: ... - December 31, 2027'.",
+        "source": "https://www.cityofcamas.us/mayor/page/mayor-steve-hogan"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term: ... - December 31, 2027'.",
+        "source": "https://www.cityofcamas.us/mayor"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date not explicitly stated on this page, but common term length.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms ending in 2027, but not explicitly stated for the mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "John Nohr",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 1",
+      "Mayor Pro Tem alternate"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city hall phone number is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated and associated with the person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city clerk email is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "jnohr@cityofcamas.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated and associated with the person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall email provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked from the individual's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL found in navigation menu linked to the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link to the council member's profile page found in the navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found in navigation under 'Council Members' for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is the person's profile page.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2022-10-17",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'sworn into office on October 17, 2022'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms starting in 2024, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in 'Term: ... - December 31, 2027'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms ending in 2027, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Martin Elzingre",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 2",
+      "Position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed phone number for the individual.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city hall phone number is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Phone number not explicitly stated for the person, but general city hall number is listed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "melzingre@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address construction explicitly stated.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city clerk email is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "martin.elzingre@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email not explicitly stated on this page, but common pattern for council members.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall email provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked from the individual's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is the individual's profile page.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link to the council member's profile page found in the navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found in navigation under 'Council Members' for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name in navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-04-21",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term: April 21, 2025 - ...' and 'sworn into office on April 21, 2025'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date not explicitly stated on this page, but common term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms starting in 2024, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11-25",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term: ... - November 25, 2025'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date not explicitly stated on this page, but common term length.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms ending in 2027, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Leslie Lewallen",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 3",
+      "Position 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed phone number associated with the council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Phone number not explicitly stated for the person, but general city hall number is listed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "llewallen@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address constructed from provided partial address and domain.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "leslie.lewallen@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email not explicitly stated on this page, but common pattern for council members.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall email provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked from the individual's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL found in navigation menu linked to the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current page, which is a profile page for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found in navigation under 'Council Members' for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name in navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11-23",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'sworn into office on November 23, 2021'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date not explicitly stated on this page, but common term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms starting in 2024, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term ending December 31, 2025'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date not explicitly stated on this page, but common term length.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms ending in 2027, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Tim Hein",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 2",
+      "Position 2",
+      "Mayor Pro Tem"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-833-1903",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as a contact number for the individual.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city hall phone number is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Phone number not explicitly stated for the person, but general city hall number is listed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "thein@cityofcamas.us",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address format explicitly described and easily constructed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city clerk email is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "tim.hein@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email not explicitly stated on this page, but common pattern for council members.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall email provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "URL of the current page, which is a profile page for the individual.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL found in navigation menu linked to the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link to the council member's profile page found in the navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found in navigation under 'Council Members' for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name in navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11-29",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated sworn-in date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date not explicitly stated on this page, but common term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms starting in 2024, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated term end date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date not explicitly stated on this page, but common term length.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms ending in 2027, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Marilyn Boerke",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 1",
+      "Position 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city hall phone number is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly stated near name and contact information.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Phone number not explicitly stated for the person, but general city hall number is listed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city clerk email is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "mboerke@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly stated near name and contact information.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "marilyn.boerke@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email not explicitly stated on this page, but common pattern for council members.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall email provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked from the individual's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL found in navigation menu linked to the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link to the council member's profile page found in the navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is a dedicated profile page for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name in navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2021-12-20",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start date explicitly stated as 'December 20, 2021' when she was sworn in.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date not explicitly stated on this page, but common term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms starting in 2024, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End date explicitly stated as 'December 31, 2025' for her term.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date not explicitly stated on this page, but common term length.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms ending in 2027, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jennifer Senescu",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city hall phone number is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Phone number not explicitly stated for the person, but general city hall number is listed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed phone number.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city clerk email is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "jennifer.senescu@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email not explicitly stated on this page, but common pattern for council members.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "jsenescu@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address constructed from explicit text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only general City Hall email provided, not specific to this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked from the individual's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL found in navigation menu linked to the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link to the council member's profile page found in the navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found in navigation under 'Council Members' for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name in navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the current page, specific to the individual.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date not explicitly stated on this page, but common term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2023-02-20",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'appointed and sworn into office on February 20, 2023'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms starting in 2024, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date not explicitly stated on this page, but common term length.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term: ... – December 31, 2027'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Inferred from other council terms ending in 2027, but not explicitly stated for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "John Svilarich",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "At Large"
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city hall phone number is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Phone number not explicitly stated for the person, but general city hall number is listed.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly provided for contact.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Only a general city clerk email is provided, not specific to this council member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "john.svilarich@cityofcamas.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email not explicitly stated on this page, but common pattern for council members.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "jsvilarich@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address provided by combining username and domain.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website linked from the individual's name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website URL found in navigation menu linked to the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit link to the council member's profile page found in the navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link found in navigation under 'Council Members' for this person.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with the person's name in navigation.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name under 'Council Members'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is the person's profile page.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date not explicitly stated on this page, but common term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the term start date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned in the text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date not explicitly stated on this page, but common term length.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the term end date.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  }
+]

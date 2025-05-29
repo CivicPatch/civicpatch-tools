@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Steven Hogan",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "shogan@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jennifer Senescu",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jsenescu@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "John Nohr",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jnohr@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "John Svilarich",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jsvilarich@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Leslie Lewallen",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "llewallen@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Marilyn Boerke",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "mboerke@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Martin Elzingre",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "melzingre@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Tim Hein",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "thein@cityofcamas.us",
+    "updated_at": "2025-05-29"
+  }
+]
