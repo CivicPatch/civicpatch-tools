@@ -1,0 +1,350 @@
+[
+  {
+    "name": "Francis Benjamin",
+    "sources": [
+      "https://www.pullman-wa.gov/government/mayor.php",
+      "https://www.pullman-wa.gov/government/city_council/index.php"
+    ],
+    "images": [],
+    "positions": [
+      "Mayor"
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-338-3316",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number labeled near name and title 'Mayor'.",
+        "source": "https://www.pullman-wa.gov/government/mayor.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "francis_benjamin@pullman-wa.gov",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Email link labeled 'Email Francis Benjamin' near name; exact email inferred from URL pattern.",
+        "source": "https://www.pullman-wa.gov/government/mayor.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/mayor.php",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary page URL for Mayor Francis Benjamin.",
+        "source": "https://www.pullman-wa.gov/government/mayor.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/mayor.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Mayor page linked from City Council page.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term stated as 2024-2027, start year extracted as 2024.",
+        "source": "https://www.pullman-wa.gov/government/mayor.php"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term stated as 2024-2027, end year extracted as 2027.",
+        "source": "https://www.pullman-wa.gov/government/mayor.php"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Carla De Lira",
+    "sources": [
+      "https://www.pullman-wa.gov/government/city_council/index.php",
+      "https://www.pullman-wa.gov/government/city_council/email_councilmember_de_lira.php"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 338-3194",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Carla De Lira's section.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "509-334-4555",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number found on the page as general city contact; no direct label linking specifically to Carla De Lira but likely main council contact.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_de_lira.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_de_lira.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to email page for Carla De Lira on city website.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_de_lira.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is a dedicated email contact page for Councilmember De Lira.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_de_lira.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Eric Fejeran",
+    "sources": [
+      "https://www.pullman-wa.gov/government/city_council/index.php",
+      "https://www.pullman-wa.gov/government/city_council/email_councilmember_fejeran.php"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "At-Large"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 338-3195",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Eric Fejeran's section.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "509-334-4555",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number found on the page header near city contact info, likely main city council contact.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_fejeran.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_fejeran.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to email page for Eric Fejeran on city website.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_fejeran.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is a dedicated email contact page for Councilmember Fejeran.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_fejeran.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Trymaine Gaither",
+    "sources": [
+      "https://www.pullman-wa.gov/government/city_council/index.php",
+      "https://www.pullman-wa.gov/government/city_council/email_councilmember_gaither.php"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 338-3192",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Trymaine Gaither's section.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "509-334-4555",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number found on the city page near council contact info, likely general city council contact.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_gaither.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_gaither.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to email page for Trymaine Gaither on city website.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_gaither.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is a direct email contact page for Councilmember Gaither.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_gaither.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Megan Guido",
+    "sources": [
+      "https://www.pullman-wa.gov/government/city_council/index.php",
+      "https://www.pullman-wa.gov/government/city_council/email_councilmember_guido.php"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 338-3191",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Megan Guido's section.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_guido.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to email page for Megan Guido on city website.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_guido.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL and title indicate this is the official email contact page for Councilmember Megan Guido.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_guido.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Ann Parks",
+    "sources": [
+      "https://www.pullman-wa.gov/government/city_council/index.php",
+      "https://www.pullman-wa.gov/government/city_council/email_councilmember_parks.php"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 338-3193",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Ann Parks's section.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_parks.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to email page for Ann Parks on city website.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_parks.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and title indicate this is the official email contact page for Councilmember Parks.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_parks.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Nathan Weller",
+    "sources": [
+      "https://www.pullman-wa.gov/government/city_council/index.php",
+      "https://www.pullman-wa.gov/government/city_council/email_councilmember_weller.php"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 338-3196",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Nathan Weller's section.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_weller.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to email page for Nathan Weller on city website.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_weller.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL and title indicate this is the official email contact page for Councilmember Nathan Weller.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_weller.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Pat Wright",
+    "sources": [
+      "https://www.pullman-wa.gov/government/city_council/index.php",
+      "https://www.pullman-wa.gov/government/city_council/email_councilmember_wright.php"
+    ],
+    "images": [],
+    "positions": [
+      "Council Member",
+      "Ward 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 338-3197",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Pat Wright's section.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "509-334-4555",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number 509-334-4555 found on the page header near city council context, likely contact for council members.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_wright.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_wright.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to email page for Pat Wright on city website.",
+        "source": "https://www.pullman-wa.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.pullman-wa.gov/government/city_council/email_councilmember_wright.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is a dedicated email contact page for Councilmember Wright.",
+        "source": "https://www.pullman-wa.gov/government/city_council/email_councilmember_wright.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-05-29"
+  }
+]
