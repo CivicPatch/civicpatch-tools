@@ -7,13 +7,13 @@ cmd = "cd ./civpatch_cli && go build -o ../dist/tmp/civpatch_cli ."
 bin = "./dist/tmp/civpatch_cli"
 
 # ===== Run Scrape ====="
-#args_bin = [
-#  "scrape", 
-#  "-run", 
-#  "-state", "wa", 
-#  "-geoid", "5367000", 
-#  "-create-pr",
-#  "-develop"]
+args_bin = [
+  "scrape", 
+  "-run", 
+  "-state", "wa", 
+  "-geoid", "5375775", 
+  "-create-pr",
+  "-develop"]
 #args_bin = [
 #  "run-task",
 #  "-state",
@@ -66,8 +66,8 @@ bin = "./dist/tmp/civpatch_cli"
 #   "-develop",
 #   "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_comment.sh nh 3300933860 526\""]
 # ===== PR review ===== " 
-args_bin = [
-  "run-task", 
-  "-branch-name", "pipeline-municipal-scrapes-nh-3301562500-818396", 
-  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_review.sh nh 3301562500 570\"", 
-  "-develop"]
+#args_bin = [
+#  "run-task", 
+#  "-branch-name", "pipeline-municipal-scrapes-nh-3301562500-818396", 
+#  "-command", "\"/app/civpatch/lib/tasks/scripts/pull_request_review.sh nh 3301562500 570\"", 
+#  "-develop"]

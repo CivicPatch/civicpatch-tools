@@ -109,7 +109,7 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 	cmd := []string{
 		"./lib/tasks/scripts/checkout_branch.sh",
 		"&&",
-		fmt.Sprintf("rake 'pipeline:fetch[%s,%s,%t]'", state, geoid, createPr),
+		fmt.Sprintf("xvfb-run rake 'pipeline:fetch[%s,%s,%t]'", state, geoid, createPr),
 	}
 
 	output := docker.TaskOptionsOutput{

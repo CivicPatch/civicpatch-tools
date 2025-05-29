@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y  \
   jq \ 
   # For reviews
   bc \ 
+  xvfb \
   && rm -rf /var/lib/apt/lists/*
 
 # Add latest gh cli for updating comments/reviewing prs
