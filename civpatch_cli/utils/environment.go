@@ -9,18 +9,18 @@ import (
 var (
 	RequiredScrapeEnvVars = []string{
 		"OPENAI_TOKEN",
-		"BRAVE_TOKEN",
-		"GOOGLE_SEARCH_API_KEY",
-		"GOOGLE_SEARCH_ENGINE_ID",
 		"GOOGLE_GEMINI_TOKEN",
-		"CLOUDFLARE_R2_ENDPOINT", // TODO: Get rid of this
-		"CLOUDFLARE_R2_ACCESS_KEY_ID",
-		"CLOUDFLARE_R2_SECRET_KEY",
 	}
 
 	RequiredEnvVarsCI = []string{
 		"GITHUB_TOKEN",
 		"GITHUB_USERNAME",
+		"GOOGLE_SEARCH_API_KEY",
+		"GOOGLE_SEARCH_ENGINE_ID",
+		"BRAVE_TOKEN",
+		"CLOUDFLARE_R2_ENDPOINT", // TODO: Get rid of this
+		"CLOUDFLARE_R2_ACCESS_KEY_ID",
+		"CLOUDFLARE_R2_SECRET_KEY",
 	}
 
 	RequiredEnvVarsSendCosts = []string{
