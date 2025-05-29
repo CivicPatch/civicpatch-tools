@@ -5,6 +5,8 @@ RUN apt-get update && apt-get install -y  \
   cmake sudo \
   git \
   jq \ 
+  # For reviews
+  bc \ 
   && rm -rf /var/lib/apt/lists/*
 
 # Add latest gh cli for updating comments/reviewing prs

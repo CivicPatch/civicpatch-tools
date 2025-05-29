@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'civpatch/lib/**'
+      - 'Dockerfile'
   workflow_dispatch:
 
 env:
