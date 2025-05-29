@@ -842,7 +842,14 @@
       "government_type": "select_board",
       "email": "wmanzi@seabrooknh.org",
       "website": "http://www.seabrooknh.info",
-      "geoid": "3301568260"
+      "geoid": "3301568260",
+      "meta_updated_at": "2025-05-29",
+      "meta_hash": "4642be256aa7bb5ec0198192d22b7ccc",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hollis",
