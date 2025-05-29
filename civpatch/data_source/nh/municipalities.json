@@ -888,7 +888,14 @@
       "government_type": "select_board",
       "email": "dstack@bownh.gov",
       "website": "http://www.bownh.gov",
-      "geoid": "3301306500"
+      "geoid": "3301306500",
+      "meta_updated_at": "2025-05-29",
+      "meta_hash": "21b531d9719047119ca2d4f5d1441205",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Plaistow",
