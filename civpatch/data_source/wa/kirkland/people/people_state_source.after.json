@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Kelli Curtis",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "KCurtis@kirklandwa.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jay Arnold",
+    "positions": [
+      "Deputy Mayor"
+    ],
+    "email": "jarnold@kirklandwa.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Amy Falcone",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "AFalcone@kirklandwa.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "John Tymczyszyn",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "JTymczyszyn@kirklandwa.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jon Pascal",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "JPascal@kirklandwa.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Neal Black",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "NBlack@kirklandwa.gov",
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Penny Sweet",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "psweet@kirklandwa.gov",
+    "updated_at": "2025-05-29"
+  }
+]
