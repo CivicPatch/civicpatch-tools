@@ -1,35 +1,25 @@
 # OpenData
 
 ## Contribute
-### Run Pipelines
-**Simple Setup (Login via Browser)**
+### Run Scrapes
+(Simplified) Secret Setup
+Set the following environment variables:
+* OPENAI_TOKEN
+* GOOGLE_GEMINI_TOKEN
+
+This will start a docker container, run the scrape, and when 
+the scrapes are complete, output to the /output folder.
+
 ```bash
 civicpatch scrape -state wa --geoid 2411856
 ```
-
-**CI Setup (Setup Environment Variables)**
-* GOOGLE_SEARCH_API_KEY
-* GOOGLE_SEARCH_ENGINE_ID
-* BRAVE_TOKEN (optional)
-* OPENAI_TOKEN
-* GOOGLE_GEMINI_TOKEN
-```bash
-civicpatch scrape -state wa --geoid 2411856 --with-ci true --dry-run false
-```
 ####
 
-### Approve a PR
-
 ## Development
-```bash
-
-```
-
-## Commands
-
-```bash
-rake "pipeline:fetch[wa,2411856]"
-```
+### Requirements
+* Docker
+* [Go](https://go.dev/doc/install)
+* [Air](https://github.com/air-verse/air?tab=readme-ov-file#via-go-install-recommended)
 
 ## Sources
 * All populations & municipalities are pulled primarily from US Census

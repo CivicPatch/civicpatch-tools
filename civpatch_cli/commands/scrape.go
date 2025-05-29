@@ -2,7 +2,6 @@ package commands
 
 import (
 	"civpatch/docker"
-	"civpatch/services"
 	"civpatch/utils"
 	"context"
 	"encoding/json"
@@ -74,7 +73,7 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 		return err
 	}
 
-	githubUsername, githubToken, dockerClient, err := prepareScrape(ctx, develop)
+	dockerClient, err := prepareScrape(ctx, develop)
 	if err != nil {
 		return err
 	}
@@ -87,15 +86,11 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 	for _, envVar := range requiredEnvVars {
 		envVars[envVar] = os.Getenv(envVar)
 	}
-	envVars["GITHUB_TOKEN"] = githubToken
-	envVars["GITHUB_USERNAME"] = githubUsername
 
 	// Note: these are usually set by the Github Actions pipeline
-	if createPr {
-		if branchName == "" { // Only populated if updating existing PR
-			runId := fmt.Sprintf("%d", rand.Intn(1000000))
-			branchName = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, geoid, runId)
-		}
+	if branchName == "" { // Only populated if updating existing PR
+		runId := fmt.Sprintf("%d", rand.Intn(1000000))
+		branchName = fmt.Sprintf("pipeline-municipal-scrapes-%s-%s-%s", state, geoid, runId)
 	}
 	envVars["BRANCH_NAME"] = branchName
 
@@ -204,6 +199,8 @@ func checkScrapeEnvs(state string, geoid string, withCI bool, sendCosts bool) ([
 	}
 
 	err := utils.CheckEnvironmentVariables(requiredEnvVars)
+	allEnvVars := append(requiredEnvVars, utils.RequiredEnvVarsCI...)
+
 	if err != nil {
 		return nil, err
 	}
@@ -215,21 +212,16 @@ func checkScrapeEnvs(state string, geoid string, withCI bool, sendCosts bool) ([
 		return nil, fmt.Errorf("error: geoid is required")
 	}
 
-	return requiredEnvVars, nil
+	return allEnvVars, nil
 }
 
-func prepareScrape(ctx context.Context, develop bool) (string, string, *docker.Client, error) {
-	githubUsername, githubToken, err := services.GetGithubCredentials(ctx)
-	if err != nil {
-		return "", "", nil, err
-	}
-
+func prepareScrape(ctx context.Context, develop bool) (*docker.Client, error) {
 	dockerClient, err := docker.NewClient()
 	if err != nil {
-		return "", "", nil, fmt.Errorf("error creating docker client: %w", err)
+		return nil, fmt.Errorf("error creating docker client: %w", err)
 	}
 
 	dockerClient.PrepareContainer(ctx, develop)
 
-	return githubUsername, githubToken, dockerClient, nil
+	return dockerClient, nil
 }
