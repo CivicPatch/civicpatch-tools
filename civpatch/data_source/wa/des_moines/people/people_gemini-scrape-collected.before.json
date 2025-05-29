@@ -1,0 +1,397 @@
+[
+  {
+    "name": "Traci Buxton",
+    "sources": [
+      "https://www.desmoineswa.gov/your_government/city_council",
+      "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810"
+    ],
+    "images": [],
+    "positions": [
+      "Mayor",
+      "Position 5"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-251-2719",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and term.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      },
+      {
+        "data": "206-251-2719",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found directly associated with the name.",
+        "source": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tbuxton@desmoineswa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      },
+      {
+        "data": "tbuxton@desmoineswa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found directly associated with the name.",
+        "source": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was found on, but not a specific profile page for the individual.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      },
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific personal profile page found; using the City Council page URL where the information was located.",
+        "source": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly listed as 'January 1, 2022'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit start date 'January 1, 2022' found in the text.",
+        "source": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly listed as 'December 31, 2025'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit end date 'December 31, 2025' found in the text.",
+        "source": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Matt Mahoney",
+    "sources": [
+      "https://www.desmoineswa.gov/your_government/city_council"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 7"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-920-6298",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and term.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mmahoney@desmoineswa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was found on, but not a specific profile page for the individual.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly listed as 'January 1, 2022'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly listed as 'December 31, 2025'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Gene Achziger",
+    "sources": [
+      "https://www.desmoineswa.gov/your_government/city_council"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 3"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-498-5645",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and term.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "gachziger@desmoineswa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was found on, but not a specific profile page for the individual.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly listed as 'January 1, 2022'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly listed as 'December 31, 2025'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Harry Steinmetz",
+    "sources": [
+      "https://www.desmoineswa.gov/your_government/city_council"
+    ],
+    "images": [],
+    "positions": [
+      "Deputy Mayor",
+      "Position 1"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-402-8614",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and term.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "hsteinmetz@desmoineswa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was found on, but not a specific profile page for the individual.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly listed as 'January 1, 2022'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly listed as 'December 31, 2025'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Jeremy Nutting",
+    "sources": [
+      "https://www.desmoineswa.gov/your_government/city_council"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 4"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-305-1147",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and term.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jnutting@desmoineswa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was found on, but not a specific profile page for the individual.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly listed as 'January 1, 2024'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly listed as 'December 31, 2027'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "JC Harris",
+    "sources": [
+      "https://www.desmoineswa.gov/your_government/city_council"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 2"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-920-4776",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and term.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jcharris@desmoineswa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was found on, but not a specific profile page for the individual.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly listed as 'January 1, 2024'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly listed as 'December 31, 2027'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  },
+  {
+    "name": "Yoshiko Grace Matsui",
+    "sources": [
+      "https://www.desmoineswa.gov/your_government/city_council"
+    ],
+    "images": [],
+    "positions": [
+      "Councilmember",
+      "Position 6"
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-549-2463",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and term.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ygracematsui@desmoineswa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.desmoineswa.gov/cms/One.aspx?portalId=17385088&pageId=17481810",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was found on, but not a specific profile page for the individual.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11-28",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly listed as 'November 28, 2023'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly listed as 'December 31, 2027'.",
+        "source": "https://www.desmoineswa.gov/your_government/city_council"
+      }
+    ],
+    "updated_at": "2025-05-29"
+  }
+]
