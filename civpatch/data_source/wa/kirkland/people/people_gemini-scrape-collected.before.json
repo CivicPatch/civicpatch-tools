@@ -1,284 +1,174 @@
 [
   {
     "name": "Kelli Curtis",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.kirklandwa.gov/Government/City-Council"
+      "https://www.kirklandwa.gov/Government/City-Council",
+      "https://www.kirklandwa.gov/Whats-Happening/News/City-Council-Selects-Councilmember-Kelli-Curtis-to-Serve-as-Mayor-of-Kirkland",
+      "https://www.kirklandwa.gov/Whats-Happening/News/Mayor-Curtis-Declares-State-of-the-City-is-Flourishing"
     ],
+    "images": [],
     "positions": [
-      "Mayor",
-      "Position 2"
+      "Council Member",
+      "Mayor"
     ],
     "phone_numbers": [
       {
         "data": "425-587-3532",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed.",
-        "proximity_to_name": 50,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the person's name.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "emails": [
+    "emails": [],
+    "websites": [
       {
-        "data": "kcurtis@kirklandwa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed.",
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Website link provided for finding more information about Mayor Curtis and the City Council.",
+        "source": "https://www.kirklandwa.gov/Whats-Happening/News/City-Council-Selects-Councilmember-Kelli-Curtis-to-Serve-as-Mayor-of-Kirkland"
       }
     ],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": []
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated re-election year.",
+        "source": "https://www.kirklandwa.gov/Whats-Happening/News/City-Council-Selects-Councilmember-Kelli-Curtis-to-Serve-as-Mayor-of-Kirkland"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-05-30"
   },
   {
     "name": "Jay Arnold",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.kirklandwa.gov/Government/City-Council"
+      "https://www.kirklandwa.gov/Government/City-Council",
+      "https://www.kirklandwa.gov/Whats-Happening/News/City-Council-Selects-Councilmember-Kelli-Curtis-to-Serve-as-Mayor-of-Kirkland",
+      "https://www.kirklandwa.gov/Whats-Happening/News/Mayor-Curtis-Declares-State-of-the-City-is-Flourishing"
     ],
+    "images": [],
     "positions": [
-      "Deputy Mayor",
-      "Position 1"
+      "Council Member",
+      "Deputy Mayor"
     ],
     "phone_numbers": [
       {
         "data": "425-587-3535",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the person's name.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "emails": [
-      {
-        "data": "jarnold@kirklandwa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "emails": [],
     "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "proximity_to_name": 20,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ]
+    "end_dates": [],
+    "updated_at": "2025-05-30"
   },
   {
     "name": "Neal Black",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.kirklandwa.gov/Government/City-Council"
+      "https://www.kirklandwa.gov/Government/City-Council",
+      "https://www.kirklandwa.gov/Whats-Happening/News/Mayor-Curtis-Declares-State-of-the-City-is-Flourishing"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
-      "Position 5"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "425-587-3544",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the person's name.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "emails": [
-      {
-        "data": "nblack@kirklandwa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "emails": [],
     "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "proximity_to_name": 20,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ]
+    "end_dates": [],
+    "updated_at": "2025-05-30"
   },
   {
     "name": "Amy Falcone",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.kirklandwa.gov/Government/City-Council"
+      "https://www.kirklandwa.gov/Government/City-Council",
+      "https://www.kirklandwa.gov/Whats-Happening/News/Mayor-Curtis-Declares-State-of-the-City-is-Flourishing"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
-      "Position 6"
+      "Council Member"
     ],
-    "phone_numbers": [
-      {
-        "data": "425-587-3526",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
-    "emails": [
-      {
-        "data": "afalcone@kirklandwa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2027-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "proximity_to_name": 20,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ]
+    "end_dates": [],
+    "updated_at": "2025-05-30"
   },
   {
     "name": "Jon Pascal",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.kirklandwa.gov/Government/City-Council"
+      "https://www.kirklandwa.gov/Government/City-Council",
+      "https://www.kirklandwa.gov/Whats-Happening/News/Mayor-Curtis-Declares-State-of-the-City-is-Flourishing"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
-      "Position 7"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "425-587-3530",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the person's name.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "emails": [
-      {
-        "data": "jpascal@kirklandwa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "emails": [],
     "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "proximity_to_name": 20,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ]
+    "end_dates": [],
+    "updated_at": "2025-05-30"
   },
   {
     "name": "Penny Sweet",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.kirklandwa.gov/Government/City-Council"
+      "https://www.kirklandwa.gov/Government/City-Council",
+      "https://www.kirklandwa.gov/Whats-Happening/News/Mayor-Curtis-Declares-State-of-the-City-is-Flourishing"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
-      "Position 3"
+      "Council Member"
     ],
     "phone_numbers": [
       {
         "data": "425-587-3534",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the person's name.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "emails": [
-      {
-        "data": "psweet@kirklandwa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "emails": [],
     "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "proximity_to_name": 20,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ]
+    "end_dates": [],
+    "updated_at": "2025-05-30"
   },
   {
     "name": "John Tymczyszyn",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.kirklandwa.gov/Government/City-Council"
+      "https://www.kirklandwa.gov/Government/City-Council",
+      "https://www.kirklandwa.gov/Whats-Happening/News/Mayor-Curtis-Declares-State-of-the-City-is-Flourishing"
     ],
+    "images": [],
     "positions": [
-      "Councilmember",
-      "Position 4"
+      "Council Member"
     ],
     "phone_numbers": [],
-    "emails": [
-      {
-        "data": "JohnT@Kirklandwa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address extracted from markdown link text.",
-        "markdown_formatting": {},
-        "proximity_to_name": 50,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "emails": [],
     "websites": [],
     "start_dates": [],
-    "end_dates": [
-      {
-        "data": "2027-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date explicitly stated.",
-        "proximity_to_name": 20,
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ]
+    "end_dates": [],
+    "updated_at": "2025-05-30"
   }
 ]
