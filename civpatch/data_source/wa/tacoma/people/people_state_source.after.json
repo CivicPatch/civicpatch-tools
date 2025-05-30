@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "victoria.woodards@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Jamika Scott",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jscott8@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Joe Bushnell",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jbushnell2@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "John Hines",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "jhines1@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Kiara Daniels",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "kdaniels@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Kristina Walker",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "kwalker@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Olgy Diaz",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "odiaz@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "ssadalge@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "positions": [
+      "Council Member"
+    ],
+    "email": "srumbaugh@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  }
+]

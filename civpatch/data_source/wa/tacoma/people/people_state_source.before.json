@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Victoria Woodards",
+    "positions": [
+      "Mayor"
+    ],
+    "email": "victoria.woodards@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Joe Bushnell",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jbushnell2@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Kiara Daniels",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "kdaniels@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Olgy Diaz",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "odiaz@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "John Hines",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jhines1@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Sarah Rumbaugh",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "srumbaugh@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Sandesh Sadalge",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "ssadalge@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Jamika Scott",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "jscott8@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Kristina Walker",
+    "positions": [
+      "Councilmember"
+    ],
+    "email": "kwalker@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Chris Bacha",
+    "positions": [
+      "City Attorney"
+    ],
+    "email": "CBacha@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Nicole Emery",
+    "positions": [
+      "City Clerk"
+    ],
+    "email": "nemery@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Elizabeth Pauli",
+    "positions": [
+      "City Manager"
+    ],
+    "email": "CityManager@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Susan Calderon",
+    "positions": [
+      "City Treasurer"
+    ],
+    "email": "SCalderon@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Jeff Robinson",
+    "positions": [
+      "Community/Economic Development Director"
+    ],
+    "email": "jrobinson@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Michelle Petrich",
+    "positions": [
+      "Court Administrator"
+    ],
+    "email": null,
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Mike Slevin",
+    "positions": [
+      "Environmental Services Director"
+    ],
+    "email": null,
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Andrew Cherullo",
+    "positions": [
+      "Finance Director"
+    ],
+    "email": "acherullo@ci.tacoma.wa.us",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Tory Green",
+    "positions": [
+      "Fire Chief"
+    ],
+    "email": "TGreen@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Shelby Fritz",
+    "positions": [
+      "Human Resources Director"
+    ],
+    "email": "sfritz@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Kate Larsen",
+    "positions": [
+      "Library Director"
+    ],
+    "email": "KateLarsen@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Tanisha Jumper",
+    "positions": [
+      "Media/Communications Director"
+    ],
+    "email": "tjumper@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Peter Huffman",
+    "positions": [
+      "Planning/Development Services Director"
+    ],
+    "email": "phuffman@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Jackie Flowers",
+    "positions": [
+      "Public Utilities Director"
+    ],
+    "email": "jflowers@cityoftacoma.org",
+    "updated_at": "2025-05-30"
+  },
+  {
+    "name": "Ramiro A. Chavez",
+    "positions": [
+      "Public Works Director/City Engineer"
+    ],
+    "email": null,
+    "updated_at": "2025-05-30"
+  }
+]
