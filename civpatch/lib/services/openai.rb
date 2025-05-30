@@ -5,15 +5,15 @@ require "services/shared/response_schemas"
 require "utils/costs_helper"
 require "utils/name_helper"
 require "core/city_manager"
+require "utils/retry_helper"
 
 # TODO: track token usage
 module Services
   MAX_RETRIES = 5 # Maximum retry attempts for rate limits
-  BASE_SLEEP = 5  # Base sleep time for exponential backoff
-  MAX_TOKENS = 100_000
 
   class Openai
     MODEL = "gpt-4.1-mini"
+    TOKEN_LIMIT = 400_000
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
@@ -24,8 +24,6 @@ module Services
       municipality_entry = municipality_context[:municipality_entry]
 
       content = File.read(content_file)
-
-      return { error: "Content for city council members are too long" } if content.split(" ").length > MAX_TOKENS
 
       system_instructions, user_instructions = generate_city_info_prompt(municipality_context, content, page_url,
                                                                          people_hint,
@@ -57,7 +55,6 @@ module Services
       divisions = government_types_config["positions"].flat_map { |position| position["divisions"] }.compact.uniq
       position_examples = government_types_config["position_examples"]
       municipality_entry = municipality_context[:municipality_entry]
-      current_date = Date.today.strftime("%Y-%m-%d")
 
       maybe_target_people = people_hint.map { |person| person&.dig("name") }.compact
 
@@ -236,36 +233,23 @@ module Services
     private
 
     def run_prompt(messages, state, municipality_name)
-      retry_attempts = 0
-      response = @client.chat(
-        parameters: {
-          model: MODEL,
-          messages: messages,
-          temperature: 0.0,
-          response_format: { type: "json_object" }
-        }
-      )
+      Utils::RetryHelper.with_retry(MAX_RETRIES) do
+        response = @client.chat(
+          parameters: {
+            model: MODEL,
+            messages: messages,
+            temperature: 0.0,
+            response_format: { type: "json_object" }
+          }
+        )
 
-      input_tokens_num = response.dig("usage", "prompt_tokens")
-      output_tokens_num = response.dig("usage", "completion_tokens")
-      Utils::CostsHelper.log_llm_cost(state, municipality_name, "openai", input_tokens_num, output_tokens_num, MODEL)
+        input_tokens_num = response.dig("usage", "prompt_tokens")
+        output_tokens_num = response.dig("usage", "completion_tokens")
+        Utils::CostsHelper.log_llm_cost(state, municipality_name, "openai", input_tokens_num, output_tokens_num, MODEL)
 
-      json_output = response.dig("choices", 0, "message", "content")
+        json_output = response.dig("choices", 0, "message", "content")
 
-      JSON.parse(json_output)
-    rescue JSON::ParserError => e
-      puts "JSON Parsing Error for #{municipality_name}, #{state}: #{e.message}"
-      puts "Problematic JSON string was:\n#{json_output}"
-      nil
-    rescue StandardError => e
-      if retry_attempts < MAX_RETRIES
-        sleep_time = BASE_SLEEP**retry_attempts + rand(0..1) # Exponential backoff with jitter
-        puts "#{e.message} - Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
-        sleep sleep_time
-        retry_attempts += 1
-        retry
-      else
-        puts "Max retries reached for #{url}."
+        JSON.parse(json_output)
       end
     end
 

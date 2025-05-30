@@ -85,11 +85,6 @@ module Core
       links = extract_links(page, base_url)
 
       valid_links = links.select do |link|
-        puts "KEYWORDS: #{keywords}"
-        puts "FOUND LINK: #{link[:href]}, match? #{text_match?(link[:text],
-                                                               keywords) || url_match?(link[:href],
-                                                                                       keywords)}, avoid_keywords: #{avoid_keywords},
-                                                                                       text: #{link[:text]}, url: #{link[:href]}"
         next false if IGNORE_SUFFIXES.any? { |suffix| link[:href].end_with?(suffix) }
         next false if text_match?(link[:text], avoid_keywords) ||
                       url_match?(link[:href], avoid_keywords)
