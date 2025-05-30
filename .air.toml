@@ -11,7 +11,7 @@ args_bin = [
   "scrape", 
   "-run", 
   "-state", "wa", 
-  "-geoid", "5367000", 
+  "-geoid", "5377105", 
   "-develop"]
 #args_bin = [
 #  "run-task",
