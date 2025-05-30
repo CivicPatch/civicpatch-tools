@@ -29,12 +29,17 @@ jobs:
           cache-dependency-path: |
             civpatch_cli/go.sum
       
+      - name: Install goreleaser
+        run: |
+          go install github.com/goreleaser/goreleaser/v2@latest
+      
       - name: Build and release civpatch_cli
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TIMESTAMP=$(date +%Y-%m-%d)
           RELEASE_VERSION=${TIMESTAMP}-${GITHUB_RUN_ID}
-          ./civpatch_cli/build.sh $RELEASE_VERSION
-          gh release create ${RELEASE_VERSION} --generate-notes ./dist/*
+          cd civpatch_cli
+          git tag ${RELEASE_VERSION}
+          goreleaser release
 

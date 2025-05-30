@@ -3,16 +3,14 @@
 ## Contribute
 ### Run Scrapes
 (Simplified) Secret Setup
-Set the following environment variables:
-* OPENAI_TOKEN
-* GOOGLE_GEMINI_TOKEN
+1. Set environment variables:
+  * OPENAI_TOKEN
+  * GOOGLE_GEMINI_TOKEN
+2. Find a GEOID to scrape under data_source/[state]/municipalities.json
+3. Run the 
 
-This will start a docker container, run the scrape, and when 
-the scrapes are complete, output to the /output folder.
+This will start a docker container, run the scrape, and when the scrapes are complete, output to the /output folder.
 
-```bash
-civicpatch scrape -state wa --geoid 2411856
-```
 ####
 
 ## Development

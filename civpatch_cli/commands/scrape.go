@@ -121,12 +121,16 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 		}
 	}
 
+	fmt.Printf("Starting scrape job. This might take a while...")
+	fmt.Printf("Check out the logs for the container in Docker Desktop (if available).")
+
 	_, err = dockerClient.RunTask(ctx, docker.TaskOptions{
 		EnvVars: envVars,
 		Command: strings.Join(cmd, " "),
 		Develop: develop,
 		Output:  output,
 	})
+
 	if err != nil {
 		if ctx.Err() != nil {
 			return fmt.Errorf("task timed out: %w", err)
