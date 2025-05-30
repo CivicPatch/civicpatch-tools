@@ -17,7 +17,7 @@ import (
 const (
 	DATA_SOURCE_URL = "https://raw.githubusercontent.com/CivicPatch/civicpatch-tools/refs/heads/main/civpatch/data_source/<STATE>/municipalities.json"
 
-	hostOutputDir = "./output"
+	hostOutputDir = "."
 )
 
 type Municipality struct {

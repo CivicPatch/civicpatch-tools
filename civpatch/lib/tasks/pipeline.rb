@@ -223,9 +223,18 @@ namespace :pipeline do
     state = context[:state]
     geoid = context[:municipality_entry]["geoid"]
 
-    destination_dir = File.join(Core::PathHelper.project_path(".."), "output")
-    source_file = File.join(Core::PathHelper.get_data_city_path(state, geoid), "people.yml")
-    puts "Copying #{source_file} to #{destination_dir}"
-    FileUtils.cp(source_file, destination_dir)
+    output_dir = File.join(Core::PathHelper.project_path(".."), "output")
+    source_data_dir = Core::PathHelper.get_data_city_path(state, geoid)
+    source_data_source_dir = Core::PathHelper.get_data_source_city_path(state, geoid)
+    destination_data_dir = File.join(output_dir, "data")
+    destination_data_source_dir = File.join(output_dir, "data_source")
+
+    FileUtils.mkdir_p(destination_data_dir)
+    FileUtils.mkdir_p(destination_data_source_dir)
+
+    puts "Copying #{source_data_dir} to #{destination_data_dir}"
+    FileUtils.cp_r(source_data_dir, destination_data_dir)
+    puts "Copying #{source_data_source_dir} to #{destination_data_source_dir}"
+    FileUtils.cp_r(source_data_source_dir, destination_data_source_dir)
   end
 end

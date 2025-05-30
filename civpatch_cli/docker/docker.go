@@ -313,7 +313,7 @@ func (c *Client) copyFromContainer(ctx context.Context, containerID, containerPa
 	// Extract the tar archive to the host directory
 	if err := archive.CopyTo(reader, archive.CopyInfo{
 		Path:  containerPath,
-		IsDir: false,
+		IsDir: true,
 	}, hostDirPath); err != nil {
 		return fmt.Errorf("failed to extract tar archive from container path '%s' to '%s': %w", containerPath, hostDirPath, err)
 	}
