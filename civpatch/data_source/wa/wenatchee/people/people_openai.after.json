@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Mike Poirier",
+    "positions": [
+      "Mayor"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/5256/638736517525800000",
+    "email": "mike@wenatcheewa.gov",
+    "phone_number": "(509) 888-6204",
+    "website": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": null,
+    "updated_at": "2025-06-02"
+  },
+  {
+    "name": "Jose Cuevas",
+    "positions": [
+      "Mayor Pro Tempore",
+      "Council Member",
+      "District 1"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/3829/637135684090370000",
+    "email": null,
+    "phone_number": "(509) 881-1256",
+    "website": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "start_date": null,
+    "end_date": "2027",
+    "updated_at": "2025-06-02"
+  },
+  {
+    "name": "Linda Herald",
+    "positions": [
+      "Council Member",
+      "At-large A"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/4320/637587397464570000",
+    "email": null,
+    "phone_number": "(509) 670-0309",
+    "website": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "start_date": null,
+    "end_date": "2027",
+    "updated_at": "2025-06-02"
+  },
+  {
+    "name": "Mayra Navarro Gomez",
+    "positions": [
+      "Council Member",
+      "At-large B"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/5294/638754807737830000",
+    "email": null,
+    "phone_number": "(509) 423-3916",
+    "website": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "start_date": null,
+    "end_date": "2025",
+    "updated_at": "2025-06-02"
+  },
+  {
+    "name": "Chelsea Ewer",
+    "positions": [
+      "Council Member",
+      "District 2"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/4985/638530950506870000",
+    "email": null,
+    "phone_number": "(509) 679-4023",
+    "website": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "start_date": null,
+    "end_date": "2025",
+    "updated_at": "2025-06-02"
+  },
+  {
+    "name": "Top Rojanasthien",
+    "positions": [
+      "Council Member",
+      "District 3"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/4736/638149061053970000",
+    "email": null,
+    "phone_number": "(509) 670-6750",
+    "website": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "start_date": "2021",
+    "end_date": "2025",
+    "updated_at": "2025-06-02"
+  },
+  {
+    "name": "Travis Hornby",
+    "positions": [
+      "Council Member",
+      "District 4"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/3833/637135696004400000",
+    "email": null,
+    "phone_number": "(509) 429-5729",
+    "website": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "start_date": null,
+    "end_date": "2027",
+    "updated_at": "2025-06-02"
+  },
+  {
+    "name": "Charlie Atkinson",
+    "positions": [
+      "Council Member",
+      "District 5"
+    ],
+    "image": "https://www.wenatcheewa.gov/home/showpublishedimage/4865/638397799038270000",
+    "email": null,
+    "phone_number": "(509) 679-3625",
+    "website": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "start_date": null,
+    "end_date": "2027",
+    "updated_at": "2025-06-02"
+  }
+]
