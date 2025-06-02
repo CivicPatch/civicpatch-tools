@@ -1,0 +1,374 @@
+[
+  {
+    "name": "Betsy Wilkerson",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed directly below name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bwilkerson@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly below name and role.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name and image.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Jonathan Bingle",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed directly below name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Division listed as part of the role description."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jbingle@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly below name and role.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name and image.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start year explicitly stated in 'Term: 2022-2025'.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End year explicitly stated in 'Term: 2022-2025'.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Michael Cathcart",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed directly below name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Division listed as part of the role description."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mcathcart@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly below name and role.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name and image.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Paul Dillon",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed directly below name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Division listed as part of the role description."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "pdillon@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly below name and role.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name and image.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Lili Navarrete",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed directly below name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Division listed as part of the role description."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "lnavarrete@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly below name and role.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name and image.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start year explicitly stated in 'Term: 2024-2025'.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End year explicitly stated in 'Term: 2024-2025'.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Zack Zappone",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed directly below name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Division listed as part of the role description."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "zzappone@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly below name and role.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name and image.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start year explicitly stated in 'Term: 2022-2025'.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End year explicitly stated in 'Term: 2022-2025'.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Kitty Klitzke",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed directly below name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Division listed as part of the role description."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kklitzke@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly below name and role.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name and image.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Start year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "End year explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  }
+]

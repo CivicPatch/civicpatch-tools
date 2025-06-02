@@ -7,7 +7,10 @@
   * OPENAI_TOKEN
   * GOOGLE_GEMINI_TOKEN
 2. Find a GEOID to scrape under data_source/[state]/municipalities.json
-3. Run the 
+3. Run the command
+```sh
+./civpatch scrape -run -state wa -geoid 5335940
+```
 
 This will start a docker container, run the scrape, and when the scrapes are complete, output to the /output folder.
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Services
-  module Shared
+  module GoogleGemini
     class ResponseSchemas
       LLM_DATA_POINT_SCHEMA = {
         type: :object,
@@ -15,7 +15,8 @@ module Services
         type: :object,
         properties: {
           name: { type: :string },
-          positions: { type: :array, items: { type: :string } },
+          roles: { type: :array, items: LLM_DATA_POINT_SCHEMA },
+          divisions: { type: :array, items: LLM_DATA_POINT_SCHEMA },
           phone_number: LLM_DATA_POINT_SCHEMA,
           email: LLM_DATA_POINT_SCHEMA,
           website: LLM_DATA_POINT_SCHEMA,

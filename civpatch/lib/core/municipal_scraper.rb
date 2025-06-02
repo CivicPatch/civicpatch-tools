@@ -2,7 +2,7 @@
 
 require "utils/url_helper"
 require "services/shared/people"
-require "services/google_gemini"
+require "services/google_gemini/client"
 require "services/openai"
 require "resolvers/search_resolver"
 require "core/crawler"
@@ -223,7 +223,7 @@ module Core
       when "openai"
         Services::Openai.new
       when "gemini"
-        Services::GoogleGemini.new
+        Services::GoogleGemini::Client.new
       end
     end
 

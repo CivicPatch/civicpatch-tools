@@ -1,0 +1,54 @@
+{
+  "government_type": "mayor_council",
+  "people": [
+    {
+      "name": "Lisa Brown",
+      "positions": [
+        "Mayor"
+      ]
+    },
+    {
+      "name": "Betsy Wilkerson",
+      "positions": [
+        "Council Member"
+      ]
+    },
+    {
+      "name": "Jonathan Bingle",
+      "positions": [
+        "Council Member"
+      ]
+    },
+    {
+      "name": "Michael Cathcart",
+      "positions": [
+        "Council Member"
+      ]
+    },
+    {
+      "name": "Paul Dillon",
+      "positions": [
+        "Council Member"
+      ]
+    },
+    {
+      "name": "Lili Navarrete",
+      "positions": [
+        "Council Member"
+      ]
+    },
+    {
+      "name": "Zack Zappone",
+      "positions": [
+        "Council Member"
+      ]
+    },
+    {
+      "name": "Kitty Klitzke",
+      "positions": [
+        "Council Member"
+      ]
+    }
+  ],
+  "notes": "Spokane, WA has a strong mayor and city council system. [3, 5, 6] The council consists of a president elected at large and six members elected by district. [3] The current mayor is Lisa Brown. [3, 8, 9, 10, 11, 13] The listed council members were found in the city's directory and council member list. [12, 13]"
+}
