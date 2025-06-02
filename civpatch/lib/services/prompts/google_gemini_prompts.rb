@@ -1,27 +1,24 @@
 # frozen_string_literal: true
 
 module Services
-  module Shared
-    class GeminiPrompts
-      def self.search_for_people_prompt(state, municipality_entry)
-        city_name = municipality_entry["name"]
+  module Prompts
+    class GoogleGeminiPrompts
+      def self.research_municipality(state, municipality_entry)
+        municipality_name = municipality_entry["name"]
         government_types = Core::CityManager.government_types
-        positions_by_government_type = government_types.map do |government_type|
-          Core::CityManager.get_config(government_type)["positions"].map { |p| p["role"] }.join(", ")
-        end
 
         %(
         Provide the current elected Mayor and City Council Members for the specified city,
         formatting the response as a JSON object.
 
-        City: #{city_name}, #{state}
-        City Website (Optional, for context): #{municipality_entry["website"]}
+        Municipality: #{municipality_name}, #{state}
+        Municipality Website (Optional, for context): #{municipality_entry["website"]}
 
         Instructions:
 
         1. Figure out the government type of the city. Available government types: #{government_types.join(", ")}
 
-        2. Determine the total number of elected officials on the City Council for #{city_name}.
+        2. Determine the total number of elected officials on the City Council for #{municipality_name}.
         This total number includes the Mayor (only if available).
 
         3. Create a JSON object with a single top-level key "people". The value of "people" must be an array.
@@ -29,8 +26,7 @@ module Services
         4. This array must contain exactly the total number of elected officials determined in step 1.
 
         5. Within the array, include one entry for the Mayor (or equivalent, only if available)
-        and the remaining entries for "Council Member (or equivalent)" positions. The full list of positions for
-        each government type are: #{positions_by_government_type.join(", ")}
+        and the remaining entries for "Council Member (or equivalent)" roles.
 
         6 .For each entry in the array, provide the current elected official's name
         only if you are highly certain based on your training data or search results.
@@ -46,9 +42,9 @@ module Services
           "government_type": The government type of the city (string),
           "people": [{
             "name": The official's name (string) or null,
-            "positions": The position held (array of strings),
+            "role": The position held (array of strings),
                          which should be either "Mayor" (only if the municipality has a mayor)
-                         or "Council Member" (or equivalent).
+                         or "Council Member" (or equivalent e.g. Selectmen, Alderman).
           }],
           "notes": "Notes about the search and the results"
         }
@@ -61,15 +57,14 @@ module Services
       )
       end
 
-      def self.municipal_directory_prompt(municipality_context, content, people, person_name = "")
+      def self.municipality_officials(municipality_context, content, people, person_name = "")
         state = municipality_context[:state]
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]
         municipality_config = Core::CityManager.get_config(government_type)
         # Ensure 'positions' here refers to the actual role names for the prompt string
-        positions = municipality_config["positions"].map { |p| p["role"] }
-        divisions = municipality_config["positions"].flat_map { |position| position["divisions"] }
-        position_examples = municipality_config["position_examples"]
+        roles = municipality_config["roles"].map { |p| p["role"] }
+        # divisions = municipality_config["positions"].flat_map { |position| position["divisions"] }
         current_date = Date.today.strftime("%Y-%m-%d")
         maybe_target_people = people.map { |person| person&.dig("name") }.compact
 
@@ -90,17 +85,17 @@ module Services
         If not, return an empty JSON array `[]`.
 
         Target Municipality: #{municipality_name}, #{state}
-        Target Municipal Roles: #{positions.join(", ")} (Examples: #{position_examples})
-        Associated Divisions: #{divisions.join(", ")}
+        Target Roles: #{roles.join(", ")}
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
         - phone_number: {data, llm_confidence, llm_confidence_reason, }
-        - email: {data, llm_confidence, llm_confidence_reason, }
-        - website: {data, llm_confidence, llm_confidence_reason, }
-        - positions: [array of strings]
-        - start_date: {data, llm_confidence, llm_confidence_reason, }
-        - end_date: {data, llm_confidence, llm_confidence_reason, }
+        - email: {data, llm_confidence, llm_confidence_reason}
+        - website: {data, llm_confidence, llm_confidence_reason}
+        - roles: [{data, llm_confidence, llm_confidence_reason}]
+        - divisions: [{data, llm_confidence, llm_confidence_reason}]
+        - start_date: {data, llm_confidence, llm_confidence_reason}
+        - end_date: {data, llm_confidence, llm_confidence_reason}
 
         Format example:
         {
@@ -113,7 +108,12 @@ module Services
                                "llm_confidence_reason": "Directly associated with name."},
               "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95,
                                 "llm_confidence_reason": "Found under header"},
-              "positions": ["Mayor", "Council Member"],
+              "roles": [{"data": "Council Member", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Listed under header."},
+                        {"data": "Mayor", "llm_confidence": 0.90,
+                                "llm_confidence_reason": "Listed under header."}],
+              "divisions": [{"data": "District 1", "llm_confidence": 0.90
+                                "llm_confidence_reason": "Listed under header."}],
               "start_date": {"data": "2022-01-01", "llm_confidence": 0.95,
                                 "llm_confidence_reason": "Listed under header."},
               "end_date": {"data": "2022-12-31", "llm_confidence": 0.95,
@@ -125,7 +125,10 @@ module Services
                               "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
               "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92,
                               "llm_confidence_reason": "Found under 'Contact Us' section near name."},
-              "positions": ["Council President"],
+              "roles": [{"data": "Council President", "llm_confidence": 0.95,
+                                "llm_confidence_reason": "Found under header."}],
+              "divisions": [{"data": "At-Large", "llm_confidence": 0.90,
+                                "llm_confidence_reason": "Found under header."}],
               "end_date": {"data": "2027-12-31", "llm_confidence": 0.95,
                               "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
             }
@@ -134,7 +137,7 @@ module Services
 
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
-        - Positions extraction:
+        - Roles extraction:
           - **CRITICAL**: Extract roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
             **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
           - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned,
@@ -142,7 +145,7 @@ module Services
             (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their
             position, even if a future term date is also mentioned. The statement of resignation or vacancy takes
             precedence over listed term dates for determining current active status.
-          - **Check for Past Dates**: Before extracting a specific position title (e.g., "Council President", "Chair"),
+          - **Check for Past Dates**: Before extracting a specific role title (e.g., "Council President", "Chair"),
             examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012",
             "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past**
             and is not the person's current role, **DO NOT extract that specific position title.** Focus only on roles
@@ -152,14 +155,11 @@ module Services
             or non-voting unless they are explicitly listed in the Target Municipal Roles.
             Focus on the primary elected/appointed governing body members.
           - Include only active roles (today is #{current_date}).
-          - Include both the role and any associated division (e.g., "Council Member, District 3").
-          - **Avoid Redundant Phrasing in Positions**: If similar terms describing the same core role
-            (e.g., "Council Member," "Councilor") are found associated with the same division
-            (ex: Ward, District, Seat), extract only the most complete or primary term used
-            in the source text. Do not concatenate these similar terms for a single position.
-            For instance, for "Ward 3 Councilor," prefer "Councilor, Ward 3" or
-            "Council Member, Ward 3" (if "Council Member" is the standard term for that role type),
-            but not "Council Member, Ward 3 Councilor."
+        - Division extraction:
+          - Extract divisions, districts, or wards ONLY if they are explicitly mentioned in the text
+            and are relevant to the person's current role.
+            Example: "Council Member for District 3" or "At-Large Councilor" should be extracted as
+            "District 3" and "At-Large", respectively.
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
@@ -227,8 +227,7 @@ module Services
             - "elected in Nov 2020, reelected Nov 2024" -> `start_date`: {"data": "2024-11"}
             - "term ending December 2028" -> `end_date`: {"data": "2028-12"}
             - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." -> (This person should NOT
-              be in the output, or if forced to output, all their fields like positions and dates should be null/empty,
-              with a reason citing the resignation).
+              be in the output).
             - **Final Check**: Was the output date explicitly written in the text (or directly convertible via
               the Month YYYY rule) **and clearly associated with the correct individual**? If not, it MUST be null.
               No exceptions for inference or misattribution.
@@ -237,7 +236,7 @@ module Services
           that appear structurally close (e.g., immediately following section) to a specific person's name or section
           should be associated with that person unless the text clearly indicates
           otherwise (e.g., 'General City Contact').
-          **When processing tabular data, ensure all extracted fields for a single person (name, positions, dates, etc.)
+          **When processing tabular data, ensure all extracted fields for a single person (name, roles, divisions, dates, etc.)
           are sourced from data within that person's specific row or clearly delineated section.
           Do not carry over or associate data from adjacent rows or different individuals.**
         - Ensure only ONE entry exists per unique person's name.

@@ -6,7 +6,7 @@ require "resolvers/person_resolver"
 module Services
   module Shared
     class People
-      def self.format_raw_data(person, source)
+      def self.to_person(person, source)
         formatted_person = {
           "name" => person["name"],
           "sources" => [source]
@@ -14,17 +14,34 @@ module Services
 
         # Sometimes a position might be in the format "Position A, Position B"
         # When it should be two positions
-        positions = person["positions"].present? ? person["positions"] : []
-        positions = positions.map { |position| position.split(",").map(&:strip) }.flatten
+        # positions = person["positions"].present? ? person["positions"] : []
+        # positions = positions.map { |position| position.split(",").map(&:strip) }.flatten
 
         formatted_person["images"] = data_point?(person["image"]) ? [person["image"]] : []
-        formatted_person["positions"] = positions
+        formatted_person["roles"] = if person["roles"].length.positive?
+                                      person["roles"].select do |role|
+                                        data_point?(role)
+                                      end
+                                    else
+                                      []
+                                    end
+        formatted_person["divisions"] = if person["divisions"].length.positive?
+                                          person["divisions"].select do |division|
+                                            data_point?(division)
+                                          end
+                                        else
+                                          []
+                                        end
         formatted_person["phone_numbers"] =
           data_point?(person["phone_number"]) ? [person["phone_number"]] : []
         formatted_person["emails"] =
           data_point?(person["email"]) && valid_email?(person["email"]["data"]) ? [person["email"]] : []
         formatted_person["websites"] =
-          data_point?(person["website"]) && valid_website?(person["website"]["data"]) ? [format_website_data_point(person["website"])] : []
+          if data_point?(person["website"]) && valid_website?(person["website"]["data"])
+            [format_website_data_point(person["website"])]
+          else
+            []
+          end
         formatted_person["start_dates"] =
           data_point?(person["start_date"]) ? [person["start_date"]] : []
         formatted_person["end_dates"] =
