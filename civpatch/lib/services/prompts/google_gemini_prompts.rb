@@ -42,7 +42,7 @@ module Services
           "government_type": The government type of the city (string),
           "people": [{
             "name": The official's name (string) or null,
-            "role": The position held (array of strings),
+            "roles": The position held (array of strings),
                          which should be either "Mayor" (only if the municipality has a mayor)
                          or "Council Member" (or equivalent e.g. Selectmen, Alderman).
           }],
