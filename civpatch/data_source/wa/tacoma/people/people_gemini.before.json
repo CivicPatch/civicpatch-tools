@@ -21,8 +21,8 @@
     "name": "John Hines",
     "roles": [
       "Council Member",
-      "Commissioner",
-      "Chair"
+      "Chair",
+      "Commissioner"
     ],
     "divisions": [
       "Position 1",
@@ -30,7 +30,7 @@
     ],
     "image": null,
     "phone_number": "(253) 591-5100",
-    "email": null,
+    "email": "HCampbell2@tacoma.gov",
     "website": "https://tacoma.gov/profile/council-member-john-hines",
     "start_date": "2023",
     "end_date": "2027-12-31",
@@ -52,7 +52,7 @@
     ],
     "image": null,
     "phone_number": "(253) 229-2508",
-    "email": "NBernik@tacoma.gov",
+    "email": null,
     "website": "https://tacoma.gov/profile/council-member-sarah-rumbaugh",
     "start_date": "2021-11",
     "end_date": "2025-12-31",
@@ -86,8 +86,7 @@
   {
     "name": "Sandesh Sadalge",
     "roles": [
-      "Council Member",
-      "At-Large"
+      "Council Member"
     ],
     "divisions": [
       "Position 4",
@@ -95,7 +94,7 @@
     ],
     "image": null,
     "phone_number": "(253) 355-1276",
-    "email": "NBernik@tacoma.gov",
+    "email": null,
     "website": "https://tacoma.gov/profile/council-member-sandesh-sadalge",
     "start_date": "2024-07",
     "end_date": "2025-12-31",
@@ -106,9 +105,11 @@
     "updated_at": "2025-06-04"
   },
   {
-    "name": "Joe Bushnell",
+    "name": "Chanjolee Bushnell",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Vice Chair",
+      "Chair"
     ],
     "divisions": [
       "Position 5",
@@ -152,6 +153,7 @@
     "name": "Olgy Diaz",
     "roles": [
       "Council Member",
+      "Commissioner",
       "Vice Chair"
     ],
     "divisions": [
@@ -173,12 +175,11 @@
   {
     "name": "Kristina Walker",
     "roles": [
-      "Council Member",
-      "Chair"
+      "Council Member"
     ],
     "divisions": [
       "Position 8",
-      "At-Large Position 8"
+      "At-Large"
     ],
     "image": null,
     "phone_number": "(253) 312-7734",

@@ -2,13 +2,9 @@
   {
     "name": "Victoria Woodards",
     "roles": [
-      "Mayor",
-      "City Council Member At-Large",
-      "City Council Liaison to the Community’s Police Advisory Committee (CPAC)"
+      "Mayor"
     ],
-    "divisions": [
-      "At-Large"
-    ],
+    "divisions": [],
     "image": "https://tacoma.gov/wp-content/uploads/2024/11/Mayor-Woodards-Portrait-1-400x385.jpg",
     "phone_number": "(253) 591-5100",
     "email": null,
@@ -27,12 +23,11 @@
       "Council Member",
       "Deputy Mayor",
       "Chair of the Government Performance and Finance Committee",
-      "Member of the Infrastructure, Planning and Sustainability Committee",
-      "Pierce Transit Commissioner"
+      "Member of the Infrastructure, Planning and Sustainability Committee"
     ],
     "divisions": [
       "Position 1",
-      "District 1 - Position 1"
+      "District 1"
     ],
     "image": "https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-400x385.jpg",
     "phone_number": "(253) 591-5100",
@@ -78,7 +73,7 @@
       "Position 3",
       "District 3"
     ],
-    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-400x385.jpg",
+    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg",
     "phone_number": "(253) 591-5100",
     "email": null,
     "website": "https://tacoma.gov/profile/council-member-jamika-scott",
@@ -116,7 +111,6 @@
     "roles": [
       "Council Member",
       "Vice Chair, Government, Performance, and Finance Committee",
-      "Member, Economic Development Committee",
       "Chair, Puget Sound Clean Air Agency",
       "Chair, Tacoma-Pierce County Health Department Board of Health"
     ],
@@ -126,7 +120,7 @@
     ],
     "image": "https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-400x385.jpg",
     "phone_number": "(253) 312-0550",
-    "email": null,
+    "email": "NBernik@tacoma.gov",
     "website": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell",
     "start_date": "2021-11",
     "end_date": "2025-12-31",
@@ -143,7 +137,8 @@
       "Council Member"
     ],
     "divisions": [
-      "At-Large Position 6"
+      "At-Large",
+      "Position 6"
     ],
     "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-400x385.jpg",
     "phone_number": "(253) 591-5100",
@@ -161,11 +156,14 @@
     "name": "Olgy Diaz",
     "roles": [
       "Council Member",
-      "Council Member At-Large Position 7"
+      "Pierce Transit Commissioner",
+      "Pierce County Regional Council Member",
+      "Vice Chair, Infrastructure, Planning and Sustainability Committee",
+      "Vice Chair, Economic Development Committee"
     ],
     "divisions": [
       "Position 7",
-      "At-Large Position 7"
+      "At-Large"
     ],
     "image": "https://tacoma.gov/wp-content/uploads/2024/11/Diaz-400x385.jpg",
     "phone_number": "(253) 533-0980",
@@ -189,10 +187,9 @@
     ],
     "divisions": [
       "Position 8",
-      "At-Large Position 8",
-      "District 3"
+      "At-Large"
     ],
-    "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-400x385.jpg",
+    "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg",
     "phone_number": "(253) 312-7734",
     "email": null,
     "website": "https://tacoma.gov/profile/council-member-kristina-walker",
