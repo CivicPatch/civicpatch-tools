@@ -10,7 +10,7 @@ require "core/crawler"
 module Core
   class MunicipalScraper
     MAX_URLS_TO_SCRAPE = 20
-    MIN_PEOPLE_TO_FIND = 5
+    MIN_PEOPLE_TO_FIND = 3
 
     def self.fetch( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
       llm_service_string,
