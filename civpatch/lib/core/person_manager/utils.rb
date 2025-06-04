@@ -61,8 +61,11 @@ module Core
         number_words_in_roman = %w[i ii iii iv v vi vii viii ix x]
 
         division_identifier_to_find = division_rest_string&.downcase&.strip
+
+        return "" if division_identifier_to_find.blank?
+
         # Remove quotation marks (curly and normal) and parentheses
-        division_identifier_to_find = division_identifier_to_find.gsub(/["“”()]/, "")
+        division_identifier_to_find = division_identifier_to_find.gsub(/["“”#()]/, "")
 
         if number_words_in_english.include?(division_identifier_to_find)
           return (number_words_in_english.index(division_rest_string) + 1).to_s
