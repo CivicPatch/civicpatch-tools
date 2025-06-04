@@ -47,7 +47,7 @@ module Core
       %w[seeded search crawler].each do |scrape_with|
         break unless should_continue_scraping?(context, data)
 
-        puts "Scraping with #{scrape_with}"
+        puts "#{llm_service_string} Scraping with #{scrape_with}"
 
         case scrape_with
         when "seeded"

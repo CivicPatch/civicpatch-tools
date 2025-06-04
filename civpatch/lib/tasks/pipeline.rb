@@ -17,7 +17,7 @@ require_relative "../services/google_sheets"
 
 namespace :pipeline do
   desc "Scrape council members for a specific municipality"
-  task :fetch, [:state, :geoid, :create_pr] do |_t, args|
+  task :scrape, [:state, :geoid, :create_pr] do |_t, args|
     state = args[:state]
     geoid = args[:geoid]
     create_pr = args[:create_pr] == "true"
