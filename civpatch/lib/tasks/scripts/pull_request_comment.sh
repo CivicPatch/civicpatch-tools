@@ -17,7 +17,7 @@ fi
 
 echo "Generating comment for $STATE $GEOID"
 DATA=$(rake "github_pipeline:generate_comment[$STATE,$GEOID]")
-COMMENT=$(printf "$DATA" | jq -r '.comment' | tr -d '"')
+COMMENT=$(printf "%s" "$DATA" | jq -r '.comment' |  sed 's/\\n/\n/g' )
 
 # Verify we got a valid comment
 if [ -z "$COMMENT" ]; then

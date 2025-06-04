@@ -16,8 +16,9 @@ if [ -z "$GITHUB_TOKEN" ]; then
 fi
 
 REVIEW=$(rake "github_pipeline:generate_review[$STATE,$GEOID]")
-SCORE=$(printf "$REVIEW" | jq '.score' )
-COMMENT=$(printf "$REVIEW" | jq --raw-output '.comment' | tr -d '"')
+
+SCORE=$(printf '%s' "$REVIEW" | jq '.score' )
+COMMENT=$(printf '%s' "$REVIEW" | jq -r '.comment' | sed 's/\\n/\n/g')
 
 APPROVED_COMMENT="Approved by Bot based on a high agreement score (>70%)."
 REJECTED_COMMENT="Rejected by Bot - please manually review."
