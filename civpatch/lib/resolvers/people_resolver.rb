@@ -278,7 +278,7 @@ module Resolvers
     end
 
     private_class_method def self.merge_common_values(arrays)
-      hash_counts = arrays.each_with_object(Hash.new(0)) do |array, aggregated_counts|
+      hash_counts = arrays.compact.each_with_object(Hash.new(0)) do |array, aggregated_counts|
         array.uniq.each do |item|
           aggregated_counts[item] += 1
         end
