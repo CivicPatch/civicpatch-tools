@@ -28,6 +28,7 @@ module Resolvers
                       elsif source_file.include?("state_source")
                         "state_source"
                       end
+        next unless source_name
 
         source = {
           source_name: source_name,
