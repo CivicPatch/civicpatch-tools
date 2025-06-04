@@ -85,7 +85,7 @@ module Services
 
         Target Municipality: #{municipality_name}, #{state}
         Target Roles: #{roles.join(", ")}
-        Division examples: #{division_names.join(", ")}
+        Target Divisions: #{division_names.join(", ")}
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
@@ -160,6 +160,11 @@ module Services
             and are relevant to the person's current role.
             Example: "Council Member for District 3" or "At-Large Councilor" should be extracted as
             "District 3" and "At-Large", respectively.
+          - A person can have multiple divisions. List them separately.
+            - Examples:
+              - "Citywide Position 7" -> "Citywide", "Position 7"
+          - Loose associations (the person lives in a district, but not elected from it)
+            should not be listed
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names

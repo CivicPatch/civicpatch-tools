@@ -41,7 +41,7 @@ module Services
           Target Person (if applicable): #{person_name}
           Target Municipality: #{municipality_entry["name"]}, #{state}
           Target roles: #{roles.join(", ")}
-          Division examples: #{division_names.join(",")}
+          Target divisions: #{division_names.join(",")}
 
           Return a JSON object with a key "people" containing an array.
           Each object represents one person and MUST include ALL fields
@@ -114,13 +114,21 @@ module Services
             - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
             - **Focus on Main Governing Body**: Prioritize extracting members of the primary municipal governing body
               (e.g., Town Council, City Council, Select Board). The `Key roles` and `Examples` provided to you#{" "}
-              primarily refer to positions on this main body.
+              primarily refer to oooooooo on this main body.
             - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased,
               or their position is otherwise noted as vacant (e.g., "applications being accepted for this seat")**,
               DO NOT include them as a current office holder or extract their position.
               The statement of resignation or vacancy takes precedence over any listed future term dates when determining current active status.
               For example, if a person was "Elected Nov 2024 for term ending Dec 2028" but then "Resigned April 15",#{" "}
               they should NOT be included in the output as an active member.
+            - Divisions should NOT be included under roles.
+          - Divisions:
+            - A person can have multiple divisions. List them separately.
+              Examples:
+                - "Citywide Position 7" -> "Citywide", "Position 7"
+                - "At-Large Position 2" -> "At-Large", "Position 2"
+            - Loose associations (the person lives in a district, but not elected from it)
+              should not be listed
           - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
           - Contact Details (Phone/Email/Website):
             - Associate details logically if near the person's name/section.

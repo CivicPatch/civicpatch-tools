@@ -22,12 +22,12 @@ module Browser
   }.freeze
   IGNORE_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"].freeze
 
-  def self.with_browser
+  def self.with_browser(headless: false)
     Playwright.create(
       playwright_cli_executable_path: Core::PathHelper.project_path(File.join("node_modules", ".bin", "patchright"))
     ) do |playwright|
       browser = playwright.chromium.launch(
-        headless: false,
+        headless: headless,
         args: ["--single-process"]
       )
 
@@ -38,11 +38,11 @@ module Browser
   end
 
   def self.fetch_page_content(url, options = {})
-    with_browser do |browser|
+    with_browser(headless: options[:headless]) do |page|
       api_data = []
 
       if options[:include_api_content]
-        browser.on("response", lambda { |response|
+        page.on("response", lambda { |response|
           content = include_api_content(response)
           api_data << content if content.present?
         })
@@ -51,16 +51,16 @@ module Browser
       with_network_retry(url) do
         return nil if IGNORE_EXTENSIONS.any? { |ext| url.end_with?(ext) }
 
-        browser.goto(url)
-        content_type = browser.evaluate("document.contentType")
+        page.goto(url)
+        content_type = page.evaluate("document.contentType")
         return nil unless html_page?(content_type)
       end
 
       sleep(options[:wait_for]) if options[:wait_for].present?
 
-      yield(browser) if block_given?
+      yield(page) if block_given?
 
-      process_page(browser, url, options, api_data)
+      process_page(page, url, options, api_data)
     end
   end
 
@@ -84,10 +84,10 @@ module Browser
     end
   end
 
-  private_class_method def self.process_page(browser, url, options, api_data)
-    page_source = browser.content
+  private_class_method def self.process_page(page, url, options, api_data)
+    page_source = page.content
 
-    page_source = process_images(browser, page_source, options, url) if options[:image_dir].present?
+    page_source = process_images(page, page_source, options, url) if options[:image_dir].present?
     page_source = Utils::UrlHelper.format_links_to_absolute(page_source, url)
     page_source = format_page_html(page_source, api_data, url) if api_data.present?
 
@@ -150,11 +150,11 @@ module Browser
     nil
   end
 
-  private_class_method def self.process_images(browser, page_source, options, url)
+  private_class_method def self.process_images(page, page_source, options, url)
     image_dir = options[:image_dir]
     FileUtils.mkdir_p(image_dir)
     base_url = Utils::UrlHelper.extract_page_base_url(page_source, url)
-    image_elements = browser.locator("img").all
+    image_elements = page.locator("img").all
 
     image_map = {}
 
@@ -162,7 +162,7 @@ module Browser
       image_excluded = maybe_exclude_image(image_element)
       next if image_excluded
 
-      key, source_image_url = process_image(browser, image_dir, base_url, image_element)
+      key, source_image_url = process_image(image_dir, base_url, image_element)
       image_map[key] = source_image_url if key.present? && source_image_url.present?
     end
 
@@ -205,13 +205,13 @@ module Browser
     tempfile
   end
 
-  private_class_method def self.process_image(browser, image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize
+  private_class_method def self.process_image(image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize
     src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
 
     absolute_src = Utils::UrlHelper.format_url(Addressable::URI.join(base_url, src).to_s)
 
-    file = download_image(absolute_src, browser, img_element)
+    file = download_image(absolute_src, img_element)
 
     raise "File is nil for #{absolute_src}" if file.nil?
 
@@ -255,7 +255,7 @@ module Browser
     img_element.evaluate("el => el.remove()")
   end
 
-  private_class_method def self.download_image(absolute_src, _browser, img_element)
+  private_class_method def self.download_image(absolute_src, img_element)
     # Try downloading with HTTParty first
     file = download_with_httparty(absolute_src)
     return file if file
