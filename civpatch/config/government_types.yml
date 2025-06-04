@@ -1,13 +1,19 @@
 ---
-divisions: &divisions
-  - at-large:
-      aliases: 
-        - citywide
-        - city-wide
-        - at large
-        - city wide
-  - ward
-  - district
+divisions:
+  at-large:
+    aliases: 
+      - citywide
+      - city-wide
+      - at large
+      - city wide
+  ward:
+    aliases:
+  district:
+    aliases:
+  position:
+    aliases:
+  seat:
+    aliases:
 #position_examples: &position_examples | # Useful for LLM prompts
 #  * council member ward 3 -> ["council member", "ward 3"]
 #  * ward #3 -> ["ward 3"]
@@ -56,7 +62,6 @@ government_types:
           - town council representative
           - town council member
           - town council
-        divisions: *divisions
     # position_examples: *position_examples
     exclude_positions:
       - youth councilor
@@ -167,7 +172,6 @@ government_types:
         - alderman
         - alderwoman
         - member
-        divisions: *divisions
 #    position_examples: *position_examples
     search_keywords: # Keys are for google search, values are for web crawling
       mayor:

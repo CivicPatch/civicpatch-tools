@@ -7,7 +7,7 @@
     "images": [],
     "roles": [
       {
-        "data": "City Council President",
+        "data": "Council President",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Role listed directly below name."
       }
@@ -55,7 +55,7 @@
     "images": [],
     "roles": [
       {
-        "data": "City Council Member",
+        "data": "Council Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Role listed directly below name."
       }
@@ -109,7 +109,7 @@
     "images": [],
     "roles": [
       {
-        "data": "City Council Member",
+        "data": "Council Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Role listed directly below name."
       }
@@ -163,7 +163,7 @@
     "images": [],
     "roles": [
       {
-        "data": "City Council Member",
+        "data": "Council Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Role listed directly below name."
       }
@@ -217,7 +217,7 @@
     "images": [],
     "roles": [
       {
-        "data": "City Council Member",
+        "data": "Council Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Role listed directly below name."
       }
@@ -271,7 +271,7 @@
     "images": [],
     "roles": [
       {
-        "data": "City Council Member",
+        "data": "Council Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Role listed directly below name."
       }
@@ -325,7 +325,7 @@
     "images": [],
     "roles": [
       {
-        "data": "City Council Member",
+        "data": "Council Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Role listed directly below name."
       }

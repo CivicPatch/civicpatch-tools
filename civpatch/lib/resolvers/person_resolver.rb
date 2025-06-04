@@ -139,52 +139,5 @@ module Resolvers
 
       people_config
     end
-
-    def self.normalize_role(government_type_config, role)
-      normalized_role = ""
-      # First normalize the role to a standard format
-      role_to_find = role&.downcase&.strip
-
-      # First, check if the role is valid as-is
-      found_role = government_type_config["roles"].find { |r| r["role"]&.downcase == role_to_find }
-
-      if found_role.present?
-        normalized_role = found_role["role"]
-      else # If not, check if it is an alias of another role
-        aliased_role = government_type_config["roles"].find { |r| r["aliases"]&.include?(role_to_find) }
-        normalized_role = if aliased_role.present?
-                            aliased_role
-                          else
-                            role_to_find
-                          end
-      end
-
-      # return the normalized role
-      normalized_role.split(" ")&.capitalize&.join(" ")
-    end
-
-    def self.normalize_division(division_types, division)
-      normalized_division = ""
-      # First normalize the division to a standard format
-      division_to_find = division&.downcase&.strip
-
-      # First, check if the division is valid as-is
-      division_to_find = division_types.find { |d| d.downcase == division_to_find }
-      if government_type_config["divisions"]&.division&.include?(division_to_find)&.downcase
-        normalized_division = division
-      else # If not, check if it is an alias of another division
-        aliased_division = division_types.find do |d|
-          d["aliases"]&.include?(division_to_find)
-        end
-        normalized_division = if aliased_division.present?
-                                aliased_division
-                              else
-                                division_to_find
-                              end
-      end
-
-      # return the normalized division
-      normalized_division.split(" ")&.capitalize&.join(" ")
-    end
   end
 end

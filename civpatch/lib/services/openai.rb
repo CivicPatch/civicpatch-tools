@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 require "openai"
-require "services/shared/response_schemas"
+require "services/google_gemini/response_schemas"
 require "utils/costs_helper"
 require "utils/name_helper"
 require "core/city_manager"
 require "utils/retry_helper"
 require "services/shared/people"
+require_relative "prompts/openai_prompts"
 
 # TODO: track token usage
 module Services
   class Openai
     MODEL = "gpt-4.1-mini"
     TOKEN_LIMIT = 400_000
+    MAX_RETRIES = 5
 
     def initialize
       @client = OpenAI::Client.new(access_token: ENV["OPENAI_TOKEN"])
@@ -61,15 +63,6 @@ module Services
 
         JSON.parse(json_output)
       end
-    end
-
-    def council_member_position?(position, position_misc)
-      position.blank? && keywords_present?(position_misc)
-    end
-
-    def keywords_present?(position_misc)
-      keywords = %w[position seat district ward]
-      keywords.any? { |keyword| position_misc.include?(keyword) }
     end
   end
 end

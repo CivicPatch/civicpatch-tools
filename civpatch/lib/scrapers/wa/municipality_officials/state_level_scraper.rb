@@ -114,7 +114,7 @@ module Scrapers
 
             officials << {
               "name" => name.gsub(/\s+/, " ").strip,
-              "positions" => title ? [title] : [], # Handle cases where title might be missing
+              "roles" => title ? [title] : [], # Handle cases where title might be missing
               "email" => email
             }
           end

@@ -12,11 +12,6 @@ module Services
           "sources" => [source]
         }
 
-        # Sometimes a position might be in the format "Position A, Position B"
-        # When it should be two positions
-        # positions = person["positions"].present? ? person["positions"] : []
-        # positions = positions.map { |position| position.split(",").map(&:strip) }.flatten
-
         formatted_person["images"] = data_point?(person["image"]) ? [person["image"]] : []
         formatted_person["roles"] = if person["roles"].length.positive?
                                       person["roles"].select do |role|
@@ -53,14 +48,15 @@ module Services
       def self.merge_person(person, partial_person)
         merged = person.dup
 
-        merged["positions"] = (Array(person["positions"]) + Array(partial_person["positions"])).uniq
-        merged["images"] = (Array(person["images"]) + Array(partial_person["images"])).uniq
-        merged["phone_numbers"] = (Array(person["phone_numbers"]) + Array(partial_person["phone_numbers"])).uniq
-        merged["emails"] = (Array(person["emails"]) + Array(partial_person["emails"])).uniq
-        merged["websites"] = (Array(person["websites"]) + Array(partial_person["websites"])).uniq
-        merged["start_dates"] = (Array(person["start_dates"]) + Array(partial_person["start_dates"])).uniq
-        merged["end_dates"] = (Array(person["end_dates"]) + Array(partial_person["end_dates"])).uniq
-        merged["sources"] = (Array(person["sources"]) + Array(partial_person["sources"])).uniq
+        merged["roles"] = (Array(person["roles"]) + Array(partial_person["roles"]))
+        merged["divisions"] = (Array(person["divisions"]) + Array(partial_person["divisions"]))
+        merged["images"] = (Array(person["images"]) + Array(partial_person["images"]))
+        merged["phone_numbers"] = (Array(person["phone_numbers"]) + Array(partial_person["phone_numbers"]))
+        merged["emails"] = (Array(person["emails"]) + Array(partial_person["emails"]))
+        merged["websites"] = (Array(person["websites"]) + Array(partial_person["websites"]))
+        merged["start_dates"] = (Array(person["start_dates"]) + Array(partial_person["start_dates"]))
+        merged["end_dates"] = (Array(person["end_dates"]) + Array(partial_person["end_dates"]))
+        merged["sources"] = (Array(person["sources"]) + Array(partial_person["sources"]))
 
         merged
       end
@@ -123,7 +119,7 @@ module Services
       end
 
       def self.profile_data_points_present?(person)
-        person["positions"].present? && person["positions"].count.positive? &&
+        person["roles"].present? && person["roles"].count.positive? &&
           (
             person["websites"].present? && person["websites"].count.positive? ||
             contact_data_points_present?(person)
@@ -218,7 +214,8 @@ module Services
 
         {
           "name" => llm_person["name"],
-          "positions" => llm_person["positions"],
+          "roles" => llm_person["roles"].map { |role| role["data"] }.uniq,
+          "divisions" => llm_person["divisions"].map { |division| division["data"] }.uniq,
           "image" => selected_data_points["image"].present? ? selected_data_points["image"]["data"] : nil,
           "phone_number" => if selected_data_points["phone_number"].present?
                               selected_data_points["phone_number"]["data"]

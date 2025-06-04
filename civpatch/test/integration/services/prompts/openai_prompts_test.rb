@@ -15,29 +15,23 @@ module Services
       }
       @content_file = File.join(__dir__, "..", "..", "fixtures", "spokane_markdown.md")
       @page_url = "https://testville.gov/council"
-
-      @response = {
-        "people" => [
-          { "name" => "Jane Mayor", "positions" => ["Mayor"], "email" => "jane@testville.gov" },
-        ]
-      }
-
-      @formatted_jane = { "name" => "Jane Mayor", "email" => "jane@testville.gov", "formatted" => true }
     end
 
     def test_prompt_output 
       # Assuming Openai has a method like `build_prompt` or similar
-      prompt = @openai.extract_city_people(
+      people = @openai.extract_city_people(
         @municipality_context,
         @content_file,
         @page_url,
-        @people_hint
+        []
       )
-      puts "\nPROMPT OUTPUT:\n#{prompt}\n"
-      refute_nil prompt
-      assert_equal 7, prompt.length, "Expected 7 people to be extracted"
+      puts "\nPROMPT OUTPUT:\n#{people}\n"
+      refute_nil people 
+      assert_equal 7, people.length, "Expected 7 people to be extracted"
+      assert_equal [[], ["District 1"], ["District 1"], ["District 2"], ["District 2"], ["District 3"], ["District 3"]], 
+        people
+          .map { |p| p["divisions"].map{ |d| d["data"]} }
     end
-
 
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require "validators/utils"
+require_relative "../validators/utils"
+require_relative "person_resolver"
 
 module Resolvers
   class PeopleResolver
@@ -51,7 +52,7 @@ module Resolvers
     def self.compare_people_across_sources(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
       sources = resolve_sources(context)
       people_config = context[:config]["people"]
-      fields = %w[positions email phone_number website start_date end_date] # Fields to compare
+      fields = %w[roles divisions email phone_number website start_date end_date] # Fields to compare
 
       unique_names = sources.map { |s| s[:people].map { |p| p["name"] } }.flatten.uniq
       total_people = unique_names.count
@@ -140,7 +141,7 @@ module Resolvers
 
         merged_person = { "name" => name }
 
-        %w[positions email phone_number website image start_date end_date].each do |field|
+        %w[roles divisions email phone_number website image start_date end_date].each do |field|
           values = person_records.map { |p| { value: p[field], confidence_score: p["confidence_score"] } }
 
           merged_person[field] = select_best_value(field, values)
@@ -201,7 +202,7 @@ module Resolvers
         Validators::Utils.normalize_phone_number(value1) == Validators::Utils.normalize_phone_number(value2) ? 1.0 : 0.0
       when "email"
         Validators::Utils.normalize_email(value1) == Validators::Utils.normalize_email(value2) ? 1.0 : 0.0
-      when "positions"
+      when "roles", "divisions"
         return 0.0 unless value1.is_a?(Array) && value2.is_a?(Array)
 
         similarity = get_array_similarity(value1, value2)
@@ -248,7 +249,7 @@ module Resolvers
     def self.select_best_value(field, values)
       non_nil_values = filter_valid_values(values)
       return nil if non_nil_values.empty?
-      return merge_common_values(values.map { |v| v[:value] }) if field == "positions"
+      return merge_common_values(values.map { |v| v[:value] }) if %w[roles divisions].include?(field)
 
       find_best_value(non_nil_values, field)
     end

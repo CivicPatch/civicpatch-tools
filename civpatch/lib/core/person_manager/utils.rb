@@ -3,88 +3,55 @@
 module Core
   module PersonManager
     class Utils
-      def self.generate_alias_map(positions_configs)
-        alias_map = {}
-        positions_configs.each do |role_config|
-          role = role_config["role"].downcase
-          role_config["aliases"]&.each do |alias_name|
-            alias_map[alias_name.downcase] = role
-          end
-        end
-        alias_map
-      end
+      SORT_KEYS = %w[name roles divisions image cdn_image email phone_number website start_date end_date sources].freeze
 
-      def self.generate_divisions_map(positions_configs)
-        divisions_map = {}
-        positions_configs.each do |role_config|
-          role = role_config["role"].downcase
-          role_config["divisions"]&.each do |division_name|
-            divisions_map[division_name.downcase] = role
-          end
-        end
-        divisions_map
-      end
+      def self.normalize_role(government_type, role)
+        government_roles = Core::CityManager.roles(government_type)
+        normalized_role = ""
+        # First normalize the role to a standard format
+        role_to_find = role&.downcase&.strip
 
-      def self.normalize_positions(positions, government_types_config)
-        positions_config = government_types_config["positions"]
-        alias_map = generate_alias_map(positions_config)
-        divisions_map = generate_divisions_map(positions_config)
-        excluded_positions = government_types_config["exclude_positions"] || []
+        # First, check if the role is valid as-is
+        found_role = government_roles.find { |r| r["role"]&.downcase == role_to_find }
 
-        positions.flat_map do |position|
-          normalized_position = position.downcase.strip
-
-          # Check if the normalized position EXACTLY matches any excluded position
-          next [] if excluded_positions.include?(normalized_position)
-
-          ## Try to find divisions
-          matching_division = divisions_map.keys.find { |k, _v| normalized_position.include?(k) }
-
-          if matching_division.present?
-            division_string = normalize_division_string(
-              matching_division,
-              normalized_position.slice(
-                (normalized_position.index(matching_division) + matching_division.length)..
-              )
-            )
-            next [divisions_map[matching_division], division_string]
-          end
-
-          ## Try to find a matching role
-          matching_position = positions_config.find do |role_config|
-            normalized_position == role_config["role"].downcase
-          end
-
-          next [matching_position["role"]] if matching_position.present?
-
-          ## Try to find aliases
-          matching_alias = alias_map.keys.find do |k|
-            normalized_position == k
-          end
-
-          next [alias_map[matching_alias]] if matching_alias.present?
-
-          # TODO: Toss anything we don't recognize?
-          # [normalized_position]
-          []
-        end.uniq
-      end
-
-      def self.format_position(position)
-        position.split(" ").map(&:capitalize).join(" ")
-      end
-
-      def self.normalize_division_string(division, division_identifier)
-        division_identifier = division_identifier.strip
-        unwanted_prefixes = ["no.", "no", "#"]
-
-        unwanted_prefixes.each do |prefix|
-          division_identifier = division_identifier.delete_prefix(prefix)
+        if found_role.present?
+          normalized_role = found_role["role"]
+        else # If not, check if it is an alias of another role
+          aliased_role = government_roles.find { |r| r["aliases"]&.include?(role_to_find) }
+          normalized_role = (aliased_role["role"] if aliased_role.present?)
         end
 
-        rest = format_division_identifier(division_identifier)
+        # return the normalized role
+        normalized_role.split(" ").map(&:capitalize)&.join(" ") if normalized_role.present?
+      end
 
-        [division, rest].join(" ").split.join(" ")
+      def self.normalize_division(division)
+        division_types = Core::CityManager.divisions
+        # First normalize the division to a standard format
+        division_to_find = division&.downcase&.strip
+
+        return nil if division_to_find.blank?
+
+        # First, check if the division is valid as-is
+        found_division = division_types.keys.find { |d| division_to_find.start_with?(d) }
+        if found_division.blank? # If not, check if it is an alias of another division
+          aliased_division_key, _value = division_types.find do |_key, value|
+            value["aliases"]&.any? { |alias_name| division_to_find.start_with?(alias_name) }
+          end
+
+          # Replace with the aliased division key if found
+          division_to_find = aliased_division_key if aliased_division_key.present?
+        end
+
+        division_key, division_rest = division_to_find.split(" ", 2)
+
+        # If the division identifier is a single word, attempt to format it
+        division_rest = format_division_identifier(division_rest)
+
+        normalized_division = [division_key, division_rest].compact.join(" ").strip
+
+        # return the normalized division
+        normalized_division.split(" ").map(&:capitalize)&.join(" ")
       end
 
       # NOTE: Assume no one is going to use non-numeric characters
@@ -93,107 +60,52 @@ module Core
         number_words_in_english = %w[one two three four five six seven eight nine ten]
         number_words_in_roman = %w[i ii iii iv v vi vii viii ix x]
 
-        if number_words_in_english.include?(division_rest_string)
+        division_identifier_to_find = division_rest_string&.downcase&.strip
+
+        if number_words_in_english.include?(division_identifier_to_find)
           return (number_words_in_english.index(division_rest_string) + 1).to_s
         end
 
-        if number_words_in_roman.include?(division_rest_string)
+        if number_words_in_roman.include?(division_identifier_to_find)
           return (number_words_in_roman.index(division_rest_string) + 1).to_s
         end
 
         division_rest_string
       end
 
-      def self.sort_positions(positions, positions_config)
-        normalized = normalize_positions(positions, positions_config)
-        apply_sort_order(normalized, positions_config["positions"])
-      end
-
-      def self.find_divisions(positions, positions_config)
-        division_matches = {}
-
-        positions.each do |position|
-          normalized_position = position.downcase.strip
-          positions_config.each do |role_config|
-            division_match = role_config["divisions"]&.find do |division|
-              normalized_position.include?(division.downcase)
-            end
-            division_matches[division_match] = normalized_position if division_match.present?
-          end
-        end
-
-        division_matches
-      end
-
-      def self.find_roles(positions, positions_config)
-        role_matches = []
-        positions.each do |position|
-          normalized_position = position.downcase.strip
-          role_match = positions_config.find do |role_config|
-            normalized_position == role_config["role"].downcase
-          end
-          role_matches << role_match["role"] if role_match.present?
-        end
-
-        role_matches
-      end
-
-      def self.sort_people(people, government_types_config)
-        positions_config = government_types_config["positions"]
-        # Map role names to their order based on the provided config
-        role_order = positions_config.each_with_index.to_h do |role_config, index|
-          [role_config["role"].downcase, index]
-        end
-
-        # Get the list of all divisions (assuming it's a flat list of strings)
-
+      def self.sort_people(government_type, people)
         sort_map = {} # {"roles", "divisions", "names"}
-        people.each_with_index do |person, index|
-          roles = find_roles(person["positions"], positions_config)
-          divisions = find_divisions(person["positions"], positions_config)
 
+        government_roles = Core::CityManager.roles(government_type)
+        role_order = government_roles.map { |r| r["role"].downcase }
+
+        people.each_with_index do |person, index|
           sort_map[index] = {
             person: person,
-            roles: roles,
-            divisions: divisions,
-            names: person["name"],
+            roles: person["roles"],
+            divisions: person["divisions"],
             name: person["name"]
           }
         end
 
         sorted_values = sort_map.values.sort_by do |data|
-          primary_role = data[:roles].find { |r| role_order.key?(r.downcase) } || "zzz"
-          role_index = role_order[primary_role.downcase] || Float::INFINITY
-
-          division_key = data[:divisions].keys.first || ""
-          division_val = data[:divisions].values.first || ""
-          division_combo = "#{division_key} #{division_val}".downcase
-
+          role = data[:roles]&.first&.downcase || ""
+          role_index = role_order.index(role) || 999
+          division = data[:divisions]&.first || ""
           name = data[:name] || ""
 
-          [role_index, division_combo, name]
+          [role_index, division, name]
         end
 
         sorted_values.map { |data| data[:person] }
       end
 
-      private_class_method def self.apply_sort_order(normalized_positions, positions_config)
-        # Create role_order hash
-        role_order = positions_config.each_with_index.to_h do |role_config, index|
-          [role_config["role"].downcase, index]
+      def self.sort_keys(person)
+        sorted = {}
+        SORT_KEYS.each do |key|
+          sorted[key] = person[key]
         end
-        # Get divisions_list
-        divisions_list = positions_config.flat_map { |role_config| role_config["divisions"] }.compact
-
-        # Apply the sort_by logic
-        normalized_positions.sort_by do |position|
-          division_match = divisions_list.find { |division| position.include?(division) }
-          [
-            role_order[position] || Float::INFINITY,
-            division_match ? 0 : 1,
-            position
-          ]
-        end
+        sorted
       end
     end
   end

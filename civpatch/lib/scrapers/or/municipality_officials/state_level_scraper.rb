@@ -58,7 +58,7 @@ module Scrapers
 
             officials << {
               "name" => Utils::NameHelper.format_name(cells[0].text.strip),
-              "positions" => [cells[1].text.strip],
+              "roles" => [cells[1].text.strip],
               "email" => cells[2].text.strip,
               "phone_number" => cells[3].text.strip
             }

@@ -7,7 +7,7 @@ require "utils/phone_helper"
 require "core/person_manager/utils"
 
 module Core
-  KEY_ORDER = %w[name positions image cdn_image email phone_number website sources]
+  KEY_ORDER = %w[name divisions roles image cdn_image email phone_number website sources].freeze
 
   class PeopleManager
     def self.get_people(state, geoid, type = nil)
@@ -26,7 +26,7 @@ module Core
       content
     end
 
-    def self.format_people(people_config, people, positions_config)
+    def self.format_people(government_type, people_config, people)
       people_config ||= {}
 
       people = people.map do |person|
@@ -38,13 +38,18 @@ module Core
                            name
                          end
 
-        # Without extra positions
-        person["positions"] = Core::PersonManager::Utils
-                              .sort_positions(person["positions"], positions_config)
-                              .map do |position|
-          Core::PersonManager::Utils
-            .format_position(position)
-        end
+        person["roles"] = person["roles"]
+                          &.map { |role| Core::PersonManager::Utils.normalize_role(government_type, role) }
+                          &.compact
+        person["divisions"] = if person["divisions"].present?
+                                person["divisions"]
+                                  &.map do |division|
+                                  Core::PersonManager::Utils
+                                    .normalize_division(division)
+                                end&.compact
+                              else
+                                []
+                              end
 
         person["website"] = Utils::UrlHelper.format_url(person["website"]) if person["website"].present?
         if person["phone_number"].present?
@@ -61,8 +66,8 @@ module Core
         person.sort_by { |key, _| KEY_ORDER.index(key) || KEY_ORDER.length }.to_h
       end
 
-      filtered_people = people.reject { |person| person["positions"].count.zero? }
-      Core::PersonManager::Utils.sort_people(filtered_people, positions_config)
+      filtered_people = people.reject { |person| person["roles"].count.zero? }
+      Core::PersonManager::Utils.sort_people(government_type, filtered_people)
     end
 
     def self.merge_person(person1, person2)
@@ -80,8 +85,10 @@ module Core
           merged_person["image"] = person2["image"] || value
         when "source_image"
           merged_person["source_image"] = person2["source_image"] || value
-        when "positions"
-          merged_person["positions"] = (Array(value) + Array(person2["positions"])).uniq
+        when "roles"
+          merged_person["roles"] = (Array(value) + Array(person2["roles"])).uniq
+        when "divisions"
+          merged_person["divisions"] = (Array(value) + Array(person2["divisions"])).uniq
         when "email"
           merged_person["email"] = person2["email"] || value
         when "phone_number"

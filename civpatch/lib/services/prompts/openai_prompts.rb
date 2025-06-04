@@ -8,8 +8,7 @@ module Services
         government_types_config = Core::CityManager.get_config(government_type)
 
         roles = government_types_config["roles"].map { |role| role["role"] }
-        divisions = government_types_config["roles"].flat_map { |role| role["divisions"] }.compact.uniq
-        # role_examples = government_types_config["role_examples"]
+        division_names = Core::CityManager.divisions.keys
         municipality_entry = context[:municipality_entry]
 
         maybe_target_people = (people_hint || []).map { |person| person&.dig("name") }.compact
@@ -41,8 +40,8 @@ module Services
 
           Target Person (if applicable): #{person_name}
           Target Municipality: #{municipality_entry["name"]}, #{state}
-          Key roles: #{roles.join(", ")}
-          Associated divisions: #{divisions.join(",")}
+          Target roles: #{roles.join(", ")}
+          Division examples: #{division_names.join(",")}
 
           Return a JSON object with a key "people" containing an array.
           Each object represents one person and MUST include ALL fields
@@ -59,7 +58,7 @@ module Services
                    their individual position as it appears in the text, regardless of the specific title.
                     [{data: "Mayor", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}]
           - divisions: (Array of Objects) Specific division/district/ward and name/number,
-                    only if specified (e.g., "Ward 1", "District 2").
+                    only if specified (e.g., "Ward 1", "District 2", "Position 3", "Seat Blue").
                     [{data: "Ward 1", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}].
           - image: (Object or null) {data: "https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg",#{" "}
                                     llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}

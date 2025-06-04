@@ -44,8 +44,8 @@ module GitHub
         ## Sources
         #{sources}
         ## People
-        | **Name**  | **Positions**     | **Email**     | **Phone**     | **Website**   | **Term Dates** | **Image**     |
-        |-----------|-------------------|---------------|---------------|---------------|----------------|---------------|
+        | **Name**  | **Roles**  | **Divisions** | **Email**     | **Phone**     | **Website**   | **Term Dates** | **Image**     |
+        |-----------|------------|---------------|---------------|---------------|----------------|---------------|------------|
         #{people.map do |person|
           image = person["cdn_image"]
           email = person["email"]
@@ -55,11 +55,17 @@ module GitHub
           end_term_date = person["end_date"].present? ? person["end_date"] : "N/A"
           term_date_markdown = "#{start_term_date} - #{end_term_date}"
 
-          position_markdown = if person["positions"].present?
-                                person["positions"].join(", ")
-                              else
-                                "N/A"
-                              end
+          roles_markdown = if person["roles"].present?
+                             person["roles"].join(", ")
+                           else
+                             "N/A"
+                           end
+
+          divisions_markdown = if person["divisions"].present?
+                                 person["divisions"].join(", ")
+                               else
+                                 "N/A"
+                               end
 
           image_markdown = if image.present?
                              "![](#{image})"
@@ -85,7 +91,7 @@ module GitHub
                                "N/A"
                              end
 
-          "**#{person["name"]}**| #{position_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{term_date_markdown} | #{image_markdown}"
+          "**#{person["name"]}**| #{roles_markdown} | #{divisions_markdown} | #{email_markdown} | #{phone_markdown} | #{website_markdown} | #{term_date_markdown} | #{image_markdown}"
         end.join("\n")}
       MARKDOWN
     end
