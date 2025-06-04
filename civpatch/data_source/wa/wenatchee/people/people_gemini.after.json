@@ -8,7 +8,7 @@
     "image": null,
     "email": "mike@wenatcheewa.gov",
     "phone_number": "(509) 888-6204",
-    "website": null,
+    "website": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor",
     "sources": [
       "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
     ],
@@ -19,8 +19,7 @@
   {
     "name": "Linda Herald",
     "divisions": [
-      "At-large",
-      "A"
+      "At-large A"
     ],
     "roles": [
       "Council Member"
@@ -39,8 +38,7 @@
   {
     "name": "Mayra Navarro Gomez",
     "divisions": [
-      "At-large",
-      "B"
+      "At-large B"
     ],
     "roles": [
       "Council Member"
@@ -109,7 +107,7 @@
     "sources": [
       "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
     ],
-    "start_date": null,
+    "start_date": "2021",
     "end_date": "2025",
     "updated_at": "2025-06-04"
   },
