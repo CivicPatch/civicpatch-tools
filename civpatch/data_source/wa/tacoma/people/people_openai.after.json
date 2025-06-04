@@ -1,9 +1,7 @@
 [
   {
     "name": "Victoria Woodards",
-    "divisions": [
-      "At-large"
-    ],
+    "divisions": [],
     "roles": [
       "Mayor"
     ],
@@ -22,7 +20,8 @@
   {
     "name": "Kiara Daniels",
     "divisions": [
-      "At-large Position 6"
+      "At-large",
+      "Position 6"
     ],
     "roles": [
       "Deputy Mayor",
@@ -44,7 +43,7 @@
     "name": "John Hines",
     "divisions": [
       "Position 1",
-      "District 1 - Position 1"
+      "District 1"
     ],
     "roles": [
       "Council Member",
@@ -92,7 +91,7 @@
     "roles": [
       "Council Member"
     ],
-    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-400x385.jpg",
+    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg",
     "email": null,
     "phone_number": "(253) 591-5100",
     "website": "https://tacoma.gov/profile/council-member-jamika-scott",
@@ -135,7 +134,7 @@
       "Council Member"
     ],
     "image": "https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-400x385.jpg",
-    "email": null,
+    "email": "NBernik@tacoma.gov",
     "phone_number": "(253) 312-0550",
     "website": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell",
     "sources": [
@@ -150,7 +149,7 @@
     "name": "Olgy Diaz",
     "divisions": [
       "Position 7",
-      "At-large Position 7"
+      "At-large"
     ],
     "roles": [
       "Council Member"
@@ -171,14 +170,13 @@
     "name": "Kristina Walker",
     "divisions": [
       "Position 8",
-      "At-large Position 8",
-      "District 3"
+      "At-large"
     ],
     "roles": [
       "Council Member",
       "Deputy Mayor"
     ],
-    "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-400x385.jpg",
+    "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg",
     "email": null,
     "phone_number": "(253) 312-7734",
     "website": "https://tacoma.gov/profile/council-member-kristina-walker",
