@@ -2,7 +2,7 @@
   {
     "name": "Kelli Curtis",
     "divisions": [
-      "Position #2",
+      "Position 2",
       "At-large"
     ],
     "roles": [
@@ -23,7 +23,7 @@
   {
     "name": "Jay Arnold",
     "divisions": [
-      "Position #1",
+      "Position 1",
       "At-large"
     ],
     "roles": [
@@ -44,7 +44,7 @@
   {
     "name": "Penny Sweet",
     "divisions": [
-      "Position #3",
+      "Position 3",
       "At-large"
     ],
     "roles": [
@@ -57,14 +57,14 @@
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "start_date": "2010-01",
+    "start_date": null,
     "end_date": "2025-12-31",
     "updated_at": "2025-06-04"
   },
   {
     "name": "John Tymczyszyn",
     "divisions": [
-      "Position #4",
+      "Position 4",
       "At-large"
     ],
     "roles": [
@@ -77,14 +77,14 @@
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "start_date": "2023-11",
+    "start_date": null,
     "end_date": "2027-12-31",
     "updated_at": "2025-06-04"
   },
   {
     "name": "Neal Black",
     "divisions": [
-      "Position #5",
+      "Position 5",
       "At-large"
     ],
     "roles": [
@@ -104,7 +104,7 @@
   {
     "name": "Amy Falcone",
     "divisions": [
-      "Position #6",
+      "Position 6",
       "At-large"
     ],
     "roles": [
@@ -124,7 +124,7 @@
   {
     "name": "Jon Pascal",
     "divisions": [
-      "Position #7",
+      "Position 7",
       "At-large"
     ],
     "roles": [
@@ -137,7 +137,7 @@
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "start_date": "2021",
+    "start_date": null,
     "end_date": "2025-12-31",
     "updated_at": "2025-06-04"
   }

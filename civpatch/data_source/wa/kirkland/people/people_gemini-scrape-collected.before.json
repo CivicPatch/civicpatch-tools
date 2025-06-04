@@ -9,31 +9,31 @@
       {
         "data": "Mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as current role."
+        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
       },
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed as a member of the City Council."
+        "llm_confidence_reason": "Implied by being listed as Mayor and part of the City Council."
       }
     ],
     "divisions": [
       {
         "data": "Position #2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under name."
+        "llm_confidence_reason": "Explicitly stated under the person's name."
       },
       {
-        "data": "at-large",
+        "data": "at large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mentioned in the introductory paragraph about the council."
+        "llm_confidence_reason": "Stated in the general description of the City Council."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3532",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as contact phone number.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -41,7 +41,7 @@
       {
         "data": "kcurtis@kirklandwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as contact email.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -51,7 +51,7 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term Expires December 31, 2027'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2027'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -67,31 +67,31 @@
       {
         "data": "Deputy Mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as current role."
+        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
       },
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed as a member of the City Council."
+        "llm_confidence_reason": "Implied by being listed as Deputy Mayor and part of the City Council."
       }
     ],
     "divisions": [
       {
         "data": "Position #1",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under name."
+        "llm_confidence_reason": "Explicitly stated under the person's name."
       },
       {
-        "data": "at-large",
+        "data": "at large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mentioned in the introductory paragraph about the council."
+        "llm_confidence_reason": "Stated in the general description of the City Council."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3535",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as contact phone number.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -99,7 +99,7 @@
       {
         "data": "jarnold@kirklandwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text associated with contact information.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -109,7 +109,7 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term Expires December 31, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -123,28 +123,28 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as current role."
+        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
       }
     ],
     "divisions": [
       {
         "data": "Position #5",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under name."
+        "llm_confidence_reason": "Explicitly stated under the person's name."
       },
       {
-        "data": "at-large",
+        "data": "at large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mentioned in the introductory paragraph about the council."
+        "llm_confidence_reason": "Stated in the general description of the City Council."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3544",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as contact phone number.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -152,7 +152,7 @@
       {
         "data": "nblack@kirklandwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text associated with contact information.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -162,7 +162,7 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term Expires December 31, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -176,21 +176,21 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as current role."
+        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
       }
     ],
     "divisions": [
       {
         "data": "Position #6",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under name."
+        "llm_confidence_reason": "Explicitly stated under the person's name."
       },
       {
-        "data": "at-large",
+        "data": "at large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mentioned in the introductory paragraph about the council."
+        "llm_confidence_reason": "Stated in the general description of the City Council."
       }
     ],
     "phone_numbers": [],
@@ -201,7 +201,7 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term Expires December 31, 2027'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2027'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -215,28 +215,28 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as current role."
+        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
       }
     ],
     "divisions": [
       {
         "data": "Position #7",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under name."
+        "llm_confidence_reason": "Explicitly stated under the person's name."
       },
       {
-        "data": "at-large",
+        "data": "at large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mentioned in the introductory paragraph about the council."
+        "llm_confidence_reason": "Stated in the general description of the City Council."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3530",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as contact phone number.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -244,24 +244,17 @@
       {
         "data": "jpascal@kirklandwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text associated with contact information.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "websites": [],
-    "start_dates": [
-      {
-        "data": "2021",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated 're-elected to his second term in 2021'.",
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2025-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term Expires December 31, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'will expire in December 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -275,28 +268,28 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as current role."
+        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
       }
     ],
     "divisions": [
       {
         "data": "Position #3",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under name."
+        "llm_confidence_reason": "Explicitly stated under the person's name."
       },
       {
-        "data": "at-large",
+        "data": "at large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mentioned in the introductory paragraph about the council."
+        "llm_confidence_reason": "Stated in the general description of the City Council."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3534",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as contact phone number.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -304,24 +297,17 @@
       {
         "data": "psweet@kirklandwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text associated with contact information.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "websites": [],
-    "start_dates": [
-      {
-        "data": "2010-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'began her first term on the Kirkland City Council in January 2010'.",
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2025-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term Expires December 31, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -335,21 +321,21 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as current role."
+        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
       }
     ],
     "divisions": [
       {
         "data": "Position #4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under name."
+        "llm_confidence_reason": "Explicitly stated under the person's name."
       },
       {
-        "data": "at-large",
+        "data": "at large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mentioned in the introductory paragraph about the council."
+        "llm_confidence_reason": "Stated in the general description of the City Council."
       }
     ],
     "phone_numbers": [],
@@ -357,24 +343,17 @@
       {
         "data": "JohnT@Kirklandwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from markdown link text associated with contact information.",
+        "llm_confidence_reason": "Explicitly listed under the person's section.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "websites": [],
-    "start_dates": [
-      {
-        "data": "2023-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected to Position 4 on the Kirkland City Council in November of 2023'.",
-        "source": "https://www.kirklandwa.gov/Government/City-Council"
-      }
-    ],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2027-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term Expires December 31, 2027'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2027'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
