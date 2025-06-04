@@ -1,1 +1,341 @@
-[]
+[
+  {
+    "name": "Mike Poirier",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor of the City of Wenatchee' and is the focus of the page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 888-6204",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under the Mayor's Office address.",
+        "source": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mike@wenatcheewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link associated with the Mayor.",
+        "source": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'He began his term as Mayor on January 1, 2024'.",
+        "source": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Jose Luis Cuevas",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Meet the Council Members' and implied by context."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 881-1256",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year explicitly stated in parentheses next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Chelsea Ewer",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Meet the Council Members' and implied by context."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 679-4023",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year explicitly stated in parentheses next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Top Rojanasthien",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'elected to serve as Wenatchee City Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 670-6750",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year explicitly stated in parentheses next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Travis Hornby",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Meet the Council Members' and implied by context."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 429-5729",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year explicitly stated in parentheses next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Charlie Atkinson",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'serving the residents of Wenatchee as a member of the City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 679-3625",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year explicitly stated in parentheses next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Linda Herald",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'serving as a Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      },
+      {
+        "data": "A",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 670-0309",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year explicitly stated in parentheses next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Mayra Navarro Gomez",
+    "sources": [
+      "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'As a City Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      },
+      {
+        "data": "B",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 423-3916",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year explicitly stated in parentheses next to the name.",
+        "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
+      }
+    ],
+    "updated_at": "2025-06-04"
+  }
+]
