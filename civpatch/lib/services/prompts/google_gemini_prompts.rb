@@ -141,14 +141,14 @@ module Services
           - **CRITICAL**: Extract roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
             **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
           - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned,
-            vacated their position, is deceased, or their position is otherwise noted as vacant
+            vacated their role, is deceased, or their roleis otherwise noted as vacant
             (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their
-            position, even if a future term date is also mentioned. The statement of resignation or vacancy takes
+            role, even if a future term date is also mentioned. The statement of resignation or vacancy takes
             precedence over listed term dates for determining current active status.
           - **Check for Past Dates**: Before extracting a specific role title (e.g., "Council President", "Chair"),
             examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012",
             "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past**
-            and is not the person's current role, **DO NOT extract that specific position title.** Focus only on roles
+            and is not the person's current role, **DO NOT extract that specific role title.** Focus only on roles
             the person currently holds according to the text.
           - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
             (e.g., "Youth Councilor", "Student Representative"),
@@ -163,6 +163,8 @@ module Services
           - A person can have multiple divisions. List them separately.
             - Examples:
               - "Citywide Position 7" -> "Citywide", "Position 7"
+              - "At-Large 1, Seat 2" -> "At-Large 1", "Seat 2"
+              - "At-Large B" -> "At-Large B" ->
           - Loose associations (the person lives in a district, but not elected from it)
             should not be listed
         - Name extraction: Extract full names ONLY, not titles

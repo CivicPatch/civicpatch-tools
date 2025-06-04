@@ -61,6 +61,8 @@ module Core
         number_words_in_roman = %w[i ii iii iv v vi vii viii ix x]
 
         division_identifier_to_find = division_rest_string&.downcase&.strip
+        # Remove quotation marks (curly and normal) and parentheses
+        division_identifier_to_find = division_identifier_to_find.gsub(/["“”()]/, "")
 
         if number_words_in_english.include?(division_identifier_to_find)
           return (number_words_in_english.index(division_rest_string) + 1).to_s
@@ -70,7 +72,7 @@ module Core
           return (number_words_in_roman.index(division_rest_string) + 1).to_s
         end
 
-        division_rest_string
+        division_identifier_to_find
       end
 
       def self.sort_people(government_type, people)
