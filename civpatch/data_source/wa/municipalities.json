@@ -256,7 +256,14 @@
       "type": "city",
       "population": 92175,
       "government_type": "mayor_council",
-      "geoid": "5335940"
+      "geoid": "5335940",
+      "meta_updated_at": "2025-06-04",
+      "meta_hash": "1492527ea20db1c66f9c1afbeb7e26d9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "ocd_ids": [
