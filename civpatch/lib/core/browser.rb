@@ -22,12 +22,12 @@ module Browser
   }.freeze
   IGNORE_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"].freeze
 
-  def self.with_browser(headless: false)
+  def self.with_browser
     Playwright.create(
       playwright_cli_executable_path: Core::PathHelper.project_path(File.join("node_modules", ".bin", "patchright"))
     ) do |playwright|
       browser = playwright.chromium.launch(
-        headless: headless,
+        headless: false,
         args: ["--single-process"]
       )
 
@@ -38,7 +38,7 @@ module Browser
   end
 
   def self.fetch_page_content(url, options = {})
-    with_browser(headless: options[:headless]) do |page|
+    with_browser do |page|
       api_data = []
 
       if options[:include_api_content]
