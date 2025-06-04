@@ -62,9 +62,8 @@ module Services
         municipality_name = municipality_context[:municipality_entry]["name"]
         government_type = municipality_context[:government_type]
         municipality_config = Core::CityManager.get_config(government_type)
-        # Ensure 'positions' here refers to the actual role names for the prompt string
         roles = municipality_config["roles"].map { |p| p["role"] }
-        # divisions = municipality_config["positions"].flat_map { |position| position["divisions"] }
+        division_names = Core::CityManager.divisions.keys
         current_date = Date.today.strftime("%Y-%m-%d")
         maybe_target_people = people.map { |person| person&.dig("name") }.compact
 
@@ -86,6 +85,7 @@ module Services
 
         Target Municipality: #{municipality_name}, #{state}
         Target Roles: #{roles.join(", ")}
+        Division examples: #{division_names.join(", ")}
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)

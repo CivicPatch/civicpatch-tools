@@ -64,15 +64,14 @@ namespace :pipeline do
     municipality_name = municipality_context[:municipality_entry]["name"]
     puts "#{state} - #{municipality_name} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
-    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
+    government_type = municipality_context[:government_type]
 
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
     people = source_directory_list["people"]
     Core::PeopleManager.update_people(municipality_context, people, "#{source_directory_list["type"]}.before")
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
-    formatted_people = Core::PeopleManager.format_people(people_config, people_with_canoncial_names,
-                                                         positions_config)
+    formatted_people = Core::PeopleManager.format_people(government_type, people_config, people_with_canoncial_names)
     Core::PeopleManager.update_people(municipality_context, formatted_people, "#{source_directory_list["type"]}.after")
 
     [formatted_people, people_config]
@@ -103,8 +102,7 @@ namespace :pipeline do
 
   def process_with_llm(municipality_context, llm_service_string,
                        seeded_urls: [], request_cache: {}, people_hint: [])
-    positions_config = Core::CityManager.get_config(municipality_context[:government_type])
-
+    government_type = municipality_context[:government_type]
     accumulated_people, people_config = Core::MunicipalScraper.fetch(
       llm_service_string,
       municipality_context,
@@ -114,7 +112,7 @@ namespace :pipeline do
     )
 
     Core::PeopleManager.update_people(municipality_context, accumulated_people, "#{llm_service_string}.before")
-    people = Core::PeopleManager.format_people(people_config, accumulated_people, positions_config)
+    people = Core::PeopleManager.format_people(government_type, people_config, accumulated_people)
     Core::PeopleManager.update_people(municipality_context, people, "#{llm_service_string}.after")
 
     source_urls = people.map { |person| person["sources"] }.flatten.uniq
@@ -158,6 +156,7 @@ namespace :pipeline do
     merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
     people = process_images(context, merged_people) if Services::Spaces.enabled?
 
+    people = people.map { |person| Core::PersonManager::Utils.sort_keys(person) }
     Core::PeopleManager.update_people(context, people)
 
     people_hash = Digest::MD5.hexdigest(people.to_yaml)

@@ -15,6 +15,14 @@ module Core
       config["government_types"].keys
     end
 
+    def self.divisions
+      config["divisions"]
+    end
+
+    def self.roles(government_type)
+      config.dig("government_types", government_type, "roles") || []
+    end
+
     def self.get_config(government_type)
       config.dig("government_types", government_type)
     end

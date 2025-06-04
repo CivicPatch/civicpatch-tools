@@ -16,12 +16,10 @@ module Core
       llm_service_string,
       municipality_context,
       request_cache: {},
-      # page_fetcher: nil,
       people_hint: [],
       seeded_urls: [] # Urls to scrape first
     )
       puts "Fetching with #{llm_service_string}"
-      # page_fetcher ||= Core::PageFetcher.new
       municipality_entry = municipality_context[:municipality_entry]
       state = municipality_context[:state]
       geoid = municipality_entry["geoid"]
@@ -34,7 +32,6 @@ module Core
         seeded_urls: seeded_urls,
         llm_service_string: llm_service_string,
         municipality_context: municipality_context,
-        # page_fetcher: page_fetcher,
         city_cache_path: city_cache_path,
         request_cache: request_cache,
         people_hint: people_hint
@@ -65,7 +62,6 @@ module Core
           keyword_terms = keyword_groups.map { |group| group[:name] }
           puts "#{llm_service_string}: Scraping with search with keyword_terms: #{keyword_terms}"
           urls = scrape_with_search(context, keyword_terms)
-          puts "Search results: #{urls}"
         when "crawler"
           exit_early = true
           puts "#{llm_service_string}: Scraping with crawler #{keyword_groups}, avoid keywords #{avoid_keywords}"
@@ -146,9 +142,7 @@ module Core
         processed_urls << url
         data[:processed_urls] = processed_urls
 
-        found_people = accumulated_people.map { |person| "#{person["name"]} (#{person["positions"].first})" }
-        # num_urls_scraped = processed_urls.count
-        # puts "#{context[:llm_service_string]}: Scraping #{url}: #{num_urls_scraped} of MAX (#{MAX_URLS_TO_SCRAPE})"
+        found_people = accumulated_people.map { |person| "#{person["name"]} (#{person["roles"].first["data"]})" }
         puts "#{context[:llm_service_string]}: #{found_people.count} people found: #{found_people}"
       end
 
@@ -235,8 +229,7 @@ module Core
       return false if num_urls_scraped >= [MAX_URLS_TO_SCRAPE, num_seeded_urls].max
 
       valid_officials_count = accumulated_officials.count do |official|
-        # TODO: should only check if the positions are relevant
-        official["positions"].present? && Services::Shared::People.profile_data_points_present?(official)
+        Services::Shared::People.profile_data_points_present?(official)
       end
 
       num_people_hint = context[:people_hint].present? ? context[:people_hint].count : 0
