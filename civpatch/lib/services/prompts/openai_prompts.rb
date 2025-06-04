@@ -127,6 +127,7 @@ module Services
               Examples:
                 - "Citywide Position 7" -> "Citywide", "Position 7"
                 - "At-Large Position 2" -> "At-Large", "Position 2"
+                - "At-Large 1, Position 2" -> "At-Large 1", "Position 2"
             - Loose associations (the person lives in a district, but not elected from it)
               should not be listed
           - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
