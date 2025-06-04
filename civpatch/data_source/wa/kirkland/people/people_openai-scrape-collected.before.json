@@ -8,7 +8,7 @@
       {
         "data": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/kelli-curtis.jpg?w=334&h=506",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled with 'Kelli Curtis' near Mayor title.",
+        "llm_confidence_reason": "Image labeled 'Kelli Curtis' near Mayor title.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -16,21 +16,21 @@
       {
         "data": "Mayor",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated as Mayor Kelli Curtis with term details."
+        "llm_confidence_reason": "Explicitly stated as Mayor Kelli Curtis."
       }
     ],
     "divisions": [
       {
         "data": "Position 2",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Listed as Position #2 in the council."
+        "llm_confidence_reason": "Listed as Position #2."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3532",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Mayor Kelli Curtis contact info.",
+        "llm_confidence_reason": "Phone number listed near Mayor Curtis contact info.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -38,7 +38,7 @@
       {
         "data": "kcurtis@kirklandwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly given for Mayor Kelli Curtis.",
+        "llm_confidence_reason": "Email explicitly given for Mayor Curtis.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -46,7 +46,7 @@
       {
         "data": "https://www.kirklandwa.gov/Government/City-Council",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General City Council page URL as no personal page provided.",
+        "llm_confidence_reason": "General City Council page URL as no personal page found.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -70,7 +70,7 @@
       {
         "data": "https://www.kirklandwa.gov/files/sharedassets/public/v/3/city-council/images/jay-arnold.jpg?w=300&h=450",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled with 'Jay Arnold' near Deputy Mayor title.",
+        "llm_confidence_reason": "Image labeled 'Jay Arnold' near Deputy Mayor title.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -85,22 +85,22 @@
       {
         "data": "Position 1",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Listed as Position #1 in the council."
+        "llm_confidence_reason": "Listed as Position #1."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3535",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Deputy Mayor Jay Arnold contact info.",
+        "llm_confidence_reason": "Phone number listed near Deputy Mayor Arnold contact info.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "emails": [
       {
         "data": "jarnold@kirklandwa.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly given for Deputy Mayor Jay Arnold.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email given but mailto link missing; inferred from text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -108,14 +108,14 @@
       {
         "data": "https://www.kirklandwa.gov/Government/City-Council",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General City Council page URL as no personal page provided.",
+        "llm_confidence_reason": "General City Council page URL as no personal page found.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2014-01",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Began first term on City Council in January 2014.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
@@ -139,7 +139,7 @@
       {
         "data": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/neal-black.jpg?w=300&h=450",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled with 'Neal Black' near Councilmember title.",
+        "llm_confidence_reason": "Image labeled 'Neal Black' near Councilmember title.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -154,22 +154,22 @@
       {
         "data": "Position 5",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Listed as Position #5 in the council."
+        "llm_confidence_reason": "Listed as Position #5."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3544",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilmember Neal Black contact info.",
+        "llm_confidence_reason": "Phone number listed near Councilmember Black contact info.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "emails": [
       {
         "data": "nblack@kirklandwa.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly given for Councilmember Neal Black.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email given but mailto link missing; inferred from text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -177,14 +177,14 @@
       {
         "data": "https://www.kirklandwa.gov/Government/City-Council",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General City Council page URL as no personal page provided.",
+        "llm_confidence_reason": "General City Council page URL as no personal page found.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2019-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Served on City Council since November 2019.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
@@ -208,7 +208,7 @@
       {
         "data": "https://www.kirklandwa.gov/files/sharedassets/public/v/3/city-council/images/amy-falcone-2024.jpg?w=300&h=450",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled with 'Amy Falcone' near Councilmember title.",
+        "llm_confidence_reason": "Image labeled 'Amy Falcone' near Councilmember title.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -223,7 +223,7 @@
       {
         "data": "Position 6",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Listed as Position #6 in the council."
+        "llm_confidence_reason": "Listed as Position #6."
       }
     ],
     "phone_numbers": [],
@@ -232,14 +232,14 @@
       {
         "data": "https://www.kirklandwa.gov/Government/City-Council",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General City Council page URL as no personal page provided.",
+        "llm_confidence_reason": "General City Council page URL as no personal page found.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2019-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Elected to Position 6 in November 2019.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
@@ -263,7 +263,7 @@
       {
         "data": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/jon-pascal.jpg?w=300&h=450",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled with 'Jon Pascal' near Councilmember title.",
+        "llm_confidence_reason": "Image labeled 'Jon Pascal' near Councilmember title.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -278,14 +278,14 @@
       {
         "data": "Position 7",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Listed as Position #7 in the council."
+        "llm_confidence_reason": "Listed as Position #7."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3530",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilmember Jon Pascal contact info.",
+        "llm_confidence_reason": "Phone number listed near Councilmember Pascal contact info.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -293,7 +293,7 @@
       {
         "data": "jpascal@kirklandwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly given for Councilmember Jon Pascal.",
+        "llm_confidence_reason": "Email explicitly given for Councilmember Pascal.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -301,14 +301,14 @@
       {
         "data": "https://www.kirklandwa.gov/Government/City-Council",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General City Council page URL as no personal page provided.",
+        "llm_confidence_reason": "General City Council page URL as no personal page found.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2016-12",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Appointed to Position 2 in December 2016, elected to Position 7 in November 2017.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
@@ -332,7 +332,7 @@
       {
         "data": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/penny-sweet.jpg?w=300&h=450",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled with 'Penny Sweet' near Councilmember title.",
+        "llm_confidence_reason": "Image labeled 'Penny Sweet' near Councilmember title.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -347,14 +347,14 @@
       {
         "data": "Position 3",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Listed as Position #3 in the council."
+        "llm_confidence_reason": "Listed as Position #3."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3534",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number listed near Councilmember Penny Sweet contact info.",
+        "llm_confidence_reason": "Phone number listed near Councilmember Sweet contact info.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -362,7 +362,7 @@
       {
         "data": "psweet@kirklandwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly given for Councilmember Penny Sweet.",
+        "llm_confidence_reason": "Email explicitly given for Councilmember Sweet.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -370,14 +370,14 @@
       {
         "data": "https://www.kirklandwa.gov/Government/City-Council",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General City Council page URL as no personal page provided.",
+        "llm_confidence_reason": "General City Council page URL as no personal page found.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2010-01",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Began first term on City Council in January 2010.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
@@ -401,7 +401,7 @@
       {
         "data": "https://www.kirklandwa.gov/files/sharedassets/public/v/1/city-council/images/john-tymczyszyn.jpg?w=300&h=450",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image labeled with 'John Tymczyszyn' near Councilmember title.",
+        "llm_confidence_reason": "Image labeled 'John Tymczyszyn' near Councilmember title.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -416,7 +416,7 @@
       {
         "data": "Position 4",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Listed as Position #4 in the council."
+        "llm_confidence_reason": "Listed as Position #4."
       }
     ],
     "phone_numbers": [],
@@ -424,7 +424,7 @@
       {
         "data": "JohnT@Kirklandwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly given for Councilmember John Tymczyszyn.",
+        "llm_confidence_reason": "Email explicitly given for Councilmember Tymczyszyn.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
@@ -432,14 +432,14 @@
       {
         "data": "https://www.kirklandwa.gov/Government/City-Council",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General City Council page URL as no personal page provided.",
+        "llm_confidence_reason": "General City Council page URL as no personal page found.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2023-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Elected to Position 4 in November 2023.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
