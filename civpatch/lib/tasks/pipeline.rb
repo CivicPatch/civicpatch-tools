@@ -180,7 +180,8 @@ namespace :pipeline do
       person["sources"]
     end.uniq
 
-    Core::CacheManager.clean(state, geoid, source_urls)
+    puts "TODO: restore cache clean!"
+    # Core::CacheManager.clean(state, geoid, source_urls)
     Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
   end
 
