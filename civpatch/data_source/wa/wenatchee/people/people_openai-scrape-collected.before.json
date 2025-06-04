@@ -8,7 +8,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/5256/638736517525800000",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image near the name and title 'Mayor Mike Poirier' on the page.",
+        "llm_confidence_reason": "Image near the name labeled 'Mayor Mike Poirier'.",
         "source": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
       }
     ],
@@ -24,7 +24,7 @@
       {
         "data": "(509) 888-6204",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed under Mayor's Office contact info near Mike Poirier's section.",
+        "llm_confidence_reason": "Phone number listed near Mayor Mike Poirier's contact info.",
         "source": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
       }
     ],
@@ -32,7 +32,7 @@
       {
         "data": "mike@wenatcheewa.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address provided as 'Email the Mayor' mailto link near Mike Poirier's name.",
+        "llm_confidence_reason": "Email extracted from 'Email the Mayor' mailto link near name.",
         "source": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
       }
     ],
@@ -40,7 +40,7 @@
       {
         "data": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the Mayor's office and Mike Poirier's profile.",
+        "llm_confidence_reason": "Primary page URL for the Mayor's office and biography.",
         "source": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor"
       }
     ],
@@ -64,7 +64,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/3829/637135684090370000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image shown next to name and district.",
+        "llm_confidence_reason": "Image directly adjacent to Jose Luis Cuevas' name and description.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -72,7 +72,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as District 1 member of Wenatchee City Council."
+        "llm_confidence_reason": "Listed as a member of Wenatchee City Council, District 1."
       }
     ],
     "divisions": [
@@ -94,7 +94,7 @@
     "websites": [
       {
         "data": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.7,
         "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -104,7 +104,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term year (2027) shown next to name.",
+        "llm_confidence_reason": "Term expiration year (2027) shown next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -119,7 +119,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/4985/638530950506870000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image shown next to name and district.",
+        "llm_confidence_reason": "Image directly adjacent to Chelsea Ewer's name and description.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -127,7 +127,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as District 2 member of Wenatchee City Council."
+        "llm_confidence_reason": "Listed as a member of Wenatchee City Council, District 2."
       }
     ],
     "divisions": [
@@ -149,7 +149,7 @@
     "websites": [
       {
         "data": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.7,
         "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -159,7 +159,7 @@
       {
         "data": "2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term year (2025) shown next to name.",
+        "llm_confidence_reason": "Term expiration year (2025) shown next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -174,7 +174,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/4736/638149061053970000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image shown next to name and district.",
+        "llm_confidence_reason": "Image directly adjacent to Top Rojanasthien's name and description.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -182,7 +182,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as District 3 member of Wenatchee City Council."
+        "llm_confidence_reason": "Listed as a member of Wenatchee City Council, District 3."
       }
     ],
     "divisions": [
@@ -195,7 +195,7 @@
     "phone_numbers": [
       {
         "data": "(509) 670-6750",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Phone number listed next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -204,7 +204,7 @@
     "websites": [
       {
         "data": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.7,
         "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -212,7 +212,7 @@
     "start_dates": [
       {
         "data": "2021",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.8,
         "llm_confidence_reason": "Text states elected in 2021.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -221,7 +221,7 @@
       {
         "data": "2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term year (2025) shown next to name.",
+        "llm_confidence_reason": "Term expiration year (2025) shown next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -236,7 +236,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/3833/637135696004400000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image shown next to name and district.",
+        "llm_confidence_reason": "Image directly adjacent to Travis Hornby's name and description.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -244,7 +244,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as District 4 member of Wenatchee City Council."
+        "llm_confidence_reason": "Listed as a member of Wenatchee City Council, District 4."
       }
     ],
     "divisions": [
@@ -258,7 +258,7 @@
       {
         "data": "(509) 429-5729",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed next to name.",
+        "llm_confidence_reason": "Phone number listed next to name with (c) indicating cell.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -266,7 +266,7 @@
     "websites": [
       {
         "data": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.7,
         "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -276,7 +276,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term year (2027) shown next to name.",
+        "llm_confidence_reason": "Term expiration year (2027) shown next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -291,7 +291,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/4865/638397799038270000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image shown next to name and district.",
+        "llm_confidence_reason": "Image directly adjacent to Charlie Atkinson's name and description.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -299,7 +299,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as District 5 member of Wenatchee City Council."
+        "llm_confidence_reason": "Listed as a member of Wenatchee City Council, District 5."
       }
     ],
     "divisions": [
@@ -321,7 +321,7 @@
     "websites": [
       {
         "data": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.7,
         "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -331,7 +331,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term year (2027) shown next to name.",
+        "llm_confidence_reason": "Term expiration year (2027) shown next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -346,7 +346,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/4320/637587397464570000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image shown next to name and division.",
+        "llm_confidence_reason": "Image directly adjacent to Linda Herald's name and description.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -354,14 +354,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as At-Large 'A' member of Wenatchee City Council."
+        "llm_confidence_reason": "Listed as a member of Wenatchee City Council, At-Large \"A\"."
       }
     ],
     "divisions": [
       {
         "data": "At-Large \"A\"",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated as At-Large 'A'."
+        "llm_confidence_reason": "Explicitly stated as At-Large \"A\"."
       }
     ],
     "phone_numbers": [
@@ -376,7 +376,7 @@
     "websites": [
       {
         "data": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.7,
         "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -386,7 +386,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term year (2027) shown next to name.",
+        "llm_confidence_reason": "Term expiration year (2027) shown next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -401,7 +401,7 @@
       {
         "data": "https://www.wenatcheewa.gov/home/showpublishedimage/5294/638754807737830000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image shown next to name and division.",
+        "llm_confidence_reason": "Image directly adjacent to Mayra Navarro Gomez's name and description.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],
@@ -409,14 +409,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as At-Large 'B' member of Wenatchee City Council."
+        "llm_confidence_reason": "Listed as a member of Wenatchee City Council, At-Large \"B\"."
       }
     ],
     "divisions": [
       {
         "data": "At-Large \"B\"",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated as At-Large 'B'."
+        "llm_confidence_reason": "Explicitly stated as At-Large \"B\"."
       }
     ],
     "phone_numbers": [
@@ -431,7 +431,7 @@
     "websites": [
       {
         "data": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.7,
         "llm_confidence_reason": "Primary page URL for council members.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
@@ -441,7 +441,7 @@
       {
         "data": "2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term year (2025) shown next to name.",
+        "llm_confidence_reason": "Term expiration year (2025) shown next to name.",
         "source": "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
       }
     ],

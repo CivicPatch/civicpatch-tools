@@ -8,7 +8,7 @@
     "image": null,
     "phone_number": "(509) 888-6204",
     "email": "mike@wenatcheewa.gov",
-    "website": null,
+    "website": "https://www.wenatcheewa.gov/government/mayor-s-office/meet-the-mayor",
     "start_date": "2024-01-01",
     "end_date": null,
     "sources": [
@@ -66,7 +66,7 @@
     "phone_number": "(509) 670-6750",
     "email": null,
     "website": null,
-    "start_date": null,
+    "start_date": "2021",
     "end_date": "2025",
     "sources": [
       "https://www.wenatcheewa.gov/government/wenatchee-city-council/meet-the-council-members"
@@ -117,8 +117,7 @@
       "Council Member"
     ],
     "divisions": [
-      "At-Large",
-      "A"
+      "At-Large A"
     ],
     "image": null,
     "phone_number": "(509) 670-0309",
@@ -137,8 +136,7 @@
       "Council Member"
     ],
     "divisions": [
-      "At-Large",
-      "B"
+      "At-Large B"
     ],
     "image": null,
     "phone_number": "(509) 423-3916",

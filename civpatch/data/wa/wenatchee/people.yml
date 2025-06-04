@@ -16,7 +16,8 @@
 - name: Linda Herald
   roles:
   - Council Member
-  divisions: []
+  divisions:
+  - At-large A
   image: https://www.wenatcheewa.gov/home/showpublishedimage/4320/637587397464570000
   cdn_image: https://cdn.civicpatch.org/open-data/wa/wenatchee/images/468baa90386a44fdb71a775ef5a7102af0963bd17320674a160071454cffb81e.png
   email: lherald@wenatcheewa.gov
@@ -30,7 +31,8 @@
 - name: Mayra Navarro Gomez
   roles:
   - Council Member
-  divisions: []
+  divisions:
+  - At-large B
   image: https://www.wenatcheewa.gov/home/showpublishedimage/5294/638754807737830000
   cdn_image: https://cdn.civicpatch.org/open-data/wa/wenatchee/images/3dd65c40ee5769282ebd2dc78519480c45597975643b93c5c5ac57c8e33c5eb6.png
   email: mnavarrogomez@wenatcheewa.gov
