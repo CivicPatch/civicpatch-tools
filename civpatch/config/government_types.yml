@@ -127,6 +127,7 @@ government_types:
         - selectwoman
         - select board
         - board of selectmen
+        - board of selectmen member
         - select board representative
         - selectboard
         - selectboard member

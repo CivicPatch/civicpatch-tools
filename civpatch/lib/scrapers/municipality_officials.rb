@@ -25,7 +25,7 @@ module Scrapers
         "people" => people
       }
     rescue StandardError => e
-      puts "Error fetching with state-level scraper for #{city_name}, #{state}: #{e.message}, falling back to search"
+      puts "No state-level scraper for #{city_name}, #{state}: #{e.message}, falling back to search"
       with_search_fallback(municipality_context)
     end
 
