@@ -15,7 +15,7 @@
       "https://www.strathamnh.gov/select-board",
       "https://www.strathamnh.gov/user/473/contact"
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   },
   {
     "name": "Allison Knab",
@@ -30,9 +30,10 @@
     "start_date": null,
     "end_date": "2027",
     "sources": [
-      "https://www.strathamnh.gov/select-board"
+      "https://www.strathamnh.gov/select-board",
+      "https://www.strathamnh.gov/user/78/contact"
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   },
   {
     "name": "Joe Anderson",
@@ -50,6 +51,6 @@
       "https://www.strathamnh.gov/select-board",
       "https://www.strathamnh.gov/user/4391/contact"
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   }
 ]
