@@ -1,0 +1,16 @@
+---
+- name: Joe Anderson
+  roles:
+  - Select Board Member
+  divisions:
+  image: https://www.strathamnh.gov/sites/g/files/vyhlif5051/f/styles/group_main_image/public/departments/mike_allison_joe_a.jpg?itok=Z1r5SwQO
+  cdn_image: https://cdn.civicpatch.org/open-data/nh/stratham/images/32dbd396e08643c1ac5e654debfe8685596bccaf95c5c17a801559faa81dd1c0.jpg
+  email:
+  phone_number: "(603) 772-7391 ext. 187"
+  website: https://www.strathamnh.gov/user/4391/contact
+  start_date:
+  end_date: '2028'
+  sources:
+  - https://www.strathamnh.gov/select-board
+  - https://www.strathamnh.gov/user/4391/contact
+  updated_at: '2025-06-05'
