@@ -174,6 +174,8 @@ module Services
           - CRITICAL: Extract phone numbers even when formatted as Markdown link text,
             like `[(206) 555-1212]()` or `[Call (206) 555-1212](some-page)`.
             Extract the number within the square brackets.
+          - List only one phone number per person.
+          - If multiple phone numbers are found, choose the most relevant one based on context.
         - Website extraction:
           - Goal: Find the primary, stable profile or biography page for the person.
           - Prioritize person-specific pages over landing pages (e.g., `/council/john-doe` over `/council/`).
