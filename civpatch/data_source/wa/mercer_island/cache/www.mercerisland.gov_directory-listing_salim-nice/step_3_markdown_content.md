@@ -1,4 +1,4 @@
-  [Skip to main content](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker/)  
+  [Skip to main content](https://www.mercerisland.gov/directory-listing/salim-nice/)  
 
  *   [City Hall Closure: Accessing City Services](https://www.mercerisland.gov/administrativeservices/page/city-hall-closure-accessing-city-services)  
  *   [E-Bike Safety](https://www.mercerisland.gov/publicworks/page/e-bike-safety)  
@@ -183,43 +183,44 @@ Column 3
    *  __ [Job Opportunities](https://www.mercerisland.gov/hr)__  
  Search form Search Website 
 
-# Councilmember Daniel Becker
+# Mayor Salim Nice
 
-  ![Councilmember Daniel Becker](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/32216/becker_2025.jpg?itok=XOnWFJM8)  
+  ![Salim Nice](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/13121/nice_2018.jpg?itok=RJqV7N2Y)  
 
-### Position No. 7, Term: 6/4/2025 - Certification of November 2025 Election
-
-###  
-
-### Phone: 206-275-7995
-
-Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov) 
+### Position No. 2, Term: 1/1/2022 - 12/31/2025
 
  
 
- Daniel was appointed to the Mercer Island City Council in June 2025. He previously served on the City’s Arts Council, most recently as Vice Chair. He graduated from Mercer Island High School in 2001 and currently lives on the north end of the Island with his husband and son, where he enjoys walking their rescue dog around the quiet streets and parks surrounding their neighborhood. 
+### Phone: 206-275-7997
 
- Daniel has an undergraduate business degree from the University of Washington. He still owns and runs the company he co-founded during college, after growing it to 200+ employees, where he serves as CTO and CFO. 
-
- *(Position No. 7 - Appointed June 2025 term: 6/4/2025 to Certification of November 2025 Election)* 
-
-   Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+### Email: [salim.nice@mercerisland.gov](mailto:salim.nice@mercerisland.gov) 
 
  
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+ Salim Nice is a dedicated public servant and accomplished professional with a strong background in government reimbursement, tax, and technology. He currently serves as the President and Chief Executive Officer of Healthcare Reimbursement Solutions (HRS), bringing over 20 years of experience in leading teams and executing strategic plans. 
 
- 
+ Before assuming his role as Mayor of Mercer Island, Salim built an impressive career in operations and technology, spearheading solutions that revolutionized how hospitals leverage government data. Under his leadership, he successfully managed the recovery of more than $1B for US Hospital providers, setting new standards for identifying reimbursement opportunities. 
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+ Salim co-founded Healthcare Payment Specialists LLC, where he served as Senior Vice President, Chief Operating Officer, and Chief Technology Officer. Under his guidance, the company grew from a team of three to more than 100 employees before being acquired by TransUnion in 2018 and soon after by FinThrive. 
 
- 
+ Salim's commitment to public service is evident in his involvement with the Mercer Island City Council. He was elected to Position 2 in November 2017 and served by appointment in Position 4 from July 2017 to November 2017. Salim's leadership qualities were recognized by the City Council when he was elected as Deputy Mayor for 2018-2019 and subsequently as Mayor in 2022. Salim was re-elected Mayor for 2024-2025. 
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+ Beyond his civic duties, Salim volunteers with the Islands Oil Spill Association (IOSA), a non-profit, community-based, community-supported oil spill response organization that serves the San Juan Islands. 
 
- 
+ A Mercer Island native, Salim holds a degree from Seattle University, and he is happily married to Janice Nice, also a Mercer Island native. Together, they are proud parents of a young child. 
 
-   
+ Salim's expertise, leadership, and dedication make him a valuable asset to the City of Mercer Island. As Mayor, he continues prioritizing the community's welfare and striving for excellence in every aspect of his responsibilities. 
+
+ __City Council Liaison Assignments:__ 
+
+ * Arts Council
+ * Safe Energy Leadership Alliance
+ * King County Growth Management Planning Council (GMPC)
+ *  Vice Chair of the Sound Cities Association Caucus of the GMPC 
+
+ *(Appointed 7/17/2017 to fill Position No. 4: 7/18/2017 to 11/28/2017)* 
+
+ *(Position No. 2: Elected 11/7/2017 term: 1/1/2018 to 12/31/2021, re-elected  11/2021 term: 1/1/2022 to 12/31/2025)* 
 
  *  ![Printer-friendly version](https://www.mercerisland.gov/sites/all/modules/print/icons/print_icon.png) 
   [City Council](https://www.mercerisland.gov/citycouncil)  
@@ -257,12 +258,12 @@ Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov)
  *  [Staff Directory](https://www.mercerisland.gov/directory) 
  *  [Hours](https://www.mercerisland.gov/ru/page/hours-operation) 
  *  [Sitemap](https://www.mercerisland.gov/sitemap) 
- *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/32216) 
+ *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/13121) 
 
 9611 SE 36th Street, Mercer Island, WA 98040 | (206) 275‑7600
 
-  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker)  
+  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/directory-listing/salim-nice)  
 
  [Privacy Policy](https://www.mercerisland.gov/administrativeservices/page/site-privacy-and-security-notice) 
 
-  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Original text Rate this translation Your feedback will be used to help improve Google Translate  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  
+  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  Original text Rate this translation Your feedback will be used to help improve Google Translate PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  

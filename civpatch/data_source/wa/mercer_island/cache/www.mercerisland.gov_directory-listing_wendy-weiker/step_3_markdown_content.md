@@ -1,4 +1,4 @@
-  [Skip to main content](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker/)  
+  [Skip to main content](https://www.mercerisland.gov/directory-listing/wendy-weiker/)  
 
  *   [City Hall Closure: Accessing City Services](https://www.mercerisland.gov/administrativeservices/page/city-hall-closure-accessing-city-services)  
  *   [E-Bike Safety](https://www.mercerisland.gov/publicworks/page/e-bike-safety)  
@@ -183,43 +183,33 @@ Column 3
    *  __ [Job Opportunities](https://www.mercerisland.gov/hr)__  
  Search form Search Website 
 
-# Councilmember Daniel Becker
+# Councilmember Wendy Weiker
 
-  ![Councilmember Daniel Becker](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/32216/becker_2025.jpg?itok=XOnWFJM8)  
+  ![Wendy Weiker](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/29031/weiker_headshot_2016.jpg?itok=HiItke3w)  
 
-### Position No. 7, Term: 6/4/2025 - Certification of November 2025 Election
-
-###  
-
-### Phone: 206-275-7995
-
-Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov) 
+### Position No. 3, Term:  1/1/2024 - 12/31/2027
 
  
 
- Daniel was appointed to the Mercer Island City Council in June 2025. He previously served on the City’s Arts Council, most recently as Vice Chair. He graduated from Mercer Island High School in 2001 and currently lives on the north end of the Island with his husband and son, where he enjoys walking their rescue dog around the quiet streets and parks surrounding their neighborhood. 
+### Phone: 206-275-7992
 
- Daniel has an undergraduate business degree from the University of Washington. He still owns and runs the company he co-founded during college, after growing it to 200+ employees, where he serves as CTO and CFO. 
-
- *(Position No. 7 - Appointed June 2025 term: 6/4/2025 to Certification of November 2025 Election)* 
-
-   Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+### Email: [wendy.weiker@mercerisland.gov](mailto:wendy.weiker@mercerisland.gov) 
 
  
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+Wendy was elected to Mercer Island City Council in 2015 and reelected in 2019. She was elected by the City Council to serve as Deputy Mayor for 2020-2021. Before joining the Council, Wendy served on the Mercer Island Utility Board for five years and was a member of the Town Center Visioning Group in 2014 and 2015.  Over the years, Wendy has been active in the PTAs at Island Park Elementary, Islander Middle School, Mercer Island High School, and the Mercer Island Band Boosters.  She holds a Master’s degree in Public Administration from the UW Evans School of Public Policy and completed the Leadership Eastside program.  
 
- 
+In her professional life, Wendy has over 20 years of public relations experience facilitating and leading community engagement programs for private companies and nonprofit organizations. She currently works at Republic Services as a Municipal Manager, volunteers with several Mercer Island nonprofits, and serves on the Association of Washington Cities Board of Directors and Sound Cities Association Board of Directors.
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+ __City Council Liaison Assignments:__ 
 
- 
+ * Disability Board
+ * Health Youth Initiative Community Coalition
+ * Puget Sound Regional Council Transportation Policy Board, Alternate
+ * Sound Cities Association Board of Directors
+ * Association of Washington Cities Board of Directors (elected by AWC members)
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
-
- 
-
-   
+ *(Elected 11/2015, term: 1/1/2016 to 12/31/2019; Re-elected 11/2019, term: 1/1/2020 to 12/31/2023; Re-elected 11/2023, term: 1/1/2024 to 12/31/2027)* 
 
  *  ![Printer-friendly version](https://www.mercerisland.gov/sites/all/modules/print/icons/print_icon.png) 
   [City Council](https://www.mercerisland.gov/citycouncil)  
@@ -257,12 +247,12 @@ Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov)
  *  [Staff Directory](https://www.mercerisland.gov/directory) 
  *  [Hours](https://www.mercerisland.gov/ru/page/hours-operation) 
  *  [Sitemap](https://www.mercerisland.gov/sitemap) 
- *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/32216) 
+ *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/12761) 
 
 9611 SE 36th Street, Mercer Island, WA 98040 | (206) 275‑7600
 
-  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker)  
+  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/directory-listing/wendy-weiker)  
 
  [Privacy Policy](https://www.mercerisland.gov/administrativeservices/page/site-privacy-and-security-notice) 
 
-  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Original text Rate this translation Your feedback will be used to help improve Google Translate  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  
+  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

@@ -1,4 +1,4 @@
-  [Skip to main content](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker/)  
+  [Skip to main content](https://www.mercerisland.gov/directory-listing/ted-weinberg/)  
 
  *   [City Hall Closure: Accessing City Services](https://www.mercerisland.gov/administrativeservices/page/city-hall-closure-accessing-city-services)  
  *   [E-Bike Safety](https://www.mercerisland.gov/publicworks/page/e-bike-safety)  
@@ -183,43 +183,42 @@ Column 3
    *  __ [Job Opportunities](https://www.mercerisland.gov/hr)__  
  Search form Search Website 
 
-# Councilmember Daniel Becker
+# Councilmember Ted Weinberg
 
-  ![Councilmember Daniel Becker](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/32216/becker_2025.jpg?itok=XOnWFJM8)  
+  ![Ted Weinberg](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/30374/ted_weinberg.png?itok=sTnkOagM)  
 
-### Position No. 7, Term: 6/4/2025 - Certification of November 2025 Election
-
-###  
-
-### Phone: 206-275-7995
-
-Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov) 
+### Position No. 4, Term:  1/1/2022 - 12/31/2025
 
  
 
- Daniel was appointed to the Mercer Island City Council in June 2025. He previously served on the City’s Arts Council, most recently as Vice Chair. He graduated from Mercer Island High School in 2001 and currently lives on the north end of the Island with his husband and son, where he enjoys walking their rescue dog around the quiet streets and parks surrounding their neighborhood. 
+### Phone: 206-275-7993
 
- Daniel has an undergraduate business degree from the University of Washington. He still owns and runs the company he co-founded during college, after growing it to 200+ employees, where he serves as CTO and CFO. 
-
- *(Position No. 7 - Appointed June 2025 term: 6/4/2025 to Certification of November 2025 Election)* 
-
-   Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+### Email: [ted.weinberg@mercerisland.gov](mailto:ted.weinberg@mercerisland.gov) 
 
  
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+Ted was elected to serve on the City Council seat 4 in 2021. Previously, he served 4 years on the Mercer Island Planning Commission, most recently as vice-chair. He also serves on the boards of the Mercer Island Sister City Association and the Friends of Seward Park.
 
  
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+Born in Seattle, Ted moved to Mercer Island in 1981. He graduated from MIHS class of ’86, got a BS degree in Architecture from the University of Virginia, and a Technology Management MBA from the University of Washington.
+
+After working 15 years at Microsoft and 10 years at a global technology consulting firm called Avanade, Ted joined the Information Technology department at the City of Seattle, where he currently serves as its Portfolio Manager and Resource Manager.
+
+Ted works every day to create an efficient government that ensures the resources we rely on everyday are dependable, keeps decision making fact-based and transparent, and makes Mercer Island a place we can all proudly call home.
+
+Ted lives with his wife Florence. They have two adult children and two Siamese cats, Valkyrie and Loki. The Weinberg family supports the MI Sister City Association, MI Schools Foundation, MI Youth and Family Services, MI Historical Society, and additional organizations promoting climate change mitigation, world peace, public safety, a full spectrum of housing, healthcare for all, the arts, a narrower wealth gap, and civil civic discourse.
+
+ __City Council Liaison Assignments:__ 
+
+ * Eastside Transportation Partnership
+ * MISD Superintendent's Community Advisory Council
+ * King County-Cities Climate Collaboration (K4C)
+ * SCA Public Issues Committee (Alternate)
+
+(Elected 11/2021, Current Term 1/2022 - 12/2025)
 
  
-
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
-
- 
-
-   
 
  *  ![Printer-friendly version](https://www.mercerisland.gov/sites/all/modules/print/icons/print_icon.png) 
   [City Council](https://www.mercerisland.gov/citycouncil)  
@@ -257,12 +256,12 @@ Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov)
  *  [Staff Directory](https://www.mercerisland.gov/directory) 
  *  [Hours](https://www.mercerisland.gov/ru/page/hours-operation) 
  *  [Sitemap](https://www.mercerisland.gov/sitemap) 
- *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/32216) 
+ *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/30374) 
 
 9611 SE 36th Street, Mercer Island, WA 98040 | (206) 275‑7600
 
-  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker)  
+  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/directory-listing/ted-weinberg)  
 
  [Privacy Policy](https://www.mercerisland.gov/administrativeservices/page/site-privacy-and-security-notice) 
 
-  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Original text Rate this translation Your feedback will be used to help improve Google Translate  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  
+  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  Original text Rate this translation Your feedback will be used to help improve Google Translate 

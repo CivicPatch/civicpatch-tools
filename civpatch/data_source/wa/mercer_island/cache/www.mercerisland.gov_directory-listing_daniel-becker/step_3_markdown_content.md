@@ -1,4 +1,4 @@
-  [Skip to main content](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker/)  
+  [Skip to main content](https://www.mercerisland.gov/directory-listing/daniel-becker/)  
 
  *   [City Hall Closure: Accessing City Services](https://www.mercerisland.gov/administrativeservices/page/city-hall-closure-accessing-city-services)  
  *   [E-Bike Safety](https://www.mercerisland.gov/publicworks/page/e-bike-safety)  
@@ -261,7 +261,7 @@ Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov)
 
 9611 SE 36th Street, Mercer Island, WA 98040 | (206) 275‑7600
 
-  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker)  
+  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/directory-listing/daniel-becker)  
 
  [Privacy Policy](https://www.mercerisland.gov/administrativeservices/page/site-privacy-and-security-notice) 
 

@@ -1,4 +1,8 @@
-  [Skip to main content](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker/)  
+ 
+
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+  [Skip to main content](https://www.mercerisland.gov/directory-listing/craig-reynolds/)  
 
  *   [City Hall Closure: Accessing City Services](https://www.mercerisland.gov/administrativeservices/page/city-hall-closure-accessing-city-services)  
  *   [E-Bike Safety](https://www.mercerisland.gov/publicworks/page/e-bike-safety)  
@@ -183,86 +187,45 @@ Column 3
    *  __ [Job Opportunities](https://www.mercerisland.gov/hr)__  
  Search form Search Website 
 
-# Councilmember Daniel Becker
+# Craig Reynolds
 
-  ![Councilmember Daniel Becker](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/32216/becker_2025.jpg?itok=XOnWFJM8)  
+  ![Craig Reynolds](https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/20041/reynolds_2019.jpg?itok=PItAHUzh)  Position:  Councilmember   Phone Number:  (206) 275-7991   Email:  craig.reynolds@mercerisland.gov 
 
-### Position No. 7, Term: 6/4/2025 - Certification of November 2025 Election
+### Councilmember
 
-###  
+Position No. 5, Term 2023
 
-### Phone: 206-275-7995
-
-Email: [daniel.becker@mercerisland.gov](mailto:daniel.becker@mercerisland.gov) 
+Craig was elected to serve on the City Council in 2019.  Previously, he served on the Mercer Island Planning Commission, most recently as vice-chair, and on the city’s Community Advisory Group.
 
  
 
- Daniel was appointed to the Mercer Island City Council in June 2025. He previously served on the City’s Arts Council, most recently as Vice Chair. He graduated from Mercer Island High School in 2001 and currently lives on the north end of the Island with his husband and son, where he enjoys walking their rescue dog around the quiet streets and parks surrounding their neighborhood. 
-
- Daniel has an undergraduate business degree from the University of Washington. He still owns and runs the company he co-founded during college, after growing it to 200+ employees, where he serves as CTO and CFO. 
-
- *(Position No. 7 - Appointed June 2025 term: 6/4/2025 to Certification of November 2025 Election)* 
-
-   Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+He is a Washington native and has lived in the Seattle area since 1987.  Craig has a degree in mathematics from M.I.T. and he is a Fellow of the Society of Actuaries and a Member of the American Academy of Actuaries.  From 2015-2016 he was President of the Society of Actuaries, a global education, research, and credentialing organization for actuaries.  He is a Principal & Consulting Actuary for Milliman, a Seattle-based international consulting firm where he has worked since 1989.  He assists his clients with long-term financial forecasting, risk management, and mergers and acquisitions.  He consults to clients around the world.
 
  
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+Craig lives with his wife Jane and her parents at the site of Jane’s childhood home on the Island.   They have three adult children.  Craig and his lab Wilson have almost completed their most-recent goal:  To walk every street on Mercer Island.  Though this effort he has gained greater appreciation for what an amazing place to live this is, and he is committed to preserving what we love while working for an even better future.
 
- 
+ __City Council Liaison Assignments:__ 
 
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
+ * Sustainability Committee
+ * Eastside Transportation Partnership
+ * Safe Energy Leadership Alliance
 
- 
-
-     Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download 
-
- 
-
-   
+(Originally Elected 11/2019, Current Term 1/2020 - 12/2023)
 
  *  ![Printer-friendly version](https://www.mercerisland.gov/sites/all/modules/print/icons/print_icon.png) 
-  [City Council](https://www.mercerisland.gov/citycouncil)  
-
- *   [City Council](https://www.mercerisland.gov/citycouncil) 
-   *  [Mayor Salim Nice](https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice) 
-   *  [Deputy Mayor David Rosenbaum](https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum) 
-   *  [Councilmember Lisa Anderl](https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl) 
-   *  [Councilmember Daniel Becker](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker) 
-   *  [Councilmember Craig Reynolds](https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds) 
-   *  [Councilmember Wendy Weiker](https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker) 
-   *  [Councilmember Ted Weinberg](https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg) 
- *  [Agendas & Minutes](https://www.mercerisland.gov/meetings?field_microsite_tid_1=27) 
- *  [Public Documents](https://www.mercerisland.gov/cityclerk/page/public-documents) 
- *  [Council Priorities and Work Plan](https://www.mercerisland.gov/citycouncil/page/city-council-priorities-and-work-plan) 
- *  [Current Council Topics](https://letstalk.mercergov.org) 
- *  [Legislative Priorities](https://www.mercerisland.gov/citycouncil/page/2025-legislative-priorities) 
- *  [City Council Voting Log](https://www.mercerisland.gov/sites/default/files/fileattachments/city_council/page/98/councilvotinglog10-1-2024.pdf) 
- *  [Planning Session (Retreat)](https://www.mercerisland.gov/citycouncil/page/city-council-planning-sessions) 
- *  [Community Member of the Year](https://www.mercerisland.gov/citycouncil/page/mercer-island-community-member-year) 
- *  [Vision Statement](https://www.mercerisland.gov/citycouncil/page/mercer-islands-vision-statement) 
- *  [Open Government Trainings Act](https://www.mercerisland.gov/cityclerk/page/open-government-trainings-act) 
- *  [Serving on the City Council](https://www.mercerisland.gov/citycouncil/page/serving-city-council) 
-
-## Upcoming Events
-
- *   [City Council Regular Hybrid Meeting](https://www.mercerisland.gov/citycouncil/page/city-council-regular-hybrid-meeting-65)  06/17/2025 - 5:00pm 
- *   [City Council Regular Hybrid Meeting](https://www.mercerisland.gov/citycouncil/page/city-council-regular-hybrid-meeting-54)  07/01/2025 - 5:00pm 
- *   [City Council Regular Hybrid Meeting](https://www.mercerisland.gov/citycouncil/page/city-council-regular-hybrid-meeting-66)  07/15/2025 - 5:00pm 
-
- [View the City Council Calendar](https://www.mercerisland.gov/calendar?field_microsite_tid_1=27) 
 
  *  [Home](https://www.mercerisland.gov) 
  *  [Contact Us](https://www.mercerisland.gov/contact) 
  *  [Staff Directory](https://www.mercerisland.gov/directory) 
  *  [Hours](https://www.mercerisland.gov/ru/page/hours-operation) 
  *  [Sitemap](https://www.mercerisland.gov/sitemap) 
- *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/32216) 
+ *  [Staff Login](https://www.mercerisland.gov/user/login?current=node/20041) 
 
 9611 SE 36th Street, Mercer Island, WA 98040 | (206) 275‑7600
 
-  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker)  
+  ![](https://www.google.com/images/cleardot.gif)   [Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.mercerisland.gov/directory-listing/craig-reynolds)  
 
  [Privacy Policy](https://www.mercerisland.gov/administrativeservices/page/site-privacy-and-security-notice) 
 
-  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Original text Rate this translation Your feedback will be used to help improve Google Translate  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  
+  [Government Websites by CivicPlus®](https://www.civicplus.com)  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Explore your accessibility options  ![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)  Original text Rate this translation Your feedback will be used to help improve Google Translate PageAssist Discover your personalization options  ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)  
