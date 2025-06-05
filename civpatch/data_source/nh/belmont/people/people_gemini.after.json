@@ -1,5 +1,23 @@
 [
   {
+    "name": "Ruth Mooney",
+    "divisions": [],
+    "roles": [
+      "Chair",
+      "Select Board Member"
+    ],
+    "image": null,
+    "email": "administration@belmontnh.gov",
+    "phone_number": "(603) 267-8300 ext. 124",
+    "website": null,
+    "sources": [
+      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+    ],
+    "start_date": null,
+    "end_date": "2027",
+    "updated_at": "2025-06-04"
+  },
+  {
     "name": "Claude Patten, Jr.",
     "divisions": [],
     "roles": [
@@ -31,24 +49,6 @@
     ],
     "start_date": null,
     "end_date": "2028",
-    "updated_at": "2025-06-04"
-  },
-  {
-    "name": "Ruth Mooney",
-    "divisions": [],
-    "roles": [
-      "Select Board Member",
-      "Chair"
-    ],
-    "image": null,
-    "email": "administration@belmontnh.gov",
-    "phone_number": "(603) 267-8300 ext. 124",
-    "website": null,
-    "sources": [
-      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
-    ],
-    "start_date": null,
-    "end_date": "2027",
     "updated_at": "2025-06-04"
   },
   {

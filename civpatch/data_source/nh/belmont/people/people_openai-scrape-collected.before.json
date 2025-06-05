@@ -17,15 +17,15 @@
       {
         "data": "603-267-8300 x 124",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact phone number listed; no individual phone found.",
+        "llm_confidence_reason": "General Board of Selectmen contact phone number listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact email listed; no individual email found.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "General Board of Selectmen contact email listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -56,7 +56,7 @@
     "images": [],
     "roles": [
       {
-        "data": "Board Member, Board of Selectmen",
+        "data": "Board of Selectmen Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as member under Board of Selectmen."
       }
@@ -66,15 +66,15 @@
       {
         "data": "603-267-8300 x 124",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact phone number listed; no individual phone found.",
+        "llm_confidence_reason": "General Board of Selectmen contact phone number listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact email listed; no individual email found.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "General Board of Selectmen contact email listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -105,7 +105,7 @@
     "images": [],
     "roles": [
       {
-        "data": "Board Member, Board of Selectmen",
+        "data": "Board of Selectmen Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as member under Board of Selectmen."
       }
@@ -115,15 +115,15 @@
       {
         "data": "603-267-8300 x 124",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact phone number listed; no individual phone found.",
+        "llm_confidence_reason": "General Board of Selectmen contact phone number listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact email listed; no individual email found.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "General Board of Selectmen contact email listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -154,7 +154,7 @@
     "images": [],
     "roles": [
       {
-        "data": "Board Member, Board of Selectmen",
+        "data": "Board of Selectmen Member",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as member under Board of Selectmen."
       }
@@ -164,15 +164,15 @@
       {
         "data": "603-267-8300 x 124",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact phone number listed; no individual phone found.",
+        "llm_confidence_reason": "General Board of Selectmen contact phone number listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact email listed; no individual email found.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "General Board of Selectmen contact email listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -205,7 +205,7 @@
       {
         "data": "Vice Chairman, Board of Selectmen",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as 'Travis O'Hara, Vice Chairman' under Board of Selectmen members."
+        "llm_confidence_reason": "Listed as 'Vice Chairman' under Board of Selectmen members."
       }
     ],
     "divisions": [],
@@ -213,15 +213,15 @@
       {
         "data": "603-267-8300 x 124",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact phone number listed; no individual phone found.",
+        "llm_confidence_reason": "General Board of Selectmen contact phone number listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Selectmen contact email listed; no individual email found.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "General Board of Selectmen contact email listed on page.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],

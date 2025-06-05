@@ -18,24 +18,6 @@
     "updated_at": "2025-06-04"
   },
   {
-    "name": "Travis O'Hara",
-    "divisions": [],
-    "roles": [
-      "Vice Chair",
-      "Select Board Member"
-    ],
-    "image": null,
-    "email": "administration@belmontnh.gov",
-    "phone_number": "(603) 267-8300 ext. 124",
-    "website": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen",
-    "sources": [
-      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
-    ],
-    "start_date": null,
-    "end_date": "2026",
-    "updated_at": "2025-06-04"
-  },
-  {
     "name": "Claude Patten, Jr.",
     "divisions": [],
     "roles": [
@@ -84,6 +66,24 @@
     ],
     "start_date": null,
     "end_date": "2027",
+    "updated_at": "2025-06-04"
+  },
+  {
+    "name": "Travis O'Hara",
+    "divisions": [],
+    "roles": [
+      "Select Board Member",
+      "Vice Chair"
+    ],
+    "image": null,
+    "email": "administration@belmontnh.gov",
+    "phone_number": "(603) 267-8300 ext. 124",
+    "website": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen",
+    "sources": [
+      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+    ],
+    "start_date": null,
+    "end_date": "2026",
     "updated_at": "2025-06-04"
   }
 ]
