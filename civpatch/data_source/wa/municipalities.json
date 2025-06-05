@@ -788,8 +788,8 @@
       "type": "city",
       "population": 31454,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-04",
-      "meta_hash": "2f63347e383acad7a479630c8e400f1b",
+      "meta_updated_at": "2025-06-05",
+      "meta_hash": "1ef66444c1687dc1ff80475462d42d9b",
       "meta_sources": [
         "state_source",
         "gemini",

@@ -13,9 +13,31 @@
   end_date: 2027-12
   sources:
   - https://www.seatacwa.gov/government/city-council
+  - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
+  - https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
+  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
+  - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
+  updated_at: '2025-06-05'
+- name: Iris Guzmán
+  roles:
+  - Chair
+  - Council Member
+  - Deputy Mayor
+  divisions:
+  - Position 6
+  image: https://www.seatacwa.gov/home/showpublishedimage/6517/637775833233570000
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seatac/images/03cfe81e34741660a0b0d32c0ae9273c8541417f3d167c3f8b53608ab3acd6a7.png
+  email: iguzman@seatacwa.gov
+  phone_number: "(206) 973-4800"
+  website: https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
+  start_date: '2022-01-01'
+  end_date: 2025-12
+  sources:
+  - https://www.seatacwa.gov/government/city-council
+  - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
+  - https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
   - https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
   - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
-  - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
   - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
   updated_at: '2025-06-05'
 - name: Joe Vinson
@@ -27,15 +49,15 @@
   image: https://www.seatacwa.gov/home/showpublishedimage/7225/638508595078070000
   cdn_image: https://cdn.civicpatch.org/open-data/wa/seatac/images/5ec18101fa7b88e1c445fcafd02770962376b3ca2b8ec8e152d60bd96f2422b0.png
   email: jvinson@seatacwa.gov
-  phone_number: '20697348002067710414'
+  phone_number: "(206) 771-0414"
   website: https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   start_date: 2024-01
   end_date: 2027-12
   sources:
   - https://www.seatacwa.gov/government/city-council
-  - https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
-  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
+  - https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
+  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
   updated_at: '2025-06-05'
 - name: Senayet Negusse
@@ -46,15 +68,15 @@
   image: https://www.seatacwa.gov/home/showpublishedimage/5761/637140014335200000
   cdn_image: https://cdn.civicpatch.org/open-data/wa/seatac/images/08e0ccc3d23c524f33d81370b8f1a80a9ba7f742c6c0db55ff835cf5ffb2ec5d.png
   email: snegusse@seatacwa.gov
-  phone_number: "(206) 973-4800"
+  phone_number: "(206) 586-1915"
   website: https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
   start_date: 2020-01
   end_date: 2027-12
   sources:
   - https://www.seatacwa.gov/government/city-council
-  - https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
-  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
+  - https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
+  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
   updated_at: '2025-06-05'
 - name: Jake Simpson
@@ -67,13 +89,13 @@
   email: jsimpson@seatacwa.gov
   phone_number: "(206) 586-7226"
   website: https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson
-  start_date: '2021-11-23'
+  start_date: '2022-01-01'
   end_date: '2025-12-31'
   sources:
   - https://www.seatacwa.gov/government/city-council
-  - https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
-  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
+  - https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
+  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson
   - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
   updated_at: '2025-06-05'
@@ -87,13 +109,13 @@
   email: pkwon@seatacwa.gov
   phone_number: "(206) 418-8033"
   website: https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon
-  start_date: 2024-01
+  start_date: 2016-01
   end_date: 2027-12
   sources:
   - https://www.seatacwa.gov/government/city-council
-  - https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
-  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
+  - https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
+  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
   - https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon
   - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
   - https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon
@@ -109,33 +131,12 @@
   email: megal@seatacwa.gov
   phone_number: "(206) 437-2973"
   website: https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
-  start_date: '2022-01-01'
+  start_date: 2022-01
   end_date: 2025-12
   sources:
   - https://www.seatacwa.gov/government/city-council
+  - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
   - https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal
-  - https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
   - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
-  - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
-  - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
-  updated_at: '2025-06-05'
-- name: Iris Guzmán
-  roles:
-  - Council Member
-  - Deputy Mayor
-  divisions:
-  - Position 6
-  image: https://www.seatacwa.gov/home/showpublishedimage/6517/637775833233570000
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/seatac/images/03cfe81e34741660a0b0d32c0ae9273c8541417f3d167c3f8b53608ab3acd6a7.png
-  email: iguzman@seatacwa.gov
-  phone_number: "(206) 973-4800"
-  website: https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
-  start_date: '2022-01-01'
-  end_date: 2025-12
-  sources:
-  - https://www.seatacwa.gov/government/city-council
-  - https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman
-  - https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson
-  - https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse
   - https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell
   updated_at: '2025-06-05'

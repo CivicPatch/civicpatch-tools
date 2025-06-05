@@ -1,5 +1,111 @@
 [
   {
+    "name": "Mohamed Egal",
+    "sources": [
+      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.seatacwa.gov/home/showpublishedimage/6569/637817404320000000",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Image near name labeled 'Egal_website' on the page.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Mayor Mohamed Egal' and 'Mayor since January 9, 2024'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Councilmember since January 1, 2022'."
+      },
+      {
+        "data": "Chair, Planning & Economic Development Committee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Chair of this committee under Civic section."
+      },
+      {
+        "data": "Chair, Sidewalk Advisory Committee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Chair of this committee under Civic section."
+      },
+      {
+        "data": "Member, Parks & Recreation Committee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Member of this committee under Civic section."
+      },
+      {
+        "data": "Member, Soundside Alliance Policy Committee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Member of this committee under Civic section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers' on the City Council page."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Council Position #4'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-437-2973",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Cell Phone listed as 206-437-2973 near name.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      }
+    ],
+    "emails": [
+      {
+        "data": "megal@seatacwa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email link text 'megal@seatacwa.gov' near name.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the official councilmember profile page.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      },
+      {
+        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Official councilmember profile page URL on the city website.",
+        "source": "https://www.seatacwa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-09",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Mayor term start date explicitly stated as January 9, 2024.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term stated as January 2022 - December 2025; end date inferred as end of December 2025.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
     "name": "Senayet Negusse",
     "sources": [
       "https://www.seatacwa.gov/government/city-council",
@@ -8,8 +114,8 @@
     "images": [
       {
         "data": "https://www.seatacwa.gov/home/showpublishedimage/5761/637140014335200000",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near the name labeled 'Senayet Negusse'.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image near the name and title 'Senayet Negusse'.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
       }
     ],
@@ -22,21 +128,41 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember Senayet Negusse' and 'Council Position #1'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Senayet Negusse' and 'Councilmember since January 2020'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Held role 'Deputy Mayor, January 2022 - January 9, 2024' but term ended January 9, 2024, so not current role."
+      },
+      {
+        "data": "Chair, Public Safety & Justice Committee",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Chair, Public Safety & Justice (PS&J) Committee' with no end date, indicating current role."
+      },
+      {
+        "data": "Member, Administration & Finance Committee",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Member, Administration & Finance (A&F) Committee' with no end date, indicating current role."
+      },
+      {
+        "data": "Member, Parks & Recreation Committee",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Member, Parks & Recreation (P&R) Committee' with no end date, indicating current role."
       }
     ],
     "divisions": [
       {
         "data": "Position 1",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Mentioned as 'Council Position #1'."
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #1'."
       }
     ],
     "phone_numbers": [
       {
-        "data": "206.973.4800",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as 'City Hall Phone' near the councilmember info.",
+        "data": "206.586.1915",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Cell Phone number listed near name and contact info.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
       }
     ],
@@ -44,7 +170,7 @@
       {
         "data": "snegusse@seatacwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near the name.",
+        "llm_confidence_reason": "Email address explicitly provided near name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
       }
     ],
@@ -52,7 +178,7 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Official councilmember profile page URL.",
+        "llm_confidence_reason": "Official councilmember profile page URL on the city website.",
         "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
@@ -66,7 +192,7 @@
       {
         "data": "2024-01",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term start date given as 'January 2024'.",
+        "llm_confidence_reason": "Term start date explicitly stated as January 2024.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
       }
     ],
@@ -74,7 +200,7 @@
       {
         "data": "2027-12",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date given as 'December 2027'.",
+        "llm_confidence_reason": "Term end date explicitly stated as December 2027.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
       }
     ],
@@ -89,8 +215,8 @@
     "images": [
       {
         "data": "https://www.seatacwa.gov/home/showpublishedimage/6521/637775843277000000",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image near the name and title 'Councilmember Jake Simpson'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Image near the name labeled 'Councilmember Jake Simpson'.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson"
       }
     ],
@@ -108,21 +234,21 @@
       {
         "data": "Mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as 'Mayor, January 11, 2022 - January 9, 2024' indicating a past mayoral term that ended in 2024."
+        "llm_confidence_reason": "Listed as 'Mayor, January 11, 2022 - January 9, 2024' indicating a past mayoral role with an end date in 2024."
       }
     ],
     "divisions": [
       {
         "data": "Position 2",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Mentioned as 'Council Position #2' in the profile."
+        "llm_confidence_reason": "Mentioned as 'Council Position #2' on the page."
       }
     ],
     "phone_numbers": [
       {
         "data": "206.973.4800",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as 'City Hall Phone' near the profile.",
+        "llm_confidence_reason": "Listed as 'City Hall Phone' near the name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson"
       }
     ],
@@ -130,7 +256,7 @@
       {
         "data": "jsimpson@seatacwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near the name.",
+        "llm_confidence_reason": "Extracted from mailto link labeled with Jake Simpson's name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson"
       }
     ],
@@ -138,20 +264,20 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Official councilmember profile page URL.",
+        "llm_confidence_reason": "Official councilmember profile page URL on the city website.",
         "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Page URL is the official profile page for Jake Simpson.",
+        "llm_confidence_reason": "Primary profile page URL for Jake Simpson.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson"
       }
     ],
     "start_dates": [
       {
         "data": "2021-11-23",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.99,
         "llm_confidence_reason": "Explicitly stated 'Councilmember since November 23, 2021'.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson"
       }
@@ -169,7 +295,7 @@
       {
         "data": "https://www.seatacwa.gov/home/showpublishedimage/6799/637994616287630000",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image URL near the name and role of Peter Kwon.",
+        "llm_confidence_reason": "Image URL near the name and role section labeled with 'Peter Kwon - Web (1)_2022_Resized'.",
         "source": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon"
       }
     ],
@@ -182,29 +308,29 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember Peter Kwon' with term dates."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Peter Kwon' and 'Council Position #3' with term dates."
       }
     ],
     "divisions": [
       {
         "data": "Position 3",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as 'Council Position #3' in the text."
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Mentioned as 'Council Position #3' indicating division by position number."
       }
     ],
     "phone_numbers": [
       {
         "data": "206.973.4800",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "City Hall Phone number listed near the role information.",
+        "llm_confidence_reason": "Listed as 'City Hall Phone: 206.973.4800' near the councilmember info.",
         "source": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon"
       }
     ],
     "emails": [
       {
         "data": "pkwon@seatacwa.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly provided near the name and role.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Extracted from mailto link '[pkwon@seatacwa.gov](mailto:pkwon@seatacwa.gov)' near the name.",
         "source": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon"
       }
     ],
@@ -212,136 +338,30 @@
       {
         "data": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Official councilmember profile page URL from city domain.",
+        "llm_confidence_reason": "Official councilmember profile page URL on the city website.",
         "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
         "data": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Page URL is the official profile page for Peter Kwon.",
+        "llm_confidence_reason": "Page URL is the official councilmember profile page.",
         "source": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date given as January 2024.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term start date explicitly stated as 'January 2024'.",
         "source": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon"
       }
     ],
     "end_dates": [
       {
         "data": "2027-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term end date given as December 2027.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end date explicitly stated as 'December 2027'.",
         "source": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon"
-      }
-    ],
-    "updated_at": "2025-06-05"
-  },
-  {
-    "name": "Mohamed Egal",
-    "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-    ],
-    "images": [
-      {
-        "data": "https://www.seatacwa.gov/home/showpublishedimage/6569/637817404320000000",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near name and title 'Mayor Mohamed Egal' on the page.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "roles": [
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers' on the City Council page."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Text states 'Mayor since January 9, 2024' indicating active mayor role."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Councilmember since January 1, 2022' indicating active council member role."
-      },
-      {
-        "data": "Chair, Planning & Economic Development Committee",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Chair, Planning & Economic Development Committee' as active role."
-      },
-      {
-        "data": "Chair, Sidewalk Advisory Committee",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Chair, Sidewalk Advisory Committee' as active role."
-      },
-      {
-        "data": "Member, Parks & Recreation Committee",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Member, Parks & Recreation Committee' as active role."
-      },
-      {
-        "data": "Member, Soundside Alliance Policy Committee",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Member, Soundside Alliance Policy Committee' as active role."
-      }
-    ],
-    "divisions": [
-      {
-        "data": "Position 4",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Text shows 'Council Position #4' indicating division as Position 4."
-      }
-    ],
-    "phone_numbers": [
-      {
-        "data": "206-973-4800",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "City Hall Phone number listed near name and role.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "emails": [
-      {
-        "data": "megal@seatacwa.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly provided near name and role.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Official councilmember profile page URL.",
-        "source": "https://www.seatacwa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Page URL is the official profile page for Mohamed Egal.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-09",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Mayor term start date explicitly stated as January 9, 2024.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Council term stated as January 2022 - December 2025; end date taken as 2025-12.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
       }
     ],
     "updated_at": "2025-06-05"
@@ -356,7 +376,7 @@
       {
         "data": "https://www.seatacwa.gov/home/showpublishedimage/7410/638637370901870000",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image near name and role labeled 'James Lovell - Website'.",
+        "llm_confidence_reason": "Image URL found near name and title.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
       }
     ],
@@ -369,21 +389,31 @@
       {
         "data": "Councilmember, Position 5",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Text states 'Councilmember, Position 5' and term dates indicating active service."
+        "llm_confidence_reason": "Explicitly stated 'Councilmember, Position 5' in the text."
+      },
+      {
+        "data": "Planning & Economic Development Committee Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Chair of Planning & Economic Development Committee."
+      },
+      {
+        "data": "Transportation & Public Works Committee Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as member of Transportation & Public Works Committee."
       }
     ],
     "divisions": [
       {
         "data": "Position 5",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 5 explicitly mentioned in role."
+        "llm_confidence_reason": "Position 5 explicitly mentioned as division."
       }
     ],
     "phone_numbers": [
       {
-        "data": "206.973.4800",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "City Hall Phone number listed near name and role.",
+        "data": "206.960.1466",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Cell Phone number explicitly listed near name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
       }
     ],
@@ -391,7 +421,7 @@
       {
         "data": "jlovell@seatacwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly provided near name and role.",
+        "llm_confidence_reason": "Email address explicitly listed near name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
       }
     ],
@@ -399,7 +429,7 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Official councilmember profile page URL.",
+        "llm_confidence_reason": "Official councilmember profile page URL on the city website.",
         "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
@@ -436,8 +466,8 @@
     "images": [
       {
         "data": "https://www.seatacwa.gov/home/showpublishedimage/6517/637775833233570000",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image URL is near the name Iris Guzmán and labeled as her photo.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Image near the name Iris Guzmán with alt text matching name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman"
       }
     ],
@@ -455,17 +485,17 @@
       {
         "data": "Councilmember, Position 6",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Councilmember since January 1, 2022, position #6' in the text."
+        "llm_confidence_reason": "Stated 'Councilmember since January 1, 2022, position #6' in the text."
       },
       {
         "data": "Chair, Parks & Recreation Committee",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Chair, Parks & Recreation Committee' in the text."
+        "llm_confidence_reason": "Stated 'Chair, Parks & Recreation Committee' in the text."
       },
       {
         "data": "Member, Administration & Finance Committee",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Member, Administration & Finance Committee' in the text."
+        "llm_confidence_reason": "Stated 'Member, Administration & Finance Committee' in the text."
       }
     ],
     "divisions": [
@@ -479,7 +509,7 @@
       {
         "data": "206.973.4800",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "City Hall Phone number explicitly listed near the name.",
+        "llm_confidence_reason": "City Hall Phone explicitly listed near name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman"
       }
     ],
@@ -487,7 +517,7 @@
       {
         "data": "iguzman@seatacwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email explicitly listed as iguzman@seatacwa.gov near the name.",
+        "llm_confidence_reason": "Email iguzman@seatacwa.gov explicitly listed near name.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman"
       }
     ],
@@ -495,7 +525,7 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Official councilmember profile page URL.",
+        "llm_confidence_reason": "Official councilmember profile page URL on the city website.",
         "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
@@ -533,7 +563,7 @@
       {
         "data": "https://www.seatacwa.gov/home/showpublishedimage/7225/638508595078070000",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image URL is near the name 'Joe Vinson' and labeled as 'Joe Vinson - Print Size'.",
+        "llm_confidence_reason": "Image URL is near the name and labeled 'Joe Vinson - Print Size'.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
@@ -546,27 +576,27 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember Joe Vinson' and 'Council Position #7' in the text."
+        "llm_confidence_reason": "Text states 'Councilmember Joe Vinson' and 'Council Position #7'."
       },
       {
         "data": "Chair, Public Safety and Justice Committee",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Text states 'Chair, Public Safety and Justice Committee' as an active role."
+        "llm_confidence_reason": "Text explicitly states 'Chair, Public Safety and Justice Committee'."
       },
       {
         "data": "Transportation and Public Works Committee Member",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Text states 'Transportation and Public Works Committee Member' as an active role."
+        "llm_confidence_reason": "Text explicitly states 'Transportation and Public Works Committee Member'."
       },
       {
         "data": "Administration and Finance Committee Member",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Text states 'Administration and Finance Committee Member' as an active role."
+        "llm_confidence_reason": "Text explicitly states 'Administration and Finance Committee Member'."
       },
       {
         "data": "Joint Advisory Committee Member, SeaTac/Port of Seattle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'Joint Advisory Committee Member, SeaTac/Port of Seattle' as an active role."
+        "llm_confidence_reason": "Text explicitly states 'Joint Advisory Committee Member, SeaTac/Port of Seattle'."
       }
     ],
     "divisions": [
@@ -578,9 +608,9 @@
     ],
     "phone_numbers": [
       {
-        "data": "206.771.0414",
+        "data": "206-771-0414",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Cell Phone number explicitly listed near Joe Vinson's contact info.",
+        "llm_confidence_reason": "Cell Phone number listed as '206.771.0414' near Joe Vinson's info.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
@@ -588,7 +618,7 @@
       {
         "data": "jvinson@seatacwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly listed as 'jvinson@seatacwa.gov' near Joe Vinson's contact info.",
+        "llm_confidence_reason": "Email 'jvinson@seatacwa.gov' extracted from mailto link near Joe Vinson's info.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
@@ -596,7 +626,7 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Official councilmember profile page URL.",
+        "llm_confidence_reason": "Official councilmember profile page URL on the city website.",
         "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
@@ -609,16 +639,16 @@
     "start_dates": [
       {
         "data": "2024-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date explicitly stated as 'January 2024'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term stated as 'January 2024 - December 2027', start date extracted as 2024-01.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
     "end_dates": [
       {
         "data": "2027-12",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term end date explicitly stated as 'December 2027'.",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term stated as 'January 2024 - December 2027', end date extracted as 2027-12.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
