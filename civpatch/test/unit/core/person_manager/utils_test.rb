@@ -7,6 +7,17 @@ require "core/city_manager"
 
 class CorePersonManagerUtilsTest < Minitest::Test
   #
+  # Role Normalization Tests
+  # 
+  def test_normalize_role_exact_match
+    assert_equal ["Mayor"], Core::PersonManager::Utils.normalize_role("mayor_council", "mayor")
+  end
+
+  def test_normalize_role_multiple_roles
+    assert_equal ["Mayor", "Council Member"], Core::PersonManager::Utils.normalize_role("mayor_council", "mayor, council member")
+  end
+
+  #
   # Division Normalization Tests
   #
   def test_normalize_division_exact_match

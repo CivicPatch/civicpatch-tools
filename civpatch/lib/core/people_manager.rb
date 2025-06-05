@@ -39,7 +39,7 @@ module Core
                          end
 
         person["roles"] = person["roles"]
-                          &.map { |role| Core::PersonManager::Utils.normalize_role(government_type, role) }
+                          &.flat_map { |role| Core::PersonManager::Utils.normalize_role(government_type, role) }
                           &.compact
         person["divisions"] = if person["divisions"].present?
                                 person["divisions"]

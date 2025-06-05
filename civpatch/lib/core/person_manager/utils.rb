@@ -7,22 +7,29 @@ module Core
 
       def self.normalize_role(government_type, role)
         government_roles = Core::CityManager.roles(government_type)
-        normalized_role = ""
+        normalized_roles = []
         # First normalize the role to a standard format
-        role_to_find = role&.downcase&.strip
+        roles_to_find = role&.downcase&.strip&.split(",")&.map(&:strip)
 
         # First, check if the role is valid as-is
-        found_role = government_roles.find { |r| r["role"]&.downcase == role_to_find }
+        roles_to_find.each do |role_to_find|
+          found_role = government_roles.find { |r| r["role"]&.downcase == role_to_find }
 
-        if found_role.present?
-          normalized_role = found_role["role"]
-        else # If not, check if it is an alias of another role
-          aliased_role = government_roles.find { |r| r["aliases"]&.include?(role_to_find) }
-          normalized_role = (aliased_role["role"] if aliased_role.present?)
+          if found_role.present?
+            normalized_role = found_role["role"]
+          else # If not, check if it is an alias of another role
+            aliased_role = government_roles.find { |r| r["aliases"]&.include?(role_to_find) }
+            normalized_role = (aliased_role["role"] if aliased_role.present?)
+          end
+
+          # return the normalized role
+          if normalized_role.present?
+            normalized_role = normalized_role.split(" ").map(&:capitalize)&.join(" ")
+            normalized_roles << normalized_role
+          end
         end
 
-        # return the normalized role
-        normalized_role.split(" ").map(&:capitalize)&.join(" ") if normalized_role.present?
+        normalized_roles
       end
 
       def self.normalize_division(division)
