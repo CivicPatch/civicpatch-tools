@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Michael Houghton",
+    "sources": [
+      "https://www.strathamnh.gov/select-board",
+      "https://www.strathamnh.gov/user/473/contact"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed in 'Title' column and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.strathamnh.gov/user/473/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name in the table.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed in 'Term Expiration' column.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Allison Knab",
+    "sources": [
+      "https://www.strathamnh.gov/select-board",
+      "https://www.strathamnh.gov/user/78/contact"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed in 'Title' column and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "aknab@strathamnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Email address inferred from username 'aknab' in URL and contact form context, but not explicitly written out.",
+        "source": "https://www.strathamnh.gov/user/78/contact"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.strathamnh.gov/user/78/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name in the table.",
+        "source": "https://www.strathamnh.gov/select-board"
+      },
+      {
+        "data": "https://www.strathamnh.gov/users/aknab",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to user profile/contact page found.",
+        "source": "https://www.strathamnh.gov/user/78/contact"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed in 'Term Expiration' column.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Joe Anderson",
+    "sources": [
+      "https://www.strathamnh.gov/select-board"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'Member' in the table under the 'Select Board' section, which is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.strathamnh.gov/user/4391/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with the name in the table.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed in 'Term Expiration' column.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  }
+]

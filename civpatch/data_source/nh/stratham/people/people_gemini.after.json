@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Michael Houghton",
+    "divisions": [],
+    "roles": [
+      "Chair"
+    ],
+    "image": null,
+    "email": null,
+    "phone_number": null,
+    "website": "https://www.strathamnh.gov/user/473/contact",
+    "sources": [
+      "https://www.strathamnh.gov/select-board",
+      "https://www.strathamnh.gov/user/473/contact"
+    ],
+    "start_date": null,
+    "end_date": "2026",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Allison Knab",
+    "divisions": [],
+    "roles": [
+      "Vice Chair"
+    ],
+    "image": null,
+    "email": "aknab@strathamnh.gov",
+    "phone_number": null,
+    "website": "https://www.strathamnh.gov/user/78/contact",
+    "sources": [
+      "https://www.strathamnh.gov/select-board",
+      "https://www.strathamnh.gov/user/78/contact"
+    ],
+    "start_date": null,
+    "end_date": "2027",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Joe Anderson",
+    "divisions": [],
+    "roles": [
+      "Select Board Member"
+    ],
+    "image": null,
+    "email": null,
+    "phone_number": null,
+    "website": "https://www.strathamnh.gov/user/4391/contact",
+    "sources": [
+      "https://www.strathamnh.gov/select-board"
+    ],
+    "start_date": null,
+    "end_date": "2028",
+    "updated_at": "2025-06-05"
+  }
+]
