@@ -141,10 +141,10 @@ module Services
             - Extract start_date and end_date in YYYY, YYYY-MM, or YYYY-MM-DD format.
             - Acceptable date phrases include:
               - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
-              - Convert natural language to proper format (e.g., "January 2025" → 2025-01)
               - For vague phrases like "Spring 2025", extract the year only.
+            - If more than one term is mentioned, extract the most recent one.
 
-          **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,#{" "}
+          **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
             paying close attention to the date extraction, conversion, and term identification rules.
         INSTRUCTIONS
 
