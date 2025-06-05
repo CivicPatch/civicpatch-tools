@@ -1,0 +1,697 @@
+[
+  {
+    "name": "Steve Hogan",
+    "sources": [
+      "https://www.cityofcamas.us/city-administration",
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/mayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/resize/styles/full_node_primary/public/imageattachments/mayor/page/24716/dsc_1635-190x238.jpg?itok=3izDtkyP",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Image labeled 'Mayor Steve Hogan' near the name and title.",
+        "source": "https://www.cityofcamas.us/city-administration"
+      },
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/resize/styles/full_node_primary/public/imageattachments/mayor/page/24716/dsc_1635-190x238.jpg?itok=3izDtkyP",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Image labeled 'Mayor Steve Hogan' near name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/mayor/page/24716/dsc_1635.jpg?itok=YqgjS_PP",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image labeled 'Mayor Steve Hogan' near name and role.",
+        "source": "https://www.cityofcamas.us/mayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Found 'Mayor Steve Hogan' with image and link to Mayor's Office on the page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Found 'Mayor Steve Hogan' with image and link to mayor page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor with term dates on the page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "City Hall phone number listed on page, likely main contact for mayor.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed under Office of the Mayor contact information.",
+        "source": "https://www.cityofcamas.us/mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityclerk@cityofcamas.us",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city clerk email provided; no direct mayor email found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link labeled 'Mayor Steve Hogan' leads to the Mayor's Office page.",
+        "source": "https://www.cityofcamas.us/city-administration"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official mayor page link found near name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Primary page URL for Mayor Steve Hogan.",
+        "source": "https://www.cityofcamas.us/mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2024.",
+        "source": "https://www.cityofcamas.us/mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2027.",
+        "source": "https://www.cityofcamas.us/mayor"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "John Nohr",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/25687/john_nohr.jpg?itok=4mseZfIU",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the heading 'Council Member John Nohr' clearly labeled and associated with him.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under City Council Members with link to council member page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Text states 'John Nohr was first appointed to the position of Camas City Council Member Ward 1' and he is currently serving."
+      },
+      {
+        "data": "Mayor Pro Tem alternate",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'John is the 2025 Mayor Pro Tem alternate.'"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states 'Position: Ward 1' and 'appointed to the position of Camas City Council Member Ward 1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Council Member Nohr can be reach at jnohr and the extension @cityofcamas.us or by calling 360-834-6864 (leave a message)'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official council member page link found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official profile page for John Nohr.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-10-17",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'subsequently sworn into office on October 17, 2022'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text states term ending December 31, 2027.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-nohr"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Martin Elzingre",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/9292/martin.jpg?itok=AxqAXqMR",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the heading 'Council Member Martin Elzingre' with alt text matching name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under City Council Members with link to council member page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Martin Elzingre was sworn into office... to the position of Ward 2, Position 1' and 'appointed to serve on City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: Ward 2' and 'Ward 2, Position 1'."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2, Position 1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number given as contact for Council Member Elzingre.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      }
+    ],
+    "emails": [
+      {
+        "data": "melzingre@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email constructed from 'melzingre' and '@cityofcamas.us' as stated in text.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official council member page link found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL and primary profile page for Martin Elzingre.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-04-21",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Martin Elzingre was sworn into office on April 21, 2025'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11-25",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term explicitly stated to end November 25, 2025.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-martin-elzingre"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Leslie Lewallen",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/24714/lewallen_leslie_-_head_shot.jpg?itok=gw8WJPKq",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image near the heading 'Council Member Leslie Lewallen' clearly labeled as her headshot.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under City Council Members with link to council member page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Council Member Leslie Lewallen' and describes her position on City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Position: Ward 3' and 'sworn into office... to the position of Ward 3, Position 2'."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text specifies 'Ward 3, Position 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number given as contact for Council Member Lewallen with instruction to leave a message.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "llewallen@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Council Member Lewallen can be reach at llewallen and the extension @cityofcamas.us' indicating email llewallen@cityofcamas.us.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official council member page link found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Leslie Lewallen as Council Member.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11-23",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Leslie Lewallen was sworn into office on November 23, 2021'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states term ends December 31, 2025.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-leslie-lewallen"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Tim Hein",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/24733/hein_tim_-_head_shot.jpg?itok=FlWKgF3_",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image near the heading 'Council Member Tim Hein' clearly labeled as his headshot.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under City Council Members with link to council member page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Text states 'Council Member Tim Hein' and describes his position on City Council."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Tim is the 2025 Mayor Pro Tem'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Position: Ward 2' and 'sworn into office... to the position of Ward 2, Position 2'."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'sworn into office... to the position of Ward 2, Position 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number given as contact for Tim Hein with instruction to leave a message.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      }
+    ],
+    "emails": [
+      {
+        "data": "thein@cityofcamas.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email given as 'thein and the extension @cityofcamas.us' indicating 'thein@cityofcamas.us'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official council member page link found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Council Member Tim Hein.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11-29",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Tim Hein was sworn into office on November 29, 2021'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states term ends December 31, 2025.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-tim-hein"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Marilyn Boerke",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/24921/boerke.jpg?itok=LwtlbL3x",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image near the heading 'Council Member Marilyn Boerke' clearly associated with her.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under City Council Members with link to council member page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Marilyn Boerke was sworn into office ... for her first full-term on City Council' and 'Position: Ward 1'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: Ward 1' and 'Ward 1, Position 2' in the text."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1, Position 2' in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number given as contact for Council Member Boerke with instruction to leave a message.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mboerke@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email prefix 'mboerke' and domain '@cityofcamas.us' stated; full email inferred logically.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official council member page link found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official profile page for Marilyn Boerke.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start explicitly stated as January 1, 2022.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term end explicitly stated as December 31, 2025.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-marilyn-boerke"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Jennifer Senescu",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/26194/senescu_jennifer.jpg?itok=XxVHYHnv",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the heading 'Council Member Jennifer Senescu' with alt text matching name.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under City Council Members with link to council member page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Council Member Senescu' and 'appointed and sworn into office on February 20, 2023, to the position of Ward 3'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: Ward 3' and 'appointed to the position of Ward 3'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number given as '360-834-6864(leave a message)' near contact info for Jennifer Senescu.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jsenescu@cityofcamas.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states 'Council Member Senescu can be reach at jsenescu and the extension @cityofcamas.us' indicating email jsenescu@cityofcamas.us.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official council member page link found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official profile page for Jennifer Senescu.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-02-20",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'appointed and sworn into office on February 20, 2023'.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term stated as 'January 1, 2024 – December 31, 2027'; appointment date is earlier but term end is clearly stated.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-jennifer-senescu"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "John Svilarich",
+    "sources": [
+      "https://www.cityofcamas.us/citycouncil/page/city-council-members",
+      "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcamas.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/29354/svilarich.jpg?itok=7LgfsKez",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image near the heading 'Council Member John Svilarich' clearly labeled as his portrait.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under City Council Members with link to council member page."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Text states 'Position: At Large (All Wards)' and 'sworn into office... to the position of At-Large for his first full-term on City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large (All Wards)'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-834-6864",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number given as contact for Council Member Svilarich with instruction to leave a message.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jsvilarich@cityofcamas.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email given as 'jsvilarich and the extension @cityofcamas.us' indicating jsvilarich@cityofcamas.us.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Official council member page link found.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/city-council-members"
+      },
+      {
+        "data": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary page URL for Council Member John Svilarich.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start explicitly stated as January 1, 2024 and sworn in January 2, 2024.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term end explicitly stated as December 31, 2027.",
+        "source": "https://www.cityofcamas.us/citycouncil/page/council-member-john-svilarich"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  }
+]
