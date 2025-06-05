@@ -2,9 +2,8 @@
 
 require "capybara"
 require "selenium-webdriver"
-require "markitdown"
 require "sanitize"
-require "marcel"
+require "rbconfig"
 
 require "utils/url_helper"
 require_relative "../core/browser"
@@ -12,6 +11,7 @@ require_relative "../core/browser"
 module Core
   class PageFetcher
     WAIT_TIME = 2
+    HTML_2_MARKDOWN_PATH = Core::PathHelper.project_path(File.join("lib", "utils", "html2markdown"))
 
     def self.extract_content(url, destination_dir)
       cached_file = Core::PathHelper.project_path(File.join(destination_dir.to_s, "step_3_markdown_content.md"))
@@ -41,12 +41,44 @@ module Core
       File.write(Core::PathHelper.project_path(File.join(destination_dir.to_s, "step_2_sanitized_html.html")),
                  sanitized_doc.to_html)
 
-      markdown_content = Markitdown.from_nokogiri(sanitized_doc)
+      markdown_content = html_to_markdown(sanitized_doc.to_html)
       markdown_content_file_path = Core::PathHelper.project_path(File.join(destination_dir.to_s,
                                                                            "step_3_markdown_content.md"))
       File.write(markdown_content_file_path, markdown_content)
 
       Core::PathHelper.project_path(markdown_content_file_path)
+    end
+
+    def self.markdown_executable_path
+      host_os = RbConfig::CONFIG['host_os']
+
+      if host_os =~ /darwin/i
+        return File.join(HTML_2_MARKDOWN_PATH, "html2markdown_macos")
+      elsif host_os =~ /linux/i
+        return File.join(HTML_2_MARKDOWN_PATH, "html2markdown_linux")
+      elsif host_os =~ /mswin|mingw|cygwin/i
+        return File.join(HTML_2_MARKDOWN_PATH, "html2markdown_windows.exe")
+      else
+        raise "Unsupported OS: #{host_os}. Only x64 versions of macOS, Linux, and Windows are supported."
+      end
+    end
+
+    def self.html_to_markdown(html)
+      executable_path = markdown_executable_path
+      raise "Markdown executable not found at #{executable_path}" unless File.exist?(executable_path)
+
+      output = IO.popen([executable_path], "r+", err: [:child, :out]) do |io|
+        io.write(html)
+        io.close_write
+        result = io.read
+        result 
+      end
+
+      if $?.success?
+        output.strip
+      else
+        raise "Failed to convert HTML to Markdown: #{output}"
+      end
     end
 
     def self.sanitize_html(html)
