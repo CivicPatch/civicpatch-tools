@@ -38,18 +38,14 @@ module Core
                            name
                          end
 
-        person["roles"] = person["roles"]
-                          &.flat_map { |role| Core::PersonManager::Utils.normalize_role(government_type, role) }
-                          &.compact
-        person["divisions"] = if person["divisions"].present?
-                                person["divisions"]
-                                  &.map do |division|
-                                  Core::PersonManager::Utils
-                                    .normalize_division(division)
-                                end&.compact
-                              else
-                                []
-                              end
+        person["roles"] = Array(person["roles"])
+                          .flat_map { |role| Core::PersonManager::Utils.normalize_role(government_type, role) }
+                          .compact
+                          .sort_by(&:downcase)
+        person["divisions"] = Array(person["divisions"])
+                              .map { |division| Core::PersonManager::Utils.normalize_division(division) }
+                              .compact
+                              .sort_by(&:downcase)
 
         person["website"] = Utils::UrlHelper.format_url(person["website"]) if person["website"].present?
         if person["phone_number"].present?
