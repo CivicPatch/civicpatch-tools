@@ -100,21 +100,25 @@ government_types:
         aliases: 
         - mayor pro-tem
         - mayor pro tem
-      - role: chair
+      - role: select board chair
         aliases:
+        - chair
+        - select board chair
         - select board chairman
         - select board chairwoman
         - chairman
         - chairwoman
         - selectboard chair
-      - role: vice chair
+      - role: select board vice chair
         aliases:
+        - select board vice chair
         - select board vice chairman
         - select board vice chairwoman
         - select board vice-chairman
         - select board vice-chairwoman
         - selectboard vice-chair
         - select board vice-chair
+        - vice chair
         - vice-chair
         - vice chairman
         - vice-chairman
