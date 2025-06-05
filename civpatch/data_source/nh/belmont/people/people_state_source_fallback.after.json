@@ -1,10 +1,26 @@
 [
   {
+    "name": "Ruth Mooney",
+    "roles": [
+      "Chair"
+    ],
+    "updated_at": "2025-06-04",
+    "divisions": []
+  },
+  {
+    "name": "Travis O'Hara",
+    "roles": [
+      "Vice Chair"
+    ],
+    "updated_at": "2025-06-04",
+    "divisions": []
+  },
+  {
     "name": "Claude Patten, Jr.",
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-06-05",
+    "updated_at": "2025-06-04",
     "divisions": []
   },
   {
@@ -12,15 +28,15 @@
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-06-05",
+    "updated_at": "2025-06-04",
     "divisions": []
   },
   {
-    "name": "Ruth Mooney",
+    "name": "Sharon Ciampi",
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-06-05",
+    "updated_at": "2025-06-04",
     "divisions": []
   }
 ]
