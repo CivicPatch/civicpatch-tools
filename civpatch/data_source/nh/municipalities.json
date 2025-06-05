@@ -957,7 +957,14 @@
       "government_type": "select_board",
       "email": "dmoore@strathamnh.gov",
       "website": "http://www.strathamnh.gov",
-      "geoid": "3301574340"
+      "geoid": "3301574340",
+      "meta_updated_at": "2025-06-04",
+      "meta_hash": "fd23ebde5ce21ee1fcb446c1ef9c0ac0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Belmont",

@@ -1,0 +1,149 @@
+[
+  {
+    "name": "Michael Houghton",
+    "sources": [
+      "https://www.strathamnh.gov/select-board"
+    ],
+    "images": [
+      {
+        "data": "https://www.strathamnh.gov/sites/g/files/vyhlif5051/f/styles/group_main_image/public/departments/mike_allison_joe_a.jpg?itok=Z1r5SwQO",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Image near the Select Board members section showing three members including Michael Houghton.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Select Board Chair",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed as 'Chair' under Select Board members on the official Stratham Select Board page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 772-7391 ext.187",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General Select Board contact phone number listed on the page.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.strathamnh.gov/user/473/contact",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct contact page link for Michael Houghton on the official site.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration year listed as 2026 on the Select Board members table.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Allison Knab",
+    "sources": [
+      "https://www.strathamnh.gov/select-board"
+    ],
+    "images": [
+      {
+        "data": "https://www.strathamnh.gov/sites/g/files/vyhlif5051/f/styles/group_main_image/public/departments/mike_allison_joe_a.jpg?itok=Z1r5SwQO",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Image near the Select Board members section showing three members including Allison Knab.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Select Board Vice Chair",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed as 'Vice Chair' under Select Board members on the official Stratham Select Board page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 772-7391 ext.187",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General Select Board contact phone number listed on the page.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.strathamnh.gov/user/78/contact",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct contact page link for Allison Knab on the official site.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration year listed as 2027 on the Select Board members table.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Joe Anderson",
+    "sources": [
+      "https://www.strathamnh.gov/select-board"
+    ],
+    "images": [
+      {
+        "data": "https://www.strathamnh.gov/sites/g/files/vyhlif5051/f/styles/group_main_image/public/departments/mike_allison_joe_a.jpg?itok=Z1r5SwQO",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Image near the Select Board members section showing three members including Joe Anderson.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed as 'Member' under Select Board members on the official Stratham Select Board page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 772-7391 ext.187",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General Select Board contact phone number listed on the page.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.strathamnh.gov/user/4391/contact",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct contact page link for Joe Anderson on the official site.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expiration year listed as 2028 on the Select Board members table.",
+        "source": "https://www.strathamnh.gov/select-board"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  }
+]
