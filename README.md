@@ -2,12 +2,12 @@
 
 ## Contribute
 ### Run Scrapes
-(Simplified) Secret Setup
-1. Set environment variables:
+1. Download latest [release](https://github.com/CivicPatch/civicpatch-tools/releases)
+2. Set environment variables:
   * OPENAI_TOKEN
   * GOOGLE_GEMINI_TOKEN
-2. Find a GEOID to scrape under data_source/[state]/municipalities.json
-3. Run the command
+3. Find a GEOID to scrape under data_source/[state]/municipalities.json
+4. Run the command
 ```sh
 ./civpatch scrape -run -state wa -geoid 5335940
 ```
