@@ -1,0 +1,145 @@
+[
+  {
+    "name": "Salim Nice",
+    "divisions": [
+      "Position 2"
+    ],
+    "roles": [
+      "Mayor"
+    ],
+    "image": "https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/13121/nice_2018.jpg?itok=RJqV7N2Y",
+    "email": "salim.nice@mercerisland.gov",
+    "phone_number": "(206) 275-7997",
+    "website": "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
+      "https://www.mercerisland.gov/citycouncil/page/serving-city-council"
+    ],
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "David Rosenbaum",
+    "divisions": [
+      "Position No. 1"
+    ],
+    "roles": [
+      "Deputy Mayor"
+    ],
+    "image": "https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/29041/rosenbaum_2020.jpg?itok=QYpMkX2S",
+    "email": "david.rosenbaum@mercerisland.gov",
+    "phone_number": "(206) 275-7996",
+    "website": "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/serving-city-council",
+      "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Ted Weinberg",
+    "divisions": [
+      "Position 4",
+      "Position No. 4"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/30374/ted_weinberg.png?itok=sTnkOagM",
+    "email": "ted.weinberg@mercerisland.gov",
+    "phone_number": "(206) 275-7993",
+    "website": "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/serving-city-council",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
+    ],
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Lisa Anderl",
+    "divisions": [
+      "Position 6",
+      "Position No. 6"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/13131/anderl_2019.jpg?itok=-_kJI85E",
+    "email": "lisa.anderl@mercerisland.gov",
+    "phone_number": "(206) 275-7994",
+    "website": "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/serving-city-council",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+    ],
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Daniel Becker",
+    "divisions": [
+      "Position 7"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member"
+    ],
+    "image": "https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/32216/becker_2025.jpg?itok=XOnWFJM8",
+    "email": "daniel.becker@mercerisland.gov",
+    "phone_number": "(206) 275-7995",
+    "website": "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/serving-city-council",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker"
+    ],
+    "start_date": "2025-06-04",
+    "end_date": "2025-11",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Wendy Weiker",
+    "divisions": [
+      "Position No. 3"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/29031/weiker_headshot_2016.jpg?itok=HiItke3w",
+    "email": "wendy.weiker@mercerisland.gov",
+    "phone_number": "(206) 275-7992",
+    "website": "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/serving-city-council",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Craig Reynolds",
+    "divisions": [
+      "Position No. 5"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.mercerisland.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/29031/reynolds_2019.jpg?itok=jeo_T1dZ",
+    "email": "craig.reynolds@mercerisland.gov",
+    "phone_number": "(206) 275-7991",
+    "website": "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
+    "sources": [
+      "https://www.mercerisland.gov/citycouncil/page/serving-city-council",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-05"
+  }
+]
