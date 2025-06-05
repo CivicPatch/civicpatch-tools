@@ -973,7 +973,14 @@
       "government_type": "select_board",
       "email": "townadministrator@belmontnh.org",
       "website": "http://belmontnh.org",
-      "geoid": "3300104740"
+      "geoid": "3300104740",
+      "meta_updated_at": "2025-06-04",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Swanzey",
