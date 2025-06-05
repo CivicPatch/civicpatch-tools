@@ -1,13 +1,6 @@
 [
   {
-    "name": "Sylvester Karasinski",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-06-05"
-  },
-  {
-    "name": "W. William Hutwelker III",
+    "name": "W. William Hutwelker, III",
     "roles": [
       "Select Board Member"
     ],
@@ -15,6 +8,13 @@
   },
   {
     "name": "James Tempesta",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Mark LaBelle",
     "roles": [
       "Select Board Member"
     ],
