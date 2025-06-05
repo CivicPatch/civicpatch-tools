@@ -8,7 +8,7 @@
     "roles": [
       {
         "data": "Chairman, Board of Selectmen",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as 'Ruth Mooney, Chairman' under Board of Selectmen members."
       }
     ],
@@ -42,11 +42,11 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration year (2027) listed next to name.",
+        "llm_confidence_reason": "Term year (2027) listed next to name.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   },
   {
     "name": "Jon Pike",
@@ -56,8 +56,8 @@
     "images": [],
     "roles": [
       {
-        "data": "Board of Selectmen Member",
-        "llm_confidence": 0.98,
+        "data": "Board Member, Board of Selectmen",
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as member under Board of Selectmen."
       }
     ],
@@ -91,11 +91,11 @@
       {
         "data": "2028",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration year (2028) listed next to name.",
+        "llm_confidence_reason": "Term year (2028) listed next to name.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   },
   {
     "name": "Claude Patten, Jr.",
@@ -105,8 +105,8 @@
     "images": [],
     "roles": [
       {
-        "data": "Board of Selectmen Member",
-        "llm_confidence": 0.98,
+        "data": "Board Member, Board of Selectmen",
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as member under Board of Selectmen."
       }
     ],
@@ -140,11 +140,11 @@
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration year (2026) listed next to name.",
+        "llm_confidence_reason": "Term year (2026) listed next to name.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   },
   {
     "name": "Sharon Ciampi",
@@ -154,8 +154,8 @@
     "images": [],
     "roles": [
       {
-        "data": "Board of Selectmen Member",
-        "llm_confidence": 0.98,
+        "data": "Board Member, Board of Selectmen",
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as member under Board of Selectmen."
       }
     ],
@@ -189,11 +189,11 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration year (2027) listed next to name.",
+        "llm_confidence_reason": "Term year (2027) listed next to name.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   },
   {
     "name": "Travis O'Hara",
@@ -204,8 +204,8 @@
     "roles": [
       {
         "data": "Vice Chairman, Board of Selectmen",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Listed as 'Vice Chairman' under Board of Selectmen members."
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Travis O'Hara, Vice Chairman' under Board of Selectmen members."
       }
     ],
     "divisions": [],
@@ -238,10 +238,10 @@
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration year (2026) listed next to name.",
+        "llm_confidence_reason": "Term year (2026) listed next to name.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
-    "updated_at": "2025-06-05"
+    "updated_at": "2025-06-04"
   }
 ]
