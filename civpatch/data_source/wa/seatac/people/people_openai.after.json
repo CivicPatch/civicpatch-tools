@@ -1,5 +1,27 @@
 [
   {
+    "name": "Senayet Negusse",
+    "divisions": [
+      "Position 1"
+    ],
+    "roles": [
+      "Chair",
+      "Council Member",
+      "Deputy Mayor"
+    ],
+    "image": "https://www.seatacwa.gov/home/showpublishedimage/5761/637140014335200000",
+    "email": "snegusse@seatacwa.gov",
+    "phone_number": "(206) 586-1915",
+    "website": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
+    "sources": [
+      "https://www.seatacwa.gov/government/city-council",
+      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
+    ],
+    "start_date": "2024-01",
+    "end_date": "2027-12",
+    "updated_at": "2025-06-05"
+  },
+  {
     "name": "Mohamed Egal",
     "divisions": [
       "Position 4"
@@ -12,14 +34,14 @@
     ],
     "image": "https://www.seatacwa.gov/home/showpublishedimage/6569/637817404320000000",
     "email": "megal@seatacwa.gov",
-    "phone_number": "(206) 973-4800",
+    "phone_number": "(206) 437-2973",
     "website": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council"
     ],
     "start_date": "2024-01-09",
-    "end_date": "2025-12",
+    "end_date": "2025-12-31",
     "updated_at": "2025-06-05"
   },
   {
@@ -61,26 +83,6 @@
     "sources": [
       "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
-    ],
-    "start_date": "2024-01",
-    "end_date": "2027-12",
-    "updated_at": "2025-06-05"
-  },
-  {
-    "name": "Senayet Negusse",
-    "divisions": [
-      "Position 1"
-    ],
-    "roles": [
-      "Council Member"
-    ],
-    "image": "https://www.seatacwa.gov/home/showpublishedimage/5761/637140014335200000",
-    "email": "snegusse@seatacwa.gov",
-    "phone_number": "(206) 973-4800",
-    "website": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
-    "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
     ],
     "start_date": "2024-01",
     "end_date": "2027-12",
@@ -138,7 +140,7 @@
     ],
     "image": "https://www.seatacwa.gov/home/showpublishedimage/7410/638637370901870000",
     "email": "jlovell@seatacwa.gov",
-    "phone_number": "(206) 973-4800",
+    "phone_number": "(206) 960-1466",
     "website": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
     "sources": [
       "https://www.seatacwa.gov/government/city-council",
