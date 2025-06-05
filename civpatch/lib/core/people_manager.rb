@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "zaru"
-require "amatch"
 require "utils/url_helper"
 require "utils/phone_helper"
 require "core/person_manager/utils"

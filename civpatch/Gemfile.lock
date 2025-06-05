@@ -15,11 +15,7 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
-    amatch (0.4.1)
-      mize
-      tins (~> 1.0)
     ast (2.4.3)
-    awesome_print (1.9.2)
     aws-eventstream (1.3.2)
     aws-partitions (1.1097.0)
     aws-sdk-core (3.223.0)
@@ -68,11 +64,6 @@ GEM
     faraday-retry (2.3.1)
       faraday (~> 2.0)
     fuzzy_match (2.1.0)
-    git (3.0.0)
-      activesupport (>= 5.0)
-      addressable (~> 2.8)
-      process_executer (~> 1.3)
-      rchardet (~> 1.9)
     google-apis-core (0.16.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 1.9)
@@ -110,9 +101,6 @@ GEM
     language_server-protocol (3.17.0.4)
     lint_roller (1.1.0)
     logger (1.7.0)
-    marcel (1.0.4)
-    markitdown (0.3.3)
-      nokogiri
     matrix (0.4.2)
     mime-types (3.7.0)
       logger
@@ -121,7 +109,6 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.5)
-    mize (0.6.1)
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
@@ -138,9 +125,6 @@ GEM
       racc (~> 1.4)
     nokolexbor (0.6.0)
     nokolexbor (0.6.0-x86_64-darwin)
-    octokit (10.0.0)
-      faraday (>= 1, < 3)
-      sawyer (~> 0.9)
     os (1.1.4)
     parallel (1.27.0)
     parser (3.3.8.0)
@@ -153,7 +137,6 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.4.0)
-    process_executer (1.3.0)
     public_suffix (6.0.1)
     racc (1.8.1)
     rack (3.1.12)
@@ -161,7 +144,6 @@ GEM
       rack (>= 1.3)
     rainbow (3.1.1)
     rake (13.2.1)
-    rchardet (1.9.0)
     regexp_parser (2.10.0)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -199,9 +181,6 @@ GEM
     sanitize (7.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.16.8)
-    sawyer (0.9.2)
-      addressable (>= 2.3.5)
-      faraday (>= 0.17.3, < 3)
     securerandom (0.4.1)
     selenium-webdriver (4.32.0)
       base64 (~> 0.2)
@@ -214,11 +193,7 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    sync (0.5.0)
     text (1.3.1)
-    tins (1.38.0)
-      bigdecimal
-      sync
     trailblazer-option (0.1.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -230,7 +205,6 @@ GEM
     websocket (1.2.11)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zaru (1.0.0)
 
 PLATFORMS
   ruby
@@ -238,25 +212,19 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (~> 7.0)
-  amatch (~> 0.4.1)
-  awesome_print (~> 1.9)
   aws-sdk-s3 (~> 1.185)
   capybara (~> 3.40)
   csv (~> 3.3)
   faraday-retry (~> 2.3)
   fuzzy_match (~> 2.1)
-  git (~> 3.0)
   google-apis-sheets_v4 (~> 0.41.0)
   googleauth (~> 1.14)
   httparty
   json
-  marcel (~> 1.0)
-  markitdown
   minitest (~> 5.16)
   namae (~> 1.2)
   nokogiri
   nokolexbor (~> 0.6.0)
-  octokit (~> 10.0)
   playwright-ruby-client (~> 1.51)
   pp (~> 0.6.2)
   rake (~> 13.0)
@@ -267,7 +235,6 @@ DEPENDENCIES
   sanitize (~> 7.0)
   selenium-webdriver (~> 4.32)
   text (~> 1.3)
-  zaru (~> 1.0)
 
 BUNDLED WITH
    2.6.2

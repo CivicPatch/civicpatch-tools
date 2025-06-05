@@ -2,7 +2,6 @@
 
 require "test_helper"
 require "core/people_manager"
-require "fuzzy_match"
 
 class PeopleManagerTest < Minitest::Test
   def setup

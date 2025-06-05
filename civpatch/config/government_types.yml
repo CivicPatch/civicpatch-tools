@@ -103,7 +103,8 @@ government_types:
       - role: select board chair
         aliases:
         - chair
-        - select board chair
+        - selectboard chairman
+        - selectboard chairwoman
         - select board chairman
         - select board chairwoman
         - chairman
@@ -111,18 +112,22 @@ government_types:
         - selectboard chair
       - role: select board vice chair
         aliases:
-        - select board vice chair
         - select board vice chairman
         - select board vice chairwoman
+        - select board vice-chair
         - select board vice-chairman
         - select board vice-chairwoman
+        - selectboard vice chair
+        - selectboard vice chairman
+        - selectboard vice chairwoman
         - selectboard vice-chair
-        - select board vice-chair
+        - selectboard vice-chairman
+        - selectboard vice-chairwoman
         - vice chair
-        - vice-chair
         - vice chairman
-        - vice-chairman
         - vice chairwoman
+        - vice-chair
+        - vice-chairman
         - vice-chairwoman
       - role: deputy mayor  
       - role: select board member
