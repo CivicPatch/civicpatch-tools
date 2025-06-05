@@ -1,0 +1,222 @@
+[
+  {
+    "name": "Ruth Mooney",
+    "sources": [
+      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Chairman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name in table."
+      },
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-267-8300 x 124",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board phone number, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "administration@belmontnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board email, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year listed next to name in table.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Jon Pike",
+    "sources": [
+      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-267-8300 x 124",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board phone number, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "administration@belmontnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board email, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year listed next to name in table.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Claude Patten, Jr.",
+    "sources": [
+      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-267-8300 x 124",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board phone number, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "administration@belmontnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board email, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year listed next to name in table.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Sharon Ciampi",
+    "sources": [
+      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-267-8300 x 124",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board phone number, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "administration@belmontnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board email, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year listed next to name in table.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Travis O'Hara",
+    "sources": [
+      "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice Chairman",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name in table."
+      },
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-267-8300 x 124",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board phone number, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "administration@belmontnh.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General board email, not specific to individual.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Year listed next to name in table.",
+        "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  }
+]
