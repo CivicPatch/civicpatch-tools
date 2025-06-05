@@ -7,30 +7,30 @@
     "images": [],
     "roles": [
       {
-        "data": "select board member",
+        "data": "Select Board Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+        "llm_confidence_reason": "Listed as a member of the 'Board of Selectmen'."
       },
       {
         "data": "Chair",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed with the title 'Chairman'."
+        "llm_confidence_reason": "Listed as 'Chairman' next to name in member table."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "603-267-8300 x 124",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board phone number listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact phone number listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board email listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact email listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -40,7 +40,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year listed next to name in parentheses, confirmed as term expiration year.",
+        "llm_confidence_reason": "Year listed next to name in member table.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -54,25 +54,25 @@
     "images": [],
     "roles": [
       {
-        "data": "select board member",
+        "data": "Select Board Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+        "llm_confidence_reason": "Listed as a member of the 'Board of Selectmen'."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "603-267-8300 x 124",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board phone number listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact phone number listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board email listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact email listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -82,7 +82,7 @@
       {
         "data": "2028",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year listed next to name in parentheses, confirmed as term expiration year.",
+        "llm_confidence_reason": "Year listed next to name in member table.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -96,25 +96,25 @@
     "images": [],
     "roles": [
       {
-        "data": "select board member",
+        "data": "Select Board Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+        "llm_confidence_reason": "Listed as a member of the 'Board of Selectmen'."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "603-267-8300 x 124",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board phone number listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact phone number listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board email listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact email listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -124,7 +124,7 @@
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year listed next to name in parentheses, confirmed as term expiration year.",
+        "llm_confidence_reason": "Year listed next to name in member table.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -138,25 +138,25 @@
     "images": [],
     "roles": [
       {
-        "data": "select board member",
+        "data": "Select Board Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+        "llm_confidence_reason": "Listed as a member of the 'Board of Selectmen'."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "603-267-8300 x 124",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board phone number listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact phone number listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board email listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact email listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -166,7 +166,7 @@
       {
         "data": "2027",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year listed next to name in parentheses, confirmed as term expiration year.",
+        "llm_confidence_reason": "Year listed next to name in member table.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -180,30 +180,30 @@
     "images": [],
     "roles": [
       {
-        "data": "select board member",
+        "data": "Select Board Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as a member of the Board of Selectmen."
+        "llm_confidence_reason": "Listed as a member of the 'Board of Selectmen'."
       },
       {
         "data": "Vice Chair",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed with the title 'Vice Chairman'."
+        "llm_confidence_reason": "Listed as 'Vice Chairman' next to name in member table."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "603-267-8300 x 124",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board phone number listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact phone number listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
     "emails": [
       {
         "data": "administration@belmontnh.gov",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General board email listed, not specific to individual.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General contact email listed for the Board of Selectmen.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
@@ -213,7 +213,7 @@
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year listed next to name in parentheses, confirmed as term expiration year.",
+        "llm_confidence_reason": "Year listed next to name in member table.",
         "source": "https://www.belmontnh.org/Pages/Index/50704/board-of-selectmen"
       }
     ],
