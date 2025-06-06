@@ -1,29 +1,27 @@
 [
   {
-    "name": "Senayet Negusse",
+    "name": "Mohamed Egal",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
     "images": [],
     "roles": [
       {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Mayor since January 9, 2024'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember since January 1, 2022'."
+      },
+      {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the 'City Council' page and section 'Find out more about your councilmembers'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Councilmember'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Listed under the 'Councilmembers' section."
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers:' section."
       },
       {
         "data": "Councilmember",
@@ -33,40 +31,83 @@
     ],
     "divisions": [
       {
-        "data": "Position #1",
+        "data": "Position #4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Council Position #1'."
+        "llm_confidence_reason": "Explicitly listed as 'Council Position #4' next to name."
       }
     ],
     "phone_numbers": [
       {
-        "data": "206.586.1915",
-        "llm_confidence": 0.9,
+        "data": "206-437-2973",
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly listed as 'Cell Phone'.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
       }
     ],
     "emails": [
       {
-        "data": "snegusse@seatacwa.gov",
+        "data": "megal@seatacwa.gov",
         "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly listed email address.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
       }
     ],
     "websites": [
       {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's profile page found next to their name.",
-        "source": "https://www.seatacwa.gov/government/city-council"
+        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in the 'Skip to Main Content' link at the top, specific to the person.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
       },
       {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
+        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name/profile link.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
+        "llm_confidence_reason": "Explicit link provided for the individual councilmember.",
+        "source": "https://www.seatacwa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember since January 1, 2022'.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed term end date 'December 2025'.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
+      }
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Senayet Negusse",
+    "sources": [
+      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council",
+      "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers:' section."
       },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Councilmembers' navigation."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
         "llm_confidence": 0.9,
@@ -76,35 +117,19 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as a link associated with the name.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
+        "llm_confidence_reason": "Explicit link provided for the individual councilmember.",
+        "source": "https://www.seatacwa.gov/government/city-council"
       }
     ],
-    "start_dates": [
-      {
-        "data": "2020-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Councilmember since January 2020'.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2027-12",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date 'December 2027'.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      }
-    ],
+    "start_dates": [],
+    "end_dates": [],
     "updated_at": "2025-06-05"
   },
   {
     "name": "Jake Simpson",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
@@ -113,12 +138,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the 'City Council' page and section 'Find out more about your councilmembers'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Listed under the 'Councilmembers' section."
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers:' section."
       },
       {
         "data": "Councilmember",
@@ -157,18 +177,6 @@
     "websites": [
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's profile page found next to their name.",
-        "source": "https://www.seatacwa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name/profile link.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
         "llm_confidence": 0.9,
         "llm_confidence_reason": "URL found in the navigation link, specific to the person.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
@@ -176,8 +184,8 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as a link associated with the name.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
+        "llm_confidence_reason": "Explicit link provided for the individual councilmember.",
+        "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
@@ -207,10 +215,8 @@
   {
     "name": "Peter Kwon",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
       "https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon"
@@ -220,12 +226,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the 'City Council' page and section 'Find out more about your councilmembers'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Listed under the 'Councilmembers' section."
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers:' section."
       },
       {
         "data": "Councilmember",
@@ -285,28 +286,16 @@
     ],
     "websites": [
       {
-        "data": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's profile page found next to their name.",
-        "source": "https://www.seatacwa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name/profile link.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      },
-      {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon",
         "llm_confidence": 0.9,
         "llm_confidence_reason": "URL found in the navigation link, specific to the person.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
       },
       {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon",
+        "data": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as a link associated with the name.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
+        "llm_confidence_reason": "Explicit link provided for the individual councilmember.",
+        "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon",
@@ -352,116 +341,10 @@
     "updated_at": "2025-06-05"
   },
   {
-    "name": "Mohamed Egal",
-    "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
-    ],
-    "images": [],
-    "roles": [
-      {
-        "data": "Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the 'City Council' page and section 'Find out more about your councilmembers'."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Mayor since January 9, 2024'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Councilmember since January 1, 2022'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Listed under the 'Councilmembers' section."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under 'Councilmembers' navigation."
-      }
-    ],
-    "divisions": [
-      {
-        "data": "Position #4",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Council Position #4' next to name."
-      }
-    ],
-    "phone_numbers": [
-      {
-        "data": "206-437-2973",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Cell Phone'.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "emails": [
-      {
-        "data": "megal@seatacwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed email address.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's profile page found next to their name.",
-        "source": "https://www.seatacwa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name/profile link.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL found in the 'Skip to Main Content' link at the top, specific to the person.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as a link associated with the name.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2022-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Councilmember since January 1, 2022'.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed term end date 'December 2025'.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
-      }
-    ],
-    "updated_at": "2025-06-05"
-  },
-  {
     "name": "James W. Lovell",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
     "images": [],
@@ -469,12 +352,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the 'City Council' page and section 'Find out more about your councilmembers'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Listed under the 'Councilmembers' section."
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers:' section."
       },
       {
         "data": "Councilmember",
@@ -513,18 +391,6 @@
     "websites": [
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's profile page found next to their name.",
-        "source": "https://www.seatacwa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name/profile link.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
         "llm_confidence": 0.9,
         "llm_confidence_reason": "URL found in the navigation link, specific to the person.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
@@ -532,8 +398,8 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as a link associated with the name.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
+        "llm_confidence_reason": "Explicit link provided for the individual councilmember.",
+        "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
@@ -563,11 +429,9 @@
   {
     "name": "Iris Guzmán",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
     "images": [],
@@ -575,7 +439,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the 'City Council' page and section 'Find out more about your councilmembers'."
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers:' section."
       },
       {
         "data": "Deputy Mayor",
@@ -596,11 +460,6 @@
         "data": "Member",
         "llm_confidence": 0.85,
         "llm_confidence_reason": "Listed as 'Member, Administration & Finance Committee'. 'Member' is a generic role, but context indicates a committee member."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Listed under the 'Councilmembers' section."
       },
       {
         "data": "Councilmember",
@@ -634,18 +493,6 @@
     "websites": [
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's profile page found next to their name.",
-        "source": "https://www.seatacwa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name/profile link.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
         "llm_confidence": 0.9,
         "llm_confidence_reason": "URL found in the navigation link, specific to the person.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal"
@@ -653,14 +500,14 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page is a person-specific profile.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman"
+        "llm_confidence_reason": "Explicit link provided for the individual councilmember.",
+        "source": "https://www.seatacwa.gov/government/city-council"
       },
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as a link associated with the name.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
+        "llm_confidence_reason": "The URL of the current page is a person-specific profile.",
+        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman"
       }
     ],
     "start_dates": [
@@ -684,9 +531,8 @@
   {
     "name": "Joe Vinson",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
@@ -695,17 +541,12 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under the 'City Council' page and section 'Find out more about your councilmembers'."
+        "llm_confidence_reason": "Listed under 'Find out more about your councilmembers:' section."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the name."
-      },
-      {
-        "data": "Chair",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly listed as 'Chair, Public Safety and Justice Committee'."
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember'."
       },
       {
         "data": "Councilmember",
@@ -717,14 +558,14 @@
       {
         "data": "Position #7",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the name."
+        "llm_confidence_reason": "Explicitly listed as 'Council Position #7'."
       }
     ],
     "phone_numbers": [
       {
-        "data": "206.771.0414",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Cell Phone'.",
+        "data": "206.973.4800",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'City Hall Phone', which is likely the official contact number.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
@@ -732,23 +573,11 @@
       {
         "data": "jvinson@seatacwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the name.",
+        "llm_confidence_reason": "Explicitly listed under 'Email'.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
     "websites": [
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's profile page found next to their name.",
-        "source": "https://www.seatacwa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the person's name/profile link.",
-        "source": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-      },
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
         "llm_confidence": 0.9,
@@ -758,7 +587,13 @@
       {
         "data": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the current page URL, which is the profile page for this person.",
+        "llm_confidence_reason": "Explicit link provided for the individual councilmember.",
+        "source": "https://www.seatacwa.gov/government/city-council"
+      },
+      {
+        "data": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the current page is a profile page for this person.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
@@ -766,7 +601,7 @@
       {
         "data": "2024-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term: January 2024 - ...' and 'Councilmember Since January 2024'.",
+        "llm_confidence_reason": "Explicitly listed as 'January 2024' in the term dates.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],
@@ -774,7 +609,7 @@
       {
         "data": "2027-12",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Term: ... - December 2027'.",
+        "llm_confidence_reason": "Explicitly listed as 'December 2027' in the term dates.",
         "source": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson"
       }
     ],

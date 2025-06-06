@@ -281,6 +281,10 @@ Find out more about your councilmembers:
 
 ## News
 
+ *  [06/10/25 Council Study Session Packet](https://www.seatacwa.gov/Home/Components/News/News/9111/23?backlist=/government/city-council)   
+
+06/05/2025 3:00 PM  
+
  *  [May 27, 2025 Council Actions](https://www.seatacwa.gov/Home/Components/News/News/9109/23?backlist=/government/city-council)   
 
 Council actions taken at the last Council meeting.  
@@ -288,10 +292,6 @@ Council actions taken at the last Council meeting.
 05/27/2025 8:17 PM  
 
  *  [05/27/25 Special Council Study Session Packet](https://www.seatacwa.gov/Home/Components/News/News/9105/23?backlist=/government/city-council)   
-
-05/22/2025 3:00 PM  
-
- *  [05/27/25 Regular Council Meeting Packet](https://www.seatacwa.gov/Home/Components/News/News/9107/23?backlist=/government/city-council)   
 
 05/22/2025 3:00 PM  
 

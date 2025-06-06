@@ -1,27 +1,5 @@
 [
   {
-    "name": "Senayet Negusse",
-    "divisions": [
-      "Position 1"
-    ],
-    "roles": [
-      "Chair",
-      "Council Member",
-      "Deputy Mayor"
-    ],
-    "image": "https://www.seatacwa.gov/home/showpublishedimage/5761/637140014335200000",
-    "email": "snegusse@seatacwa.gov",
-    "phone_number": "(206) 586-1915",
-    "website": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
-    "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse"
-    ],
-    "start_date": "2024-01",
-    "end_date": "2027-12",
-    "updated_at": "2025-06-05"
-  },
-  {
     "name": "Mohamed Egal",
     "divisions": [
       "Position 4"
@@ -52,7 +30,6 @@
     "roles": [
       "Chair",
       "Council Member",
-      "Council Member",
       "Deputy Mayor"
     ],
     "image": "https://www.seatacwa.gov/home/showpublishedimage/6517/637775833233570000",
@@ -78,7 +55,7 @@
     ],
     "image": "https://www.seatacwa.gov/home/showpublishedimage/7225/638508595078070000",
     "email": "jvinson@seatacwa.gov",
-    "phone_number": "(206) 771-0414",
+    "phone_number": "(206) 973-4800",
     "website": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
     "sources": [
       "https://www.seatacwa.gov/government/city-council",
@@ -86,6 +63,23 @@
     ],
     "start_date": "2024-01",
     "end_date": "2027-12",
+    "updated_at": "2025-06-05"
+  },
+  {
+    "name": "Senayet Negusse",
+    "divisions": [],
+    "roles": [
+      "Council Member"
+    ],
+    "image": null,
+    "email": null,
+    "phone_number": null,
+    "website": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
+    "sources": [
+      "https://www.seatacwa.gov/government/city-council"
+    ],
+    "start_date": null,
+    "end_date": null,
     "updated_at": "2025-06-05"
   },
   {
@@ -105,8 +99,8 @@
       "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson"
     ],
-    "start_date": "2021-11-23",
-    "end_date": null,
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
     "updated_at": "2025-06-05"
   },
   {
@@ -119,7 +113,7 @@
     ],
     "image": "https://www.seatacwa.gov/home/showpublishedimage/6799/637994616287630000",
     "email": "pkwon@seatacwa.gov",
-    "phone_number": "(206) 973-4800",
+    "phone_number": "(206) 418-8033",
     "website": "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon",
     "sources": [
       "https://www.seatacwa.gov/government/city-council",
