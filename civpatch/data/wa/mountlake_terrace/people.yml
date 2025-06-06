@@ -1,29 +1,113 @@
 ---
-- name: Kyoko Matsumoto Wright
-  positions:
-  - Mayor
-  email: Kmatsumotowright@mltwa.gov
 - name: Bryan Wahl
-  positions:
-  - Council Member
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  - Position 5
+  image: https://www.cityofmlt.com/ImageRepository/Document?documentID=38427
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/mountlake_terrace/images/3fda894addeef09e6444c7926b831ae33333f195b0ab443594313e0b18c6e1a4.jpg
   email: Bwahl@mltwa.gov
+  phone_number: "(425) 967-2512"
+  website: https://www.cityofmlt.com/Directory.aspx?EID=14
+  start_date: '2013'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.cityofmlt.com/587/City-Council
+  - https://www.cityofmlt.com/Directory.aspx?EID=14
+  updated_at: '2025-06-06'
 - name: Erin Murray
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 7
+  image: https://www.cityofmlt.com/ImageRepository/Document?documentID=36666
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/mountlake_terrace/images/37873a2f20760701e4d4b58c618844bdb2cb4657f51105b3eaf6caba6b9e1732.jpg
   email: Emurray@mltwa.gov
+  phone_number: "(425) 967-2416"
+  website: https://www.cityofmlt.com/Directory.aspx?EID=80
+  start_date:
+  end_date: '2027-12-31'
+  sources:
+  - https://www.cityofmlt.com/587/City-Council
+  - https://www.cityofmlt.com/Directory.aspx?EID=80
+  updated_at: '2025-06-06'
+- name: Kyoko Matsumoto Wright
+  roles:
+  - Mayor
+  divisions:
+  - Position 4
+  image: https://www.cityofmlt.com/ImageRepository/Document?documentID=36670
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/mountlake_terrace/images/80dbb3b5acf07db3f18d387478f40fb0dd55d08556c9309a9814cf941400a451.jpg
+  email: Kmatsumotowright@mltwa.gov
+  phone_number: "(425) 967-1948"
+  website: https://www.cityofmlt.com/Directory.aspx?EID=13
+  start_date: 2008-01
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofmlt.com/587/City-Council
+  - https://www.cityofmlt.com/Directory.aspx?EID=13
+  updated_at: '2025-06-06'
 - name: Laura Sonmore
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 6
+  image: https://www.cityofmlt.com/ImageRepository/Document?documentID=38428
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/mountlake_terrace/images/227cbc540e7a6620d76e157c813f38909881446fbb994abd4793066816d27961.jpg
   email: Lsonmore@mltwa.gov
-- name: Richard Ryan
-  positions:
+  phone_number: "(425) 967-1975"
+  website: https://www.cityofmlt.com/Directory.aspx?EID=10
+  start_date: '2015'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.cityofmlt.com/587/City-Council
+  - https://www.cityofmlt.com/Directory.aspx?EID=10
+  updated_at: '2025-06-06'
+- name: Rick Ryan
+  roles:
   - Council Member
+  divisions:
+  - Position 1
+  image: https://www.cityofmlt.com/ImageRepository/Document?documentID=38430
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/mountlake_terrace/images/7eef9aef6086b5f079882fc2d368f1c9f1c66b83cf39b6888b28e8a805ac7675.jpg
   email: Rryan@mltwa.gov
-- name: Rory Paine-Donovan Paine-Donovan
-  positions:
-  - Council Member
-  email: RPaine-Donovan@mltwa.gov
+  phone_number: "(425) 977-9232"
+  website: https://www.cityofmlt.com/Directory.aspx?EID=11
+  start_date: 2008-02
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofmlt.com/587/City-Council
+  - https://www.cityofmlt.com/Directory.aspx?EID=11
+  updated_at: '2025-06-06'
 - name: Steve Woodard
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 2
+  image: https://www.cityofmlt.com/ImageRepository/Document?documentID=36674
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/mountlake_terrace/images/2a056bd4fa82fc0f7ec3cb7395111e14bb07e2029e16ae5f6123742997240971.jpg
   email: Swoodard@mltwa.gov
+  phone_number: "(425) 967-2356"
+  website: https://www.cityofmlt.com/Directory.aspx?EID=9
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofmlt.com/587/City-Council
+  - https://www.cityofmlt.com/Directory.aspx?EID=9
+  updated_at: '2025-06-06'
+- name: William Paige Jr.
+  roles:
+  - Council Member
+  divisions:
+  - Position 3
+  image: https://www.cityofmlt.com/ImageRepository/Document?documentID=38424
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/mountlake_terrace/images/3a857caede57ac71ebba575deee30c5f6c8c31b695938939d35588c59550965a.jpg
+  email: wpaige@mltwa.gov
+  phone_number: "(425) 776-1161"
+  website: https://www.cityofmlt.com/Directory.aspx?EID=166
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofmlt.com/587/City-Council
+  - https://www.cityofmlt.com/Directory.aspx?EID=166
+  updated_at: '2025-06-06'
