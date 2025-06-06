@@ -72,7 +72,9 @@ module Core
         return "" if division_identifier_to_find.blank?
 
         # Remove quotation marks (curly and normal) and parentheses
-        division_identifier_to_find = division_identifier_to_find.gsub(/["“”#()]/, "")
+        division_identifier_to_find = division_identifier_to_find.gsub(/["“”‘’()]/, "").strip
+        # Remove prefixes like "no1", "no 1", "no.1", "no. 1", "#1", "# 1"
+        division_identifier_to_find = division_identifier_to_find.sub(/^(no\.?\s*|#\.?\s*)/, "").strip
 
         if number_words_in_english.include?(division_identifier_to_find)
           return (number_words_in_english.index(division_rest_string) + 1).to_s
