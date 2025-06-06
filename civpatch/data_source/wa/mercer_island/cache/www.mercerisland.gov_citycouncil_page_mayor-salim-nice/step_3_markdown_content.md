@@ -348,14 +348,6 @@ Salim's expertise, leadership, and dedication make him a valuable asset to the C
 
 [Government Websites by CivicPlus®](https://www.civicplus.com)
 
-Original text
-
-Rate this translation
-
-Your feedback will be used to help improve Google Translate
-
-![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)
-
 Opens in new window
 
 PDF Download
@@ -369,5 +361,13 @@ PowerPoint Download
 Document Download
 
 Explore your accessibility options
+
+![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)
+
+Original text
+
+Rate this translation
+
+Your feedback will be used to help improve Google Translate
 
 PageAssist Discover your personalization options ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)

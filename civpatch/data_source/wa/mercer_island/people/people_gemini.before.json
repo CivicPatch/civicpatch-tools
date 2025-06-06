@@ -17,13 +17,12 @@
     "sources": [
       "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
       "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
       "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "David Rosenbaum",
@@ -43,13 +42,12 @@
     "sources": [
       "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
       "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
       "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Lisa Anderl",
@@ -68,38 +66,34 @@
     "sources": [
       "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
       "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
       "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Daniel Becker",
     "roles": [
       "Councilmember"
     ],
-    "divisions": [
-      "Position No. 7"
-    ],
+    "divisions": [],
     "image": null,
-    "phone_number": "206-275-7995",
-    "email": "daniel.becker@mercerisland.gov",
+    "phone_number": null,
+    "email": null,
     "website": "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-    "start_date": "2025-06-04",
-    "end_date": "2025-11",
+    "start_date": null,
+    "end_date": null,
     "sources": [
       "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
       "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
       "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Craig Reynolds",
@@ -118,13 +112,12 @@
     "sources": [
       "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
       "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
       "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Wendy Weiker",
@@ -143,13 +136,12 @@
     "sources": [
       "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
       "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
       "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Ted Weinberg",
@@ -157,7 +149,7 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position No. 4"
+      "Position 4"
     ],
     "image": null,
     "phone_number": "206-275-7993",
@@ -168,12 +160,11 @@
     "sources": [
       "https://www.mercerisland.gov/citycouncil/page/mayor-salim-nice",
       "https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-daniel-becker",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl",
       "https://www.mercerisland.gov/citycouncil/page/councilmember-craig-reynolds",
-      "https://www.mercerisland.gov/citycouncil/page/councilmember-lisa-anderl"
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-wendy-weiker",
+      "https://www.mercerisland.gov/citycouncil/page/councilmember-ted-weinberg"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   }
 ]

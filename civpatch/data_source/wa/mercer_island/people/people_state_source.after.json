@@ -5,7 +5,7 @@
       "Mayor"
     ],
     "email": "salim.nice@mercergov.org",
-    "updated_at": "2025-06-06",
+    "updated_at": "2025-06-05",
     "divisions": []
   },
   {
@@ -14,16 +14,7 @@
       "Deputy Mayor"
     ],
     "email": "david.rosenbaum@mercergov.org",
-    "updated_at": "2025-06-06",
-    "divisions": []
-  },
-  {
-    "name": "Craig Reynolds",
-    "roles": [
-      "Council Member"
-    ],
-    "email": "craig.reynolds@mercergov.org",
-    "updated_at": "2025-06-06",
+    "updated_at": "2025-06-05",
     "divisions": []
   },
   {
@@ -32,16 +23,16 @@
       "Council Member"
     ],
     "email": "lisa.anderl@mercergov.org",
-    "updated_at": "2025-06-06",
+    "updated_at": "2025-06-05",
     "divisions": []
   },
   {
-    "name": "Ted Weinberg",
+    "name": "Craig Reynolds",
     "roles": [
       "Council Member"
     ],
-    "email": "ted.weinberg@mercerisland.gov",
-    "updated_at": "2025-06-06",
+    "email": "craig.reynolds@mercergov.org",
+    "updated_at": "2025-06-05",
     "divisions": []
   },
   {
@@ -50,7 +41,16 @@
       "Council Member"
     ],
     "email": "wendy.weiker@mercergov.org",
-    "updated_at": "2025-06-06",
+    "updated_at": "2025-06-05",
+    "divisions": []
+  },
+  {
+    "name": "Ted Weinberg",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "ted.weinberg@mercerisland.gov",
+    "updated_at": "2025-06-05",
     "divisions": []
   }
 ]

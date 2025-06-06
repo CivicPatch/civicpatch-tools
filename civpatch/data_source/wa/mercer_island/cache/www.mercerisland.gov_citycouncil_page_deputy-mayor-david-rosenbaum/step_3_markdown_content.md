@@ -1,5 +1,3 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
 [Skip to main content](https://www.mercerisland.gov/citycouncil/page/deputy-mayor-david-rosenbaum/)
 
 - [City Hall Closure: Accessing City Services](https://www.mercerisland.gov/administrativeservices/page/city-hall-closure-accessing-city-services)
@@ -341,14 +339,6 @@ Dave spent 14 years working as a Congressional aide in Washington D.C. and curre
 
 [Government Websites by CivicPlus®](https://www.civicplus.com)
 
-Original text
-
-Rate this translation
-
-Your feedback will be used to help improve Google Translate
-
-![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)
-
 Opens in new window
 
 PDF Download
@@ -361,6 +351,12 @@ PowerPoint Download
 
 Document Download
 
-Explore your accessibility options
+![placeholder](https://www.mercerisland.gov/sites/all/themes/aha_compass/logo.png)
 
 PageAssist Discover your personalization options ![PageAssist Loading](https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png)
+
+Original text
+
+Rate this translation
+
+Your feedback will be used to help improve Google Translate
