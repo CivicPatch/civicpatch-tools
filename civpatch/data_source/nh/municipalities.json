@@ -1065,7 +1065,14 @@
       "government_type": "select_board",
       "email": "landuse@atkinson-nh.gov",
       "website": "http://www.town-atkinsonnh.com",
-      "geoid": "3301502340"
+      "geoid": "3301502340",
+      "meta_updated_at": "2025-06-06",
+      "meta_hash": "d452640f4f71b88710e77b4a61433189",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Farmington",
