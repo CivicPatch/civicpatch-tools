@@ -1,0 +1,167 @@
+[
+  {
+    "name": "Thomas McLeod",
+    "divisions": [],
+    "roles": [
+      "Mayor"
+    ],
+    "image": "https://www.tukwilawa.gov/wp-content/uploads/Mayor-McLeod-2024-240x300.jpg",
+    "email": "Mayor@tukwilawa.gov",
+    "phone_number": "(206) 433-1850",
+    "website": "https://www.tukwilawa.gov/departments/mayors-office",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Tosh Sharp",
+    "divisions": [
+      "Position 1"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member",
+      "Council President"
+    ],
+    "image": "https://www.tukwilawa.gov/wp-content/uploads/Tosh.jpg",
+    "email": "tosh.sharp@tukwilawa.gov",
+    "phone_number": "(206) 507-6440",
+    "website": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+    ],
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Armen Papyan",
+    "divisions": [
+      "Position 2"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member"
+    ],
+    "image": "https://www.tukwilawa.gov/wp-content/uploads/Armen-scaled.jpg",
+    "email": "Armen.Papyan@TukwilaWA.gov",
+    "phone_number": "(206) 888-3380",
+    "website": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Hannah Hedrick",
+    "divisions": [
+      "Position 3"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member"
+    ],
+    "image": "https://www.tukwilawa.gov/wp-content/uploads/Hedrick_Portrait-scaled.jpg",
+    "email": "Hannah.Hedrick@TukwilaWa.gov",
+    "phone_number": "(206) 580-5123",
+    "website": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+    ],
+    "start_date": "2024-01-22",
+    "end_date": "2025-11",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Dennis Martinez",
+    "divisions": [
+      "Position 4"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member"
+    ],
+    "image": "https://www.tukwilawa.gov/wp-content/uploads/Martinezsmaller-scaled.jpg",
+    "email": "Dennis.Martinez@Tukwilawa.gov",
+    "phone_number": "(206) 960-1607",
+    "website": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Mohamed Abdi",
+    "divisions": [
+      "Position 5"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member"
+    ],
+    "image": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+    "email": "mohamed.abdi@tukwilawa.gov",
+    "phone_number": "(206) 798-4872",
+    "website": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+    ],
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Jovita McConnell",
+    "divisions": [
+      "Position 6"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member"
+    ],
+    "image": "https://www.tukwilawa.gov/wp-content/uploads/Jovita.jpg",
+    "email": "Jovita.McConnell@TukwilaWa.gov",
+    "phone_number": "(206) 600-3533",
+    "website": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+    ],
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Verna Seal",
+    "divisions": [
+      "Position 7"
+    ],
+    "roles": [
+      "Council Member",
+      "Council Member"
+    ],
+    "image": "https://www.tukwilawa.gov/wp-content/uploads/Seal-Headshot-1-scaled-1.jpg",
+    "email": "verna.seal@tukwilawa.gov",
+    "phone_number": "(206) 724-4548",
+    "website": "https://www.tukwilawa.gov/departments/city-council/verna-seal",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "start_date": "2025-03-10",
+    "end_date": "2025-11",
+    "updated_at": "2025-06-06"
+  }
+]

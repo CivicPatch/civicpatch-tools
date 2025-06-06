@@ -1,33 +1,170 @@
 ---
 - name: Thomas McLeod
-  positions:
+  roles:
   - Mayor
-  email: thomas.mcleod@tukwilawa.gov
+  divisions:
+  image: https://www.tukwilawa.gov/wp-content/uploads/Mayor-McLeod-2024-240x300.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/tukwila/images/1fe682c9d64d16de6732440777cf3b7f49aeccc8242240d914da26ccf88b8689.jpg
+  email: Mayor@tukwilawa.gov
+  phone_number: "(206) 433-1850"
+  website: https://www.tukwilawa.gov/departments/mayors-office
+  start_date: '2024-01-01'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.tukwilawa.gov/departments/mayors-office
+  updated_at: '2025-06-06'
 - name: Armen Papyan
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 2
+  image: https://www.tukwilawa.gov/wp-content/uploads/Armen-scaled.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/tukwila/images/6369140457573dc23b3630ca96772aa0059fbd77812f98fd6e6ee8ff2391eb9b.jpg
   email: armen.papyan@tukwilawa.gov
+  phone_number: "(206) 433-1800"
+  website: https://www.tukwilawa.gov/departments/city-council/armen-papyan
+  start_date: '2024-01-01'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.tukwilawa.gov/departments/mayors-office
+  - https://www.tukwilawa.gov/departments/city-council
+  - https://www.tukwilawa.gov/departments/city-council/tosh-sharp
+  - https://www.tukwilawa.gov/departments/city-council/armen-papyan
+  - https://www.tukwilawa.gov/departments/city-council/hannah-hedrick
+  - https://www.tukwilawa.gov/departments/city-council/dennis-martinez
+  - https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  - https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell
+  - https://www.tukwilawa.gov/departments/city-council/verna-seal
+  updated_at: '2025-06-06'
 - name: Dennis Martinez
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 4
+  image: https://www.tukwilawa.gov/wp-content/uploads/Martinezsmaller-scaled.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/tukwila/images/a04a4982fec63b5762afaa9aeb99a894b4b3604a9f27ecf08ce2d1bc3466dbdf.jpg
   email: dennis.martinez@tukwilawa.gov
+  phone_number: "(206) 433-1800"
+  website: https://www.tukwilawa.gov/departments/city-council/dennis-martinez
+  start_date: '2024-01-01'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.tukwilawa.gov/departments/mayors-office
+  - https://www.tukwilawa.gov/departments/city-council
+  - https://www.tukwilawa.gov/departments/city-council/tosh-sharp
+  - https://www.tukwilawa.gov/departments/city-council/armen-papyan
+  - https://www.tukwilawa.gov/departments/city-council/hannah-hedrick
+  - https://www.tukwilawa.gov/departments/city-council/dennis-martinez
+  - https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  - https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell
+  - https://www.tukwilawa.gov/departments/city-council/verna-seal
+  updated_at: '2025-06-06'
 - name: Hannah Hedrick
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 3
+  image: https://www.tukwilawa.gov/wp-content/uploads/Hedrick_Portrait-scaled.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/tukwila/images/fdaa442c199128fe53955d780cdfa87287efe5903b4796584d73ceacf266d18f.jpg
   email: hannah.hedrick@tukwilawa.gov
+  phone_number: "(206) 433-1800"
+  website: https://www.tukwilawa.gov/departments/city-council/hannah-hedrick
+  start_date: '2024-01-01'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.tukwilawa.gov/departments/mayors-office
+  - https://www.tukwilawa.gov/departments/city-council
+  - https://www.tukwilawa.gov/departments/city-council/tosh-sharp
+  - https://www.tukwilawa.gov/departments/city-council/armen-papyan
+  - https://www.tukwilawa.gov/departments/city-council/hannah-hedrick
+  - https://www.tukwilawa.gov/departments/city-council/dennis-martinez
+  - https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  - https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell
+  - https://www.tukwilawa.gov/departments/city-council/verna-seal
+  updated_at: '2025-06-06'
 - name: Jovita McConnell
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 6
+  image: https://www.tukwilawa.gov/wp-content/uploads/Jovita.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/tukwila/images/c1c939245d3207e24f79d178f16dcb69d268f899edbcaf31f3b535bf2bad1923.jpg
   email: jovita.mcconnell@tukwilawa.gov
+  phone_number: "(206) 433-1800"
+  website: https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell
+  start_date: '2024-01-01'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.tukwilawa.gov/departments/mayors-office
+  - https://www.tukwilawa.gov/departments/city-council
+  - https://www.tukwilawa.gov/departments/city-council/tosh-sharp
+  - https://www.tukwilawa.gov/departments/city-council/armen-papyan
+  - https://www.tukwilawa.gov/departments/city-council/hannah-hedrick
+  - https://www.tukwilawa.gov/departments/city-council/dennis-martinez
+  - https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  - https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell
+  - https://www.tukwilawa.gov/departments/city-council/verna-seal
+  updated_at: '2025-06-06'
 - name: Mohamed Abdi
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 5
+  image: https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  cdn_image:
   email: Mohamed.Abdi@TukwilaWa.gov
+  phone_number: "(206) 433-1800"
+  website: https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  start_date: '2022-01-01'
+  end_date: '2025-12-31'
+  sources:
+  - https://www.tukwilawa.gov/departments/mayors-office
+  - https://www.tukwilawa.gov/departments/city-council
+  - https://www.tukwilawa.gov/departments/city-council/tosh-sharp
+  - https://www.tukwilawa.gov/departments/city-council/armen-papyan
+  - https://www.tukwilawa.gov/departments/city-council/hannah-hedrick
+  - https://www.tukwilawa.gov/departments/city-council/dennis-martinez
+  - https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  - https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell
+  - https://www.tukwilawa.gov/departments/city-council/verna-seal
+  updated_at: '2025-06-06'
 - name: Tosh Sharp
-  positions:
+  roles:
   - Council Member
+  - Council President
+  divisions:
+  - Position 1
+  image: https://www.tukwilawa.gov/wp-content/uploads/Tosh.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/tukwila/images/401a43dd625b99c6a64b860acabe439cf1ed9ae19574e9687cfade464786d1b2.jpg
   email: Tosh.Sharp@TukwilaWa.gov
+  phone_number: "(206) 433-1800"
+  website: https://www.tukwilawa.gov/departments/city-council/tosh-sharp
+  start_date: '2022-01-01'
+  end_date: '2025-12-31'
+  sources:
+  - https://www.tukwilawa.gov/departments/mayors-office
+  - https://www.tukwilawa.gov/departments/city-council
+  - https://www.tukwilawa.gov/departments/city-council/tosh-sharp
+  - https://www.tukwilawa.gov/departments/city-council/armen-papyan
+  - https://www.tukwilawa.gov/departments/city-council/hannah-hedrick
+  - https://www.tukwilawa.gov/departments/city-council/dennis-martinez
+  - https://www.tukwilawa.gov/departments/city-council/mohamed-abdi
+  - https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell
+  - https://www.tukwilawa.gov/departments/city-council/verna-seal
+  updated_at: '2025-06-06'
 - name: Verna Seal
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 7
+  image: https://www.tukwilawa.gov/wp-content/uploads/Seal-Headshot-1-scaled-1.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/tukwila/images/28cd873270f48dddbcd61ca0413dc5ec2c58fc6b58b740d5050d5e9e0c26d34a.jpg
   email: verna.seal@TukwilaWa.gov
+  phone_number: "(206) 724-4548"
+  website: https://www.tukwilawa.gov/departments/city-council/verna-seal
+  start_date: '2025-03-10'
+  end_date: 2025-11
+  sources:
+  - https://www.tukwilawa.gov/departments/city-council
+  - https://www.tukwilawa.gov/departments/city-council/verna-seal
+  updated_at: '2025-06-06'

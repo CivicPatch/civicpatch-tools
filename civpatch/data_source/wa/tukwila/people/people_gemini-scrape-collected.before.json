@@ -1,0 +1,1880 @@
+[
+  {
+    "name": "Thomas McLeod",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Mayor Thomas McLeod'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "206-433-1850",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as phone number for Mayor McLeod.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Mayor@tukwilawa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as email for Mayor McLeod.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/mayors-office",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page is dedicated to the Mayor's Office and features the Mayor's information.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Began: January 1, 2024'.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expires: December 31, 2027'.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Tosh Sharp",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office",
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Tosh Sharp (Council President)'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a current member of the City Council."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed with this title."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated next to name in navigation/header."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by page title 'Councilmember Tosh Sharp' and context."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to name."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role explicitly listed next to name."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states all council members are elected at-large."
+      },
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position No. 1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number provided, not individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "206 507-6440",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Phone/Text'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number, not specific to the individual or council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number, not specific to the individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email provided, not individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "tosh.sharp@tukwilawa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Email'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked from the name.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the URL of the profile page for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the person's name under the City Council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name in the navigation.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page for this specific person, linked from the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the name in the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name under City Council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is linked from the name and is person-specific.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'January 1, 2022' for 'Term of Office'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2024-01-22",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Hannah Hedrick's term is listed, implying it might be the general council term start, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Start date for Dennis Martinez's term is listed, but not explicitly for Tosh Sharp. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term start date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2025' for 'Term of Office'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Hannah Hedrick's term is listed, implying it might be the general council term end, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "End date for Dennis Martinez's term is listed, but not explicitly for Tosh Sharp. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term end date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Mohamed Abdi",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office",
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under 'City Council' without a specific title, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a current member of the City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under the 'City Council' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' heading with an individual link."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by page title 'Councilmember Mohamed Abdi' and context of the list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under City Council heading, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed in the City Council section with other council members."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states all council members are elected at-large."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Council Position No. 5'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number provided, not individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number, not specific to the individual or council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "206 798-4872",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email provided, not individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "mohamed.abdi@tukwilawa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked from the name.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name, likely a profile page.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the person's name under the City Council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name in the navigation.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page for this specific person, linked from the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the name and page content.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name under City Council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is linked from the name and is person-specific.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2024-01-22",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Hannah Hedrick's term is listed, implying it might be the general council term start, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Start date for Dennis Martinez's term is listed, but not explicitly for Mohamed Abdi. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'January 1, 2022'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Hannah Hedrick's term is listed, implying it might be the general council term end, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "End date for Dennis Martinez's term is listed, but not explicitly for Mohamed Abdi. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'December 31, 2025'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Armen Papyan",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office",
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under 'City Council' without a specific title, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a current member of the City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under the 'City Council' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' heading with an individual link."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by context of the council list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under City Council heading, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed in the City Council section with other council members."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states all council members are elected at-large."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Council Position No. 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number provided, not individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "206-888-3380",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed phone number.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number, not specific to the individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email provided, not individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "Armen.Papyan@TukwilaWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed email address.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked from the name.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name, likely a profile page.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL of the dedicated profile page for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name in the navigation.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page for this specific person, linked from the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the name in the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name under City Council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is linked from the name and is person-specific.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'January 1, 2024'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2024-01-22",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Hannah Hedrick's term is listed, implying it might be the general council term start, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Start date for Dennis Martinez's term is listed, but not explicitly for Armen Papyan. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term start date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'December 31, 2027'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Hannah Hedrick's term is listed, implying it might be the general council term end, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "End date for Dennis Martinez's term is listed, but not explicitly for Armen Papyan. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term end date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Jovita McConnell",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office",
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under 'City Council' without a specific title, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a current member of the City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under the 'City Council' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' heading with an individual link."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by context of the council list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jovita McConnell'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed in the City Council section with other council members."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states all council members are elected at-large."
+      },
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position No. 6'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number provided, not individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number, not specific to the individual or council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number, not specific to the individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "206-600-3533",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed in bio section.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email provided, not individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "Jovita.McConnell@TukwilaWa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email explicitly listed in bio section.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked from the name.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name, likely a profile page.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the person's name under the City Council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name in the navigation.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page for this specific person, linked from the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the name in the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is the person's profile page.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is linked from the name and is person-specific.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2024-01-22",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Hannah Hedrick's term is listed, implying it might be the general council term start, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Start date for Dennis Martinez's term is listed, but not explicitly for Jovita McConnell. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term start date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'January 1, 2024'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Hannah Hedrick's term is listed, implying it might be the general council term end, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "End date for Dennis Martinez's term is listed, but not explicitly for Jovita McConnell. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term end date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'to December 31, 2027'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Dennis Martinez",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office",
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under 'City Council' without a specific title, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a current member of the City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under the 'City Council' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' in the heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by context of the council list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under City Council heading, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed in the City Council section with other council members."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states all council members are elected at-large."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Council Position No. 4' under the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number provided, not individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number, not specific to the individual or council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "206-960-1607",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Cell Phone' under the name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number, not specific to the individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email provided, not individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "Dennis.Martinez@Tukwilawa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under the name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked from the name.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name, likely a profile page.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the person's name under the City Council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name in the navigation.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page for this specific person, linked from the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the name in the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name under City Council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is linked from the name and is person-specific.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2024-01-22",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Hannah Hedrick's term is listed, implying it might be the general council term start, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'January 1, 2024' for 'Term of office'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term start date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Hannah Hedrick's term is listed, implying it might be the general council term end, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'December 31, 2027' for 'Term of office'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term end date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Hannah Hedrick",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office",
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under 'City Council' without a specific title, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a current member of the City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under the 'City Council' heading with an individual link."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by context of the council list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under City Council heading, implying Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed in the City Council section with other council members."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states all council members are elected at-large."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Council Position No. 3'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number provided, not individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number, not specific to the individual or council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "206.580.5123",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Phone'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city phone number, not specific to the individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email provided, not individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "Hannah.Hedrick@TukwilaWa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Email'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email, not specific to the individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email listed, not specific to this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly linked from the name.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name, likely a profile page.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the person's name under the City Council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL associated with the person's name in the navigation.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the page for this specific person, linked from the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL associated with the name in the council list.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name under City Council.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is linked from the name and is person-specific.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Start date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "Start date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2024-01-22",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term of office: January 22, 2024'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Start date for Dennis Martinez's term is listed, but not explicitly for Hannah Hedrick. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term start date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "End date for Tosh Sharp's term is listed, but not explicitly for this person. Assuming similar term length.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "End date not explicitly mentioned for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'to November 2025 General Election certification date'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "End date for Dennis Martinez's term is listed, but not explicitly for Hannah Hedrick. Assuming terms align but confidence is low.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "Term end date found for another council member (Mohamed Abdi). Assuming it might apply to others, but not explicitly stated for this person.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Verna Seal",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a current member of the City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed next to name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states all council members are elected at-large."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Council Position No. 7'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-433-1800",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "General city phone number provided, not individual council member.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "206.724.4548",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citycouncil@tukwilawa.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General council email provided, not individual.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "verna.seal@tukwilawa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/verna-seal",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link associated with name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/verna-seal",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the current page and is person-specific.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-03-10",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'March 10, 2025' for the current term.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'November 2025 General Election certification date'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  }
+]
