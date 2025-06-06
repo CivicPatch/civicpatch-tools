@@ -1074,7 +1074,14 @@
       "government_type": "select_board",
       "email": "rdickie@farmington.nh.us",
       "website": "http://www.farmington.nh.us",
-      "geoid": "3301726020"
+      "geoid": "3301726020",
+      "meta_updated_at": "2025-06-06",
+      "meta_hash": "c96a70903a1ae629011cc7870a728201",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Plymouth",
