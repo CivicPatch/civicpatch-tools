@@ -1,0 +1,146 @@
+[
+  {
+    "name": "Troy McCoy",
+    "divisions": [
+      "Position 1",
+      "Position No. 1"
+    ],
+    "roles": [
+      "Council Member",
+      "Mayor"
+    ],
+    "image": "https://www.cityofbg.org/ImageRepository/Document?documentID=8384",
+    "email": "troy.mccoy@cityofbg.org",
+    "phone_number": "(360) 600-5468",
+    "website": "https://www.cityofbg.org/378",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378"
+    ],
+    "start_date": "2024-01",
+    "end_date": "2025-12",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Shane Bowman",
+    "divisions": [
+      "Position No. 2"
+    ],
+    "roles": [
+      "Council Member",
+      "Deputy Mayor"
+    ],
+    "image": "https://www.cityofbg.org/ImageRepository/Document?documentID=4866",
+    "email": "shane.bowman@cityofbg.org",
+    "phone_number": "(360) 787-3266",
+    "website": "https://www.cityofbg.org/index.aspx?NID=377",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/index.aspx?NID=377"
+    ],
+    "start_date": "2024-01",
+    "end_date": "2027-12",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Victoria Ferrer",
+    "divisions": [
+      "Position No. 3"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofbg.org/ImageRepository/Document?documentID=11804",
+    "email": "victoria.ferrer@cityofbg.org",
+    "phone_number": "(360) 601-9994",
+    "website": "https://www.cityofbg.org/379/Councilmember-Ferrer",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer"
+    ],
+    "start_date": "2023-11",
+    "end_date": "2027-12",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Jeanie Kuypers",
+    "divisions": [
+      "Position No. 4"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofbg.org/ImageRepository/Document?documentID=13614",
+    "email": "jeanie.kuypers@cityofbg.org",
+    "phone_number": "(360) 839-6641",
+    "website": "https://www.cityofbg.org/376/Councilmember-Kuypers",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers"
+    ],
+    "start_date": "2025-02-03",
+    "end_date": "2025-11-25",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Tricia Davis",
+    "divisions": [
+      "Position No. 5"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofbg.org/ImageRepository/Document?documentID=8061",
+    "email": "tricia.davis@cityofbg.org",
+    "phone_number": "(360) 798-3979",
+    "website": "https://www.cityofbg.org/380/Councilmember-Davis",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/380/Councilmember-Davis"
+    ],
+    "start_date": "2021-11",
+    "end_date": "2025-12",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Cherish DesRochers",
+    "divisions": [
+      "Position No. 6"
+    ],
+    "roles": [
+      "Council Member",
+      "Deputy Mayor"
+    ],
+    "image": "https://www.cityofbg.org/ImageRepository/Document?documentID=5422",
+    "email": "cherish.desrochers@cityofbg.org",
+    "phone_number": "(360) 798-3245",
+    "website": "https://www.cityofbg.org/472/Councilmember-DesRochers",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/472"
+    ],
+    "start_date": "2022-01",
+    "end_date": "2025-12",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Eric Overholser",
+    "divisions": [
+      "Position No. 7"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofbg.org/ImageRepository/Document?documentID=11931",
+    "email": "eric.overholser@cityofbg.org",
+    "phone_number": "(360) 798-1198",
+    "website": "https://www.cityofbg.org/382/Councilmember-Overholser",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/382/Councilmember-Overholser"
+    ],
+    "start_date": "2024-01",
+    "end_date": "2027-12",
+    "updated_at": "2025-06-06"
+  }
+]
