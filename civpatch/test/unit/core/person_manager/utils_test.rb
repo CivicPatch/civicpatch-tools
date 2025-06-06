@@ -46,4 +46,73 @@ class CorePersonManagerUtilsTest < Minitest::Test
   def test_normalize_division_fallback
     assert_equal "Unknown", Core::PersonManager::Utils.normalize_division("unknown")
   end
+
+  def test_sort_people_by_role_index
+    # Mock Core::CityManager.roles to control role order
+    government_type = "city"
+    roles = [
+      { "role" => "Mayor", "aliases" => [] },
+      { "role" => "Council Member", "aliases" => ["Councilman", "Councilwoman"] },
+      { "role" => "Clerk", "aliases" => [] }
+    ]
+    Core::CityManager.stub :roles, roles do
+      people = [
+        { "name" => "Charlie", "roles" => ["Clerk"], "divisions" => ["District 2"] },
+        { "name" => "Alice", "roles" => ["Mayor"], "divisions" => ["District 1"] },
+        { "name" => "Bob", "roles" => ["Council Member"], "divisions" => ["District 1"] },
+        { "name" => "Eve", "roles" => ["Unknown Role"], "divisions" => ["District 3"] }
+      ]
+      sorted = Core::PersonManager::Utils.sort_people(government_type, people)
+      assert_equal ["Alice", "Bob", "Charlie", "Eve"], sorted.map { |p| p["name"] }
+    end
+  end
+
+  def test_sort_people_by_division_and_name
+    government_type = "city"
+    roles = [
+      { "role" => "Council Member", "aliases" => [] }
+    ]
+    Core::CityManager.stub :roles, roles do
+      people = [
+        { "name" => "Zara", "roles" => ["Council Member"], "divisions" => ["District B"] },
+        { "name" => "Anna", "roles" => ["Council Member"], "divisions" => ["District A"] },
+        { "name" => "Mike", "roles" => ["Council Member"], "divisions" => ["District A"] }
+      ]
+      sorted = Core::PersonManager::Utils.sort_people(government_type, people)
+      # Anna and Mike have same role and division, so sort by name
+      assert_equal ["Anna", "Mike", "Zara"], sorted.map { |p| p["name"] }
+    end
+  end
+
+  def test_sort_people_with_missing_fields
+    government_type = "city"
+    roles = [
+      { "role" => "Mayor", "aliases" => [] }
+    ]
+    Core::CityManager.stub :roles, roles do
+      people = [
+        { "name" => "NoRole", "divisions" => ["District 1"] },
+        { "name" => "NoDivision", "roles" => ["Mayor"] },
+        { "roles" => ["Mayor"], "divisions" => ["District 2"] }
+      ]
+      sorted = Core::PersonManager::Utils.sort_people(government_type, people)
+      # "NoDivision" and the nameless person have role "Mayor", so come first, sorted by division then name (nil name last)
+      assert_equal ["NoDivision", nil, "NoRole"], sorted.map { |p| p["name"] }
+    end
+  end
+
+  def test_sort_people_unknown_role_sorts_last
+    government_type = "city"
+    roles = [
+      { "role" => "Mayor", "aliases" => [] }
+    ]
+    Core::CityManager.stub :roles, roles do
+      people = [
+        { "name" => "Known", "roles" => ["Mayor"], "divisions" => ["D1"] },
+        { "name" => "Unknown", "roles" => ["Alien"], "divisions" => ["D2"] }
+      ]
+      sorted = Core::PersonManager::Utils.sort_people(government_type, people)
+      assert_equal ["Known", "Unknown"], sorted.map { |p| p["name"] }
+    end
+  end
 end

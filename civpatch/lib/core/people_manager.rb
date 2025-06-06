@@ -5,8 +5,6 @@ require "utils/phone_helper"
 require "core/person_manager/utils"
 
 module Core
-  KEY_ORDER = %w[name divisions roles image cdn_image email phone_number website sources].freeze
-
   class PeopleManager
     def self.get_people(state, geoid, type = nil)
       if type.present?
@@ -57,92 +55,10 @@ module Core
           Utils::UrlHelper.format_url(source)
         end
 
-        person.sort_by { |key, _| KEY_ORDER.index(key) || KEY_ORDER.length }.to_h
+        person
       end
 
-      filtered_people = people.reject { |person| person["roles"].count.zero? }
-      Core::PersonManager::Utils.sort_people(government_type, filtered_people)
-    end
-
-    def self.merge_person(person1, person2)
-      return person1 || person2 if person1.nil? || person2.nil?
-
-      merged_person = {}
-
-      # Define merging rules for each field
-      person1.each do |field, value|
-        case field
-        when "name"
-          # Keep name from the first person (person1)
-          merged_person["name"] = value
-        when "image"
-          merged_person["image"] = person2["image"] || value
-        when "source_image"
-          merged_person["source_image"] = person2["source_image"] || value
-        when "roles"
-          merged_person["roles"] = (Array(value) + Array(person2["roles"])).uniq
-        when "divisions"
-          merged_person["divisions"] = (Array(value) + Array(person2["divisions"])).uniq
-        when "email"
-          merged_person["email"] = person2["email"] || value
-        when "phone_number"
-          merged_person["phone_number"] = person2["phone_number"] || value
-        when "website"
-          url = person2["website"] || value
-          merged_person["website"] = url
-        when "sources"
-          sources = (Array(value) + Array(person2["sources"])).compact.uniq
-          merged_person["sources"] = sources
-        end
-      end
-
-      # Handle fields that are in person2 but not in person1
-      person2.each do |field, value|
-        merged_person[field] ||= value
-      end
-
-      merged_person
-    end
-
-    def self.merge_people(city_directory, partial_city_directory)
-      new_people = people_with_names(partial_city_directory)
-      return city_directory unless new_people.present?
-
-      merge_people_lists(city_directory, new_people)
-    end
-
-    def self.merge_people_lists(list1, list2, threshold = 0.8)
-      matcher = FuzzyMatch.new(list1.map { |person| person["name"] })
-
-      # Make a copy of list1 to avoid modifying the original list
-      merged = list1.dup
-
-      list2.each do |person2|
-        matched_name = find_match(person2["name"], list1, matcher, threshold)
-
-        if matched_name
-          # Find the matched person from list1
-          matched_person = list1.find { |person| person["name"] == matched_name }
-
-          # If the matched person is found in list1, merge them
-          if matched_person
-            index = merged.index { |person| person["name"] == matched_person["name"] }
-            merged[index] = merge_person(merged[index], person2)
-          end
-        else
-          merged << person2
-        end
-      end
-
-      merged
-    end
-
-    def self.find_match(name, list, matcher, threshold)
-      best_match = matcher.find(name)
-      return nil unless best_match
-
-      similarity = best_match.pair_distance_similar(name)
-      similarity >= threshold ? list.find { |p| p["name"] == best_match } : nil
+      people.reject { |person| person["roles"].count.zero? }
     end
 
     def self.update_people(

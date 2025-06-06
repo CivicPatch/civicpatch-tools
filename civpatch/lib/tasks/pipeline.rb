@@ -152,11 +152,13 @@ namespace :pipeline do
   end
 
   def aggregate_sources(context, sources: [])
+    government_type = context[:government_type]
     state = context[:state]
     merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
     people = process_images(context, merged_people) if Services::Spaces.enabled?
 
     people = people.map { |person| Core::PersonManager::Utils.sort_keys(person) }
+    people = Core::PersonManager::Utils.sort_people(government_type, people)
     Core::PeopleManager.update_people(context, people)
 
     people_hash = Digest::MD5.hexdigest(people.to_yaml)

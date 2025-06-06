@@ -57,7 +57,7 @@ module Validators
 
     ### TESTING SIMILARITY SCORE ###
     def test_similarity_exact_match
-      assert_equal 1.0, Validators::Utils.similarity_score("phone_number", "123-456-7890", "123-456-7890")
+      assert_equal 1.0, Resolvers::PeopleResolver.similarity_score("phone_number", "123-456-7890", "123-456-7890")
       assert_equal 1.0, Validators::Utils.similarity_score("email", "alice@example.com", "alice@example.com")
     end
 
@@ -442,5 +442,6 @@ module Validators
       assert_in_delta expected_agreement_score, result[:agreement_score], 0.001,
                       "Agreement score mismatch when person is missing"
     end
+
   end
 end
