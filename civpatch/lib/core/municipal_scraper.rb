@@ -142,7 +142,7 @@ module Core
         processed_urls << url
         data[:processed_urls] = processed_urls
 
-        found_people = accumulated_people.map { |person| "#{person["name"]} (#{person["roles"].first["data"]})" }
+        found_people = accumulated_people.map { |person| "#{person["name"]} (#{person["roles"].first&.dig("data")})" }
         puts "#{context[:llm_service_string]}: #{found_people.count} people found: #{found_people}"
       end
 

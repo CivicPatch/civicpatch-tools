@@ -21,6 +21,13 @@ module Browser
     }
   }.freeze
   IGNORE_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"].freeze
+  USER_AGENTS = [
+    "Dalvik/2.1.0 (Linux; U; Android 10; MI MAX 3 MIUI/20.1.16)",
+    "Mozilla/5.0 (Linux; Android 9; SM-A750G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.74 Mobile Safari/537.36",
+    "Mozilla/5.0 (Linux; Android 9; SM-J701F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.120 Mobile Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko; Google Web Preview) Chrome/89.0.4389.84 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; rv:77.0) Gecko/20100101 Firefox/77.0 anonymized by Abelssoft 462766946"
+  ]
 
   def self.with_browser
     Playwright.create(
@@ -162,7 +169,7 @@ module Browser
       image_excluded = maybe_exclude_image(image_element)
       next if image_excluded
 
-      key, source_image_url = process_image(image_dir, base_url, image_element)
+      key, source_image_url = process_image(page, image_dir, base_url, image_element)
       image_map[key] = source_image_url if key.present? && source_image_url.present?
     end
 
@@ -194,24 +201,15 @@ module Browser
   private_class_method def self.generate_filename(src, file_type)
     hash = Digest::SHA256.hexdigest(src)
     "#{hash}.#{file_type}"
-  end
+  end 
 
-  private_class_method def self.capture_image_as_browser_screenshot(img_element)
-    data = img_element.screenshot
-    tempfile = Tempfile.new(binmode: true)
-    tempfile.write(data)
-    tempfile.rewind
-
-    tempfile
-  end
-
-  private_class_method def self.process_image(image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize
+  private_class_method def self.process_image(page, image_dir, base_url, img_element) # rubocop:disable Metrics/AbcSize
     src = img_element.get_attribute("src")
     return if src.nil? || src.empty?
 
     absolute_src = Utils::UrlHelper.format_url(Addressable::URI.join(base_url, src).to_s)
 
-    file = download_image(absolute_src, img_element)
+    file = download_image(page, absolute_src, img_element)
 
     raise "File is nil for #{absolute_src}" if file.nil?
 
@@ -255,13 +253,13 @@ module Browser
     img_element.evaluate("el => el.remove()")
   end
 
-  private_class_method def self.download_image(absolute_src, img_element)
+  private_class_method def self.download_image(page, absolute_src, img_element)
     # Try downloading with HTTParty first
     file = download_with_httparty(absolute_src)
     return file if file
 
     # If HTTParty failed, try browser screenshot
-    file = capture_image_as_browser_screenshot(img_element)
+    file = capture_image_as_browser_screenshot(page, img_element)
 
     if file.present?
       # puts "\t\t\t✅: Browser screenshot captured for #{absolute_src}"
@@ -278,67 +276,73 @@ module Browser
     return nil if absolute_src.start_with?("data:")
 
     max_redirects = 5
-    _fetch_and_follow_redirects(absolute_src, max_redirects)
-  end
+    url = absolute_src
 
-  private_class_method def self._fetch_and_follow_redirects(initial_url, max_redirects) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity,Metrics/AbcSize
-    current_url = initial_url
-    redirect_count = 0
-
-    while redirect_count < max_redirects
-      encoded_url = nil
+    max_redirects.times do
       begin
-        # Normalize URL before each request attempt
-        uri = Addressable::URI.parse(current_url).normalize
-        encoded_url = uri.to_s
-      rescue Addressable::URI::InvalidURIError => e
-        puts "Invalid URI during redirect handling for #{initial_url} (current: #{current_url}): #{e.message}"
-        return nil # Cannot proceed
-      end
-
-      temp_file = Tempfile.new(binmode: true)
-      response = nil
-
-      begin
-        response = HTTParty.get(encoded_url, timeout: 10, stream_body: true, follow_redirects: false) do |chunk|
+        uri = Addressable::URI.parse(url).normalize
+        temp_file = Tempfile.new(binmode: true)
+        response = HTTParty.get(
+          uri.to_s, {
+          headers: { "User-Agent" => USER_AGENTS.sample },
+          timeout: 10, 
+          stream_body: true, 
+          follow_redirects: false
+        }) do |chunk|
           temp_file.write(chunk) unless chunk.empty?
         end
         temp_file.close
 
-        if response.success? # 2xx codes
-          return temp_file # Successful download
-        elsif [301, 302, 303, 307, 308].include?(response.code)
-          # Handle Redirect
-          temp_file.unlink # Discard temp file from redirect response
-          redirect_count += 1
-          location = response.headers["location"]
-
-          if location.blank?
-            puts "Redirect from #{encoded_url} missing Location header."
-            return nil
-          end
-
-          current_url = location # Update URL for the next iteration
-          # puts "Redirecting (#{redirect_count}/#{max_redirects}) to: #{current_url}" # Log raw redirect target
-          next # Continue to the next loop iteration
-        else
-          # Handle other HTTP errors (4xx, 5xx)
-          # puts "\t->HTTP request failed for #{encoded_url} with code: #{response.code}"
+        case response.code
+        when 200..299
+          return temp_file
+        when 301, 302, 303, 307, 308
           temp_file.unlink
-          return nil
+          url = response.headers["location"]
+          break if url.blank?
+        else
+          temp_file.unlink
+          break
         end
-      rescue StandardError => e
-        # Handle network errors, timeouts, etc.
-        # puts "\t->HTTParty error for #{encoded_url} (Original: #{initial_url}): #{e.message}"
-        temp_file.close
-        temp_file.unlink
-        return nil
+      rescue
+        break
       end
     end
+  end
 
-    # If the loop finishes, max redirects were exceeded
-    puts "Max redirects (#{max_redirects}) exceeded for original URL: #{initial_url}"
-    nil # Return nil explicitly
+  private_class_method def self.capture_image_as_browser_screenshot(page, img_element)
+    # Popups might interfere with screenshot capture, so we try to close them first
+    begin
+      page.evaluate <<~JS
+        [
+          '[role="dialog"]',
+          '[aria-modal="true"]',
+          '[class*="modal"]',
+          '[class*="popup"]',
+          '[class*="overlay"]',
+          '[id*="modal"]',
+          '[id*="popup"]',
+          '[id*="overlay"]',
+          '.cookie',
+          '.consent'
+        ].forEach(selector => {
+          document.querySelectorAll(selector).forEach(el => {
+            el.style.display = 'none';
+          });
+        });
+      JS
+    rescue
+      # Ignore if not present
+    end
+
+
+
+    data = img_element.screenshot
+    tempfile = Tempfile.new(binmode: true)
+    tempfile.write(data)
+    tempfile.rewind
+
+    tempfile
   end
 
   private_class_method def self.determine_file_type(file)
