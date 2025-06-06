@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Kyoko Matsumoto Wright",
+    "divisions": [
+      "Position 4"
+    ],
+    "roles": [
+      "Mayor"
+    ],
+    "image": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36670",
+    "email": "kmatsumotowright@mltwa.gov",
+    "phone_number": "(425) 967-1948",
+    "website": "https://www.cityofmlt.com/Directory.aspx?EID=13",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=13"
+    ],
+    "start_date": "2008-01",
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Bryan Wahl",
+    "divisions": [
+      "Position 5"
+    ],
+    "roles": [
+      "Mayor Pro Tempore"
+    ],
+    "image": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38427",
+    "email": "Bwahl@mltwa.gov",
+    "phone_number": "(425) 967-2512",
+    "website": "https://www.cityofmlt.com/Directory.aspx?EID=14",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=14"
+    ],
+    "start_date": "2013",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Rick Ryan",
+    "divisions": [
+      "Position 1"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38430",
+    "email": "Rryan@mltwa.gov",
+    "phone_number": "(425) 977-9232",
+    "website": "https://www.cityofmlt.com/Directory.aspx?EID=11",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=11"
+    ],
+    "start_date": "2008-02",
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Steve Woodard",
+    "divisions": [
+      "Position 2"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36674",
+    "email": "Swoodard@mltwa.gov",
+    "phone_number": "(425) 967-2356",
+    "website": "https://www.cityofmlt.com/Directory.aspx?EID=9",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=9"
+    ],
+    "start_date": null,
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "William Paige Jr.",
+    "divisions": [
+      "Position 3"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38424",
+    "email": "wpaige@mltwa.gov",
+    "phone_number": null,
+    "website": "https://www.cityofmlt.com/Directory.aspx?EID=166",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=166"
+    ],
+    "start_date": null,
+    "end_date": "2025-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Laura Sonmore",
+    "divisions": [
+      "Position 6"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38428",
+    "email": "Lsonmore@mltwa.gov",
+    "phone_number": "(425) 967-1975",
+    "website": "https://www.cityofmlt.com/Directory.aspx?EID=10",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=10"
+    ],
+    "start_date": "2000",
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Erin Murray",
+    "divisions": [
+      "Position 7"
+    ],
+    "roles": [
+      "Council Member"
+    ],
+    "image": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36666",
+    "email": "Emurray@mltwa.gov",
+    "phone_number": "(425) 967-2416",
+    "website": "https://www.cityofmlt.com/Directory.aspx?EID=80",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=80"
+    ],
+    "start_date": null,
+    "end_date": "2027-12-31",
+    "updated_at": "2025-06-06"
+  }
+]

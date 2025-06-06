@@ -1,0 +1,585 @@
+[
+  {
+    "name": "Kyoko Matsumoto Wright",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=13"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Mayor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated 'Appointed to the City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated that all council members are elected at-large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-776-1161",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "425-967-1948",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the person's name and title.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=13"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@ci.mlt.wa.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "kmatsumotowright@mltwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text associated with the person.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=13"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofmlt.com/Directory.aspx?EID=13",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided next to name.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2008-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Appointed to the City Council in January 2008'.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=13"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration'.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Bryan Wahl",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=14"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as current title."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated he was appointed and elected to the City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated that all council members are elected at-large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-776-1161",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "425-967-2512",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and title.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=14"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@ci.mlt.wa.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "Bwahl@mltwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name and title.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=14"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofmlt.com/Directory.aspx?EID=14",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided next to name.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2013",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states he was 'elected to his current position in 2013'. Using the most recent election date.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=14"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration'.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Rick Ryan",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=11"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role explicitly listed under Title."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated that all council members are elected at-large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-776-1161",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "425-977-9232",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to name.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=11"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@ci.mlt.wa.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "Rryan@mltwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=11"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofmlt.com/Directory.aspx?EID=11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided next to name.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2008-02",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Appointed to City Council in February 2008'.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=11"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration'.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Steve Woodard",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=9"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated that all council members are elected at-large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-776-1161",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "425-967-2356",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name and title.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=9"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@ci.mlt.wa.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "Swoodard@mltwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name and title.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=9"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofmlt.com/Directory.aspx?EID=9",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided next to name.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration'.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "William L. Paige, Jr.",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=166"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed as 'Councilmember' under the title."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated that all council members are elected at-large."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed as 'Position 3' under the title."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-776-1161",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@ci.mlt.wa.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "wpaige@mltwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address is directly listed under the person's name and title.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=166"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofmlt.com/Directory.aspx?EID=166",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided next to name.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration'.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Laura Sonmore",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=10"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Councilmember' and confirmed as currently serving."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated that all council members are elected at-large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-776-1161",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "425-967-1975",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed next to 'Phone:'.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@ci.mlt.wa.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "Lsonmore@mltwa.gov",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly provided as mailto link text.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofmlt.com/Directory.aspx?EID=10",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided next to name.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2015",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Most recent re-election year explicitly mentioned.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration'.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Erin Murray",
+    "sources": [
+      "https://www.cityofmlt.com/587/City-Council",
+      "https://www.cityofmlt.com/Directory.aspx?EID=80"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' listed directly under the name as 'Title'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated that all council members are elected at-large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-776-1161",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General city hall phone number provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "425-967-2416",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=80"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@ci.mlt.wa.us",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "General council email provided, not specific to this person.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      },
+      {
+        "data": "Emurray@mltwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text associated with the name.",
+        "source": "https://www.cityofmlt.com/Directory.aspx?EID=80"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofmlt.com/Directory.aspx?EID=80",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Link provided next to name.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expiration'.",
+        "source": "https://www.cityofmlt.com/587/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  }
+]
