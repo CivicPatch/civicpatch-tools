@@ -1,24 +1,43 @@
 [
   {
+    "name": "Mohamed Egal",
+    "roles": [
+      "Mayor",
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
+      "Position #4"
+    ],
+    "image": null,
+    "phone_number": "206-437-2973",
+    "email": "megal@seatacwa.gov",
+    "website": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+    "start_date": "2022-01",
+    "end_date": "2025-12",
+    "sources": [
+      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council",
+      "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
+    ],
+    "updated_at": "2025-06-05"
+  },
+  {
     "name": "Senayet Negusse",
     "roles": [
       "Council Member",
       "Councilmember"
     ],
-    "divisions": [
-      "Position #1"
-    ],
+    "divisions": [],
     "image": null,
-    "phone_number": "206.586.1915",
-    "email": "snegusse@seatacwa.gov",
+    "phone_number": null,
+    "email": null,
     "website": "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
-    "start_date": "2020-01",
-    "end_date": "2027-12",
+    "start_date": null,
+    "end_date": null,
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
     "updated_at": "2025-06-05"
@@ -39,10 +58,8 @@
     "start_date": "2022-01-01",
     "end_date": "2025-12-31",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/jake-simpson",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
@@ -65,38 +82,11 @@
     "start_date": "2016-01",
     "end_date": "2027-12",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.ci.seatac.wa.us/government/city-council/councilmembers/peter-kwon",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell",
       "https://www.seatacwa.gov/government/city-council/councilmembers/peter-kwon"
-    ],
-    "updated_at": "2025-06-05"
-  },
-  {
-    "name": "Mohamed Egal",
-    "roles": [
-      "Council Member",
-      "Mayor",
-      "Councilmember"
-    ],
-    "divisions": [
-      "Position #4"
-    ],
-    "image": null,
-    "phone_number": "206-437-2973",
-    "email": "megal@seatacwa.gov",
-    "website": "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-    "start_date": "2022-01",
-    "end_date": "2025-12",
-    "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
     "updated_at": "2025-06-05"
   },
@@ -117,10 +107,8 @@
     "start_date": "2024-01",
     "end_date": "2027-12",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
     "updated_at": "2025-06-05"
@@ -144,11 +132,9 @@
     "start_date": "2022-01-01",
     "end_date": "2025-12",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/iris-guzman",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
     "updated_at": "2025-06-05"
@@ -157,22 +143,20 @@
     "name": "Joe Vinson",
     "roles": [
       "Council Member",
-      "Councilmember",
-      "Chair"
+      "Councilmember"
     ],
     "divisions": [
       "Position #7"
     ],
     "image": null,
-    "phone_number": "206.771.0414",
+    "phone_number": "206.973.4800",
     "email": "jvinson@seatacwa.gov",
     "website": "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
     "start_date": "2024-01",
     "end_date": "2027-12",
     "sources": [
-      "https://www.seatacwa.gov/government/city-council",
-      "https://www.seatacwa.gov/government/city-council/councilmembers/senayet-negusse",
       "https://www.seatacwa.gov/government/city-council/councilmembers/mohamed-egal",
+      "https://www.seatacwa.gov/government/city-council",
       "https://www.seatacwa.gov/government/city-council/councilmembers/joe-vinson",
       "https://www.seatacwa.gov/government/city-council/councilmembers/james-w-lovell"
     ],
