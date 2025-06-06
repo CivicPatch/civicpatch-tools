@@ -1,0 +1,390 @@
+[
+  {
+    "name": "Kate Dexter",
+    "sources": [
+      "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
+      "https://www.cityofpa.us/137/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' next to the name."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council member' in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Mayor' explicitly listed next to the name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #4' in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kdexter@cityofpa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email extracted directly from markdown link text associated with the name.",
+        "source": "https://www.cityofpa.us/137/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'serving January 2022' for the current term after re-election.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'until December 2025' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Navarra Carr",
+    "sources": [
+      "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
+      "https://www.cityofpa.us/137/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor' next to the name."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council member' in the text."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Deputy Mayor' explicitly listed next to the name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #6' in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ncarr@cityofpa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email extracted directly from markdown link text associated with the name.",
+        "source": "https://www.cityofpa.us/137/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'serving January 2024' for the current term after re-election.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'to December 2027' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Drew Schwab",
+    "sources": [
+      "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
+      "https://www.cityofpa.us/137/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Council Member' explicitly listed next to the name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'position #2' in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "aschwab@cityofpa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email extracted directly from markdown link text associated with the name.",
+        "source": "https://www.cityofpa.us/137/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'filling unexpired seat, position #2 December 2023'.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'to December 2025' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Amy Miller",
+    "sources": [
+      "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
+      "https://www.cityofpa.us/137/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council member' next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Council Member' explicitly listed next to the name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #5' for the elected term."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "amiller@cityofpa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email extracted directly from markdown link text associated with the name.",
+        "source": "https://www.cityofpa.us/137/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Elected and serving January 2024' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'to December 2027' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Brendan Meyer",
+    "sources": [
+      "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
+      "https://www.cityofpa.us/137/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council member' next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Council Member' explicitly listed next to the name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #7' in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bmeyer@cityofpa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email extracted directly from markdown link text associated with the name.",
+        "source": "https://www.cityofpa.us/137/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'serving January 2024' for the current term after re-election.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'until December 2027' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "LaTrisha Suggs",
+    "sources": [
+      "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
+      "https://www.cityofpa.us/137/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council member' next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Council Member' explicitly listed next to the name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #1' in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "losuggs@cityofpa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email extracted directly from markdown link text associated with the name.",
+        "source": "https://www.cityofpa.us/137/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'serving January 2022' for the current elected term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'to December 2025' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Lindsey Schromen-Wawrin",
+    "sources": [
+      "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
+      "https://www.cityofpa.us/137/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council member' next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Council Member' explicitly listed next to the name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #3' in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "lswawrin@cityofpa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email extracted directly from markdown link text associated with the name.",
+        "source": "https://www.cityofpa.us/137/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'serving January 2022' for the current term after re-election.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'to December 2025' for the current term.",
+        "source": "https://www.cityofpa.us/912/Meet-Your-City-Council-Members"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  }
+]
