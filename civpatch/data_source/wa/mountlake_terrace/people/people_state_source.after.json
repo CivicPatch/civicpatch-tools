@@ -5,7 +5,7 @@
       "Mayor"
     ],
     "email": "Kmatsumotowright@mltwa.gov",
-    "updated_at": "2025-06-06",
+    "updated_at": "2025-06-05",
     "divisions": []
   },
   {
@@ -14,34 +14,7 @@
       "Council Member"
     ],
     "email": "Emurray@mltwa.gov",
-    "updated_at": "2025-06-06",
-    "divisions": []
-  },
-  {
-    "name": "Laura Sonmore",
-    "roles": [
-      "Council Member"
-    ],
-    "email": "Lsonmore@mltwa.gov",
-    "updated_at": "2025-06-06",
-    "divisions": []
-  },
-  {
-    "name": "Richard Ryan",
-    "roles": [
-      "Council Member"
-    ],
-    "email": "Rryan@mltwa.gov",
-    "updated_at": "2025-06-06",
-    "divisions": []
-  },
-  {
-    "name": "Steve Woodard",
-    "roles": [
-      "Council Member"
-    ],
-    "email": "Swoodard@mltwa.gov",
-    "updated_at": "2025-06-06",
+    "updated_at": "2025-06-05",
     "divisions": []
   },
   {
@@ -50,7 +23,34 @@
       "Council Member"
     ],
     "email": "wpaige@mltwa.gov",
-    "updated_at": "2025-06-06",
+    "updated_at": "2025-06-05",
+    "divisions": []
+  },
+  {
+    "name": "Richard Ryan",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "Rryan@mltwa.gov",
+    "updated_at": "2025-06-05",
+    "divisions": []
+  },
+  {
+    "name": "Laura Sonmore",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "Lsonmore@mltwa.gov",
+    "updated_at": "2025-06-05",
+    "divisions": []
+  },
+  {
+    "name": "Steve Woodard",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "Swoodard@mltwa.gov",
+    "updated_at": "2025-06-05",
     "divisions": []
   }
 ]
