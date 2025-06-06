@@ -158,6 +158,7 @@ module Browser
   end
 
   private_class_method def self.process_images(page, page_source, options, url)
+    prepare_browser_screenshot(page)
     image_dir = options[:image_dir]
     FileUtils.mkdir_p(image_dir)
     base_url = Utils::UrlHelper.extract_page_base_url(page_source, url)
@@ -310,7 +311,7 @@ module Browser
     end
   end
 
-  private_class_method def self.capture_image_as_browser_screenshot(page, img_element)
+  private_class_method def self.prepare_browser_screenshot(page)
     # Popups might interfere with screenshot capture, so we try to close them first
     begin
       page.evaluate <<~JS
@@ -334,9 +335,9 @@ module Browser
     rescue
       # Ignore if not present
     end
+  end
 
-
-
+  private_class_method def self.capture_image_as_browser_screenshot(page, img_element) 
     data = img_element.screenshot
     tempfile = Tempfile.new(binmode: true)
     tempfile.write(data)
