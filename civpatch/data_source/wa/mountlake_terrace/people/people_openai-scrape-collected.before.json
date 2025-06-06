@@ -9,13 +9,13 @@
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38426",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near her name labeled 'NEW PHOTO Kyoko Matsumoto Wright (6)'.",
+        "llm_confidence_reason": "Image near name labeled 'NEW PHOTO Kyoko Matsumoto Wright (6)'.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36670",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Image near name labeled 'Mayor Kyoko Matsumoto Wright Headshot 2024'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image labeled 'Mayor Kyoko Matsumoto Wright Headshot 2024' directly associated with her name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=13"
       }
     ],
@@ -23,42 +23,42 @@
       {
         "data": "Mayor",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Mayor' under her name."
+        "llm_confidence_reason": "Explicitly stated 'Mayor' under name on city council page."
       },
       {
         "data": "Mayor",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Title explicitly stated as 'Mayor' in the text."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Title: Mayor' under Kyoko Matsumoto Wright's section."
       }
     ],
     "divisions": [
       {
         "data": "Position 4",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 4 listed under her name."
+        "llm_confidence_reason": "Position 4 listed under name."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-967-1948",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone' directly under name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under her name and title.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=13"
       }
     ],
     "emails": [
       {
         "data": "kmatsumotowright@mltwa.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'Email' near name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link labeled 'Email' directly under her name and title.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=13"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=13",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Profile link directly associated with her name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page link next to name.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
@@ -72,7 +72,7 @@
       {
         "data": "2008-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed to City Council in January 2008; no later start date for Mayor role given.",
+        "llm_confidence_reason": "Appointed to City Council in January 2008, indicating start of municipal service.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=13"
       }
     ],
@@ -84,7 +84,7 @@
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Bryan Wahl",
@@ -96,13 +96,13 @@
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38427",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near his name labeled 'Headshot (4)'.",
+        "llm_confidence_reason": "Image near name labeled 'Headshot (4)'.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36663",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near Bryan Wahl's name labeled 'Mayor Pro Tem Bryan Wahl Headshot 2024'.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Mayor Pro Tem Bryan Wahl Headshot 2024' near name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=14"
       }
     ],
@@ -110,7 +110,7 @@
       {
         "data": "Mayor Pro Tem",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Mayor Pro Tem' under his name."
+        "llm_confidence_reason": "Explicitly stated 'Mayor Pro Tem' under name on city council page."
       },
       {
         "data": "Mayor Pro Tem",
@@ -120,21 +120,21 @@
       {
         "data": "City Councilmember",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Referred to as City Councilmember and appointed to City Council in 2012, elected in 2013."
+        "llm_confidence_reason": "Described as serving on City Council and elected to current position in 2013."
       }
     ],
     "divisions": [
       {
         "data": "Position 5",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 5 listed under his name."
+        "llm_confidence_reason": "Position 5 listed under name."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-967-2512",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone' directly under Bryan Wahl's contact info.",
+        "llm_confidence_reason": "Phone number labeled 'Phone' near Bryan Wahl's name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=14"
       }
     ],
@@ -142,21 +142,21 @@
       {
         "data": "Bwahl@mltwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'Email' with mailto:Bwahl@mltwa.gov near Bryan Wahl's contact info.",
+        "llm_confidence_reason": "Email link text 'Email' near Bryan Wahl's name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=14"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=14",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Profile link directly associated with his name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page link next to name.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=14",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Bryan Wahl's directory profile.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Primary page URL for Bryan Wahl's profile.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=14"
       }
     ],
@@ -176,7 +176,7 @@
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Rick Ryan",
@@ -188,13 +188,13 @@
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38430",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near his name labeled 'Headshot (8)'.",
+        "llm_confidence_reason": "Image near name labeled 'Headshot (8)'.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36672",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image near the name labeled 'Councilmember Rick Ryan Headshot 2024'.",
+        "llm_confidence_reason": "Image URL labeled 'Councilmember Rick Ryan Headshot 2024' near name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=11"
       }
     ],
@@ -202,7 +202,7 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Councilmember' under his name."
+        "llm_confidence_reason": "Explicitly stated 'Councilmember' under name on city council page."
       },
       {
         "data": "Councilmember",
@@ -214,14 +214,14 @@
       {
         "data": "Position 1",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 1 listed under his name."
+        "llm_confidence_reason": "Position 1 listed under name."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-977-9232",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone' near Rick Ryan's name.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under Rick Ryan's name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=11"
       }
     ],
@@ -229,15 +229,15 @@
       {
         "data": "Rryan@mltwa.gov",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email extracted from mailto link near Rick Ryan's name.",
+        "llm_confidence_reason": "Email extracted from mailto link text near Rick Ryan's name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=11"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=11",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Profile link directly associated with his name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page link next to name.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
@@ -251,7 +251,7 @@
       {
         "data": "2008-02",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed to City Council in February 2008.",
+        "llm_confidence_reason": "Appointed to City Council in February 2008 as stated in text.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=11"
       }
     ],
@@ -263,7 +263,7 @@
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Steve Woodard",
@@ -275,12 +275,12 @@
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38425",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near his name labeled 'Steve Woodard Headshot'.",
+        "llm_confidence_reason": "Image near name labeled 'Steve Woodard Headshot'.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36674",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Image URL labeled 'Councilmember Steve Woodard Headshot 2024' near name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=9"
       }
@@ -289,26 +289,26 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Councilmember' under his name."
+        "llm_confidence_reason": "Explicitly stated 'Councilmember' under name on city council page."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' on the page."
+        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' in the text."
       }
     ],
     "divisions": [
       {
         "data": "Position 2",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 2 listed under his name."
+        "llm_confidence_reason": "Position 2 listed under name."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-967-2356",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under Steve Woodard's name and title.",
+        "llm_confidence_reason": "Phone number labeled 'Phone' directly under Steve Woodard's name and title.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=9"
       }
     ],
@@ -323,8 +323,8 @@
     "websites": [
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=9",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Profile link directly associated with his name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page link next to name.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
@@ -343,7 +343,7 @@
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "William L. Paige, Jr.",
@@ -355,7 +355,7 @@
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38424",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near his name labeled 'WALL William L. Paige, Headshot 1'.",
+        "llm_confidence_reason": "Image near name labeled 'WALL William L. Paige, Headshot 1'.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
@@ -363,7 +363,7 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Councilmember' under his name."
+        "llm_confidence_reason": "Explicitly stated 'Councilmember' under name on city council page."
       },
       {
         "data": "Councilmember Position 3",
@@ -375,12 +375,12 @@
       {
         "data": "Position 3",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 3 listed under his name."
+        "llm_confidence_reason": "Position 3 listed under name."
       },
       {
         "data": "Position 3",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 3 is specified in the title; no ward or district mentioned."
+        "llm_confidence_reason": "Position 3 is specified in the title."
       }
     ],
     "phone_numbers": [],
@@ -388,15 +388,15 @@
       {
         "data": "wpaige@mltwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly provided near the name.",
+        "llm_confidence_reason": "Email address provided directly under the name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=166"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=166",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Profile link directly associated with his name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page link next to name.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
@@ -415,7 +415,7 @@
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Laura Sonmore",
@@ -427,13 +427,13 @@
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38428",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near her name labeled 'Headshot (5)'.",
+        "llm_confidence_reason": "Image near name labeled 'Headshot (5)'.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36671",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image URL labeled 'Councilmember Laura Sonmore Headshot 2024' near name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image labeled 'Councilmember Laura Sonmore Headshot 2024' near name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
       }
     ],
@@ -441,26 +441,26 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Councilmember' under her name."
+        "llm_confidence_reason": "Explicitly stated 'Councilmember' under name on city council page."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' in the text."
+        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' and described as current in the text."
       }
     ],
     "divisions": [
       {
         "data": "Position 6",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 6 listed under her name."
+        "llm_confidence_reason": "Position 6 listed under name."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-967-1975",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near name and role.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
       }
     ],
@@ -468,21 +468,21 @@
       {
         "data": "Lsonmore@mltwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email extracted from mailto link text near name.",
+        "llm_confidence_reason": "Email extracted from mailto link near name and role.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=10",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Profile link directly associated with her name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page link next to name.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=10",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Laura Sonmore's directory entry.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is the profile page for Laura Sonmore.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
       }
     ],
@@ -490,7 +490,7 @@
       {
         "data": "2000",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Appointed to City Council in 2000 as stated in text.",
+        "llm_confidence_reason": "Appointed to City Council in 2000, indicating start of current service.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=10"
       }
     ],
@@ -502,7 +502,7 @@
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   },
   {
     "name": "Erin Murray",
@@ -514,12 +514,12 @@
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=38429",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Image near her name labeled 'Headshot (6)'.",
+        "llm_confidence_reason": "Image near name labeled 'Headshot (6)'.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/ImageRepository/Document?documentID=36666",
-        "llm_confidence": 0.99,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Image labeled 'Councilmember Erin Murray Headshot 2024' near name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=80"
       }
@@ -528,19 +528,19 @@
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Explicitly stated 'Councilmember' under her name."
+        "llm_confidence_reason": "Explicitly stated 'Councilmember' under name on city council page."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' under Erin Murray's name."
+        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' under Erin Murray's section."
       }
     ],
     "divisions": [
       {
         "data": "Position 7",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Position 7 listed under her name."
+        "llm_confidence_reason": "Position 7 listed under name."
       }
     ],
     "phone_numbers": [
@@ -555,21 +555,21 @@
       {
         "data": "Emurray@mltwa.gov",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email link text 'Email' with mailto: Emurray@mltwa.gov near name.",
+        "llm_confidence_reason": "Email link text 'Email' with mailto: Emurray@mltwa.gov near Erin Murray's name.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=80"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=80",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Profile link directly associated with her name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page link next to name.",
         "source": "https://www.cityofmlt.com/587/City-Council"
       },
       {
         "data": "https://www.cityofmlt.com/Directory.aspx?EID=80",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Erin Murray's directory profile.",
+        "llm_confidence_reason": "Page URL is the profile page for Erin Murray.",
         "source": "https://www.cityofmlt.com/Directory.aspx?EID=80"
       }
     ],
@@ -582,6 +582,6 @@
         "source": "https://www.cityofmlt.com/587/City-Council"
       }
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-05"
   }
 ]
