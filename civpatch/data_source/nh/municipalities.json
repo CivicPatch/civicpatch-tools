@@ -1026,7 +1026,14 @@
       "government_type": "select_board",
       "email": "Townhall@Pembroke-NH.com",
       "website": "http://www.pembroke-nh.com/",
-      "geoid": "3301360020"
+      "geoid": "3301360020",
+      "meta_updated_at": "2025-06-06",
+      "meta_hash": "2de04bdaaff598a27ac4297e6c56738c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Epping",
