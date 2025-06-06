@@ -1049,7 +1049,14 @@
       "government_type": "select_board",
       "email": "administrator@eppingnh.gov",
       "website": "http://www.townofepping.com",
-      "geoid": "3301524660"
+      "geoid": "3301524660",
+      "meta_updated_at": "2025-06-06",
+      "meta_hash": "3b78476dc3c6f0074f671974c9cb5a1f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Atkinson",
