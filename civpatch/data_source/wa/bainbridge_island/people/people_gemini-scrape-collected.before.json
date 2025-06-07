@@ -1,0 +1,658 @@
+[
+  {
+    "name": "Ashley Mathews",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under the name in the table."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit 'Title: Mayor' found directly associated with the person."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "South Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 949-7413",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-949-7413",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number found directly associated with the name and title.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+      }
+    ],
+    "emails": [
+      {
+        "data": "amathews@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "amathews@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found directly associated with the name and title.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/Directory.aspx?EID=338",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table under 'Term Expires'.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicit 'Term Expires' date found directly associated with the person.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Jon Quitslund",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under the name in the table."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Deputy Mayor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "South Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 450-6218",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-450-6218",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed and associated with the name.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jquitslund@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "jquitslund@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed and associated with the name.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=293",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=293",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the specific page for Jon Quitslund in the staff directory.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table under 'Term Expires'.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2025'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Kirsten Hytopoulos",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in the 'City Council' section, implying this role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Title' and confirmed as currently serving."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Title'."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Title'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 482-4958",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-482-4958",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Phone'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "emails": [
+      {
+        "data": "khytopoulos@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "khytopoulos@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as a mailto link.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=260",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=260",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the page the information was extracted from, serving as a profile page.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Text states 'again in 2019-2023, in her current at-large position'. While ambiguous if this is the start of the *current* term ending 2027, it's the most recent explicit start year mentioned for the at-large position.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table under 'Term Expires'.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expires: 12/31/2027'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Brenda Fantroy-Johnson",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in the 'City Council' section, implying this role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' under Title."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "North Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "North Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'North Ward' under Title."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 498-4294",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-498-4294",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bfantroy-johnson@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "bfantroy-johnson@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=274",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table under 'Term Expires'.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: 12/31/2027'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Leslie Schneider",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in the 'City Council' section, implying this role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Central Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "Central Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as part of the title."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 200-4502",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-200-4502",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed phone number.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "emails": [
+      {
+        "data": "lschneider@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "lschneider@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed email address.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/Directory.aspx?EID=250",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "https://www.bainbridgewa.gov/Directory.aspx?EID=250",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "This is the page URL for Leslie Schneider's directory entry, not a dedicated profile page.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2018",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Text states 'since 2018', indicating the start year.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table under 'Term Expires'.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term expires 12/31/2027'.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Clarence Moriwaki",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in the 'City Council' section, implying this role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Central Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "Central Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Central Ward' under Title."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 491-6131",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-491-6131",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cmoriwaki@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "cmoriwaki@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed and linked.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=296",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table under 'Term Expires'.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: 12/31/2025'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Joe Deets",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in the 'City Council' section, implying this role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Title' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "North Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "District 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table."
+      },
+      {
+        "data": "North Ward",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Title'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 473-1864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-473-1864",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Phone'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jdeets@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "jdeets@bainbridgewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as a mailto link.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=229",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL linked from the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "https://www.linkedin.com/in/jwdeets",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Provided as a link to a professional profile page.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to the name in the table under 'Term Expires'.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires: 12/31/2025'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  }
+]
