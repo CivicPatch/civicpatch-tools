@@ -1,0 +1,703 @@
+[
+  {
+    "name": "Thomas McLeod",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/mayors-office"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/wp-content/uploads/Mayor-McLeod-2024-240x300.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image directly associated with Mayor Thomas McLeod on the Mayor's Office page.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Thomas McLeod' with term dates and contact info on the Mayor's Office page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "206-433-1850",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed under Mayor Thomas McLeod's contact information.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Mayor@tukwilawa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address linked as 'Email Mayor McLeod' on the Mayor's Office page.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/mayors-office",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Primary page URL for the Mayor's Office where the information is found.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term began January 1, 2024 as explicitly stated.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term expires December 31, 2027 as explicitly stated.",
+        "source": "https://www.tukwilawa.gov/departments/mayors-office"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Tosh Sharp",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Profile page URL likely contains image; no direct image URL found.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/wp-content/uploads/Tosh.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image URL found directly next to the name and title of Tosh Sharp.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Position 1; Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Tosh Sharp, Position 1' and also referenced as Council President elected annually."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Tosh Sharp' and 'Council Position No. 1' on the Tukwila City Council page."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Position 1 explicitly stated next to name."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Listed as 'Council Position No. 1' indicating the division as Position 1."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206 507-6440",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone/Text number explicitly listed as '206 507-6440' near the contact details for Tosh Sharp.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tosh.sharp@tukwilawa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly provided as 'tosh.sharp@tukwilawa.gov' in mailto link near name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page URL for Tosh Sharp.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Primary profile page URL for Tosh Sharp on Tukwila City Council website.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start date explicitly stated as 'January 1, 2022' in 'Term of Office' section.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term end date explicitly stated as 'December 31, 2025' in 'Term of Office' section.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/tosh-sharp"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Armen Papyan",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Profile page URL likely contains image; no direct image URL found.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/wp-content/uploads/Armen-scaled.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image URL found near the name and title 'Councilmember Armen Papyan'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Position 2",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as 'Armen Papyan, Position 2' on the City Council members list."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Armen Papyan' and 'Council Position No. 2' in Tukwila City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Position 2 explicitly stated next to name."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Mentioned as 'Council Position No. 2' indicating division by position number."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-888-3380",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' directly associated with Armen Papyan.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Armen.Papyan@TukwilaWA.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly given as 'Email: Armen.Papyan@TukwilaWA.gov' near the name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page URL for Armen Papyan.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/armen-papyan",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Armen Papyan on Tukwila city website.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start date explicitly stated as 'January 1, 2024'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term end date explicitly stated as 'December 31, 2027'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/armen-papyan"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Hannah Hedrick",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Profile page URL likely contains image; no direct image URL found.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/wp-content/uploads/Hedrick_Portrait-scaled.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image URL found near the name and title 'Councilmember Hannah Hedrick'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Position 3",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as 'Hannah Hedrick, Position 3' on the City Council members list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Identified as 'Councilmember Hannah Hedrick' with 'Council Position No. 3' indicating council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Position 3 explicitly stated next to name."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position No. 3'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-580-5123",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near the name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Hannah.Hedrick@TukwilaWa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly provided near the name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page URL for Hannah Hedrick.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Hannah Hedrick.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-22",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start date explicitly stated as 'January 22, 2024'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end date given as 'November 2025 General Election certification date', extracted as year-month.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/hannah-hedrick"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Dennis Martinez",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Profile page URL likely contains image; no direct image URL found.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/wp-content/uploads/Martinezsmaller-scaled.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image URL found near the name and title 'Councilmember Dennis Martinez'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Position 4",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as 'Dennis Martinez, Position 4' on the City Council members list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Identified as 'Councilmember Dennis Martinez' with 'Council Position No. 4' indicating council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Position 4 explicitly stated next to name."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position No. 4'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-960-1607",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Cell phone number labeled 'Cell Phone' near Dennis Martinez's contact info.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Dennis.Martinez@TukwilaWa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address explicitly given near Dennis Martinez's name.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page URL for Dennis Martinez.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Dennis Martinez on Tukwila city website.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2024.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2027.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/dennis-martinez"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Mohamed Abdi",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Profile page URL likely contains image; no direct image URL found.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Position 5",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as 'Mohamed Abdi, Position 5' on the City Council members list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Mohamed Abdi' with 'Council Position No. 5'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Position 5 explicitly stated next to name."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as 'Council Position No. 5'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-798-4872",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number listed directly under Mohamed Abdi's name and position.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mohamed.abdi@tukwilawa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address listed directly under Mohamed Abdi's contact info.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page URL for Mohamed Abdi.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Mohamed Abdi.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2022.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2025.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/mohamed-abdi"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Jovita McConnell",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Profile page URL likely contains image; no direct image URL found.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/wp-content/uploads/Jovita.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image URL found near the name and title 'Councilmember Jovita McConnell'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Position 6",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as 'Jovita McConnell, Position 6' on the City Council members list."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jovita McConnell' and 'Council Position No. 6' indicating active council role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Position 6 explicitly stated next to name."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Mentioned as 'Council Position No. 6' indicating division by position number."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-600-3533",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number explicitly listed under Jovita McConnell's contact info.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Jovita.McConnell@TukwilaWa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed under Jovita McConnell's contact info.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page URL for Jovita McConnell.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Jovita McConnell.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start date explicitly stated as 'January 1, 2024'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term end date explicitly stated as 'December 31, 2027'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/jovita-mcconnell"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Verna Seal",
+    "sources": [
+      "https://www.tukwilawa.gov/departments/city-council",
+      "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+    ],
+    "images": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/verna-seal",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Profile page URL likely contains image; no direct image URL found.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/wp-content/uploads/Seal-Headshot-1-scaled-1.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image URL found near the name and title 'Councilmember Verna Seal'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Position 7",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as 'Verna Seal, Position 7' on the City Council members list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Verna Seal' and 'Council Position No. 7' with term dates."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Position 7 explicitly stated next to name."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Mentioned as 'Council Position No. 7'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "206-724-4548",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number labeled 'Phone:' near Verna Seal's contact info.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "emails": [
+      {
+        "data": "verna.seal@tukwilawa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed as 'Email: verna.seal@tukwilawa.gov'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/verna-seal",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Official profile page URL for Verna Seal.",
+        "source": "https://www.tukwilawa.gov/departments/city-council"
+      },
+      {
+        "data": "https://www.tukwilawa.gov/departments/city-council/verna-seal",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Page URL is the official profile page for Verna Seal on Tukwila City Council site.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-03-10",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Term start date explicitly stated as 'March 10, 2025'.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Term end date given as 'November 2025 General Election certification date', extracted as year-month.",
+        "source": "https://www.tukwilawa.gov/departments/city-council/verna-seal"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  }
+]
