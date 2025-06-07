@@ -312,6 +312,30 @@ namespace :one_off do
     Core::StateManager.update_municipalities(state, municipalities)
   end
 
+  task :rerun_for_non_roles do
+    state = "nh"
+    municipalities_core = Core::StateManager.get_municipalities(state)
+    municipalities = municipalities_core["municipalities"]
+    updated_municipalities = municipalities.map do |municipality|
+      next municipality if (municipality["meta_sources"]&.length || 0) < 3
+      
+      people = Core::PeopleManager.get_people(state, municipality["geoid"])
+
+      if people.any? { |person| person["roles"].blank? }
+        puts "#{municipality["name"]} - #{municipality["geoid"]} - needs to be rerun"
+        municipality["meta_sources"] = []
+        next municipality
+      else
+        puts "Skipping #{municipality["name"]} - #{municipality["geoid"]}"
+        next municipality
+      end
+    end
+
+    municipalities_core["municipalities"] = updated_municipalities
+    File.write(Core::PathHelper.project_path(File.join("data_source", state, "municipalities.json")),
+               JSON.pretty_generate(municipalities_core))
+  end
+
   task :remove_cached_files do
     remove_cached_files
   end
