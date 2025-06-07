@@ -1,0 +1,345 @@
+[
+  {
+    "name": "Nigel Herbig",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.kenmorewa.gov/home/showpublishedimage/4583/638417044073830000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Group photo includes Mayor Nigel Herbig; no separate image found.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Mayor Nigel Herbig' and he is listed as Mayor on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed for all council members on the City Council Contact Information section.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "nherbig@kenmorewa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to Nigel Herbig's name.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary City Council page URL where he is listed.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Melanie O'Cain",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.kenmorewa.gov/home/showpublishedimage/4583/638417044073830000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Group photo includes Deputy Mayor Melanie O'Cain; no separate image found.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Text states 'Deputy Mayor Melanie O'Cain' and she is listed as Deputy Mayor on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed for all council members on the City Council Contact Information section.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mocain@kenmorewa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to Melanie O'Cain's name.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary City Council page URL where she is listed.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Jon Culver",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.kenmorewa.gov/home/showpublishedimage/4583/638417044073830000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Group photo includes Councilmember Jon Culver; no separate image found.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as Councilmember Jon Culver on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed for all council members on the City Council Contact Information section.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jculver@kenmorewa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to Jon Culver's name.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary City Council page URL where he is listed.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Joe Marshall",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.kenmorewa.gov/home/showpublishedimage/4583/638417044073830000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Group photo includes Councilmember Joe Marshall; no separate image found.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as Councilmember Joe Marshall on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed for all council members on the City Council Contact Information section.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jmarshall@kenmorewa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to Joe Marshall's name.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary City Council page URL where he is listed.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Nathan Loutsis",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.kenmorewa.gov/home/showpublishedimage/4583/638417044073830000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Group photo includes Councilmember Nathan Loutsis; no separate image found.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as Councilmember Nathan Loutsis on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed for all council members on the City Council Contact Information section.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "nloutsis@kenmorewa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to Nathan Loutsis's name.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary City Council page URL where he is listed.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Debra Srebnik",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.kenmorewa.gov/home/showpublishedimage/4583/638417044073830000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Group photo includes Councilmember Debra Srebnik; no separate image found.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as Councilmember Debra Srebnik on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed for all council members on the City Council Contact Information section.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dsrebnik@kenmorewa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to Debra Srebnik's name.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary City Council page URL where she is listed.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Valerie Sasson",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.kenmorewa.gov/home/showpublishedimage/4583/638417044073830000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Group photo includes Councilmember Valerie Sasson; no separate image found.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Listed as Councilmember Valerie Sasson on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed for all council members on the City Council Contact Information section.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "vsasson@kenmorewa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed next to Valerie Sasson's name.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Primary City Council page URL where she is listed.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-06"
+  }
+]

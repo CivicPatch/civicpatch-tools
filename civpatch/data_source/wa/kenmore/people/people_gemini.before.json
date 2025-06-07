@@ -1,0 +1,151 @@
+[
+  {
+    "name": "Jon Culver",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 5"
+    ],
+    "image": null,
+    "phone_number": "(425) 398-8900",
+    "email": "jculver@kenmorewa.gov",
+    "website": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161",
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161"
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Nigel Herbig",
+    "roles": [
+      "Mayor",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position 4"
+    ],
+    "image": null,
+    "phone_number": "(425) 398-8900",
+    "email": "nherbig@kenmorewa.gov",
+    "website": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161",
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161"
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Nathan Loutsis",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 7"
+    ],
+    "image": null,
+    "phone_number": "(425) 398-8900",
+    "email": "nloutsis@kenmorewa.gov",
+    "website": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161",
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161"
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Joe Marshall",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 2"
+    ],
+    "image": null,
+    "phone_number": "(425) 398-8900",
+    "email": "jmarshall@kenmorewa.gov",
+    "website": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161",
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161"
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Melanie O'Cain",
+    "roles": [
+      "Deputy Mayor",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 1"
+    ],
+    "image": null,
+    "phone_number": "(425) 398-8900",
+    "email": "mocain@kenmorewa.gov",
+    "website": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161",
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161"
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Valerie Sasson",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 3"
+    ],
+    "image": null,
+    "phone_number": "(425) 398-8900",
+    "email": "vsasson@kenmorewa.gov",
+    "website": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161",
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161"
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Debra Srebnik",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 6"
+    ],
+    "image": null,
+    "phone_number": "(425) 398-8900",
+    "email": "dsrebnik@kenmorewa.gov",
+    "website": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161",
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161"
+    ],
+    "updated_at": "2025-06-06"
+  }
+]

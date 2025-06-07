@@ -1,0 +1,619 @@
+[
+  {
+    "name": "Jon Culver",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed under the group photo and in the contact table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated title and current role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states all councilmembers are 'at-large'."
+      },
+      {
+        "data": "Position No. 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the council position held."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed phone number for the person.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jculver@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "jculver@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed email address for the person.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual staff directory page found in the contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated start date for the current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated end date for the current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/204/161"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Nigel Herbig",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed under the group photo and in the contact table."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Mayor' and 'Appointed Mayor on January 10, 2022'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'currently holds Position No. 4 on the City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states all councilmembers are 'at-large'."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'currently holds Position No. 4'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to the name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161"
+      }
+    ],
+    "emails": [
+      {
+        "data": "nherbig@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "nherbig@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual staff directory page found in the contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Current Term January 1, 2022'.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Current Term ... December 31, 2025'.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/84/161"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Nathan Loutsis",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed under the group photo and in the contact table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as his title and department role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states all councilmembers are 'at-large'."
+      },
+      {
+        "data": "Position No. 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as his position."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to his name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161"
+      }
+    ],
+    "emails": [
+      {
+        "data": "nloutsis@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "nloutsis@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed next to his name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual staff directory page found in the contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as the start date of his current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as the end date of his current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/202/161"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Joe Marshall",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed under the group photo and in the contact table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states all councilmembers are 'at-large'."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as holding 'Position No. 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the person's name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jmarshall@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "jmarshall@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly under the person's name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual staff directory page found in the contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'January 1, 2022' as the start date for the current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'December 31, 2025' as the end date for the current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/90/161"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Melanie O'Cain",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed under the group photo and in the contact table."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the person's title."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Stated as holding a position on the City Council, implying Council Member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states all councilmembers are 'at-large'."
+      },
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the position held on the City Council."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the person's name and contact information.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mocain@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "mocain@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly under the person's name and contact information.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual staff directory page found in the contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the start date of the current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the end date of the current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/92/161"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Valerie Sasson",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed under the group photo and in the contact table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as her title and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states all councilmembers are 'at-large'."
+      },
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as her position number."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under her name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161"
+      }
+    ],
+    "emails": [
+      {
+        "data": "vsasson@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "vsasson@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under her name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual staff directory page found in the contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the page where her information is found, but not a dedicated personal profile page.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the start date of her current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the end date of her current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/206/161"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Debra Srebnik",
+    "sources": [
+      "https://www.kenmorewa.gov/government/city-council",
+      "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role listed under the group photo and in the contact table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as her title and role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states all councilmembers are 'at-large'."
+      },
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as her position."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "(425) 398-8900",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under her name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dsrebnik@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly next to the name in a contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "dsrebnik@kenmorewa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address listed directly under her name.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link to individual staff directory page found in the contact table.",
+        "source": "https://www.kenmorewa.gov/government/city-council"
+      },
+      {
+        "data": "https://www.kenmorewa.gov/government/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal website found, linking to the general City Council page where her information is located.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the start date of her current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the end date of her current term.",
+        "source": "https://www.kenmorewa.gov/Home/Components/StaffDirectory/StaffDirectory/94/161"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  }
+]
