@@ -1,0 +1,893 @@
+[
+  {
+    "name": "Troy McCoy",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers",
+      "https://www.cityofbg.org/378/Mayor-McCoy"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Mayor."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as elected to City Council Position."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as selected to serve as Mayor beginning January 2024."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implicitly holds Council Member role by holding Council Position No. 1."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the link text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in navigation as 'Mayor McCoy'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Troy McCoy' and that he was selected to serve as Mayor beginning January 2024."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated he was 'elected to Council Position No. 1'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as City Council Position No. 1."
+      },
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Council Position No. 1'."
+      },
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Council Position No. 1' associated with his current term."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-600-5468",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as primary phone number under contact information.",
+        "source": "https://www.cityofbg.org/378"
+      },
+      {
+        "data": "360-600-5468",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Information'.",
+        "source": "https://www.cityofbg.org/378/Mayor-McCoy"
+      }
+    ],
+    "emails": [
+      {
+        "data": "troy.mccoy@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as email contact.",
+        "source": "https://www.cityofbg.org/378"
+      },
+      {
+        "data": "troy.mccoy@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from a mailto link text under 'Contact Information'.",
+        "source": "https://www.cityofbg.org/378/Mayor-McCoy"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbg.org/378/Mayor-McCoy",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from link text associated with the name, likely a profile page.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      },
+      {
+        "data": "https://www.cityofbg.org/378/Mayor-McCoy",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      },
+      {
+        "data": "https://www.cityofbg.org/378/Mayor-McCoy",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the profile page itself.",
+        "source": "https://www.cityofbg.org/378/Mayor-McCoy"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected date for council position.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'January 2022' for current term start.",
+        "source": "https://www.cityofbg.org/378"
+      },
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as the start date for the 'Current Term' for his Council Position.",
+        "source": "https://www.cityofbg.org/378/Mayor-McCoy"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'December 2025' for current term end.",
+        "source": "https://www.cityofbg.org/378"
+      },
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as the end date for the 'Current Term'.",
+        "source": "https://www.cityofbg.org/378/Mayor-McCoy"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Shane Bowman",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378",
+      "https://www.cityofbg.org/index.aspx?NID=377",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers",
+      "https://www.cityofbg.org/377/Deputy-Mayor-Bowman"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Deputy Mayor."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as re-elected to City Council Position."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in navigation link text as 'Deputy Mayor Bowman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Implicitly holds Council Member role as Deputy Mayor."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as current title 'Deputy Mayor Shane Bowman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated he was re-elected to 'City Council Position No. 2'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor' in the link text."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in navigation as 'Deputy Mayor Bowman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated as 're-elected to City Council Position No. 2' and 'Councilmember Bowman'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Used in the page title, heading, and breadcrumbs, indicating a current role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as City Council Position No. 2."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position No. 2'."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Position No. 2' associated with his re-election."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-787-3266",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under Contact Information as 'Phone'.",
+        "source": "https://www.cityofbg.org/index.aspx?NID=377"
+      },
+      {
+        "data": "360-787-3266",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'Phone' under 'Contact Information'.",
+        "source": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman"
+      }
+    ],
+    "emails": [
+      {
+        "data": "shane.bowman@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under Contact Information as email link.",
+        "source": "https://www.cityofbg.org/index.aspx?NID=377"
+      },
+      {
+        "data": "shane.bowman@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Information' with an email link.",
+        "source": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "URL is the page dedicated to Deputy Mayor Bowman, likely a profile page.",
+        "source": "https://www.cityofbg.org/index.aspx?NID=377"
+      },
+      {
+        "data": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from link text associated with the name, likely a profile page.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      },
+      {
+        "data": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      },
+      {
+        "data": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL used in skip links and breadcrumbs, specific to Deputy Mayor Bowman.",
+        "source": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated re-elected date for council position.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'January 2024' for Current Term.",
+        "source": "https://www.cityofbg.org/index.aspx?NID=377"
+      },
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the start date of the 'Current Term'.",
+        "source": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'December 2027' for Current Term.",
+        "source": "https://www.cityofbg.org/index.aspx?NID=377"
+      },
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the end date of the 'Current Term'.",
+        "source": "https://www.cityofbg.org/377/Deputy-Mayor-Bowman"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Victoria Ferrer",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Councilmember and elected to City Council Position."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in navigation link text as 'Councilmember Ferrer'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the heading and text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in navigation as 'Councilmember Ferrer'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as City Council Position No. 3."
+      },
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position No. 3'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-601-9994",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Mobile Phone' under Contact Information.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      }
+    ],
+    "emails": [
+      {
+        "data": "victoria.ferrer@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from markdown link text associated with the name.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbg.org/379/Councilmember-Ferrer",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is a profile page for this person.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      },
+      {
+        "data": "https://www.cityofbg.org/379/Councilmember-Ferrer",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected date for council position.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'elected... in November of 2023' and 'service... began in November 2023'.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'December 2027' for the current term end.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Jeanie Kuypers",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Councilmember and appointed to City Council Position."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in navigation link text as 'Councilmember Kuypers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jeanie Kuypers'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as City Council Position No. 4."
+      },
+      {
+        "data": "Position No. 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position No. 4'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-839-6641",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Phone under Contact Information.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jeanie.kuypers@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from mailto link text under Contact Information.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbg.org/376/Councilmember-Kuypers",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from link text associated with the name, likely a profile page.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      },
+      {
+        "data": "https://www.cityofbg.org/376/Councilmember-Kuypers",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL is a person-specific profile page.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-02-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated appointed date.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2025-02-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'appointed... on February 3, 2025'.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11-25",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated term ending date.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2025-11-25",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'November 25, 2025' for the current term.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Tricia Davis",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers",
+      "https://www.cityofbg.org/380/Councilmember-Davis"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Councilmember and elected to City Council Position."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in navigation link text as 'Councilmember Davis'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in navigation as 'Councilmember Davis'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Tricia Davis' and 'elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as City Council Position No. 5."
+      },
+      {
+        "data": "Position No. 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Position No. 5'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-798-3979",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'Mobile Phone' under Contact Information.",
+        "source": "https://www.cityofbg.org/380/Councilmember-Davis"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tricia.davis@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as email contact.",
+        "source": "https://www.cityofbg.org/380/Councilmember-Davis"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbg.org/380/Councilmember-Davis",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from link text associated with the name, likely a profile page.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      },
+      {
+        "data": "https://www.cityofbg.org/380/Councilmember-Davis",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      },
+      {
+        "data": "https://www.cityofbg.org/380/Councilmember-Davis",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page is a person-specific profile page.",
+        "source": "https://www.cityofbg.org/380/Councilmember-Davis"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected date for council position.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2021-10",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated 'Her service in the position began in October of 2021 when she was appointed'.",
+        "source": "https://www.cityofbg.org/380/Councilmember-Davis"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Current Term January 2022 - December 2025'.",
+        "source": "https://www.cityofbg.org/380/Councilmember-Davis"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Cherish DesRochers",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers",
+      "https://www.cityofbg.org/472",
+      "https://www.cityofbg.org/472/Councilmember-DesRochers"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Councilmember and re-elected to Position."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in navigation link text as 'Councilmember DesRochers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in navigation as 'Councilmember DesRochers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and re-elected to a full term."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly referred to as 'Councilmember' and holds a 'Council Position'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Position No. 6."
+      },
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Council Position No. 6."
+      },
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as her council position."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-798-3245",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Phone' under Contact Information.",
+        "source": "https://www.cityofbg.org/472"
+      },
+      {
+        "data": "360-798-3245",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under Contact Information with her name.",
+        "source": "https://www.cityofbg.org/472/Councilmember-DesRochers"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cherish.desrochers@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from mailto link text under Contact Information.",
+        "source": "https://www.cityofbg.org/472"
+      },
+      {
+        "data": "cherish.desrochers@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under Contact Information with her name.",
+        "source": "https://www.cityofbg.org/472/Councilmember-DesRochers"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbg.org/472/Councilmember-DesRochers",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from link text associated with the name, likely a profile page.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      },
+      {
+        "data": "https://www.cityofbg.org/472/Councilmember-DesRochers",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      },
+      {
+        "data": "https://www.cityofbg.org/522/Meet-your-City-Council/472/Councilmember-DesRochers",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL of the current page which is a profile page for this person.",
+        "source": "https://www.cityofbg.org/472"
+      },
+      {
+        "data": "https://www.cityofbg.org/472/Councilmember-DesRochers",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the specific profile page for the person.",
+        "source": "https://www.cityofbg.org/472/Councilmember-DesRochers"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated re-elected date for council position.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'January 2022' for Current Term.",
+        "source": "https://www.cityofbg.org/472"
+      },
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the start date of her current term.",
+        "source": "https://www.cityofbg.org/472/Councilmember-DesRochers"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'December 2025' for Current Term.",
+        "source": "https://www.cityofbg.org/472"
+      },
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as the end date of her current term.",
+        "source": "https://www.cityofbg.org/472/Councilmember-DesRochers"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  },
+  {
+    "name": "Eric Overholser",
+    "sources": [
+      "https://www.cityofbg.org/522/Meet-your-City-Council",
+      "https://www.cityofbg.org/378",
+      "https://www.cityofbg.org/379/Councilmember-Ferrer",
+      "https://www.cityofbg.org/376/Councilmember-Kuypers",
+      "https://www.cityofbg.org/382/Councilmember-Overholser"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as Councilmember and elected to City Council Position."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in navigation link text as 'Councilmember Overholser'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed in navigation as 'Councilmember Overholser'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Eric Overholser' and 'elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as City Council Position No. 7."
+      },
+      {
+        "data": "Position No. 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as his council position."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-798-1198",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'Mobile Phone' under Contact Information.",
+        "source": "https://www.cityofbg.org/382/Councilmember-Overholser"
+      }
+    ],
+    "emails": [
+      {
+        "data": "eric.overholser@cityofbg.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from mailto link text under Contact Information.",
+        "source": "https://www.cityofbg.org/382/Councilmember-Overholser"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbg.org/382/Councilmember-Overholser",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from link text associated with the name, likely a profile page.",
+        "source": "https://www.cityofbg.org/379/Councilmember-Ferrer"
+      },
+      {
+        "data": "https://www.cityofbg.org/382/Councilmember-Overholser",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Extracted from navigation link associated with the name.",
+        "source": "https://www.cityofbg.org/376/Councilmember-Kuypers"
+      },
+      {
+        "data": "https://www.cityofbg.org/382/Councilmember-Overholser",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL of the page is a dedicated profile page for this person.",
+        "source": "https://www.cityofbg.org/382/Councilmember-Overholser"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated elected date for council position.",
+        "source": "https://www.cityofbg.org/522/Meet-your-City-Council"
+      },
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'January 2024' for Current Term.",
+        "source": "https://www.cityofbg.org/382/Councilmember-Overholser"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'December 2027' for Current Term.",
+        "source": "https://www.cityofbg.org/382/Councilmember-Overholser"
+      }
+    ],
+    "updated_at": "2025-06-06"
+  }
+]
