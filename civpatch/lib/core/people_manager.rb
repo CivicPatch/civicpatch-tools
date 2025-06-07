@@ -66,7 +66,7 @@ module Core
       new_city_people,
       directory_type = nil
     )
-      updated_at = Time.now.strftime("%Y-%m-%d")
+      updated_at = Time.now.utc.iso8601
       new_city_people = new_city_people.map { |person| add_updated_at(person, updated_at) }
 
       state = municipality_context[:state]
