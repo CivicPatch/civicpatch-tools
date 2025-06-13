@@ -282,7 +282,7 @@ namespace :one_off do
       city_name = file.split("/").third
       people = YAML.load_file(file)
       people.each do |person|
-        csv_file.puts [state_name, state_abbrev, city_name, person["name"], person["positions"].join("|"), person["image"], person["source_image"],
+        csv_file.puts [state_name, state_abbrev, city_name, person["name"], person["roles"].join("|"), person["image"], person["cdn_pameg"],
                        person["email"], person["phone_number"], person["website"], person["start_date"], person["end_date"]].join(",")
       end
     end
@@ -318,7 +318,7 @@ namespace :one_off do
     municipalities = municipalities_core["municipalities"]
     updated_municipalities = municipalities.map do |municipality|
       next municipality if (municipality["meta_sources"]&.length || 0) < 3
-      
+
       people = Core::PeopleManager.get_people(state, municipality["geoid"])
 
       if people.any? { |person| person["roles"].blank? }
