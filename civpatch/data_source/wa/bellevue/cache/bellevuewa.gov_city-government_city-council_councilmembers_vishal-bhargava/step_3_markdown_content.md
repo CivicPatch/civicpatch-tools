@@ -1,4 +1,4 @@
-[Skip to main content](https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya/)
+[Skip to main content](https://bellevuewa.gov/city-government/city-council/councilmembers/vishal-bhargava/)
 
 Bellevue home
 
@@ -77,7 +77,7 @@ Language
 
 Menu
 
-# Claire Sumadiwirya
+# Vishal Bhargava
 
 ## Breadcrumb
 
@@ -110,23 +110,25 @@ Expand Menu
 - [Jared Nieuwenhuis](https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis)
 - [Claire Sumadiwirya](https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya)
 
-![Claire Sumadiwirya portrait](https://bellevuewa.gov/sites/default/files/styles/medium/public/inline-images/2025-04/claire-sumadiwirya.jpg?itok=ipNAjgLl)
+![Vishal Bhargava](https://bellevuewa.gov/sites/default/files/styles/medium/public/inline-images/2025-06/vishal-bhargava.jpg?itok=B5tjkRlr)
 
-Councilmember 4/1/25-11/25/25
+Councilmember 5/6/25-11/25/25
 
-Claire Sumadiwirya, a Bellevue business owner involved in several social causes, was appointed in April 2025 to the seat on the City Council vacated by Janice Zahn. Sumadiwirya will serve through the certification of the November 2025 general election. If elected, she will serve through Zahn’s original term date of Dec. 31, 2027.
+Vishal Bhargava, an Amazon executive and Planning Commission member, was appointed to the City Council, taking the seat vacated by John Stokes in May 2025.
 
-Sumadiwirya has lived in Bellevue for more than 30 years and owns a small business downtown. She grew up in the Bridle Trails neighborhood and currently lives downtown with her three children. When interviewed by the council about her interest in the appointment, Sumadiwirya said her priorities include public safety, education, sustainable growth and quality of life.
+Bhargava, who began serving on the Planning Commission in 2018, resigned his seat to join the council. He has more than a decade of experience in urban planning, technology leadership and community service. In 2021, he cofounded the Beautiful Minds Foundation, a mental health advocacy organization.
 
-Claire is the founder and CEO of Bellden Ventures, which opened Bellden Café downtown in 2017. The cafe has contributed proceeds from its sale of specialty coffee, gourmet food and lifestyle products to over 30 charities. Her focus has been on building social enterprises that enable workforce training and that deliver a positive economic impact. Prior to Bellden Ventures, she worked in a variety of roles across finance, marketing, real estate, media and global business relations.
+Vishal’s priorities include affordable housing and sustainable growth, enhancing public safety with expanded mental health resources, and promoting economic development through innovation and workforce investment. He aims to foster an inclusive, resilient Bellevue, balancing growth with quality of life for all community members.
 
-Sumadiwirya serves on the King County Open Space Equity Cabinet, Bellevue School Foundation and Overlake Medical Center Foundation. Prior to her appointment to the council, which necessitated her resignation from them, Councilmember Sumadiwirya served on the Bellevue Downtown Association, PorchLight and Visit Bellevue. She led community engagement and program development at the King County Immigrant and Refugee Commission and was briefly executive director of the BelRed Arts District.
+Bhargava has been with Amazon for more than a decade, and has been a director of product management since 2020.
 
-Sumadiwirya has a Master of Business Administration degree in accounting and finance from Seattle University and double bachelor’s degrees in business and sociology from the University of Washington. 
+Bhargava’s appointment ends after certification of the November general election. He is running for the council seat and would serve through Stokes’ original term ending Dec. 31, 2027 if he wins.
+
+Vishal has an MBA in strategy and operations from the UCLA Anderson School of Management and a master’s in urban planning from the University of Illinois Urbana-Champaign. He earned a certification in disruptive innovation from the Harvard Business School.
 
 ## City Council
 
-**Claire Sumadiwirya**  
+**Vishal Bhargava**  
 P.O. Box 90012  
 Bellevue, WA 98009
 
@@ -136,11 +138,11 @@ Telephone
 
 Email
 
-[csumadiwirya@bellevuewa.gov](mailto:csumadiwirya@bellevuewa.gov)
+[vbhargava@bellevuewa.gov](mailto:vbhargava@bellevuewa.gov)
 
 ### Reasonable Accommodation
 
-For alternate formats, interpreters, or reasonable modification requests please phone at least 48 hours in advance 425-452-6800 (voice) or email [servicefirst@bellevuewa.gov](mailto:servicefirst@bellevuewa.gov?subject=Claire%20Sumadiwirya%20Webpage). For complaints regarding modifications, contact the City of Bellevue ADA, Title VI, and Equal Opportunity Officer at [ADATitleVI@bellevuewa.gov](mailto:ADATitleVI@bellevuewa.gov).
+For alternate formats, interpreters, or reasonable modification requests please phone at least 48 hours in advance 425-452-6800 (voice) or email [servicefirst@bellevuewa.gov](mailto:servicefirst@bellevuewa.gov?subject=Vishal%20Bhargava%20Webpage). For complaints regarding modifications, contact the City of Bellevue ADA, Title VI, and Equal Opportunity Officer at [ADATitleVI@bellevuewa.gov](mailto:ADATitleVI@bellevuewa.gov).
 
 ### [![City of Bellevue seal](https://bellevuewa.gov/themes/custom/bellevue/images/logo.png)City of Bellevue, WA](https://bellevuewa.gov)
 
