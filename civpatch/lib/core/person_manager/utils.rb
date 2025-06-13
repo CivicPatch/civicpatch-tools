@@ -114,10 +114,20 @@ module Core
         sorted_values.map { |data| data[:person] }
       end
 
-      def self.sort_keys(person)
+      def self.sort_keys(government_type, person)
+        government_roles = Core::CityManager.roles(government_type)
         sorted = {}
         SORT_KEYS.each do |key|
-          sorted[key] = person[key]
+          if key == "roles"
+            # Sort roles by their role index
+            sorted_roles = person[key].sort_by do |role|
+              role_index = government_roles.find_index { |r| r["role"].casecmp(role).zero? }
+              role_index.nil? ? 999 : role_index
+            end
+            sorted[key] = sorted_roles
+          else
+            sorted[key] = person[key]
+          end
         end
         sorted
       end

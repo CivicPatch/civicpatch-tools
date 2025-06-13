@@ -23,7 +23,7 @@ module Scrapers
           municipality_entry = municipality_context[:municipality_entry]
           source_url = get_source_url(municipality_entry)
           # Fetch HTML, interacting to select "All" entries
-          response = Browser.fetch_page_content(source_url) do |browser|
+          response = Core::Browser.fetch_page_content(source_url) do |browser|
             # Create a Select object and choose the "All" option by its value ("-1")
             page.locator("select#dtCityContacts_length").select_option(value: "-1")
 

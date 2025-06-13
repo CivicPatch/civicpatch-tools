@@ -1,3 +1,5 @@
+.envrc
+.env
 .bundle/
 .yardoc
 _yardoc/
@@ -10,6 +12,7 @@ vendor/
 output/
 tmp/
 
+todo.md
 chat.txt
 costs.csv
 people.csv

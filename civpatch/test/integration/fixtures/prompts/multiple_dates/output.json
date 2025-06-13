@@ -1,0 +1,135 @@
+[
+  {
+    "name": "Kate Dexter",
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Re-elected and serving January 2022 to December 2025.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term ends December 2025.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Navarra Carr",
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Re-elected and serving January 2024 to December 2027.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term ends December 2027.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Drew Schwab",
+    "start_dates": [
+      {
+        "data": "2023-12",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Elected December 2023 to December 2025; start date assumed December 2023.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term ends December 2025.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Amy Miller",
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected and serving January 2024 to December 2027.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term ends December 2027.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Brendan Meyer",
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Re-elected and serving January 2024 to December 2027.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term ends December 2027.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "LaTrisha Suggs",
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected and serving January 2022 to December 2025.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term ends December 2025.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  },
+  {
+    "name": "Lindsey Schromen-Wawrin",
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Re-elected and serving January 2022 to December 2025.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term ends December 2025.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  }
+]

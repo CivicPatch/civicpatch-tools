@@ -13,9 +13,10 @@ module Services
   module GoogleGemini
     class Client
       MODELS = %w[
-        gemini-2.5-flash-preview-04-17
+        gemini-2.5-flash-preview-05-20
         gemini-2.0-flash
       ].freeze
+      # gemini-2.5-flash-preview-04-17 broken as of 06/10
 
       BASE_URI = "https://generativelanguage.googleapis.com"
       DEFAULT_TIMEOUT = 180

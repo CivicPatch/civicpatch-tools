@@ -1,0 +1,39 @@
+name: 2b. 🧪 - Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'civpatch/lib/**'
+  workflow_dispatch:
+
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up ruby
+        uses: actions/setup-
+
+      - name: Run unit tests
+        run:
+          cd civpatch
+          TEST_PATTERN="test/unit/**/*_test.rb" bundle exec rake test
+      
+      - name: Run integration tests (if needed)
+        env:
+          GOOGLE_GEMINI_TOKEN: ${{ secrets.TEST_GOOGLE_GEMINI_TOKEN }}
+          OPENAI_TOKEN: ${{ secrets.TEST_OPENAI_TOKEN }}
+        if: >
+          github.event_name == 'workflow_dispatch' ||
+          contains(join(github.event.commits.*.modified, '\n') , 'civpatch/lib/services/') ||
+          contains(join(github.event.commits.*.added, '\n') , 'civpatch/lib/services/') ||
+          contains(join(github.event.commits.*.removed, '\n') , 'civpatch/lib/services/')
+        run:
+          cd civpatch
+          TEST_PATTERN="test/integration/**/*_test.rb" bundle exec rake test
+

@@ -23,9 +23,9 @@ module Core
 
       # Store images one level up from destination dir to simplify image upload
       image_dir = PathHelper.project_path(File.join(destination_dir, "..", "images"))
-      page_html = Browser.fetch_page_content(url, { image_dir: image_dir,
-                                                    wait_for: WAIT_TIME,
-                                                    include_api_content: true })
+      page_html = Core::Browser.fetch_page_content(url, { image_dir: image_dir,
+                                                          wait_for: WAIT_TIME,
+                                                          include_api_content: true })
       return nil if page_html.blank?
 
       html = page_html
@@ -50,14 +50,14 @@ module Core
     end
 
     def self.markdown_executable_path
-      host_os = RbConfig::CONFIG['host_os']
+      host_os = RbConfig::CONFIG["host_os"]
 
       if host_os =~ /darwin/i
-        return File.join(HTML_2_MARKDOWN_PATH, "html2markdown_macos")
+        File.join(HTML_2_MARKDOWN_PATH, "html2markdown_macos")
       elsif host_os =~ /linux/i
-        return File.join(HTML_2_MARKDOWN_PATH, "html2markdown_linux")
+        File.join(HTML_2_MARKDOWN_PATH, "html2markdown_linux")
       elsif host_os =~ /mswin|mingw|cygwin/i
-        return File.join(HTML_2_MARKDOWN_PATH, "html2markdown_windows.exe")
+        File.join(HTML_2_MARKDOWN_PATH, "html2markdown_windows.exe")
       else
         raise "Unsupported OS: #{host_os}. Only x64 versions of macOS, Linux, and Windows are supported."
       end
@@ -67,18 +67,16 @@ module Core
       executable_path = markdown_executable_path
       raise "Markdown executable not found at #{executable_path}" unless File.exist?(executable_path)
 
-      output = IO.popen([executable_path], "r+", err: [:child, :out]) do |io|
+      output = IO.popen([executable_path], "r+", err: %i[child out]) do |io|
         io.write(html)
         io.close_write
         result = io.read
-        result 
+        result
       end
 
-      if $?.success?
-        output.strip
-      else
-        raise "Failed to convert HTML to Markdown: #{output}"
-      end
+      raise "Failed to convert HTML to Markdown: #{output}" unless $?.success?
+
+      output.strip
     end
 
     def self.sanitize_html(html)
