@@ -1,5 +1,14 @@
 # OpenData
 
+## Pipeline Setup
+* Join civicpatch-tools repo
+* Set up environment variables under environment: `env-<github-username>`
+  * Google Search
+  * Brave Search
+  * OpenAI
+  * Google Gemini
+* Actions -> Run "Municipal Officials - Scrape"
+
 ## Contribute
 ### Run Scrapes
 1. Download latest [release](https://github.com/CivicPatch/civicpatch-tools/releases)
