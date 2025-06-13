@@ -2,6 +2,7 @@
 - name: Kate Dexter
   roles:
   - Mayor
+  - Council Member
   divisions:
   - Position 4
   image: https://www.cityofpa.us/ImageRepository/Document?documentId=11926
@@ -14,7 +15,24 @@
   sources:
   - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
   - https://www.cityofpa.us/137/City-Council
-  updated_at: '2025-06-06'
+  updated_at: '2025-06-11T02:53:59Z'
+- name: Navarra Carr
+  roles:
+  - Deputy Mayor
+  - Council Member
+  divisions:
+  - Position 6
+  image: https://www.cityofpa.us/ImageRepository/Document?documentId=11927
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/port_angeles/images/1f3a08c1f9bf842755c95ad55a23dff26f001b28357d040f49b90f41d6a4e9bf.jpg
+  email: ncarr@cityofpa.us
+  phone_number:
+  website: https://www.cityofpa.us/912/Meet-Your-City-Council-Members
+  start_date: 2024-01
+  end_date: 2027-12
+  sources:
+  - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
+  - https://www.cityofpa.us/137/City-Council
+  updated_at: '2025-06-11T02:53:59Z'
 - name: LaTrisha Suggs
   roles:
   - Council Member
@@ -30,7 +48,7 @@
   sources:
   - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
   - https://www.cityofpa.us/137/City-Council
-  updated_at: '2025-06-06'
+  updated_at: '2025-06-11T02:53:59Z'
 - name: Drew Schwab
   roles:
   - Council Member
@@ -46,7 +64,7 @@
   sources:
   - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
   - https://www.cityofpa.us/137/City-Council
-  updated_at: '2025-06-06'
+  updated_at: '2025-06-11T02:53:59Z'
 - name: Lindsey Schromen-Wawrin
   roles:
   - Council Member
@@ -55,14 +73,15 @@
   image: https://www.cityofpa.us/ImageRepository/Document?documentId=11934
   cdn_image: https://cdn.civicpatch.org/open-data/wa/port_angeles/images/bc09056445a4e1362e70c1955e1cab679a3e0af9846e92ea07b9275384833547.jpg
   email: lswawrin@cityofpa.us
-  phone_number:
+  phone_number: "(360) 406-4321"
   website: https://www.cityofpa.us/912/Meet-Your-City-Council-Members
   start_date: 2022-01
   end_date: 2025-12
   sources:
   - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
   - https://www.cityofpa.us/137/City-Council
-  updated_at: '2025-06-06'
+  - https://www.cityofpa.us/directory.aspx?EID=242
+  updated_at: '2025-06-11T02:53:59Z'
 - name: Amy Miller
   roles:
   - Council Member
@@ -78,24 +97,7 @@
   sources:
   - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
   - https://www.cityofpa.us/137/City-Council
-  updated_at: '2025-06-06'
-- name: Navarra Carr
-  roles:
-  - Council Member
-  - Deputy Mayor
-  divisions:
-  - Position 6
-  image: https://www.cityofpa.us/ImageRepository/Document?documentId=11927
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/port_angeles/images/1f3a08c1f9bf842755c95ad55a23dff26f001b28357d040f49b90f41d6a4e9bf.jpg
-  email: ncarr@cityofpa.us
-  phone_number:
-  website: https://www.cityofpa.us/912/Meet-Your-City-Council-Members
-  start_date: 2024-01
-  end_date: 2027-12
-  sources:
-  - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
-  - https://www.cityofpa.us/137/City-Council
-  updated_at: '2025-06-06'
+  updated_at: '2025-06-11T02:53:59Z'
 - name: Brendan Meyer
   roles:
   - Council Member
@@ -111,4 +113,4 @@
   sources:
   - https://www.cityofpa.us/912/Meet-Your-City-Council-Members
   - https://www.cityofpa.us/137/City-Council
-  updated_at: '2025-06-06'
+  updated_at: '2025-06-11T02:53:59Z'
