@@ -1,166 +1,180 @@
-  ![Loading...](images/731b3eaf5c57e92438ed3f342c49ddf381a979871980a09347df26bbedfd284e.svg) 
+##### Checking Your Browser
 
-#####  Checking Your Browser 
+Starting Session...Continue
 
- One Moment...  [Continue](https://my.spokanecity.org/welcome)  
+Browser cookies and javascript are enabled.
 
-Ensure browser cookies and javascript are enabled.
+- [City of Spokane](https://my.spokanecity.org "City of Spokane Home Page")
+- [spokanecity](https://my.spokanecity.org/website/map "Website Map & Sections")
+- [Site Menu](https://my.spokanecity.org "Website Menu")
+  
+  - [live](https://my.spokanecity.org/live "Living in Spokane")
+  - [work](https://my.spokanecity.org/work "Working & Doing Business")
+  - [enjoy](https://my.spokanecity.org/enjoy "Enjoying & Visiting")
+  - [engage](https://my.spokanecity.org/engage "Engaging & Getting Involved")
+- [Search](https://my.spokanecity.org/search "Website Search")
+- [My Account](https://my.spokanecity.org/account "My Account")
 
- *  [City of Spokane](https://my.spokanecity.org/mayor) 
- *  [spokanecity](https://my.spokanecity.org/website/map) 
- *  [Site Menu](https://my.spokanecity.org/mayor)  
-   *  [live](https://my.spokanecity.org/live) 
-   *  [work](https://my.spokanecity.org/work) 
-   *  [enjoy](https://my.spokanecity.org/enjoy) 
-   *  [engage](https://my.spokanecity.org/engage)  
- *  [Search](https://my.spokanecity.org/search) 
- *  [My Account](https://my.spokanecity.org/account) 
+# [Mayor](https://my.spokanecity.org/mayor/default.aspx "Mayor")
 
-#  [Mayor](https://my.spokanecity.org/mayor/default.aspx) 
+[Previous](https://my.spokanecity.org/mayor "Previous") ![Celebrate Juneteenth](https://static.spokanecity.org/graphics/blogs/celebrate-juneteenth-in-spokane-2025/celebrate-juneteenth/16x7/Full/celebrate-juneteenth.png) [Next](https://my.spokanecity.org/mayor "Next")
 
-  [Previous](https://my.spokanecity.org/mayor)  [![Mayor, City Council Announce New Traffic Safety Improvements](images/7520c7019d39d39e117aa1b51d1c8d12f848407de868f83bee14d0e93465112a.svg)![Loading...](images/cef9bd8b599615b3e982ccc59b51403136ce387bb670484f0a57ac9468f2dad8.svg)](https://my.spokanecity.org/news/releases/2025/04/16/mayor-city-council-announce-new-traffic-safety-improvements)  [Next](https://my.spokanecity.org/mayor)   [Mayor, City Council Announce New Traffic Safety ImprovementsA comprehensive package of new initiatives aimed at improving traffic safety throughout downtown and across Spokane](https://my.spokanecity.org/news/releases/2025/04/16/mayor-city-council-announce-new-traffic-safety-improvements) 
+[Celebrate Juneteenth Join a Juneteenth celebration!](https://my.spokanecity.org/news/stories/2025/06/10/celebrate-juneteenth-in-spokane "Celebrate Juneteenth")
 
- *  [Mayor, City Council Announce New Traffic Safety Improvements](https://my.spokanecity.org/news/releases/2025/04/16/mayor-city-council-announce-new-traffic-safety-improvements) 
- *  [![Mayor, City Council Announce New Traffic Safety Improvements](images/c1afb11382f6d2e7824ddc99d99562cc23dd2f584c53c2633324f66b54e4cd13.svg)](https://my.spokanecity.org/news/releases/2025/04/16/mayor-city-council-announce-new-traffic-safety-improvements) 
- *  [![City of Spokane Celebrates 25 Years of Neighborhood Services](images/d998bf2765f78db36b893e3cf0dfbad57c1a85f21c89a2a2db49d9260fd8705f.svg)](https://my.spokanecity.org/news/releases/2025/04/14/city-of-spokane-celebrates-25-years-of-neighborhood-services) 
- *  [![Community Assistance Response Team (CARES)](images/d998bf2765f78db36b893e3cf0dfbad57c1a85f21c89a2a2db49d9260fd8705f.svg)](https://my.spokanecity.org/news/releases/2025/04/02/spokane-cares-team-expands) 
- *  [![New Specialized Shelter for Women Opening This Week](images/d998bf2765f78db36b893e3cf0dfbad57c1a85f21c89a2a2db49d9260fd8705f.svg)](https://my.spokanecity.org/news/releases/2025/04/01/new-specialized-shelter-for-women-opening-this-week) 
- *  [![City of Spokane Joins Bluesky](images/d998bf2765f78db36b893e3cf0dfbad57c1a85f21c89a2a2db49d9260fd8705f.svg)](https://my.spokanecity.org/news/releases/2025/04/04/city-of-spokane-joins-bluesky-to-increase-communication-with-residents) 
- *  [![Mayor and Council President Propose Using Opioid Funds for Treatment](images/d998bf2765f78db36b893e3cf0dfbad57c1a85f21c89a2a2db49d9260fd8705f.svg)](https://my.spokanecity.org/news/releases/2025/03/14/mayor-and-council-president-propose-using-opioid-funds-for-treatment) 
- *  [![Mayor Brown Signs Amicus Brief Opposing Trump Administration](images/d998bf2765f78db36b893e3cf0dfbad57c1a85f21c89a2a2db49d9260fd8705f.svg)](https://my.spokanecity.org/news/releases/2025/02/21/mayor-brown-signs-amicus-brief-opposing-trump-administration) 
- *  ![](images/036ed93610536223e1c241cec47ef5d2d185a43584ca13e13a3562a0ebde5390.svg) 
-  [spokanecity](https://twitter.com/spokanecity) 
+- [Celebrate Juneteenth](https://my.spokanecity.org/news/stories/2025/06/10/celebrate-juneteenth-in-spokane "Celebrate Juneteenth")
 
-. [@MayorSpokane](https://twitter.com/MayorSpokane) and members of the [@Spokane_Council](https://twitter.com/Spokane_Council) announced a comprehensive package of new initiatives aimed at improving traffic safety throughout downtown and across Spokane. [https://t.co/N08igfrdFu](https://t.co/N08igfrdFu)  [https://t.co/peb2Mc5dhX](https://t.co/peb2Mc5dhX) 
+[spokanecity](https://twitter.com/spokanecity)
 
- *  [About MayorLisa Brown](https://my.spokanecity.org/mayor/about) 
- *  [Contact Mayor Brown's OfficeQuestion? Contact Us](https://my.spokanecity.org/mayor/ask-the-mayor) 
- *  [Ceremonial DocumentsSalutations & Proclamations](https://my.spokanecity.org/mayor/ceremonial-documents) 
- *  [Invite the MayorTo Attend a Meeting or Event](https://spokanecity.wufoo.com/forms/invite-the-mayor-to-attend-a-meeting-or-event) 
+Mayor Lisa Brown has issued a curfew to begin at 9:30 p.m. Wednesday. [https://t.co/JqKCQ4Pi3e](https://t.co/JqKCQ4Pi3e) [https://t.co/HiJrpwIEYr](https://t.co/HiJrpwIEYr)
 
- *  [BlogsNews from My Office](https://my.spokanecity.org/mayor/blogs) 
- *  [From the Mayor’s DeskSign up for Mayor Brown’s Newsletter](https://lp.constantcontactpages.com/sl/BUpV1VY) 
-  ![Spokane Mountain Silhouette](images/32e5dc338650707b4f67b579be1d79237319899542b15b63212375a9d197a244.svg)   ![Mayor's Seal](images/f7c472fbc529a75063941c90b7bcc0e7f995778c8730356c9d424ee1af586ae5.svg)  
+- [About MayorLisa Brown](https://my.spokanecity.org/mayor/about)
+- [Contact Mayor Brown's OfficeQuestion? Contact Us](https://my.spokanecity.org/mayor/ask-the-mayor)
+- [Ceremonial DocumentsSalutations &amp; Proclamations](https://my.spokanecity.org/mayor/ceremonial-documents)
+- [Invite the MayorTo Attend a Meeting or Event](https://spokanecity.wufoo.com/forms/invite-the-mayor-to-attend-a-meeting-or-event)
 
-***
+<!--THE END-->
 
-  [![My Spokane 311](images/d88621217bf9facf2ea13d8a60057c0c40190cd617d900fbd4f19514f5542c89.svg)](https://my.spokanecity.org/account)  
+- [BlogsNews from My Office](https://my.spokanecity.org/mayor/blogs)
+- [From the Mayor’s DeskSign up for Mayor Brown’s Newsletter](https://lp.constantcontactpages.com/sl/BUpV1VY)
 
- [808 W. Spokane Falls Blvd.Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+Spokane,+WA+99201) 
+* * *
 
- [Dial 311]() or [509.755.CITY (2489)]() 
+[808 W. Spokane Falls Blvd.  
+Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+Spokane,+WA+99201)
 
- *  [X/Twitter](https://twitter.com/mayorofspokane) 
- *  [Facebook](https://www.facebook.com/mayorofspokane) 
- *  [Instagram](https://www.instagram.com/mayorofspokane) 
+Dial 311 or 509.755.CITY (2489)
 
- *  [spokanecity]() 
+- [X/Twitter](https://twitter.com/mayorofspokane "Follow us on X/Twitter")
+- [Facebook](https://www.facebook.com/mayorofspokane "Find us on Facebook")
+- [Instagram](https://www.instagram.com/mayorofspokane "See us on Facebook")
 
- *  [Business & Development](https://my.spokanecity.org/business) 
-   *  [Commercial](https://my.spokanecity.org/business/commercial) 
-   *  [Residential](https://my.spokanecity.org/business/residential) 
-   *  [Resources](https://my.spokanecity.org/business/resources) 
- *  [City Hall](https://my.spokanecity.org/cityhall) 
-   *  [Mayor](https://my.spokanecity.org/mayor) 
-   *  [City Council](https://my.spokanecity.org/citycouncil) 
-   *  [Hearing Examiner](https://my.spokanecity.org/hearingexaminer) 
- *  [Library](http://www.spokanelibrary.org) 
-   *  [Locations](http://www.spokanelibrary.org/open) 
-   *  [Digital Branch](http://www.spokanelibrary.org/digital) 
-   *  [Services](http://www.spokanelibrary.org/services) 
-   *  [Events](http://www.spokanelibrary.org/calendar) 
- *  [CityCable5](https://my.spokanecity.org/citycable5) 
-   *  [Programs](https://my.spokanecity.org/citycable5/programs) 
-   *  [Schedule](https://my.spokanecity.org/citycable5/schedule) 
-   *  [Videos](https://my.spokanecity.org/citycable5/videos) 
-   *  [Live](https://my.spokanecity.org/citycable5/live) 
- *  [Parks & Recreation](https://my.spokanecity.org/parksrec) 
-   *  [Parks](https://my.spokanecity.org/parks) 
-   *  [Recreation](https://my.spokanecity.org/recreation) 
-   *  [Riverfront Spokane](https://my.spokanecity.org/riverfrontspokane) 
-   *  [Golf](https://my.spokanecity.org/golf) 
- *  [Police Department](https://my.spokanecity.org/police) 
-   *  [Patrol](https://my.spokanecity.org/police/patrol) 
-   *  [Investigations](https://my.spokanecity.org/police/investigations) 
-   *  [Prevention](https://my.spokanecity.org/police/prevention) 
- *  [Courts](https://my.spokanecity.org/courts) 
-   *  [Municipal Court](https://my.spokanecity.org/courts/municipal-court) 
-   *  [Probation](https://my.spokanecity.org/courts/probation) 
-   *  [Public Defender](https://my.spokanecity.org/courts/public-defender) 
- *  [Fire Department](https://my.spokanecity.org/fire) 
-   *  [Operations](https://my.spokanecity.org/fire/operations) 
-   *  [Prevention](https://my.spokanecity.org/fire/prevention) 
-   *  [Training](https://my.spokanecity.org/fire/training) 
- *  [Community](https://my.spokanecity.org/community) 
-   *  [CHHS](https://my.spokanecity.org/chhs) 
-   *  [Neighborhoods](https://my.spokanecity.org/neighborhoods) 
-   *  [Code Enforcement](https://my.spokanecity.org/codeenforcement) 
- *  [Public Works & Utilities](https://my.spokanecity.org/publicworks) 
-   *  [Streets](https://my.spokanecity.org/streets) 
-   *  [Household](https://my.spokanecity.org/household) 
-   *  [Utilities](https://my.spokanecity.org/publicworks/utility-billing) 
-   *  [Environment](https://my.spokanecity.org/publicworks/environmental) 
- *  [OpenData](https://my.spokanecity.org/opendata) 
-   *  [Charter](https://my.spokanecity.org/charter) 
-   *  [Municipal Code](https://my.spokanecity.org/smc) 
-   *  [Maps](https://my.spokanecity.org/opendata/gis) 
- *  [Administrative](https://my.spokanecity.org/administrative) 
-   *  [Legal](https://my.spokanecity.org/administrative/legal) 
-   *  [Claims](https://my.spokanecity.org/administrative/claims) 
-   *  [Public Records](https://my.spokanecity.org/administrative/public-records) 
+<!--THE END-->
 
-***
+- spokanecity
 
- *  [Live](https://my.spokanecity.org/live) 
- *  [Community](https://my.spokanecity.org/community) 
- *  [Get There](https://my.spokanecity.org/getthere) 
- *  [Household Services](https://my.spokanecity.org/household) 
- *  [Parking](https://my.spokanecity.org/parking) 
- *  [Neighborhoods](https://my.spokanecity.org/neighborhoods) 
- *  [Public Safety](https://my.spokanecity.org/publicsafety) 
+<!--THE END-->
 
- *  [Work](https://my.spokanecity.org/work) 
- *  [Doing Business](https://my.spokanecity.org/business/doing-business) 
- *  [Jobs & Employment](https://my.spokanecity.org/jobs) 
- *  [Projects](https://my.spokanecity.org/projects) 
- *  [Get Started...](https://my.spokanecity.org/getstarted) 
- *  [Permits](https://my.spokanecity.org/permits) 
- *  [Purchasing](https://my.spokanecity.org/administrative/purchasing) 
+- [Business &amp; Development](https://my.spokanecity.org/business "Business & Development")
+  
+  - [Commercial](https://my.spokanecity.org/business/commercial "Commercial Services")
+  - [Residential](https://my.spokanecity.org/business/residential "Residential Services")
+  - [Resources](https://my.spokanecity.org/business/resources "Business & Development Resources")
+- [City Hall](https://my.spokanecity.org/cityhall "City Hall")
+  
+  - [Mayor](https://my.spokanecity.org/mayor "Office of the Mayor")
+  - [City Council](https://my.spokanecity.org/citycouncil "City Council")
+  - [Hearing Examiner](https://my.spokanecity.org/hearingexaminer "Hearing Examiner")
+- [Library](https://www.spokanelibrary.org "Spokane Public Library")
+  
+  - [Locations](https://www.spokanelibrary.org/open "Library Locations")
+  - [Digital Branch](https://www.spokanelibrary.org/digital "Digital Branch")
+  - [Services](https://www.spokanelibrary.org/services "Library Services")
+  - [Events](https://www.spokanelibrary.org/calendar "Library Events")
+- [CityCable5](https://my.spokanecity.org/citycable5 "CityCable5")
+  
+  - [Programs](https://my.spokanecity.org/citycable5/programs "CityCable5 Programs")
+  - [Schedule](https://my.spokanecity.org/citycable5/schedule "CityCable5 Schedule")
+  - [Videos](https://my.spokanecity.org/citycable5/videos "CityCable5 Video Library")
+  - [Live](https://my.spokanecity.org/citycable5/live "Watch CityCable5 Live")
+- [Parks &amp; Recreation](https://my.spokanecity.org/parksrec "Parks & Recreation")
+  
+  - [Parks](https://my.spokanecity.org/parks "Parks")
+  - [Recreation](https://my.spokanecity.org/recreation "Recreation")
+  - [Riverfront Spokane](https://my.spokanecity.org/riverfrontspokane "Riverfront Spokane")
+  - [Golf](https://my.spokanecity.org/golf "Golf")
+- [Police Department](https://my.spokanecity.org/police "Police Department")
+  
+  - [Patrol](https://my.spokanecity.org/police/patrol "Patrol")
+  - [Investigations](https://my.spokanecity.org/police/investigations "Investigations")
+  - [Prevention](https://my.spokanecity.org/police/prevention "Prevention")
+- [Courts](https://my.spokanecity.org/courts "Courts")
+  
+  - [Municipal Court](https://my.spokanecity.org/courts/municipal-court "Municipal Court")
+  - [Probation](https://my.spokanecity.org/courts/probation "Probation Services")
+  - [Public Defender](https://my.spokanecity.org/courts/public-defender "Public Defender")
+- [Fire Department](https://my.spokanecity.org/fire "Fire Department")
+  
+  - [Operations](https://my.spokanecity.org/fire/operations "Operations")
+  - [Prevention](https://my.spokanecity.org/fire/prevention "Prevention")
+  - [Training](https://my.spokanecity.org/fire/training "Training")
+- [Community](https://my.spokanecity.org/community "Community Services")
+  
+  - [CHHS](https://my.spokanecity.org/chhs "Community, Housing, and Human Services")
+  - [Neighborhoods](https://my.spokanecity.org/neighborhoods "Neighborhoods")
+  - [Code Enforcement](https://my.spokanecity.org/codeenforcement "Code Enforcement")
+- [Public Works &amp; Utilities](https://my.spokanecity.org/publicworks "Public Works & Utilities")
+  
+  - [Streets](https://my.spokanecity.org/streets "Streets")
+  - [Household](https://my.spokanecity.org/household "Household Services")
+  - [Utilities](https://my.spokanecity.org/publicworks/utility-billing "Utility Billing")
+  - [Environment](https://my.spokanecity.org/publicworks/environmental "Environmental Services")
+- [OpenData](https://my.spokanecity.org/opendata)
+  
+  - [Charter](https://my.spokanecity.org/charter "City Charter")
+  - [Municipal Code](https://my.spokanecity.org/smc "Municipal Code")
+  - [Maps](https://my.spokanecity.org/opendata/gis "Maps & GIS")
+- [Administrative](https://my.spokanecity.org/administrative "Administrative Services")
+  
+  - [Legal](https://my.spokanecity.org/administrative/legal "City Attorney's Office")
+  - [Claims](https://my.spokanecity.org/administrative/claims "Claims")
+  - [Public Records](https://my.spokanecity.org/administrative/public-records "Public Records")
 
- *  [Enjoy](https://my.spokanecity.org/enjoy) 
- *  [Arts & Culture](https://my.spokanecity.org/arts) 
- *  [Riverfront Spokane](https://my.spokanecity.org/riverfrontspokane) 
- *  [Golf](https://my.spokanecity.org/golf) 
- *  [Parks](https://my.spokanecity.org/parks) 
- *  [Recreation](https://my.spokanecity.org/recreation) 
- *  [Visit Spokane](http://www.visitspokane.com) 
+* * *
 
- *  [Engage](https://my.spokanecity.org/engage) 
- *  [Get Involved](https://my.spokanecity.org/getinvolved) 
- *  [Mayor Brown](https://my.spokanecity.org/mayor) 
- *  [City Council](https://my.spokanecity.org/citycouncil) 
- *  [Police Ombuds](https://my.spokanecity.org/opo) 
- *  [Budget & Performance](https://my.spokanecity.org/budget) 
- *  [Elections](https://my.spokanecity.org/elections) 
+- [Live](https://my.spokanecity.org/live "Live in Spokane")
+- [Community](https://my.spokanecity.org/community "Community Services")
+- [Get There](https://my.spokanecity.org/getthere "Get There")
+- [Household Services](https://my.spokanecity.org/household "Household Services")
+- [Parking](https://my.spokanecity.org/parking "Parking")
+- [Neighborhoods](https://my.spokanecity.org/neighborhoods "Neighborhoods")
+- [Public Safety](https://my.spokanecity.org/publicsafety "Public Safety")
 
-***
+<!--THE END-->
 
- *  [X/Twitter](https://twitter.com/spokanecity) 
- *  [Facebook](https://facebook.com/spokanecity) 
- *  [YouTube](https://youtube.com/cityofspokane) 
- *  [Vimeo](https://vimeo.com/spokanecity) 
- *  [Instagram](https://instagram.com/spokanecity) 
-  [Back Top](https://my.spokanecity.org/mayor#Top)  
+- [Work](https://my.spokanecity.org/work "Work in Spokane")
+- [Doing Business](https://my.spokanecity.org/business/doing-business "Doing Business")
+- [Jobs &amp; Employment](https://my.spokanecity.org/jobs "Jobs & Employment")
+- [Projects](https://my.spokanecity.org/projects "Projects")
+- [Get Started...](https://my.spokanecity.org/getstarted "Get Started...")
+- [Permits](https://my.spokanecity.org/permits "Permits")
+- [Purchasing](https://my.spokanecity.org/administrative/purchasing "Purchasing")
 
- *  [Terms of Use](https://my.spokanecity.org/website/terms) 
- * 
- *  [Your Privacy](https://my.spokanecity.org/website/privacy) 
- * 
- *  [Legal Notices]() 
+<!--THE END-->
 
- *  [City of Spokane](https://my.spokanecity.org/about) 
- * 
- *  [Washington](https://access.wa.gov) 
- * 
- *  [USA](https://www.usa.gov) 
- 
+- [Enjoy](https://my.spokanecity.org/enjoy "Enjoy & Have Fun!")
+- [Arts &amp; Culture](https://my.spokanecity.org/arts "Arts & Culture")
+- [Riverfront Spokane](https://my.spokanecity.org/riverfrontspokane "Riverfront Spokane")
+- [Golf](https://my.spokanecity.org/golf "Golf")
+- [Parks](https://my.spokanecity.org/parks "Parks")
+- [Recreation](https://my.spokanecity.org/recreation "Recreation")
+- [Visit Spokane](https://www.visitspokane.com "Spokane Hotels, Events, Restaurants & Things to Do")
+
+<!--THE END-->
+
+- [Engage](https://my.spokanecity.org/engage "Engage Spokane")
+- [Get Involved](https://my.spokanecity.org/getinvolved "Get Involved")
+- [Mayor Brown](https://my.spokanecity.org/mayor "Mayor Brown")
+- [City Council](https://my.spokanecity.org/citycouncil "City Council")
+- [Police Ombuds](https://my.spokanecity.org/opo "Police Ombuds")
+- [Budget &amp; Performance](https://my.spokanecity.org/budget "Budget & Performance Measures")
+- [Elections](https://my.spokanecity.org/elections "Elections & Voting")
+
+* * *
+
+- [X/Twitter](https://twitter.com/spokanecity "Follow us on X/Twitter")
+- [Facebook](https://facebook.com/spokanecity "Find us on Facebook")
+- [YouTube](https://youtube.com/cityofspokane "Watch us on YouTube")
+- [Vimeo](https://vimeo.com/spokanecity "Watch us on Vimeo")
+- [Instagram](https://instagram.com/spokanecity "See us on Instagram")
+
+[Back Top](https://my.spokanecity.org/mayor/ "Back Top")
+
+- [Terms of Use](https://my.spokanecity.org/website/terms "Terms of Use & Disclaimer")
+- [Your Privacy](https://my.spokanecity.org/website/privacy "Privacy Policy")
+- Legal Notices
+
+<!--THE END-->
+
+- [City of Spokane](https://my.spokanecity.org/about "City of Spokane")
+- [Washington](https://access.wa.gov "State of Washington")
+- [USA](https://www.usa.gov "United States of America")

@@ -15,7 +15,7 @@ Browser cookies and javascript are enabled.
 - [Search](https://my.spokanecity.org/search "Website Search")
 - [My Account](https://my.spokanecity.org/account "My Account")
 
-[Menu](https://my.spokanecity.org/citycouncil/members/jonathan-bingle)
+[Menu](https://my.spokanecity.org/citycouncil/members/kitty-klitzke)
 
 - [City Council](https://my.spokanecity.org/citycouncil)More
   
@@ -36,7 +36,7 @@ Browser cookies and javascript are enabled.
   - [Zack Zappone](https://my.spokanecity.org/citycouncil/members/zack-zappone)
   - [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/kitty-klitzke)
   - [Vacancy](https://my.spokanecity.org/citycouncil/members/vacancy)
-- [Jonathan Bingle](https://my.spokanecity.org/citycouncil/members/jonathan-bingle)
+- [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/kitty-klitzke)
 
 # [City Council](https://my.spokanecity.org/citycouncil/default.aspx "City Council")
 
@@ -45,44 +45,35 @@ Browser cookies and javascript are enabled.
 - Previous
 - Next
 
-## Jonathan Bingle
+## Kitty Klitzke
 
-![Jonathan Bingle](https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/3x4/medium/jonathan-bingle.jpg)
+![Kitty Klitzke](https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/3x4/medium/kitty-klitzke.jpg)
 
-*City Council Member, District 1*  
-Term: 2022-2025  
-[jbingle@spokanecity.org](mailto:jbingle@spokanecity.org)
+*City Council Member, District 3*  
+Term: 2024-2027  
+[kklitzke@spokanecity.org](mailto:kklitzke@spokanecity.org)
 
-A lifelong resident of Northeast Spokane, Council Member Bingle is uniquely suited to understand the historic challenges and current needs of District 1. He graduated from Rogers High School and studied at Spokane Falls Community College before launching his first small business 11 years ago. As a small business owner, Jonathan has fostered deep relationships within the community and developed a robust understanding of the challenges small businesses in Spokane face on a daily basis. As such, Jonathan will always support local businesses and promote positive growth in Northeast Spokane, especially as the community recovers from COVID. Our small businesses are the lifeblood of our local economy, and their success is imperative for our community to thrive.
+Council member Klitzke is an accomplished land use and transportation advocate excited to take on the city's long-term planning and vision needs. She is a former army reserve medic, former chair of Spokane's Community Assembly Pedestrian, Transportation, and Traffic Committee, chair of the Spokane Regional Transportation Advisory Committee, and president of the Spokane Regional Food Policy Council. She led Complete Streets Spokane, which successfully advocated for bike and pedestrian infrastructure requirements when planning and building streets.
 
-Jonathan's family has a long history of International Ministry, bringing food, water, medicine, and the Gospel to rural villages in need. His charitable endeavors and community service have made him deeply devoted to doing what he can to help others build a stronger family and community. Jonathan is committed to making Spokane the best place to live, work, and raise a family, just as he is doing with his wife Christina and their young son, Samuel.
-
-Jonathan is also committed to bringing common sense back to City Council. His priorities are to strength the resources devoted to Northeast Spokane and protect its economic future as we continue to grow as a city. He will give our law enforcement officers the support and funding they need to keep our neighborhoods safe, while also working to find sensible solutions to the housing and homelessness crisis in Spokane.
+Council member Klitzke is a lifelong resident of Spokane. She grew up in Northeast Spokane and has lived in Northwest Spokane since 2003. She and her husband, Rick, have two children, one in college and one in public school. They enjoy Nordic skiing, kayaking, rafting, hiking, backpacking, and staying active in the community.
 
 #### Current Council Related Boards, Committees and Commissions
 
-- [Finance and Administration Committee](https://my.spokanecity.org/bcc/committees/finance-and-administration), Member
-  
-  - [Launch Northwest](https://launchnw.org)
-  - Legislative Committee
-  - [Spokane Employees Retirement System (SERS) Board](https://my.spokanecity.org/bcc/boards/city-employees-retirement-board)
-- [Public Infrastructure, Environment and Sustainability Committee](https://my.spokanecity.org/bcc/committees/public-infrastructure-environment-and-sustainability), Vice Chair
-  
-  - [Spokane Regional Transportation Council (SRTC)](https://www.srtc.org/srtc-board-of-directors)
-  - [Transportation Commission](https://my.spokanecity.org/bcc/commissions/transportation-commission) Liaison
-- [Public Safety &amp; Community Health Committee](https://my.spokanecity.org/bcc/committees/public-safety-and-community-health), Member
-- [Urban Experience Committee](https://my.spokanecity.org/bcc/committees/urban-development), Chair
-  
-  - [Downtown BID Board Liaison](https://my.spokanecity.org/bcc/boards/downtown-business-improvement-district-board)
-  - [Park Board](https://my.spokanecity.org/bcc/boards/spokane-park-board)
-  - Park Board Executive Committee
-  - Regional Homeless Authority
+- [Public Infrastructure, Environment and Sustainability Committee](https://my.spokanecity.org/bcc/committees/public-infrastructure-environment-and-sustainability), Chair
+- [Plan Commission](https://my.spokanecity.org/bcc/commissions/plan-commission), Liaison
+- [GMA Steering Committee of Association of Washington](https://my.spokanecity.org/bcc/committees/spokane-county-growth-management-steering-committee), Elected Officials
+- [Spokane Library Board of Trustees](https://my.spokanecity.org/bcc/boards/spokane-public-library-board-of-trustees), Liaison
+- [Spokane Transit Authority](https://my.spokanecity.org/bcc/boards/spokane-transit-authority)
+- [Spokane Regional Transportation Commission](https://my.spokanecity.org/bcc/commissions/transportation-commission)
+- [Spokane Regional Solid Waste](https://www.spokanecounty.org/1270/Solid-Waste-Advisory-Committee)
+- [Salmon Restoration Lead Entity](https://spokanesalmon.org/about/lead-entities)
+- [Veterans' Advisory Board](https://www.spokanecounty.org/3951/Veterans-Advisory-Board-VAB)
+- [Cooper Jones Active Transportation Safety Council (ATSC)](https://wtsc.wa.gov/safe-driving/active-transportation-safety-council)
 
 #### Legislative Assistant
 
-Candi Davis  
-509.625.6719  
-[cldavis@spokanecity.org](mailto:cldavis@spokanecity.org)
+Sarah Sirott  
+[ssirott@spokanecity.org](mailto:ssirott@spokanecity.org)
 
 #### Voting History
 
@@ -92,9 +83,9 @@ Search:
 
 Date Description Vote [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36658** - Vacation of Latah Place between Inland Empire Way and the Union Pacific Railroad, as requested by adjacent property owners. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36681** - Relating to Employee Leave, amending SMC sections 03.04.010, 03.04.020, 03.04.040, 03.04.070, 03.04.200, 03.04.220, 03.04.230, to chapter 03.04 of the Spokane Municipal Code; repealing SMC section 03.04.030, to chapter 03.04 of the Spokane Municipal Code; and setting an effective date. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36683** - Correcting position titles in SMC Chapter 07.06; amending Sections 07.06.097 and 07.06.271 of the Spokane Municipal Code. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36696** - Hearing on Final Reading Ordinance C36696 Amending Title 17 of the Spokane Municipal Code to update regulations governing accessory dwelling units (ADU’s) in accordance with House Bill 1337. Specifically amending Section 17A.020.010 “A” Definitions, Chapter 17C.111.205 Development Standards Tables, Chapter 17C.300 Accessory Dwelling Units, Section 17H.010.040 Initiation of Street Improvement Projects, setting an effective date, and other matters properly related thereto. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Resolution 2025-0035** - Providing for the issuance and sale of taxable Limited Tax General Obligation Bonds in the aggregate principal amount of not to exceed $6,800,000. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Resolution 2025-0037** - Declaring Leads Online, formerly Forensic Technology (Largo, FL), a sole-source provider and authorizing the City to enter into a five (5) year contract for IBIS ClearCase – approximately $356,963.20, without public bidding. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Resolution 2025-0038** - Approving settlement with Krista Tripp-$400,000. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Special Budget Ordinance C36687** - Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to finance capital needs in the Fire Department, and declaring an emergency. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Special Budget Ordinance C36688** - Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to increase a part time employee to a full time employee in the cares program, and declaring an emergency. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Special Budget Ordinance C36689** - Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to replace damaged multi-purpose armored vehicle, and declaring an emergency. Yea
 
-Showing 1 to 10 of 872 entries
+Showing 1 to 10 of 346 entries
 
-Previous12345…88Next
+Previous12345…35Next
 
 *The City of Choice*
 
@@ -229,7 +220,7 @@ Spokane, WA 99201
 - [Vimeo](https://vimeo.com/spokanecity "Watch us on Vimeo")
 - [Instagram](https://instagram.com/spokanecity "See us on Instagram")
 
-[Back Top](https://my.spokanecity.org/citycouncil/members/jonathan-bingle/ "Back Top")
+[Back Top](https://my.spokanecity.org/citycouncil/members/kitty-klitzke/ "Back Top")
 
 - [Terms of Use](https://my.spokanecity.org/website/terms "Terms of Use & Disclaimer")
 - [Your Privacy](https://my.spokanecity.org/website/privacy "Privacy Policy")
