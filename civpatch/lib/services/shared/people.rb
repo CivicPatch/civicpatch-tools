@@ -13,14 +13,14 @@ module Services
         }
 
         formatted_person["images"] = data_point?(person["image"]) ? [person["image"]] : []
-        formatted_person["roles"] = if person["roles"]&.length.positive?
+        formatted_person["roles"] = if person["roles"]&.length&.positive?
                                       person["roles"].select do |role|
                                         data_point?(role)
                                       end
                                     else
                                       []
                                     end
-        formatted_person["divisions"] = if person["divisions"].length.positive?
+        formatted_person["divisions"] = if person["divisions"]&.length&.positive?
                                           person["divisions"].select do |division|
                                             data_point?(division)
                                           end
