@@ -2,36 +2,36 @@
   {
     "name": "Zach Tirrell",
     "roles": [
-      "Selectboard Member"
+      "Select Board Member"
     ],
-    "updated_at": "2025-06-06"
-  },
-  {
-    "name": "William Bolton",
-    "roles": [
-      "Selectboard Member"
-    ],
-    "updated_at": "2025-06-06"
-  },
-  {
-    "name": "Maryann Barnsley",
-    "roles": [
-      "Selectboard Member"
-    ],
-    "updated_at": "2025-06-06"
-  },
-  {
-    "name": "Neil McIver",
-    "roles": [
-      "Selectboard Member"
-    ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-13T19:38:49Z"
   },
   {
     "name": "Theodore Wisniewski",
     "roles": [
-      "Selectboard Member"
+      "Select Board Member"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-13T19:38:49Z"
+  },
+  {
+    "name": "Maryann Barnsley",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-06-13T19:38:49Z"
+  },
+  {
+    "name": "Philip LaMoreaux",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-06-13T19:38:49Z"
+  },
+  {
+    "name": "Jason Neenos",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-06-13T19:38:49Z"
   }
 ]
