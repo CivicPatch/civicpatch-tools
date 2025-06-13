@@ -22,9 +22,10 @@ git -C ./tmp/civicpatch-tools checkout -B $BRANCH_NAME
 
 # Copy everything except the lock files
 cp -rn ./tmp/civicpatch-tools/. /app
-# Overwrite civpatch/data and data_source with clobbering copy if they exist
-[ -d ./tmp/civicpatch-tools/civpatch/data ] && cp -r ./tmp/civicpatch-tools/civpatch/data/. /app/civpatch/data/
-[ -d ./tmp/civicpatch-tools/civpatch/data_source ] && cp -r ./tmp/civicpatch-tools/civpatch/data_source/. /app/civpatch/data_source/
+# Force overwrite data and data_source directories
+rm -rf /app/civpatch/data /app/civpatch/data_source
+cp -r ./tmp/civicpatch-tools/civpatch/data /app/civpatch/
+cp -r ./tmp/civicpatch-tools/civpatch/data_source /app/civpatch/
 
 # Restore the lock files if they existed
 [ -f ./tmp/Gemfile.lock.backup ] && cp ./tmp/Gemfile.lock.backup /app/civpatch/Gemfile.lock
