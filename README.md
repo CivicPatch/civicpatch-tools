@@ -86,3 +86,9 @@ This will start a docker container, run the scrape, and when the scrapes are com
 
 ### Links
 * https://editor.dicebear.com/
+
+### Misc Setup
+* Set up gitleaks
+  * Move [this](https://raw.githubusercontent.com/gitleaks/gitleaks/958f55ac629b5351bb7b9c80f00c10823fef64d3/scripts/pre-commit.py) to .git/hooks/pre-commit.py
+
+
