@@ -6,6 +6,7 @@
       "Mayor"
     ],
     "divisions": [
+      "At-large",
       "Position 4"
     ],
     "image": null,
@@ -18,7 +19,7 @@
       "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
       "https://www.cityofpa.us/137/City-Council"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-11T02:53:56Z"
   },
   {
     "name": "Navarra Carr",
@@ -27,6 +28,7 @@
       "Deputy Mayor"
     ],
     "divisions": [
+      "At-large",
       "Position 6"
     ],
     "image": null,
@@ -39,7 +41,7 @@
       "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
       "https://www.cityofpa.us/137/City-Council"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-11T02:53:56Z"
   },
   {
     "name": "Drew Schwab",
@@ -47,6 +49,7 @@
       "Council Member"
     ],
     "divisions": [
+      "At-large",
       "Position 2"
     ],
     "image": null,
@@ -59,7 +62,7 @@
       "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
       "https://www.cityofpa.us/137/City-Council"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-11T02:53:56Z"
   },
   {
     "name": "Amy Miller",
@@ -68,6 +71,7 @@
       "Council Member"
     ],
     "divisions": [
+      "At-large",
       "Position 5"
     ],
     "image": null,
@@ -80,7 +84,7 @@
       "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
       "https://www.cityofpa.us/137/City-Council"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-11T02:53:56Z"
   },
   {
     "name": "Brendan Meyer",
@@ -89,6 +93,7 @@
       "Council Member"
     ],
     "divisions": [
+      "At-large",
       "Position 7"
     ],
     "image": null,
@@ -101,7 +106,7 @@
       "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
       "https://www.cityofpa.us/137/City-Council"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-11T02:53:56Z"
   },
   {
     "name": "LaTrisha Suggs",
@@ -110,6 +115,7 @@
       "Council Member"
     ],
     "divisions": [
+      "At-large",
       "Position 1"
     ],
     "image": null,
@@ -122,7 +128,7 @@
       "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
       "https://www.cityofpa.us/137/City-Council"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-11T02:53:56Z"
   },
   {
     "name": "Lindsey Schromen-Wawrin",
@@ -131,6 +137,7 @@
       "Council Member"
     ],
     "divisions": [
+      "At-large",
       "Position 3"
     ],
     "image": null,
@@ -143,6 +150,6 @@
       "https://www.cityofpa.us/912/Meet-Your-City-Council-Members",
       "https://www.cityofpa.us/137/City-Council"
     ],
-    "updated_at": "2025-06-06"
+    "updated_at": "2025-06-11T02:53:56Z"
   }
 ]
