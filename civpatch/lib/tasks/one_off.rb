@@ -293,6 +293,12 @@ namespace :one_off do
     Scrapers::Municipalities.fetch("nh")
   end
 
+  task :count_mun do
+    state = "wa"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    puts municipalities.select { |municipality| municipality["website"].present? }.length
+  end
+
   task :update_government_types do
     official_government_types = %w[mayor_council selectmen aldermen town_meeting]
     state = "wa"

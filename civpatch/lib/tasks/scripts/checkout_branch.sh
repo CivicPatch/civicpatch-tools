@@ -13,8 +13,8 @@ mkdir -p ./tmp/civicpatch-tools
 git clone -b main $REPO_URL ./tmp/civicpatch-tools
 # Try to fetch the target branch
 git -C ./tmp/civicpatch-tools fetch origin $BRANCH_NAME || true
-# Try to checkout the branch, fall back to main if it doesn't exist
-git -C ./tmp/civicpatch-tools checkout $BRANCH_NAME || git -C ./tmp/civicpatch-tools checkout main
+# Create and checkout the branch (will create if doesn't exist)
+git -C ./tmp/civicpatch-tools checkout -B $BRANCH_NAME
 
 # Backup the lock files if they exist
 [ -f civpatch/Gemfile.lock ] && cp civpatch/Gemfile.lock ./tmp/Gemfile.lock.backup
@@ -33,5 +33,5 @@ cp -rn ./tmp/civicpatch-tools/. /app
 rm -rf ./tmp
 cd /app/civpatch
 
-# Ensure we're on the correct branch
-git checkout $BRANCH_NAME || git checkout main
+# Create and checkout the branch in the main repo
+git checkout -B $BRANCH_NAME
