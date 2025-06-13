@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-mayor/)
 
 # City of Kent
 
@@ -1228,9 +1228,9 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
   
   - [2025 Summer Events](https://www.kentwa.gov/events/2025-summer-events "2025 Summer Events")
 
-[Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
+[Government](https://www.kentwa.gov/government)
 
-# Kent City Councilmember Toni Troutner
+# Kent Mayor Dana Ralph
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,45 +1244,71 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Toni Troutner](https://www.kentwa.gov/home/showpublishedimage/17771/638446490523030000)
+![Mayor Banner](https://www.kentwa.gov/home/showpublishedimage/2171/636131525380430000)
 
-Kent City Councilmember Toni Troutner, elected in 2017, assumes office having a deep understanding of the issues facing Kent residents, families, and businesses. Having lived in Kent for 25 years, Toni has been active and involved in the community through a variety of volunteer and community service roles.
+## Meet Mayor Dana Ralph
 
-She has served Kent students and families as the president of the Kent School District Parent, Teacher, and Student Association. Her commitment to public safety led her to serve as a commissioner on the Civil Service Commission and, currently, Chair of the Puget Sound Regional Fire Authority Governance Board. She is the chair of the Kent Drug Free Coalition and the past president of the Kent Downtown Partnership, as well as a coordinator for the Kent Severe Weather Shelter.
+![Portrait of Mayor Ralph](https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000)
 
-Her priorities include a focus on public safety and investing in our infrastructure. She's continuing to invest in our one-of-a-kind parks system, while fighting to keep taxes low for Kent residents and businesses.
+Re-elected by Kent voters for her second term in 2021, **Mayor Dana Ralph** serves as the Chief Executive Officer of the City of Kent in Washington State.
 
-While serving as Chair of the Public Safety Committee, she supported the addition of body worn cameras for our police department increasing accountability and transparency in policing. She is proud to have worked for apprenticeship utilization, ensuring young people can get local jobs in the building and construction trades. Finally, as Council President, she shepherded over two million dollars in federal CARES Act dollars to local businesses to support them during the COVID-19 pandemic.
+She along with a seven-member City Council and over 730 City employees work to deliver results for the 140,000 people and over 5,000 businesses that call Kent Home.
 
-It is an honor to represent the City as co-chair of the WRIA 9 Watershed Ecosystem Forum. The city has a great partnership with the WRIA and has been the recipient of grant funding for several salmon habitat projects.
+Mayor Ralph has the sole discretion to appoint the City’s **Executive Leadership Team**, which consists of the Directors overseeing all city departments
 
-Councilmember Troutner was awarded the Advance Certificate of Municipal Leadership by the Association of Washington Cities in November of 2024.
+She works with them to develop policy, programs and services to benefit the residents and businesses of Kent. She is also responsible for preparing and transmitting the City’s $884 million-dollar biennial operating and capital budgets.
 
-During her free time, Toni enjoys spending time with her husband, Brett, and her sons, Kyler and Connor. They love trying new restaurants in town and spending time checking out local businesses.
+A Kent native, Mayor Ralph is the **fourth generation** of her family to call Kent home. After attending Kent public schools, she **graduated from Kent-Meridian High School**.
 
-## Reach Councilmember Troutner, position 4
+During high school, she met and later married her high school sweetheart, Shawn. Together, they raised two boys who graduated from Kentridge High School.
 
-- 253-856-5712
-- 253-951-7765
-- [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
-- Email all Council:  
-  [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- Kent City Council  
-  220 Fourth Avenue South  
+Nearly 30 years ago, Mayor Ralph started a small business in Kent, which she still owns, but no longer manages day-to-day operations.
+
+Driven by wanting to make a difference in her hometown, she first became involved in local government about 20 years ago when she volunteered to serve on the City’s Land Use and Planning Board and the City’s Arts Commission.
+
+As she learned more about policy and advocacy and the inner working of local government, she wanted to be more involved to help shape the future of our community that she loves.
+
+She was first elected to the **Kent City Council** in 2011 and served from 2012 to 2017.
+
+During 2014 and 2015, she served as **Kent City Council President** where she was responsible for agenda setting and committee assignments.
+
+Knowing there was much more work to be done for Kent, she ran for **Mayor** while at the same time battling (and later defeating!) breast cancer.
+
+**She elected by voters in 2017 and sworn into office in January 2018 as Kent’s 27th Mayor and only the 3rd woman to ever hold the role.**
+
+As mayor, Dana has prioritized bringing good jobs to Kent, improving public safety, investing in the city’s infrastructure, parks and human services programs, expanding housing and transit options, and supporting Kent’s small businesses and industries.
+
+She values communication and transparency, and serving with compassion as we look after vulnerable populations and ensure a principled approach to equity and inclusion.
+
+When not at work, Mayor Ralph is known for her extensive knowledge of Rock N’ Roll, she enjoys camping, spending time with family and friends, attending community events and volunteering.
+
+She is passionate about serving the many needs of our diverse city. She is one of the founders of the Shop with a Cop program that raises funds to buy Christmas gifts for families in-need through Kent Youth and Family Services, and she encourages all City employees to give back to the community whenever possible.
+
+“I am so proud to call Kent home and it is such an honor to serve as your mayor.
+
+Kent has infinite potential. We have all the ingredients to continue being a world-class city for residents and businesses to thrive and make a lasting impact,” said Mayor Ralph.
+
+Our strength is our people, and I am blessed to work side-by-side with some of the best and brightest every day toward a shared vision: to make Kent an even better place to live, work and play for generations.
+
+My hope is that you will join in the passion that drives me—the idea I work toward every day—showing the world Kent’s potential, and making sure our residents, businesses and community organizations have the tools to turn that potential into reality.”
+
+[**Sign up for Mayor Ralph's weekly newsletter here!**](https://kentwa.gov/subscribe)
+
+## Reach the Mayor
+
+- 253-856-5700
+- [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
+- ![](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
+  
+  Office of the Mayor  
+  220 Fourth Ave. S  
   Kent, WA 98032
-- **Term Began**
-  
-  January 2018
-- **Term Expires**
-  
-  Dec. 31, 2025
-- **Chair**
-  
-  Puget Sound Regional Fire Authority, Co-Chair Severe Weather Shelter, Drug Free Coalition
-- **Member**
-  
-  Co-Chair WRIA 9 Managment Committee and Forum; Puget Sound Regional Fire Authority Governance Board (Chair); Disability Retirement Board (LEOFF 1); Kent Drug Free Coalition; Region Transit Committee; Coordinator Severe Weather Shelter; Kent Downtown Partnership Secretary; King County Flood Control District Advisory Committee (alternate); Puget Sound Regional Council Executive Board (alternate)
-- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the Mayor will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+
+Free viewers are required for some of the attached documents.  
+They can be downloaded by clicking on the icons below.
+
+[Acrobat Reader ![Download Acrobat Reader](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/acrobat.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fget.adobe.com%2Freader%2F&____isexternal=true "Download Acrobat Reader") [Windows Media Player ![Download Windows Media Player](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/wmp.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fwindows.microsoft.com%2Fen-us%2Fwindows%2Fwindows-media-player&____isexternal=true "Download Windows Media Player") [Word Viewer ![Download Word Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/word.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Word Viewer") [Excel Viewer ![Download Excel Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/excel.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Excel Viewer") [PowerPoint Viewer ![Download PowerPoint Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/powerpoint.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download PowerPoint Viewer")
 
 ## Stay Connected
 

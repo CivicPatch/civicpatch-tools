@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce/)
 
 # City of Kent
 
@@ -1230,7 +1230,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember Toni Troutner
+# Kent City Councilmember Bill Boyce
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,44 +1244,51 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Toni Troutner](https://www.kentwa.gov/home/showpublishedimage/17771/638446490523030000)
+![Councilmember Bill Boyce](https://www.kentwa.gov/home/showpublishedimage/17761/638446491818570000)
 
-Kent City Councilmember Toni Troutner, elected in 2017, assumes office having a deep understanding of the issues facing Kent residents, families, and businesses. Having lived in Kent for 25 years, Toni has been active and involved in the community through a variety of volunteer and community service roles.
+Born and raised in North Carolina, Kent City Councilmember Bill Boyce first came to Washington when he was stationed at Fort Lewis as an US Army airborne ranger paratrooper for four years. Bill loved the area so much, he decided to stay. He moved to Kent in 1984, where he and his wife Debbie raised five children. With a bachelor’s degree in business, Bill has been at the Boeing Company for 36 years, currently as a Senior Manufacturer leader. 
 
-She has served Kent students and families as the president of the Kent School District Parent, Teacher, and Student Association. Her commitment to public safety led her to serve as a commissioner on the Civil Service Commission and, currently, Chair of the Puget Sound Regional Fire Authority Governance Board. She is the chair of the Kent Drug Free Coalition and the past president of the Kent Downtown Partnership, as well as a coordinator for the Kent Severe Weather Shelter.
+Bill has always been passionate about being involved in the community where he lives. Before being elected to Kent City Council, currently in his third term, he served on the Kent School District Board of Directors for 16 years, including four terms as board president. He is a charter member and past president of the Kent Sunrise Rotary Club, and he served as a commissioner of the Criminal Justice Training Center for 13 years. 
 
-Her priorities include a focus on public safety and investing in our infrastructure. She's continuing to invest in our one-of-a-kind parks system, while fighting to keep taxes low for Kent residents and businesses.
+Bill currently represents Kent on the Sound Cities Association Public Interest Committee as a member. He also serves on the Harborview Medical Center Board of Trustees.
 
-While serving as Chair of the Public Safety Committee, she supported the addition of body worn cameras for our police department increasing accountability and transparency in policing. She is proud to have worked for apprenticeship utilization, ensuring young people can get local jobs in the building and construction trades. Finally, as Council President, she shepherded over two million dollars in federal CARES Act dollars to local businesses to support them during the COVID-19 pandemic.
+Bill believes one of the most important roles he plays is ensuring government transparency and accountability. “Making sure the people of Kent have access to their government is crucial,” said Bill. “We need to ensure we get our residents the best bang for their buck, keep taxes low and deliver high quality services that their families can count on.”
 
-It is an honor to represent the City as co-chair of the WRIA 9 Watershed Ecosystem Forum. The city has a great partnership with the WRIA and has been the recipient of grant funding for several salmon habitat projects.
+Bill is a firm believer that we need to provide a safe and welcoming community that will attract new residents, well-paying jobs and potential development to our city.
 
-Councilmember Troutner was awarded the Advance Certificate of Municipal Leadership by the Association of Washington Cities in November of 2024.
+“It is so important that we make Kent a place that everyone can call home. Businesses should be proud of not only locating here but the top-quality workforce we provide as well. We must continue to create a wide variety of jobs for the diverse residents who call Kent home,” Bill concluded.
 
-During her free time, Toni enjoys spending time with her husband, Brett, and her sons, Kyler and Connor. They love trying new restaurants in town and spending time checking out local businesses.
+When not at work or doing community service, Bill loves to spend quality family time. He enjoys BBQing and smoking high quality meats for his wife Debbie, his kids and his grandkids. He enjoys watching and participating in sporting events, spending time outdoors and checking out new businesses in Kent. Bill lives on the East Hill with his wife Debbie, and his 5 kids – all KSD graduates – still reside around the region with his grandchildren.
 
-## Reach Councilmember Troutner, position 4
+“Having a close-knit family is one of the most important things to me,” says Bill. “We get together every Sunday for a big family dinner. We like going up to the mountains or playing outdoor games, sitting, laughing and having a good time.”
 
-- 253-856-5712
-- 253-951-7765
-- [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
+[Kent TV21 Calling Kent Home, Council Edition: Bill Boyce](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119879553&____isexternal=true) from [Kent TV21](https://vimeo.com/kenttv21) on [Vimeo](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com&____isexternal=true).
+
+## Reach Councilmember Boyce, Position 5
+
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
+  
+  253-856-5712
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
+  
+  206-915-0930
+- [bboyce@KentWA.gov](mailto:bboyce@kentwa.gov)
 - Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- Kent City Council  
-  220 Fourth Avenue South  
+- ![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
+  
+  Kent City Council  
+  220 Fourth Ave S.  
   Kent, WA 98032
 - **Term Began**
   
-  January 2018
+  January 2012
 - **Term Expires**
   
-  Dec. 31, 2025
-- **Chair**
-  
-  Puget Sound Regional Fire Authority, Co-Chair Severe Weather Shelter, Drug Free Coalition
+  Dec. 31, 2027
 - **Member**
   
-  Co-Chair WRIA 9 Managment Committee and Forum; Puget Sound Regional Fire Authority Governance Board (Chair); Disability Retirement Board (LEOFF 1); Kent Drug Free Coalition; Region Transit Committee; Coordinator Severe Weather Shelter; Kent Downtown Partnership Secretary; King County Flood Control District Advisory Committee (alternate); Puget Sound Regional Council Executive Board (alternate)
+  Sound Cities Association Public Interest Committee and the Harborview Board of Trustees
 - *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
