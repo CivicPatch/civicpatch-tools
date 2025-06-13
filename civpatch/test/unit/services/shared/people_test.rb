@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require_relative "../../../lib/services/shared/people"
+require_relative "../../../../lib/services/shared/people"
 require "resolvers/person_resolver" # Added dependency
 
 module Services

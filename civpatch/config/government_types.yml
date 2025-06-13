@@ -194,6 +194,7 @@ government_types:
         - council manager
       council members:
         - meet the council
+        - meet your city council members
         - city council members
         - council bios
         - council members

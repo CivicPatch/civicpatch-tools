@@ -68,45 +68,6 @@ module Services
           - start_date: (Object or null) {data: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
           - end_date: (Object or null) {data: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
 
-          Example Format: # Shows desired output for common patterns
-          {
-            "people": [
-              {
-                "name": "Denyse McGriff",
-                "roles": [{data: "Mayor", "llm_confidence": 0.95, "llm_confidence_reason": "Found 'Mayor' in the text."}],
-                "divisions": [],
-                "image": {"data": "https://www.orcity.org/headshot.jpg", "llm_confidence": 0.95,
-                          "llm_confidence_reason": "Found image labeled 'Mayor Denyse McGriff' near name."},
-                "phone_number": {"data": "503-656-3912", "llm_confidence": 0.95, "llm_confidence_reason": "Found number labeled 'Home:' near name."},
-                "email": {"data": "dmcgriff@orcity.org", "llm_confidence": 0.98, "llm_confidence_reason": "Extracted from mailto link text near name."},
-                "website": {"data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff", "llm_confidence": 0.9, "llm_confidence_reason": "Primary page URL."},
-                "start_date": {"data": "2023-01-01", "llm_confidence": 0.99,"llm_confidence_reason": "Extracted start date from 'Term: January 1, 2023 to ...'"},
-                "end_date": {"data": "2026-12-31", "llm_confidence": 0.99, "llm_confidence_reason": "Extracted end date from 'Term: ... to December 31, 2026'"}
-              }, {
-                "name": "Adam Marl",
-                "roles": [{data: "Council Member", "llm_confidence": 0.95, "llm_confidence_reason": "Found 'Council Member' in the text."}],
-                "divisions": ["Ward 1"],
-                "image": {"data": "https://www.orcity.org/images/f7ac574487389ed707b5d516d17500f55ca16e63d4b8100ef310b0d792cce875.jpg",
-                          "llm_confidence": 0.95, "llm_confidence_reason": "Found image labeled 'Commissioner Adam Marl' near name."},
-                "phone_number": {"data": "503-406-8165", "llm_confidence": 0.95, "llm_confidence_reason": "Found number labeled 'Cell:' near name."},
-                "email": {"data": "amarl@orcity.org", "llm_confidence": 0.98, "llm_confidence_reason": "Extracted from mailto link text near name."},
-                "website": {"data": "https://www.orcity.org/1775/Commissioner-Adam-Marl", "llm_confidence": 0.9, "llm_confidence_reason": "Primary page URL."},
-                "start_date": {"data": "2023-01-01", "llm_confidence": 0.99,"llm_confidence_reason": "Extracted start date from 'Term: January 1, 2023 to ...'"},
-                "end_date": {"data": "2026-12-31", "llm_confidence": 0.99, "llm_confidence_reason": "Extracted end date from 'Term: ... to December 31, 2026'"}
-              }, {
-                "name": "Example Person",
-                "roles": ["Council Member At-Large"],
-                "divisions": [],
-                "image": null,
-                "phone_number": null,
-                "email": null,
-                "website": null,
-                "start_date": null,
-                "end_date": {"data": "2026-12", "llm_confidence": 0.97, "llm_confidence_reason": "Extracted from 'Term Expires December 2026'"}
-              }
-            ]
-          }
-
           Extraction Guidelines:
           - General: Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field\'s data.
           - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in \'positions\'.
@@ -142,7 +103,10 @@ module Services
             - Acceptable date phrases include:
               - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
               - For vague phrases like "Spring 2025", extract the year only.
-            - If more than one term is mentioned, extract the most recent one.
+            - If more than one term is mentioned, extract the latest term dates.
+            - Examples:
+              - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
+              - "Served January 2018 until December 2021 - Re-elected and serving January 2022 and until December 2025" -> start_date: "2022-01", end_date: "2025-12"
 
           **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
             paying close attention to the date extraction, conversion, and term identification rules.

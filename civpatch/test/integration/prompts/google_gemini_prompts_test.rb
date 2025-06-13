@@ -1,6 +1,5 @@
 require "test_helper"
 require "services/google_gemini/client"
-require "services/prompts/google_gemini_prompts"
 
 module IntegrationTest
   class GoogleGeminiPromptsTest < Minitest::Test

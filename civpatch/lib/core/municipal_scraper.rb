@@ -9,7 +9,7 @@ require "core/crawler"
 
 module Core
   class MunicipalScraper
-    MAX_URLS_TO_SCRAPE = 20
+    MAX_URLS_TO_SCRAPE = 30
     MIN_PEOPLE_TO_FIND = 3
 
     def self.fetch( # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
@@ -42,7 +42,7 @@ module Core
                people_config: municipality_context[:config]["people"] }
       exit_early = false
 
-      avoid_keywords = %w[alerts news event calendar archive]
+      avoid_keywords = %w[alerts news event calendar archive meeting commission alert documentcenter]
 
       %w[seeded search crawler].each do |scrape_with|
         break unless should_continue_scraping?(context, data)
@@ -59,9 +59,10 @@ module Core
           urls = seeded_urls
         when "search"
           exit_early = true
-          keyword_terms = keyword_groups.map { |group| group[:name] }
-          puts "#{llm_service_string}: Scraping with search with keyword_terms: #{keyword_terms}"
-          urls = scrape_with_search(context, keyword_terms)
+          puts "#{llm_service_string}: Scraping with search with keyword term: #{keyword_groups.map do |group|
+            group[:name]
+          end}"
+          urls = scrape_with_search(context, keyword_groups)
         when "crawler"
           exit_early = true
           puts "#{llm_service_string}: Scraping with crawler #{keyword_groups}, avoid keywords #{avoid_keywords}"
@@ -70,8 +71,10 @@ module Core
 
         next if urls.blank?
 
+        puts "Urls before filtering: #{urls}"
+
         urls = urls.map { |url| Utils::UrlHelper.format_url(url) }.reject do |url|
-          avoid_keywords.any? { |keyword| url.include?(keyword) }
+          avoid_keywords.any? { |keyword| url.downcase.include?(keyword) }
         end
 
         puts "#{llm_service_string}: URLs to scrape:"
@@ -93,11 +96,11 @@ module Core
       [formatted_officials, data[:people_config]]
     end
 
-    def self.scrape_with_search(context, keyword_terms)
+    def self.scrape_with_search(context, keyword_groups)
       return context[:request_cache]["search"] if context[:request_cache]["search"].present?
 
       results = Resolvers::SearchResolver.municipal_search(context[:municipality_context],
-                                                           keyword_terms)
+                                                           keyword_groups)
       context[:request_cache]["search"] = results
       results
     end
@@ -223,10 +226,11 @@ module Core
 
     def self.should_continue_scraping?(context, data)
       accumulated_officials = data[:accumulated_people]
+
+      puts "URLs processed: #{data[:processed_urls]}"
       num_urls_scraped = data[:processed_urls].count
 
-      num_seeded_urls = context[:seeded_urls].present? ? context[:seeded_urls].count : 0
-      return false if num_urls_scraped >= [MAX_URLS_TO_SCRAPE, num_seeded_urls].max
+      return false if num_urls_scraped >= MAX_URLS_TO_SCRAPE
 
       valid_officials_count = accumulated_officials.count do |official|
         Services::Shared::People.profile_data_points_present?(official)

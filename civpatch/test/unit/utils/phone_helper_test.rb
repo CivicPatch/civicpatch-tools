@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require_relative "../../lib/utils/phone_helper"
+require "utils/phone_helper"
 
 module Utils
   class PhoneHelperTest < Minitest::Test

@@ -2,6 +2,7 @@
 
 # Given a base url and keyword groups, crawl the domain
 require "selenium-webdriver"
+require "nokolexbor"
 require "utils/array_helper"
 require_relative "browser"
 require_relative "../utils/url_helper"
@@ -39,14 +40,18 @@ module Core
       while queue.any? && visited.size < max_pages
         current = queue.shift
         next if visited.include?(current[:url])
+        next if current[:depth] > max_depth
 
         visited.add(current[:url])
-        puts "Crawling: #{current[:url]} (#{visited.size}/#{max_pages})"
 
-        results, visited = process_keyword_groups(
+        results, visited, new_links = process_keyword_groups(
           base_url, visited, current, keyword_groups,
           max_depth, avoid_keywords, results
         )
+
+        new_links.each do |link_url|
+          queue.push({ url: link_url, depth: current[:depth] + 1 })
+        end
       end
 
       results
@@ -56,31 +61,27 @@ module Core
       base_url, visited, current, keyword_groups,
       max_depth, avoid_keywords, results
     )
-      found_links = []
+      all_new_links = []
       keyword_groups.each do |keyword_group|
         new_found_links, visited = follow_links(
           base_url, visited, current[:url],
           keyword_group[:keywords], max_depth,
           current[:depth] + 1, avoid_keywords
         )
-        found_links.concat(new_found_links.reject do |new_found_link|
-          found_links.any? do |found_link|
-            found_link == new_found_link
-          end
-        end)
 
-        results[keyword_group[:name]].concat(found_links) unless found_links.empty?
+        unless new_found_links.empty?
+          results[keyword_group[:name]].concat(new_found_links)
+          all_new_links.concat(new_found_links)
+        end
       end
 
-      [results, visited]
+      [results, visited, all_new_links.uniq]
     end
 
     def self.follow_links(base_url, visited, url, keywords, max_depth, depth, avoid_keywords)
-      return [] if depth > max_depth
-
       page = fetch_page(url)
       visited.add(url)
-      return [] unless page
+      return [[], visited] unless page
 
       links = extract_links(page, base_url)
 
@@ -98,8 +99,8 @@ module Core
     end
 
     def self.fetch_page(url)
-      html = Browser.fetch_page_content(url)
-      Nokogiri::HTML(html)
+      html = Core::Browser.fetch_page_content(url)
+      Nokolexbor::HTML(html)
     end
 
     def self.extract_links(page, base_url)

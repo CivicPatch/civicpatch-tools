@@ -69,17 +69,19 @@ module Services
 
         target_text = if person_name.present?
                         person_name
-                      else
-                        %(the council members (including the mayor) of the target municipality.
+                      elsif maybe_target_people.present?
+                        %(the main governing body of the target municipality.
                         If the content includes information about the following people, they are
                         very likely to be on the council:
                         #{maybe_target_people.join(", ")}
                         )
+                      else
+                        %(the main governing body of the target municipality.
+                          You are looking for specific types of roles: #{roles.join(", ")}
+                        )
                       end
 
         %(
-        You are an expert data extractor.
-
         First, determine if the content contains relevant information about #{target_text}.
         If not, return an empty JSON array `[]`.
 

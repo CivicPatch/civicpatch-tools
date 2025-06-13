@@ -9,7 +9,7 @@ module Services
       @search_engine_id = ENV["GOOGLE_SEARCH_ENGINE_ID"]
     end
 
-    def self.municipal_search(municipality_context, query_keywords)
+    def self.municipal_search(municipality_context, query_keywords, _or_terms_list)
       set_keys
 
       state = municipality_context[:state]
@@ -22,6 +22,7 @@ module Services
         siteSearch: website,
         siteSearchFilter: "i",
         q: query
+        # orTerms: or_terms_list.join("|")
       }
 
       response = HTTParty.get(GOOGLE_SEARCH_ENDPOINT, query: params)

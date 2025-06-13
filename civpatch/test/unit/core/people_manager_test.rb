@@ -17,22 +17,24 @@ class PeopleManagerTest < Minitest::Test
       { "name" => "Bob", "positions" => [] },
       { "name" => "Charlie", "positions" => ["councilmember"] }
     ]
+
+    @government_type = "mayor_council"
   end
 
   def test_filters_out_people_with_no_positions
-    result = Core::PeopleManager.format_people(@people, @positions_config)
+    result = Core::PeopleManager.format_people(@government_type, @people, @positions_config)
     names = result.map { |p| p["name"] }
     refute_includes names, "Bob"
   end
 
   def test_sorts_and_formats_positions
-    result = Core::PeopleManager.format_people(@people, @positions_config)
+    result = Core::PeopleManager.format_people(@government_type, @people, @positions_config)
     alice = result.find { |p| p["name"] == "Alice" }
     assert_equal ["Mayor", "Council Member"], alice["positions"]
   end
 
   def test_handles_aliases
-    result = Core::PeopleManager.format_people(@people, @positions_config)
+    result = Core::PeopleManager.format_people(@government_type, @people, @positions_config)
     charlie = result.find { |p| p["name"] == "Charlie" }
     assert_equal ["Council Member"], charlie["positions"]
   end
@@ -76,7 +78,7 @@ class PeopleManagerTest < Minitest::Test
     ]
 
     # Call the method with test data
-    formatted = Core::PeopleManager.format_people(people, positions_config)
+    formatted = Core::PeopleManager.format_people(@government_type, people, positions_config)
 
     # Assert that the formatted list has only the relevant entries
     assert_equal 3, formatted.size

@@ -18,7 +18,27 @@ require_relative "lib/open_data"
 
 OpenData.load_tasks
 
-Minitest::TestTask.create
+namespace :test do
+  desc "Run tests (use TEST_PATTERN=test/integration/**/*_test.rb to run specific tests)"
+  task :run do
+    test_files = Dir.glob(ENV["TEST_PATTERN"] || "test/**/*_test.rb")
+
+    if test_files.empty?
+      puts "No test files found matching pattern: #{ENV["TEST_PATTERN"]}"
+      exit 1
+    end
+
+    puts "\nRunning tests:"
+    test_files.each { |f| puts "  #{f}" }
+    puts "\n"
+
+    # Run the tests using ruby directly with both test and lib in the load path
+    cmd = ["bundle", "exec", "ruby", "-Ilib:test", *test_files]
+    system(*cmd) or exit(1)
+  end
+end
+
+task test: "test:run"
 
 require "rubocop/rake_task"
 

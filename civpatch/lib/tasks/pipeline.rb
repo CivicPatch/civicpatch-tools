@@ -157,7 +157,7 @@ namespace :pipeline do
     merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
     people = process_images(context, merged_people) if Services::Spaces.enabled?
 
-    people = people.map { |person| Core::PersonManager::Utils.sort_keys(person) }
+    people = people.map { |person| Core::PersonManager::Utils.sort_keys(government_type, person) }
     people = Core::PersonManager::Utils.sort_people(government_type, people)
     Core::PeopleManager.update_people(context, people)
 
