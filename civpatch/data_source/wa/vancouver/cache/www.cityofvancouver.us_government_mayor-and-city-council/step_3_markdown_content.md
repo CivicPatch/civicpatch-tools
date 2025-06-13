@@ -1,4 +1,4 @@
-[Skip to main content](https://cityofvancouver.us/departments/mayor-city-council/) [Skip to search](https://cityofvancouver.us/departments/mayor-city-council/)
+[Skip to main content](https://www.cityofvancouver.us/government/mayor-and-city-council/) [Skip to search](https://www.cityofvancouver.us/government/mayor-and-city-council/)
 
 ![logo](https://www.cityofvancouver.us/wp-content/uploads/2023/12/cov-logo-color.png)
 
@@ -110,7 +110,7 @@ Search
 <!--THE END-->
 
 1. [Home](https://www.cityofvancouver.us)
-2. [Government](https://cityofvancouver.us/government)
+2. [Government](https://www.cityofvancouver.us/government)
 3. [Department Directory](https://www.cityofvancouver.us/departments)
 4. Mayor and City Council
 
@@ -170,7 +170,7 @@ There are many opportunities to volunteer at the City as an individual or a grou
 415 W. 6th St.  
 Vancouver, WA 98660](https://www.google.com/maps?q=City%20Hall%20415%20W.%206th%20St.%2C%20WA%2098660)
 
-[CONTACT](https://cityofvancouver.us/contact)
+[CONTACT](https://www.cityofvancouver.us/contact)
 
 ##### RESOURCES
 
