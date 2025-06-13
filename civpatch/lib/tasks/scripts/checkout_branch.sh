@@ -9,10 +9,12 @@ REPO_URL="https://github.com/CivicPatch/civicpatch-tools.git"
 
 cd /app
 mkdir -p ./tmp/civicpatch-tools
-# Clone the specific branch directly
-git clone -b $BRANCH_NAME $REPO_URL ./tmp/civicpatch-tools
-# Ensure we have the latest
-git -C ./tmp/civicpatch-tools pull origin $BRANCH_NAME
+# Clone main branch first
+git clone -b main $REPO_URL ./tmp/civicpatch-tools
+# Try to fetch the target branch
+git -C ./tmp/civicpatch-tools fetch origin $BRANCH_NAME || true
+# Try to checkout the branch, fall back to main if it doesn't exist
+git -C ./tmp/civicpatch-tools checkout $BRANCH_NAME || git -C ./tmp/civicpatch-tools checkout main
 
 # Backup the lock files if they exist
 [ -f civpatch/Gemfile.lock ] && cp civpatch/Gemfile.lock ./tmp/Gemfile.lock.backup
@@ -20,9 +22,9 @@ git -C ./tmp/civicpatch-tools pull origin $BRANCH_NAME
 
 # Copy everything except the lock files
 cp -rn ./tmp/civicpatch-tools/. /app
-# Overwrite civpatch/data and data_source with clobbering copy
-cp -r ./tmp/civicpatch-tools/civpatch/data/. /app/civpatch/data/
-cp -r ./tmp/civicpatch-tools/civpatch/data_source/. /app/civpatch/data_source/
+# Overwrite civpatch/data and data_source with clobbering copy if they exist
+[ -d ./tmp/civicpatch-tools/civpatch/data ] && cp -r ./tmp/civicpatch-tools/civpatch/data/. /app/civpatch/data/
+[ -d ./tmp/civicpatch-tools/civpatch/data_source ] && cp -r ./tmp/civicpatch-tools/civpatch/data_source/. /app/civpatch/data_source/
 
 # Restore the lock files if they existed
 [ -f ./tmp/Gemfile.lock.backup ] && cp ./tmp/Gemfile.lock.backup /app/civpatch/Gemfile.lock
@@ -32,4 +34,4 @@ rm -rf ./tmp
 cd /app/civpatch
 
 # Ensure we're on the correct branch
-git checkout $BRANCH_NAME
+git checkout $BRANCH_NAME || git checkout main
