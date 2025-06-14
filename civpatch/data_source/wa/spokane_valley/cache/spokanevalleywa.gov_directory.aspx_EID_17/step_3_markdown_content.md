@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=18%2F)
+[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=17%2F)
 
 ![Home Page](https://spokanevalleywa.gov/ImageRepository/Document?documentID=66)
 
@@ -22,26 +22,24 @@ Search
 1. [Home](https://spokanevalleywa.gov)
 2. Staff Directory
 
-![Headshot of Councilmember Jessica Yaeger](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2807 "Headshot of Councilmember Jessica Yaeger")
+![Headshot of Councilmember Rod Higgins](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2806 "Headshot of Councilmember Rod Higgins")
 
-# Jessica Yaeger
+# Rod Higgins
 
  
 
 [City Council](https://spokanevalleywa.gov/Directory.aspx?DID=8)  
-Title: Council Position 2  
-Phone: 509-720-5064  
-[Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov)
+Title: Council Position 1  
+Phone: 509-720-5066  
+[Email Councilmember Higgins](mailto:rhiggins@SpokaneValleyWA.gov)
 
-**Term: 2024 to 2027**
+**Term: 2022 to 2025**
 
-Jessica Yaeger is serving her first term on the City Council, elected to position 2 in November 2023.
+Rod Higgins joined the City Council on Feb. 5, 2013, when he was appointed to complete a vacated term. In November 2013, Higgins was elected to the Council for a four-year term and has since been re-elected for two additional terms. Higgins served as Mayor from 2016 to 2017 and again from 2018 to 2019. He served as Deputy Mayor from 2022 to 2023.
 
-Yaeger has spent over 25 years in the healthcare field, with over 10 in executive leadership roles. She has her own company that works with seniors and their families to provide placement services, care management and end-of-life doula services. She earned a bachelor's degree in social sciences and psychology from Washington State University.
+Higgins's professional career included nearly 40 years in mining and financial services. He holds a bachelor’s degree in finance from the University of Idaho.
 
-Yaeger is a board member for Corbin Senior Center, a volunteer with the Northwest Boxer Rescue group and the previous board secretary for the Senior Action Network of Eastern Washington.
-
-Yaeger and her husband enjoy traveling, kayaking, walking their three dogs and spending time with their kids, friends, and family.
+In addition to involvement in several community and professional organizations, Higgins served as a City of Spokane Valley Planning Commissioner from January 2012 until his appointment to the City Council in February 2013.
 
  
 

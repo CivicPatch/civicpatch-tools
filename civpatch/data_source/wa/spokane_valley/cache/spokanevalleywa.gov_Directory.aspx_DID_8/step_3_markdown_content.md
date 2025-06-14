@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=18%2F)
+[Skip to Main Content](https://spokanevalleywa.gov/Directory.aspx?DID=8%2F)
 
 ![Home Page](https://spokanevalleywa.gov/ImageRepository/Document?documentID=66)
 
@@ -17,33 +17,38 @@ Search
 
 <!--THE END-->
 
-![](https://spokanevalleywa.gov/ImageRepository/Document?documentID=65)
+![](https://spokanevalleywa.gov/ImageRepository/Document?documentID=64)
 
 1. [Home](https://spokanevalleywa.gov)
 2. Staff Directory
 
-![Headshot of Councilmember Jessica Yaeger](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2807 "Headshot of Councilmember Jessica Yaeger")
-
-# Jessica Yaeger
+# City Council
 
  
 
-[City Council](https://spokanevalleywa.gov/Directory.aspx?DID=8)  
-Title: Council Position 2  
-Phone: 509-720-5064  
-[Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov)
+10210 E Sprague Avenue Spokane Valley WA 99206
 
-**Term: 2024 to 2027**
+[Directions](https://www.google.com/maps/place/10210+E+Sprague+Avenue+Spokane+Valley+WA+99206)
 
-Jessica Yaeger is serving her first term on the City Council, elected to position 2 in November 2023.
+Physical Address:View Map
 
-Yaeger has spent over 25 years in the healthcare field, with over 10 in executive leadership roles. She has her own company that works with seniors and their families to provide placement services, care management and end-of-life doula services. She earned a bachelor's degree in social sciences and psychology from Washington State University.
+10210 E Sprague Avenue  
+Spokane Valley, WA 99206
 
-Yaeger is a board member for Corbin Senior Center, a volunteer with the Northwest Boxer Rescue group and the previous board secretary for the Senior Action Network of Eastern Washington.
+Phone:
 
-Yaeger and her husband enjoy traveling, kayaking, walking their three dogs and spending time with their kids, friends, and family.
+509-720-5102
 
- 
+Fax:
+
+509-720-5075
+
+[Email City Council](mailto:CityCouncil@SpokaneValleyWA.gov)  
+Link: [City Council Page](https://spokanevalleywa.gov/193)
+
+Staff
+
+Name Title Email Phone Additional Phone [Haley, Pam](https://spokanevalleywa.gov/directory.aspx?EID=21) Council Position 5 [Email Mayor Haley](mailto:phaley@SpokaneValleyWA.gov) 509-720-5060   [Hattenburg, Tim](https://spokanevalleywa.gov/directory.aspx?EID=22) Council Position 6 [Email Deputy Mayor Hattenburg](mailto:thattenburg@SpokaneValleyWA.gov) 509-720-5063   [Higgins, Rod](https://spokanevalleywa.gov/directory.aspx?EID=17) Council Position 1 [Email Councilmember Higgins](mailto:rhiggins@SpokaneValleyWA.gov) 509-720-5066   [Padden, Laura](https://spokanevalleywa.gov/directory.aspx?EID=23) Council Position 7 [Email Councilmember Padden](mailto:lpadden@SpokaneValleyWA.gov) 509-720-5061   [Yaeger, Jessica](https://spokanevalleywa.gov/directory.aspx?EID=18) Council Position 2 [Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov) 509-720-5064   [Wick, Ben](https://spokanevalleywa.gov/directory.aspx?EID=20) Council Position 4 [Email Councilmember Wick](mailto:bwick@SpokaneValleyWA.gov) 509-720-5065   [Merkel, Al](https://spokanevalleywa.gov/directory.aspx?EID=19) Council Position 3 [Email Councilmember Merkel](mailto:amerkel@SpokaneValleyWA.gov) 509-720-5062 (desk) 509-828-0097 (cell)
 
 [Return to Staff Directory](https://spokanevalleywa.gov/Directory.aspx)
 
