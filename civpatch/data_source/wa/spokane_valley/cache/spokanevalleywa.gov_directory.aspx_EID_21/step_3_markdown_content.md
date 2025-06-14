@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=18%2F)
+[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=21%2F)
 
 ![Home Page](https://spokanevalleywa.gov/ImageRepository/Document?documentID=66)
 
@@ -22,26 +22,24 @@ Search
 1. [Home](https://spokanevalleywa.gov)
 2. Staff Directory
 
-![Headshot of Councilmember Jessica Yaeger](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2807 "Headshot of Councilmember Jessica Yaeger")
+![Headshot of Councilmember Pam Haley](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2809 "Headshot of Councilmember Pam Haley")
 
-# Jessica Yaeger
+# Pam Haley
 
  
 
 [City Council](https://spokanevalleywa.gov/Directory.aspx?DID=8)  
-Title: Council Position 2  
-Phone: 509-720-5064  
-[Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov)
+Title: Council Position 5  
+Phone: 509-720-5060  
+[Email Mayor Haley](mailto:phaley@SpokaneValleyWA.gov)
 
-**Term: 2024 to 2027**
+**Term: 2022 to 2025**
 
-Jessica Yaeger is serving her first term on the City Council, elected to position 2 in November 2023.
+Pam Haley joined the Council in June 2016 when she was appointed to fill a vacancy. She is now serving her second four-year term through 2025. Haley served as the Deputy Mayor from 2018 to 2019 and Mayor from 2022 to 2023.
 
-Yaeger has spent over 25 years in the healthcare field, with over 10 in executive leadership roles. She has her own company that works with seniors and their families to provide placement services, care management and end-of-life doula services. She earned a bachelor's degree in social sciences and psychology from Washington State University.
+Haley is a small business owner who holds a master’s degree in both business and education.
 
-Yaeger is a board member for Corbin Senior Center, a volunteer with the Northwest Boxer Rescue group and the previous board secretary for the Senior Action Network of Eastern Washington.
-
-Yaeger and her husband enjoy traveling, kayaking, walking their three dogs and spending time with their kids, friends, and family.
+Among the skills and interests Haley brings to her role as a Councilmember are budgeting, community partnerships, children's issues, negotiating, consulting and local issues.
 
  
 
