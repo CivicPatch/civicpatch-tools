@@ -1,13 +1,14 @@
 [
   {
     "name": "Pete Serrano",
-    "positions": [
+    "roles": [
       "Mayor",
-      "Council Member",
+      "Council Member"
+    ],
+    "divisions": [
       "District 4"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 545-3404",
     "email": "serranocouncil@pasco-wa.gov",
     "website": null,
@@ -17,18 +18,18 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-14T17:20:59Z"
   },
   {
     "name": "David Milne",
-    "positions": [
-      "Mayor Pro Tempore",
-      "Council Member",
-      "District 5",
-      "Mayor Pro-Tem"
+    "roles": [
+      "Mayor Pro-Tem",
+      "Council Member"
+    ],
+    "divisions": [
+      "District 5"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 545-3404",
     "email": "milnecouncil@pasco-wa.gov",
     "website": null,
@@ -38,16 +39,18 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-14T17:20:59Z"
   },
   {
     "name": "Blanche Barajas",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
       "District 1"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 545-3404",
     "email": "barajascouncil@pasco-wa.gov",
     "website": null,
@@ -57,16 +60,18 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-14T17:20:59Z"
   },
   {
     "name": "Charles Grimm",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
       "District 2"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "509-905-2672",
     "email": "grimmcouncil@pasco-wa.gov",
     "website": null,
@@ -76,16 +81,18 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-14T17:20:59Z"
   },
   {
     "name": "Leo Perales",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
       "District 3"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 905-2673",
     "email": "peralescouncil@pasco-wa.gov",
     "website": null,
@@ -95,16 +102,18 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-14T17:20:59Z"
   },
   {
     "name": "Melissa Blasdel",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
       "District 6"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 905-2676",
     "email": "blasdelcouncil@pasco-wa.gov",
     "website": null,
@@ -114,16 +123,19 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-14T17:20:59Z"
   },
   {
     "name": "Peter Harpster",
-    "positions": [
-      "Council Member",
-      "At Large"
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
+      "At Large",
+      "At-Large"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "509-905-2677",
     "email": "harpstercouncil@pasco-wa.gov",
     "website": null,
@@ -133,6 +145,6 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-14T17:20:59Z"
   }
 ]
