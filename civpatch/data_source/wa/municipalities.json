@@ -152,9 +152,13 @@
       "type": "city",
       "population": 106785,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-17",
-      "meta_hash": "d5ab90225ea70f2884b50108a77bbec5",
-      "meta_sources": [],
+      "meta_updated_at": "2025-06-14T17:18:35Z",
+      "meta_hash": "3ca2fa85aa474cfd05d149ae8153c22a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "5357745"
     },
     {
