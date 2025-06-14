@@ -1,154 +1,211 @@
 [
   {
     "name": "Armondo Pavone",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
+    "divisions": [],
     "image": null,
     "phone_number": "425-430-6500",
     "email": "mayor@rentonwa.gov",
     "website": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
-    "term_date": null,
+    "start_date": null,
+    "end_date": null,
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   },
   {
     "name": "James Alberson, Jr.",
-    "positions": [
+    "roles": [
       "Council Member",
+      "Council member",
       "Councilmember",
-      "Council President, Position No. 1"
+      "Council President"
+    ],
+    "divisions": [
+      "Position No. 1"
     ],
     "image": null,
     "phone_number": "425-430-6501",
     "email": "jalberson@rentonwa.gov",
     "website": "https://www.rentonwa.gov/Government/City-Council/alberson",
-    "term_date": "2022 to 2025",
+    "start_date": "2022",
+    "end_date": "2025",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/alberson",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   },
   {
     "name": "Ruth Pérez",
-    "positions": [
+    "roles": [
       "Council Member",
-      "Councilmember",
       "Council President Pro Tem",
-      "Chair: Finance Committee",
-      "Vice Chair: Transportation/Aviation Committee",
-      "Member: Public Safety Committee"
+      "Council member",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Position No. 6"
     ],
     "image": null,
     "phone_number": "425-430-6501",
     "email": "rperez@rentonwa.gov",
     "website": "https://www.rentonwa.gov/Government/City-Council/perez",
-    "term_date": "2014 to 2025",
+    "start_date": "2021",
+    "end_date": "2025",
     "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
       "https://www.rentonwa.gov/Government/City-Council/perez",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   },
   {
     "name": "Ryan McIrvin",
-    "positions": [
+    "roles": [
       "Council Member",
-      "Councilmember",
-      "Chair: Transportation/Aviation Committee",
-      "Vice Chair: Planning & Development Committee",
-      "Member: Finance Committee"
+      "Councilmember"
     ],
+    "divisions": [],
     "image": null,
     "phone_number": "425-430-6501",
-    "email": "rmcirvin@rentonwa.gov",
+    "email": null,
     "website": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-    "term_date": "2016",
+    "start_date": null,
+    "end_date": null,
     "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
       "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   },
   {
     "name": "Valerie O'Halloran",
-    "positions": [
+    "roles": [
       "Council Member",
-      "Councilmember",
-      "Council President",
-      "Chair: Community Services Committee",
-      "Vice Chair: Finance Committee",
-      "Member: Utilities Committee"
+      "Chair",
+      "Vice Chair",
+      "Council member",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Position No. 3"
     ],
     "image": null,
     "phone_number": "425-430-6501",
     "email": "vohalloran@rentonwa.gov",
     "website": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-    "term_date": "2019",
+    "start_date": "2019",
+    "end_date": "2027",
     "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
       "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   },
   {
     "name": "Ed Prince",
-    "positions": [
+    "roles": [
       "Council Member",
-      "Councilmember",
-      "Chair: Planning & Development Committee",
-      "Vice Chair: Public Safety Committee",
-      "Member: Transportation/Aviation Committee",
-      "Association of Washington Cities Board of Directors",
-      "Growth Management Policy Board",
-      "King CountyRegional Homelessness Authority",
-      "RRFA Governance Board",
-      "Sound Transit Board of Directors"
+      "Chair",
+      "Vice Chair",
+      "Council member",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Position No. 5"
     ],
     "image": null,
     "phone_number": "425-430-6501",
     "email": "eprince@rentonwa.gov",
     "website": "https://www.rentonwa.gov/Government/City-Council/prince",
-    "term_date": "Elected: 2012",
+    "start_date": "2012",
+    "end_date": "2027",
     "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
       "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   },
   {
     "name": "Carmen Rivera",
-    "positions": [
+    "roles": [
       "Council Member",
-      "Councilmember",
-      "Chair: Public Safety Committee",
-      "Vice Chair: Utilities Committee",
-      "Member: Community Services Committee"
+      "Chair",
+      "Vice Chair",
+      "Council member",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Position 2"
     ],
     "image": null,
     "phone_number": "425-430-6501",
     "email": "crivera@rentonwa.gov",
     "website": "https://www.rentonwa.gov/Government/City-Council/rivera",
-    "term_date": "2021",
+    "start_date": "2021",
+    "end_date": "2025",
     "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   },
   {
     "name": "Kim-Khánh Văn",
-    "positions": [
+    "roles": [
       "Council Member",
-      "Councilmember",
-      "Chair: Utilities Committee",
-      "Vice Chair: Community Services Committee",
-      "Member: Planning & Development Committee"
+      "Council member",
+      "Councilmember"
     ],
+    "divisions": [],
     "image": null,
     "phone_number": "425-430-6501",
-    "email": "kvan@rentonwa.gov",
+    "email": null,
     "website": "https://www.rentonwa.gov/Government/City-Council/van",
-    "term_date": "2020",
+    "start_date": null,
+    "end_date": null,
     "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
       "https://www.rentonwa.gov/Government/City-Council/van",
-      "https://www.rentonwa.gov/Government/City-Council/rivera"
-    ]
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "updated_at": "2025-06-14T03:01:17Z"
   }
 ]
