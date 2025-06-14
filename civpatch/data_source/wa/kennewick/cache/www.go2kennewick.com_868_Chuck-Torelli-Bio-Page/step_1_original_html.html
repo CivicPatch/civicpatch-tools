@@ -1,0 +1,2852 @@
+<!DOCTYPE html><html lang="en" class="js no-flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths wf-muli-n3-active wf-muli-n4-active wf-muli-i4-active wf-muli-n7-active wf-active has-webFonts" style="height: 100%;"><head>
+			<meta http-equiv="X-UA-Compatible" content="IE=10">
+
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+<!-- Google Tag Manager for GA4 -->
+				<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira+Sans:500,700,regular|Open+Sans:500,500italic,600,600italic,700,700italic,800,800italic,italic,regular|Oxygen:700,regular|" media="all"><script type="text/javascript" src="//heatmaps.monsido.com/v1/heatmaps.js"></script><script type="text/javascript" src="//cdn.monsido.com/page-assist/v2/mon-page-assist-loader.js"></script><script type="text/javascript" src="//pagecorrect.monsido.com/v1/page-correct.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-E4VB4W1DP7&amp;cx=c&amp;gtm=457e56b1za200&amp;tag_exp=101509157~103116026~103200004~103233427~103351869~103351871~104617979~104617981~104661466~104661468~104718208~104736445~104736447"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-3KYWE4Y5Z2&amp;l=cpDataLayerGA4&amp;cx=c&amp;gtm=45He56b1v867875367za200&amp;tag_exp=101509157~103116026~103200004~103233427~103351869~103351871~104617979~104617981~104661466~104661468~104718208~104736445~104736447"></script><script src="/Assets/Mystique/Shared/Scripts/webfontloader/webfont.js" type="text/javascript" async=""></script><script src="/Assets/Scripts/RWD/MediaFramework.js"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-K73C5PS&amp;l=cpDataLayerGA4"></script><script>(function(w,d,s,l,i){w.GAMeasurementID='G-3KYWE4Y5Z2';w[l]=w[l]||[];w[l].push({'gtm.start':
+				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+				})(window,document,'script','cpDataLayerGA4','GTM-K73C5PS');</script>
+				<!-- End Google Tag Manager for GA4 -->
+				<script type="text/javascript">
+					var enableTelemetry = 'false'
+					var aiConfig = {
+					instrumentationKey: '1cde048e-3185-4906-aa46-c92a7312b60f'						
+					}
+					var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c.queue.push(function () { c[a].apply(c, b) }) } } var c = { config: a }, d = document, e = window; setTimeout(function () { var b = d.createElement('script'); b.src = a.url || 'https://az416426.vo.msecnd.net/scripts/a/ai.0.js', d.getElementsByTagName('script')[0].parentNode.appendChild(b) }); try { c.cookie = d.cookie } catch (a) { } c.queue = []; for (var f = ['Event', 'Exception', 'Metric', 'PageView', 'Trace', 'Dependency']; f.length;)b('track' + f.pop()); if (b('setAuthenticatedUserContext'), b('clearAuthenticatedUserContext'), b('startTrackEvent'), b('stopTrackEvent'), b('startTrackPage'), b('stopTrackPage'), b('flush'), !a.disableExceptionTracking) { f = 'onerror', b('_' + f); var g = e[f]; e[f] = function (a, b, d, e, h) { var i = g && g(a, b, d, e, h); return !0 !== i && c['_' + f](a, b, d, e, h), i } } return c }(aiConfig);
+					window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length;
+					// Add telemetry initializer
+					appInsights.queue.push(function() {
+						appInsights.context.addTelemetryInitializer(function(envelope) {
+							var telemetryItem = envelope.data.baseData;
+							// To check the telemetry item’s type:
+							if (!false)
+							{
+								//If the telemetry is not enabled, we still want to capture Google map custom event, so only allow that
+								if (envelope.name.indexOf('.Event') == -1)
+									return false;
+							}
+						});
+					});						
+					appInsights.trackPageView();
+				</script>
+	<script>
+		function populateAntiForgery(token) {
+			var input = document.createElement("input");
+			input.name = "__RequestVerificationToken";
+			input.type = "hidden";
+			input.value = token;
+			var absPat = /^https?:\/\/|^\/\//i;
+			var forms = document.getElementsByTagName("form");
+			for (var i = 0; i < forms.length; i++) {
+				if (forms[i].method == "post" &&
+					!forms[i].querySelector('[name="__RequestVerificationToken"]') &&
+					!absPat.test(forms[i].getAttribute("action"))) {
+					forms[i].appendChild(input.cloneNode());
+				}
+			}
+		}
+
+		function getAntiForgeryToken(callback, error) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/antiforgery");
+			xhr.addEventListener("load", function() {
+				try {
+					if (this.status !== 200) {
+						throw Error("Invalid status. Could not retrieve antiforgery token.");
+		}
+					var obj = JSON.parse(this.responseText);
+					callback(obj.token);
+				} catch (e) {
+					typeof error === "function" && error(e);
+				}
+			});
+			xhr.send();
+		}
+
+		getAntiForgeryToken(function(token) {
+			if (document.readyState === "complete"
+				|| document.readyState === "loaded" 
+				|| document.readyState === "interactive") {
+				populateAntiForgery(token);
+				return;
+			}
+			document.addEventListener("DOMContentLoaded", function() {
+				populateAntiForgery(token);
+			}, false);
+		}, console.error);
+			</script>
+			
+
+	<script type="text/javascript">
+		window.departmentHeader = {};
+		window.pageSectionTracker = {};
+		window.isResponsiveEnabled = true;
+		window.isRemoveSetHeights= false;
+		if (window.isRemoveSetHeights) {
+			document.documentElement.className += ' removeSetHeights';
+		}
+		window.mainMenuMediaQuery = 'screen and (max-width: 40em)';
+		window.isMobileBrowserIncludingTablets = false;
+		window.fixedResponsiveMenu = false;
+		window.fullWidthResponsiveMenu = false;
+		window.responsiveMenuHeight = '';
+		window.responsiveMenuFontSize = '';
+		(function () {
+			window.setSizeCookie = function () {
+				document.cookie = "dpi=" + window.devicePixelRatio + "; path=/";
+				document.cookie = "viewportWidth=" + window.innerWidth + "; path=/";
+				document.cookie = "viewportHeight=" + window.innerHeight + "; path=/";
+				if (screen && screen.width && screen.height) {
+					document.cookie = "screenWidth=" + screen.width + "; path=/";
+					document.cookie = "screenHeight=" + screen.height + "; path=/";
+				}
+				document.cookie = "responsiveGhost=1; path=/";
+			};
+
+			setSizeCookie();
+		}());
+	</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<meta name="category0" content="Home">
+<meta name="category1" content="Your Government">
+<meta name="category2" content="City Council">
+<meta name="category3" content="Chuck Torelli Bio Page">
+
+	
+	<meta name="theme-color" content="rgb(8, 41, 74)">
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+		<title>Chuck Torelli Bio Page | Kennewick, WA</title>
+
+		<meta name="description" content="">
+			<script src="/Assets/Scripts/jQuery/jquery-2.2.4.min.js"></script><script src="https://az416426.vo.msecnd.net/scripts/a/ai.0.js"></script>
+	<script src="/Assets/Scripts/jQuery/jQuery-migrate-1.4.1.js" type="text/javascript"></script>
+	
+
+	<!--[if IE 6]><script language="JavaScript" type="text/javascript"> var isie6 = true; </script><![endif]-->
+	<!--[if IE 7]><script language="JavaScript" type="text/javascript"> var isie7 = true; </script><![endif]-->
+	<!--[if IE 8]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<!--[if IE 9]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+	<script type="text/javascript"><!--
+	var intCountryCode = 840;
+	var externalSiteDialogHeight = '390px';
+	var order = '';
+//--></script>
+	
+	<link href="/370352201.css" rel="stylesheet" type="text/css">	<link href="/-1644711469.css" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" type="text/css" href="/Assets/Styles/Print.css" media="print">
+	<script type="text/javascript">
+		window.Pages = window.Pages || {};
+		// FrontEnd RWD initialization
+		window.Pages.rwdReady = $.Deferred();
+		window.Pages.toolBarDeferred = $.Deferred();
+		window.Pages.rwdSetupComplete = $.Deferred();
+		window.Pages.megaMenuLoaded = $.Deferred();
+		window.Pages.angularToolbarComplete = $.Deferred();
+		window.Pages.frontEndToolbarComplete = $.Deferred();
+	</script>
+	<!--CPHeadContent-->
+	<script src="/4079962.js" type="text/javascript"></script>
+	
+	
+	
+	
+
+
+
+
+	<!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="/App_Themes/ie8.css"><![endif]-->
+	<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/App_Themes/ie7.css"><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/App_Themes/ie6.css"><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="/Scripts/html5.js"></script><![endif]-->
+
+	<script type="text/javascript">
+		setEditorVariables(false, 840);
+		function getPrintPreviewType() { return 0; } function printPreview() {pPreview(getPrintPreviewType()); }
+	</script>
+	<script src="/Assets/Scripts/AlpineJS/3.14.1/alpine.min.js" type="text/javascript" defer="defer"></script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,700" media="all">
+<style>      .htmx-indicator{opacity:0}      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}      </style><link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.pgV-E-68K-A.L.W.O/am=AIAB/d=0/rs=AN8SPfrmq8FRbUqU1IlJUoEnksIMIqlZPQ/m=el_main_css"><script type="text/javascript" charset="UTF-8" src="https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_US.Wde1et4Hzsk.O/am=AAAI/d=1/exm=el_conf/ed=1/rs=AN8SPfrEgdLChDdwPBZi9VvtETkouS1arw/m=el_main"></script></head>
+<body class="wide cpTextResizeOn doneLoading monsido-toolbar-body-container" style="position: relative; min-height: 100%; top: 0px;" data-mon-page-fix="done"><div id="divAjaxProgress" style="position: fixed; inset: 0px; text-align: center; border: 1px solid rgb(102, 102, 102); z-index: 90000000; height: 722px; width: 1267px; display: none;"><div id="divAjaxShade" style="position: fixed; inset: 0px; background: rgb(255, 255, 255); opacity: 0.5; height: 720px; width: 1265px;"></div><div id="divAjaxImgProgress" class="loading" style="position: relative; top: 360px; display: none;"><p>Loading</p></div></div>
+
+    <script>jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});</script>
+
+    <div id="fb-root"></div>
+<div id="skipToContentLinks">
+<a href="https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page/" target="_self" class="skipToContentLink">Skip to Main Content</a>
+</div>
+    <form id="frmReferenceFormForTelerikEditorDialogs"></form>
+
+        <input type="hidden" id="GoogleMapsKey" value="AIzaSyDWUuE-ifkbhxblF920N8MjpBdTg1Wt784">
+
+
+
+    <input type="hidden" id="cpcDomain" value="https://cp-civicplusuniversity2.civicplus.com">
+    <input type="hidden" id="hdnStructureID" value="6">
+    <input type="hidden" id="hdnContentCollectionID" value="34e76e8e-42fe-4b2f-b393-de0b5c36b7b5">
+    <input type="hidden" id="hdnWorkingCopyID" value="00000000-0000-0000-0000-000000000000">
+    <input type="hidden" id="hdnThemeID" value="22">
+    <input type="hidden" id="pageIsFrontEnd" value="true">
+    <input type="hidden" id="pageModuleID">
+    <input type="hidden" id="pagePageID" value="868">
+
+        <div id="stickyPlaceholder"></div>
+    <div id="outer-wrap" class="outer-wrap">
+        <div id="inner-wrap" class="inner-wrap">
+                <div id="divToolbars" class="cpToolbars newCP mui-fixed" style="overflow: visible;">
+                    
+
+
+
+                </div>
+            <div id="bodyWrapper">
+                <div id="mainNavHolderMobile" class="mainNavHolderMobile"></div>
+                
+<div data-cprole="structuralContainer" id="bodyContainerTS">
+<!-- Header Container --><header data-cprole="structuralContainer" id="headerContainerTS" class="fixedTopTS" style="top: 0px;">
+<div class="siteWrap" id="flexHeaderTS"><div data-cprole="banner" id="bannerLogoTS" class="bannerLogoTS empty">
+
+
+
+
+				<a id="bannerLogoTS-133" style="			display: block; text-align: center;
+" class="bannerObject" href="https://www.go2kennewick.com" target="_self"><img alt="Kennewick WA Homepage" class="bannerObject" height="137" src="https://www.go2kennewick.com/ImageRepository/Document?documentID=15016" width="523"></a>
+</div><nav data-cprole="nav" id="mainNav" class="siteNav mainNav" role="navigation">
+<ol id="mainNavMenu" data-parent="1" class="rootNavMenu" role="menu"><!--
+--><li id="MainItem27" class="topMenuItem" role="none" data-pageid="27" data-displaymegamenu="True" style="width: 24.8259%;"><!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavYourGovernment" class="navMainItem mainNavItem mainNavItem1" href="https://www.go2kennewick.com/27/Your-Government" target="_self" style="font-size: 19px;"><span style="display: inline;">   Your Government </span></a>			<!--
+			--><!--
+			--></li><!----><li id="MainItem101" class="topMenuItem" role="none" data-pageid="101" data-displaymegamenu="True" style="width: 20.2105%;"><!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavCityServices" class="navMainItem mainNavItem mainNavItem2" href="https://www.go2kennewick.com/101/City-Services" target="_self" style="font-size: 19px;"><span style="display: inline;">   City Services </span></a>			<!--
+			--><!--
+			--></li><!----><li id="MainItem31" class="topMenuItem" role="none" data-pageid="31" data-displaymegamenu="True" style="width: 22.3968%;"><!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavOurCommunity" class="navMainItem mainNavItem mainNavItem3" href="https://www.go2kennewick.com/31/Our-Community" target="_self" style="font-size: 19px;"><span style="display: inline;">   Our Community </span></a>			<!--
+			--><!--
+			--></li><!----><li id="MainItem35" class="topMenuItem" role="none" data-pageid="35" data-displaymegamenu="True" style="width: 15.5951%;"><!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavBusiness" class="navMainItem mainNavItem mainNavItem4" href="https://www.go2kennewick.com/1493/Economic-Development" target="_self" style="font-size: 19px;"><span style="display: inline;">   Business </span></a>			<!--
+			--><!--
+			--></li><!----><li id="MainItem9" class="topMenuItem" role="none" data-pageid="9" data-displaymegamenu="True" style="width: 16.9717%;"><!--
+			--><!--
+			--> <a role="menuitem" aria-haspopup="true" aria-expanded="false" id="mainNavHowDoI" class="navMainItem mainNavItem mainNavItem5" href="https://www.go2kennewick.com/9/How-Do-I" target="_self" style="font-size: 19px;"><span style="display: inline;">   How Do I... </span></a>			<!--
+			--><!--
+			--></li><!---->
+</ol>
+
+
+	<script type="text/javascript">
+		(function () {
+			function setupMenu() {
+				const menuID = 'mainNavMenu';
+				const menuType = MAIN_MENU;
+
+				//setup menu manager properties for main menu
+				if (!menuManager.mobileMainNav && true)
+					menuManager.adjustMainItemsWidth('#' + menuID);
+				menuManager.isMainMenuEditable = false;
+				menuManager.mainMenuMaxSubMenuLevels = 4;
+				menuManager.setMOMMode(2, menuType);
+
+				//Init main menu
+				const setupDraggable = menuManager.isMainMenuEditable;
+				const urlToGetHiddenMenus = '/Pages/MenuMain/HiddenMainSubMenus?pageID=1&moduleID=&themeID=22&menuContainerID=mainNav';
+
+				menuManager.setupMenu(menuID, 'mainNav', menuType, setupDraggable, urlToGetHiddenMenus);
+				menuManager.mainMenuInit = true;
+				menuManager.mainMenuTextResizer = true;
+				if (1.00 > 0)
+					menuManager.mainMenuTextResizerRatio = 1.00;
+				if (window.isResponsiveEnabled)
+					menuManager.mainMenuReady.resolve();
+
+			}
+
+			if (document.readyState === "complete"
+				|| document.readyState === "loaded"
+				|| document.readyState === "interactive") {
+				setupMenu();
+				return;
+			}
+
+			document.addEventListener("DOMContentLoaded", setupMenu);
+		})();
+	</script>
+
+
+<aside data-cprole="megaMenu" id="megaMenu" class="megaMenu" style="display: none;"><input type="hidden" id="megaMenuPopupDirection" value="0"><input type="hidden" id="megaMenuWidthReference" value="1"></aside></nav><div data-cprole="contentContainer" id="searchTS">	<div id="cce96814de-6056-4fc0-9986-c02ae7f1e987" data-containerid="e96814de-6056-4fc0-9986-c02ae7f1e987" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="27">
+				                
+
+		<div class="row outer wide"><!--
+--><div class="outer col col10 first" style="height: auto;" data-widgetcontainerid="d17f1c9d-0865-4815-9ada-317da589361d">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col10 first last id4601a0ea-d70c-4940-9b10-f3a95c99a7fa" style="height: 50px;" data-widgetcontainerid="4601a0ea-d70c-4940-9b10-f3a95c99a7fa">
+	
+<div data-widget-id="38298e39-c672-463b-acb0-a0b715663880" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget38298e39-c672-463b-acb0-a0b715663880" class="widget widgetGraphicLinks skin65 widgetOptionSet4 wide" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:1em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid5 ">	
+			<div class="row wide"><!--
+--><div class="col col1 first "><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.facebook.com/KennewickWA" target="_blank" aria-label="Facebook Opens in new window" rel="noopener"> </a></div><!--
+--></div></div><!----><div class="col col1  "><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.instagram.com/cityofkennewick" target="_blank" aria-label="Instagram Opens in new window" rel="noopener"> </a></div><!--
+--></div></div><!----><div class="col col1  "><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.youtube.com/@cityofkennewick99336" target="_blank" aria-label="YouTube Opens in new window" rel="noopener"> </a></div><!--
+--></div></div><!----><div class="col col1  "><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks"><a class="widgetDesc widgetGraphicLinksLink" href="https://www.go2kennewick.com/linkedin" target="_blank" aria-label="Linkedin Opens in new window" rel="noopener"> </a></div><!--
+--></div></div><!----><div class="col col1  last"><div class="semanticList"><!--
+--></div></div><!--			--></div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col14 last" style="height: auto;" data-widgetcontainerid="96c4fedd-b31b-41f9-8ab9-5b8847011203">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col14 first last id5cc3facc-7da4-4fbd-802f-26b5c910752e" style="height: 50px;" data-widgetcontainerid="5cc3facc-7da4-4fbd-802f-26b5c910752e">
+	
+<div data-widget-id="d228f534-c7c0-4330-bbc1-7faee839728d" data-widget-controller-path="/Layout/WidgetSearch">
+	
+	<script defer="" type="text/javascript" src="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.js"></script>
+	<script defer="" src="/Areas/Layout/Assets/Scripts/Search.js" type="text/javascript"></script>
+	<script defer="" type="text/javascript">
+
+		$(document).ready(function () {
+			try {
+				$(".widgetSearchButton.widgetSearchButtond228f534-c7c0-4330-bbc1-7faee839728d").click(function (e) {
+				e.preventDefault();
+					if (false||$("#ysnSearchOnlyDeptd228f534-c7c0-4330-bbc1-7faee839728d").is(':checked'))
+					{
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), Number(0));
+					}
+					else {
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), 0);
+					}
+			});
+			$("#searchFieldd228f534-c7c0-4330-bbc1-7faee839728d").keypress(function (e) {
+				if (window.clipboardData) {
+					if (e.keyCode === 13) {
+						if ($("#ysnSearchOnlyDeptd228f534-c7c0-4330-bbc1-7faee839728d").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				} else {
+					if (e.which === 13) {
+						if ($("#ysnSearchOnlyDeptd228f534-c7c0-4330-bbc1-7faee839728d").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				}
+				return true;
+			});
+
+				if (true) {
+					var currentRequest = null;
+					var $searchField = $("#searchFieldd228f534-c7c0-4330-bbc1-7faee839728d").autocomplete({
+						source: function (request, response) {
+							currentRequest = $.ajax({
+								url: '/Search/AutoComplete' + ($("#ysnSearchOnlyDeptd228f534-c7c0-4330-bbc1-7faee839728d").is(':checked') || false? '?departmentId=0' : ''),
+								dataType: "json",
+								timeout: 10000,
+								beforeSend: function () {
+									if (currentRequest != null) {
+										currentRequest.abort();
+									}
+								},
+								data:
+								{
+									term: request.term,
+								},
+								success: function (data) {
+									response(data);
+									$('.autoCompleteError').remove();
+								},
+								error: function (xmlhttprequest, textstatus, message) {
+									if (textstatus === "timeout") {
+										if ($("#searchFieldd228f534-c7c0-4330-bbc1-7faee839728d").siblings('.autoCompleteError').length == 0)
+											$('<span class="autoCompleteError"><p class="alert error">Search autocomplete is currently not responding. Please try again later.</p></span>').insertAfter($("#searchFieldd228f534-c7c0-4330-bbc1-7faee839728d"));
+									}
+								}
+							});
+						},
+						html: true,
+						delay: 500,
+						select: function (event, ui) {
+							$(this).val(ui.item.value);
+							$(this).next().click();
+						}
+					});
+
+					$searchField.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $("<li class=\"itemList\"></li>")
+							.data("ui-autocomplete-item", item)
+							.append("<a>" + item.label + "</a>")
+							.appendTo(ul);
+					};
+}
+}
+			catch(e) {} //we're going to eat this error. Autocomplete won't work but we dont wan't to break anything else on the page.
+		});
+	</script>
+
+	<section id="widgetPreviewSearch" class="widget widgetSearch skin61 widgetOptionSet66" style="display: block;" aria-label="Search">
+				<!-- For the button right and inside -->
+		<div class="widgetBody buttonRightInside">
+			<input class="widgetSearchBox widgetSearchBoxd228f534-c7c0-4330-bbc1-7faee839728d ui-autocomplete-input" cp5ph="true" id="searchFieldd228f534-c7c0-4330-bbc1-7faee839728d" name="searchField" onchange="searchBtnApplyQuery();" placeholder="Search..." title="Search..." type="text" value="" autocomplete="off">
+						<a href="https://www.go2kennewick.com/Search/Results" id="btnSearchIcon" class="widgetSearchButton widgetSearchButtond228f534-c7c0-4330-bbc1-7faee839728d" role="button"></a>
+
+			<label class="searchLabel" for="searchFieldd228f534-c7c0-4330-bbc1-7faee839728d">Search</label>
+		</div>
+
+	</section>
+
+
+<style scoped="">
+	  
+		.widgetSearch ::-webkit-input-placeholder {
+		color: rgba(8, 41, 74, 1);
+	  }
+		.widgetSearch :-moz-placeholder { /* Firefox 18- */
+	   color: rgba(8, 41, 74, 1);
+	}
+		.widgetSearch ::-moz-placeholder {  /* Firefox 19+ */
+	   color: rgba(8, 41, 74, 1);
+	}
+	.widgetSearch :-ms-input-placeholder {
+	   color: rgba(8, 41, 74, 1);
+	}
+	
+
+	.widgetSearch .widgetBody .widgetSearchBoxd228f534-c7c0-4330-bbc1-7faee839728d
+	{
+		color: rgba(8, 41, 74, 1);
+		background: transparent;
+border: 0;
+height: 50px;
+padding: 0 70px 0 20px;
+font-family: Open Sans;
+font-size: 1em;
+	}
+	.widgetSearch .widgetBody .widgetSearchButtond228f534-c7c0-4330-bbc1-7faee839728d
+	{
+		margin: 0;
+	}
+	.widgetSearch .widgetSearch-onlyDeptd228f534-c7c0-4330-bbc1-7faee839728d
+	{
+		display: inline-block;
+		color: #333;
+		
+		
+		 padding-top: 10px;
+	}
+	#ysnSearchOnlyDeptd228f534-c7c0-4330-bbc1-7faee839728d
+	{
+		position: relative;
+		top: .125em;
+	}
+
+</style>
+
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.min.css">
+<link rel="stylesheet" href="/Common/Controls/jquery-ui-1.14.1/jquery-ui.theme.min.css">
+
+
+
+<script type="text/javascript">
+	//Updates search icons href to have the correct queryString
+	function searchBtnApplyQuery() {
+		document.getElementById("btnSearchIcon").href = "/Search?searchPhrase=" + document.getElementById("searchFieldd228f534-c7c0-4330-bbc1-7faee839728d").value;
+	}
+	</script>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!--		--></div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</header><!-- Banner --><div data-cprole="structuralContainer" id="bannerContainerTS" class="noOverflowTS">
+<div data-cprole="banner" id="banner1"><div data-cprole="structuralContainer" id="bannerSizingTS">
+<div data-cprole="structuralContainer" id="bannerSearchTS">
+<div class="siteWrap2"><div data-cprole="contentContainer" id="welcomeTS">	<div id="cc8611d746-f01b-40d6-b1cf-0dd3e928c866" data-containerid="8611d746-f01b-40d6-b1cf-0dd3e928c866" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</div></div>
+</div>
+</div>
+
+
+
+
+		<div id="bannerImagesJSON134" class="hidden"></div><div class="bannerObject external fixedBanner" id="bannerDivbanner1" style="min-height: 343px; top: 0px; left: -98.7016px; right: 0px; position: absolute; overflow: hidden; z-index: -999999; padding: 0px;" data-image-scale="true"><img class="bannerObject" width="1265px" style="position: absolute; left: 0px; margin: 0px; width: 1462.4px;" src="https://www.go2kennewick.com/ImageRepository/Document?documentID=15113" data-is-delayed="false" alt=""></div>
+		
+			<script type="text/javascript">
+				$(window).on("load", function () {
+					$.when(window.Pages.rwdSetupComplete)
+						.done(function () {
+							renderExternalBannerSlideshow('banner1',
+								{"BannerOptionID":134,"ThemeID":22,"SlotName":"banner1","Name":"Default","IsDefault":true,"BannerMode":2,"SlideShowSlideTiming":"5","SlideshowTransition":0,"SlideShowTransitionTiming":"1","ImageScale":true,"ImageAlignment":1,"ImageScroll":true,"MuteSound":true,"VideoType":0,"Status":40,"SlideshowControlsPosition":0,"SlideshowControlsAlignment":0,"SlideshowBannerControlsColorScheme":0,"DisplayVideoPauseButton":false,"VideoPauseButtonAlignment":1,"VideoPauseButtonControlsAlignment":0,"VideoPauseButtonStyle":"#FFFFFF","VideoPauseButtonBackgroundStyle":"#000000","VideoPauseButtonAlignmentClass":"alignRight viewport","DisplaySlideshowPauseButton":true,"SlideshowControlsColor":"#FFFFFF","SlideshowControlsBackgroundColor":"#000000","SlideshowPauseButtonClass":"isHidden","BannerImages":[{"BannerImageID":428,"BannerOptionID":134,"FileName":"/ImageRepository/Document?documentID=15112","Height":516,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":2,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":430,"BannerOptionID":134,"FileName":"/ImageRepository/Document?documentID=15113","Height":516,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":3,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":369,"BannerOptionID":134,"FileName":"/ImageRepository/Document?documentID=15019","Height":516,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":3,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":431,"BannerOptionID":134,"FileName":"/ImageRepository/Document?documentID=15018","Height":516,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":4,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""},{"BannerImageID":432,"BannerOptionID":134,"FileName":"/ImageRepository/Document?documentID=15017","Height":516,"Width":2200,"StartingOn":null,"StoppingOn":null,"IsLink":false,"LinkAddress":null,"Sequence":5,"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","AltText":""}],"BannerVideos":[{"BannerVideoID":2,"BannerOptionID":134,"VideoFileName":"","ImageFileName":"EmptyBannerBkg202312080916371474.png","IsLink":false,"LinkAddress":null,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/","VideoFileID":"00000000-0000-0000-0000-000000000000","ImageFileID":"00000000-0000-0000-0000-000000000000","VideoWidth":0,"VideoHeight":0,"ImageWidth":0,"ImageHeight":0,"LinkedVideoUrl":"","RecordStatus":0,"AltText":null}],"RecordStatus":0,"ModifiedBy":0,"ModifiedOn":"\/Date(-62135568000000)\/"},
+								'/App_Themes/Interior/Images/',
+								'Rotating');
+						});
+				});
+			</script>
+
+</div>
+</div><!-- Content container --><div data-cprole="structuralContainer" id="mainContainerTS">
+<div class="siteWrap2"><div data-cprole="structuralContainer" id="mainWrapTS" class="mainWrap" role="main">
+<div data-cprole="structuralContainer" id="siteSidebarTS" class="siteSidebar">
+<aside data-cprole="contentContainer" id="sidebarContainer1TS">	<div id="cc779b3547-af16-430e-ae6e-bee176900fc8" data-containerid="779b3547-af16-430e-ae6e-bee176900fc8" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside><nav data-cprole="nav" id="secondaryNav" class="siteNav secondaryNav">
+
+
+
+
+
+	<ol role="menu" id="secondaryMenusecondaryNav" data-parent="531" class="rootNavMenu accordionNav">
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem549" data-pageid="549">
+		<div class="accordionNavItem">
+			<a href="https://kennewickwa.portal.civicclerk.com" target="_blank" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem" aria-label="Council Calendar Opens in new window" rel="noopener">Council Calendar</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem581" data-pageid="581">
+		<div class="accordionNavItem">
+			<a href="https://www.go2kennewick.com/581/Council-Meetings-Information" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Council Meetings &amp; Information</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem888" data-pageid="888">
+		<div class="accordionNavItem">
+			<a href="https://kennewickwa.portal.civicclerk.com" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Current Agenda</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem1256" data-pageid="1256">
+		<div class="accordionNavItem">
+			<a href="https://www.go2kennewick.com/1256/Council-Meeting-Broadcasts" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Council Meeting Broadcasts</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem550" data-pageid="550">
+		<div class="accordionNavItem">
+			<a href="https://www.go2kennewick.com/550/Meeting-Guidelines" target="_self" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem">Meeting Guidelines</a>
+		</div>
+			</li>
+	<li role="menuitem" aria-haspopup="true" class="topMenuItem sideNavLi hasAccordionChildren" id="SideItem1622" data-pageid="1622">
+		<div class="accordionNavItem">
+			<a href="https://www.go2kennewick.com/DocumentCenter/View/16696/City-of-Kennewick-Governance-Coordination-Manual" target="_blank" class="navMainItem secondaryNavItem cpComponent" data-type="SecondaryMainItem" aria-label="Governance Coordination Manual Opens in new window" rel="noopener">Governance Coordination Manual</a>
+		</div>
+			</li>
+
+	</ol>
+
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			//setup menu manager properties for secondary menu
+			menuManager.isSideMenuEditable = false;
+			menuManager.sideMenuMaxSubMenuLevels = 4;
+			menuManager.sideMenuHasCustomLinks = false;
+		});
+	</script>
+
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			$('*[id^="SideItem"]').each(function () {
+				var ids = $('[id="' + this.id + '"]');
+				if (ids.length > 1)
+					$.each(ids, function (index, value) {
+						value.id = value.id + '_' + index;
+					});
+			});
+
+			$('.hasAccordionChildren .openAccordionNav').click(function (e) {
+				e.preventDefault();
+				showHideAccordionMenuForSecondaryNav($(this));
+			});
+
+			$("#secondaryNav .grippy").each(function () {
+				menuManager.setupDraggableElement($(this), SIDE_MENU, '#secondaryNav');
+			});
+
+			$("#secondaryNav li").each(function () {
+				menuManager.setupDroppableAccordionElement($(this), SIDE_MENU);
+			});
+		});
+	</script>
+
+
+
+</nav><aside data-cprole="contentContainer" id="sidebarContainer2TS">	<div id="cc5717e6c3-b832-4d4f-9d81-ec1caec0773f" data-containerid="5717e6c3-b832-4d4f-9d81-ec1caec0773f" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div><div data-cprole="structuralContainer" id="outerContentWrapTS" class="outerContentWrap">
+<div data-cprole="structuralContainer" id="contentWrapTS" class="contentWrap">
+<div data-cprole="breadCrumbs" id="breadCrumbs" class="breadCrumbContainer">		<ol class="semanticList breadCrumbs">
+			<li><a class="breadCrumb" href="https://www.go2kennewick.com">Home</a></li><li><a class="breadCrumb" href="https://www.go2kennewick.com/27/Your-Government">Your Government</a></li><li><a class="breadCrumb" href="https://www.go2kennewick.com/531/City-Council">City Council</a></li><li id="currentBCPage" data-pageid="868">Chuck Torelli Bio Page</li>
+		</ol>
+
+	   
+    
+</div><div data-cprole="mainContentContainer" id="moduleContent">
+	
+	<div id="page" class="moduleContentNew">
+		
+
+	<input id="hdnPageID" name="hdnPageID" type="hidden" value="868">
+	<input id="hdnParentID" name="hdnParentID" type="hidden" value="531">
+	<input id="hdnVersionID" name="hdnVersionID" type="hidden" value="8410">
+	<input id="pageMenuTitle" name="pageMenuTitle" type="hidden" value="Chuck Torelli Bio Page">
+	<input id="pageShowFeatureColumn" name="pageShowFeatureColumn" type="hidden" value="False">
+	<input id="hdnIsLayoutPage" name="hdnIsLayoutPage" type="hidden" value="False">
+	<input id="hdnPageStatus" name="hdnPageStatus" type="hidden" value="Published">
+
+			
+		<div id="cca905acfb-00ed-4817-bc83-4ed3d6c85353" data-containerid="a905acfb-00ed-4817-bc83-4ed3d6c85353" class="pageContent cpGrid cpGrid24" data-contentcontainerbreakpoint="30" data-smoothscrolling="True">
+			
+
+		<div class="row outer wide"><!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="c90408f0-2544-4b6f-a8ad-30dbcbb223df">
+				
+	<div class="row nest first wide">
+
+	
+	<div class="inner col col5 first id6a9b6e3e-4cb6-4781-8966-88f9d989af34" style="height: 356px;" data-widgetcontainerid="6a9b6e3e-4cb6-4781-8966-88f9d989af34">
+	
+
+<div class="widget image pageStyles" id="divImageOuteree084bb4-3546-450b-968a-d389c3a3b162" data-widget-id="ee084bb4-3546-450b-968a-d389c3a3b162">
+    
+	<div class="widgetBody imageBorder" id="divImageee084bb4-3546-450b-968a-d389c3a3b162">
+<img src="https://www.go2kennewick.com/ImageRepository/Document?documentID=11223" alt="Torelli  Portrait" title="Torelli  Portrait">	</div>
+</div>
+	</div> <!-- inner column -->
+	<div class="inner col col19 last id3642b41e-7ddb-4ea7-8e63-3a6f583d3717" style="height: 356px;" data-widgetcontainerid="3642b41e-7ddb-4ea7-8e63-3a6f583d3717">
+	
+<div class="widget editor pageStyles wide" id="divEditor74059082-e140-47a8-a958-d05b1b5fd2a0" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:25em&quot;}">
+	    <div class="fr-view">
+
+
+        <h2 class="subhead1">Chuck Torelli &nbsp;</h2><p>City Council<br>Title: Mayor Pro Tem.<br>Phone: 509 405-2156 <br><a href="mailto:Chuck.Torelli@ci.kennewick.wa.us" target="_blank" class="Hyperlink" aria-label="Email Mr. Torelli Opens in new window" rel="noopener">Email Mr. Torelli</a></p><p><a href="https://www.go2kennewick.com/FormCenter/Contact-Us-4/Contact-Us-Form-44" target="_blank" class="Hyperlink" aria-label="&nbsp; Opens in new window" rel="noopener">&nbsp;</a></p><h3 class="subhead2">Address</h3><p><span>PO Box 6108&nbsp;</span><br><span>Kennewick, WA 99336</span></p><p><br></p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '74059082-e140-47a8-a958-d05b1b5fd2a0'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+	<div class="row nest last wide">
+
+	
+	<div class="inner col col24 first last id91c9464e-5f89-45a4-a88d-e298283569fd" style="height: 590px;" data-widgetcontainerid="91c9464e-5f89-45a4-a88d-e298283569fd">
+	
+<div class="widget editor pageStyles wide" id="divEditor735e9c80-12e7-4753-bb45-aca94fb6c18a" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:25em&quot;}">
+	    <div class="fr-view">
+
+
+        <p><span><strong>Biography</strong></span></p><p>Charles (Chuck) Torelli has lived in Kennewick since 1985. His three children were all raised in Kennewick as were three (out of ten) of his grandchildren. He is married to Beverly Johnson-Torelli who retired from the Kennewick School District as Assistant Superintendent for Human Resources.&nbsp;</p><p>Chuck retired from Hanford in 2011 after a thirty-four-year career. Thirty-one years were spent at the Plutonium Finishing Plant in capacities ranging from Plant Engineer to decommissioning Superintendent.&nbsp;</p><p>Service – Chuck was appointed to the Kennewick City Council in 2019. He replaced Council Member Matt Boehnke who was elected to the Washington State Legislature. &nbsp;Chuck was then elected to the Kennewick City Council November of 2019. &nbsp;Chuck served on Kennewick City Planning Commission since 2017. He also serves on the board of the Benton-Franklin League of Women Voters, is a member of the East Benton County History Museum and Historical Society and was a past board member of the SHAKE (provides school supplies for local school districts).&nbsp;</p><p>Chuck priorities are economic development and managed long-term planning.&nbsp;</p><p><span><strong>Committees and Boards</strong></span></p><p><span>Mr. Torelli is currently serving on the Benton Franklin Housing Continuum of Care, Hanford Advisory Board, Joint Coliseum Advisory Committee, Hanford Advisory Board, Hanford Area Economic Investment Fund Committee (HAEIFC), Hanford Communities Governing Board, LEOFF Disability Board, and Benton County Solid Waste Advisory Committee (SWAC). He also servers as an alternate on the Benton County Law and Justice Council and the Energy Communities Alliance.</span><br><br></p>
+    </div>
+
+<script type="text/javascript">
+	$(document).ready(function (e) {		
+	    renderSlideshowIfApplicable($('#divEditor' + '735e9c80-12e7-4753-bb45-aca94fb6c18a'));
+	});
+</script>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!--		--></div> <!-- outer row -->
+
+
+		</div>
+
+	</div>
+
+	
+	<div class="newCP">
+
+	</div>
+</div>
+</div><aside data-cprole="contentContainer" id="featureColumn" class="secondaryContent" style="display: none;">	<div id="cceb32ae2b-d291-4224-8c6b-79151bf71f86" data-containerid="eb32ae2b-d291-4224-8c6b-79151bf71f86" class="pageContent cpGrid cpGrid24 showInMobile">
+				                
+
+
+
+	</div>
+</aside>
+</div>
+</div></div>
+</div><!-- GBs --><div data-cprole="structuralContainer" id="gbsContainerTS">
+<div class="siteWrap"><div data-cprole="contentContainer" id="gbsTS">	<div id="cc5f3e3c87-c88e-47ca-bdd9-ea315fefdc6b" data-containerid="5f3e3c87-c88e-47ca-bdd9-ea315fefdc6b" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="52">
+				                
+
+		<div class="row outer wide"><!--
+--><div class="outer col col8 first" style="height: auto;" data-widgetcontainerid="edb38572-c814-411c-8361-7cfa06a33315">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col8 first last idb78b7061-6b52-4836-a606-55b0cebd873d" style="height: 230px;" data-widgetcontainerid="b78b7061-6b52-4836-a606-55b0cebd873d">
+	
+<div data-widget-id="14ea7bb6-cee7-4cda-8c51-8ada6398e70f" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget14ea7bb6-cee7-4cda-8c51-8ada6398e70f" class="widget widgetGraphicLinks skin63 widgetOptionSet4 narrow" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:35em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row narrow"><!--
+--><div class="col col1 first "><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.go2kennewick.com/list.aspx" target="_self" class="fancyButton fancyButton606 ">
+		<span>
+			<span><span class="text">Notify Me®</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton606.fancyButton:link,.fancyButton606.fancyButton:visited, .fancyButton606div.fancyButton{
+	background-color: rgb(255, 255, 255);
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-top-left-radius: 10px;
+	-khtml-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	-khtml-border-top-right-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-bottom-left-radius: 10px;
+	-khtml-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	-khtml-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	border-top: 5px solid rgb(8, 41, 74);
+	border-left: 5px solid rgb(8, 41, 74);
+	border-right: 5px solid rgb(8, 41, 74);
+	border-bottom: 5px solid rgb(8, 41, 74);
+position: relative;
+z-index: 1;
+transition: all .2s ease-in-out;
+}
+
+.fancyButton606::after {
+content: "";
+position: absolute;
+left: -2px;
+top: 0;
+width: 102px;
+height: 100%;
+background: rgba(8, 41, 74, 1);
+z-index: -1;
+transition: all .2s ease-in-out;
+}
+.fancyButton606.fancyButton:hover,.fancyButton606.fancyButton:focus,.fancyButton606.fancyButton:active,.fancyButton606.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.fancyButton606:is(:hover,:focus,:active)::after {
+width: calc(100% + 4px);}
+.fancyButton606.fancyButton:link > span,.fancyButton606.fancyButton:visited > span, .fancyButton606div.fancyButton > span{
+}
+.fancyButton606.fancyButton:hover > span,.fancyButton606.fancyButton:focus > span,.fancyButton606.fancyButton:active > span,.fancyButton606.fancyButton.hover > span{
+}
+.fancyButton606.fancyButton .text{
+	color: rgb(8, 41, 74);
+	font-size: 1.3em;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	background-image: url('/ImageRepository/Document?documentID=15041');
+	background-repeat: no-repeat;
+	background-position: 5px  center;
+height: 100px;
+line-height: 1.2em;
+transition: all .2s ease-in-out;
+}
+.fancyButton606.fancyButton:hover .text,.fancyButton606.fancyButton:focus .text,.fancyButton606.fancyButton:active .text,.fancyButton606.fancyButton.hover .text{
+	color: rgb(255, 255, 255);
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=15042');
+
+
+}
+</style>
+
+ </div><!--
+--></div></div><!----><div class="col col1  last"><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.governmentjobs.com/careers/kennewick" target="_self" class="fancyButton fancyButton607 ">
+		<span>
+			<span><span class="text">Employment</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton607.fancyButton:link,.fancyButton607.fancyButton:visited, .fancyButton607div.fancyButton{
+	background-color: rgb(255, 255, 255);
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-top-left-radius: 10px;
+	-khtml-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	-khtml-border-top-right-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-bottom-left-radius: 10px;
+	-khtml-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	-khtml-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	border-top: 5px solid rgb(8, 41, 74);
+	border-left: 5px solid rgb(8, 41, 74);
+	border-right: 5px solid rgb(8, 41, 74);
+	border-bottom: 5px solid rgb(8, 41, 74);
+position: relative;
+z-index: 1;
+transition: all .2s ease-in-out;
+}
+
+.fancyButton607::after {
+content: "";
+position: absolute;
+left: -2px;
+top: 0;
+width: 102px;
+height: 100%;
+background: rgba(8, 41, 74, 1);
+z-index: -1;
+transition: all .2s ease-in-out;
+}
+.fancyButton607.fancyButton:hover,.fancyButton607.fancyButton:focus,.fancyButton607.fancyButton:active,.fancyButton607.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.fancyButton607:is(:hover,:focus,:active)::after {
+width: calc(100% + 4px);}
+.fancyButton607.fancyButton:link > span,.fancyButton607.fancyButton:visited > span, .fancyButton607div.fancyButton > span{
+}
+.fancyButton607.fancyButton:hover > span,.fancyButton607.fancyButton:focus > span,.fancyButton607.fancyButton:active > span,.fancyButton607.fancyButton.hover > span{
+}
+.fancyButton607.fancyButton .text{
+	color: rgb(8, 41, 74);
+	font-size: 1.3em;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	background-image: url('/ImageRepository/Document?documentID=15039');
+	background-repeat: no-repeat;
+	background-position: 3px  center;
+height: 100px;
+line-height: 1.2em;
+transition: all .2s ease-in-out;
+}
+.fancyButton607.fancyButton:hover .text,.fancyButton607.fancyButton:focus .text,.fancyButton607.fancyButton:active .text,.fancyButton607.fancyButton.hover .text{
+	color: rgb(255, 255, 255);
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=15040');
+
+
+}
+</style>
+
+ </div><!--
+--></div></div><!--			--></div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col8" style="height: auto;" data-widgetcontainerid="f3ec9401-6d22-45c2-b702-9fe62d6c5f20">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col8 first last id066cf0bd-0522-469b-b295-078d07d7de78" style="height: 230px;" data-widgetcontainerid="066cf0bd-0522-469b-b295-078d07d7de78">
+	
+<div data-widget-id="d8d7b067-dcd3-4ca2-9b69-06f95e3a9bd5" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidgetd8d7b067-dcd3-4ca2-9b69-06f95e3a9bd5" class="widget widgetGraphicLinks skin63 widgetOptionSet4 narrow" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:35em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row narrow"><!--
+--><div class="col col1 first "><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://www.go2kennewick.com/752/Utilities" target="_self" class="fancyButton fancyButton613 ">
+		<span>
+			<span><span class="text">Utility<br>Information</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton613.fancyButton:link,.fancyButton613.fancyButton:visited, .fancyButton613div.fancyButton{
+	background-color: rgb(255, 255, 255);
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-top-left-radius: 10px;
+	-khtml-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	-khtml-border-top-right-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-bottom-left-radius: 10px;
+	-khtml-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	-khtml-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	border-top: 5px solid rgb(8, 41, 74);
+	border-left: 5px solid rgb(8, 41, 74);
+	border-right: 5px solid rgb(8, 41, 74);
+	border-bottom: 5px solid rgb(8, 41, 74);
+position: relative;
+z-index: 1;
+transition: all .2s ease-in-out;
+}
+
+.fancyButton613::after {
+content: "";
+position: absolute;
+left: -2px;
+top: 0;
+width: 102px;
+height: 100%;
+background: rgba(8, 41, 74, 1);
+z-index: -1;
+transition: all .2s ease-in-out;
+}
+.fancyButton613.fancyButton:hover,.fancyButton613.fancyButton:focus,.fancyButton613.fancyButton:active,.fancyButton613.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.fancyButton613:is(:hover,:focus,:active)::after {
+width: calc(100% + 4px);}
+.fancyButton613.fancyButton:link > span,.fancyButton613.fancyButton:visited > span, .fancyButton613div.fancyButton > span{
+}
+.fancyButton613.fancyButton:hover > span,.fancyButton613.fancyButton:focus > span,.fancyButton613.fancyButton:active > span,.fancyButton613.fancyButton.hover > span{
+}
+.fancyButton613.fancyButton .text{
+	color: rgb(8, 41, 74);
+	font-size: 1.3em;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	background-image: url('/ImageRepository/Document?documentID=15045');
+	background-repeat: no-repeat;
+	background-position: 5px  center;
+height: 100px;
+line-height: 1.2em;
+transition: all .2s ease-in-out;
+}
+.fancyButton613.fancyButton:hover .text,.fancyButton613.fancyButton:focus .text,.fancyButton613.fancyButton:active .text,.fancyButton613.fancyButton.hover .text{
+	color: rgb(255, 255, 255);
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=15046');
+
+
+}
+</style>
+
+ </div><!--
+--></div></div><!----><div class="col col1  last"><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://cityofkennewickwa.tylerportico.com/TIM/Portal/portal-home" target="_self" class="fancyButton fancyButton614 ">
+		<span>
+			<span><span class="text">Report a<br>Concern</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton614.fancyButton:link,.fancyButton614.fancyButton:visited, .fancyButton614div.fancyButton{
+	background-color: rgb(255, 255, 255);
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-top-left-radius: 10px;
+	-khtml-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	-khtml-border-top-right-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-bottom-left-radius: 10px;
+	-khtml-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	-khtml-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	border-top: 5px solid rgb(8, 41, 74);
+	border-left: 5px solid rgb(8, 41, 74);
+	border-right: 5px solid rgb(8, 41, 74);
+	border-bottom: 5px solid rgb(8, 41, 74);
+position: relative;
+z-index: 1;
+transition: all .2s ease-in-out;
+}
+
+.fancyButton614::after {
+content: "";
+position: absolute;
+left: -2px;
+top: 0;
+width: 102px;
+height: 100%;
+background: rgba(8, 41, 74, 1);
+z-index: -1;
+transition: all .2s ease-in-out;
+}
+.fancyButton614.fancyButton:hover,.fancyButton614.fancyButton:focus,.fancyButton614.fancyButton:active,.fancyButton614.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.fancyButton614:is(:hover,:focus,:active)::after {
+width: calc(100% + 4px);}
+.fancyButton614.fancyButton:link > span,.fancyButton614.fancyButton:visited > span, .fancyButton614div.fancyButton > span{
+}
+.fancyButton614.fancyButton:hover > span,.fancyButton614.fancyButton:focus > span,.fancyButton614.fancyButton:active > span,.fancyButton614.fancyButton.hover > span{
+}
+.fancyButton614.fancyButton .text{
+	color: rgb(8, 41, 74);
+	font-size: 1.3em;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	background-image: url('/ImageRepository/Document?documentID=15043');
+	background-repeat: no-repeat;
+	background-position: 3px  center;
+height: 100px;
+line-height: 1.2em;
+transition: all .2s ease-in-out;
+}
+.fancyButton614.fancyButton:hover .text,.fancyButton614.fancyButton:focus .text,.fancyButton614.fancyButton:active .text,.fancyButton614.fancyButton.hover .text{
+	color: rgb(255, 255, 255);
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=15044');
+
+
+}
+</style>
+
+ </div><!--
+--></div></div><!--			--></div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col8 last" style="height: auto;" data-widgetcontainerid="ddd7ee3d-ab8a-400a-9857-3bf1a383738e">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col8 first last idc323e2b0-8aec-4256-8325-c4cfa826f9a7" style="height: 230px;" data-widgetcontainerid="c323e2b0-8aec-4256-8325-c4cfa826f9a7">
+	
+<div data-widget-id="71b1072c-32ee-4577-93a4-f701182dbb08" data-widget-controller-path="/GraphicLinks/Widget">
+
+
+
+
+<div id="graphicLinkWidget71b1072c-32ee-4577-93a4-f701182dbb08" class="widget widgetGraphicLinks skin63 widgetOptionSet4 narrow" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:35em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="graphicLinks">
+	<div class="widgetHeader">
+		<div class="">
+				</div>
+	</div>
+	<div class="widgetBody cpGrid cpGrid2 ">	
+			<div class="row narrow"><!--
+--><div class="col col1 first "><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://selfservice.ci.kennewick.wa.us/EnerGov_Prod/SelfService" target="_self" class="fancyButton fancyButton615 ">
+		<span>
+			<span><span class="text">Permitting<br>Self Service Portal</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton615.fancyButton:link,.fancyButton615.fancyButton:visited, .fancyButton615div.fancyButton{
+	background-color: rgb(255, 255, 255);
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-top-left-radius: 10px;
+	-khtml-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	-khtml-border-top-right-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-bottom-left-radius: 10px;
+	-khtml-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	-khtml-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	border-top: 5px solid rgb(8, 41, 74);
+	border-left: 5px solid rgb(8, 41, 74);
+	border-right: 5px solid rgb(8, 41, 74);
+	border-bottom: 5px solid rgb(8, 41, 74);
+position: relative;
+z-index: 1;
+transition: all .2s ease-in-out;
+}
+
+.fancyButton615::after {
+content: "";
+position: absolute;
+left: -2px;
+top: 0;
+width: 102px;
+height: 100%;
+background: rgba(8, 41, 74, 1);
+z-index: -1;
+transition: all .2s ease-in-out;
+}
+.fancyButton615.fancyButton:hover,.fancyButton615.fancyButton:focus,.fancyButton615.fancyButton:active,.fancyButton615.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.fancyButton615:is(:hover,:focus,:active)::after {
+width: calc(100% + 4px);}
+.fancyButton615.fancyButton:link > span,.fancyButton615.fancyButton:visited > span, .fancyButton615div.fancyButton > span{
+}
+.fancyButton615.fancyButton:hover > span,.fancyButton615.fancyButton:focus > span,.fancyButton615.fancyButton:active > span,.fancyButton615.fancyButton.hover > span{
+}
+.fancyButton615.fancyButton .text{
+	color: rgb(8, 41, 74);
+	font-size: 1.3em;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	background-image: url('/ImageRepository/Document?documentID=15037');
+	background-repeat: no-repeat;
+	background-position: 5px  center;
+height: 100px;
+line-height: 1.2em;
+transition: all .2s ease-in-out;
+}
+.fancyButton615.fancyButton:hover .text,.fancyButton615.fancyButton:focus .text,.fancyButton615.fancyButton:active .text,.fancyButton615.fancyButton.hover .text{
+	color: rgb(255, 255, 255);
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=15038');
+
+
+}
+</style>
+
+ </div><!--
+--></div></div><!----><div class="col col1  last"><div class="semanticList"><!--
+	    --><div class="widgetItem GraphicLinks">
+
+<div>
+	<a href="https://kennewickwa.portal.civicclerk.com" target="_self" class="fancyButton fancyButton616 ">
+		<span>
+			<span><span class="text">Agendas<br>&amp; Minutes</span></span>
+		</span>
+	</a>
+</div>
+		<style scoped="scoped">.fancyButton616.fancyButton:link,.fancyButton616.fancyButton:visited, .fancyButton616div.fancyButton{
+	background-color: rgb(255, 255, 255);
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-top-left-radius: 10px;
+	-khtml-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	-khtml-border-top-right-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-bottom-left-radius: 10px;
+	-khtml-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	-khtml-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	border-top: 5px solid rgb(8, 41, 74);
+	border-left: 5px solid rgb(8, 41, 74);
+	border-right: 5px solid rgb(8, 41, 74);
+	border-bottom: 5px solid rgb(8, 41, 74);
+position: relative;
+z-index: 1;
+transition: all .2s ease-in-out;
+}
+
+.fancyButton616::after {
+content: "";
+position: absolute;
+left: -2px;
+top: 0;
+width: 102px;
+height: 100%;
+background: rgba(8, 41, 74, 1);
+z-index: -1;
+transition: all .2s ease-in-out;
+}
+.fancyButton616.fancyButton:hover,.fancyButton616.fancyButton:focus,.fancyButton616.fancyButton:active,.fancyButton616.fancyButton.hover{
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.fancyButton616:is(:hover,:focus,:active)::after {
+width: calc(100% + 4px);}
+.fancyButton616.fancyButton:link > span,.fancyButton616.fancyButton:visited > span, .fancyButton616div.fancyButton > span{
+}
+.fancyButton616.fancyButton:hover > span,.fancyButton616.fancyButton:focus > span,.fancyButton616.fancyButton:active > span,.fancyButton616.fancyButton.hover > span{
+}
+.fancyButton616.fancyButton .text{
+	color: rgb(8, 41, 74);
+	font-size: 1.3em;
+	font-family: "Open Sans";
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 115px;
+	background-image: url('/ImageRepository/Document?documentID=15035');
+	background-repeat: no-repeat;
+	background-position: 5px  center;
+height: 100px;
+line-height: 1.2em;
+transition: all .2s ease-in-out;
+}
+.fancyButton616.fancyButton:hover .text,.fancyButton616.fancyButton:focus .text,.fancyButton616.fancyButton:active .text,.fancyButton616.fancyButton.hover .text{
+	color: rgb(255, 255, 255);
+	text-decoration: underline;
+	background-image: url('/ImageRepository/Document?documentID=15036');
+
+
+}
+</style>
+
+ </div><!--
+--></div></div><!--			--></div>
+	</div>
+	<div class="widgetFooter">
+			</div>
+</div>
+
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!--		--></div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div><!-- Footer --><footer data-cprole="structuralContainer" id="footerContainerTS">
+<div class="siteWrap2"><div data-cprole="contentContainer" id="footerTS">	<div id="cc8b4b5b30-4fc6-433a-a5f1-d09f6f85c901" data-containerid="8b4b5b30-4fc6-433a-a5f1-d09f6f85c901" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-contentcontainerbreakpoint="45">
+				                
+
+		<div class="row outer wide"><!--
+--><div class="outer col col6 first" style="height: auto;" data-widgetcontainerid="69d4795b-e401-49e4-80cc-3bc00b78a81a">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col6 first last idc6e48f4c-1a1a-4f10-908d-1d9d663558d0" style="height: 219px;" data-widgetcontainerid="c6e48f4c-1a1a-4f10-908d-1d9d663558d0">
+	
+    <div data-widget-id="9db73b94-0674-47f4-8768-96f0c19bf0d2" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdv9db73b94-0674-47f4-8768-96f0c19bf0d2" class="widget widgetInfoAdvanced skin61 widgetOptionSet5 narrow" data-modulewidgettype="infoAdv" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:25em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-label="Info Advanced">
+			<header class="widgetHeader" id="header9db73b94-0674-47f4-8768-96f0c19bf0d2">
+		<div class="">
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row narrow">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<p><a href="https://www.go2kennewick.com"></a></p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdv9db73b94-0674-47f4-8768-96f0c19bf0d2 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col1" style="height: auto;" data-widgetcontainerid="0b60e0fc-b23c-4927-84bd-5257cdf4a696">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col1 first last id1a76a12e-73b1-42cc-a346-c202258432c4" style="height: 219px;" data-widgetcontainerid="1a76a12e-73b1-42cc-a346-c202258432c4">
+	
+
+<div class="widget widgetSpacer" id="a277d7d0-7085-44bb-bb6d-8950be7eb5f2" style="height: auto;"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col5" style="height: auto;" data-widgetcontainerid="2ef053d9-d5bd-4e03-8387-f56edbe4b185">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col5 first last id4654de2f-322d-40e4-bb7e-b3c92d5a5b68" style="height: 219px;" data-widgetcontainerid="4654de2f-322d-40e4-bb7e-b3c92d5a5b68">
+	
+    <div data-widget-id="d4ce1a23-f888-4d94-865f-b8ad79c968f0" data-widget-controller-path="/InfoAdvanced/Widget">
+
+
+
+
+
+	<section id="divInfoAdvd4ce1a23-f888-4d94-865f-b8ad79c968f0" class="widget widgetInfoAdvanced skin64 widgetOptionSet5 narrow" data-modulewidgettype="infoAdv" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:25em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="headerd4ce1a23-f888-4d94-865f-b8ad79c968f0">
+			<header class="widgetHeader" id="headerd4ce1a23-f888-4d94-865f-b8ad79c968f0">
+		<div class="">
+					<h3>Contact Us</h3>
+								</div>
+	</header>
+	<div class="widgetBody  cpGrid cpGrid1 ">
+		<div class="row narrow">
+					<div class="col col1 first last">
+						<ol class="pageStyles semanticList">
+
+<li class="InfoAdvanced widgetItem fr-view">
+	<h2 class="subhead1">City Hall</h2>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>210 W 6th Ave</p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Kennewick, WA 99336</p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Phone: <a href="tel:509-585-4200">509-585-4200</a></p>
+</li>
+<li class="InfoAdvanced widgetItem fr-view">
+	<p>Hours: 8:30am-4:30pm M-F</p>
+</li>						</ol>
+					</div>
+		</div>
+	</div>
+	<div class="widgetFooter">
+
+	</div>
+
+	</section>
+
+
+
+<script type="text/javascript">
+	//Render slideshow if info advacned items contain one.
+	$(document).ready(function (e) {
+		$('#divInfoAdvd4ce1a23-f888-4d94-865f-b8ad79c968f0 .InfoAdvanced.widgetItem').each(function () {
+			renderSlideshowIfApplicable($(this));		
+		});
+	});
+</script></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col1" style="height: auto;" data-widgetcontainerid="772fd349-2cd5-4c88-b03e-fae66cd49731">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col1 first last id7a0e9241-24e3-41f6-9ee3-a48530e29d0b" style="height: 219px;" data-widgetcontainerid="7a0e9241-24e3-41f6-9ee3-a48530e29d0b">
+	
+
+<div class="widget widgetSpacer" id="c9a2e81b-6d4b-435d-8a6d-eacc2c6977f2" style="height: auto;"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col5" style="height: auto;" data-widgetcontainerid="73dac576-52b5-40f3-be84-113fc307f329">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col5 first last id4e6a1db9-751b-474f-ba61-5c87bec5ec74" style="height: 219px;" data-widgetcontainerid="4e6a1db9-751b-474f-ba61-5c87bec5ec74">
+	
+	<div data-widget-id="d0754c53-742b-4b0f-af3a-1fe374a67fc6" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinkd0754c53-742b-4b0f-af3a-1fe374a67fc6" class="widget widgetQuickLinks skin64 widgetOptionSet27 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:25em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeaderd0754c53-742b-4b0f-af3a-1fe374a67fc6">
+			<header class="widgetHeader" id="quickLinksHeaderd0754c53-742b-4b0f-af3a-1fe374a67fc6">
+		<div class="">
+					<h3><a style="" href="https://www.go2kennewick.com/QuickLinks.aspx?CID=12,19">Quick Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.governmentjobs.com/careers/kennewick" target="_self">Jobs</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://library.municode.com/wa/kennewick/codes/code_of_ordinances" target="_self">Municipal Code</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.go2kennewick.com/FAQ.aspx" target="_self">Frequently Asked Questions</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://owa.ci.kennewick.wa.us/owa" target="_self">Employee Email </a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.go2kennewick.com/1491/Police-Department" target="_self">Police</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col1" style="height: auto;" data-widgetcontainerid="764ffffe-a451-4abe-a75c-ed3d2595421a">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col1 first last ida6eec2cc-fd80-4a49-9131-7c4245f1bbcb" style="height: 219px;" data-widgetcontainerid="a6eec2cc-fd80-4a49-9131-7c4245f1bbcb">
+	
+
+<div class="widget widgetSpacer" id="64dd8a31-7075-481a-8ea9-00192d416bbf" style="height: auto;"></div>	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!----><div class="outer col col5 last" style="height: auto;" data-widgetcontainerid="0ff47454-c04b-42e6-a2a6-b43df26b978d">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col5 first last id71d2b434-9bc3-4ae5-9286-11d9b03e1081" style="height: 219px;" data-widgetcontainerid="71d2b434-9bc3-4ae5-9286-11d9b03e1081">
+	
+	<div data-widget-id="ca301373-b515-481a-a743-7b6553dae308" data-widget-controller-path="/QuickLinks/Widget">
+
+
+
+
+
+ 
+
+
+	<section id="widgetQuicklinkca301373-b515-481a-a743-7b6553dae308" class="widget widgetQuickLinks skin64 widgetOptionSet27 narrow" data-modulewidgettype="quickLinks" data-elementqueryclasses="{&quot;wide-narrow&quot;:&quot;min-width:25em&quot;}" data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" aria-labelledby="quickLinksHeaderca301373-b515-481a-a743-7b6553dae308">
+			<header class="widgetHeader" id="quickLinksHeaderca301373-b515-481a-a743-7b6553dae308">
+		<div class="">
+					<h3><a style="" href="https://www.go2kennewick.com/QuickLinks.aspx?CID=12">Site Links</a></h3>
+						</div>
+	</header>
+	<div class="widgetBody cpGrid cpGrid1 ">
+        <div class="row  narrow">
+				<div class="col col1 first last">
+					<ol class="semanticList">
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.go2kennewick.com/sitemap" target="_self">Site Map</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.go2kennewick.com/accessibility" target="_self">Accessibility</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.go2kennewick.com/site/privacy" target="_self">Privacy Policy</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.go2kennewick.com/site/copyright" target="_self">Copyright Notices</a>
+        <div class="widgetMeta"></div>
+    </li>
+
+    <li style="position:relative" class="widgetItem QuickLinks">
+        <a class="widgetDesc widgetQuickLinksLink" href="https://www.go2kennewick.com/1025" target="_self">Social Media Policy</a>
+        <div class="widgetMeta"></div>
+    </li>
+					</ol>
+				</div>
+		</div>
+        
+	</div>
+	<div class="widgetFooter">
+	</div>
+	<div class="addItemModal hidden">
+		<div class="url hidden">/QuickLinks.aspx</div>
+	</div>
+
+	</section>
+</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!--		--></div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</footer><!-- Powered By --><div data-cprole="structuralContainer" id="poweredByContainerTS">
+<div class="siteWrap2"><div data-cprole="contentContainer" id="poweredByTS">	<div id="cc8bb9bd71-5510-4235-bb3a-b53fb53d5572" data-containerid="8bb9bd71-5510-4235-bb3a-b53fb53d5572" class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile">
+				                
+
+		<div class="row outer wide"><!--
+--><div class="outer col col24 first last" style="height: auto;" data-widgetcontainerid="bbe22c51-bb27-45f2-80a8-2d1bd77ae658">
+				
+	<div class="row nest first last wide">
+
+	
+	<div class="inner col col24 first last id750a622c-2eba-4800-bbd9-d54c2614284f" style="height: 64px;" data-widgetcontainerid="750a622c-2eba-4800-bbd9-d54c2614284f">
+	
+ 
+	<div data-widget-id="8efd452d-f8f1-40f2-a9b4-46968a25bc9a" data-modulename="customHtml" id="widgetCustomHtml8efd452d-f8f1-40f2-a9b4-46968a25bc9a" class="widget widgetCustomHtml skin67 narrow">
+	<div class="widgetBody pageStyles" id="widgetBody8efd452d-f8f1-40f2-a9b4-46968a25bc9a">
+		<div id="customHtml8efd452d-f8f1-40f2-a9b4-46968a25bc9a"><div><style>
+  /* CP icon */
+  .cpBylineIconTS {
+  }
+  /* CP Text */
+  .cpBylineTextTS,
+  .cpBylineTextTS a:link {
+  }
+
+  .cpBylineTS {
+    text-align: center;
+  }
+  
+  .cpBylineIconTS {
+    fill: currentColor;
+    width: 39px;
+    height: 26px;
+    display: inline;
+    vertical-align: middle;
+  }
+</style>
+
+<div class="widgetItem cpBylineTS">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="cpBylineIconTS">
+    <path class="c" d="M73.4,23.2h-19v16.7h19c2.8,0,5,2.2,5,5c0,2.8-2.2,5-5,5h-19v28.4h5.5l11.3-11.7h2.2c11.9,0,21.6-9.7,21.6-21.6C95,33,85.3,23.2,73.4,23.2"></path>
+    <path class="p" d="M45.8,66.5H26.6C14.7,66.5,5,56.8,5,44.9C5,33,14.7,23.2,26.6,23.2h19.1v16.7H26.6c-2.8,0-5,2.2-5,5c0,2.8,2.2,5,5,5h19.1V66.5z"></path>
+  </svg>
+  <span class="cpBylineTextTS">Government Websites by <a href="https://connect.civicplus.com/referral">CivicPlus®</a></span>
+</div>
+</div></div>
+	</div>
+	</div>
+	</div> <!-- inner column -->
+
+	</div> <!-- inner row -->
+
+			</div><!-- outer column --><!--		--></div> <!-- outer row -->
+
+
+	</div>
+</div></div>
+</div>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+<link href="/745732998.css" rel="stylesheet" type="text/css">
+
+<div tabindex="0"></div>
+<div id="SplashMessageWrapper" class="cp-Splash-wrapper">
+	<div role="dialog" aria-labelledby="cp-Splash-title" aria-describedby="editorContentDesc" aria-modal="true" tabindex="-1" id="SplashMessage" class="hidden cp-Splash cp-Splash--modal is-open">
+		<div class="cp-Splash-header">
+			<span class="cp-Splash-title" id="cp-Splash-title">Loading</span>
+			<button class="cp-Splash-Btn cp-Splash-close" aria-label="Close this modal" title="Close this window">
+				<svg id="iconClose" viewBox="0 0 25 25">
+					<polygon style="fill:currentcolor" points="18.806,6.98 18.075,6.248 12.532,11.792 6.989,6.248 6.257,6.98 11.786,12.508 6.212,18.084 6.943,18.815 12.532,13.224 18.12,18.815 18.851,18.084 13.277,12.508"></polygon>
+				</svg>
+			</button>
+		</div>
+		<div class="cp-Splash-body">
+			<div class="cp-Splash-Prose editorContent fr-view fr-element" id="editorContentDesc">
+				<!-- Content from the Froala Editor will go here. -->
+				Loading
+			</div>
+		</div>
+		<div class="cp-Splash-footer">
+			<button class="cp-Splash-Btn cp-Splash-Btn--NoShow">Do Not Show Again</button>
+			<button class="cp-Splash-Btn cp-Splash-Btn--Close">Close</button>
+		</div>
+	</div>
+</div>
+<div tabindex="0"></div>
+
+<script src="/Assets/Scripts/APIClient.js"></script>
+<script src="/Assets/Mystique/Shared/Scripts/Moment/Moment.min.js"></script>
+<script src="/Assets/Scripts/SplashModal/SplashModalRender.js"></script>
+<script>
+
+		$(document).ready(function () {
+			var filter = {
+				targetId: '868',
+				targetType: 1
+			}
+
+			new SplashModalRender().triggerRender(filter);
+		});
+</script>
+
+    
+	
+	
+	
+	
+
+
+
+	
+
+
+
+
+
+
+    <script src="/357991998.js" type="text/javascript"></script>
+    <!----------Google Translate (Mobile Friendly)--------->
+
+ 
+
+<style>#google-translate-container {float: right;padding: 3px 5px 0px 0px;}.goog-te-combo,.goog-te-banner *,.goog-te-ftab *,.goog-te-menu *,.goog-te-menu2 *,.goog-te-balloon * {font-family: arial;font-size: 10pt;background-image: url("https://theme.zdassets.com/theme_assets/958586/bae8aa24db8d43595871692a9d259186f2db3fb4.png");background-position: 3px 4px;background-size: 22px;background-repeat: no-repeat;text-indent: 20px;background-color: #fff;color: #000 !important;}.goog-logo-link {display: none !important;}.goog-te-gadget {color: transparent !important;}.goog-te-gadget .goog-te-combo {margin: 2px 0 !important;border-radius: 15px !important;}.goog-te-combo{border: 1px solid !important;border-color: #bcc9d7 #96a3b1 #96a3b1 #bcc9d7 !important;border-radius: 0 !important;height:32px; !important;padding: 0 1px 0 .25rem !important;}
+
+#launcher-wrapper {bottom: 50px !important;}
+
+</style>
+
+<div id="google-translate-container">
+
+<div id="google_translate_element" style="position: fixed; bottom: 0px; right: 20px; z-index: 5;"><div class="skiptranslate goog-te-gadget" dir="ltr" style=""><div id=":0.targetLanguage"><select class="goog-te-combo" aria-label="google translate languages"><option value="">Select Language</option><option value="ab">Abkhaz</option><option value="ace">Acehnese</option><option value="ach">Acholi</option><option value="aa">Afar</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="alz">Alur</option><option value="am">Amharic</option><option value="ar">Arabic</option><option value="hy">Armenian</option><option value="as">Assamese</option><option value="av">Avar</option><option value="awa">Awadhi</option><option value="ay">Aymara</option><option value="az">Azerbaijani</option><option value="ban">Balinese</option><option value="bal">Baluchi</option><option value="bm">Bambara</option><option value="bci">Baoulé</option><option value="ba">Bashkir</option><option value="eu">Basque</option><option value="btx">Batak Karo</option><option value="bts">Batak Simalungun</option><option value="bbc">Batak Toba</option><option value="be">Belarusian</option><option value="bem">Bemba</option><option value="bn">Bengali</option><option value="bew">Betawi</option><option value="bho">Bhojpuri</option><option value="bik">Bikol</option><option value="bs">Bosnian</option><option value="br">Breton</option><option value="bg">Bulgarian</option><option value="bua">Buryat</option><option value="yue">Cantonese</option><option value="ca">Catalan</option><option value="ceb">Cebuano</option><option value="ch">Chamorro</option><option value="ce">Chechen</option><option value="ny">Chichewa</option><option value="zh-CN">Chinese (Simplified)</option><option value="zh-TW">Chinese (Traditional)</option><option value="chk">Chuukese</option><option value="cv">Chuvash</option><option value="co">Corsican</option><option value="crh">Crimean Tatar (Cyrillic)</option><option value="crh-Latn">Crimean Tatar (Latin)</option><option value="hr">Croatian</option><option value="cs">Czech</option><option value="da">Danish</option><option value="fa-AF">Dari</option><option value="dv">Dhivehi</option><option value="din">Dinka</option><option value="doi">Dogri</option><option value="dov">Dombe</option><option value="nl">Dutch</option><option value="dyu">Dyula</option><option value="dz">Dzongkha</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="ee">Ewe</option><option value="fo">Faroese</option><option value="fj">Fijian</option><option value="tl">Filipino</option><option value="fi">Finnish</option><option value="fon">Fon</option><option value="fr">French</option><option value="fr-CA">French (Canada)</option><option value="fy">Frisian</option><option value="fur">Friulian</option><option value="ff">Fulani</option><option value="gaa">Ga</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gn">Guarani</option><option value="gu">Gujarati</option><option value="ht">Haitian Creole</option><option value="cnh">Hakha Chin</option><option value="ha">Hausa</option><option value="haw">Hawaiian</option><option value="iw">Hebrew</option><option value="hil">Hiligaynon</option><option value="hi">Hindi</option><option value="hmn">Hmong</option><option value="hu">Hungarian</option><option value="hrx">Hunsrik</option><option value="iba">Iban</option><option value="is">Icelandic</option><option value="ig">Igbo</option><option value="ilo">Ilocano</option><option value="id">Indonesian</option><option value="iu-Latn">Inuktut (Latin)</option><option value="iu">Inuktut (Syllabics)</option><option value="ga">Irish</option><option value="it">Italian</option><option value="jam">Jamaican Patois</option><option value="ja">Japanese</option><option value="jw">Javanese</option><option value="kac">Jingpo</option><option value="kl">Kalaallisut</option><option value="kn">Kannada</option><option value="kr">Kanuri</option><option value="pam">Kapampangan</option><option value="kk">Kazakh</option><option value="kha">Khasi</option><option value="km">Khmer</option><option value="cgg">Kiga</option><option value="kg">Kikongo</option><option value="rw">Kinyarwanda</option><option value="ktu">Kituba</option><option value="trp">Kokborok</option><option value="kv">Komi</option><option value="gom">Konkani</option><option value="ko">Korean</option><option value="kri">Krio</option><option value="ku">Kurdish (Kurmanji)</option><option value="ckb">Kurdish (Sorani)</option><option value="ky">Kyrgyz</option><option value="lo">Lao</option><option value="ltg">Latgalian</option><option value="la">Latin</option><option value="lv">Latvian</option><option value="lij">Ligurian</option><option value="li">Limburgish</option><option value="ln">Lingala</option><option value="lt">Lithuanian</option><option value="lmo">Lombard</option><option value="lg">Luganda</option><option value="luo">Luo</option><option value="lb">Luxembourgish</option><option value="mk">Macedonian</option><option value="mad">Madurese</option><option value="mai">Maithili</option><option value="mak">Makassar</option><option value="mg">Malagasy</option><option value="ms">Malay</option><option value="ms-Arab">Malay (Jawi)</option><option value="ml">Malayalam</option><option value="mt">Maltese</option><option value="mam">Mam</option><option value="gv">Manx</option><option value="mi">Maori</option><option value="mr">Marathi</option><option value="mh">Marshallese</option><option value="mwr">Marwadi</option><option value="mfe">Mauritian Creole</option><option value="chm">Meadow Mari</option><option value="mni-Mtei">Meiteilon (Manipuri)</option><option value="min">Minang</option><option value="lus">Mizo</option><option value="mn">Mongolian</option><option value="my">Myanmar (Burmese)</option><option value="nhe">Nahuatl (Eastern Huasteca)</option><option value="ndc-ZW">Ndau</option><option value="nr">Ndebele (South)</option><option value="new">Nepalbhasa (Newari)</option><option value="ne">Nepali</option><option value="bm-Nkoo">NKo</option><option value="no">Norwegian</option><option value="nus">Nuer</option><option value="oc">Occitan</option><option value="or">Odia (Oriya)</option><option value="om">Oromo</option><option value="os">Ossetian</option><option value="pag">Pangasinan</option><option value="pap">Papiamento</option><option value="ps">Pashto</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese (Brazil)</option><option value="pt-PT">Portuguese (Portugal)</option><option value="pa">Punjabi (Gurmukhi)</option><option value="pa-Arab">Punjabi (Shahmukhi)</option><option value="qu">Quechua</option><option value="kek">Qʼeqchiʼ</option><option value="rom">Romani</option><option value="ro">Romanian</option><option value="rn">Rundi</option><option value="ru">Russian</option><option value="se">Sami (North)</option><option value="sm">Samoan</option><option value="sg">Sango</option><option value="sa">Sanskrit</option><option value="sat-Latn">Santali (Latin)</option><option value="sat">Santali (Ol Chiki)</option><option value="gd">Scots Gaelic</option><option value="nso">Sepedi</option><option value="sr">Serbian</option><option value="st">Sesotho</option><option value="crs">Seychellois Creole</option><option value="shn">Shan</option><option value="sn">Shona</option><option value="scn">Sicilian</option><option value="szl">Silesian</option><option value="sd">Sindhi</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="so">Somali</option><option value="es">Spanish</option><option value="su">Sundanese</option><option value="sus">Susu</option><option value="sw">Swahili</option><option value="ss">Swati</option><option value="sv">Swedish</option><option value="ty">Tahitian</option><option value="tg">Tajik</option><option value="ber-Latn">Tamazight</option><option value="ber">Tamazight (Tifinagh)</option><option value="ta">Tamil</option><option value="tt">Tatar</option><option value="te">Telugu</option><option value="tet">Tetum</option><option value="th">Thai</option><option value="bo">Tibetan</option><option value="ti">Tigrinya</option><option value="tiv">Tiv</option><option value="tpi">Tok Pisin</option><option value="to">Tongan</option><option value="lua">Tshiluba</option><option value="ts">Tsonga</option><option value="tn">Tswana</option><option value="tcy">Tulu</option><option value="tum">Tumbuka</option><option value="tr">Turkish</option><option value="tk">Turkmen</option><option value="tyv">Tuvan</option><option value="ak">Twi</option><option value="udm">Udmurt</option><option value="uk">Ukrainian</option><option value="ur">Urdu</option><option value="ug">Uyghur</option><option value="uz">Uzbek</option><option value="ve">Venda</option><option value="vec">Venetian</option><option value="vi">Vietnamese</option><option value="war">Waray</option><option value="cy">Welsh</option><option value="wo">Wolof</option><option value="xh">Xhosa</option><option value="sah">Yakut</option><option value="yi">Yiddish</option><option value="yo">Yoruba</option><option value="yua">Yucatec Maya</option><option value="zap">Zapotec</option><option value="zu">Zulu</option></select></div>Powered by <span style="white-space:nowrap"><a class="VIpgJd-ZVi9od-l4eHX-hSRGPd" href="https://translate.google.com" target="_blank" rel="noopener"><img src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png" width="37px" height="14px" style="padding-right: 3px" alt="Google Translate">Translate</a></span></div></div>
+
+</div>
+
+<script>
+
+function googleTranslateElementInit() {
+
+new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
+
+// begin accessibility compliance
+
+$('img.goog-te-gadget-icon').attr('alt','Google Translate');
+
+$('div#goog-gt-tt div.logo img').attr('alt','translate');
+
+$('div#goog-gt-tt .original-text').css('text-align','left');
+
+$('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+
+$('.goog-te-combo').attr('aria-label','google translate languages');
+
+$('svg.goog-te-spinner').attr('title','Google Translate Spinner');
+
+$('.goog-te-gadget-simple .goog-te-menu-value span').css('color','#000000');
+
+}
+
+$(function() {
+
+$.getScript("//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit");
+
+});
+
+</script>
+
+ 
+<!--------------End Google Translate----------------->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-123183581-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-123183581-1');
+</script>
+
+
+<!-- Fixed Nav Adjustment -->
+<script>
+  function getValueTS(elem, attr) {
+    const val = elem.css(attr);
+    if (val === undefined) return undefined;
+    const num = parseInt(val, 10);
+    if (num === NaN) return undefined;
+    return num;
+  }
+
+  function clampTS(number, min, max) {
+    return Math.min(Math.max(number, min), max);
+  }
+
+  function isPageEditingTS() {
+    return (
+      $("#doneEditing").length > 0 || // In live edit
+      typeof DesignCenter !== "undefined" // In theme manager
+    );
+  }
+
+  const bgColorRegexTS = /rgba\((\d+), (\d+), (\d+), (\d*\.?\d*)\)/;
+  function isTransparentTS(elem) {
+    const bg = elem.css('background-color');
+    if (typeof bg !== "string" || !bg.startsWith('rgba(')) return false;
+    const matchState = bg.match(bgColorRegexTS);
+    if (!matchState || matchState.length !== 5) return false;
+    const alpha = parseFloat(matchState[4], 10);
+    if (!(alpha >= 0 && alpha < 1)) return false;
+    return true;
+  }
+
+  function iterateLeftpads(cb) {
+    const containersTS = $("[class^='siteWrap'],[class*=' siteWrap']");
+    for (let i = 0; i < containersTS.length; i++) {
+      const containerTS = containersTS[i];
+      // Skip the body container and anything with data-skip-leftpad
+      if (
+        containerTS.id !== "bodyContainerTS" &&
+        containerTS.getAttribute('data-skip-leftpad') === null
+      ) {
+        cb(containerTS);
+      }
+    }
+  }
+
+  const anchor = $("#divToolbars");
+
+  // Outer banner padding (push banner down)
+  const outerSizingTS = $("#bannerContainerTS");
+  // Inner banner padding (push banner content down) - Transparent header OR on attaching headers
+  const innerSizingTS = $("#bannerSizingTS");
+  const bodyContainerTS = $("#bodyContainerTS");
+
+  const forceUnfixClassTS = "forceUnfixTS";
+
+  const fixedTopTS = $(".fixedTopTS");
+  const fixedBottomTS = $(".fixedBottomTS");
+  const fixedLeftTS = $(".fixedLeftTS");
+
+  var initialTopTS;
+  var topAttachTS;
+  if (fixedTopTS && fixedTopTS.length === 1) {
+    initialTopTS = getValueTS(fixedTopTS, 'top');
+    const attachment = fixedTopTS.attr('data-attach');
+    if (attachment) topAttachTS = $("#" + attachment);
+    if (!topAttachTS || topAttachTS.length !== 1) topAttachTS = undefined;
+  }
+
+  function resizeAdjustmentTS() {
+    const editing = isPageEditingTS();
+
+    // Fixed top script
+    (function () {
+      if (!fixedTopTS || fixedTopTS.length !== 1 || initialTopTS === undefined) return;
+
+      if (editing) {
+        fixedTopTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedTopTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      const topPosition = fixedTopTS.css('position');
+      if (topPosition === 'fixed') {
+        if (topAttachTS) {
+          scrollAdjustmentTS();
+        } else {
+          const anchorHeight = anchor.outerHeight() - 1;
+          fixedTopTS.css('top', anchorHeight + initialTopTS);
+        }
+      } else {
+        fixedTopTS.css('top', initialTopTS);
+      }
+
+      if (topPosition === 'fixed' || topPosition === 'absolute') {
+        // Bump the banner content down
+        if (isTransparentTS(fixedTopTS)) {
+          innerSizingTS.css('padding-top', initialTopTS + fixedTopTS.outerHeight() - 1);
+          outerSizingTS.css('padding-top', '');
+
+          try {
+            window.Pages.onResizeHandlersExecute();
+          } catch (e) { }
+        } else {
+          outerSizingTS.css('padding-top', fixedTopTS.outerHeight() - 1);
+          innerSizingTS.css('padding-top', '');
+        }
+      } else {
+        innerSizingTS.css('padding-top', '');
+        outerSizingTS.css('padding-top', '');
+      }
+    })();
+
+    // Fixed bottom script
+    (function () {
+      if (!fixedBottomTS || fixedBottomTS.length === 0) return;
+
+      // If the widget has gone narrow, force unfix
+      if (editing || fixedBottomTS.outerHeight() > 200) {
+        fixedBottomTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedBottomTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      if (fixedBottomTS.css('position') === 'fixed') {
+        bodyContainerTS.css('padding-bottom', fixedBottomTS.outerHeight());
+      } else {
+        bodyContainerTS.css('padding-bottom', '');
+      }
+    })();
+
+    // Fixed left script
+    (function () {
+      if (!fixedLeftTS || fixedLeftTS.length === 0) return;
+
+      if (editing) {
+        fixedLeftTS[0].classList.add(forceUnfixClassTS);
+      } else {
+        fixedLeftTS[0].classList.remove(forceUnfixClassTS);
+      }
+
+      if (fixedLeftTS.css('position') === 'fixed') {
+        const anchorHeight = anchor.outerHeight() - 1;
+        fixedLeftTS.css('top', anchorHeight);
+        const leftBoundingTS = fixedLeftTS[0].getBoundingClientRect();
+        iterateLeftpads(function (containerTS) {
+          const containerBoundingTS = containerTS.getBoundingClientRect();
+          if (containerBoundingTS.left <= leftBoundingTS.right) {
+            $(containerTS).css('padding-left', leftBoundingTS.width + 16);
+          }
+        });
+      } else {
+        fixedLeftTS.css('top', '');
+        iterateLeftpads(function (containerTS) {
+          $(containerTS).css('padding-left', '');
+        });
+      }
+    })();
+  }
+
+  function scrollAdjustmentTS() {
+    if (!fixedTopTS || fixedTopTS.length !== 1 || !topAttachTS || topAttachTS.length !== 1) return;
+    const topPosition = fixedTopTS.css('position');
+    if (topPosition === 'fixed' || topPosition === 'absolute') {
+      const anchorBounding = anchor[0].getBoundingClientRect();
+      const attachBounding = topAttachTS[0].getBoundingClientRect();
+      const scrollTop = $(window).scrollTop();
+
+      fixedTopTS.css('top', Math.max(anchorBounding.bottom - 1, attachBounding.bottom));
+    } else {
+      fixedTopTS.css('top', initialTopTS);
+    }
+  }
+
+  $(window).load(function () {
+    setTimeout(function () {
+      resizeAdjustmentTS();
+    }, 350);
+
+    $(window).scroll(function () {
+      scrollAdjustmentTS();
+    });
+
+    var adjustTimeoutTS;
+    $(window).resize(function () {
+      clearTimeout(adjustTimeoutTS);
+      adjustTimeoutTS = setTimeout(function () {
+        resizeAdjustmentTS();
+      }, 350);
+    });
+
+    $.when(window.Pages.angularToolbarComplete).done(function () {
+      resizeAdjustmentTS();
+    });
+  });
+</script>
+<!-- End Fixed Nav Adjustment -->
+
+<script type="text/javascript">
+    window._monsido = window._monsido || {
+        token: "jqBAop_QBziQfTRLHt9ynQ",
+        statistics: {
+            enabled: true,
+            cookieLessTracking: true,
+            documentTracking: {
+                enabled: true,
+                documentCls: "monsido_download",
+                documentIgnoreCls: "monsido_ignore_download",
+                documentExt: ["pdf","doc","ppt","docx","pptx"],
+            },
+        },
+        heatmap: {
+            enabled: true,
+        },
+        pageCorrect: {
+            enabled: true,
+        },
+        pageAssistV2: {
+            enabled: true,
+            theme: "light",
+            mainColor: "#783CE2",
+            textColor: "#ffffff",
+            linkColor: "#783CE2",
+            buttonHoverColor: "#783CE2",
+            mainDarkColor: "#052942",
+            textDarkColor: "#ffffff",
+            linkColorDark: "#FFCF4B",
+            buttonHoverDarkColor: "#FFCF4B",
+            greeting: "Discover your personalization options",
+            direction: "leftbottom",
+            coordinates: "undefined undefined undefined undefined",
+            iconShape: "circle",
+            title: "Personalization Options",
+            titleText: "Welcome to PageAssist&#8482; toolbar! Adjust the options below to cater the website to your accessibility needs.",
+            iconPictureUrl: "logo",
+            logoPictureUrl: "",
+            logoPictureBase64: "",
+            languages: [""],
+            defaultLanguage: "",
+            skipTo: false,
+            alwaysOnTop: false,
+        },
+    };
+</script>
+<script type="text/javascript" async="" src="https://app-script.monsido.com/v2/monsido-script.js"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            document.cookie = "responsiveGhost=0; path=/";
+        });
+        $(window).on("load", function () {
+            $('body').addClass('doneLoading').removeClass('hideContent');
+
+            if ($('#404Content').length > 0)
+                $('div#bodyWrapper').css('padding', '0px');
+        });
+    </script>
+
+    <noscript>
+        <style>
+            body.hideContent {
+                opacity: 1 !important;
+            }
+        </style>
+    </noscript>
+
+        
+<div style="display: none;">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+		<symbol id="iconArrow--left" viewBox="0 0 25 25">
+			<title>Arrow Left</title>
+			<polygon style="fill:currentcolor" points="18.044,25 19.498,23.545 8.409,12.454 19.408,1.455 17.954,0 5.502,12.452"></polygon>
+		</symbol>
+
+		<symbol id="iconArrow--right" viewBox="0 0 25 25">
+			<title>Arrow Right</title>
+			<polygon style="fill:currentcolor" points="6.957,0 5.502,1.455 16.591,12.546 5.592,23.545 7.047,25 19.498,12.548"></polygon>
+		</symbol>
+
+	</svg>
+</div>
+    <script type="text/javascript">loadCSS('//fonts.googleapis.com/css?family=Fira+Sans:500,700,regular|Open+Sans:500,500italic,600,600italic,700,700italic,800,800italic,italic,regular|Oxygen:700,regular|');</script>
+    
+
+    
+        <div style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol id="iconSlideshowArrowLeft" viewBox="0 0 22.68 40">
+                    <title>Slideshow Left Arrow</title>
+                    <g>
+                        <path style="fill:currentcolor;" d="M20,40a2.67,2.67,0,0,1-1.9-.79L.79,21.9a2.68,2.68,0,0,1,0-3.79L18.1.79a2.68,2.68,0,1,1,3.79,3.79L6.47,20,21.89,35.42A2.68,2.68,0,0,1,20,40Z"></path>
+                    </g>
+                </symbol>
+                <symbol id="iconSlideshowArrowRight" viewBox="0 0 22.68 40">
+                    <title>Slideshow Right Arrow</title>
+                    <g>
+                        <path style="fill:currentcolor;" d="M2.68,0a2.67,2.67,0,0,1,1.9.79L21.89,18.1a2.68,2.68,0,0,1,0,3.79L4.58,39.21A2.68,2.68,0,0,1,.79,35.42L16.21,20,.79,4.58A2.68,2.68,0,0,1,2.68,0Z"></path>
+                    </g>
+                </symbol>
+            </svg>
+        </div>
+    
+    
+
+    <div id="root-picker-outlet"></div>
+
+
+<ul id="ui-id-1" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="display: none;"></ul><div role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu27" class="contentTop mainNavMegaMenu megaMenuContainer pageID_27 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; left: 15.2px; width: 1234.6px; top: 193.375px;">	<div id="cc6bb8e481-50e6-45e7-91a6-e0adbfedc18c" data-containerid="6bb8e481-50e6-45e7-91a6-e0adbfedc18c" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu101" class="contentTop mainNavMegaMenu megaMenuContainer pageID_101 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; left: 15.2px; width: 1234.6px; top: 193.375px;">	<div id="cc2fc46b77-d202-498d-81d6-14154d49dc24" data-containerid="2fc46b77-d202-498d-81d6-14154d49dc24" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu31" class="contentTop mainNavMegaMenu megaMenuContainer pageID_31 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; left: 15.2px; width: 1234.6px; top: 193.375px;">	<div id="cce9104096-fef2-4c73-83b8-a3947adb0c85" data-containerid="e9104096-fef2-4c73-83b8-a3947adb0c85" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu35" class="contentTop mainNavMegaMenu megaMenuContainer pageID_35 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; left: 15.2px; width: 1234.6px; top: 193.375px;">	<div id="cc98c626b2-7bbd-4daa-8999-a835788edb93" data-containerid="98c626b2-7bbd-4daa-8999-a835788edb93" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><div id="goog-gt-tt" class="VIpgJd-yAWNEb-L7lbkb skiptranslate" style="border-radius: 12px; margin: 0 0 0 -23px; padding: 0; font-family: 'Google Sans', Arial, sans-serif;" data-id=""><div id="goog-gt-vt" class="VIpgJd-yAWNEb-hvhgNd"><div class="VIpgJd-yAWNEb-hvhgNd-Ud7fr"><div class=" VIpgJd-yAWNEb-hvhgNd-IuizWc-i3jM8c " dir="ltr">Original text</div></div><div class="VIpgJd-yAWNEb-hvhgNd-k77Iif"><div id="goog-gt-original-text" class="VIpgJd-yAWNEb-nVMfcd-fmcmS VIpgJd-yAWNEb-hvhgNd-axAV1"></div></div><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid ltr"><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od ltr" dir="ltr"><div class="VIpgJd-yAWNEb-hvhgNd-UTujCb">Rate this translation</div><div class="VIpgJd-yAWNEb-hvhgNd-eO9mKe">Your feedback will be used to help improve Google Translate</div></div><div class="VIpgJd-yAWNEb-hvhgNd-xgov5 ltr"><button id="goog-gt-thumbUpButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="Good translation" aria-label="Good translation" aria-pressed="false"><span id="goog-gt-thumbUpIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7H2v13h16c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM7 18H4V9h3v9zm14-7l-3 7H9V8l4.34-4.34L12 9h9v2z"></path></svg></span><span id="goog-gt-thumbUpIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7v13h11c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM5 7H1v13h4V7z"></path></svg></span></button><button id="goog-gt-thumbDownButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="Poor translation" aria-label="Poor translation" aria-pressed="false"><span id="goog-gt-thumbDownIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7h5V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zM17 6h3v9h-3V6zM3 13l3-7h9v10l-4.34 4.34L12 15H3v-2z"></path></svg></span><span id="goog-gt-thumbDownIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zm16 0h4V4h-4v13z"></path></svg></span></button></div></div><div id="goog-gt-votingHiddenPane" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><form id="goog-gt-votingForm" action="//translate.googleapis.com/translate_voting?client=te" method="post" target="votingFrame" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><input type="text" name="sl" id="goog-gt-votingInputSrcLang"><input type="text" name="tl" id="goog-gt-votingInputTrgLang"><input type="text" name="query" id="goog-gt-votingInputSrcText"><input type="text" name="gtrans" id="goog-gt-votingInputTrgText"><input type="text" name="vote" id="goog-gt-votingInputVote"></form><iframe name="votingFrame" frameborder="0"></iframe></div></div></div><aside role="menu" data-cprole="contentContainer" id="mainNavMegaMenu9" class="contentTop mainNavMegaMenu megaMenuContainer pageID_9 moved megaMenu" data-orientation="horizontal" style="display: none; position: absolute; z-index: 100; left: 15.2px; width: 1234.6px; top: 193.375px;">	<div id="ccb407b10d-8722-4a22-adaa-66ce1583685d" data-containerid="b407b10d-8722-4a22-adaa-66ce1583685d" class="pageContent cpGrid cpGrid24">
+				                
+
+
+
+	</div>
+</aside><div class="VIpgJd-ZVi9od-aZ2wEe-wOHMyf"><div class="VIpgJd-ZVi9od-aZ2wEe-OiiCO"><svg xmlns="http://www.w3.org/2000/svg" class="VIpgJd-ZVi9od-aZ2wEe" width="96px" height="96px" viewBox="0 0 66 66"><circle class="VIpgJd-ZVi9od-aZ2wEe-Jt5cK" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div><div id="bannerSlideshowControls_banner1" class="bannerSlideshowControlsNew none " style="display:none">
+			<a id="arrowPrev_banner1" tabindex="0" class="arrowNew prev" aria-label="Banner Arrow Previous"><svg style=" " class=""><use xmlnsxlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowLeft"></use></svg></a>
+			<a id="arrowNext_banner1" tabindex="0" class="arrowNew next" aria-label="Banner Arrow Next"><svg style=" " class=""><use xmlnsxlink="http://www.w3.org/1999/xlink" xlink:href="#iconSlideshowArrowRight"></use></svg></a>
+		</div><button class="mon-logo-container mon-light-theme" mon-position="leftbottom" aria-labelledby="mon-pa-pageassist-label mon-pa-logo-label" id="monsido-pageassist" aria-expanded="false"><span id="mon-pa-pageassist-label" class="mon-pa-efsc">PageAssist</span>
+        <span id="mon-pa-logo-label" class="mon-logo-text-content">Discover your personalization options</span>
+        <span class="mon-logo-image-wrapper-content">
+            <span class="mon-logo-image-wrapper ">
+                <span class="mon-pageassist-close-img mon-pa-efsc">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><path class="a mon-pa-efsc" d="M10.343,87.5l4.264-4.264a1.341,1.341,0,0,0,0-1.9l-.948-.948a1.341,1.341,0,0,0-1.9,0L7.5,84.657,3.236,80.392a1.341,1.341,0,0,0-1.9,0l-.948.948a1.341,1.341,0,0,0,0,1.9L4.657,87.5.392,91.764a1.341,1.341,0,0,0,0,1.9l.948.948a1.341,1.341,0,0,0,1.9,0L7.5,90.343l4.264,4.264a1.341,1.341,0,0,0,1.9,0l.948-.948a1.341,1.341,0,0,0,0-1.9Z" transform="translate(0 -80)"></path></svg>
+                </span>
+                <span class="mon-pageassist-check-img mon-pa-efsc">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7.457" viewBox="0 0 10 7.457"><path class="a mon-pa-efsc" d="M3.4,72.409l-3.25-3.25a.5.5,0,0,1,0-.707l.707-.707a.5.5,0,0,1,.707,0L3.75,69.934,8.44,65.245a.5.5,0,0,1,.707,0l.707.707a.5.5,0,0,1,0,.707L4.1,72.409a.5.5,0,0,1-.707,0Z" transform="translate(0 -65.098)"></path></svg>
+                </span>
+                <span class="mon-logo-image-bg">
+                    
+                </span>
+                <img class="mon-spinner mon-pa-efsc" src="https://cdn.monsido.com/page-assist/v2/assets/img/default-spinner.png" alt="PageAssist Loading">
+            </span>
+        </span>
+        <style type="text/css">
+    
+    @keyframes monLogoRight {
+        from {
+            right: -60px !important;
+        }
+        to {
+            right: 20px !important;
+        }
+    }
+    @keyframes monLogoLeft {
+        from {
+            left: -60px !important;
+        }
+        to {
+            left: 20px !important;
+        }
+    }
+    @keyframes monLogoBottom {
+        from {
+            bottom: -60px !important;
+        }
+        to {
+            bottom: 5px !important;
+        }
+    }
+    @keyframes monLogoTop {
+        from {
+            top: -60px !important;
+        }
+        to {
+            top: 5px !important;
+        }
+    }
+    @keyframes monSpinner {
+        from {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container {
+        background: transparent !important;
+        border: none !important;
+        box-sizing: content-box !important;
+        font-family: 'Roboto', Arial, sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+        position: fixed !important;
+        bottom: 3px !important;
+        z-index: 2147483640 !important;
+        text-transform: none !important;
+        transition: right 0.2s ease;
+        animation: monLogoLeft 0.3s normal forwards;
+        align-items: center !important;
+        display: flex !important;
+        outline: none !important;
+        padding: 10px !important;
+        margin: 0 !important;
+        max-width: 200px !important;
+        white-space: normal !important;
+        height: auto !important;
+        width: auto !important;
+    }
+
+    .mon-logo-container {
+        --mon-pa-distance-from-popup: 3;
+    }
+
+    .mon-pa-button-border {
+        border: 3px solid var(--mon-pa-button-border-color);
+    }
+
+    #mon-pa-pageassist-label {
+        border: 0 !important;
+        clip: rect(1px, 1px, 1px, 1px) !important;
+        clip-path: inset(50%) !important;
+        height: 1px !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        position: absolute !important;
+        width: 1px !important;
+        white-space: nowrap !important;
+    }
+
+    body.monsido-toolbar-body-container > mon-pa-dashboard + .mon-logo-container {
+        animation:unset;
+        transition:unset;
+    }
+
+    .mon-logo-container[mon-loading] img.mon-spinner {
+        display: block !important;
+        margin: auto !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container:not([aria-expanded="true"]):hover {
+        background-color:#783CE2 !important;
+        border-radius: 3px !important;
+        box-shadow: 0px 0px 6px #00000029;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container:not([aria-expanded="true"]).mon-dark-theme:hover {
+        background-color: #052942 !important;
+        border-radius: 3px !important;
+        box-shadow: 0px 0px 6px #00000029;
+    }
+
+    .mon-logo-image-wrapper img.mon-spinner {
+        display: none !important;
+        animation-name:monSpinner;
+        animation-duration:3s;
+        animation-iteration-count:infinite;
+        animation-timing-function:linear;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content {
+        order:0 !important;
+    }
+
+    body.monsido-toolbar-body-container>.mon-logo-container[mon-position="right"] .mon-logo-image-wrapper-content,
+    body.monsido-toolbar-body-container>.mon-logo-container[mon-position="righttop"] .mon-logo-image-wrapper-content,
+    body.monsido-toolbar-body-container>.mon-logo-container[mon-position="rightbottom"] .mon-logo-image-wrapper-content {
+        order:1 !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper .mon-logo-image-bg {
+        background: #783CE2 !important;
+        display: none !important;
+        width: 36px !important;
+        height: 36px !important;
+        margin: auto !important;
+        border-radius: 50% !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme .mon-logo-image-wrapper .mon-logo-image-bg {
+        background-color: #052942 !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper .mon-logo-image-bg {
+        display: block !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper .mon-logo-image-bg img.mon-logo-image {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container:not([aria-expanded="true"])[mon-loading].mon-pa-styles-applied .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-check-img,
+    body.monsido-toolbar-body-container .mon-logo-container[mon-loading] .mon-logo-image-wrapper .mon-logo-image-bg,
+    body.monsido-toolbar-body-container .mon-logo-container[mon-loading].mon-dark-theme .mon-logo-image-wrapper .mon-pageassist-check-img,
+    body.monsido-toolbar-body-container .mon-logo-container[mon-loading].mon-dark-theme .mon-logo-image-wrapper .mon-logo-image-bg {
+        display: none !important;
+    }
+
+    
+    body.monsido-toolbar-body-container>.mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        display:block !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        background-color: #783CE2 !important;
+        border-radius: 50% !important;
+        box-sizing: border-box !important;
+        padding: 0 !important;
+        width: 60px !important;
+        height: 60px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-rounded-box .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        border-radius: 3px !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container:focus .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        box-shadow: 0px 0px 1px 5px #1c86db !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container:hover:not([aria-expanded="true"]) .mon-logo-image-wrapper-content .mon-logo-image-wrapper{
+        box-shadow: 0px 0px 1px 2px #ffffff !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-check-img,
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-close-img {
+        display: none !important;
+        margin: 4px 0 0 !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-check-img svg,
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-close-img svg {
+        width: 15px !important;
+        height: 15px !important;
+        vertical-align: unset !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-check-img svg .a,
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-close-img svg .a {
+        fill: #ffffff !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        background-color:#052942 !important;
+        box-shadow: 0px 0px 6px #00000029;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme:hover .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        background-color:#052942 !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme:hover .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-check-img svg .a,
+    body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme:hover .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-close-img svg .a {
+        fill: #ffffff !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"] .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-close-img  {
+        display: block !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"] .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        background-color:#783CE2 !important;
+        box-shadow: 0px 0px 6px #00000029;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"].mon-dark-theme .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        background-color:#052942 !important;
+        box-shadow: 0px 0px 6px #00000029;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"] .mon-logo-image-wrapper .mon-pageassist-check-img,
+    body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"] .mon-logo-image-wrapper .mon-logo-image-bg {
+        display: none !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container:not([aria-expanded="true"]).mon-pa-styles-applied .mon-logo-image-wrapper-content .mon-logo-image-wrapper .mon-pageassist-check-img  {
+        display: block !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-styles-applied .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        background-color:#783CE2 !important;
+    }
+    body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme.mon-pa-styles-applied .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+        background-color:#052942 !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-styles-applied .mon-logo-image-wrapper .mon-pageassist-close-img,
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-styles-applied .mon-logo-image-wrapper .mon-logo-image-bg {
+        display: none !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-text-content {
+        display:none !important;
+        letter-spacing: normal !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container:not([aria-expanded="true"]):hover .mon-logo-text-content {
+        display: block !important;
+        text-align: left !important;
+        line-height: 1.3 !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container .mon-logo-text-content {
+        order:1 !important;
+        padding-right:20px !important;
+        padding-left:10px !important;
+        display:none !important;
+        color:#ffffff !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme .mon-logo-text-content {
+        color:#ffffff !important;
+    }
+
+    
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='centertop'],
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='centerbottom'] {
+        animation: monLogoBottom 0.3s normal forwards;
+        left: 50% !important;
+        margin-left: -40px !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='centerbottom'] {
+        animation: monLogoBottom 0.3s normal forwards;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='centertop'] {
+        top: 5px !important;
+        animation: monLogoTop 0.3s normal forwards;
+        bottom: auto !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='lefttop'],
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='righttop'] {
+        top: 5px !important;
+        bottom: auto !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='right'],
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='left'] {
+        bottom: 50% !important;
+        margin-top: 40px !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='left'],
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='leftbottom'],
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='lefttop'] {
+        left: 20px !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='right'],
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='rightbottom'],
+    body.monsido-toolbar-body-container .mon-logo-container[mon-position='righttop'] {
+        animation: monLogoRight 0.3s normal forwards;
+        right: 20px !important;
+    }
+
+    
+    @media (max-height: 920px) {
+        body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"] {
+            display: none !important;
+        }
+    }
+
+    @media (max-width: 600px) {
+        body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"] {
+            display: none !important;
+        }
+    }
+
+    @media print {
+        body.monsido-toolbar-body-container .mon-logo-container {
+            display: none !important;
+        }
+    }
+
+    
+    button.skip-to-pageassist {
+        left: -999px !important;
+        position: fixed !important;
+        top: auto !important;
+        width: 1px !important;
+        height: 1px !important;
+        overflow: hidden !important;
+        z-index: -999 !important;
+    }
+
+    button.skip-to-pageassist:focus, button.skip-to-pageassist:active {
+        color: #fff !important;
+        background-color: #000 !important;
+        top: 4px !important;
+        left: 4px !important;
+        right: auto !important;
+        height: auto !important;
+        width: auto !important;
+        overflow: auto !important;
+        padding: 5px !important;
+        text-align: center !important;
+        font-size: 1.2em !important;
+        z-index: 9999999999999999999999999999 !important;
+    }
+
+    
+        body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            color: #ffffff !important;
+            box-shadow: 0px 0px 6px #00000029;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"] .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            box-shadow: 0px 0px 6px #00000029;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container.mon-pa-styles-applied .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            box-shadow: 0px 0px 6px #00000029;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container:hover .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            color: #ffffff !important;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container:not([aria-expanded="true"]):hover {
+            background-color: #783CE2 !important;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container:hover .mon-logo-image-wrapper .mon-logo-image-bg {
+            background-color: #783CE2 !important;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container .mon-logo-image-wrapper .mon-logo-image-bg {
+            background-color: #783CE2 !important;
+        }
+    
+        body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            box-shadow: 0px 0px 6px #00000029;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container[aria-expanded="true"].mon-dark-theme .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            box-shadow: 0px 0px 6px #00000029;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme.mon-pa-styles-applied .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            box-shadow: 0px 0px 6px #00000029;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme:hover .mon-logo-image-wrapper-content .mon-logo-image-wrapper {
+            background-color: #783CE2 !important;
+            color: #ffffff !important;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme:not([aria-expanded="true"]):hover {
+            background-color: #783CE2 !important;
+        }
+
+        body.monsido-toolbar-body-container .mon-logo-container.mon-dark-theme .mon-logo-image-wrapper .mon-logo-image-bg {
+            background-color: #783CE2 !important;
+        }
+    
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-coordinates-bottom {
+        animation: monLogoBottom 0.3s normal forwards;
+        bottom: var(--mon-pa-button-bottom) !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-coordinates-top {
+        top: var(--mon-pa-button-top) !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-coordinates-left {
+        left: var(--mon-pa-button-left) !important;
+    }
+
+    body.monsido-toolbar-body-container .mon-logo-container.mon-pa-coordinates-right {
+        right: var(--mon-pa-button-right) !important;
+    }
+    
+
+</style></button></body></html>
