@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.go2kennewick.com/531/City-Council/)
+[Skip to Main Content](https://www.go2kennewick.com/873/John-Trumbo-Bio-Page/)
 
 ![Kennewick WA Homepage](https://www.go2kennewick.com/ImageRepository/Document?documentID=15016)
 
@@ -12,7 +12,7 @@ Loading
 
 Search
 
-![](https://www.go2kennewick.com/ImageRepository/Document?documentID=15113)
+![](https://www.go2kennewick.com/ImageRepository/Document?documentID=15018)
 
 1. [Council Calendar](https://kennewickwa.portal.civicclerk.com)
 2. [Council Meetings &amp; Information](https://www.go2kennewick.com/581/Council-Meetings-Information)
@@ -25,94 +25,32 @@ Search
 
 1. [Home](https://www.go2kennewick.com)
 2. [Your Government](https://www.go2kennewick.com/27/Your-Government)
-3. City Council
+3. [City Council](https://www.go2kennewick.com/531/City-Council)
+4. John Trumbo Bio Page
 
-# City Council
+![chuck torelli 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13164 "chuck torelli 2022")
 
-The City of Kennewick has a Council-Manager form of government. The City Manager is appointed by the City Council as the chief executive officer of the City and is responsible to the Council for the proper administration of all City business. The Council is comprised of seven Council members, one of whom is appointed by its members to serve as Mayor for two years. Though Chair of the Council and the presiding member at weekly Council meetings, the Mayor has an equal vote with other Council members. Council members are elected by the citizens of Kennewick to serve a four-year term. Council members are part-time elected officials who exercise the legislative power of the City and determine matters of policy.
+## John Trumbo
 
-![Mayor Crawford 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15430 "Mayor Crawford 2024")
+City Council  
+Title: Council Member  
+Phone: 509-366-2241   
+[Email Mr. Trumbo](mailto:John.Trumbo@ci.kennewick.wa.us)
 
-### Gretl Crawford
+### Address
 
-[Email Mayor Crawford](mailto:gretl.crawford@ci.kennewick.wa.us)  
-Mayor, Council Member - Ward 1 Position 1  
-Term Expires: December 31, 2025   
-Phone: 509-531-0454  
-[Ms. Crawford Biography](https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page)
+PO Box 6108  
+Kennewick, WA 99336
 
-![Ward 1 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3866 "Ward 1")
+### Biography
 
-![Torelli  Portrait](https://www.go2kennewick.com/ImageRepository/Document?documentID=11216 "Torelli  Portrait")
+Mr. Trumbo was elected to the council effective January 2014. His priorities are to ensure open and accountable government, growing industrial development, revitalizing the riverfront and downtown Kennewick and addressing issues that affect the oldest and historic areas of the city. As a retired journalist, he advocates public involvement in, and knowledge about, local government.
 
-### Charles  Torelli
+ 
 
-[Email Mayor Pro Tem Torelli](mailto:chuck.torelli@ci.kennewick.wa.us)  
-Mayor Pro Tem., Council Member - At Large Position 5 (All Wards)  
-December 31, 2027  
-Phone: 509-405-2156  
-[Mr. Torelli Biography](https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page)
+**Boards and Commissions**
 
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
-
-![loren anderson 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13168 "loren anderson 2022")
-
-### Loren Anderson
-
-[Email Councilmember Anderson](mailto:loren.anderson@ci.kennewick.wa.us)  
-Council Member - Ward 2 Position 2  
-Term Expires: December 31, 2025  
-Phone: 509-586-5532  
-[Mr. Anderson Biography](https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page)
-
-![Ward 2 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3868 "Ward 2")
-
-![brad beauchamp 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13163 "brad beauchamp 2022")
-
-### Brad Beauchamp
-
-[Email Councilmember Beauchamp](mailto:brad.beauchamp@ci.kennewick.wa.us)  
-Council Member - At Large Position 6 (All Wards)  
-Term Expires: December 31, 2027   
-Phone: 509-308-6556  
-[Mr. Beauchamp Biography](https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page) 
-
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
-
-![Jim Millbauer 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15429 "Jim Millbauer 2024")
-
-### Jim Millbauer
-
-[Email Councilmember Millbauer](mailto:jim.millbauer@ci.kennewick.wa.us)  
-Council Member - At Large Position 7 (All Wards)  
-Term Expires: December 31, 2027   
-Phone: 509-531-4134  
-[Mr. Millbauer Biography](https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page) 
-
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
-
-![John Trumbo 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15428 "John Trumbo 2024")
-
-### John Trumbo
-
-[Email Councilmember Trumbo](mailto:john.trumbo@ci.kennewick.wa.us)  
-Council Member - Ward 3 Position 3  
-Term Expires: December 31, 2025  
-Phone: 509-366-2241  
-[Mr. Trumbo Biography](https://www.go2kennewick.com/873/John-Trumbo-Bio-Page "Councilman Trumbo Biography")
-
-![Ward 3 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3869 "Ward 3")
-
-![Jason McShane 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15427 "Jason McShane 2024")
-
-### Jason McShane
-
-[Email Councilmember McShane](mailto:jason.mcshane@ci.kennewick.wa.us)  
-Council Member - At Large Position 4 (All Wards)  
-Term Expires: Certification of the 2025 election  
-Phone: 509-537-5903
-
-![All Wards](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
+Mr. Trumbo currently serves on the Benton County Law and Justice Council, Benton Franklin Community Action Committee, and the Kennewick Public Facilities District. He also serves as alternate on the Ben Franklin Transit Board and the Benton Franklin Council of Governments
 
 [Notify Me®](https://www.go2kennewick.com/list.aspx)
 
