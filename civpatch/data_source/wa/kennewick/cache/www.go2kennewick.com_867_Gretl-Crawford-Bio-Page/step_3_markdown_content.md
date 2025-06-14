@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.go2kennewick.com/531/City-Council/)
+[Skip to Main Content](https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page/)
 
 ![Kennewick WA Homepage](https://www.go2kennewick.com/ImageRepository/Document?documentID=15016)
 
@@ -25,94 +25,36 @@ Search
 
 1. [Home](https://www.go2kennewick.com)
 2. [Your Government](https://www.go2kennewick.com/27/Your-Government)
-3. City Council
+3. [City Council](https://www.go2kennewick.com/531/City-Council)
+4. Gretl Crawford Bio Page
 
-# City Council
+![gretl crawford 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13166 "gretl crawford 2022")
 
-The City of Kennewick has a Council-Manager form of government. The City Manager is appointed by the City Council as the chief executive officer of the City and is responsible to the Council for the proper administration of all City business. The Council is comprised of seven Council members, one of whom is appointed by its members to serve as Mayor for two years. Though Chair of the Council and the presiding member at weekly Council meetings, the Mayor has an equal vote with other Council members. Council members are elected by the citizens of Kennewick to serve a four-year term. Council members are part-time elected officials who exercise the legislative power of the City and determine matters of policy.
+## Gretl Crawford
 
-![Mayor Crawford 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15430 "Mayor Crawford 2024")
-
-### Gretl Crawford
-
-[Email Mayor Crawford](mailto:gretl.crawford@ci.kennewick.wa.us)  
-Mayor, Council Member - Ward 1 Position 1  
-Term Expires: December 31, 2025   
+City Council  
+Title: Mayor  
 Phone: 509-531-0454  
-[Ms. Crawford Biography](https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page)
+[Email Ms. Crawford](mailto:gretl.crawford@ci.kennewick.wa.us "Email Gretl Crawford")
 
-![Ward 1 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3866 "Ward 1")
+### Address
 
-![Torelli  Portrait](https://www.go2kennewick.com/ImageRepository/Document?documentID=11216 "Torelli  Portrait")
+PO Box 6108   
+Kennewick, WA 99336 
 
-### Charles  Torelli
+### Biography
 
-[Email Mayor Pro Tem Torelli](mailto:chuck.torelli@ci.kennewick.wa.us)  
-Mayor Pro Tem., Council Member - At Large Position 5 (All Wards)  
-December 31, 2027  
-Phone: 509-405-2156  
-[Mr. Torelli Biography](https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page)
+I have lived in the Tri-Cities area since 1982.  I grew up along the Snake River on an apple orchard with my parents, Dave and Donna Hovde and 3 sisters.   I graduated from Kamiakin High School in 1991 and continued my education at University of Washington and then Washington State University.  I graduated with a degree in Interior Design, with minors in Fine arts and Business. 
 
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
+My husband of 25 years, Scott Crawford, is a local farmer, and we have raised our 3 boys here in the Tri-Cities.  My boys are just starting out in life: Graduating high school,  one is still in college and one is entering the work force.  
 
-![loren anderson 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13168 "loren anderson 2022")
+I run 2 businesses in Kennewick, have invested in this community and want the best for Kennewick and the future of our community.  I started my construction company, Gretl Crawford Homes, in 1998, and my second business, It’s all in the Details, retail store in 2015.  I have a passion for Design, construction and business and hope to bring that experience to the city to encourage others.  I am an ASID accredited professional member, have been a member of the Home Builders Association for over 15 years and am a member of the Chamber of commerce.
 
-### Loren Anderson
+My busy family and my businesses have kept me busy for the past 24 years, and now it is my time to give back to this great community for future generations and ensure that there is opportunity here and that this is a place that they want to come back to. I am hopeful that my past experiences will help lead the City of Kennewick for the next 4 years.
 
-[Email Councilmember Anderson](mailto:loren.anderson@ci.kennewick.wa.us)  
-Council Member - Ward 2 Position 2  
-Term Expires: December 31, 2025  
-Phone: 509-586-5532  
-[Mr. Anderson Biography](https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page)
+### Boards and Commissions
 
-![Ward 2 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3868 "Ward 2")
-
-![brad beauchamp 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13163 "brad beauchamp 2022")
-
-### Brad Beauchamp
-
-[Email Councilmember Beauchamp](mailto:brad.beauchamp@ci.kennewick.wa.us)  
-Council Member - At Large Position 6 (All Wards)  
-Term Expires: December 31, 2027   
-Phone: 509-308-6556  
-[Mr. Beauchamp Biography](https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page) 
-
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
-
-![Jim Millbauer 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15429 "Jim Millbauer 2024")
-
-### Jim Millbauer
-
-[Email Councilmember Millbauer](mailto:jim.millbauer@ci.kennewick.wa.us)  
-Council Member - At Large Position 7 (All Wards)  
-Term Expires: December 31, 2027   
-Phone: 509-531-4134  
-[Mr. Millbauer Biography](https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page) 
-
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
-
-![John Trumbo 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15428 "John Trumbo 2024")
-
-### John Trumbo
-
-[Email Councilmember Trumbo](mailto:john.trumbo@ci.kennewick.wa.us)  
-Council Member - Ward 3 Position 3  
-Term Expires: December 31, 2025  
-Phone: 509-366-2241  
-[Mr. Trumbo Biography](https://www.go2kennewick.com/873/John-Trumbo-Bio-Page "Councilman Trumbo Biography")
-
-![Ward 3 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3869 "Ward 3")
-
-![Jason McShane 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15427 "Jason McShane 2024")
-
-### Jason McShane
-
-[Email Councilmember McShane](mailto:jason.mcshane@ci.kennewick.wa.us)  
-Council Member - At Large Position 4 (All Wards)  
-Term Expires: Certification of the 2025 election  
-Phone: 509-537-5903
-
-![All Wards](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
+Ms. Crawford is currently serving on the Benton Franklin Council of Governments, Fire Pension Board, and the LEOFF Disability Board. She also serves as alternate on the Historic Downtown Kennewick Board, Tri-Cities National Park Committee, and Tri Cities Regional Chamber of Commerce Board. 
 
 [Notify Me®](https://www.go2kennewick.com/list.aspx)
 
