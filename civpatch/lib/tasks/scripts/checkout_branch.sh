@@ -15,6 +15,8 @@ git clone -b main $REPO_URL ./tmp/civicpatch-tools
 git -C ./tmp/civicpatch-tools fetch origin $BRANCH_NAME || true
 # Create and checkout the branch (will create if doesn't exist)
 git -C ./tmp/civicpatch-tools checkout -B $BRANCH_NAME
+# Pull latest changes from the branch if it exists
+git -C ./tmp/civicpatch-tools pull origin $BRANCH_NAME || true
 
 # Backup the lock files if they exist
 [ -f civpatch/Gemfile.lock ] && cp civpatch/Gemfile.lock ./tmp/Gemfile.lock.backup
@@ -36,3 +38,5 @@ cd /app/civpatch
 
 # Create and checkout the branch in the main repo
 git checkout -B $BRANCH_NAME
+# Pull latest changes in the main repo
+git pull origin $BRANCH_NAME || true
