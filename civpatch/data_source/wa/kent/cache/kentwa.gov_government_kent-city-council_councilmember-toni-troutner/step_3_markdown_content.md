@@ -1,7 +1,5 @@
 [Show/Hide](https:void%20%280%29)
 
-![Translate](https://kentwa.gov/home/showpublishedimage/18475/637801805938670000)
-
 Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
@@ -1264,22 +1262,12 @@ During her free time, Toni enjoys spending time with her husband, Brett, and her
 
 ## Reach Councilmember Troutner, position 4
 
-- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
-  
-  253-856-5712
-- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
-  
-  253-951-7765
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
-  
-  [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
-  
-  Email all Council:  
+- 253-856-5712
+- 253-951-7765
+- [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
+- Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
-  
-  Kent City Council  
+- Kent City Council  
   220 Fourth Avenue South  
   Kent, WA 98032
 - **Term Began**
