@@ -1,12 +1,10 @@
 [Show/Hide](https:void%20%280%29)
 
-![Translate](https://www.kentwa.gov/home/showpublishedimage/18475/637801805938670000)
-
 Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-mayor/)
 
 # City of Kent
 
@@ -1230,9 +1228,9 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
   
   - [2025 Summer Events](https://www.kentwa.gov/events/2025-summer-events "2025 Summer Events")
 
-[Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
+[Government](https://www.kentwa.gov/government)
 
-# Kent City Councilmember Marli Larimer
+# Kent Mayor Dana Ralph
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1246,44 +1244,69 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Marli Larimer](https://www.kentwa.gov/home/showpublishedimage/17767/638446491131370000)Councilmember Marli Larimer grew up in Portland, but after a few years in in Arizona and California, her family returned the Northwest and settled in Kent in 1990. Marli later graduated from Kentwood and spent her college and early career years in West Seattle, where she met her husband, Terry. In 2009, they decided to move back to Kent to raise their family. They live in the Panther Lake area and have two teenagers at Kentridge who are active in tennis and ballet.
+![Mayor Banner](https://www.kentwa.gov/home/showpublishedimage/2171/636131525380430000)
 
-Like many Kent residents, Marli balances work, family, and community life. With a bachelor’s degree in mass communications and an associate’s degree in non-profit management, Marli works for Concentrix Catalyst as the Global Director of Content &amp; Communication where she manages a large team of consultants around the world that help brands create digital experiences.
+## Meet Mayor Dana Ralph
 
-Her council priorities include developing creative solutions for the City’s financial challenges and addressing the housing affordability crisis. She's passionate about finding ways to connect Kent’s youth to high-paying jobs in space-tech and advanced manufacturing in the Kent Valley and supporting small businesses that are the lifeblood of our community.
+![Portrait of Mayor Ralph](https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000)
 
-“I want to be sure we are securing housing for all economic levels and that we have a fair and balanced approach that suits all residents,” Marli said. “From regional and economic perspectives, we need to take our place at the table and push for Kent's housing, transportation, funding, and programming needs."
+Re-elected by Kent voters for her second term in 2021, **Mayor Dana Ralph** serves as the Chief Executive Officer of the City of Kent in Washington State.
 
-While on Council, she is particularly proud of her work on the Council's race and equity resolution, where she worked to secure funding for youth mental health, police data analysis and a police co-responder model. Other measures she's proud to have introduced or supported include extended protections for renters throughout the city (later overturned when the State passed equally protective statewide policies), single use plastic bag ban (also later duplicated at the state-level), increased transparency in Council meeting scheduling, expanded open application policies for citizen advisory boards, a plan to save labor and water costs by introducing pollinator gardens throughout the City, and lobbying for local crosswalks for safer school crossings.
+She along with a seven-member City Council and over 730 City employees work to deliver results for the 140,000 people and over 5,000 businesses that call Kent Home.
 
-When not at work, Marli is an active community volunteer, working with Evergreen City Ballet and school groups. She is the subject-matter-expert for Kent’s Economic and Community Development committee, sits on the Puget Sound Regional Fire Authority’s Governance Board, and serves on the Seattle-King County Advisory Council for Aging &amp; Disability Services since 2019. Having been raised with a sister with cerebral palsy, disability rights and services is an area of policy that she is passionate about.
+Mayor Ralph has the sole discretion to appoint the City’s **Executive Leadership Team**, which consists of the Directors overseeing all city departments
 
-Every year, Marli and Terry take their kids, who are avid Marvel and anime fans, to Emerald City Comic Con. The family enjoys spending time in Kent's parks and recreation programming and going to local events like Nerdfest, Cornucopia Days and the International Festival. Her favorite weekend activities including shopping in historic downtown, walking their dog along the Green River trail, and visiting the gardens at the Neeley-Sommes house and/or the Kent History Museum.
+She works with them to develop policy, programs and services to benefit the residents and businesses of Kent. She is also responsible for preparing and transmitting the City’s $884 million-dollar biennial operating and capital budgets.
 
-“Kent is a hidden gem in the south end, and I don’t think people realize all the amenities we have,” said Marli. "Our city is diverse and dynamic; we are growing, with new residents and businesses choosing Kent every day. I want to see Kent realize our full potential without sacrificing the small-town, family-focused character that is Kent's foundation and history.”
+A Kent native, Mayor Ralph is the **fourth generation** of her family to call Kent home. After attending Kent public schools, she **graduated from Kent-Meridian High School**.
 
-## Reach Councilmember Larimer, position 1
+During high school, she met and later married her high school sweetheart, Shawn. Together, they raised two boys who graduated from Kentridge High School.
 
-- 253-856-5712
-- 206-247-9989
-- [MLarimer@KentWA.gov](mailto:mlarimer@KentWA.gov)
-- Email all Council:  
-  [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
-  
-  Kent City Council  
+Nearly 30 years ago, Mayor Ralph started a small business in Kent, which she still owns, but no longer manages day-to-day operations.
+
+Driven by wanting to make a difference in her hometown, she first became involved in local government about 20 years ago when she volunteered to serve on the City’s Land Use and Planning Board and the City’s Arts Commission.
+
+As she learned more about policy and advocacy and the inner working of local government, she wanted to be more involved to help shape the future of our community that she loves.
+
+She was first elected to the **Kent City Council** in 2011 and served from 2012 to 2017.
+
+During 2014 and 2015, she served as **Kent City Council President** where she was responsible for agenda setting and committee assignments.
+
+Knowing there was much more work to be done for Kent, she ran for **Mayor** while at the same time battling (and later defeating!) breast cancer.
+
+**She elected by voters in 2017 and sworn into office in January 2018 as Kent’s 27th Mayor and only the 3rd woman to ever hold the role.**
+
+As mayor, Dana has prioritized bringing good jobs to Kent, improving public safety, investing in the city’s infrastructure, parks and human services programs, expanding housing and transit options, and supporting Kent’s small businesses and industries.
+
+She values communication and transparency, and serving with compassion as we look after vulnerable populations and ensure a principled approach to equity and inclusion.
+
+When not at work, Mayor Ralph is known for her extensive knowledge of Rock N’ Roll, she enjoys camping, spending time with family and friends, attending community events and volunteering.
+
+She is passionate about serving the many needs of our diverse city. She is one of the founders of the Shop with a Cop program that raises funds to buy Christmas gifts for families in-need through Kent Youth and Family Services, and she encourages all City employees to give back to the community whenever possible.
+
+“I am so proud to call Kent home and it is such an honor to serve as your mayor.
+
+Kent has infinite potential. We have all the ingredients to continue being a world-class city for residents and businesses to thrive and make a lasting impact,” said Mayor Ralph.
+
+Our strength is our people, and I am blessed to work side-by-side with some of the best and brightest every day toward a shared vision: to make Kent an even better place to live, work and play for generations.
+
+My hope is that you will join in the passion that drives me—the idea I work toward every day—showing the world Kent’s potential, and making sure our residents, businesses and community organizations have the tools to turn that potential into reality.”
+
+[**Sign up for Mayor Ralph's weekly newsletter here!**](https://kentwa.gov/subscribe)
+
+## Reach the Mayor
+
+- 253-856-5700
+- [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
+- Office of the Mayor  
   220 Fourth Ave. S  
   Kent, WA 98032
-- **Term Began**
-  
-  June 2018
-- **Term Expires**
-  
-  Dec. 31, 2027
-- **Member**
-  
-  King County Aging and Disabilities Advisory Council and Puget Sound Regional Fire Authority Governance Board
-- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the Mayor will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+
+Free viewers are required for some of the attached documents.  
+They can be downloaded by clicking on the icons below.
+
+[Acrobat Reader ![Download Acrobat Reader](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/acrobat.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fget.adobe.com%2Freader%2F&____isexternal=true "Download Acrobat Reader") [Windows Media Player ![Download Windows Media Player](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/wmp.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fwindows.microsoft.com%2Fen-us%2Fwindows%2Fwindows-media-player&____isexternal=true "Download Windows Media Player") [Word Viewer ![Download Word Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/word.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Word Viewer") [Excel Viewer ![Download Excel Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/excel.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Excel Viewer") [PowerPoint Viewer ![Download PowerPoint Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/powerpoint.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download PowerPoint Viewer")
 
 ## Stay Connected
 

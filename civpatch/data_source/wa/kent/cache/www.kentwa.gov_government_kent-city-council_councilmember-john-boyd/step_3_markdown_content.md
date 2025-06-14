@@ -1270,12 +1270,8 @@ John is pro-union, pro-family, pro-gun safety, and pro-choice. As a council memb
 
 ## Reach Councilmember Boyd, position 3
 
-- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
-  
-  253-856-5712
-- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
-  
-  206-930-7108
+- 253-856-5712
+- 206-930-7108
 - ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
   
   [JBoyd@KentWA.gov](mailto:JBoyd@KentWA.gov)
@@ -1283,7 +1279,9 @@ John is pro-union, pro-family, pro-gun safety, and pro-choice. As a council memb
   
   Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- Kent City Council  
+- ![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
+  
+  Kent City Council  
   220 Fourth Ave. S  
   Kent, WA 98032
 - **Term Began**

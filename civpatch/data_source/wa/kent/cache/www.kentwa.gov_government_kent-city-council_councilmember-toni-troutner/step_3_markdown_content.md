@@ -1262,18 +1262,16 @@ During her free time, Toni enjoys spending time with her husband, Brett, and her
 
 ## Reach Councilmember Troutner, position 4
 
-- 253-856-5712
-- 253-951-7765
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
   
-  [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
+  253-856-5712
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
   
-  Email all Council:  
+  253-951-7765
+- [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
+- Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
-  
-  Kent City Council  
+- Kent City Council  
   220 Fourth Avenue South  
   Kent, WA 98032
 - **Term Began**

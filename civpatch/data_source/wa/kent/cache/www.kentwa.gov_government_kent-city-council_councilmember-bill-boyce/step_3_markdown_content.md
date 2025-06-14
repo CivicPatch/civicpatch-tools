@@ -6,7 +6,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce/)
 
 # City of Kent
 
@@ -1232,7 +1232,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember Marli Larimer
+# Kent City Councilmember Bill Boyce
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1246,43 +1246,45 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Marli Larimer](https://www.kentwa.gov/home/showpublishedimage/17767/638446491131370000)Councilmember Marli Larimer grew up in Portland, but after a few years in in Arizona and California, her family returned the Northwest and settled in Kent in 1990. Marli later graduated from Kentwood and spent her college and early career years in West Seattle, where she met her husband, Terry. In 2009, they decided to move back to Kent to raise their family. They live in the Panther Lake area and have two teenagers at Kentridge who are active in tennis and ballet.
+![Councilmember Bill Boyce](https://www.kentwa.gov/home/showpublishedimage/17761/638446491818570000)
 
-Like many Kent residents, Marli balances work, family, and community life. With a bachelor’s degree in mass communications and an associate’s degree in non-profit management, Marli works for Concentrix Catalyst as the Global Director of Content &amp; Communication where she manages a large team of consultants around the world that help brands create digital experiences.
+Born and raised in North Carolina, Kent City Councilmember Bill Boyce first came to Washington when he was stationed at Fort Lewis as an US Army airborne ranger paratrooper for four years. Bill loved the area so much, he decided to stay. He moved to Kent in 1984, where he and his wife Debbie raised five children. With a bachelor’s degree in business, Bill has been at the Boeing Company for 36 years, currently as a Senior Manufacturer leader. 
 
-Her council priorities include developing creative solutions for the City’s financial challenges and addressing the housing affordability crisis. She's passionate about finding ways to connect Kent’s youth to high-paying jobs in space-tech and advanced manufacturing in the Kent Valley and supporting small businesses that are the lifeblood of our community.
+Bill has always been passionate about being involved in the community where he lives. Before being elected to Kent City Council, currently in his third term, he served on the Kent School District Board of Directors for 16 years, including four terms as board president. He is a charter member and past president of the Kent Sunrise Rotary Club, and he served as a commissioner of the Criminal Justice Training Center for 13 years. 
 
-“I want to be sure we are securing housing for all economic levels and that we have a fair and balanced approach that suits all residents,” Marli said. “From regional and economic perspectives, we need to take our place at the table and push for Kent's housing, transportation, funding, and programming needs."
+Bill currently represents Kent on the Sound Cities Association Public Interest Committee as a member. He also serves on the Harborview Medical Center Board of Trustees.
 
-While on Council, she is particularly proud of her work on the Council's race and equity resolution, where she worked to secure funding for youth mental health, police data analysis and a police co-responder model. Other measures she's proud to have introduced or supported include extended protections for renters throughout the city (later overturned when the State passed equally protective statewide policies), single use plastic bag ban (also later duplicated at the state-level), increased transparency in Council meeting scheduling, expanded open application policies for citizen advisory boards, a plan to save labor and water costs by introducing pollinator gardens throughout the City, and lobbying for local crosswalks for safer school crossings.
+Bill believes one of the most important roles he plays is ensuring government transparency and accountability. “Making sure the people of Kent have access to their government is crucial,” said Bill. “We need to ensure we get our residents the best bang for their buck, keep taxes low and deliver high quality services that their families can count on.”
 
-When not at work, Marli is an active community volunteer, working with Evergreen City Ballet and school groups. She is the subject-matter-expert for Kent’s Economic and Community Development committee, sits on the Puget Sound Regional Fire Authority’s Governance Board, and serves on the Seattle-King County Advisory Council for Aging &amp; Disability Services since 2019. Having been raised with a sister with cerebral palsy, disability rights and services is an area of policy that she is passionate about.
+Bill is a firm believer that we need to provide a safe and welcoming community that will attract new residents, well-paying jobs and potential development to our city.
 
-Every year, Marli and Terry take their kids, who are avid Marvel and anime fans, to Emerald City Comic Con. The family enjoys spending time in Kent's parks and recreation programming and going to local events like Nerdfest, Cornucopia Days and the International Festival. Her favorite weekend activities including shopping in historic downtown, walking their dog along the Green River trail, and visiting the gardens at the Neeley-Sommes house and/or the Kent History Museum.
+“It is so important that we make Kent a place that everyone can call home. Businesses should be proud of not only locating here but the top-quality workforce we provide as well. We must continue to create a wide variety of jobs for the diverse residents who call Kent home,” Bill concluded.
 
-“Kent is a hidden gem in the south end, and I don’t think people realize all the amenities we have,” said Marli. "Our city is diverse and dynamic; we are growing, with new residents and businesses choosing Kent every day. I want to see Kent realize our full potential without sacrificing the small-town, family-focused character that is Kent's foundation and history.”
+When not at work or doing community service, Bill loves to spend quality family time. He enjoys BBQing and smoking high quality meats for his wife Debbie, his kids and his grandkids. He enjoys watching and participating in sporting events, spending time outdoors and checking out new businesses in Kent. Bill lives on the East Hill with his wife Debbie, and his 5 kids – all KSD graduates – still reside around the region with his grandchildren.
 
-## Reach Councilmember Larimer, position 1
+“Having a close-knit family is one of the most important things to me,” says Bill. “We get together every Sunday for a big family dinner. We like going up to the mountains or playing outdoor games, sitting, laughing and having a good time.”
+
+[Kent TV21 Calling Kent Home, Council Edition: Bill Boyce](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119879553&____isexternal=true) from [Kent TV21](https://vimeo.com/kenttv21) on [Vimeo](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com&____isexternal=true).
+
+## Reach Councilmember Boyce, Position 5
 
 - 253-856-5712
-- 206-247-9989
-- [MLarimer@KentWA.gov](mailto:mlarimer@KentWA.gov)
+- 206-915-0930
+- [bboyce@KentWA.gov](mailto:bboyce@kentwa.gov)
 - Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
-  
-  Kent City Council  
-  220 Fourth Ave. S  
+- Kent City Council  
+  220 Fourth Ave S.  
   Kent, WA 98032
 - **Term Began**
   
-  June 2018
+  January 2012
 - **Term Expires**
   
   Dec. 31, 2027
 - **Member**
   
-  King County Aging and Disabilities Advisory Council and Puget Sound Regional Fire Authority Governance Board
+  Sound Cities Association Public Interest Committee and the Harborview Board of Trustees
 - *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected

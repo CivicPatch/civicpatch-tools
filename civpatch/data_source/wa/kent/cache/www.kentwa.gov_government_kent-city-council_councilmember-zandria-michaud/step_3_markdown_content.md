@@ -1256,8 +1256,12 @@ In her free time, Zandria and her family enjoy hikes, exploring Kent’s parks a
 
 ## Reach Councilmember Michaud, position 7
 
-- 253-856-5712
-- 206-402-8547
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
+  
+  253-856-5712
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
+  
+  206-402-8547
 - **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
   
   [ZMichaud@KentWA.gov](mailto:ZMichaud@kentwa.gov)
