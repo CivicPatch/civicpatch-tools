@@ -1,12 +1,10 @@
 [Show/Hide](https:void%20%280%29)
 
-![Translate](https://www.kentwa.gov/home/showpublishedimage/18475/637801805938670000)
-
 Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher/)
 
 # City of Kent
 
@@ -1232,7 +1230,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember Marli Larimer
+# Kent City Councilmember Brenda Fincher
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1246,29 +1244,48 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Marli Larimer](https://www.kentwa.gov/home/showpublishedimage/17767/638446491131370000)Councilmember Marli Larimer grew up in Portland, but after a few years in in Arizona and California, her family returned the Northwest and settled in Kent in 1990. Marli later graduated from Kentwood and spent her college and early career years in West Seattle, where she met her husband, Terry. In 2009, they decided to move back to Kent to raise their family. They live in the Panther Lake area and have two teenagers at Kentridge who are active in tennis and ballet.
+![Councilmember Brenda Fincher](https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000)
 
-Like many Kent residents, Marli balances work, family, and community life. With a bachelor’s degree in mass communications and an associate’s degree in non-profit management, Marli works for Concentrix Catalyst as the Global Director of Content &amp; Communication where she manages a large team of consultants around the world that help brands create digital experiences.
+Growing up in a military family, Kent City Councilmember Brenda Fincher had the privilege of living in different places and meeting different people. This is one of the many things she loves about Kent—being around people from all over the world who have different cultures, beliefs and backgrounds. 
 
-Her council priorities include developing creative solutions for the City’s financial challenges and addressing the housing affordability crisis. She's passionate about finding ways to connect Kent’s youth to high-paying jobs in space-tech and advanced manufacturing in the Kent Valley and supporting small businesses that are the lifeblood of our community.
+Brenda moved to Kent in 1988 when she and her family were ready for a change. She raised her son and daughter in the Kent School District, with her children starting out at O’Brien Elementary, which was then in an industrial area. While her kids were in school, Brenda was president of several PTAs and is a two-time Golden Acorn Award recipient. 
 
-“I want to be sure we are securing housing for all economic levels and that we have a fair and balanced approach that suits all residents,” Marli said. “From regional and economic perspectives, we need to take our place at the table and push for Kent's housing, transportation, funding, and programming needs."
+Her kids are grown now and have five kids of their own, who Brenda loves spending time with. Brenda works at Holy Spirit Parish in downtown Kent, but her community work doesn’t stop there. She has also volunteered for various organizations, including the following: 
 
-While on Council, she is particularly proud of her work on the Council's race and equity resolution, where she worked to secure funding for youth mental health, police data analysis and a police co-responder model. Other measures she's proud to have introduced or supported include extended protections for renters throughout the city (later overturned when the State passed equally protective statewide policies), single use plastic bag ban (also later duplicated at the state-level), increased transparency in Council meeting scheduling, expanded open application policies for citizen advisory boards, a plan to save labor and water costs by introducing pollinator gardens throughout the City, and lobbying for local crosswalks for safer school crossings.
+- Subject Matter Chair of Public Works
+- Council Liaison to Kent Arts Commission
+- Former Subject Matter Chair of Parks, Recreation &amp; Human Services
+- King Conservation District Advisory Committee
+- Mental Illness and Drug Dependency Advisory Committee
+- An organizer of the Kent International Festival
+- Catholic Community Services and Catholic Housing Boards
+- The board and care teams of MultiFaith Works
+- Intercommunity Peace &amp; Justice Center Board
+- Former president of the Kent Youth and Family Services Board
+- Archdiocese of Seattle’s Black Catholic Advisory Circle
+- Kent School District Diversity Task Force, where she was a contributing author to the district’s original Diversity Task Force Plan
+- Look, Listen + Learn Board
 
-When not at work, Marli is an active community volunteer, working with Evergreen City Ballet and school groups. She is the subject-matter-expert for Kent’s Economic and Community Development committee, sits on the Puget Sound Regional Fire Authority’s Governance Board, and serves on the Seattle-King County Advisory Council for Aging &amp; Disability Services since 2019. Having been raised with a sister with cerebral palsy, disability rights and services is an area of policy that she is passionate about.
+“When I was a growing up, my parents always volunteered in the community and started my brother and me off early. One of my favorites was being a candy striper in a convalescent home” explains Brenda. “You learn so much from others when you give back to the community.” 
 
-Every year, Marli and Terry take their kids, who are avid Marvel and anime fans, to Emerald City Comic Con. The family enjoys spending time in Kent's parks and recreation programming and going to local events like Nerdfest, Cornucopia Days and the International Festival. Her favorite weekend activities including shopping in historic downtown, walking their dog along the Green River trail, and visiting the gardens at the Neeley-Sommes house and/or the Kent History Museum.
+Having served on the city council since 2014, Brenda was drawn to serving on Kent City Council, because she thought that it was another platform from which to serve and where she could make the biggest difference. Brenda believes there are two sides to everything, and we have to think about what our neighbors are going through when making decisions. 
 
-“Kent is a hidden gem in the south end, and I don’t think people realize all the amenities we have,” said Marli. "Our city is diverse and dynamic; we are growing, with new residents and businesses choosing Kent every day. I want to see Kent realize our full potential without sacrificing the small-town, family-focused character that is Kent's foundation and history.”
+Brenda, who describes herself as usually upbeat and positive, enjoys spending time with friends and family, camping, sewing, crafts, traveling and singing in the church choir. 
 
-## Reach Councilmember Larimer, position 1
+“Kent is a marvelous and amazing place to live. We have so many cultures here, and you don’t get that everywhere,” says Brenda. “Just about anything you can think of is made in Kent, and there are so many things to see and do here.”
 
-- 253-856-5712
-- 206-247-9989
-- [MLarimer@KentWA.gov](mailto:mlarimer@KentWA.gov)
-- Email all Council:  
-  [Kent City Council Members](mailto:citycouncil@kentwa.gov)
+ 
+
+[Calling Kent Home, Council Edition: Brenda Fincher](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119179105&____isexternal=true) from [Kent TV21](https://vimeo.com/kenttv21) on [Vimeo](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com&____isexternal=true).
+
+## Reach Councilmember Fincher, Position 6
+
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
+  
+  253-856-5712
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)    206-818-7909
+- [bfincher@KentWA.gov](mailto:bfincher@kentwa.gov)
+- [Kent City Council Members](mailto:citycouncil@kentwa.gov)
 - **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
   
   Kent City Council  
@@ -1276,14 +1293,14 @@ Every year, Marli and Terry take their kids, who are avid Marvel and anime fans,
   Kent, WA 98032
 - **Term Began**
   
-  June 2018
+  March 2014
 - **Term Expires**
   
-  Dec. 31, 2027
+  Dec. 31, 2025
 - **Member**
   
-  King County Aging and Disabilities Advisory Council and Puget Sound Regional Fire Authority Governance Board
-- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+  Arts Commission; King Conservation District Advisory Committee; Mental Illness and Drug Dependency Advisory Committee; Intercommunity Peace &amp; Justice Board; Look, Listen + Learn Board
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
 

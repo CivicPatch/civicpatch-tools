@@ -6,7 +6,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur/)
 
 # City of Kent
 
@@ -1232,7 +1232,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember Marli Larimer
+# Kent City Council President Satwinder Kaur
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1246,43 +1246,67 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Marli Larimer](https://www.kentwa.gov/home/showpublishedimage/17767/638446491131370000)Councilmember Marli Larimer grew up in Portland, but after a few years in in Arizona and California, her family returned the Northwest and settled in Kent in 1990. Marli later graduated from Kentwood and spent her college and early career years in West Seattle, where she met her husband, Terry. In 2009, they decided to move back to Kent to raise their family. They live in the Panther Lake area and have two teenagers at Kentridge who are active in tennis and ballet.
+![Councilmember Satwinder Kaur](https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000)**Satwinder Kaur** (pronounced *Seth-win-der Core*), President of the Kent City Council, is a lifelong resident of Kent and proud graduate of Kentridge High School. She and her husband are raising their four children—including a newborn—in the city they call home.
 
-Like many Kent residents, Marli balances work, family, and community life. With a bachelor’s degree in mass communications and an associate’s degree in non-profit management, Marli works for Concentrix Catalyst as the Global Director of Content &amp; Communication where she manages a large team of consultants around the world that help brands create digital experiences.
+Having served on the Kent City Council since 2018, Satwinder was elected by her colleagues as Council President in 2024. She brings both lived experience and a deep commitment to public service to her role on the Council, where she works to ensure that all voices in the community are heard—especially those who are often not at the table.
 
-Her council priorities include developing creative solutions for the City’s financial challenges and addressing the housing affordability crisis. She's passionate about finding ways to connect Kent’s youth to high-paying jobs in space-tech and advanced manufacturing in the Kent Valley and supporting small businesses that are the lifeblood of our community.
+“I want to bring new perspectives that may not have been considered before,” she says.
 
-“I want to be sure we are securing housing for all economic levels and that we have a fair and balanced approach that suits all residents,” Marli said. “From regional and economic perspectives, we need to take our place at the table and push for Kent's housing, transportation, funding, and programming needs."
+In addition to holding associate’s, bachelor’s, and an MBA from University of Washington, Satwinder is certified in Six Sigma and Lean Management. She works in the IT sector and brings a strong problem-solving mindset and systems-based thinking to her public service. Her earlier experience as an admin in the Mayor’s Office gave her insight into the everyday issues residents face, and she remains committed to listening to individuals, families, business owners, and community leaders alike.
 
-While on Council, she is particularly proud of her work on the Council's race and equity resolution, where she worked to secure funding for youth mental health, police data analysis and a police co-responder model. Other measures she's proud to have introduced or supported include extended protections for renters throughout the city (later overturned when the State passed equally protective statewide policies), single use plastic bag ban (also later duplicated at the state-level), increased transparency in Council meeting scheduling, expanded open application policies for citizen advisory boards, a plan to save labor and water costs by introducing pollinator gardens throughout the City, and lobbying for local crosswalks for safer school crossings.
+Satwinder’s passion for Kent is reflected in her active involvement in numerous local and regional organizations. She currently serves on the following boards and committees:
 
-When not at work, Marli is an active community volunteer, working with Evergreen City Ballet and school groups. She is the subject-matter-expert for Kent’s Economic and Community Development committee, sits on the Puget Sound Regional Fire Authority’s Governance Board, and serves on the Seattle-King County Advisory Council for Aging &amp; Disability Services since 2019. Having been raised with a sister with cerebral palsy, disability rights and services is an area of policy that she is passionate about.
+**Regional Committees:**
 
-Every year, Marli and Terry take their kids, who are avid Marvel and anime fans, to Emerald City Comic Con. The family enjoys spending time in Kent's parks and recreation programming and going to local events like Nerdfest, Cornucopia Days and the International Festival. Her favorite weekend activities including shopping in historic downtown, walking their dog along the Green River trail, and visiting the gardens at the Neeley-Sommes house and/or the Kent History Museum.
+- Chair, **Puget Sound Clean Air Agency Advisory Council**
+- Member, **Growth Management Planning Council**
+- Member, **Domestic Violence Regional Task Force**
+- Member, **Growth Management Policy Board**
+- Member, **Association of Washington Cities Nominating Committee**
+- Member, **Association of Washington Cities Federal and State Policy Committee**
 
-“Kent is a hidden gem in the south end, and I don’t think people realize all the amenities we have,” said Marli. "Our city is diverse and dynamic; we are growing, with new residents and businesses choosing Kent every day. I want to see Kent realize our full potential without sacrificing the small-town, family-focused character that is Kent's foundation and history.”
+ 
 
-## Reach Councilmember Larimer, position 1
+**Past Local Boards and Initiatives:**
 
-- 253-856-5712
-- 206-247-9989
-- [MLarimer@KentWA.gov](mailto:mlarimer@KentWA.gov)
+- Chair, **Kent Cultural Communities Board**
+- **Green Kent Park Steward**, Kent Parks
+- Board of Trustees, **Greater Kent Historical Society**
+- Board of Directors, **Living Well Kent**
+- Member, **Mayor’s Diversity Task Force**, City of Renton
+- Board Member, **Puget Sound Access**
+
+ 
+
+Some of Satwinder’s favorite things about Kent include hanging out at Clark Lake Park, enjoying food from around the world, participating in the Adopt-a-Street program with the Sikh community, and seeing people of all backgrounds come together to support one another. She values Kent’s rich diversity, strong community spirit, and inclusive places of worship.
+
+“I love the amazing people we have in Kent. It’s a caring community where people truly look out for their neighbors,” she says. “They choose Kent—the biggest city in South King County—as their home.”
+
+When she isn’t working, volunteering, or serving on Council, Satwinder enjoys spending time with her family, exploring the outdoors, and attending various events in Kent.
+
+With every decision she makes, Satwinder is guided by a simple but powerful goal: to leave Kent a better place for future generations to live, work, and thrive in.
+
+ 
+
+ 
+
+## Reach Council President Kaur, position 2
+
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
+  
+  253-856-5712
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)   206-406-2468
+- [skaur@KentWA.gov](mailto:skaur@KentWA.gov)
 - Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
-  
-  Kent City Council  
-  220 Fourth Ave. S  
+- 220 Fourth Ave. S  
   Kent, WA 98032
 - **Term Began**
   
-  June 2018
+  January 2018
 - **Term Expires**
   
-  Dec. 31, 2027
-- **Member**
-  
-  King County Aging and Disabilities Advisory Council and Puget Sound Regional Fire Authority Governance Board
+  Dec. 31, 2025
 - *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
