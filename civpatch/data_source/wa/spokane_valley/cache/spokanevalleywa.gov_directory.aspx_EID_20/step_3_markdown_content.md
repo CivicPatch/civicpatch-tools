@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=18%2F)
+[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=20%2F)
 
 ![Home Page](https://spokanevalleywa.gov/ImageRepository/Document?documentID=66)
 
@@ -17,31 +17,31 @@ Search
 
 <!--THE END-->
 
-![](https://spokanevalleywa.gov/ImageRepository/Document?documentID=65)
+![](https://spokanevalleywa.gov/ImageRepository/Document?documentID=64)
 
 1. [Home](https://spokanevalleywa.gov)
 2. Staff Directory
 
-![Headshot of Councilmember Jessica Yaeger](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2807 "Headshot of Councilmember Jessica Yaeger")
+![Headshot of Councilmember Ben Wick](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2808 "Headshot of Councilmember Ben Wick")
 
-# Jessica Yaeger
+# Ben Wick
 
  
 
 [City Council](https://spokanevalleywa.gov/Directory.aspx?DID=8)  
-Title: Council Position 2  
-Phone: 509-720-5064  
-[Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov)
+Title: Council Position 4  
+Phone: 509-720-5065  
+[Email Councilmember Wick](mailto:bwick@SpokaneValleyWA.gov)
 
-**Term: 2024 to 2027**
+**Term: 2022 to 2025**
 
-Jessica Yaeger is serving her first term on the City Council, elected to position 2 in November 2023.
+Ben Wick was elected to position 4 as a result of the November 2017 election and was re-elected in November 2021. Wick previously served a four-year term on the Spokane Valley City Council from 2012 through 2015. He served as Mayor from 2020 to 2021.
 
-Yaeger has spent over 25 years in the healthcare field, with over 10 in executive leadership roles. She has her own company that works with seniors and their families to provide placement services, care management and end-of-life doula services. She earned a bachelor's degree in social sciences and psychology from Washington State University.
+Wick is the publisher of the Spokane Valley Current and Liberty Lake Splash community newspapers. He graduated from East Valley High School and earned a Bachelor of Science degree in Computer Science from Eastern Washington University.
 
-Yaeger is a board member for Corbin Senior Center, a volunteer with the Northwest Boxer Rescue group and the previous board secretary for the Senior Action Network of Eastern Washington.
+Wick is a member and current President of the Spokane Valley Kiwanis Club, Honorary Commander emeritus with the Fairchild Airforce Base, and volunteer with the Spokane County Interstate Fair. 
 
-Yaeger and her husband enjoy traveling, kayaking, walking their three dogs and spending time with their kids, friends, and family.
+Wick is a fourth-generation Spokane Valley native and happily married with four young children.
 
  
 

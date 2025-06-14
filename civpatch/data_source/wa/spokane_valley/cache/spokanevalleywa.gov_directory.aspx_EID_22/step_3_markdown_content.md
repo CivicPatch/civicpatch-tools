@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=18%2F)
+[Skip to Main Content](https://spokanevalleywa.gov/directory.aspx?EID=22%2F)
 
 ![Home Page](https://spokanevalleywa.gov/ImageRepository/Document?documentID=66)
 
@@ -22,26 +22,26 @@ Search
 1. [Home](https://spokanevalleywa.gov)
 2. Staff Directory
 
-![Headshot of Councilmember Jessica Yaeger](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2807 "Headshot of Councilmember Jessica Yaeger")
+![Headshot of Councilmember Tim Hattenburg](https://spokanevalleywa.gov/ImageRepository/Document?documentID=2811 "Headshot of Councilmember Tim Hattenburg")
 
-# Jessica Yaeger
+# Tim Hattenburg
 
  
 
 [City Council](https://spokanevalleywa.gov/Directory.aspx?DID=8)  
-Title: Council Position 2  
-Phone: 509-720-5064  
-[Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov)
+Title: Council Position 6  
+Phone: 509-720-5063  
+[Email Deputy Mayor Hattenburg](mailto:thattenburg@SpokaneValleyWA.gov)
 
 **Term: 2024 to 2027**
 
-Jessica Yaeger is serving her first term on the City Council, elected to position 2 in November 2023.
+Tim Hattenburg is serving his second four-year term on the City Council, re-elected in November 2023. 
 
-Yaeger has spent over 25 years in the healthcare field, with over 10 in executive leadership roles. She has her own company that works with seniors and their families to provide placement services, care management and end-of-life doula services. She earned a bachelor's degree in social sciences and psychology from Washington State University.
+Hattenburg is a published author and small business owner. He is a retired teacher, coach and athletic director with the Central Valley School District, and prior to City Council, he served ten years on the Spokane County Library Board of Trustees, with seven of those years as chair and vice-chair. 
 
-Yaeger is a board member for Corbin Senior Center, a volunteer with the Northwest Boxer Rescue group and the previous board secretary for the Senior Action Network of Eastern Washington.
+Hattenburg graduated from Central Valley High School, Spokane Falls Community College and Washington State University with a double major in education and history. He has also completed two years of postgraduate study at Gonzaga, Whitworth and Eastern Washington universities.
 
-Yaeger and her husband enjoy traveling, kayaking, walking their three dogs and spending time with their kids, friends, and family.
+Hattenburg is a lifelong Spokane Valley native. He is married with three grown children and three grandchildren.
 
  
 

@@ -1,463 +1,1252 @@
 [
   {
     "name": "Pam Haley",
-    "image": null,
+    "sources": [
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=21",
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/directory.aspx?EID=21"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and 'joined the Council'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Council Position 5' and the 'Members' section stating 'seven City Council positions'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Haley' in the '2024 State of the City' section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from email link text 'Email Mayor Haley'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Email Mayor Haley' in the title column, indicating current role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from 'Council Position 5' in the title column, which is a common designation for council members."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified as 'Council Position 5' and confirmed as currently serving 'her second four-year term through 2025'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Title: Council Position 5'."
+      },
+      {
+        "data": "Council Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 5' next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'The seven City Council positions are at-large' in the 'Members' section."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from 'Council Position 5' in the title column."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Council Position 5' under her name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509-720-5060",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under title and name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to 'Phone:' under her name.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=21"
+      },
+      {
+        "data": "509-720-5102",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council phone number provided, no individual phone number found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
+        "data": "509-720-5060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Phone'.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Phone' column associated with the person.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5060",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number directly listed under Pam Haley's contact information.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=21"
       }
     ],
     "emails": [
       {
         "data": "phaley@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Email address extracted directly from the mailto link text associated with her name.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=21"
+      },
+      {
+        "data": "CityCouncil@SpokaneValleyWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council email provided, no individual email found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
+        "data": "phaley@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Email' link text.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "phaley@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Email Mayor Haley' link text in the email column.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "phaley@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted from a mailto link directly associated with Pam Haley.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=21"
       }
     ],
     "websites": [
       {
-        "data": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link to City Council directory.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=21",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly linked from the name 'Pam Haley' in the 'Contact a Councilmember' section.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
+        "data": "https://spokanevalleywa.gov/directory.aspx?EID=21",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from the href attribute of the link associated with the person's name.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=21"
       },
       {
-        "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=21",
+        "data": "2022",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025' for her current term.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=21"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "2022 to 2025",
+        "data": "2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025' and 'through 2025'.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=21"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025' and 'through 2025' for her current term.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=21"
       }
     ],
-    "positions": [
-      "Council Position 5",
-      "Councilmember",
-      "Council Member",
-      "Mayor"
-    ],
-    "sources": []
+    "updated_at": "2025-06-14T02:54:00Z"
   },
   {
     "name": "Rod Higgins",
-    "image": null,
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=17",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/directory.aspx?EID=17"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Council Position 1' and the 'Members' section stating 'seven City Council positions'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified as 'City Council' and 'Council Position 1', indicating a current council member role. Past roles (Mayor, Deputy Mayor, Planning Commissioner) were explicitly dated as past and excluded."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title' and email link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from 'Council Position 1' in the title column, which is a common designation for council members."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'City Council' and 'Council Position 1' and the context of his current service, including being 'elected to the Council' and 're-elected'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 1' next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'The seven City Council positions are at-large' in the 'Members' section."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Council Position 1' under the person's name."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from 'Council Position 1' in the title column."
+      },
+      {
+        "data": "Council Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Title: Council Position 1'."
+      }
+    ],
     "phone_numbers": [
       {
+        "data": "509-720-5102",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council phone number provided, no individual phone number found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "509-720-5066",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number directly listed under the person's contact information.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=17"
+      },
+      {
+        "data": "509-720-5066",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Phone'.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5066",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Phone' column associated with the person.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5066",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Phone: 509-720-5066'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=17"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@SpokaneValleyWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council email provided, no individual email found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "rhiggins@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Email address extracted directly from a mailto link associated with the person.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=17"
+      },
+      {
+        "data": "rhiggins@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Email' link text.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "rhiggins@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Email Councilmember Higgins' link text in the email column.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "rhiggins@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly provided as a mailto link for Councilmember Higgins.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=17"
       }
     ],
     "websites": [
       {
         "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=17",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly linked from the name 'Rod Higgins' in the 'Contact a Councilmember' section.",
         "source": "https://www.spokanevalleywa.gov/193/City-Council"
       },
       {
-        "data": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Associated with City Council",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=17"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2022 to 2025",
+        "data": "https://spokanevalleywa.gov/directory.aspx?EID=17",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=17"
+        "llm_confidence_reason": "Extracted from the href attribute of the link associated with the person's name.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Council Position 1"
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025' for the current term.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=17"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=17"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025' for the current term.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=17"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=17"
+      }
+    ],
+    "updated_at": "2025-06-14T02:54:00Z"
   },
   {
     "name": "Jessica Yaeger",
-    "image": null,
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/directory.aspx?EID=18",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Council Position 2' and the 'Members' section stating 'seven City Council positions'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title' and email link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council' and 'Council Position 2', which is a synonym for council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from 'Council Position 2' in the title column, which is a common designation for council members."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 2' next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'The seven City Council positions are at-large' in the 'Members' section."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 2'."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from 'Council Position 2' in the title column."
+      }
+    ],
     "phone_numbers": [
       {
+        "data": "509-720-5102",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council phone number provided, no individual phone number found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "509-720-5064",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Phone'.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5064",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under the person's section",
         "source": "https://spokanevalleywa.gov/directory.aspx?EID=18"
+      },
+      {
+        "data": "509-720-5064",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Phone' column associated with the person.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@SpokaneValleyWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council email provided, no individual email found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "jyaeger@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly from table column 'Email' link text.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "jyaeger@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address found in mailto link text directly associated with the name and role section",
         "source": "https://spokanevalleywa.gov/directory.aspx?EID=18"
+      },
+      {
+        "data": "jyaeger@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Email Councilmember Yaeger' link text in the email column.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
       }
     ],
     "websites": [
       {
         "data": "https://spokanevalleywa.gov/directory.aspx?EID=18",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly linked from the name 'Jessica Yaeger' in the 'Contact a Councilmember' section.",
         "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
+        "data": "https://spokanevalleywa.gov/directory.aspx?EID=18",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from the href attribute of the link associated with the person's name.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "2024 to 2027",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024 to 2027'.",
         "source": "https://spokanevalleywa.gov/directory.aspx?EID=18"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Council Position 2"
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024 to 2027'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=18"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-14T02:54:00Z"
   },
   {
     "name": "Al Merkel",
-    "image": null,
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=19",
+      "https://spokanevalleywa.gov/directory.aspx?EID=19"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Council Position 3' and the 'Members' section stating 'seven City Council positions'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title' and email link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from 'Council Position 3' in the title column, which is a common designation for council members."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified as 'Council Position 3' and serving on 'City Council', which implies a 'Council Member' role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council' and 'serving his first term on City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 3' next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'The seven City Council positions are at-large' in the 'Members' section."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from 'Council Position 3' in the title column."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 3'."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 3' and 'elected to position 3'."
+      }
+    ],
     "phone_numbers": [
+      {
+        "data": "509-720-5102",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council phone number provided, no individual phone number found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
       {
         "data": "509-720-5062",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "proximity_to_name": 50,
+        "llm_confidence_reason": "Directly from table column 'Phone' (desk number selected as primary).",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5062",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Phone' column associated with the person, prioritizing the first number listed.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5062",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Phone: 509-720-5062 (desk)'.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=19"
       },
       {
         "data": "509-720-5062",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly in staff directory.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+        "llm_confidence_reason": "Primary phone number listed as 'Phone: 509-720-5062 (desk)'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=19"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@SpokaneValleyWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council email provided, no individual email found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "amerkel@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly from table column 'Email' link text.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "amerkel@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Email Councilmember Merkel' link text in the email column.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "amerkel@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=19"
       },
       {
         "data": "amerkel@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly in staff directory.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+        "llm_confidence_reason": "Email address provided as a mailto link.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=19"
       }
     ],
     "websites": [
       {
         "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=19",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly linked from the name 'Al Merkel' in the 'Contact a Councilmember' section.",
         "source": "https://www.spokanevalleywa.gov/193/City-Council"
       },
       {
-        "data": "https://spokanevalleywa.gov/Directory.aspx?DID=8",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link to City Council directory.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://spokanevalleywa.gov/directory.aspx?EID=19"
-      },
-      {
-        "data": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Associated with City Council",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=19"
+        "data": "https://spokanevalleywa.gov/directory.aspx?EID=19",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from the href attribute of the link associated with the person's name.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "2024 to 2027",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term dates.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://spokanevalleywa.gov/directory.aspx?EID=19"
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024 to 2027'.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=19"
       },
       {
-        "data": "2024 to 2027",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "proximity_to_name": 35,
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=19"
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024 to 2027'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=19"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Council Position 3"
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024 to 2027'.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=19"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024 to 2027'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=19"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-14T02:54:00Z"
   },
   {
     "name": "Ben Wick",
-    "image": null,
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=20",
+      "https://spokanevalleywa.gov/directory.aspx?EID=20"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Council Position 4' and the 'Members' section stating 'seven City Council positions'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title' and email link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from 'Council Position 4' in the title column, which is a common designation for council members."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified as 'Council Position 4' and 'elected to position 4', indicating a council member role. Past roles (Mayor) are ignored."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified from 'Council Position 4' and confirmed by election information, matching a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 4' next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'The seven City Council positions are at-large' in the 'Members' section."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from 'Council Position 4' in the title column."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 4'."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Council Position 4'."
+      }
+    ],
     "phone_numbers": [
       {
+        "data": "509-720-5102",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council phone number provided, no individual phone number found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "509-720-5065",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Phone'.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5065",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Phone' column associated with the person.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5065",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly provided next to 'Phone:'.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=20"
+      },
+      {
+        "data": "509-720-5065",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to 'Phone:'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=20"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@SpokaneValleyWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council email provided, no individual email found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "bwick@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly from table column 'Email' link text.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "bwick@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Email Councilmember Wick' link text in the email column.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "bwick@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=20"
+      },
+      {
+        "data": "bwick@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted from mailto link text.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=20"
       }
     ],
     "websites": [
       {
         "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=20",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly linked from the name 'Ben Wick' in the 'Contact a Councilmember' section.",
         "source": "https://www.spokanevalleywa.gov/193/City-Council"
       },
       {
-        "data": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link to City Council page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=20"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2022 to 2025",
+        "data": "https://spokanevalleywa.gov/directory.aspx?EID=20",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=20"
+        "llm_confidence_reason": "Extracted from the href attribute of the link associated with the person's name.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Council Position 4"
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 're-elected in November 2021' for the current term.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=20"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=20"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=20"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=20"
+      }
+    ],
+    "updated_at": "2025-06-14T02:54:00Z"
   },
   {
     "name": "Tim Hattenburg",
-    "image": null,
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=22",
+      "https://spokanevalleywa.gov/directory.aspx?EID=22"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Council Position 6' and the 'Members' section stating 'seven City Council positions'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor Hattenburg' in the '2024 State of the City' section."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from email link text 'Email Deputy Mayor Hattenburg'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Email Deputy Mayor Hattenburg' in the title column, indicating current role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from 'Council Position 6' in the title column, which is a common designation for council members."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified as 'Councilmember' in the headshot alt text and 'Council Position 6' in the title."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly mentioned in the email link text 'Email Deputy Mayor Hattenburg'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Council Position 6' and 'serving his second four-year term on the City Council'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly mentioned in the email link text 'Email Deputy Mayor Hattenburg'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 6' next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'The seven City Council positions are at-large' in the 'Members' section."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from 'Council Position 6' in the title column."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 6' under Title."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 6' under his title."
+      }
+    ],
     "phone_numbers": [
       {
+        "data": "509-720-5102",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council phone number provided, no individual phone number found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "509-720-5063",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Phone'.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5063",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Phone' column associated with the person.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5063",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under the person's contact information.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=22"
+      },
+      {
+        "data": "509-720-5063",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under his name and title.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=22"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@SpokaneValleyWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council email provided, no individual email found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "thattenburg@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly from table column 'Email' link text.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "thattenburg@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Email Deputy Mayor Hattenburg' link text in the email column.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "thattenburg@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted directly from a mailto link associated with the person.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=22"
+      },
+      {
+        "data": "thattenburg@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted directly from a mailto link associated with his name and title 'Deputy Mayor Hattenburg'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=22"
       }
     ],
     "websites": [
       {
         "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=22",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly linked from the name 'Tim Hattenburg' in the 'Contact a Councilmember' section.",
         "source": "https://www.spokanevalleywa.gov/193/City-Council"
       },
       {
-        "data": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link to City Council directory.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=22"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2024 to 2027",
+        "data": "https://spokanevalleywa.gov/directory.aspx?EID=22",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Extracted from the href attribute of the link associated with the person's name.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=22",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL is a profile page for Tim Hattenburg, indicated by the 'Skip to Main Content' link and the page content.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=22"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Council Position 6",
-      "Deputy Mayor"
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated in 'Term: 2024 to 2027'.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=22"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 're-elected in November 2023', which is the most recent election date for his current term.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=22"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated in 'Term: 2024 to 2027'.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=22"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024 to 2027'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=22"
+      }
+    ],
+    "updated_at": "2025-06-14T02:54:00Z"
   },
   {
     "name": "Laura Padden",
-    "image": null,
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=23",
+      "https://spokanevalleywa.gov/directory.aspx?EID=23"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Council Position 7' and the 'Members' section stating 'seven City Council positions'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title' and email link text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from 'Council Position 7' in the title column, which is a common designation for council members."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified as 'Councilmember' in the headshot alt text and 'City Council' is mentioned, indicating a 'Council Member' role. 'Council Position 7' further specifies her role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Stated as 'City Council' and 'Councilmember' in the text, which is a direct synonym for 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 7' next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'The seven City Council positions are at-large' in the 'Members' section."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Title'."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from 'Council Position 7' in the title column."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Title: Council Position 7'."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 7' under her name."
+      }
+    ],
     "phone_numbers": [
       {
+        "data": "509-720-5102",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council phone number provided, no individual phone number found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "509-720-5061",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under title and name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly from table column 'Phone'.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5061",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Phone' column associated with the person.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "509-720-5061",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under her contact information.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=23"
+      },
+      {
+        "data": "509-720-5061",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under her name.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=23"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@SpokaneValleyWA.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Council email provided, no individual email found. Applied to all members as the primary contact for the body.",
+        "source": "https://www.spokanevalleywa.gov/193/City-Council"
+      },
+      {
         "data": "lpadden@SpokaneValleyWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly from table column 'Email' link text.",
+        "source": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "lpadden@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted directly from the 'Email Councilmember Padden' link text in the email column.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+      },
+      {
+        "data": "lpadden@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted directly from a mailto link associated with her name.",
         "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=23"
+      },
+      {
+        "data": "lpadden@SpokaneValleyWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address extracted from the 'mailto:' link directly associated with her name.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=23"
       }
     ],
     "websites": [
       {
         "data": "https://www.spokanevalleywa.gov/directory.aspx?EID=23",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly linked from the name 'Laura Padden' in the 'Contact a Councilmember' section.",
         "source": "https://www.spokanevalleywa.gov/193/City-Council"
       },
       {
-        "data": "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Listed under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=23"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2022 to 2025",
+        "data": "https://spokanevalleywa.gov/directory.aspx?EID=23",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=23"
+        "llm_confidence_reason": "Extracted from the href attribute of the link associated with the person's name.",
+        "source": "https://spokanevalleywa.gov/Directory.aspx?DID=8"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Council Position 7",
-      "Councilmember"
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=23"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025' and 'elected in November 2021' indicating the term began in 2022.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=23"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://www.spokanevalleywa.gov/directory.aspx?EID=23"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022 to 2025'.",
+        "source": "https://spokanevalleywa.gov/directory.aspx?EID=23"
+      }
+    ],
+    "updated_at": "2025-06-14T02:54:00Z"
   }
 ]

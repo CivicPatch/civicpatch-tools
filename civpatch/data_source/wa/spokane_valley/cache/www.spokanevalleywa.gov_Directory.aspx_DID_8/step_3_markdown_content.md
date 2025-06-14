@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.spokanevalleywa.gov/directory.aspx?EID=23%2F)
+[Skip to Main Content](https://www.spokanevalleywa.gov/Directory.aspx?DID=8%2F)
 
 ![Home Page](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=66)
 
@@ -17,33 +17,38 @@ Search
 
 <!--THE END-->
 
-![](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=64)
+![](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=65)
 
 1. [Home](https://www.spokanevalleywa.gov)
 2. Staff Directory
 
-![Headshot of Councilmember Laura Padden](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=2810 "Headshot of Councilmember Laura Padden")
-
-# Laura Padden
+# City Council
 
  
 
-[City Council](https://www.spokanevalleywa.gov/Directory.aspx?DID=8)  
-Title: Council Position 7  
-Phone: 509-720-5061  
-[Email Councilmember Padden](mailto:lpadden@SpokaneValleyWA.gov)
+10210 E Sprague Avenue Spokane Valley WA 99206
 
-**Term: 2022 to 2025**
+[Directions](https://www.google.com/maps/place/10210+E+Sprague+Avenue+Spokane+Valley+WA+99206)
 
-Laura Padden is serving her first term on the City Council after being elected in November 2021.
+Physical Address:View Map
 
-Padden holds a bachelor's degree in police science and administration from Washington State University. She later returned to college and earned a second bachelor's degree in computer science from Eastern Washington University.
+10210 E Sprague Avenue  
+Spokane Valley, WA 99206
 
-Padden worked in private industry for many years and, for the last nearly 20 years, has been employed at the Community Colleges of Spokane as a software developer. She is active in her church in numerous capacities and serves on the Finance Council.
+Phone:
 
-Padden is a native of Spokane and has been a resident of Spokane Valley since the age of two. She is a frequent blood donor and actively volunteers in the community. She and her husband, Mike, have five grown sons and three grandchildren.
+509-720-5102
 
- 
+Fax:
+
+509-720-5075
+
+[Email City Council](mailto:CityCouncil@SpokaneValleyWA.gov)  
+Link: [City Council Page](https://www.spokanevalleywa.gov/193)
+
+Staff
+
+Name Title Email Phone Additional Phone [Haley, Pam](https://www.spokanevalleywa.gov/directory.aspx?EID=21) Council Position 5 [Email Mayor Haley](mailto:phaley@SpokaneValleyWA.gov) 509-720-5060   [Hattenburg, Tim](https://www.spokanevalleywa.gov/directory.aspx?EID=22) Council Position 6 [Email Deputy Mayor Hattenburg](mailto:thattenburg@SpokaneValleyWA.gov) 509-720-5063   [Higgins, Rod](https://www.spokanevalleywa.gov/directory.aspx?EID=17) Council Position 1 [Email Councilmember Higgins](mailto:rhiggins@SpokaneValleyWA.gov) 509-720-5066   [Padden, Laura](https://www.spokanevalleywa.gov/directory.aspx?EID=23) Council Position 7 [Email Councilmember Padden](mailto:lpadden@SpokaneValleyWA.gov) 509-720-5061   [Yaeger, Jessica](https://www.spokanevalleywa.gov/directory.aspx?EID=18) Council Position 2 [Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov) 509-720-5064   [Wick, Ben](https://www.spokanevalleywa.gov/directory.aspx?EID=20) Council Position 4 [Email Councilmember Wick](mailto:bwick@SpokaneValleyWA.gov) 509-720-5065   [Merkel, Al](https://www.spokanevalleywa.gov/directory.aspx?EID=19) Council Position 3 [Email Councilmember Merkel](mailto:amerkel@SpokaneValleyWA.gov) 509-720-5062 (desk) 509-828-0097 (cell)
 
 [Return to Staff Directory](https://www.spokanevalleywa.gov/Directory.aspx)
 
