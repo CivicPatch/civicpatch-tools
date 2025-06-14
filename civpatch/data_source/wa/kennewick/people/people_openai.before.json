@@ -2,15 +2,15 @@
   {
     "name": "Gretl Crawford",
     "roles": [
-      "Council Member",
-      "Mayor"
+      "Mayor",
+      "Council Member"
     ],
     "divisions": [
-      "Position 1",
-      "Ward 1"
+      "Ward 1",
+      "Position 1"
     ],
-    "image": null,
-    "phone_number": "(509) 531-0454",
+    "image": "https://www.go2kennewick.com/ImageRepository/Document?documentID=15430",
+    "phone_number": "509-531-0454",
     "email": "gretl.crawford@ci.kennewick.wa.us",
     "website": "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page",
     "start_date": null,
@@ -19,21 +19,21 @@
       "https://www.go2kennewick.com/531/City-Council",
       "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page"
     ],
-    "updated_at": "2025-06-14T17:17:49Z"
+    "updated_at": "2025-06-14T17:16:53Z"
   },
   {
     "name": "Charles Torelli",
     "roles": [
+      "Mayor Pro Tem",
       "Council Member",
-      "Mayor Pro Tempore",
-      "Mayor Pro Tempore"
+      "City Council Member, Mayor Pro Tem"
     ],
     "divisions": [
-      "At-large",
+      "At Large",
       "Position 5"
     ],
-    "image": null,
-    "phone_number": "(509) 405-2156",
+    "image": "https://www.go2kennewick.com/ImageRepository/Document?documentID=11216",
+    "phone_number": "509-405-2156",
     "email": "chuck.torelli@ci.kennewick.wa.us",
     "website": "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page",
     "start_date": "2019-11",
@@ -42,7 +42,7 @@
       "https://www.go2kennewick.com/531/City-Council",
       "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page"
     ],
-    "updated_at": "2025-06-14T17:17:49Z"
+    "updated_at": "2025-06-14T17:16:53Z"
   },
   {
     "name": "Loren Anderson",
@@ -50,11 +50,11 @@
       "Council Member"
     ],
     "divisions": [
-      "Position 2",
-      "Ward 2"
+      "Ward 2",
+      "Position 2"
     ],
-    "image": null,
-    "phone_number": "(509) 586-5532",
+    "image": "https://www.go2kennewick.com/ImageRepository/Document?documentID=13168",
+    "phone_number": "509-586-5532",
     "email": "loren.anderson@ci.kennewick.wa.us",
     "website": "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page",
     "start_date": null,
@@ -63,7 +63,7 @@
       "https://www.go2kennewick.com/531/City-Council",
       "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page"
     ],
-    "updated_at": "2025-06-14T17:17:49Z"
+    "updated_at": "2025-06-14T17:16:53Z"
   },
   {
     "name": "Brad Beauchamp",
@@ -71,11 +71,11 @@
       "Council Member"
     ],
     "divisions": [
-      "At-large",
+      "At Large",
       "Position 6"
     ],
-    "image": null,
-    "phone_number": "(509) 308-6556",
+    "image": "https://www.go2kennewick.com/ImageRepository/Document?documentID=13163",
+    "phone_number": "509-308-6556",
     "email": "brad.beauchamp@ci.kennewick.wa.us",
     "website": "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page",
     "start_date": null,
@@ -84,7 +84,7 @@
       "https://www.go2kennewick.com/531/City-Council",
       "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page"
     ],
-    "updated_at": "2025-06-14T17:17:49Z"
+    "updated_at": "2025-06-14T17:16:53Z"
   },
   {
     "name": "Jim Millbauer",
@@ -92,11 +92,11 @@
       "Council Member"
     ],
     "divisions": [
-      "At-large",
+      "At Large",
       "Position 7"
     ],
-    "image": null,
-    "phone_number": "(509) 820-2349",
+    "image": "https://www.go2kennewick.com/ImageRepository/Document?documentID=15429",
+    "phone_number": "509-531-4134",
     "email": "jim.millbauer@ci.kennewick.wa.us",
     "website": "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page",
     "start_date": "2019",
@@ -105,7 +105,7 @@
       "https://www.go2kennewick.com/531/City-Council",
       "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page"
     ],
-    "updated_at": "2025-06-14T17:17:49Z"
+    "updated_at": "2025-06-14T17:16:53Z"
   },
   {
     "name": "John Trumbo",
@@ -113,11 +113,11 @@
       "Council Member"
     ],
     "divisions": [
-      "Position 3",
-      "Ward 3"
+      "Ward 3",
+      "Position 3"
     ],
-    "image": null,
-    "phone_number": "(509) 366-2241",
+    "image": "https://www.go2kennewick.com/ImageRepository/Document?documentID=15428",
+    "phone_number": "509-366-2241",
     "email": "john.trumbo@ci.kennewick.wa.us",
     "website": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page",
     "start_date": "2014-01",
@@ -126,7 +126,7 @@
       "https://www.go2kennewick.com/531/City-Council",
       "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page"
     ],
-    "updated_at": "2025-06-14T17:17:49Z"
+    "updated_at": "2025-06-14T17:16:53Z"
   },
   {
     "name": "Jason McShane",
@@ -134,18 +134,18 @@
       "Council Member"
     ],
     "divisions": [
-      "At-large",
+      "At Large",
       "Position 4"
     ],
-    "image": null,
-    "phone_number": "(509) 537-5903",
+    "image": "https://www.go2kennewick.com/ImageRepository/Document?documentID=15427",
+    "phone_number": "509-537-5903",
     "email": "jason.mcshane@ci.kennewick.wa.us",
     "website": null,
     "start_date": null,
-    "end_date": null,
+    "end_date": "2025",
     "sources": [
       "https://www.go2kennewick.com/531/City-Council"
     ],
-    "updated_at": "2025-06-14T17:17:49Z"
+    "updated_at": "2025-06-14T17:16:53Z"
   }
 ]

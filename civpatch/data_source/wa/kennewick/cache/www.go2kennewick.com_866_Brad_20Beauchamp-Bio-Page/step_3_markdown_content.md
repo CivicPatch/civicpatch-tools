@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.go2kennewick.com/531/City-Council/)
+[Skip to Main Content](https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page/)
 
 ![Kennewick WA Homepage](https://www.go2kennewick.com/ImageRepository/Document?documentID=15016)
 
@@ -25,94 +25,40 @@ Search
 
 1. [Home](https://www.go2kennewick.com)
 2. [Your Government](https://www.go2kennewick.com/27/Your-Government)
-3. City Council
+3. [City Council](https://www.go2kennewick.com/531/City-Council)
+4. Jim Millbauer Bio Page
 
-# City Council
+![jim millbauer 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13167 "jim millbauer 2022")
 
-The City of Kennewick has a Council-Manager form of government. The City Manager is appointed by the City Council as the chief executive officer of the City and is responsible to the Council for the proper administration of all City business. The Council is comprised of seven Council members, one of whom is appointed by its members to serve as Mayor for two years. Though Chair of the Council and the presiding member at weekly Council meetings, the Mayor has an equal vote with other Council members. Council members are elected by the citizens of Kennewick to serve a four-year term. Council members are part-time elected officials who exercise the legislative power of the City and determine matters of policy.
+## Jim Millbauer
 
-![Mayor Crawford 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15430 "Mayor Crawford 2024")
+City Council  
+Title: Council Member  
+Phone: 509-820-2349   
+[Email Mr. Millbauer](mailto:jim.millbauer@ci.kennewick.wa.us)
 
-### Gretl Crawford
+### Address
 
-[Email Mayor Crawford](mailto:gretl.crawford@ci.kennewick.wa.us)  
-Mayor, Council Member - Ward 1 Position 1  
-Term Expires: December 31, 2025   
-Phone: 509-531-0454  
-[Ms. Crawford Biography](https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page)
+PO Box 6108  
+Kennewick, WA 99336
 
-![Ward 1 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3866 "Ward 1")
+### Biography
 
-![Torelli  Portrait](https://www.go2kennewick.com/ImageRepository/Document?documentID=11216 "Torelli  Portrait")
+Mr. Millbauer has called Kennewick home since 1987 and was elected to the Kennewick City Council in 2019.   
+   
+He has been an UA Local 598 pipefitter for 39 years, and for the last 21 years, has proudly served and represented hard working men and women at Hanford as a Project Steward. His career is a reflection of his values and strong belief in the importance of serving others. For this reason, he volunteers on a variety of boards and organizations such as United Way, Bikes for Tikes, and After School Matters.   
+   
+His focus is to create more opportunity for economic development, make public safety a priority, and work together on building a better community, through projects that support responsible growth.   
+   
+ Mr. Millbauer has three children and five grandchildren, all of whom call Kennewick home. 
 
-### Charles  Torelli
+ 
 
-[Email Mayor Pro Tem Torelli](mailto:chuck.torelli@ci.kennewick.wa.us)  
-Mayor Pro Tem., Council Member - At Large Position 5 (All Wards)  
-December 31, 2027  
-Phone: 509-405-2156  
-[Mr. Torelli Biography](https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page)
+### Committees &amp; Boards
 
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
+Mr. Millbauer presently serves on the Block Grant Advisory Board, Energy Communities Alliance, the Lodging Tax Advisory Committee, Tri-Cities National Park Committee, Visit Tri-Cities Board, and the Kennewick Public Facilities District. He also serves as alternate on the Benton Franklin Community Action Committee, Benton Franklin Housing Continuum of Care, Good Roads &amp; Transportation Association, Hanford Communities Governing Board, and Benton County Solid Waste Advisory Committee (SWAC). 
 
-![loren anderson 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13168 "loren anderson 2022")
-
-### Loren Anderson
-
-[Email Councilmember Anderson](mailto:loren.anderson@ci.kennewick.wa.us)  
-Council Member - Ward 2 Position 2  
-Term Expires: December 31, 2025  
-Phone: 509-586-5532  
-[Mr. Anderson Biography](https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page)
-
-![Ward 2 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3868 "Ward 2")
-
-![brad beauchamp 2022](https://www.go2kennewick.com/ImageRepository/Document?documentID=13163 "brad beauchamp 2022")
-
-### Brad Beauchamp
-
-[Email Councilmember Beauchamp](mailto:brad.beauchamp@ci.kennewick.wa.us)  
-Council Member - At Large Position 6 (All Wards)  
-Term Expires: December 31, 2027   
-Phone: 509-308-6556  
-[Mr. Beauchamp Biography](https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page) 
-
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
-
-![Jim Millbauer 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15429 "Jim Millbauer 2024")
-
-### Jim Millbauer
-
-[Email Councilmember Millbauer](mailto:jim.millbauer@ci.kennewick.wa.us)  
-Council Member - At Large Position 7 (All Wards)  
-Term Expires: December 31, 2027   
-Phone: 509-531-4134  
-[Mr. Millbauer Biography](https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page) 
-
-![All Wards Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
-
-![John Trumbo 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15428 "John Trumbo 2024")
-
-### John Trumbo
-
-[Email Councilmember Trumbo](mailto:john.trumbo@ci.kennewick.wa.us)  
-Council Member - Ward 3 Position 3  
-Term Expires: December 31, 2025  
-Phone: 509-366-2241  
-[Mr. Trumbo Biography](https://www.go2kennewick.com/873/John-Trumbo-Bio-Page "Councilman Trumbo Biography")
-
-![Ward 3 Opens in new window](https://www.go2kennewick.com/ImageRepository/Document?documentID=3869 "Ward 3")
-
-![Jason McShane 2024](https://www.go2kennewick.com/ImageRepository/Document?documentID=15427 "Jason McShane 2024")
-
-### Jason McShane
-
-[Email Councilmember McShane](mailto:jason.mcshane@ci.kennewick.wa.us)  
-Council Member - At Large Position 4 (All Wards)  
-Term Expires: Certification of the 2025 election  
-Phone: 509-537-5903
-
-![All Wards](https://www.go2kennewick.com/ImageRepository/Document?documentID=3875 "All Wards")
+ 
 
 [Notify Me®](https://www.go2kennewick.com/list.aspx)
 
