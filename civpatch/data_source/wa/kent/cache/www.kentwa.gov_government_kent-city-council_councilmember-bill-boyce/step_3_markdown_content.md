@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce/)
 
 # City of Kent
 
@@ -1230,7 +1230,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember John Boyd
+# Kent City Councilmember Bill Boyce
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,53 +1244,53 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember John Boyd](https://www.kentwa.gov/home/showpublishedimage/24260/638446489711770000)Councilmember John Boyd grew up in Southern California, where he began his career in the U.S. Navy. There, he gained experience by interacting with a diverse group of people from across the country.
+![Councilmember Bill Boyce](https://www.kentwa.gov/home/showpublishedimage/17761/638446491818570000)
 
-John’s first visit to Washington State was in 1978 while he was in the Navy. At the time, he was on Temporary Assigned Duty at the Naval Air Station on Whidbey Island. John says that he loved it so much when he was here that when Boeing came to California in 1996, looking for skilled workers, he did not hesitate to accept their offer. Boyd then moved to Washington with his wife Cheryl and their two sons. He successfully secured a career at Boeing to provide for his family and recently retired.
+Born and raised in North Carolina, Kent City Councilmember Bill Boyce first came to Washington when he was stationed at Fort Lewis as an US Army airborne ranger paratrooper for four years. Bill loved the area so much, he decided to stay. He moved to Kent in 1984, where he and his wife Debbie raised five children. With a bachelor’s degree in business, Bill has been at the Boeing Company for 36 years, currently as a Senior Manufacturer leader. 
 
-John takes pride in his work and life story, enabling him to become the person he is today. He is a leader, a provider, a father, and a husband. However, above all, he is someone who cares about his community.
+Bill has always been passionate about being involved in the community where he lives. Before being elected to Kent City Council, currently in his third term, he served on the Kent School District Board of Directors for 16 years, including four terms as board president. He is a charter member and past president of the Kent Sunrise Rotary Club, and he served as a commissioner of the Criminal Justice Training Center for 13 years. 
 
-John has lived in Kent for nearly 28 years, during which time he came to know it as home.
+Bill currently represents Kent on the Sound Cities Association Public Interest Committee as a member. He also serves on the Harborview Medical Center Board of Trustees.
 
-Through working and volunteering with organizations like SeaMar and Therapeutic Health Services he has made a difference in his community by helping those dealing with substance abuse issues; and with a degree in Human Services and as a certified Substance Abuse counselor, he feels ready to address our ongoing situations.
+Bill believes one of the most important roles he plays is ensuring government transparency and accountability. “Making sure the people of Kent have access to their government is crucial,” said Bill. “We need to ensure we get our residents the best bang for their buck, keep taxes low and deliver high quality services that their families can count on.”
 
-John understands that a community is only healthy when its members step up to take care of it, and he uses his time to put his beliefs into practice.
+Bill is a firm believer that we need to provide a safe and welcoming community that will attract new residents, well-paying jobs and potential development to our city.
 
-Boyd states that while he sits on the Kent City Council, he is glad to be a part of the decision-makers that shape Kent to address challenges and continued growth so families can comfortably work, live, and play.
+“It is so important that we make Kent a place that everyone can call home. Businesses should be proud of not only locating here but the top-quality workforce we provide as well. We must continue to create a wide variety of jobs for the diverse residents who call Kent home,” Bill concluded.
 
-John also states that since retiring, his new hobbies have been going to the gym, playing chess, cooking, and spending time with family.
+When not at work or doing community service, Bill loves to spend quality family time. He enjoys BBQing and smoking high quality meats for his wife Debbie, his kids and his grandkids. He enjoys watching and participating in sporting events, spending time outdoors and checking out new businesses in Kent. Bill lives on the East Hill with his wife Debbie, and his 5 kids – all KSD graduates – still reside around the region with his grandchildren.
 
-His top priority is coming up with and executing a plan that will decrease homelessness and drug and alcohol dependency in the community. His priorities are improving public safety, attracting new businesses, and helping individuals gain employment.
+“Having a close-knit family is one of the most important things to me,” says Bill. “We get together every Sunday for a big family dinner. We like going up to the mountains or playing outdoor games, sitting, laughing and having a good time.”
 
-John says he will ensure that there is fiscal responsibility and that your tax dollars are being accounted for.
+[Kent TV21 Calling Kent Home, Council Edition: Bill Boyce](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119879553&____isexternal=true) from [Kent TV21](https://vimeo.com/kenttv21) on [Vimeo](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com&____isexternal=true).
 
-John is pro-union, pro-family, pro-gun safety, and pro-choice. As a council member, he aims to keep the City of Kent and its people safe.
+## Reach Councilmember Boyce, Position 5
 
-## Reach Councilmember Boyd, position 3
-
-- 253-856-5712
-- 206-930-7108
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
+  
+  253-856-5712
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
+  
+  206-915-0930
 - ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
   
-  [JBoyd@KentWA.gov](mailto:JBoyd@KentWA.gov)
+  [bboyce@KentWA.gov](mailto:bboyce@kentwa.gov)
 - ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
   
   Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- ![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
-  
-  Kent City Council  
-  220 Fourth Ave. S  
+- Kent City Council  
+  220 Fourth Ave S.  
   Kent, WA 98032
 - **Term Began**
   
-  January 2024
+  January 2012
 - **Term Expires**
   
   Dec. 31, 2027
 - **Member**
   
-  Puget Sound Fire RFA Governance Board; and Management Coordinator Committee (MCC) member for the Local Hazardous Waste Management Program
+  Sound Cities Association Public Interest Committee and the Harborview Board of Trustees
 - *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected

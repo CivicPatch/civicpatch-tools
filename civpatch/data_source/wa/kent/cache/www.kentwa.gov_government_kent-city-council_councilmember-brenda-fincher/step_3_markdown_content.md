@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher/)
 
 # City of Kent
 
@@ -1230,7 +1230,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember John Boyd
+# Kent City Councilmember Brenda Fincher
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,54 +1244,65 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember John Boyd](https://www.kentwa.gov/home/showpublishedimage/24260/638446489711770000)Councilmember John Boyd grew up in Southern California, where he began his career in the U.S. Navy. There, he gained experience by interacting with a diverse group of people from across the country.
+![Councilmember Brenda Fincher](https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000)
 
-John’s first visit to Washington State was in 1978 while he was in the Navy. At the time, he was on Temporary Assigned Duty at the Naval Air Station on Whidbey Island. John says that he loved it so much when he was here that when Boeing came to California in 1996, looking for skilled workers, he did not hesitate to accept their offer. Boyd then moved to Washington with his wife Cheryl and their two sons. He successfully secured a career at Boeing to provide for his family and recently retired.
+Growing up in a military family, Kent City Councilmember Brenda Fincher had the privilege of living in different places and meeting different people. This is one of the many things she loves about Kent—being around people from all over the world who have different cultures, beliefs and backgrounds. 
 
-John takes pride in his work and life story, enabling him to become the person he is today. He is a leader, a provider, a father, and a husband. However, above all, he is someone who cares about his community.
+Brenda moved to Kent in 1988 when she and her family were ready for a change. She raised her son and daughter in the Kent School District, with her children starting out at O’Brien Elementary, which was then in an industrial area. While her kids were in school, Brenda was president of several PTAs and is a two-time Golden Acorn Award recipient. 
 
-John has lived in Kent for nearly 28 years, during which time he came to know it as home.
+Her kids are grown now and have five kids of their own, who Brenda loves spending time with. Brenda works at Holy Spirit Parish in downtown Kent, but her community work doesn’t stop there. She has also volunteered for various organizations, including the following: 
 
-Through working and volunteering with organizations like SeaMar and Therapeutic Health Services he has made a difference in his community by helping those dealing with substance abuse issues; and with a degree in Human Services and as a certified Substance Abuse counselor, he feels ready to address our ongoing situations.
+- Subject Matter Chair of Public Works
+- Council Liaison to Kent Arts Commission
+- Former Subject Matter Chair of Parks, Recreation &amp; Human Services
+- King Conservation District Advisory Committee
+- Mental Illness and Drug Dependency Advisory Committee
+- An organizer of the Kent International Festival
+- Catholic Community Services and Catholic Housing Boards
+- The board and care teams of MultiFaith Works
+- Intercommunity Peace &amp; Justice Center Board
+- Former president of the Kent Youth and Family Services Board
+- Archdiocese of Seattle’s Black Catholic Advisory Circle
+- Kent School District Diversity Task Force, where she was a contributing author to the district’s original Diversity Task Force Plan
+- Look, Listen + Learn Board
 
-John understands that a community is only healthy when its members step up to take care of it, and he uses his time to put his beliefs into practice.
+“When I was a growing up, my parents always volunteered in the community and started my brother and me off early. One of my favorites was being a candy striper in a convalescent home” explains Brenda. “You learn so much from others when you give back to the community.” 
 
-Boyd states that while he sits on the Kent City Council, he is glad to be a part of the decision-makers that shape Kent to address challenges and continued growth so families can comfortably work, live, and play.
+Having served on the city council since 2014, Brenda was drawn to serving on Kent City Council, because she thought that it was another platform from which to serve and where she could make the biggest difference. Brenda believes there are two sides to everything, and we have to think about what our neighbors are going through when making decisions. 
 
-John also states that since retiring, his new hobbies have been going to the gym, playing chess, cooking, and spending time with family.
+Brenda, who describes herself as usually upbeat and positive, enjoys spending time with friends and family, camping, sewing, crafts, traveling and singing in the church choir. 
 
-His top priority is coming up with and executing a plan that will decrease homelessness and drug and alcohol dependency in the community. His priorities are improving public safety, attracting new businesses, and helping individuals gain employment.
+“Kent is a marvelous and amazing place to live. We have so many cultures here, and you don’t get that everywhere,” says Brenda. “Just about anything you can think of is made in Kent, and there are so many things to see and do here.”
 
-John says he will ensure that there is fiscal responsibility and that your tax dollars are being accounted for.
+ 
 
-John is pro-union, pro-family, pro-gun safety, and pro-choice. As a council member, he aims to keep the City of Kent and its people safe.
+[Calling Kent Home, Council Edition: Brenda Fincher](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119179105&____isexternal=true) from [Kent TV21](https://vimeo.com/kenttv21) on [Vimeo](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com&____isexternal=true).
 
-## Reach Councilmember Boyd, position 3
+## Reach Councilmember Fincher, Position 6
 
-- 253-856-5712
-- 206-930-7108
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
   
-  [JBoyd@KentWA.gov](mailto:JBoyd@KentWA.gov)
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
+  253-856-5712
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)    206-818-7909
+- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
   
-  Email all Council:  
+  [bfincher@KentWA.gov](mailto:bfincher@kentwa.gov)
+- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
+  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- ![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
-  
-  Kent City Council  
+- Kent City Council  
   220 Fourth Ave. S  
   Kent, WA 98032
 - **Term Began**
   
-  January 2024
+  March 2014
 - **Term Expires**
   
-  Dec. 31, 2027
+  Dec. 31, 2025
 - **Member**
   
-  Puget Sound Fire RFA Governance Board; and Management Coordinator Committee (MCC) member for the Local Hazardous Waste Management Program
-- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+  Arts Commission; King Conservation District Advisory Committee; Mental Illness and Drug Dependency Advisory Committee; Intercommunity Peace &amp; Justice Board; Look, Listen + Learn Board
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
 

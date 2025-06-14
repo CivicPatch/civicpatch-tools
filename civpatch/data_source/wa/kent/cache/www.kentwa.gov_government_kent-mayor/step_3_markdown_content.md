@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-mayor/)
 
 # City of Kent
 
@@ -1228,9 +1228,9 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
   
   - [2025 Summer Events](https://www.kentwa.gov/events/2025-summer-events "2025 Summer Events")
 
-[Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
+[Government](https://www.kentwa.gov/government)
 
-# Kent City Councilmember John Boyd
+# Kent Mayor Dana Ralph
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,54 +1244,69 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember John Boyd](https://www.kentwa.gov/home/showpublishedimage/24260/638446489711770000)Councilmember John Boyd grew up in Southern California, where he began his career in the U.S. Navy. There, he gained experience by interacting with a diverse group of people from across the country.
+![Mayor Banner](https://www.kentwa.gov/home/showpublishedimage/2171/636131525380430000)
 
-John’s first visit to Washington State was in 1978 while he was in the Navy. At the time, he was on Temporary Assigned Duty at the Naval Air Station on Whidbey Island. John says that he loved it so much when he was here that when Boeing came to California in 1996, looking for skilled workers, he did not hesitate to accept their offer. Boyd then moved to Washington with his wife Cheryl and their two sons. He successfully secured a career at Boeing to provide for his family and recently retired.
+## Meet Mayor Dana Ralph
 
-John takes pride in his work and life story, enabling him to become the person he is today. He is a leader, a provider, a father, and a husband. However, above all, he is someone who cares about his community.
+![Portrait of Mayor Ralph](https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000)
 
-John has lived in Kent for nearly 28 years, during which time he came to know it as home.
+Re-elected by Kent voters for her second term in 2021, **Mayor Dana Ralph** serves as the Chief Executive Officer of the City of Kent in Washington State.
 
-Through working and volunteering with organizations like SeaMar and Therapeutic Health Services he has made a difference in his community by helping those dealing with substance abuse issues; and with a degree in Human Services and as a certified Substance Abuse counselor, he feels ready to address our ongoing situations.
+She along with a seven-member City Council and over 730 City employees work to deliver results for the 140,000 people and over 5,000 businesses that call Kent Home.
 
-John understands that a community is only healthy when its members step up to take care of it, and he uses his time to put his beliefs into practice.
+Mayor Ralph has the sole discretion to appoint the City’s **Executive Leadership Team**, which consists of the Directors overseeing all city departments
 
-Boyd states that while he sits on the Kent City Council, he is glad to be a part of the decision-makers that shape Kent to address challenges and continued growth so families can comfortably work, live, and play.
+She works with them to develop policy, programs and services to benefit the residents and businesses of Kent. She is also responsible for preparing and transmitting the City’s $884 million-dollar biennial operating and capital budgets.
 
-John also states that since retiring, his new hobbies have been going to the gym, playing chess, cooking, and spending time with family.
+A Kent native, Mayor Ralph is the **fourth generation** of her family to call Kent home. After attending Kent public schools, she **graduated from Kent-Meridian High School**.
 
-His top priority is coming up with and executing a plan that will decrease homelessness and drug and alcohol dependency in the community. His priorities are improving public safety, attracting new businesses, and helping individuals gain employment.
+During high school, she met and later married her high school sweetheart, Shawn. Together, they raised two boys who graduated from Kentridge High School.
 
-John says he will ensure that there is fiscal responsibility and that your tax dollars are being accounted for.
+Nearly 30 years ago, Mayor Ralph started a small business in Kent, which she still owns, but no longer manages day-to-day operations.
 
-John is pro-union, pro-family, pro-gun safety, and pro-choice. As a council member, he aims to keep the City of Kent and its people safe.
+Driven by wanting to make a difference in her hometown, she first became involved in local government about 20 years ago when she volunteered to serve on the City’s Land Use and Planning Board and the City’s Arts Commission.
 
-## Reach Councilmember Boyd, position 3
+As she learned more about policy and advocacy and the inner working of local government, she wanted to be more involved to help shape the future of our community that she loves.
 
-- 253-856-5712
-- 206-930-7108
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
-  
-  [JBoyd@KentWA.gov](mailto:JBoyd@KentWA.gov)
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
-  
-  Email all Council:  
-  [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- ![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
-  
-  Kent City Council  
+She was first elected to the **Kent City Council** in 2011 and served from 2012 to 2017.
+
+During 2014 and 2015, she served as **Kent City Council President** where she was responsible for agenda setting and committee assignments.
+
+Knowing there was much more work to be done for Kent, she ran for **Mayor** while at the same time battling (and later defeating!) breast cancer.
+
+**She elected by voters in 2017 and sworn into office in January 2018 as Kent’s 27th Mayor and only the 3rd woman to ever hold the role.**
+
+As mayor, Dana has prioritized bringing good jobs to Kent, improving public safety, investing in the city’s infrastructure, parks and human services programs, expanding housing and transit options, and supporting Kent’s small businesses and industries.
+
+She values communication and transparency, and serving with compassion as we look after vulnerable populations and ensure a principled approach to equity and inclusion.
+
+When not at work, Mayor Ralph is known for her extensive knowledge of Rock N’ Roll, she enjoys camping, spending time with family and friends, attending community events and volunteering.
+
+She is passionate about serving the many needs of our diverse city. She is one of the founders of the Shop with a Cop program that raises funds to buy Christmas gifts for families in-need through Kent Youth and Family Services, and she encourages all City employees to give back to the community whenever possible.
+
+“I am so proud to call Kent home and it is such an honor to serve as your mayor.
+
+Kent has infinite potential. We have all the ingredients to continue being a world-class city for residents and businesses to thrive and make a lasting impact,” said Mayor Ralph.
+
+Our strength is our people, and I am blessed to work side-by-side with some of the best and brightest every day toward a shared vision: to make Kent an even better place to live, work and play for generations.
+
+My hope is that you will join in the passion that drives me—the idea I work toward every day—showing the world Kent’s potential, and making sure our residents, businesses and community organizations have the tools to turn that potential into reality.”
+
+[**Sign up for Mayor Ralph's weekly newsletter here!**](https://kentwa.gov/subscribe)
+
+## Reach the Mayor
+
+- 253-856-5700
+- [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
+- Office of the Mayor  
   220 Fourth Ave. S  
   Kent, WA 98032
-- **Term Began**
-  
-  January 2024
-- **Term Expires**
-  
-  Dec. 31, 2027
-- **Member**
-  
-  Puget Sound Fire RFA Governance Board; and Management Coordinator Committee (MCC) member for the Local Hazardous Waste Management Program
-- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the Mayor will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+
+Free viewers are required for some of the attached documents.  
+They can be downloaded by clicking on the icons below.
+
+[Acrobat Reader ![Download Acrobat Reader](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/acrobat.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fget.adobe.com%2Freader%2F&____isexternal=true "Download Acrobat Reader") [Windows Media Player ![Download Windows Media Player](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/wmp.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fwindows.microsoft.com%2Fen-us%2Fwindows%2Fwindows-media-player&____isexternal=true "Download Windows Media Player") [Word Viewer ![Download Word Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/word.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Word Viewer") [Excel Viewer ![Download Excel Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/excel.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Excel Viewer") [PowerPoint Viewer ![Download PowerPoint Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/powerpoint.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download PowerPoint Viewer")
 
 ## Stay Connected
 

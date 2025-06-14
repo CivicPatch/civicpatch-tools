@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur/)
 
 # City of Kent
 
@@ -1230,7 +1230,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember John Boyd
+# Kent City Council President Satwinder Kaur
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,53 +1244,73 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember John Boyd](https://www.kentwa.gov/home/showpublishedimage/24260/638446489711770000)Councilmember John Boyd grew up in Southern California, where he began his career in the U.S. Navy. There, he gained experience by interacting with a diverse group of people from across the country.
+![Councilmember Satwinder Kaur](https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000)**Satwinder Kaur** (pronounced *Seth-win-der Core*), President of the Kent City Council, is a lifelong resident of Kent and proud graduate of Kentridge High School. She and her husband are raising their four children—including a newborn—in the city they call home.
 
-John’s first visit to Washington State was in 1978 while he was in the Navy. At the time, he was on Temporary Assigned Duty at the Naval Air Station on Whidbey Island. John says that he loved it so much when he was here that when Boeing came to California in 1996, looking for skilled workers, he did not hesitate to accept their offer. Boyd then moved to Washington with his wife Cheryl and their two sons. He successfully secured a career at Boeing to provide for his family and recently retired.
+Having served on the Kent City Council since 2018, Satwinder was elected by her colleagues as Council President in 2024. She brings both lived experience and a deep commitment to public service to her role on the Council, where she works to ensure that all voices in the community are heard—especially those who are often not at the table.
 
-John takes pride in his work and life story, enabling him to become the person he is today. He is a leader, a provider, a father, and a husband. However, above all, he is someone who cares about his community.
+“I want to bring new perspectives that may not have been considered before,” she says.
 
-John has lived in Kent for nearly 28 years, during which time he came to know it as home.
+In addition to holding associate’s, bachelor’s, and an MBA from University of Washington, Satwinder is certified in Six Sigma and Lean Management. She works in the IT sector and brings a strong problem-solving mindset and systems-based thinking to her public service. Her earlier experience as an admin in the Mayor’s Office gave her insight into the everyday issues residents face, and she remains committed to listening to individuals, families, business owners, and community leaders alike.
 
-Through working and volunteering with organizations like SeaMar and Therapeutic Health Services he has made a difference in his community by helping those dealing with substance abuse issues; and with a degree in Human Services and as a certified Substance Abuse counselor, he feels ready to address our ongoing situations.
+Satwinder’s passion for Kent is reflected in her active involvement in numerous local and regional organizations. She currently serves on the following boards and committees:
 
-John understands that a community is only healthy when its members step up to take care of it, and he uses his time to put his beliefs into practice.
+**Regional Committees:**
 
-Boyd states that while he sits on the Kent City Council, he is glad to be a part of the decision-makers that shape Kent to address challenges and continued growth so families can comfortably work, live, and play.
+- Chair, **Puget Sound Clean Air Agency Advisory Council**
+- Member, **Growth Management Planning Council**
+- Member, **Domestic Violence Regional Task Force**
+- Member, **Growth Management Policy Board**
+- Member, **Association of Washington Cities Nominating Committee**
+- Member, **Association of Washington Cities Federal and State Policy Committee**
 
-John also states that since retiring, his new hobbies have been going to the gym, playing chess, cooking, and spending time with family.
+ 
 
-His top priority is coming up with and executing a plan that will decrease homelessness and drug and alcohol dependency in the community. His priorities are improving public safety, attracting new businesses, and helping individuals gain employment.
+**Past Local Boards and Initiatives:**
 
-John says he will ensure that there is fiscal responsibility and that your tax dollars are being accounted for.
+- Chair, **Kent Cultural Communities Board**
+- **Green Kent Park Steward**, Kent Parks
+- Board of Trustees, **Greater Kent Historical Society**
+- Board of Directors, **Living Well Kent**
+- Member, **Mayor’s Diversity Task Force**, City of Renton
+- Board Member, **Puget Sound Access**
 
-John is pro-union, pro-family, pro-gun safety, and pro-choice. As a council member, he aims to keep the City of Kent and its people safe.
+ 
 
-## Reach Councilmember Boyd, position 3
+Some of Satwinder’s favorite things about Kent include hanging out at Clark Lake Park, enjoying food from around the world, participating in the Adopt-a-Street program with the Sikh community, and seeing people of all backgrounds come together to support one another. She values Kent’s rich diversity, strong community spirit, and inclusive places of worship.
 
-- 253-856-5712
-- 206-930-7108
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
+“I love the amazing people we have in Kent. It’s a caring community where people truly look out for their neighbors,” she says. “They choose Kent—the biggest city in South King County—as their home.”
+
+When she isn’t working, volunteering, or serving on Council, Satwinder enjoys spending time with her family, exploring the outdoors, and attending various events in Kent.
+
+With every decision she makes, Satwinder is guided by a simple but powerful goal: to leave Kent a better place for future generations to live, work, and thrive in.
+
+ 
+
+ 
+
+## Reach Council President Kaur, position 2
+
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
   
-  [JBoyd@KentWA.gov](mailto:JBoyd@KentWA.gov)
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
+  253-856-5712
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)   206-406-2468
+- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
+  
+  [skaur@KentWA.gov](mailto:skaur@KentWA.gov)
+- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
   
   Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- ![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
+- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
   
-  Kent City Council  
   220 Fourth Ave. S  
   Kent, WA 98032
 - **Term Began**
   
-  January 2024
+  January 2018
 - **Term Expires**
   
-  Dec. 31, 2027
-- **Member**
-  
-  Puget Sound Fire RFA Governance Board; and Management Coordinator Committee (MCC) member for the Local Hazardous Waste Management Program
+  Dec. 31, 2025
 - *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
