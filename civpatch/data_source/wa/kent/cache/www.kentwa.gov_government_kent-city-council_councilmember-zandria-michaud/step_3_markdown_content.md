@@ -1258,14 +1258,12 @@ In her free time, Zandria and her family enjoy hikes, exploring Kent’s parks a
 
 - 253-856-5712
 - 206-402-8547
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
-  
-  [ZMichaud@KentWA.gov](mailto:ZMichaud@kentwa.gov)
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
-  
-  Email all Council:  
+- [ZMichaud@KentWA.gov](mailto:ZMichaud@kentwa.gov)
+- Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- Kent City Council  
+- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
+  
+  Kent City Council  
   220 Fourth Ave. S  
   Kent, WA 98032
 - **Term Began**
@@ -1393,10 +1391,10 @@ Tap the icon to expand or tap the title to go to the page.
   
   - [2025 Summer Events](https://www.kentwa.gov/events/2025-summer-events "2025 Summer Events")
 
-Loading ...
-
 Original text
 
 Rate this translation
 
 Your feedback will be used to help improve Google Translate
+
+Loading ...

@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119879553&____isexternal=true%2F)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher/)
 
 # City of Kent
 
@@ -1228,309 +1228,75 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
   
   - [2025 Summer Events](https://www.kentwa.gov/events/2025-summer-events "2025 Summer Events")
 
-<!--THE END-->
+[Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-- ![Kent Summer Fun!](https://www.kentwa.gov/home/showpublishedimage/25465/638852346950630000)
+# Kent City Councilmember Brenda Fincher
+
+[Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
+
+[Share &amp; Bookmark](https:void%280%29; "Click to expand Share & Bookmark options") Share &amp; Bookmark, Press Enter to show all options, press Tab go to next option
+
+- [Email](https:void%280%29; "Click to submit an email online")
+- [Facebook](https:shareLink%28'facebook'%29 "Click to share with Facebook")
+- [LinkedIn](https:shareLink%28'linkedin'%29 "Click to share with LinkedIn")
+- [Twitter](https:shareLink%28'twitter'%29 "Click to share with Twitter")
+- [Reddit](https:shareLink%28'reddit'%29 "Click to share with Reddit")
+
+[Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
+
+![Councilmember Brenda Fincher](https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000)
+
+Growing up in a military family, Kent City Councilmember Brenda Fincher had the privilege of living in different places and meeting different people. This is one of the many things she loves about Kent—being around people from all over the world who have different cultures, beliefs and backgrounds. 
+
+Brenda moved to Kent in 1988 when she and her family were ready for a change. She raised her son and daughter in the Kent School District, with her children starting out at O’Brien Elementary, which was then in an industrial area. While her kids were in school, Brenda was president of several PTAs and is a two-time Golden Acorn Award recipient. 
+
+Her kids are grown now and have five kids of their own, who Brenda loves spending time with. Brenda works at Holy Spirit Parish in downtown Kent, but her community work doesn’t stop there. She has also volunteered for various organizations, including the following: 
+
+- Subject Matter Chair of Public Works
+- Council Liaison to Kent Arts Commission
+- Former Subject Matter Chair of Parks, Recreation &amp; Human Services
+- King Conservation District Advisory Committee
+- Mental Illness and Drug Dependency Advisory Committee
+- An organizer of the Kent International Festival
+- Catholic Community Services and Catholic Housing Boards
+- The board and care teams of MultiFaith Works
+- Intercommunity Peace &amp; Justice Center Board
+- Former president of the Kent Youth and Family Services Board
+- Archdiocese of Seattle’s Black Catholic Advisory Circle
+- Kent School District Diversity Task Force, where she was a contributing author to the district’s original Diversity Task Force Plan
+- Look, Listen + Learn Board
+
+“When I was a growing up, my parents always volunteered in the community and started my brother and me off early. One of my favorites was being a candy striper in a convalescent home” explains Brenda. “You learn so much from others when you give back to the community.” 
+
+Having served on the city council since 2014, Brenda was drawn to serving on Kent City Council, because she thought that it was another platform from which to serve and where she could make the biggest difference. Brenda believes there are two sides to everything, and we have to think about what our neighbors are going through when making decisions. 
+
+Brenda, who describes herself as usually upbeat and positive, enjoys spending time with friends and family, camping, sewing, crafts, traveling and singing in the church choir. 
+
+“Kent is a marvelous and amazing place to live. We have so many cultures here, and you don’t get that everywhere,” says Brenda. “Just about anything you can think of is made in Kent, and there are so many things to see and do here.”
+
+ 
+
+[Calling Kent Home, Council Edition: Brenda Fincher](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119179105&____isexternal=true) from [Kent TV21](https://vimeo.com/kenttv21) on [Vimeo](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com&____isexternal=true).
+
+## Reach Councilmember Fincher, Position 6
+
+- 253-856-5712
+- 206-818-7909
+- [bfincher@KentWA.gov](mailto:bfincher@kentwa.gov)
+- [Kent City Council Members](mailto:citycouncil@kentwa.gov)
+- Kent City Council  
+  220 Fourth Ave. S  
+  Kent, WA 98032
+- **Term Began**
   
-  ## Kent Summer Fun!
-- ![Welcome](https://www.kentwa.gov/home/showpublishedimage/17519/637769817465070000)
+  March 2014
+- **Term Expires**
   
-  ## Welcome
+  Dec. 31, 2025
+- **Member**
   
-  Everything Kent, all in one place.
-- ![](https://www.kentwa.gov/home/showpublishedimage/25390/638772948592670000)
-- ![Kent City Council Newsletter](https://www.kentwa.gov/home/showpublishedimage/25081/638657982318770000)
-  
-  ## Kent City Council Newsletter
-  
-  Subscribe for updates and news from your councilmembers!
-  
-  [Sign up](https://public.govdelivery.com/accounts/WAKENT/signup/43115)
-- ![KentWorks](https://www.kentwa.gov/home/showpublishedimage/13469/637369748507370000)
-  
-  ## KentWorks
-  
-  Download the App today and stay connected!
-
-<!--THE END-->
-
-1. 1
-2. 2
-3. 3
-4. 4
-5. 5
-
-Pause
-
-- [![daily-kent-tv](https://www.kentwa.gov/home/showpublishedimage/14874/637743633123930000) 1 **City Hall**  
-  \
-  City Hall is operating on its regular Monday to Friday 8 a.m. - 5 p.m. schedule.](https://www.kentwa.gov/government/city-clerk)
-- [![daily-pay-online](https://www.kentwa.gov/home/showpublishedimage/14876/637743633129200000) 2 **Pay Online**  
-  \
-  Pay water bills, parking tickets, get a pet license, and more.](https://www.kentwa.gov/pay-and-apply/online-services)
-- [![TheNotItsPhotobyHaleighElliott](https://www.kentwa.gov/home/showpublishedimage/19014/637878699229200000) 3 **Events**  
-  \
-  Stay up to date with what's happening in Kent!](https://www.kentwa.gov/events/calendar-month-view)
-- [![daily-city-hall](https://www.kentwa.gov/home/showpublishedimage/14872/637743633114570000) 4 **Kent TV 21**  
-  \
-  Watch scheduled city council meetings.](https://www.youtube.com/user/KentTV21)
-
-## Resource Lookup
-
-Enter your address to get information like recycling pick up days and voting information.
-
-Tip: Enter the first few characters of your address and wait for your information to appear.
-
-Search by address...
-
-<!--THE END-->
-
-- Address not found...
-
-Enter an address to get started
-
-### Address
-
-### City
-
-### Zip Code
-
-### Neighborhood Council
-
-### Water District
-
-### Sewer Service Area
-
-### Ballot Dropbox
-
-### Elemetary School
-
-### Middle School
-
-### High School
-
-### Garbage
-
-[View PDF](https:)
-
-### Snow Removal
-
-### Flood Zone
-
-## Online Services
-
-- [![CTA-4-ApplyforaPermit@2x](https://www.kentwa.gov/home/showpublishedimage/14784/637743614795830000)  
-  \
-  Apply for a permit](https://www.kentwa.gov/pay-and-apply/apply-for-a-permit)
-- [![CTA-1-ApplyforaBusinessLicense@2x](https://www.kentwa.gov/home/showpublishedimage/14772/637743614762400000)  
-  \
-  Apply for a business license](https://www.kentwa.gov/pay-and-apply/apply-for-a-business-license)
-- [![parks-blue@2x](https://www.kentwa.gov/home/showpublishedimage/14705/637737753758970000)  
-  \
-  Find a park](https://www.kentwa.gov/departments/kent-parks/parks-places)
-- [![CTA-5-SubmitaServiceRequest@2x](https://www.kentwa.gov/home/showpublishedimage/14788/637743614808200000)  
-  \
-  Report a non-emergency issue](https://www.kentwa.gov/pay-and-apply/kentworks)
-- [![CTA-6-FileaPoliceReport@2x](https://www.kentwa.gov/home/showpublishedimage/14792/637743614819830000)  
-  \
-  File a police report](https://www.kentwa.gov/departments/police-department/file-a-police-report-online)
-- [![CTA-7-FileaSmallClaim@2x](https://www.kentwa.gov/home/showpublishedimage/14796/637743614831900000)  
-  \
-  File a small claim](https://www.kentwa.gov/?splash=https%3A%2F%2Fkingcounty.gov%2Fcourts%2Fdistrict-court%2Fsmall-claims.aspx&____isexternal=true)
-- [![CTA-8-FileTaxes@2x](https://www.kentwa.gov/home/showpublishedimage/14800/637743614844070000)  
-  \
-  File city taxes](https://www.kentwa.gov/pay-and-apply/file-city-taxes)
-- [![CTA-9-PayaFine@2x](https://www.kentwa.gov/home/showpublishedimage/14804/637743614857070000)  
-  \
-  Pay a fine](https://www.kentwa.gov/pay-and-apply/pay-my-fines)
-- [![CTA-10-PayWaterandSewerBills@2x](https://www.kentwa.gov/home/showpublishedimage/14760/637743614725500000)  
-  \
-  Pay water &amp; sewer bill](https://www.kentwa.gov/pay-and-apply/pay-water-and-sewer-bill-online)
-- [![CTA-11-PublicRecordsCenter@2x](https://www.kentwa.gov/home/showpublishedimage/14764/637743614740500000)  
-  \
-  Public records center](https://www.kentwa.gov/pay-and-apply/make-a-public-records-request)
-- [Traffic advisories](https://www.kentwa.gov/departments/public-works/transportation/traffic-advisories)
-- [Language Access](https://www.kentwa.gov/government/race-equity/language-access-landing-page)
-
-<!--THE END-->
-
-- ![2024 Mayor Progress Report](https://www.kentwa.gov/home/showpublishedimage/25193/638723630112870000)
-  
-  ## Mayor's Progress Report 2024
-  
-  The City of Kent is dedicated to providing the community with excellent service. We continue our work to improve the quality of life of those who live in, work in and visit Kent. We hope that you enjoy this year’s progress report and find it informative! #WeAreKent
-  
-  [Watch Video](https://www.youtube.com/embed/keU8Cx4T1EE?autoplay=1) [More Videos](https://www.kentwa.gov/moreVideos)
-
-## News
-
-- [Apr 24  
-  \
-  ![Construction begins on Ezee Fiber's high-speed Internet expansion in Kent](https://www.kentwa.gov/home/showpublishedimage/25411/638811002197900000)  
-  \
-  **Construction begins on Ezee Fiber's high-speed Internet expansion in Kent**  
-  \
-  News](https://www.kentwa.gov/Home/Components/News/News/1955/2243)
-- [Apr 16  
-  \
-  ![Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent](https://www.kentwa.gov/home/showpublishedimage/25409/638804780468000000)  
-  \
-  **Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent**  
-  \
-  Media Releases](https://www.kentwa.gov/Home/Components/News/News/1953/2243)
-- [Mar 24  
-  \
-  ![Martin Sortun receives Special Olympics honor](https://www.kentwa.gov/home/showpublishedimage/25398/638784287774700000)  
-  \
-  **Martin Sortun receives Special Olympics honor**  
-  \
-  News](https://www.kentwa.gov/Home/Components/News/News/1951/2243)
-- [Mar 21  
-  \
-  ![Mayor Dana Ralph delivers 2025 State of the City](https://www.kentwa.gov/home/showpublishedimage/25396/638784285438630000)  
-  \
-  **Mayor Dana Ralph delivers 2025 State of the City**  
-  \
-  News](https://www.kentwa.gov/Home/Components/News/News/1949/2243)
-
-[More News](https://www.kentwa.gov/news/city-news)
-
-## Upcoming Events
-
-- [**Juneteenth Flag Raising**  
-  \
-  Jun 17  
-  \
-  ![Juneteenth Flag Raising](https://www.kentwa.gov/home/showpublishedimage/19044/637889110586730000)](https://www.kentwa.gov/Home/Components/Calendar/Event/6893/18)
-- [**Equity and Inclusion Speaker Series**  
-  \
-  Jun 18  
-  \
-  ![Equity and Inclusion Speaker Series](https://www.kentwa.gov/home/showpublishedimage/25437/638835217275970000)](https://www.kentwa.gov/Home/Components/Calendar/Event/6889/18)
-- [**Green Kent June Conservation Event**  
-  \
-  Jun 21  
-  \
-  ![Green Kent June Conservation Event](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6816/18)
-- [**Fourth of July Splash**  
-  \
-  Jul 4  
-  \
-  ![Fourth of July Splash](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6763/18)
-- [**Kent Summer Concerts - Alex Zerbe**  
-  \
-  Jul 9  
-  \
-  ![Kent Summer Concerts - Alex Zerbe](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6727/18)
-- [**Kent Summer Concerts - Darren Motamedy**  
-  \
-  Jul 9  
-  \
-  ![Kent Summer Concerts - Darren Motamedy](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6737/18)
-
-[More Events](https://www.kentwa.gov/events/calendar-month-view)
-
-## Guides &amp; Resources
-
-![](https://www.kentwa.gov/home/showpublishedimage/17585/637771469431570000)
-
-## Kent History
-
-- [History of Kent](https://www.kentwa.gov/guides/kent-history)
-- [Sister Cities](https://www.kentwa.gov/guides/sister-cities)
-- [Kent 101](https://www.kentwa.gov/guides/kent-101)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17583/637771452289130000)
-
-## Getting Around Kent
-
-- [Winter Weather Plan](https://www.kentwa.gov/guides/winter-weather-plan)
-- [Downtown Parking](https://www.kentwa.gov/guides/downtown-parking)
-- [Public Transportation](https://www.kentwa.gov/departments/public-works/transportation/public-transit-and-commute-options)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17589/637771539870470000)
-
-## Housing &amp; Assistance
-
-- [Housing Resources](https://www.kentwa.gov/guides/housing-resources)
-- [Human Services Resources](https://www.kentwa.gov/departments/kent-parks/human-services/human-services-resources-and-help)
-- [Home Repair](https://www.kentwa.gov/departments/kent-parks/human-services/home-repair)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17581/637771422070770000)
-
-## Business Resources
-
-- [How to Start a Restaurant](https://www.kentwa.gov/guides/restaurant-success)
-- [Business Licenses](https://www.kentwa.gov/pay-and-apply/apply-for-a-business-license)
-- [Business Assistance](https://www.kentwa.gov/departments/econ-community-dev/business-services-and-assistance)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17641/637771614280370000)
-
-## Environmental Care
-
-- [Trash, Recycling &amp; Yard Waste](https://www.kentwa.gov/guides/garbage-recycling-food-and-yard-waste)
-- [Natural Yard Care](https://www.kentwa.gov/guides/natural-yard-care)
-- [Fats, Oils &amp; Grease Disposal](https://www.kentwa.gov/guides/fats-oils-and-grease-f-o-g)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17645/637771650348100000)
-
-## Get Involved
-
-- [Volunteer Opportunities](https://www.kentwa.gov/pay-and-apply/find-volunteer-opportunities)
-- [Neighborhood Programs](https://www.kentwa.gov/guides/neighborhood-program)
-- [Clean-Up Events](https://www.kentwa.gov/departments/public-works/environmental/talking-trash-recycle-and-clean-up-events-for-residents)
-
-## Kent Elected Officials
-
-[![Portrait of Mayor Ralph](https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000)  
-\
-**Dana Ralph**  
-\
-Mayor](https://www.kentwa.gov/government/kent-mayor)
-
-[![Councilmember Satwinder Kaur](https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000)  
-\
-**Satwinder Kaur**  
-\
-Council President](https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur)
-
-[![Councilmember Bill Boyce](https://www.kentwa.gov/home/showpublishedimage/17761/638446491818570000)  
-\
-**Bill Boyce**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce)
-
-[![Councilmember John Boyd](https://www.kentwa.gov/home/showpublishedimage/24260/638446489711770000)  
-\
-**John Boyd**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd)
-
-[![Councilmember Brenda Fincher](https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000)  
-\
-**Brenda Fincher**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher)
-
-[![Councilmember Marli Larimer](https://www.kentwa.gov/home/showpublishedimage/17767/638446491131370000)  
-\
-**Marli Larimer**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer)
-
-[![Councilmember Zandria Michaud](https://www.kentwa.gov/home/showpublishedimage/17773/638446490252730000)  
-\
-**Zandria Michaud**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud)
-
-[![Councilmember Toni Troutner](https://www.kentwa.gov/home/showpublishedimage/17771/638446490523030000)  
-\
-**Toni Troutner**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner)
-
-[Learn about City Council](https://www.kentwa.gov/government/kent-city-council)
+  Arts Commission; King Conservation District Advisory Committee; Mental Illness and Drug Dependency Advisory Committee; Intercommunity Peace &amp; Justice Board; Look, Listen + Learn Board
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
 
