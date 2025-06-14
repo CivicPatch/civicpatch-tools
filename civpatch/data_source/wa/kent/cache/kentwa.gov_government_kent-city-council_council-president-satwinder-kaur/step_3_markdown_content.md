@@ -1292,16 +1292,10 @@ With every decision she makes, Satwinder is guided by a simple but powerful goal
 
 ## Reach Council President Kaur, position 2
 
-- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
-  
-  253-856-5712
-- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)   206-406-2468
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
-  
-  [skaur@KentWA.gov](mailto:skaur@KentWA.gov)
-- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
-  
-  Email all Council:  
+- 253-856-5712
+- 206-406-2468
+- [skaur@KentWA.gov](mailto:skaur@KentWA.gov)
+- Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
 - **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
   

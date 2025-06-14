@@ -1301,9 +1301,7 @@ My hope is that you will join in the passion that drives me—the idea I work to
 - ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
   
   253-856-5700
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
-  
-  [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
+- [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
 - Office of the Mayor  
   220 Fourth Ave. S  
   Kent, WA 98032
