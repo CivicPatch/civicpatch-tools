@@ -1,139 +1,536 @@
 [
   {
     "name": "Lisa Brown",
-    "image": null,
-    "phone_numbers": [],
+    "sources": [
+      "https://my.spokanecity.org/mayor/about",
+      "https://my.spokanecity.org/mayor",
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Lisa Brown' and 'About Mayor Lisa Brown'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Lisa Brown'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Mayor Brown' and linked to the Mayor's office."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly referred to as 'Mayor Brown' and linked to the Mayor's office page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Brown' with a link to the Mayor's office page."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Brown' with a link to her office."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "509.625.6250",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Contact Information' for 'Mayor Lisa Brown'.",
+        "source": "https://my.spokanecity.org/mayor/about"
+      }
+    ],
     "emails": [],
     "websites": [
       {
         "data": "https://my.spokanecity.org/mayor/about",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to the mayor's page is available under 'About MayorLisa Brown'",
-        "proximity_to_name": 50000000.0,
+        "llm_confidence_reason": "The URL 'https://my.spokanecity.org/mayor/about' is the current page and is explicitly linked as 'About' under the 'Mayor' section, serving as her profile page.",
+        "source": "https://my.spokanecity.org/mayor/about"
+      },
+      {
+        "data": "https://my.spokanecity.org/mayor/about",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Found a direct link 'About MayorLisa Brown' which leads to her profile page.",
         "source": "https://my.spokanecity.org/mayor"
+      },
+      {
+        "data": "https://my.spokanecity.org/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with 'Mayor Brown' in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/mayor",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Direct link to the Mayor's office page provided in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link provided next to name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
       }
     ],
-    "term_dates": [],
-    "positions": [
-      "Mayor"
-    ]
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-14T02:54:36Z"
   },
   {
     "name": "Betsy Wilkerson",
-    "image": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
+      "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under the 'Council Members' section and is one of the target individuals provided in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Council Members' section with a dedicated profile link, strongly implying the role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Council Members' section."
+      },
+      {
+        "data": "City Council President",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Role 'City Council President' is explicitly stated directly under her name."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "bwilkerson@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly associated with name as mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "bwilkerson@spokanecity.org",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address is directly listed next to her name and role.",
+        "source": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson"
       }
     ],
     "websites": [
       {
         "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and image.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly linked from name.",
         "source": "https://my.spokanecity.org/citycouncil/members"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "2024-2027",
+        "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
-        "proximity_to_name": 5,
-        "source": "https://my.spokanecity.org/citycouncil/members"
+        "llm_confidence_reason": "URL directly associated with Betsy Wilkerson's name in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Direct link to the individual's profile page provided in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link provided next to name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "A direct link to her profile page is provided in the navigation and as a header link.",
+        "source": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson"
       }
     ],
-    "positions": [
-      "City Council President"
-    ]
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The term '2024-2027' is explicitly stated for her role.",
+        "source": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The term '2024-2027' is explicitly stated for her role.",
+        "source": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson"
+      }
+    ],
+    "updated_at": "2025-06-14T02:54:36Z"
   },
   {
     "name": "Jonathan Bingle",
-    "image": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
+      "https://my.spokanecity.org/citycouncil/members/jonathan-bingle"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under the 'Council Members' section and is one of the target individuals provided in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Council Members' section with a dedicated profile link, strongly implying the role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Council Members' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member' directly under his name."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Public Infrastructure, Environment and Sustainability Committee, Vice Chair'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Urban Experience Committee, Chair'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as part of role."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member, District 1'."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jbingle@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly associated with name as mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "jbingle@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link directly under his name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle"
       }
     ],
     "websites": [
       {
         "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and image.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly linked from name.",
         "source": "https://my.spokanecity.org/citycouncil/members"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "2022-2025",
+        "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
-        "proximity_to_name": 5,
-        "source": "https://my.spokanecity.org/citycouncil/members"
+        "llm_confidence_reason": "URL directly associated with Jonathan Bingle's name in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Direct link to the individual's profile page provided in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link provided next to name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to Jonathan Bingle's profile page found in the navigation and as a header link.",
+        "source": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle"
       }
     ],
-    "positions": [
-      "City Council Member",
-      "District 1"
-    ]
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle"
+      }
+    ],
+    "updated_at": "2025-06-14T02:54:36Z"
   },
   {
     "name": "Michael Cathcart",
-    "image": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member' directly under his name."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Vice Chair' for the 'Finance and Administration Committee' under 'Current Boards, Committees and Commissions'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Chairman' for the 'Northeast Public Development Authority (PDA)' under 'Current Boards, Committees and Commissions'."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Vice Chairman' for the 'Growth Management Steering Committee of Elected Officials' under 'Current Boards, Committees and Commissions'."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Vice Chairman' for the 'Spokane Regional Health District Board of Directors' under 'Current Boards, Committees and Commissions'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Council Members' section with a dedicated profile link, strongly implying the role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Council Members' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as part of role."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member, District 1'."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "mcathcart@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly associated with name as mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "mcathcart@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link directly under the name and role.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
       }
     ],
     "websites": [
       {
         "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and image.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly linked from name.",
         "source": "https://my.spokanecity.org/citycouncil/members"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "2024-2027",
+        "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
-        "proximity_to_name": 5,
-        "source": "https://my.spokanecity.org/citycouncil/members"
+        "llm_confidence_reason": "URL directly associated with Michael Cathcart's name in the navigation and main heading.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Direct link to the individual's profile page provided in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link provided next to name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
       }
     ],
-    "positions": [
-      "City Council Member",
-      "District 1"
-    ]
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      }
+    ],
+    "updated_at": "2025-06-14T02:54:36Z"
   },
   {
     "name": "Paul Dillon",
-    "image": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under the 'Council Members' section and is one of the target individuals provided in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member'."
+      },
+      {
+        "data": "Council President Pro-Tempore",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly listed under 'Current Council Related Boards, Committees and Commissions'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly listed as 'Finance and Administration Committee, Chair'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Council Members' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as part of role."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member, District 2'."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509.564.4569",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "proximity_to_name": 5,
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Phone number directly provided under name and role.",
         "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
       }
     ],
@@ -141,15 +538,13 @@
       {
         "data": "pdillon@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly associated with name as mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
         "data": "pdillon@spokanecity.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address directly provided as a mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
       }
     ],
@@ -157,62 +552,124 @@
       {
         "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and image.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly linked from name.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
         "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 1,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Paul Dillon's name in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The current page is the individual's profile page, and a direct link to it is provided in the navigation.",
         "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link provided next to name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "2024-2027",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
-        "data": "2024-2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "proximity_to_name": 5,
+        "data": "2024",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
         "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
       }
     ],
-    "positions": [
-      "City Council Member",
-      "District 2",
-      "City Council Member, District 2",
-      "Council President Pro-Tempore",
-      "Chair",
-      "Member",
-      "Liaison"
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-14T02:54:36Z"
   },
   {
     "name": "Lili Navarrete",
-    "image": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
+      "https://my.spokanecity.org/citycouncil/members/lili-navarrete"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under the 'Council Members' section and is one of the target individuals provided in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Council Members' section with a dedicated profile link, strongly implying the role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Council Members' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member'."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Urban Experience Committee, Vice Chair'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as part of role."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member, District 2'."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "lnavarrete@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly associated with name as mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
         "data": "lnavarrete@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Email address directly provided as a mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members/lili-navarrete"
       }
     ],
@@ -220,61 +677,130 @@
       {
         "data": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and image.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly linked from name.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
         "data": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "proximity_to_name": 10,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Lili Navarrete's name in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Direct link to the individual's profile page provided in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link provided next to name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to Lili Navarrete's profile page found in the navigation and header.",
         "source": "https://my.spokanecity.org/citycouncil/members/lili-navarrete"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "2024-2025",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2025'.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
-        "data": "2024-2025",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2025'.",
         "source": "https://my.spokanecity.org/citycouncil/members/lili-navarrete"
       }
     ],
-    "positions": [
-      "City Council Member",
-      "District 2",
-      "Member of Finance and Administration Committee",
-      "Member of Public Safety & Community Health Committee",
-      "Member of Public Infrastructure, Environment and Sustainability Committee",
-      "Vice Chair of Urban Experience Committee"
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/lili-navarrete"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-14T02:54:36Z"
   },
   {
     "name": "Zack Zappone",
-    "image": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
+      "https://my.spokanecity.org/citycouncil/members/zack-zappone"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under the 'Council Members' section and is one of the target individuals provided in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Council Members' section with a dedicated profile link, strongly implying the role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Council Members' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'City Council Member'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Public Safety & Community Health Committee, Chair'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as part of role."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'City Council Member, District 3'."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "zzappone@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly associated with name as mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
         "data": "zzappone@spokanecity.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a mailto link next to his name.",
         "source": "https://my.spokanecity.org/citycouncil/members/zack-zappone"
       }
     ],
@@ -282,102 +808,216 @@
       {
         "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and image.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly linked from name.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
         "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Link associated with name.",
-        "proximity_to_name": 3,
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Zack Zappone's name in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Direct link to the individual's profile page provided in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link provided next to name.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to his profile page found in the navigation and header.",
         "source": "https://my.spokanecity.org/citycouncil/members/zack-zappone"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "2022-2025",
+        "data": "2022",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022-2025'.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
-        "data": "2022-2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under title.",
-        "proximity_to_name": 5,
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in 'Term: 2022-2025'.",
         "source": "https://my.spokanecity.org/citycouncil/members/zack-zappone"
       }
     ],
-    "positions": [
-      "City Council Member",
-      "District 3",
-      "Member of Finance and Administration Committee",
-      "Member of Public Infrastructure, Environment and Sustainability Committee",
-      "Chair of Public Safety & Community Health Committee",
-      "Member of Urban Experience Committee"
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2022-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in 'Term: 2022-2025'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/zack-zappone"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-14T02:54:36Z"
   },
   {
     "name": "Kitty Klitzke",
-    "image": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
+      "https://my.spokanecity.org/citycouncil/members/kitty-klitzke"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed under the 'Council Members' section and is one of the target individuals provided in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Council Members' section with a dedicated profile link, strongly implying the role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Chair' of 'Public Infrastructure, Environment and Sustainability Committee', which is a current council-related board."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as part of role."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'District 3' next to role."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member, District 3'."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "kklitzke@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly associated with name as mailto link.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
         "data": "kklitzke@spokanecity.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly associated with name.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Email address explicitly listed under name and role.",
         "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "kklitzke@spokanecity.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly provided as a mailto link next to her name and role.",
+        "source": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke"
       }
     ],
     "websites": [
       {
         "data": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and image.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Directly linked from name.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
-        "data": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "proximity_to_name": 10,
+        "data": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with Kitty Klitzke's name in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Direct link to the individual's profile page provided in the navigation.",
+        "source": "https://my.spokanecity.org/citycouncil/members/paul-dillon"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL for her profile page found in navigation and matches current page context.",
         "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct link to her profile page found in the navigation menu and as the main page URL.",
+        "source": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "2024-2027",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under term.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
         "source": "https://my.spokanecity.org/citycouncil/members"
       },
       {
-        "data": "2024-2027",
+        "data": "2024",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under title.",
-        "proximity_to_name": 5,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
         "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke"
       }
     ],
-    "positions": [
-      "City Council Member",
-      "District 3",
-      "Chair",
-      "Liaison"
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated in 'Term: 2024-2027'.",
+        "source": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-14T02:54:36Z"
   }
 ]
