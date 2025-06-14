@@ -2,34 +2,34 @@
   {
     "name": "Lisa Brown",
     "roles": [
-      "Mayor",
-      "mayor"
+      "Mayor"
     ],
     "divisions": [],
     "image": null,
-    "phone_number": "509.625.6250",
+    "phone_number": "509-755-2489",
     "email": null,
-    "website": "https://my.spokanecity.org/mayor/about",
+    "website": "https://my.spokanecity.org/mayor",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://my.spokanecity.org/mayor",
-      "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
-      "https://my.spokanecity.org/mayor/about"
+      "https://my.spokanecity.org/mayor"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   },
   {
     "name": "Betsy Wilkerson",
     "roles": [
       "City Council President",
       "Council Member",
-      "council member"
+      "Vice Chair, Public Safety & Community Health Committee",
+      "Member, Finance and Administration Committee",
+      "Member, Public Infrastructure, Environment and Sustainability Committee",
+      "Member, Urban Experience Committee"
     ],
-    "divisions": [],
-    "image": null,
+    "divisions": [
+      "District 2"
+    ],
+    "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
     "phone_number": null,
     "email": "bwilkerson@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
@@ -37,25 +37,19 @@
     "end_date": "2027",
     "sources": [
       "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   },
   {
     "name": "Jonathan Bingle",
     "roles": [
-      "City Council Member",
-      "Council Member",
-      "council member",
-      "Vice Chair",
-      "Chair"
+      "City Council Member"
     ],
     "divisions": [
       "District 1"
     ],
-    "image": null,
+    "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
     "phone_number": null,
     "email": "jbingle@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
@@ -63,25 +57,28 @@
     "end_date": "2025",
     "sources": [
       "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
       "https://my.spokanecity.org/citycouncil/members/jonathan-bingle"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   },
   {
     "name": "Michael Cathcart",
     "roles": [
       "City Council Member",
-      "Council Member",
-      "Vice Chair",
-      "Chair",
-      "council member"
+      "Vice Chair, Finance and Administration Committee",
+      "Member, Public Infrastructure, Environment and Sustainability Committee",
+      "Member, Public Safety & Community Health Committee",
+      "Member, Urban Experience Committee",
+      "Chairman, Northeast Public Development Authority (PDA)",
+      "Vice Chairman, Growth Management Steering Committee of Elected Officials",
+      "Vice Chairman, Spokane Regional Health District Board of Directors",
+      "Member, BROADLINC Public Development Authority (PDA) Governing Board",
+      "Member, Spokane Transit Authority"
     ],
     "divisions": [
       "District 1"
     ],
-    "image": null,
+    "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg",
     "phone_number": null,
     "email": "mcathcart@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
@@ -89,24 +86,24 @@
     "end_date": "2027",
     "sources": [
       "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   },
   {
     "name": "Paul Dillon",
     "roles": [
       "City Council Member",
-      "Council Member",
-      "council member",
       "Council President Pro-Tempore",
-      "Chair"
+      "Finance and Administration Committee Chair",
+      "Public Infrastructure, Environment and Sustainability Committee Member",
+      "Public Safety & Community Health Committee Member",
+      "Urban Experience Committee Member"
     ],
     "divisions": [
       "District 2"
     ],
-    "image": null,
+    "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
     "phone_number": "509.564.4569",
     "email": "pdillon@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
@@ -114,24 +111,19 @@
     "end_date": "2027",
     "sources": [
       "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
       "https://my.spokanecity.org/citycouncil/members/paul-dillon"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   },
   {
     "name": "Lili Navarrete",
     "roles": [
-      "City Council Member",
-      "Council Member",
-      "council member",
-      "Vice Chair"
+      "City Council Member"
     ],
     "divisions": [
       "District 2"
     ],
-    "image": null,
+    "image": "https://static.spokanecity.org/photos/2024/12/05/lili-navarrete/chips/medium/lili-navarrete.jpg",
     "phone_number": null,
     "email": "lnavarrete@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
@@ -139,24 +131,19 @@
     "end_date": "2025",
     "sources": [
       "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
       "https://my.spokanecity.org/citycouncil/members/lili-navarrete"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   },
   {
     "name": "Zack Zappone",
     "roles": [
-      "City Council Member",
-      "Council Member",
-      "council member",
-      "Chair"
+      "City Council Member"
     ],
     "divisions": [
       "District 3"
     ],
-    "image": null,
+    "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
     "phone_number": null,
     "email": "zzappone@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
@@ -164,35 +151,29 @@
     "end_date": "2025",
     "sources": [
       "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
       "https://my.spokanecity.org/citycouncil/members/zack-zappone"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   },
   {
     "name": "Kitty Klitzke",
     "roles": [
       "City Council Member",
-      "Council Member",
-      "council member",
-      "Chair"
+      "Chair, Public Infrastructure, Environment and Sustainability Committee"
     ],
     "divisions": [
       "District 3"
     ],
-    "image": null,
+    "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg",
     "phone_number": null,
     "email": "kklitzke@spokanecity.org",
-    "website": "https://my.spokanecity.org/citycouncil/members/kitty-klitzke",
+    "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
     "start_date": "2024",
     "end_date": "2027",
     "sources": [
       "https://my.spokanecity.org/citycouncil/members",
-      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
-      "https://my.spokanecity.org/citycouncil/members/kitty-klitzke"
+      "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
     ],
-    "updated_at": "2025-06-14T17:10:35Z"
+    "updated_at": "2025-06-14T17:08:17Z"
   }
 ]
