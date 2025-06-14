@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher/)
 
 # City of Kent
 
@@ -1230,7 +1230,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember Toni Troutner
+# Kent City Councilmember Brenda Fincher
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,45 +1244,63 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Toni Troutner](https://www.kentwa.gov/home/showpublishedimage/17771/638446490523030000)
+![Councilmember Brenda Fincher](https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000)
 
-Kent City Councilmember Toni Troutner, elected in 2017, assumes office having a deep understanding of the issues facing Kent residents, families, and businesses. Having lived in Kent for 25 years, Toni has been active and involved in the community through a variety of volunteer and community service roles.
+Growing up in a military family, Kent City Councilmember Brenda Fincher had the privilege of living in different places and meeting different people. This is one of the many things she loves about Kent—being around people from all over the world who have different cultures, beliefs and backgrounds. 
 
-She has served Kent students and families as the president of the Kent School District Parent, Teacher, and Student Association. Her commitment to public safety led her to serve as a commissioner on the Civil Service Commission and, currently, Chair of the Puget Sound Regional Fire Authority Governance Board. She is the chair of the Kent Drug Free Coalition and the past president of the Kent Downtown Partnership, as well as a coordinator for the Kent Severe Weather Shelter.
+Brenda moved to Kent in 1988 when she and her family were ready for a change. She raised her son and daughter in the Kent School District, with her children starting out at O’Brien Elementary, which was then in an industrial area. While her kids were in school, Brenda was president of several PTAs and is a two-time Golden Acorn Award recipient. 
 
-Her priorities include a focus on public safety and investing in our infrastructure. She's continuing to invest in our one-of-a-kind parks system, while fighting to keep taxes low for Kent residents and businesses.
+Her kids are grown now and have five kids of their own, who Brenda loves spending time with. Brenda works at Holy Spirit Parish in downtown Kent, but her community work doesn’t stop there. She has also volunteered for various organizations, including the following: 
 
-While serving as Chair of the Public Safety Committee, she supported the addition of body worn cameras for our police department increasing accountability and transparency in policing. She is proud to have worked for apprenticeship utilization, ensuring young people can get local jobs in the building and construction trades. Finally, as Council President, she shepherded over two million dollars in federal CARES Act dollars to local businesses to support them during the COVID-19 pandemic.
+- Subject Matter Chair of Public Works
+- Council Liaison to Kent Arts Commission
+- Former Subject Matter Chair of Parks, Recreation &amp; Human Services
+- King Conservation District Advisory Committee
+- Mental Illness and Drug Dependency Advisory Committee
+- An organizer of the Kent International Festival
+- Catholic Community Services and Catholic Housing Boards
+- The board and care teams of MultiFaith Works
+- Intercommunity Peace &amp; Justice Center Board
+- Former president of the Kent Youth and Family Services Board
+- Archdiocese of Seattle’s Black Catholic Advisory Circle
+- Kent School District Diversity Task Force, where she was a contributing author to the district’s original Diversity Task Force Plan
+- Look, Listen + Learn Board
 
-It is an honor to represent the City as co-chair of the WRIA 9 Watershed Ecosystem Forum. The city has a great partnership with the WRIA and has been the recipient of grant funding for several salmon habitat projects.
+“When I was a growing up, my parents always volunteered in the community and started my brother and me off early. One of my favorites was being a candy striper in a convalescent home” explains Brenda. “You learn so much from others when you give back to the community.” 
 
-Councilmember Troutner was awarded the Advance Certificate of Municipal Leadership by the Association of Washington Cities in November of 2024.
+Having served on the city council since 2014, Brenda was drawn to serving on Kent City Council, because she thought that it was another platform from which to serve and where she could make the biggest difference. Brenda believes there are two sides to everything, and we have to think about what our neighbors are going through when making decisions. 
 
-During her free time, Toni enjoys spending time with her husband, Brett, and her sons, Kyler and Connor. They love trying new restaurants in town and spending time checking out local businesses.
+Brenda, who describes herself as usually upbeat and positive, enjoys spending time with friends and family, camping, sewing, crafts, traveling and singing in the church choir. 
 
-## Reach Councilmember Troutner, position 4
+“Kent is a marvelous and amazing place to live. We have so many cultures here, and you don’t get that everywhere,” says Brenda. “Just about anything you can think of is made in Kent, and there are so many things to see and do here.”
 
-- 253-856-5712
-- 253-951-7765
-- [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
-- Email all Council:  
-  [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- Kent City Council  
-  220 Fourth Avenue South  
+ 
+
+[Calling Kent Home, Council Edition: Brenda Fincher](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119179105&____isexternal=true) from [Kent TV21](https://vimeo.com/kenttv21) on [Vimeo](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com&____isexternal=true).
+
+## Reach Councilmember Fincher, Position 6
+
+- **![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)**
+  
+  253-856-5712
+- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)    206-818-7909
+- [bfincher@KentWA.gov](mailto:bfincher@kentwa.gov)
+- [Kent City Council Members](mailto:citycouncil@kentwa.gov)
+- **![geo-alt](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)**
+  
+  Kent City Council  
+  220 Fourth Ave. S  
   Kent, WA 98032
 - **Term Began**
   
-  January 2018
+  March 2014
 - **Term Expires**
   
   Dec. 31, 2025
-- **Chair**
-  
-  Puget Sound Regional Fire Authority, Co-Chair Severe Weather Shelter, Drug Free Coalition
 - **Member**
   
-  Co-Chair WRIA 9 Managment Committee and Forum; Puget Sound Regional Fire Authority Governance Board (Chair); Disability Retirement Board (LEOFF 1); Kent Drug Free Coalition; Region Transit Committee; Coordinator Severe Weather Shelter; Kent Downtown Partnership Secretary; King County Flood Control District Advisory Committee (alternate); Puget Sound Regional Council Executive Board (alternate)
-- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+  Arts Commission; King Conservation District Advisory Committee; Mental Illness and Drug Dependency Advisory Committee; Intercommunity Peace &amp; Justice Board; Look, Listen + Learn Board
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
 

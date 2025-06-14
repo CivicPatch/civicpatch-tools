@@ -4,7 +4,7 @@ Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenia
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner/)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur/)
 
 # City of Kent
 
@@ -1230,7 +1230,7 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Government](https://www.kentwa.gov/government) » [Kent City Council](https://www.kentwa.gov/government/kent-city-council)
 
-# Kent City Councilmember Toni Troutner
+# Kent City Council President Satwinder Kaur
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -1244,31 +1244,62 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Councilmember Toni Troutner](https://www.kentwa.gov/home/showpublishedimage/17771/638446490523030000)
+![Councilmember Satwinder Kaur](https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000)**Satwinder Kaur** (pronounced *Seth-win-der Core*), President of the Kent City Council, is a lifelong resident of Kent and proud graduate of Kentridge High School. She and her husband are raising their four children—including a newborn—in the city they call home.
 
-Kent City Councilmember Toni Troutner, elected in 2017, assumes office having a deep understanding of the issues facing Kent residents, families, and businesses. Having lived in Kent for 25 years, Toni has been active and involved in the community through a variety of volunteer and community service roles.
+Having served on the Kent City Council since 2018, Satwinder was elected by her colleagues as Council President in 2024. She brings both lived experience and a deep commitment to public service to her role on the Council, where she works to ensure that all voices in the community are heard—especially those who are often not at the table.
 
-She has served Kent students and families as the president of the Kent School District Parent, Teacher, and Student Association. Her commitment to public safety led her to serve as a commissioner on the Civil Service Commission and, currently, Chair of the Puget Sound Regional Fire Authority Governance Board. She is the chair of the Kent Drug Free Coalition and the past president of the Kent Downtown Partnership, as well as a coordinator for the Kent Severe Weather Shelter.
+“I want to bring new perspectives that may not have been considered before,” she says.
 
-Her priorities include a focus on public safety and investing in our infrastructure. She's continuing to invest in our one-of-a-kind parks system, while fighting to keep taxes low for Kent residents and businesses.
+In addition to holding associate’s, bachelor’s, and an MBA from University of Washington, Satwinder is certified in Six Sigma and Lean Management. She works in the IT sector and brings a strong problem-solving mindset and systems-based thinking to her public service. Her earlier experience as an admin in the Mayor’s Office gave her insight into the everyday issues residents face, and she remains committed to listening to individuals, families, business owners, and community leaders alike.
 
-While serving as Chair of the Public Safety Committee, she supported the addition of body worn cameras for our police department increasing accountability and transparency in policing. She is proud to have worked for apprenticeship utilization, ensuring young people can get local jobs in the building and construction trades. Finally, as Council President, she shepherded over two million dollars in federal CARES Act dollars to local businesses to support them during the COVID-19 pandemic.
+Satwinder’s passion for Kent is reflected in her active involvement in numerous local and regional organizations. She currently serves on the following boards and committees:
 
-It is an honor to represent the City as co-chair of the WRIA 9 Watershed Ecosystem Forum. The city has a great partnership with the WRIA and has been the recipient of grant funding for several salmon habitat projects.
+**Regional Committees:**
 
-Councilmember Troutner was awarded the Advance Certificate of Municipal Leadership by the Association of Washington Cities in November of 2024.
+- Chair, **Puget Sound Clean Air Agency Advisory Council**
+- Member, **Growth Management Planning Council**
+- Member, **Domestic Violence Regional Task Force**
+- Member, **Growth Management Policy Board**
+- Member, **Association of Washington Cities Nominating Committee**
+- Member, **Association of Washington Cities Federal and State Policy Committee**
 
-During her free time, Toni enjoys spending time with her husband, Brett, and her sons, Kyler and Connor. They love trying new restaurants in town and spending time checking out local businesses.
+ 
 
-## Reach Councilmember Troutner, position 4
+**Past Local Boards and Initiatives:**
+
+- Chair, **Kent Cultural Communities Board**
+- **Green Kent Park Steward**, Kent Parks
+- Board of Trustees, **Greater Kent Historical Society**
+- Board of Directors, **Living Well Kent**
+- Member, **Mayor’s Diversity Task Force**, City of Renton
+- Board Member, **Puget Sound Access**
+
+ 
+
+Some of Satwinder’s favorite things about Kent include hanging out at Clark Lake Park, enjoying food from around the world, participating in the Adopt-a-Street program with the Sikh community, and seeing people of all backgrounds come together to support one another. She values Kent’s rich diversity, strong community spirit, and inclusive places of worship.
+
+“I love the amazing people we have in Kent. It’s a caring community where people truly look out for their neighbors,” she says. “They choose Kent—the biggest city in South King County—as their home.”
+
+When she isn’t working, volunteering, or serving on Council, Satwinder enjoys spending time with her family, exploring the outdoors, and attending various events in Kent.
+
+With every decision she makes, Satwinder is guided by a simple but powerful goal: to leave Kent a better place for future generations to live, work, and thrive in.
+
+ 
+
+ 
+
+## Reach Council President Kaur, position 2
 
 - 253-856-5712
-- 253-951-7765
-- [TTroutner@KentWA.gov](mailto:TTroutner@KentWA.gov)
-- Email all Council:  
+- 206-406-2468
+- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
+  
+  [skaur@KentWA.gov](mailto:skaur@KentWA.gov)
+- **![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)**
+  
+  Email all Council:  
   [Kent City Council Members](mailto:citycouncil@kentwa.gov)
-- Kent City Council  
-  220 Fourth Avenue South  
+- 220 Fourth Ave. S  
   Kent, WA 98032
 - **Term Began**
   
@@ -1276,12 +1307,6 @@ During her free time, Toni enjoys spending time with her husband, Brett, and her
 - **Term Expires**
   
   Dec. 31, 2025
-- **Chair**
-  
-  Puget Sound Regional Fire Authority, Co-Chair Severe Weather Shelter, Drug Free Coalition
-- **Member**
-  
-  Co-Chair WRIA 9 Managment Committee and Forum; Puget Sound Regional Fire Authority Governance Board (Chair); Disability Retirement Board (LEOFF 1); Kent Drug Free Coalition; Region Transit Committee; Coordinator Severe Weather Shelter; Kent Downtown Partnership Secretary; King County Flood Control District Advisory Committee (alternate); Puget Sound Regional Council Executive Board (alternate)
 - *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the City Council will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
 
 ## Stay Connected
