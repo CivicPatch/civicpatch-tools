@@ -1,10 +1,12 @@
 [Show/Hide](https:void%20%280%29)
 
+![Translate](https://www.kentwa.gov/home/showpublishedimage/18475/637801805938670000)
+
 Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
 
-[Skip to Main Content](https://www.kentwa.gov/?splash=https%3A%2F%2Fvimeo.com%2F119879553&____isexternal=true%2F)
+[Skip to Main Content](https://www.kentwa.gov/government/kent-mayor/)
 
 # City of Kent
 
@@ -1228,309 +1230,89 @@ Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelo
   
   - [2025 Summer Events](https://www.kentwa.gov/events/2025-summer-events "2025 Summer Events")
 
-<!--THE END-->
+[Government](https://www.kentwa.gov/government)
 
-- ![Kent Summer Fun!](https://www.kentwa.gov/home/showpublishedimage/25465/638852346950630000)
+# Kent Mayor Dana Ralph
+
+[Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
+
+[Share &amp; Bookmark](https:void%280%29; "Click to expand Share & Bookmark options") Share &amp; Bookmark, Press Enter to show all options, press Tab go to next option
+
+- [Email](https:void%280%29; "Click to submit an email online")
+- [Facebook](https:shareLink%28'facebook'%29 "Click to share with Facebook")
+- [LinkedIn](https:shareLink%28'linkedin'%29 "Click to share with LinkedIn")
+- [Twitter](https:shareLink%28'twitter'%29 "Click to share with Twitter")
+- [Reddit](https:shareLink%28'reddit'%29 "Click to share with Reddit")
+
+[Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
+
+![Mayor Banner](https://www.kentwa.gov/home/showpublishedimage/2171/636131525380430000)
+
+## Meet Mayor Dana Ralph
+
+![Portrait of Mayor Ralph](https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000)
+
+Re-elected by Kent voters for her second term in 2021, **Mayor Dana Ralph** serves as the Chief Executive Officer of the City of Kent in Washington State.
+
+She along with a seven-member City Council and over 730 City employees work to deliver results for the 140,000 people and over 5,000 businesses that call Kent Home.
+
+Mayor Ralph has the sole discretion to appoint the City’s **Executive Leadership Team**, which consists of the Directors overseeing all city departments
+
+She works with them to develop policy, programs and services to benefit the residents and businesses of Kent. She is also responsible for preparing and transmitting the City’s $884 million-dollar biennial operating and capital budgets.
+
+A Kent native, Mayor Ralph is the **fourth generation** of her family to call Kent home. After attending Kent public schools, she **graduated from Kent-Meridian High School**.
+
+During high school, she met and later married her high school sweetheart, Shawn. Together, they raised two boys who graduated from Kentridge High School.
+
+Nearly 30 years ago, Mayor Ralph started a small business in Kent, which she still owns, but no longer manages day-to-day operations.
+
+Driven by wanting to make a difference in her hometown, she first became involved in local government about 20 years ago when she volunteered to serve on the City’s Land Use and Planning Board and the City’s Arts Commission.
+
+As she learned more about policy and advocacy and the inner working of local government, she wanted to be more involved to help shape the future of our community that she loves.
+
+She was first elected to the **Kent City Council** in 2011 and served from 2012 to 2017.
+
+During 2014 and 2015, she served as **Kent City Council President** where she was responsible for agenda setting and committee assignments.
+
+Knowing there was much more work to be done for Kent, she ran for **Mayor** while at the same time battling (and later defeating!) breast cancer.
+
+**She elected by voters in 2017 and sworn into office in January 2018 as Kent’s 27th Mayor and only the 3rd woman to ever hold the role.**
+
+As mayor, Dana has prioritized bringing good jobs to Kent, improving public safety, investing in the city’s infrastructure, parks and human services programs, expanding housing and transit options, and supporting Kent’s small businesses and industries.
+
+She values communication and transparency, and serving with compassion as we look after vulnerable populations and ensure a principled approach to equity and inclusion.
+
+When not at work, Mayor Ralph is known for her extensive knowledge of Rock N’ Roll, she enjoys camping, spending time with family and friends, attending community events and volunteering.
+
+She is passionate about serving the many needs of our diverse city. She is one of the founders of the Shop with a Cop program that raises funds to buy Christmas gifts for families in-need through Kent Youth and Family Services, and she encourages all City employees to give back to the community whenever possible.
+
+“I am so proud to call Kent home and it is such an honor to serve as your mayor.
+
+Kent has infinite potential. We have all the ingredients to continue being a world-class city for residents and businesses to thrive and make a lasting impact,” said Mayor Ralph.
+
+Our strength is our people, and I am blessed to work side-by-side with some of the best and brightest every day toward a shared vision: to make Kent an even better place to live, work and play for generations.
+
+My hope is that you will join in the passion that drives me—the idea I work toward every day—showing the world Kent’s potential, and making sure our residents, businesses and community organizations have the tools to turn that potential into reality.”
+
+[**Sign up for Mayor Ralph's weekly newsletter here!**](https://kentwa.gov/subscribe)
+
+## Reach the Mayor
+
+- 253-856-5700
+- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
   
-  ## Kent Summer Fun!
-- ![Welcome](https://www.kentwa.gov/home/showpublishedimage/17519/637769817465070000)
+  [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
+- ![](https://www.kentwa.gov/home/showpublishedimage/14386/637769731329900000)
   
-  ## Welcome
-  
-  Everything Kent, all in one place.
-- ![](https://www.kentwa.gov/home/showpublishedimage/25390/638772948592670000)
-- ![Kent City Council Newsletter](https://www.kentwa.gov/home/showpublishedimage/25081/638657982318770000)
-  
-  ## Kent City Council Newsletter
-  
-  Subscribe for updates and news from your councilmembers!
-  
-  [Sign up](https://public.govdelivery.com/accounts/WAKENT/signup/43115)
-- ![KentWorks](https://www.kentwa.gov/home/showpublishedimage/13469/637369748507370000)
-  
-  ## KentWorks
-  
-  Download the App today and stay connected!
-
-<!--THE END-->
-
-1. 1
-2. 2
-3. 3
-4. 4
-5. 5
-
-Pause
-
-- [![daily-kent-tv](https://www.kentwa.gov/home/showpublishedimage/14874/637743633123930000) 1 **City Hall**  
-  \
-  City Hall is operating on its regular Monday to Friday 8 a.m. - 5 p.m. schedule.](https://www.kentwa.gov/government/city-clerk)
-- [![daily-pay-online](https://www.kentwa.gov/home/showpublishedimage/14876/637743633129200000) 2 **Pay Online**  
-  \
-  Pay water bills, parking tickets, get a pet license, and more.](https://www.kentwa.gov/pay-and-apply/online-services)
-- [![TheNotItsPhotobyHaleighElliott](https://www.kentwa.gov/home/showpublishedimage/19014/637878699229200000) 3 **Events**  
-  \
-  Stay up to date with what's happening in Kent!](https://www.kentwa.gov/events/calendar-month-view)
-- [![daily-city-hall](https://www.kentwa.gov/home/showpublishedimage/14872/637743633114570000) 4 **Kent TV 21**  
-  \
-  Watch scheduled city council meetings.](https://www.youtube.com/user/KentTV21)
-
-## Resource Lookup
-
-Enter your address to get information like recycling pick up days and voting information.
-
-Tip: Enter the first few characters of your address and wait for your information to appear.
-
-Search by address...
-
-<!--THE END-->
-
-- Address not found...
-
-Enter an address to get started
-
-### Address
-
-### City
-
-### Zip Code
-
-### Neighborhood Council
-
-### Water District
-
-### Sewer Service Area
-
-### Ballot Dropbox
-
-### Elemetary School
-
-### Middle School
-
-### High School
-
-### Garbage
-
-[View PDF](https:)
-
-### Snow Removal
-
-### Flood Zone
-
-## Online Services
-
-- [![CTA-4-ApplyforaPermit@2x](https://www.kentwa.gov/home/showpublishedimage/14784/637743614795830000)  
-  \
-  Apply for a permit](https://www.kentwa.gov/pay-and-apply/apply-for-a-permit)
-- [![CTA-1-ApplyforaBusinessLicense@2x](https://www.kentwa.gov/home/showpublishedimage/14772/637743614762400000)  
-  \
-  Apply for a business license](https://www.kentwa.gov/pay-and-apply/apply-for-a-business-license)
-- [![parks-blue@2x](https://www.kentwa.gov/home/showpublishedimage/14705/637737753758970000)  
-  \
-  Find a park](https://www.kentwa.gov/departments/kent-parks/parks-places)
-- [![CTA-5-SubmitaServiceRequest@2x](https://www.kentwa.gov/home/showpublishedimage/14788/637743614808200000)  
-  \
-  Report a non-emergency issue](https://www.kentwa.gov/pay-and-apply/kentworks)
-- [![CTA-6-FileaPoliceReport@2x](https://www.kentwa.gov/home/showpublishedimage/14792/637743614819830000)  
-  \
-  File a police report](https://www.kentwa.gov/departments/police-department/file-a-police-report-online)
-- [![CTA-7-FileaSmallClaim@2x](https://www.kentwa.gov/home/showpublishedimage/14796/637743614831900000)  
-  \
-  File a small claim](https://www.kentwa.gov/?splash=https%3A%2F%2Fkingcounty.gov%2Fcourts%2Fdistrict-court%2Fsmall-claims.aspx&____isexternal=true)
-- [![CTA-8-FileTaxes@2x](https://www.kentwa.gov/home/showpublishedimage/14800/637743614844070000)  
-  \
-  File city taxes](https://www.kentwa.gov/pay-and-apply/file-city-taxes)
-- [![CTA-9-PayaFine@2x](https://www.kentwa.gov/home/showpublishedimage/14804/637743614857070000)  
-  \
-  Pay a fine](https://www.kentwa.gov/pay-and-apply/pay-my-fines)
-- [![CTA-10-PayWaterandSewerBills@2x](https://www.kentwa.gov/home/showpublishedimage/14760/637743614725500000)  
-  \
-  Pay water &amp; sewer bill](https://www.kentwa.gov/pay-and-apply/pay-water-and-sewer-bill-online)
-- [![CTA-11-PublicRecordsCenter@2x](https://www.kentwa.gov/home/showpublishedimage/14764/637743614740500000)  
-  \
-  Public records center](https://www.kentwa.gov/pay-and-apply/make-a-public-records-request)
-- [Traffic advisories](https://www.kentwa.gov/departments/public-works/transportation/traffic-advisories)
-- [Language Access](https://www.kentwa.gov/government/race-equity/language-access-landing-page)
-
-<!--THE END-->
-
-- ![2024 Mayor Progress Report](https://www.kentwa.gov/home/showpublishedimage/25193/638723630112870000)
-  
-  ## Mayor's Progress Report 2024
-  
-  The City of Kent is dedicated to providing the community with excellent service. We continue our work to improve the quality of life of those who live in, work in and visit Kent. We hope that you enjoy this year’s progress report and find it informative! #WeAreKent
-  
-  [Watch Video](https://www.youtube.com/embed/keU8Cx4T1EE?autoplay=1) [More Videos](https://www.kentwa.gov/moreVideos)
-
-## News
-
-- [Apr 24  
-  \
-  ![Construction begins on Ezee Fiber's high-speed Internet expansion in Kent](https://www.kentwa.gov/home/showpublishedimage/25411/638811002197900000)  
-  \
-  **Construction begins on Ezee Fiber's high-speed Internet expansion in Kent**  
-  \
-  News](https://www.kentwa.gov/Home/Components/News/News/1955/2243)
-- [Apr 16  
-  \
-  ![Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent](https://www.kentwa.gov/home/showpublishedimage/25409/638804780468000000)  
-  \
-  **Ezee Fiber Breaks Ground on $400 Million Fiber Internet Expansion in Kent**  
-  \
-  Media Releases](https://www.kentwa.gov/Home/Components/News/News/1953/2243)
-- [Mar 24  
-  \
-  ![Martin Sortun receives Special Olympics honor](https://www.kentwa.gov/home/showpublishedimage/25398/638784287774700000)  
-  \
-  **Martin Sortun receives Special Olympics honor**  
-  \
-  News](https://www.kentwa.gov/Home/Components/News/News/1951/2243)
-- [Mar 21  
-  \
-  ![Mayor Dana Ralph delivers 2025 State of the City](https://www.kentwa.gov/home/showpublishedimage/25396/638784285438630000)  
-  \
-  **Mayor Dana Ralph delivers 2025 State of the City**  
-  \
-  News](https://www.kentwa.gov/Home/Components/News/News/1949/2243)
-
-[More News](https://www.kentwa.gov/news/city-news)
-
-## Upcoming Events
-
-- [**Juneteenth Flag Raising**  
-  \
-  Jun 17  
-  \
-  ![Juneteenth Flag Raising](https://www.kentwa.gov/home/showpublishedimage/19044/637889110586730000)](https://www.kentwa.gov/Home/Components/Calendar/Event/6893/18)
-- [**Equity and Inclusion Speaker Series**  
-  \
-  Jun 18  
-  \
-  ![Equity and Inclusion Speaker Series](https://www.kentwa.gov/home/showpublishedimage/25437/638835217275970000)](https://www.kentwa.gov/Home/Components/Calendar/Event/6889/18)
-- [**Green Kent June Conservation Event**  
-  \
-  Jun 21  
-  \
-  ![Green Kent June Conservation Event](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6816/18)
-- [**Fourth of July Splash**  
-  \
-  Jul 4  
-  \
-  ![Fourth of July Splash](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6763/18)
-- [**Kent Summer Concerts - Alex Zerbe**  
-  \
-  Jul 9  
-  \
-  ![Kent Summer Concerts - Alex Zerbe](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6727/18)
-- [**Kent Summer Concerts - Darren Motamedy**  
-  \
-  Jul 9  
-  \
-  ![Kent Summer Concerts - Darren Motamedy](https://www.kentwa.gov/project/contents/main/_gfx/home/Event-Bg-Img-Default.jpg)](https://www.kentwa.gov/Home/Components/Calendar/Event/6737/18)
-
-[More Events](https://www.kentwa.gov/events/calendar-month-view)
-
-## Guides &amp; Resources
-
-![](https://www.kentwa.gov/home/showpublishedimage/17585/637771469431570000)
-
-## Kent History
-
-- [History of Kent](https://www.kentwa.gov/guides/kent-history)
-- [Sister Cities](https://www.kentwa.gov/guides/sister-cities)
-- [Kent 101](https://www.kentwa.gov/guides/kent-101)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17583/637771452289130000)
-
-## Getting Around Kent
-
-- [Winter Weather Plan](https://www.kentwa.gov/guides/winter-weather-plan)
-- [Downtown Parking](https://www.kentwa.gov/guides/downtown-parking)
-- [Public Transportation](https://www.kentwa.gov/departments/public-works/transportation/public-transit-and-commute-options)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17589/637771539870470000)
-
-## Housing &amp; Assistance
-
-- [Housing Resources](https://www.kentwa.gov/guides/housing-resources)
-- [Human Services Resources](https://www.kentwa.gov/departments/kent-parks/human-services/human-services-resources-and-help)
-- [Home Repair](https://www.kentwa.gov/departments/kent-parks/human-services/home-repair)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17581/637771422070770000)
-
-## Business Resources
-
-- [How to Start a Restaurant](https://www.kentwa.gov/guides/restaurant-success)
-- [Business Licenses](https://www.kentwa.gov/pay-and-apply/apply-for-a-business-license)
-- [Business Assistance](https://www.kentwa.gov/departments/econ-community-dev/business-services-and-assistance)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17641/637771614280370000)
-
-## Environmental Care
-
-- [Trash, Recycling &amp; Yard Waste](https://www.kentwa.gov/guides/garbage-recycling-food-and-yard-waste)
-- [Natural Yard Care](https://www.kentwa.gov/guides/natural-yard-care)
-- [Fats, Oils &amp; Grease Disposal](https://www.kentwa.gov/guides/fats-oils-and-grease-f-o-g)
-
-![](https://www.kentwa.gov/home/showpublishedimage/17645/637771650348100000)
-
-## Get Involved
-
-- [Volunteer Opportunities](https://www.kentwa.gov/pay-and-apply/find-volunteer-opportunities)
-- [Neighborhood Programs](https://www.kentwa.gov/guides/neighborhood-program)
-- [Clean-Up Events](https://www.kentwa.gov/departments/public-works/environmental/talking-trash-recycle-and-clean-up-events-for-residents)
-
-## Kent Elected Officials
-
-[![Portrait of Mayor Ralph](https://www.kentwa.gov/home/showpublishedimage/25253/638731311339130000)  
-\
-**Dana Ralph**  
-\
-Mayor](https://www.kentwa.gov/government/kent-mayor)
-
-[![Councilmember Satwinder Kaur](https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000)  
-\
-**Satwinder Kaur**  
-\
-Council President](https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur)
-
-[![Councilmember Bill Boyce](https://www.kentwa.gov/home/showpublishedimage/17761/638446491818570000)  
-\
-**Bill Boyce**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce)
-
-[![Councilmember John Boyd](https://www.kentwa.gov/home/showpublishedimage/24260/638446489711770000)  
-\
-**John Boyd**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd)
-
-[![Councilmember Brenda Fincher](https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000)  
-\
-**Brenda Fincher**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher)
-
-[![Councilmember Marli Larimer](https://www.kentwa.gov/home/showpublishedimage/17767/638446491131370000)  
-\
-**Marli Larimer**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer)
-
-[![Councilmember Zandria Michaud](https://www.kentwa.gov/home/showpublishedimage/17773/638446490252730000)  
-\
-**Zandria Michaud**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud)
-
-[![Councilmember Toni Troutner](https://www.kentwa.gov/home/showpublishedimage/17771/638446490523030000)  
-\
-**Toni Troutner**  
-\
-Councilmember](https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner)
-
-[Learn about City Council](https://www.kentwa.gov/government/kent-city-council)
+  Office of the Mayor  
+  220 Fourth Ave. S  
+  Kent, WA 98032
+- *State law provides that all correspondence sent to elected officials (including email) is public record. Any correspondence sent to the Mayor will be disclosed to any person who requests it, unless exempt from disclosure under state law.*
+
+Free viewers are required for some of the attached documents.  
+They can be downloaded by clicking on the icons below.
+
+[Acrobat Reader ![Download Acrobat Reader](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/acrobat.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fget.adobe.com%2Freader%2F&____isexternal=true "Download Acrobat Reader") [Windows Media Player ![Download Windows Media Player](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/wmp.jpg)](https://www.kentwa.gov/?splash=http%3A%2F%2Fwindows.microsoft.com%2Fen-us%2Fwindows%2Fwindows-media-player&____isexternal=true "Download Windows Media Player") [Word Viewer ![Download Word Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/word.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Word Viewer") [Excel Viewer ![Download Excel Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/excel.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download Excel Viewer") [PowerPoint Viewer ![Download PowerPoint Viewer](https://www.kentwa.gov/DefaultContent/Default/_gfx/downloadmessage/powerpoint.jpg)](https://www.kentwa.gov/?splash=https%3A%2F%2Fproducts.office.com%2Fen-US%2Foffice-online%2Fdocuments-spreadsheets-presentations-office-online&____isexternal=true "Download PowerPoint Viewer")
 
 ## Stay Connected
 

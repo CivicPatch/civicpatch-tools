@@ -1,205 +1,390 @@
 [
   {
     "name": "Dana Ralph",
-    "image": null,
+    "sources": [
+      "https://kentwa.gov/government/kent-mayor",
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://www.kentwa.gov/government/kent-mayor",
+      "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
+      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as her current role and Chief Executive Officer of the City of Kent. Past roles like 'City Council' and 'City Council President' are not included as per guidelines for current active roles."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Dana Ralph' and confirmed by 'Re-elected by Kent voters for her second term in 2021' and 'She elected by voters in 2017 and sworn into office in January 2018 as Kent’s 27th Mayor'. "
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly identified as 'Kent Mayor Dana Ralph' in a navigation link and described as 'The Mayor of Kent works with a seven-member council'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Kent Mayor Dana Ralph' in a navigation link and confirmed by 'Office of the Mayor' section."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "253-856-5700",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information for the mayor.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Phone number explicitly listed under 'Reach the Mayor' section and directly associated with her name and role on her official page",
         "source": "https://kentwa.gov/government/kent-mayor"
+      },
+      {
+        "data": "253-856-5700",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Reach the Mayor' section, directly associated with her name and role. ",
+        "source": "https://www.kentwa.gov/government/kent-mayor"
       }
     ],
     "emails": [
       {
         "data": "Mayor@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information for the mayor.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Email address explicitly listed under 'Reach the Mayor' section and directly associated with her name and role on her official page",
         "source": "https://kentwa.gov/government/kent-mayor"
+      },
+      {
+        "data": "Mayor@KentWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address is explicitly listed under 'Reach the Mayor' section, directly associated with her name and role. ",
+        "source": "https://www.kentwa.gov/government/kent-mayor"
       }
     ],
     "websites": [
       {
         "data": "https://kentwa.gov/government/kent-mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page dedicated to the mayor.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "The current page URL is her official profile page as Mayor.",
         "source": "https://kentwa.gov/government/kent-mayor"
       },
       {
         "data": "https://www.kentwa.gov/government/kent-mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "2018 to present",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Elected in 2017 and re-elected in 2021.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://kentwa.gov/government/kent-mayor"
+        "data": "https://www.kentwa.gov/government/kent-mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is her dedicated profile page as Mayor. ",
+        "source": "https://www.kentwa.gov/government/kent-mayor"
+      },
+      {
+        "data": "https://kentwa.gov/government/kent-mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Website URL for 'Kent Mayor Dana Ralph' found in the navigation menu.",
+        "source": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      },
+      {
+        "data": "https://kentwa.gov/government/kent-mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The navigation link 'Kent Mayor Dana Ralph' points to this URL.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
       }
     ],
-    "positions": [
-      "Mayor",
-      "Chief Executive Officer",
-      "Council President"
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'Re-elected by Kent voters for her second term in 2021'. Following the guideline to use the most recent election date for start_date. The initial swearing-in date of 'January 2018' is for her first term, not the most recent re-election.",
+        "source": "https://kentwa.gov/government/kent-mayor"
+      },
+      {
+        "data": "2021",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Re-elected by Kent voters for her second term in 2021', indicating the start of her current term. ",
+        "source": "https://www.kentwa.gov/government/kent-mayor"
+      }
     ],
-    "sources": []
+    "end_dates": [],
+    "updated_at": "2025-06-14T02:58:57Z"
   },
   {
     "name": "Satwinder Kaur",
-    "image": null,
+    "sources": [
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
+      "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'President of the Kent City Council' and 'elected by her colleagues as Council President in 2024'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Stated as 'Having served on the Kent City Council since 2018', implying she is a Council Member."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'President of the Kent City Council' and 'elected by her colleagues as Council President in 2024'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Having served on the Kent City Council since 2018'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'position 2' in the contact section for Council President Kaur."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'position 2' under her contact information."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "First phone number listed directly under 'Reach Council President Kaur'.",
         "source": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      },
+      {
+        "data": "253-856-5712",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "First phone number listed under 'Reach Council President Kaur'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
       }
     ],
     "emails": [
       {
         "data": "skaur@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly listed as an email address for Satwinder Kaur.",
         "source": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      },
+      {
+        "data": "skaur@KentWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed as her email address.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
       }
     ],
     "websites": [
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "January 2018 - Dec. 31, 2025",
+        "data": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "The current page URL is the profile page for Satwinder Kaur.",
         "source": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      },
+      {
+        "data": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Satwinder Kaur.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
       }
     ],
-    "positions": [
-      "Council President",
-      "Council Member",
-      "Chair, Kent Cultural Communities Board",
-      "Green Kent Park Steward",
-      "Board of Trustees, Greater Kent Historical Society",
-      "Board of Directors, Living Well Kent",
-      "Member, Mayor’s Diversity Task Force, City of Renton",
-      "Board member, Puget Sound Access",
-      "Chair, Puget Sound Clean Air Agency Advisory Council",
-      "Growth Management Planning Council",
-      "Domestic Violence Regional Task Force"
+    "start_dates": [
+      {
+        "data": "2018-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began January 2018'.",
+        "source": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      },
+      {
+        "data": "2018-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began January 2018'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2025'.",
+        "source": "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2025'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
+      }
+    ],
+    "updated_at": "2025-06-14T02:58:57Z"
   },
   {
     "name": "Bill Boyce",
-    "image": null,
+    "sources": [
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly identified as 'Kent City Councilmember' and 'elected to Kent City Council'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Kent City Councilmember' and confirmed as current in his third term."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Position 5' next to his name and contact information."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Position 5' under his contact information."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-856-5712",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under Reach Councilmember Boyce.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "One of two phone numbers listed directly under 'Reach Councilmember Boyce'.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+      },
+      {
+        "data": "253-856-5712",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Reach Councilmember Boyce'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
       }
     ],
     "emails": [
       {
         "data": "bboyce@KentWA.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Directly listed as an email contact for Councilmember Boyce.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+      },
+      {
+        "data": "bboyce@KentWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Reach Councilmember Boyce'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
       }
     ],
     "websites": [
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to Kent TV21 Calling Kent Home, Council Edition: Bill Boyce",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Bill Boyce.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "January 2012",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under Reach Councilmember Boyce.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+        "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the current page, which serves as his official profile.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position 5",
-      "Member",
-      "Sound Cities Association Public Interest Committee",
-      "Harborview Board of Trustees"
+    "start_dates": [
+      {
+        "data": "2012-01",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began January 2012'.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+      },
+      {
+        "data": "2012-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began January 2012'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2027'.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2027'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
+      }
+    ],
+    "updated_at": "2025-06-14T02:58:57Z"
   },
   {
     "name": "John Boyd",
-    "image": null,
+    "sources": [
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember John Boyd' and 'As a council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'position 3' under contact information."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "First phone number listed under 'Reach Councilmember Boyd'.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
       }
     ],
@@ -207,10 +392,7 @@
       {
         "data": "JBoyd@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly listed under 'Reach Councilmember Boyd'.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
       }
     ],
@@ -218,107 +400,194 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd#pagebody",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Link to councilmember's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "January 2024 to Dec. 31, 2027",
+        "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "The current page URL is the profile page for John Boyd.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "position 3",
-      "Puget Sound Fire RFA Governance Board Member",
-      "Management Coordinator Committee (MCC) member for the Local Hazardous Waste Management Program"
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began January 2024'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2027'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
+      }
+    ],
+    "updated_at": "2025-06-14T02:58:57Z"
   },
   {
     "name": "Brenda Fincher",
-    "image": null,
+    "sources": [
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+      "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+      "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Kent City Councilmember Brenda Fincher' and 'served on the city council'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Identified as 'Kent City Councilmember Brenda Fincher' and 'served on the city council since 2014'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Reach Councilmember Fincher, Position 6'."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Position 6' next to her contact information."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-856-5712",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Directly listed as a contact number for Councilmember Fincher.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      },
+      {
+        "data": "253-856-5712",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "First phone number listed under 'Reach Councilmember Fincher'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
       }
     ],
     "emails": [
       {
         "data": "bfincher@KentWA.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Directly listed as a contact email for Councilmember Fincher.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      },
+      {
+        "data": "bfincher@KentWA.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address is directly listed under 'Reach Councilmember Fincher'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
       }
     ],
     "websites": [
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "March 2014 to Dec. 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "data": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The current page is a dedicated profile page for Brenda Fincher.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      },
+      {
+        "data": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The current page is a dedicated profile page for Brenda Fincher.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      },
+      {
+        "data": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The current page is a dedicated profile page for Brenda Fincher.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      },
+      {
+        "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is the dedicated profile page for Brenda Fincher.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Chair of the Public Works Committee",
-      "Council Liaison to the Arts Commission",
-      "Position 6"
+    "start_dates": [
+      {
+        "data": "2014-03",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began March 2014'.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      },
+      {
+        "data": "2014-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began March 2014'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2025'.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2025'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
+      }
+    ],
+    "updated_at": "2025-06-14T02:58:57Z"
   },
   {
     "name": "Marli Larimer",
-    "image": null,
+    "sources": [
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Kent City Councilmember' and 'While on Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'position 1' next to her contact information."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed under the councilmember's contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "First phone number listed under 'Reach Councilmember Larimer'.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
       }
     ],
@@ -326,10 +595,7 @@
       {
         "data": "MLarimer@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly listed email address for Councilmember Larimer.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
       }
     ],
@@ -337,52 +603,95 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "https://www.kentwa.gov/government/kent-city-council",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Points to the Kent City Council page, which is the most relevant page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "June 2018 to Dec. 31, 2027",
+        "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated in the contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "The URL of the current page is her official profile.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "position 1",
-      "Member, King County Aging and Disabilities Advisory Council",
-      "Member, Puget Sound Regional Fire Authority Governance Board"
+    "start_dates": [
+      {
+        "data": "2018-06",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began June 2018'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2027'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
+      }
+    ],
+    "updated_at": "2025-06-14T02:58:57Z"
   },
   {
     "name": "Zandria Michaud",
-    "image": null,
+    "sources": [
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Kent City Councilmember Zandria Michaud' and 'Serving her second term on council'."
+      },
+      {
+        "data": "Parks and Human Services Subject Matter Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'currently serving as Kent’s Parks and Human Services Subject Matter Chair'."
+      },
+      {
+        "data": "Human Services Council Liaison",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Human Services Council Liaison'."
+      },
+      {
+        "data": "Member, Firefighters’ Relief & Pension Board",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'a member of the Firefighters’ Relief & Pension Board'."
+      },
+      {
+        "data": "Member, King County Regional Law, Safety, and Justice Committee",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'a member of the King County Regional Law, Safety, and Justice Committee'."
+      },
+      {
+        "data": "Member, Washington Community Forestry Council",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'a member of the Washington Community Forestry Council'."
+      },
+      {
+        "data": "Member, Washington State Tree Equity Collaborative Steering Committee",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'a member of the Washington State Tree Equity Collaborative Steering Committee'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'position 7' in the contact section."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "First phone number listed under 'Reach Councilmember Michaud'.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
       }
     ],
@@ -390,10 +699,7 @@
       {
         "data": "ZMichaud@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Email address is directly listed under 'Reach Councilmember Michaud'.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
       }
     ],
@@ -401,64 +707,80 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
       },
       {
-        "data": "https://www.kentwa.gov/government/kent-city-council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to the Kent City Council page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "Nov. 26th, 2019 to Dec. 31, 2027",
+        "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates explicitly stated.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for the individual.",
         "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Parks and Human Services Subject Matter Chair",
-      "Human Services Council Liaison",
-      "Member of the Firefighters’ Relief & Pension Board",
-      "Member of the King County Regional Law, Safety, and Justice Committee",
-      "Member of the Washington Community Forestry Council",
-      "Member of the Washington State Tree Equity Collaborative Steering Committee"
+    "start_dates": [
+      {
+        "data": "2019-11-26",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began Nov. 26th, 2019'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2027'.",
+        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
+      }
+    ],
+    "updated_at": "2025-06-14T02:58:57Z"
   },
   {
     "name": "Toni Troutner",
-    "image": null,
+    "sources": [
+      "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
+      "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated under 'Kent Elected Officials'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Kent City Councilmember'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'currently, Chair of the Puget Sound Regional Fire Authority Governance Board'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'chair of the Kent Drug Free Coalition'."
+      },
+      {
+        "data": "Co-Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'co-chair of the WRIA 9 Watershed Ecosystem Forum'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'position 4' in the contact section."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-856-5712",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
-      },
-      {
-        "data": "253-856-5712",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed under the councilmember's contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "First phone number listed directly under her contact information.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
       }
     ],
@@ -466,19 +788,7 @@
       {
         "data": "TTroutner@KentWA.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
-      },
-      {
-        "data": "TTroutner@KentWA.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the councilmember's name.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "Directly listed as her email address.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
       }
     ],
@@ -486,50 +796,32 @@
       {
         "data": "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly linked from the person's entry.",
         "source": "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "Dec. 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "source": "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
       },
       {
-        "data": "January 2018 to Dec. 31, 2025",
+        "data": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated in the provided text.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "llm_confidence_reason": "The URL of the current page is her profile page.",
         "source": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Chair Puget Sound Regional Fire Authority",
-      "Co-Chair Severe Weather Shelter",
-      "Drug Free Coalition",
-      "Co-Chair WRIA 9 Managment Committee and Forum",
-      "Chair Puget Sound Regional Fire Authority Governance Board",
-      "Member Disability Retirement Board (LEOFF 1)",
-      "Member Kent Drug Free Coalition",
-      "Member Region Transit Committee",
-      "Coordinator Severe Weather Shelter",
-      "Secretary Kent Downtown Partnership",
-      "Alternate King County Flood Control District Advisory Committee",
-      "Alternate Puget Sound Regional Council Executive Board",
-      "Council Member",
-      "Member Puget Sound Regional Fire Authority Governance Board"
+    "start_dates": [
+      {
+        "data": "2018-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began January 2018'.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires Dec. 31, 2025'.",
+        "source": "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
+      }
+    ],
+    "updated_at": "2025-06-14T02:58:57Z"
   }
 ]

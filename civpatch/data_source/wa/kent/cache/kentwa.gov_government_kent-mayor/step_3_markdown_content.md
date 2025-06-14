@@ -1298,12 +1298,8 @@ My hope is that you will join in the passion that drives me—the idea I work to
 
 ## Reach the Mayor
 
-- ![telephone](https://www.kentwa.gov/home/showpublishedimage/14390/637816568572470000)
-  
-  253-856-5700
-- ![envelope](https://www.kentwa.gov/home/showpublishedimage/14382/637813932614270000)
-  
-  [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
+- 253-856-5700
+- [Mayor@KentWA.gov](mailto:Mayor@KentWA.gov)
 - Office of the Mayor  
   220 Fourth Ave. S  
   Kent, WA 98032
@@ -1427,10 +1423,10 @@ Tap the icon to expand or tap the title to go to the page.
   
   - [2025 Summer Events](https://kentwa.gov/events/2025-summer-events "2025 Summer Events")
 
-Loading ...
-
 Original text
 
 Rate this translation
 
 Your feedback will be used to help improve Google Translate
+
+Loading ...
