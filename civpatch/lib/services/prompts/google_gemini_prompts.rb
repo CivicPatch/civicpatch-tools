@@ -69,7 +69,7 @@ module Services
 
         target_text = if person_name.present?
                         person_name
-                      elsif maybe_target_people.present?
+                      elsif maybe_target_people.present? && maybe_target_people.count.positive?
                         %(the main governing body of the target municipality.
                         If the content includes information about the following people, they are
                         very likely to be on the council:
@@ -99,51 +99,13 @@ module Services
         - start_date: {data, llm_confidence, llm_confidence_reason}
         - end_date: {data, llm_confidence, llm_confidence_reason}
 
-        Format example:
-        {
-          "people": [
-            {
-              "name": "John Doe",
-              "phone_number": {"data": "123-456-7890", "llm_confidence": 0.95,
-                               "llm_confidence_reason": "Listed under Contact."},
-              "email": {"data": "john.doe@example.com", "llm_confidence": 0.95,
-                               "llm_confidence_reason": "Directly associated with name."},
-              "website": {"data": "https://example.com/john-doe", "llm_confidence": 0.95,
-                                "llm_confidence_reason": "Found under header"},
-              "roles": [{"data": "Council Member", "llm_confidence": 0.95,
-                                "llm_confidence_reason": "Listed under header."},
-                        {"data": "Mayor", "llm_confidence": 0.90,
-                                "llm_confidence_reason": "Listed under header."}],
-              "divisions": [{"data": "District 1", "llm_confidence": 0.90
-                                "llm_confidence_reason": "Listed under header."}],
-              "start_date": {"data": "2022-01-01", "llm_confidence": 0.95,
-                                "llm_confidence_reason": "Listed under header."},
-              "end_date": {"data": "2022-12-31", "llm_confidence": 0.95,
-                                "llm_confidence_reason": "Listed under header."}
-            },
-            {
-              "name": "Jane Smith",
-              "phone_number": {"data": "(987) 654-3210", "llm_confidence": 0.90,
-                              "llm_confidence_reason": "Extracted from markdown link text like [(987) 654-3210]()"},
-              "email": {"data": "jane.smith@example.gov", "llm_confidence": 0.92,
-                              "llm_confidence_reason": "Found under 'Contact Us' section near name."},
-              "roles": [{"data": "Council President", "llm_confidence": 0.95,
-                                "llm_confidence_reason": "Found under header."}],
-              "divisions": [{"data": "At-Large", "llm_confidence": 0.90,
-                                "llm_confidence_reason": "Found under header."}],
-              "end_date": {"data": "2027-12-31", "llm_confidence": 0.95,
-                              "llm_confidence_reason": "Found phrase 'Term Expires December 31, 2027'"}
-            }
-          ]
-        }
-
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - Roles extraction:
           - **CRITICAL**: Extract roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
             **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
           - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned,
-            vacated their role, is deceased, or their roleis otherwise noted as vacant
+            vacated their role, is deceased, or their role is otherwise noted as vacant
             (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their
             role, even if a future term date is also mentioned. The statement of resignation or vacancy takes
             precedence over listed term dates for determining current active status.
@@ -152,15 +114,16 @@ module Services
             "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past**
             and is not the person's current role, **DO NOT extract that specific role title.** Focus only on roles
             the person currently holds according to the text.
-          - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
-            (e.g., "Youth Councilor", "Student Representative"),
+          - **EXCLUDE**: Do NOT extract roles that are advisory, honorary, student/youth positions,
             or non-voting unless they are explicitly listed in the Target Municipal Roles.
             Focus on the primary elected/appointed governing body members.
+            We are only interested in roles that are related to the main governing body of the municipality.
+          - **EXCLUDE**: Do NOT extract roles for any committees, authorities, commissions, or boards that are not the main governing body, even if the title sounds official (e.g., "Vice Chair of Transit Authority", "Chair of Finance Committee", "Member, Planning Board"). Only include roles that match the Target Roles list exactly.
           - Include only active roles (today is #{current_date}).
         - Division extraction:
-          - Extract divisions, districts, or wards ONLY if they are explicitly mentioned in the text
-            and are relevant to the person's current role.
-            Example: "Council Member for District 3" or "At-Large Councilor" should be extracted as
+          - Extract divisions if they are explicitly mentioned in the text
+            and are relevant to the person's role in regards to the main governing body.
+          - Example: "Council Member for District 3" or "At-Large Councilor" should be extracted as
             "District 3" and "At-Large", respectively.
           - A person can have multiple divisions. List them separately.
             - Examples:

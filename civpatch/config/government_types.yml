@@ -49,6 +49,8 @@ government_types:
       - role: deputy mayor
       - role: vice mayor
       - role: council president
+        aliases:
+        - city council president
       - role: deputy council president
       - role: council vice president
       - role: council manager
@@ -61,6 +63,7 @@ government_types:
           - councilman
           - councilor
           - councillor
+          - city council member
           - town council representative
           - town council member
           - town council
