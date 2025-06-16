@@ -6,37 +6,86 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.federalwaywa.gov/page/about-jim-ferrell",
       "https://www.federalwaywa.gov/node/61",
+      "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel",
       "https://www.federalwaywa.gov/node/1326",
       "https://www.cityoffederalway.com/node/3534",
       "https://www.cityoffederalway.com/page/councilmember-jack-walsh",
       "https://www.cityoffederalway.com/page/councilmember-jack-dovey",
-      "https://www.cityoffederalway.com/page/council-president-linda-kochmar",
-      "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel"
+      "https://www.cityoffederalway.com/page/council-president-linda-kochmar"
     ],
     "images": [],
-    "positions": [
-      "mayor",
-      "Mayor"
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell' and 'Federal Way Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Mayor Jim Ferrell'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell' in the 'Government' section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell' in the 'Government' navigation section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Ferrell' under the 'Government' section."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "(253) 835-2402",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under the person's name and title.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number directly listed next to the name 'Mayor Jim Ferrell'.",
         "source": "https://www.federalwaywa.gov/mayors-office"
       }
     ],
     "emails": [
       {
         "data": "jim.ferrell@federalwaywa.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under the person's name and title.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly listed next to the name 'Mayor Jim Ferrell'.",
         "source": "https://www.federalwaywa.gov/mayors-office"
       },
       {
         "data": "jim.ferrell@cityoffederalway.com",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found in mailto link text explicitly for contacting the Mayor.",
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link for Mayor Ferrell.",
         "source": "https://www.federalwaywa.gov/page/about-jim-ferrell"
       }
     ],
@@ -44,33 +93,33 @@
       {
         "data": "https://www.federalwaywa.gov/page/about-jim-ferrell",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link explicitly labeled as 'official bio' for the person.",
+        "llm_confidence_reason": "Directly linked as 'Learn more about Mayor Jim Ferrell from his official bio'.",
         "source": "https://www.federalwaywa.gov/mayors-office"
       },
       {
         "data": "https://www.federalwaywa.gov/page/about-jim-ferrell",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Page URL is the profile page for the person.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page is a dedicated profile page for Jim Ferrell.",
         "source": "https://www.federalwaywa.gov/page/about-jim-ferrell"
       }
     ],
     "start_dates": [
       {
         "data": "2014-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit date found next to 'Term Began' label.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Began: January 1, 2014'.",
         "source": "https://www.federalwaywa.gov/page/about-jim-ferrell"
       }
     ],
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit date found next to 'Term Expires' label.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires: December 31, 2025'.",
         "source": "https://www.federalwaywa.gov/page/about-jim-ferrell"
       }
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Lydia Assefa-Dawson",
@@ -79,30 +128,45 @@
       "https://www.federalwaywa.gov/node/61"
     ],
     "images": [],
-    "positions": [
-      "Council Member",
-      "Position 1"
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'COUNCILMEMBERS' heading."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Councilmember Lydia Assefa-Dawson'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "lydia.assefa-dawson@federalwaywa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link text.",
+        "llm_confidence_reason": "Email address extracted directly from mailto link text.",
         "source": "https://www.federalwaywa.gov/node/61"
       }
     ],
     "websites": [
       {
         "data": "https://www.federalwaywa.gov/node/61",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL extracted from link associated with name in table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked next to the name.",
         "source": "https://www.federalwaywa.gov/page/city-council"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Paul McDaniel",
@@ -111,36 +175,45 @@
       "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel"
     ],
     "images": [],
-    "positions": [
-      "Council Member",
-      "Position 2"
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'COUNCILMEMBERS' heading."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated in the page title 'Councilmember Paul McDaniel'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "paul.mcdaniel@federalwaywa.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly associated with the name via a mailto link.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly provided as a mailto link.",
         "source": "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL extracted from link associated with name in table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked next to the name.",
         "source": "https://www.federalwaywa.gov/page/city-council"
-      },
-      {
-        "data": "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current page URL is a dedicated profile page for the person.",
-        "source": "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Susan Honda",
@@ -149,30 +222,45 @@
       "https://www.federalwaywa.gov/node/1326"
     ],
     "images": [],
-    "positions": [
-      "Council Member",
-      "Position 3"
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'COUNCILMEMBERS' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Susan Honda' in the heading for her dedicated section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "susan.honda@federalwaywa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address found directly in markdown link text associated with the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link directly under the person's name.",
         "source": "https://www.federalwaywa.gov/node/1326"
       }
     ],
     "websites": [
       {
         "data": "https://www.federalwaywa.gov/node/1326",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL extracted from link associated with name in table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked next to the name.",
         "source": "https://www.federalwaywa.gov/page/city-council"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Hoang V. Tran",
@@ -181,33 +269,50 @@
       "https://www.cityoffederalway.com/node/3534"
     ],
     "images": [],
-    "positions": [
-      "Council Member",
-      "Position 4",
-      "Chair - Finance",
-      "Economic Development and Regional Affairs Committee (FEDRAC)",
-      "Member - Land Use and Transportation Committee (LUTC)"
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'COUNCILMEMBERS' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Hoang V. Tran'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Chair - Finance, Economic Development and Regional Affairs Committee (FEDRAC)', which is a council committee."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "hoang.tran@federalwaywa.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address directly provided as a mailto link for Councilmember Tran.",
         "source": "https://www.cityoffederalway.com/node/3534"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityoffederalway.com/node/3534",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL extracted from link associated with name in table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked next to the name.",
         "source": "https://www.federalwaywa.gov/page/city-council"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Jack Walsh",
@@ -216,36 +321,61 @@
       "https://www.cityoffederalway.com/page/councilmember-jack-walsh"
     ],
     "images": [],
-    "positions": [
-      "Council Member",
-      "Position 5"
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'COUNCILMEMBERS' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jack Walsh' in the page title and content."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Chair: Parks Recreation Human Services Public Safety Committee (PRHSPS)'."
+      },
+      {
+        "data": "Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Member: Land Use Transportation Committee (LUTC)'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jack.walsh@federalwaywa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found explicitly linked to the person.",
+        "llm_confidence_reason": "Email address found directly associated with the councilmember's name via a mailto link.",
         "source": "https://www.cityoffederalway.com/page/councilmember-jack-walsh"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityoffederalway.com/page/councilmember-jack-walsh",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL extracted from link associated with name in table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked next to the name.",
         "source": "https://www.federalwaywa.gov/page/city-council"
       },
       {
         "data": "https://www.cityoffederalway.com/page/councilmember-jack-walsh",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Page URL is a dedicated profile page for the person.",
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for the councilmember.",
         "source": "https://www.cityoffederalway.com/page/councilmember-jack-walsh"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Jack Dovey",
@@ -254,36 +384,56 @@
       "https://www.cityoffederalway.com/page/councilmember-jack-dovey"
     ],
     "images": [],
-    "positions": [
-      "Council Member",
-      "Position 6"
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'COUNCILMEMBERS' heading."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jack Dovey'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Current Council Committees' as 'Chair: Land Use Transportation Committee (LUTC)'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jack.dovey@federalwaywa.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from a mailto link directly associated with the name.",
         "source": "https://www.cityoffederalway.com/page/councilmember-jack-dovey"
       }
     ],
     "websites": [
       {
-        "data": "https://www.cityoffederalway.com/page/councilmember-jack-dovie",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL extracted from link associated with name in table.",
+        "data": "https://www.cityoffederalway.com/page/councilmember-jack-dovey",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked next to the name.",
         "source": "https://www.federalwaywa.gov/page/city-council"
       },
       {
         "data": "https://www.cityoffederalway.com/page/councilmember-jack-dovey",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Current page URL is a profile page for the person.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is the person's dedicated profile page.",
         "source": "https://www.cityoffederalway.com/page/councilmember-jack-dovey"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Linda Kochmar",
@@ -292,36 +442,55 @@
       "https://www.cityoffederalway.com/page/council-president-linda-kochmar"
     ],
     "images": [],
-    "positions": [
-      "Council Member",
-      "Position 7",
-      "Council President"
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' next to the name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'COUNCILMEMBERS' and holding a 'Position'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated in the page heading and main content."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed next to the name."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "linda.kochmar@federalwaywa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link associated with her name and title.",
         "source": "https://www.cityoffederalway.com/page/council-president-linda-kochmar"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityoffederalway.com/page/council-president-linda-kochmar",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Website URL extracted from link associated with name in table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked next to the name.",
         "source": "https://www.federalwaywa.gov/page/city-council"
       },
       {
         "data": "https://www.cityoffederalway.com/page/council-president-linda-kochmar",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The page URL is a profile page for this person.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL is the current page and is specific to her profile.",
         "source": "https://www.cityoffederalway.com/page/council-president-linda-kochmar"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   }
 ]

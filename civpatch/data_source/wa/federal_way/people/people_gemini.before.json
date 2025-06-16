@@ -1,10 +1,10 @@
 [
   {
     "name": "Jim Ferrell",
-    "positions": [
-      "mayor",
+    "roles": [
       "Mayor"
     ],
+    "divisions": [],
     "image": null,
     "phone_number": "(253) 835-2402",
     "email": "jim.ferrell@federalwaywa.gov",
@@ -16,19 +16,21 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.federalwaywa.gov/page/about-jim-ferrell",
       "https://www.federalwaywa.gov/node/61",
+      "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel",
       "https://www.federalwaywa.gov/node/1326",
       "https://www.cityoffederalway.com/node/3534",
       "https://www.cityoffederalway.com/page/councilmember-jack-walsh",
       "https://www.cityoffederalway.com/page/councilmember-jack-dovey",
-      "https://www.cityoffederalway.com/page/council-president-linda-kochmar",
-      "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel"
+      "https://www.cityoffederalway.com/page/council-president-linda-kochmar"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Lydia Assefa-Dawson",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
       "Position 1"
     ],
     "image": null,
@@ -41,12 +43,14 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.federalwaywa.gov/node/61"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Paul McDaniel",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
       "Position 2"
     ],
     "image": null,
@@ -59,12 +63,15 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.cityoffederalway.com/page/councilmember-paul-mcdaniel"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Susan Honda",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
       "Position 3"
     ],
     "image": null,
@@ -77,16 +84,17 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.federalwaywa.gov/node/1326"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Hoang V. Tran",
-    "positions": [
+    "roles": [
+      "Councilmember",
       "Council Member",
-      "Position 4",
-      "Chair - Finance",
-      "Economic Development and Regional Affairs Committee (FEDRAC)",
-      "Member - Land Use and Transportation Committee (LUTC)"
+      "Chair"
+    ],
+    "divisions": [
+      "Position 4"
     ],
     "image": null,
     "phone_number": null,
@@ -98,12 +106,17 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.cityoffederalway.com/node/3534"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Jack Walsh",
-    "positions": [
+    "roles": [
+      "Councilmember",
       "Council Member",
+      "Chair",
+      "Member"
+    ],
+    "divisions": [
       "Position 5"
     ],
     "image": null,
@@ -116,12 +129,16 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.cityoffederalway.com/page/councilmember-jack-walsh"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Jack Dovey",
-    "positions": [
+    "roles": [
+      "Councilmember",
       "Council Member",
+      "Chair"
+    ],
+    "divisions": [
       "Position 6"
     ],
     "image": null,
@@ -134,14 +151,16 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.cityoffederalway.com/page/councilmember-jack-dovey"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   },
   {
     "name": "Linda Kochmar",
-    "positions": [
-      "Council Member",
-      "Position 7",
-      "Council President"
+    "roles": [
+      "Council President",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Position 7"
     ],
     "image": null,
     "phone_number": null,
@@ -153,6 +172,6 @@
       "https://www.federalwaywa.gov/page/city-council",
       "https://www.cityoffederalway.com/page/council-president-linda-kochmar"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-06-16T17:49:38Z"
   }
 ]
