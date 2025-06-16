@@ -1,22 +1,45 @@
 [
   {
     "name": "Pete Serrano",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Mayor",
-      "Council Member",
-      "District 4"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor' and is a target role, elected January 2024."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'elected to the City Council' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'District 4' for Mayor Pete Serrano."
+      }
     ],
     "phone_numbers": [
       {
         "data": "(509) 545-3404",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed phone number.",
+        "llm_confidence_reason": "Phone number explicitly provided under 'Contact Information' for Pete Serrano.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -24,7 +47,7 @@
       {
         "data": "serranocouncil@pasco-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed email address.",
+        "llm_confidence_reason": "Email address explicitly provided under 'Contact Information' for Pete Serrano.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -33,7 +56,7 @@
       {
         "data": "2022-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "Start date explicitly stated as '01 Jan 2022' under 'Term' for Pete Serrano.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -41,31 +64,53 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "End date explicitly stated as '31 Dec 2025' under 'Term' for Pete Serrano.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:24:11Z"
   },
   {
     "name": "David Milne",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Mayor Pro Tempore",
-      "Council Member",
-      "District 5",
-      "Mayor Pro-Tem"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro-Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "mayor pro tempore",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor Pro-Tem' and is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'District 5' for Mayor Pro-Tem David Milne."
+      }
     ],
     "phone_numbers": [
       {
         "data": "(509) 545-3404",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed phone number.",
+        "llm_confidence_reason": "Phone number explicitly provided under 'Contact Information' for David Milne.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -73,7 +118,7 @@
       {
         "data": "milnecouncil@pasco-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed email address.",
+        "llm_confidence_reason": "Email address explicitly provided under 'Contact Information' for David Milne.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -82,7 +127,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "Start date explicitly stated as '01 Jan 2024' under 'Term' for David Milne.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -90,29 +135,48 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "End date explicitly stated as '31 Dec 2027' under 'Term' for David Milne.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:24:11Z"
   },
   {
     "name": "Blanche Barajas",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 1"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'member of the Pasco City Council' and is a target role. Past roles (Mayor Pro-Tem, Mayor) were excluded as per guidelines."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'District 1' for Councilmember Blanche Barajas."
+      }
     ],
     "phone_numbers": [
       {
         "data": "(509) 545-3404",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed phone number.",
+        "llm_confidence_reason": "Phone number explicitly provided under 'Contact Information' for Blanche Barajas.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -120,7 +184,7 @@
       {
         "data": "barajascouncil@pasco-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed email address.",
+        "llm_confidence_reason": "Email address explicitly provided under 'Contact Information' for Blanche Barajas.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -129,7 +193,7 @@
       {
         "data": "2022-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "Start date explicitly stated as '01 Jan 2022' under 'Term' for Blanche Barajas.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -137,29 +201,48 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "End date explicitly stated as '31 Dec 2025' under 'Term' for Blanche Barajas.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:24:11Z"
   },
   {
     "name": "Charles Grimm",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 2"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'District 2' for Councilmember Charles Grimm."
+      }
     ],
     "phone_numbers": [
       {
         "data": "509-905-2672",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed phone number.",
+        "llm_confidence_reason": "Phone number explicitly provided under 'Contact Information' for Charles Grimm.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -167,7 +250,7 @@
       {
         "data": "grimmcouncil@pasco-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed email address.",
+        "llm_confidence_reason": "Email address explicitly provided under 'Contact Information' for Charles Grimm.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -176,7 +259,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "Start date explicitly stated as '01 Jan 2024' under 'Term' for Charles Grimm.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -184,29 +267,48 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "End date explicitly stated as '31 Dec 2027' under 'Term' for Charles Grimm.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:24:11Z"
   },
   {
     "name": "Leo Perales",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 3"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'District 3' for Councilmember Leo Perales."
+      }
     ],
     "phone_numbers": [
       {
         "data": "(509) 905-2673",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed phone number.",
+        "llm_confidence_reason": "Phone number explicitly provided under 'Contact Information' for Leo Perales.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -214,7 +316,7 @@
       {
         "data": "peralescouncil@pasco-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed email address.",
+        "llm_confidence_reason": "Email address explicitly provided under 'Contact Information' for Leo Perales.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -223,7 +325,7 @@
       {
         "data": "2023-11-28",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "Start date explicitly stated as '28 Nov 2023' under 'Term' for Leo Perales.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -231,29 +333,48 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "End date explicitly stated as '31 Dec 2025' under 'Term' for Leo Perales.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:24:11Z"
   },
   {
     "name": "Melissa Blasdel",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 6"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'appointed representative for District 6 on the Pasco City Council' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'District 6' for Councilmember Melissa Blasdel."
+      }
     ],
     "phone_numbers": [
       {
         "data": "(509) 905-2676",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed phone number.",
+        "llm_confidence_reason": "Phone number explicitly provided under 'Contact Information' for Melissa Blasdel.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -261,7 +382,7 @@
       {
         "data": "blasdelcouncil@pasco-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed email address.",
+        "llm_confidence_reason": "Email address explicitly provided under 'Contact Information' for Melissa Blasdel.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -270,7 +391,7 @@
       {
         "data": "2023-10-02",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "Start date explicitly stated as '02 Oct 2023' under 'Term' for Melissa Blasdel.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -278,29 +399,48 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "End date explicitly stated as '31 Dec 2025' under 'Term' for Melissa Blasdel.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:24:11Z"
   },
   {
     "name": "Peter Harpster",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "At Large"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'At-Large' for Councilmember Peter Harpster."
+      }
     ],
     "phone_numbers": [
       {
         "data": "509-905-2677",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed phone number.",
+        "llm_confidence_reason": "Phone number explicitly provided under 'Contact Information' for Peter Harpster.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -308,7 +448,7 @@
       {
         "data": "harpstercouncil@pasco-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed email address.",
+        "llm_confidence_reason": "Email address explicitly provided under 'Contact Information' for Peter Harpster.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -317,7 +457,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "Start date explicitly stated as '01 Jan 2024' under 'Term' for Peter Harpster.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -325,10 +465,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term dates.",
+        "llm_confidence_reason": "End date explicitly stated as '31 Dec 2027' under 'Term' for Peter Harpster.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:24:11Z"
   }
 ]

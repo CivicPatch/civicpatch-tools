@@ -1,30 +1,53 @@
 [
   {
     "name": "Pete Serrano",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Mayor",
-      "Council Member",
-      "District 4"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pete Serrano' in the City Council members list."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected Mayor by fellow Councilmembers in January 2024."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected to City Council in 2017 and serving as Mayor concurrently."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 4' next to Pete Serrano's name."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 4."
+      }
     ],
     "phone_numbers": [
       {
-        "data": "(509) 545-3404",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' near Pete Serrano's name and contact info.",
+        "data": "509-545-3404",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
     "emails": [
       {
         "data": "serranocouncil@pasco-wa.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from mailto link text near Pete Serrano's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under contact info.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
@@ -32,177 +55,486 @@
       {
         "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL linked directly to the person's name and role.",
+        "llm_confidence_reason": "URL linked directly to Pete Serrano's name in the council members list.",
         "source": "https://www.pasco-wa.gov/122/City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2022-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date explicitly stated as '01 Jan 2022' for Pete Serrano.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Council term start date explicitly stated as 01 Jan 2022; Mayor term started January 2024.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term end date explicitly stated as '31 Dec 2025' for Pete Serrano.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 31 Dec 2025.",
         "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
       }
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-16T22:23:49Z"
   },
   {
     "name": "David Milne",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/122/City-Council",
+      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Mayor Pro-Tem",
-      "Council Member",
-      "District 5"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro-Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro-Tem David Milne' in the City Council members list."
+      },
+      {
+        "data": "Mayor Pro-Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor Pro-Tem."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Serving as Councilmember concurrently with Mayor Pro-Tem role."
+      }
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 5' next to David Milne's name."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 5."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-545-3404",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "emails": [
+      {
+        "data": "milnecouncil@pasco-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
     "websites": [
       {
         "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL linked directly to the person's name and role.",
+        "llm_confidence_reason": "URL linked directly to David Milne's name in the council members list.",
         "source": "https://www.pasco-wa.gov/122/City-Council"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date explicitly stated as 01 Jan 2024.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 31 Dec 2027.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "updated_at": "2025-06-16T22:23:49Z"
   },
   {
     "name": "Blanche Barajas",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/122/City-Council",
+      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 1"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Blanche Barajas' in the City Council members list."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 1."
+      },
+      {
+        "data": "Mayor Pro-Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected by Council colleagues as Mayor Pro-Tem in 2020."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected Mayor in 2022, served until January 2024."
+      }
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 1' next to Blanche Barajas's name."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 1."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-545-3404",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "emails": [
+      {
+        "data": "barajascouncil@pasco-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
     "websites": [
       {
         "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL linked directly to the person's name and role.",
+        "llm_confidence_reason": "URL linked directly to Blanche Barajas's name in the council members list.",
         "source": "https://www.pasco-wa.gov/122/City-Council"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Current term start date explicitly stated as 01 Jan 2022.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Current term end date explicitly stated as 31 Dec 2025.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "updated_at": "2025-06-16T22:23:49Z"
   },
   {
     "name": "Charles Grimm",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/122/City-Council",
+      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 2"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Charles Grimm' in the City Council members list."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 2."
+      }
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 2' next to Charles Grimm's name."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 2."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-905-2672",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "emails": [
+      {
+        "data": "grimmcouncil@pasco-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
     "websites": [
       {
         "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL linked directly to the person's name and role.",
+        "llm_confidence_reason": "URL linked directly to Charles Grimm's name in the council members list.",
         "source": "https://www.pasco-wa.gov/122/City-Council"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "start_dates": [
+      {
+        "data": "2023-12-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Sworn into office December 1, 2023.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 31 Dec 2027.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "updated_at": "2025-06-16T22:23:49Z"
   },
   {
     "name": "Leo Perales",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/122/City-Council",
+      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 3"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Leo Perales' in the City Council members list."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 3."
+      }
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 3' next to Leo Perales's name."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 3."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-905-2673",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "emails": [
+      {
+        "data": "peralescouncil@pasco-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
     "websites": [
       {
         "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL linked directly to the person's name and role.",
+        "llm_confidence_reason": "URL linked directly to Leo Perales's name in the council members list.",
         "source": "https://www.pasco-wa.gov/122/City-Council"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "start_dates": [
+      {
+        "data": "2023-11-28",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date explicitly stated as 28 Nov 2023.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 31 Dec 2025.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "updated_at": "2025-06-16T22:23:49Z"
   },
   {
     "name": "Melissa Blasdel",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/122/City-Council",
+      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "District 6"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Melissa Blasdel' in the City Council members list."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 6."
+      }
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 6' next to Melissa Blasdel's name."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for District 6."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-905-2676",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "emails": [
+      {
+        "data": "blasdelcouncil@pasco-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
     "websites": [
       {
         "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL linked directly to the person's name and role.",
+        "llm_confidence_reason": "URL linked directly to Melissa Blasdel's name in the council members list.",
         "source": "https://www.pasco-wa.gov/122/City-Council"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "start_dates": [
+      {
+        "data": "2023-10-02",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date explicitly stated as 02 Oct 2023.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 31 Dec 2025.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "updated_at": "2025-06-16T22:23:49Z"
   },
   {
     "name": "Peter Harpster",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.pasco-wa.gov/122/City-Council"
+      "https://www.pasco-wa.gov/122/City-Council",
+      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "positions": [
-      "Council Member",
-      "At Large"
+    "images": [
+      {
+        "data": "https://cdn.arcgis.com/sharing/rest/content/items/f60f1947ca884745858550f70441e92c/resources/uWQxZRctK5LCs8E3HdFOR.jpg?w=20",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
     ],
-    "phone_numbers": [],
-    "emails": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Peter Harpster' in the City Council members list."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Councilmember for At-Large position."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to Peter Harpster's name."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Described as serving in the 'At-Large' Council position."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-905-2677",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "emails": [
+      {
+        "data": "harpstercouncil@pasco-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under contact info.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
     "websites": [
       {
         "data": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL linked directly to the person's name and role.",
+        "llm_confidence_reason": "URL linked directly to Peter Harpster's name in the council members list.",
         "source": "https://www.pasco-wa.gov/122/City-Council"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-09"
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date explicitly stated as 01 Jan 2024.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 31 Dec 2027.",
+        "source": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+      }
+    ],
+    "updated_at": "2025-06-16T22:23:49Z"
   }
 ]
