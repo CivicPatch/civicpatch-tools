@@ -95,8 +95,9 @@ module Services
           - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
           - Contact Details (Phone/Email/Website):
             - Associate details logically if near the person's name/section.
-            - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
-              Pick the most relevant phone number if multiple are present.
+            - Pick the most relevant contact detail if multiple are present.
+            - Phone numbers:
+              - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
             - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
             - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
             - `email` data should ONLY contain email addresses.
@@ -105,7 +106,8 @@ module Services
             - Acceptable date phrases include:
               - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
               - For vague phrases like "Spring 2025", extract the year only.
-            - If more than one term is mentioned, extract the latest term dates.
+            - If more than one term is mentioned, extract the most recent term dates. 
+            - If more than one start date is mentioned, use the most recent one (actual start date is preferred over elected term date).
             - Examples:
               - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
               - "Served January 2018 until December 2021 - Re-elected and serving January 2022 and until December 2025" -> start_date: "2022-01", end_date: "2025-12"
