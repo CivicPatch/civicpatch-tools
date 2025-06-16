@@ -1,329 +1,600 @@
 [
   {
     "name": "Gretl Crawford",
-    "image": null,
+    "sources": [
+      "https://www.go2kennewick.com/531/City-Council",
+      "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Role explicitly listed as 'Title: Mayor' on the person's bio page"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role explicitly listed as 'City Council' on the person's bio page, which is a clear synonym for Council Member"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509-531-0454",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated after 'Phone:'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "509-531-0454",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Phone' heading on the person's bio page",
+        "source": "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page"
       }
     ],
     "emails": [
       {
         "data": "gretl.crawford@ci.kennewick.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly associated with name as a mailto link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "gretl.crawford@ci.kennewick.wa.us",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address extracted directly from mailto link text associated with the person's name and contact information on their bio page",
+        "source": "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page"
       }
     ],
     "websites": [
       {
         "data": "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Biography link found directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated as 'Ms. Crawford Biography' link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "December 31, 2025",
+        "data": "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under the name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "The current page is a dedicated bio page for Gretl Crawford, making it her primary profile website",
+        "source": "https://www.go2kennewick.com/867/Gretl-Crawford-Bio-Page"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Term Expires: December 31, 2025'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "positions": [
-      "Mayor",
-      "Council Member",
-      "Ward 1 Position 1"
-    ]
+    "updated_at": "2025-06-16T17:58:23Z"
   },
   {
     "name": "Charles Torelli",
-    "image": null,
+    "sources": [
+      "https://www.go2kennewick.com/531/City-Council",
+      "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Chuck was appointed to the Kennewick City Council in 2019' and 'elected to the Kennewick City Council November of 2019'."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Mayor Pro Tem.' for Chuck Torelli."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "All Wards",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509-405-2156",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated after 'Phone:'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "509-405-2156",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to 'Phone:' for Chuck Torelli.",
+        "source": "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page"
       }
     ],
     "emails": [
       {
         "data": "chuck.torelli@ci.kennewick.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly associated with name as a mailto link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "Chuck.Torelli@ci.kennewick.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link for Mr. Torelli.",
+        "source": "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page"
       }
     ],
     "websites": [
       {
         "data": "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Biography link found directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated as 'Mr. Torelli Biography' link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "December 31, 2027",
+        "data": "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under the name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "The current page is a dedicated bio page for Chuck Torelli, providing his profile information.",
+        "source": "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Chuck was then elected to the Kennewick City Council November of 2019'.",
+        "source": "https://www.go2kennewick.com/868/Chuck-Torelli-Bio-Page"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Date 'December 31, 2027' is listed directly under his roles, following the pattern of term expiration dates for other council members.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "positions": [
-      "Mayor Pro Tem",
-      "Council Member",
-      "At Large Position 5"
-    ]
+    "updated_at": "2025-06-16T17:58:23Z"
   },
   {
     "name": "Loren Anderson",
-    "image": null,
+    "sources": [
+      "https://www.go2kennewick.com/531/City-Council",
+      "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Council Member' explicitly stated under 'City Council Title:'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509-586-5532",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated after 'Phone:'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "509-586-5532",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly provided next to 'Phone:'.",
+        "source": "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page"
       }
     ],
     "emails": [
       {
         "data": "loren.anderson@ci.kennewick.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly associated with name as a mailto link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "loren.anderson@ci.kennewick.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided next to 'Email Mr. Anderson' and is a mailto link.",
+        "source": "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page"
       }
     ],
     "websites": [
       {
         "data": "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Biography link found directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated as 'Mr. Anderson Biography' link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "December 31, 2025",
+        "data": "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under the name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "The URL is explicitly mentioned as the 'Loren Anderson Bio Page' in the breadcrumbs and as a 'Skip to Main Content' link at the top, indicating it's his dedicated profile page.",
+        "source": "https://www.go2kennewick.com/870/Loren-Anderson-Bio-Page"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Term Expires: December 31, 2025'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Ward 2 Position 2"
-    ]
+    "updated_at": "2025-06-16T17:58:23Z"
   },
   {
     "name": "Brad Beauchamp",
-    "image": null,
+    "sources": [
+      "https://www.go2kennewick.com/531/City-Council",
+      "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page",
+      "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Council Member' under the person's name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "All Wards",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509-308-6556",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated after 'Phone:'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "509-308-6556",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed as 'Phone' under the person's name.",
+        "source": "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page"
       }
     ],
     "emails": [
       {
         "data": "brad.beauchamp@ci.kennewick.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly associated with name as a mailto link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "brad.beauchamp@ci.kennewick.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from a mailto link text directly associated with the person.",
+        "source": "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page"
       }
     ],
     "websites": [
       {
         "data": "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Biography link found directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated as 'Mr. Beauchamp Biography' link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "December 31, 2027",
+        "data": "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL found in 'Skip to Main Content' link and breadcrumbs, indicating a bio page for the person.",
+        "source": "https://www.go2kennewick.com/871/Brad%20Beauchamp-Bio-Page"
+      },
+      {
+        "data": "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under the name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly provided as a link to his bio page at the top of the document.",
+        "source": "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Term Expires: December 31, 2027'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "positions": [
-      "Council Member",
-      "At Large Position 6"
-    ]
+    "updated_at": "2025-06-16T17:58:23Z"
   },
   {
     "name": "Jim Millbauer",
-    "image": null,
+    "sources": [
+      "https://www.go2kennewick.com/531/City-Council",
+      "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'City Council' and 'Title: Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "All Wards",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509-531-4134",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated after 'Phone:'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "509-820-2349",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed next to 'Phone:'.",
+        "source": "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page"
       }
     ],
     "emails": [
       {
         "data": "jim.millbauer@ci.kennewick.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly associated with name as a mailto link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "jim.millbauer@ci.kennewick.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided in a mailto link.",
+        "source": "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page"
       }
     ],
     "websites": [
       {
         "data": "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Biography link found directly under the name, but the link is incorrect.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Directly stated as 'Mr. Millbauer Biography' link, but the URL itself contains 'Brad Beauchamp-Bio-Page', indicating a potential error in the source link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "December 31, 2027",
+        "data": "2019",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under the name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly stated 'elected to the Kennewick City Council in 2019'.",
+        "source": "https://www.go2kennewick.com/866/Brad%20Beauchamp-Bio-Page"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Term Expires: December 31, 2027'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "positions": [
-      "Council Member",
-      "At Large Position 7"
-    ]
+    "updated_at": "2025-06-16T17:58:23Z"
   },
   {
     "name": "John Trumbo",
-    "image": null,
+    "sources": [
+      "https://www.go2kennewick.com/531/City-Council",
+      "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Title: Council Member' directly under his name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      }
+    ],
     "phone_numbers": [
       {
-        "data": "509- 366-2241",
+        "data": "509-366-2241",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated after 'Phone:'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "509-366-2241",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Phone' for John Trumbo.",
+        "source": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page"
       }
     ],
     "emails": [
       {
         "data": "john.trumbo@ci.kennewick.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly associated with name as a mailto link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
+      },
+      {
+        "data": "John.Trumbo@ci.kennewick.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link for Mr. Trumbo.",
+        "source": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page"
       }
     ],
     "websites": [
       {
         "data": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Biography link found directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated as 'Mr. Trumbo Biography' link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "December 31, 2025",
+        "data": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under the name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "The current page is a dedicated bio page for John Trumbo, serving as his primary profile.",
+        "source": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2014-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated 'elected to the council effective January 2014'.",
+        "source": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as 'Term Expires: December 31, 2025'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Ward 3 Position 3"
-    ]
+    "updated_at": "2025-06-16T17:58:23Z"
   },
   {
     "name": "Jason McShane",
-    "image": null,
+    "sources": [
+      "https://www.go2kennewick.com/531/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      },
+      {
+        "data": "All Wards",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated next to role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "509-537-5903",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly stated after 'Phone:'.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
@@ -331,38 +602,13 @@
       {
         "data": "jason.mcshane@ci.kennewick.wa.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly associated with name as a mailto link.",
         "source": "https://www.go2kennewick.com/531/City-Council"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.go2kennewick.com/873/John-Trumbo-Bio-Page",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Biography link found directly under the name, but the link is incorrect.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.go2kennewick.com/531/City-Council"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "Certification of the 2025 election",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under the name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.go2kennewick.com/531/City-Council"
-      }
-    ],
-    "positions": [
-      "Council Member",
-      "At Large Position 4"
-    ]
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-16T17:58:23Z"
   }
 ]
