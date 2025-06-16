@@ -50,8 +50,8 @@ jobs:
           # and ignore municipalities that already have PRs open
           geoids_to_ignore=$(gh pr list --state open --json headRefName --search "head:pipeline-municipal-scrapes-${{ github.event.inputs.state }}-" --template '{{range .}}{{.headRefName}} {{end}}')
 
-          # Extract GEOIDs from branch names like pipeline-municipal-scrapes-wa-king-federal_way-2410494-14096425230
-          geoids=$(echo $geoids_to_ignore | sed -E 's/pipeline-municipal-scrapes-[^-]+-[^-]+-[^-]+-([^-]+)-[0-9]+/\1/g')
+          # Extract GEOIDs from branch names like pipeline-municipal-scrapes-wa-2410494-14096425230
+          geoids=$(echo $geoids_to_ignore | sed -E 's/.*-([0-9]+)-[0-9]+$/\1/g' | tr ' ' ',')
 
           # Now the rake task returns JSON array of objects
           cmd="./bin/cli scrape -plan -state ${{ github.event.inputs.state }} -num-scrapes ${{ github.event.inputs.num_municipalities }}"
