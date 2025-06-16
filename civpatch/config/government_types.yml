@@ -45,7 +45,9 @@ government_types:
         - vice-chairman
         - vice chairwoman
         - vice-chairwoman
+      - role: assistant mayor
       - role: deputy mayor
+      - role: vice mayor
       - role: council president
       - role: deputy council president
       - role: council vice president
