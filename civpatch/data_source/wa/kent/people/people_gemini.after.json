@@ -15,9 +15,11 @@
       "https://kentwa.gov/government/kent-mayor",
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-mayor",
-      "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
+      "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
+      "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
+      "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   },
   {
     "name": "Satwinder Kaur",
@@ -39,7 +41,7 @@
       "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
       "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   },
   {
     "name": "Bill Boyce",
@@ -61,11 +63,12 @@
       "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   },
   {
     "name": "John Boyd",
     "roles": [
+      "Council Member",
       "Council Member"
     ],
     "divisions": [
@@ -81,11 +84,12 @@
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   },
   {
     "name": "Brenda Fincher",
     "roles": [
+      "Chair",
       "Council Member",
       "Council Member"
     ],
@@ -103,7 +107,7 @@
       "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   },
   {
     "name": "Marli Larimer",
@@ -124,11 +128,12 @@
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   },
   {
     "name": "Zandria Michaud",
     "roles": [
+      "Chair",
       "Council Member",
       "Council Member"
     ],
@@ -145,7 +150,7 @@
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   },
   {
     "name": "Toni Troutner",
@@ -168,6 +173,6 @@
       "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
       "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
     ],
-    "updated_at": "2025-06-14T02:24:35Z"
+    "updated_at": "2025-06-16T18:11:07Z"
   }
 ]

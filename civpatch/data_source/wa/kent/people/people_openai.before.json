@@ -16,19 +16,20 @@
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-mayor"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   },
   {
     "name": "Satwinder Kaur",
     "roles": [
       "Council President",
+      "President of the Kent City Council",
       "Council Member, Position 2"
     ],
     "divisions": [
       "Position 2"
     ],
     "image": "https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000",
-    "phone_number": "253-856-5712, 206-406-2468",
+    "phone_number": "253-856-5712",
     "email": "skaur@KentWA.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
     "start_date": "2018-01",
@@ -38,19 +39,21 @@
       "https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur",
       "https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   },
   {
     "name": "Bill Boyce",
     "roles": [
       "Councilmember",
-      "Kent City Councilmember, Position 5"
+      "Kent City Councilmember, Position 5",
+      "Member, Sound Cities Association Public Interest Committee",
+      "Member, Harborview Medical Center Board of Trustees"
     ],
     "divisions": [
       "Position 5"
     ],
     "image": "https://www.kentwa.gov/home/showpublishedimage/17761/638446491818570000",
-    "phone_number": null,
+    "phone_number": "253-856-5712",
     "email": "bboyce@kentwa.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
     "start_date": "2012-01",
@@ -60,7 +63,7 @@
       "https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   },
   {
     "name": "John Boyd",
@@ -80,7 +83,7 @@
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   },
   {
     "name": "Brenda Fincher",
@@ -92,8 +95,8 @@
       "Position 6"
     ],
     "image": "https://www.kentwa.gov/home/showpublishedimage/17763/638446491525130000",
-    "phone_number": "253-856-5712, 206-818-7909",
-    "email": "bfincher@KentWA.gov",
+    "phone_number": "253-856-5712",
+    "email": "bfincher@kentwa.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
     "start_date": "2014-03",
     "end_date": "2025-12-31",
@@ -102,7 +105,7 @@
       "https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   },
   {
     "name": "Marli Larimer",
@@ -122,7 +125,7 @@
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   },
   {
     "name": "Zandria Michaud",
@@ -134,7 +137,7 @@
       "Position 7"
     ],
     "image": "https://www.kentwa.gov/home/showpublishedimage/17773/638446490252730000",
-    "phone_number": "253-856-5712, 206-402-8547",
+    "phone_number": "253-856-5712",
     "email": "ZMichaud@KentWA.gov",
     "website": "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud",
     "start_date": "2019-11-26",
@@ -143,7 +146,7 @@
       "https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true",
       "https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   },
   {
     "name": "Toni Troutner",
@@ -151,7 +154,7 @@
       "Councilmember",
       "Kent City Councilmember, Position 4",
       "Council President",
-      "Kent City Councilmember"
+      "City Councilmember"
     ],
     "divisions": [
       "Position 4"
@@ -167,6 +170,6 @@
       "https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner",
       "https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner"
     ],
-    "updated_at": "2025-06-14T02:22:34Z"
+    "updated_at": "2025-06-16T18:09:00Z"
   }
 ]

@@ -7,15 +7,17 @@
   cdn_image: https://cdn.civicpatch.org/open-data/wa/kent/images/149cb5a8d4214b3c7283dba96f96ba407452f8dd1b2c368e2c558a75996a77d8.png
   email: Mayor@KentWA.gov
   phone_number: "(253) 856-5700"
-  website: https://kentwa.gov/government/kent-mayor
+  website: https://www.kentwa.gov/government/kent-mayor
   start_date: '2021'
-  end_date: "."
+  end_date:
   sources:
   - https://kentwa.gov/government/kent-mayor
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://www.kentwa.gov/government/kent-mayor
-  - https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur
-  updated_at: '2025-06-16T17:56:48Z'
+  - https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce
+  - https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher
+  - https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher
+  updated_at: '2025-06-16T18:11:11Z'
 - name: Satwinder Kaur
   roles:
   - Council President
@@ -23,7 +25,7 @@
   divisions:
   - Position 2
   image: https://www.kentwa.gov/home/showpublishedimage/17769/638446490832100000
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/kent/images/92448f39ff9c9a88594b137c9e7bf7685f03cd532301706facf876affa9ebac6.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/kent/images/92448f39ff9c9a88594b137c9e7bf7685f03cd532301706facf876affa9ebac6.png
   email: skaur@KentWA.gov
   phone_number: "(253) 856-5712"
   website: https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur
@@ -33,7 +35,7 @@
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://kentwa.gov/government/kent-city-council/council-president-satwinder-kaur
   - https://www.kentwa.gov/government/kent-city-council/council-president-satwinder-kaur
-  updated_at: '2025-06-16T17:56:48Z'
+  updated_at: '2025-06-16T18:11:11Z'
 - name: Marli Larimer
   roles:
   - Council Member
@@ -49,7 +51,7 @@
   sources:
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://www.kentwa.gov/government/kent-city-council/councilmember-marli-larimer
-  updated_at: '2025-06-16T17:56:48Z'
+  updated_at: '2025-06-16T18:11:11Z'
 - name: John Boyd
   roles:
   - Council Member
@@ -65,7 +67,7 @@
   sources:
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://www.kentwa.gov/government/kent-city-council/councilmember-john-boyd
-  updated_at: '2025-06-16T17:56:48Z'
+  updated_at: '2025-06-16T18:11:11Z'
 - name: Toni Troutner
   roles:
   - Council Member
@@ -82,7 +84,7 @@
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://www.kentwa.gov/government/kent-city-council/councilmember-toni-troutner
   - https://kentwa.gov/government/kent-city-council/councilmember-toni-troutner
-  updated_at: '2025-06-16T17:56:48Z'
+  updated_at: '2025-06-16T18:11:11Z'
 - name: Bill Boyce
   roles:
   - Council Member
@@ -92,14 +94,14 @@
   cdn_image: https://cdn.civicpatch.org/open-data/wa/kent/images/48da41f1c7c99c1dce69f9f36ef91c7a46df63cedce2f5577826639ed266616f.png
   email: bboyce@KentWA.gov
   phone_number: "(253) 856-5712"
-  website: https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce
+  website: https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce
   start_date: 2012-01
   end_date: '2027-12-31'
   sources:
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://kentwa.gov/government/kent-city-council/councilmember-bill-boyce
   - https://www.kentwa.gov/government/kent-city-council/councilmember-bill-boyce
-  updated_at: '2025-06-16T17:56:48Z'
+  updated_at: '2025-06-16T18:11:11Z'
 - name: Brenda Fincher
   roles:
   - Council Member
@@ -116,14 +118,14 @@
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://kentwa.gov/government/kent-city-council/councilmember-brenda-fincher
   - https://www.kentwa.gov/government/kent-city-council/councilmember-brenda-fincher
-  updated_at: '2025-06-16T17:56:48Z'
+  updated_at: '2025-06-16T18:11:11Z'
 - name: Zandria Michaud
   roles:
   - Council Member
   divisions:
   - Position 7
   image: https://www.kentwa.gov/home/showpublishedimage/17773/638446490252730000
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/kent/images/bd1023b985133313cb5f93de724f4d4f434ce089263b1df2d29cf64b9f03736d.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/kent/images/bd1023b985133313cb5f93de724f4d4f434ce089263b1df2d29cf64b9f03736d.png
   email: ZMichaud@Kentwa.gov
   phone_number: "(253) 856-5712"
   website: https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud
@@ -132,4 +134,4 @@
   sources:
   - https://www.kentwa.gov/?splash=https://vimeo.com/119879553&____isexternal=true
   - https://www.kentwa.gov/government/kent-city-council/councilmember-zandria-michaud
-  updated_at: '2025-06-16T17:56:48Z'
+  updated_at: '2025-06-16T18:11:11Z'
