@@ -1,15 +1,59 @@
 [
   {
     "name": "Armondo Pavone",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated next to the name and in the 'About Mayor Pavone' section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Mayor Armondo Pavone' in the navigation menu."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the navigation link."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Armondo Pavone' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Kim-Khánh Văn' in the heading and text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Mayor Armondo Pavone' in the navigation menu."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the navigation menu as 'Mayor Armondo Pavone'."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "425-430-6500",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' section and directly associated with Mayor Pavone.",
         "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       }
     ],
@@ -17,77 +61,143 @@
       {
         "data": "mayor@rentonwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact' section and directly associated with Mayor Pavone.",
         "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
+      },
+      {
+        "data": "kvan@rentonwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Information' for Councilmember Kim-Khánh Văn.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/van"
       }
     ],
     "websites": [
       {
-        "data": "https://www.facebook.com/mayorpavone",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Listed under Follow Mayor Pavone on Facebook",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is the official profile page for Mayor Armondo Pavone.",
         "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to mayor's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is directly linked to the person's name in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
       },
       {
         "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Found in the City Council list.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       },
       {
         "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found in the navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+        "llm_confidence_reason": "Extracted from the navigation menu link associated with the name.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       },
       {
         "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the mayor.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL for Mayor Armondo Pavone's profile page found in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly listed in the navigation menu for the person.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL found in the navigation menu directly associated with the person's name and role.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'He was first elected as mayor in 2019'.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
+      },
+      {
+        "data": "2020",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Elected: 2020' under 'Term'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/van"
       }
     ],
-    "term_dates": [],
-    "positions": [
-      "Mayor"
-    ],
-    "sources": []
+    "end_dates": [],
+    "updated_at": "2025-06-16T17:57:57Z"
   },
   {
     "name": "James Alberson, Jr.",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the navigation menu next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember James Alberson, Jr.' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember James Alberson, Jr.' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember James Alberson, Jr.' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember James Alberson, Jr.' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the page title and navigation menu as 'Councilmember'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed under 'Council Membership'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated as part of the Council Membership."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-430-6501",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly listed under 'Contact Information'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
@@ -95,265 +205,410 @@
       {
         "data": "jalberson@rentonwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Directly listed under 'Contact Information'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to councilmember's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "A direct link to the council member's profile page is provided in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Found in the City Council list.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is directly linked to the person's name in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found in the navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+        "llm_confidence_reason": "Extracted from the navigation menu link associated with the name.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/van"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2022 to 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "URL for Councilmember James Alberson, Jr.'s profile page found in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly listed in the navigation menu for the person.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/alberson",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the current page URL, which is a profile page for the individual.",
         "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Councilmember",
-      "Council President, Position No. 1"
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed under 'Elected'.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly listed under 'Term Expires'.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+      }
+    ],
+    "updated_at": "2025-06-16T17:57:57Z"
   },
   {
     "name": "Ruth Pérez",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the navigation menu next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Ruth Pérez' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ruth Pérez' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ruth Pérez' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly referred to as 'Councilmember Ruth Pérez' and listed under 'City Council' navigation."
+      },
+      {
+        "data": "Council President Pro Tem",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council President Pro Tem' under 'Council Membership' and mentioned as a current role in the biography ('in 2024 as Council President Pro Tem')."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Ruth Pérez' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the navigation menu as 'Councilmember Ruth Pérez'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 6' under 'Council Membership'."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-430-6501",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Information' section.",
         "source": "https://www.rentonwa.gov/Government/City-Council/perez"
       }
     ],
     "emails": [
       {
         "data": "rperez@rentonwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact Information' section.",
         "source": "https://www.rentonwa.gov/Government/City-Council/perez"
       }
     ],
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/perez",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to councilmember's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "A direct link to the council member's profile page is provided in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/perez",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Found in the City Council list.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is directly linked to the person's name in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/perez",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found in the navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+        "llm_confidence_reason": "Extracted from the navigation menu link associated with the name.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/perez",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/perez"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/van"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2014 to 2025",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "URL for Councilmember Ruth Pérez's profile page found in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The URL of the current page is the person's profile page.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/perez"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The URL of the current page is the person's profile page.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/perez"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "The URL of the current page is the person's profile page.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/perez"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly listed in the navigation menu for the person.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/perez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL found in the navigation menu directly associated with the person's name and role.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states she was 're-elected in 2017 and 2021'. Following the guideline to use the most recent election/re-election date for start_date.",
         "source": "https://www.rentonwa.gov/Government/City-Council/perez"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Councilmember",
-      "Council President Pro Tem",
-      "Chair: Finance Committee",
-      "Vice Chair: Transportation/Aviation Committee",
-      "Member: Public Safety Committee"
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires: 2025' under 'Term' section.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/perez"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-16T17:57:57Z"
   },
   {
     "name": "Ryan McIrvin",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the navigation menu next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Ryan McIrvin' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ryan McIrvin' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ryan McIrvin' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the navigation menu as 'Councilmember Ryan McIrvin'."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "425-430-6501",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Information'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
       }
     ],
-    "emails": [
-      {
-        "data": "rmcirvin@rentonwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
-      }
-    ],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to councilmember's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "A direct link to the council member's profile page is provided in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Found in the City Council list.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is directly linked to the person's name in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found in the navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+        "llm_confidence_reason": "Extracted from the navigation menu link associated with the name.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/van"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2016",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "URL for Councilmember Ryan McIrvin's profile page found in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is the current page and is a profile page for the person.",
         "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL found in the navigation menu directly associated with the person's name and role.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Councilmember",
-      "Chair: Transportation/Aviation Committee",
-      "Vice Chair: Planning & Development Committee",
-      "Member: Finance Committee"
-    ],
-    "sources": []
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-16T17:57:57Z"
   },
   {
     "name": "Valerie O'Halloran",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the navigation menu next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Valerie O'Halloran' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link and page title."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Chair: Community Services Committee' under 'Council Membership' section."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair: Finance Committee' under 'Council Membership' section."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valerie O'Halloran' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valerie O'Halloran' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Valerie O'Halloran' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the navigation menu as 'Councilmember Valerie O'Halloran'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under 'Council Membership' section."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-430-6501",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly stated under 'Contact Information' section.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       }
     ],
@@ -361,83 +616,143 @@
       {
         "data": "vohalloran@rentonwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly stated under 'Contact Information' section.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       }
     ],
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to councilmember's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "This is the current page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "A direct link to the council member's profile page is provided in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found in the navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "URL is directly linked to the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu and current page URL.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Extracted from the navigation menu link associated with the name.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL for Councilmember Valerie O'Halloran's profile page found in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly listed in the navigation menu for the person.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL found in the navigation menu directly associated with the person's name and role.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
         "data": "2019",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly stated under 'Term' section as 'Elected: 2019'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Councilmember",
-      "Council President",
-      "Chair: Community Services Committee",
-      "Vice Chair: Finance Committee",
-      "Member: Utilities Committee"
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated under 'Term' section as 'Term Expires: 2027'.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-16T17:57:57Z"
   },
   {
     "name": "Ed Prince",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the navigation menu next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Ed Prince' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ed Prince' in the heading and navigation menu."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Chair: Planning & Development Committee' under 'Council Membership' and 'Chair' is a target role."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Vice Chair: Public Safety Committee' under 'Council Membership' and 'Vice Chair' is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ed Prince' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Ed Prince' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the navigation menu as 'Councilmember Ed Prince'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed under 'Council Membership' section."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-430-6501",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly listed under 'Contact Information' section.",
         "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       }
     ],
@@ -445,96 +760,143 @@
       {
         "data": "eprince@rentonwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly listed under 'Contact Information' section.",
         "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       }
     ],
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/prince",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to councilmember's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
-      },
-      {
-        "data": "https://www.rentonwa.gov/Government/City-Council/prince",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Found in the City Council list.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "A direct link to the council member's profile page is provided in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/prince",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found in the navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "URL is directly linked to the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/prince",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct URL to the councilmember's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/prince",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Current page URL and extracted from the navigation menu link associated with the name.",
         "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/prince",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL for Councilmember Ed Prince's profile page found in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/prince",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly listed in the navigation menu for the person.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/prince",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL found in the navigation menu directly associated with the person's name and role.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "Elected: 2012",
+        "data": "2012",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly listed as 'Elected: 2012' under 'Term' section.",
         "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Councilmember",
-      "Chair: Planning & Development Committee",
-      "Vice Chair: Public Safety Committee",
-      "Member: Transportation/Aviation Committee",
-      "Association of Washington Cities Board of Directors",
-      "Growth Management Policy Board",
-      "King CountyRegional Homelessness Authority",
-      "RRFA Governance Board",
-      "Sound Transit Board of Directors"
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Term Expires: 2027' under 'Term' section.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-16T17:57:57Z"
   },
   {
     "name": "Carmen Rivera",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the navigation menu next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Carmen Rivera' in the heading and navigation."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Chair: Public Safety Committee' under 'Council Membership'."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair: Utilities Committee' under 'Council Membership'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Carmen Rivera' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Carmen Rivera' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Carmen Rivera' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the navigation menu as 'Councilmember Carmen Rivera'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 2' under 'Council Membership'."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-430-6501",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly listed under 'Contact Information'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
       }
     ],
@@ -542,152 +904,172 @@
       {
         "data": "crivera@rentonwa.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly listed under 'Contact Information'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
       }
     ],
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to councilmember's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "A direct link to the council member's profile page is provided in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Found in the City Council list.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current page URL is the profile page for Carmen Rivera.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the current page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+        "llm_confidence_reason": "Extracted from the navigation menu link associated with the name.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL for Councilmember Carmen Rivera's profile page found in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly listed in the navigation menu for the person.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/rivera",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL found in the navigation menu directly associated with the person's name and role.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
         "data": "2021",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Explicitly stated as 'Elected: 2021' under 'Term'.",
         "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Councilmember",
-      "Chair: Public Safety Committee",
-      "Vice Chair: Utilities Committee",
-      "Member: Community Services Committee"
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires: 2025' under 'Term'.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-16T17:57:57Z"
   },
   {
     "name": "Kim-Khánh Văn",
-    "image": null,
+    "sources": [
+      "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
+      "https://www.rentonwa.gov/Government/City-Council/rivera",
+      "https://www.rentonwa.gov/Government/City-Council/ohalloran",
+      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the navigation menu next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Kim-Khánh Văn' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Kim-Khánh Văn' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember Kim-Khánh Văn' in the navigation menu."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Directly stated in the navigation menu as 'Councilmember Kim-Khánh Văn'."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "425-430-6501",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "Phone number explicitly listed under 'Contact Information' for Councilmember Kim-Khánh Văn.",
         "source": "https://www.rentonwa.gov/Government/City-Council/van"
       }
     ],
-    "emails": [
-      {
-        "data": "kvan@rentonwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Contact Information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/van"
-      }
-    ],
+    "emails": [],
     "websites": [
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/van",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link to councilmember's page found in navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "A direct link to the council member's profile page is provided in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/van",
-        "llm_confidence": 0.75,
-        "llm_confidence_reason": "Found in the City Council list.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is directly linked to the person's name in the navigation menu.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/van",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL directly associated with the person's name in the navigation menu.",
         "source": "https://www.rentonwa.gov/Government/City-Council/ohalloran"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/van",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found in the navigation menu.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/rivera"
+        "llm_confidence_reason": "Extracted from the navigation menu link associated with the name.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/prince"
       },
       {
         "data": "https://www.rentonwa.gov/Government/City-Council/van",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the main page for the councilmember.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.rentonwa.gov/Government/City-Council/van"
-      }
-    ],
-    "term_dates": [
-      {
-        "data": "2020",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "The provided content is the profile page for Councilmember Kim-Khánh Văn, and the URL is her specific profile page.",
         "source": "https://www.rentonwa.gov/Government/City-Council/van"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/van",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL explicitly listed in the navigation menu for the person.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      },
+      {
+        "data": "https://www.rentonwa.gov/Government/City-Council/van",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL found in the navigation menu directly associated with the person's name and role.",
+        "source": "https://www.rentonwa.gov/Government/City-Council/alberson"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Councilmember",
-      "Chair: Utilities Committee",
-      "Vice Chair: Community Services Committee",
-      "Member: Planning & Development Committee"
-    ],
-    "sources": []
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-16T17:57:57Z"
   }
 ]
