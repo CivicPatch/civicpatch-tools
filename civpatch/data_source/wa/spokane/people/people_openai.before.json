@@ -15,7 +15,7 @@
       "https://my.spokanecity.org/mayor/about",
       "https://my.spokanecity.org/mayor"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   },
   {
     "name": "Betsy Wilkerson",
@@ -33,7 +33,7 @@
       "https://my.spokanecity.org/citycouncil/members",
       "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   },
   {
     "name": "Jonathan Bingle",
@@ -53,21 +53,12 @@
       "https://my.spokanecity.org/citycouncil/members",
       "https://my.spokanecity.org/citycouncil/members/jonathan-bingle"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   },
   {
     "name": "Michael Cathcart",
     "roles": [
-      "City Council Member",
-      "Vice Chair, Finance and Administration Committee",
-      "Member, Public Infrastructure, Environment and Sustainability Committee",
-      "Member, Public Safety & Community Health Committee",
-      "Member, Urban Experience Committee",
-      "Chairman, Northeast Public Development Authority (PDA)",
-      "Vice Chairman, Growth Management Steering Committee of Elected Officials",
-      "Vice Chairman, Spokane Regional Health District Board of Directors",
-      "Member, BROADLINC Public Development Authority (PDA) Governing Board",
-      "Member, Spokane Transit Authority"
+      "City Council Member"
     ],
     "divisions": [
       "District 1"
@@ -82,17 +73,13 @@
       "https://my.spokanecity.org/citycouncil/members",
       "https://my.spokanecity.org/citycouncil/members/michael-cathcart"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   },
   {
     "name": "Paul Dillon",
     "roles": [
       "City Council Member",
-      "Council President Pro-Tempore",
-      "Chair, Finance and Administration Committee",
-      "Member, Public Infrastructure, Environment and Sustainability Committee",
-      "Member, Public Safety & Community Health Committee",
-      "Member, Urban Experience Committee"
+      "Council President Pro-Tempore"
     ],
     "divisions": [
       "District 2"
@@ -107,7 +94,7 @@
       "https://my.spokanecity.org/citycouncil/members",
       "https://my.spokanecity.org/citycouncil/members/paul-dillon"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   },
   {
     "name": "Lili Navarrete",
@@ -127,7 +114,7 @@
       "https://my.spokanecity.org/citycouncil/members",
       "https://my.spokanecity.org/citycouncil/members/lili-navarrete"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   },
   {
     "name": "Zack Zappone",
@@ -147,7 +134,7 @@
       "https://my.spokanecity.org/citycouncil/members",
       "https://my.spokanecity.org/citycouncil/members/zack-zappone"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   },
   {
     "name": "Kitty Klitzke",
@@ -167,6 +154,6 @@
       "https://my.spokanecity.org/citycouncil/members",
       "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke"
     ],
-    "updated_at": "2025-06-16T17:50:00Z"
+    "updated_at": "2025-06-16T20:29:20Z"
   }
 ]
