@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.spokanevalleywa.gov/directory.aspx?EID=23%2F)
+[Skip to Main Content](https://www.spokanevalleywa.gov/directory.aspx?EID=18%2F)
 
 ![Home Page](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=66)
 
@@ -17,31 +17,31 @@ Search
 
 <!--THE END-->
 
-![](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=63)
+![](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=64)
 
 1. [Home](https://www.spokanevalleywa.gov)
 2. Staff Directory
 
-![Headshot of Councilmember Laura Padden](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=2810 "Headshot of Councilmember Laura Padden")
+![Headshot of Councilmember Jessica Yaeger](https://www.spokanevalleywa.gov/ImageRepository/Document?documentID=2807 "Headshot of Councilmember Jessica Yaeger")
 
-# Laura Padden
+# Jessica Yaeger
 
  
 
 [City Council](https://www.spokanevalleywa.gov/Directory.aspx?DID=8)  
-Title: Council Position 7  
-Phone: 509-720-5061  
-[Email Councilmember Padden](mailto:lpadden@SpokaneValleyWA.gov)
+Title: Council Position 2  
+Phone: 509-720-5064  
+[Email Councilmember Yaeger](mailto:jyaeger@SpokaneValleyWA.gov)
 
-**Term: 2022 to 2025**
+**Term: 2024 to 2027**
 
-Laura Padden is serving her first term on the City Council after being elected in November 2021.
+Jessica Yaeger is serving her first term on the City Council, elected to position 2 in November 2023.
 
-Padden holds a bachelor's degree in police science and administration from Washington State University. She later returned to college and earned a second bachelor's degree in computer science from Eastern Washington University.
+Yaeger has spent over 25 years in the healthcare field, with over 10 in executive leadership roles. She has her own company that works with seniors and their families to provide placement services, care management and end-of-life doula services. She earned a bachelor's degree in social sciences and psychology from Washington State University.
 
-Padden worked in private industry for many years and, for the last nearly 20 years, has been employed at the Community Colleges of Spokane as a software developer. She is active in her church in numerous capacities and serves on the Finance Council.
+Yaeger is a board member for Corbin Senior Center, a volunteer with the Northwest Boxer Rescue group and the previous board secretary for the Senior Action Network of Eastern Washington.
 
-Padden is a native of Spokane and has been a resident of Spokane Valley since the age of two. She is a frequent blood donor and actively volunteers in the community. She and her husband, Mike, have five grown sons and three grandchildren.
+Yaeger and her husband enjoy traveling, kayaking, walking their three dogs and spending time with their kids, friends, and family.
 
  
 

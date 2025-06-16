@@ -1,119 +1,180 @@
 [
   {
     "name": "Pam Haley",
-    "positions": [
-      "Council Position 5",
-      "Councilmember",
+    "roles": [
       "Council Member",
-      "Mayor"
+      "Mayor",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Position 5",
+      "at-large"
     ],
     "image": null,
     "phone_number": "509-720-5060",
     "email": "phaley@SpokaneValleyWA.gov",
     "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=21",
-    "term_date": "2022 to 2025",
+    "start_date": "2022",
+    "end_date": "2025",
     "sources": [
       "https://www.spokanevalleywa.gov/directory.aspx?EID=21",
-      "https://www.spokanevalleywa.gov/193/City-Council"
-    ]
-  },
-  {
-    "name": "Rod Higgins",
-    "positions": [
-      "Council Member",
-      "Council Position 1"
-    ],
-    "image": null,
-    "phone_number": "509-720-5066",
-    "email": "rhiggins@SpokaneValleyWA.gov",
-    "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=17",
-    "term_date": "2022 to 2025",
-    "sources": [
-      "https://www.spokanevalleywa.gov/directory.aspx?EID=17",
-      "https://www.spokanevalleywa.gov/193/City-Council"
-    ]
-  },
-  {
-    "name": "Jessica Yaeger",
-    "positions": [
-      "Council Member",
-      "Council Position 2"
-    ],
-    "image": null,
-    "phone_number": "509-720-5064",
-    "email": "jyaeger@SpokaneValleyWA.gov",
-    "website": "https://spokanevalleywa.gov/directory.aspx?EID=18",
-    "term_date": "2024 to 2027",
-    "sources": [
-      "https://spokanevalleywa.gov/directory.aspx?EID=18",
-      "https://www.spokanevalleywa.gov/193/City-Council"
-    ]
-  },
-  {
-    "name": "Al Merkel",
-    "positions": [
-      "Council Member",
-      "Council Position 3"
-    ],
-    "image": null,
-    "phone_number": "509-720-5062",
-    "email": "amerkel@SpokaneValleyWA.gov",
-    "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=19",
-    "term_date": "2024 to 2027",
-    "sources": [
-      "https://www.spokanevalleywa.gov/directory.aspx?EID=19",
       "https://www.spokanevalleywa.gov/193/City-Council",
-      "https://spokanevalleywa.gov/directory.aspx?EID=19"
-    ]
-  },
-  {
-    "name": "Ben Wick",
-    "positions": [
-      "Council Member",
-      "Council Position 4"
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/directory.aspx?EID=21"
     ],
-    "image": null,
-    "phone_number": "509-720-5065",
-    "email": "bwick@SpokaneValleyWA.gov",
-    "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=20",
-    "term_date": "2022 to 2025",
-    "sources": [
-      "https://www.spokanevalleywa.gov/directory.aspx?EID=20",
-      "https://www.spokanevalleywa.gov/193/City-Council"
-    ]
+    "updated_at": "2025-06-16T17:52:25Z"
   },
   {
     "name": "Tim Hattenburg",
-    "positions": [
-      "Council Member",
-      "Council Position 6",
-      "Deputy Mayor"
+    "roles": [
+      "Deputy Mayor",
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position 6"
     ],
     "image": null,
     "phone_number": "509-720-5063",
     "email": "thattenburg@SpokaneValleyWA.gov",
     "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=22",
-    "term_date": "2024 to 2027",
+    "start_date": "2024",
+    "end_date": "2027",
     "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
       "https://www.spokanevalleywa.gov/directory.aspx?EID=22",
-      "https://www.spokanevalleywa.gov/193/City-Council"
-    ]
+      "https://spokanevalleywa.gov/directory.aspx?EID=22"
+    ],
+    "updated_at": "2025-06-16T17:52:25Z"
+  },
+  {
+    "name": "Rod Higgins",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position 1"
+    ],
+    "image": null,
+    "phone_number": "509-720-5066",
+    "email": "rhiggins@SpokaneValleyWA.gov",
+    "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=17",
+    "start_date": "2022",
+    "end_date": "2025",
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=17",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/directory.aspx?EID=17"
+    ],
+    "updated_at": "2025-06-16T17:52:25Z"
+  },
+  {
+    "name": "Jessica Yaeger",
+    "roles": [
+      "Councilmember",
+      "Council Member",
+      "Council Position 2"
+    ],
+    "divisions": [
+      "at-large",
+      "Position 2"
+    ],
+    "image": null,
+    "phone_number": "509-720-5064",
+    "email": "jyaeger@SpokaneValleyWA.gov",
+    "website": "https://spokanevalleywa.gov/directory.aspx?EID=18",
+    "start_date": "2024",
+    "end_date": "2027",
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/directory.aspx?EID=18",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=18",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8"
+    ],
+    "updated_at": "2025-06-16T17:52:25Z"
+  },
+  {
+    "name": "Al Merkel",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position 3"
+    ],
+    "image": null,
+    "phone_number": "509-720-5062",
+    "email": "amerkel@SpokaneValleyWA.gov",
+    "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=19",
+    "start_date": "2024",
+    "end_date": "2027",
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=19",
+      "https://spokanevalleywa.gov/directory.aspx?EID=19"
+    ],
+    "updated_at": "2025-06-16T17:52:25Z"
+  },
+  {
+    "name": "Ben Wick",
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position 4"
+    ],
+    "image": null,
+    "phone_number": "509-720-5065",
+    "email": "bwick@SpokaneValleyWA.gov",
+    "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=20",
+    "start_date": "2022",
+    "end_date": "2025",
+    "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://www.spokanevalleywa.gov/directory.aspx?EID=20",
+      "https://spokanevalleywa.gov/directory.aspx?EID=20"
+    ],
+    "updated_at": "2025-06-16T17:52:25Z"
   },
   {
     "name": "Laura Padden",
-    "positions": [
-      "Council Member",
-      "Council Position 7",
-      "Councilmember"
+    "roles": [
+      "Councilmember",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position 7"
     ],
     "image": null,
     "phone_number": "509-720-5061",
     "email": "lpadden@SpokaneValleyWA.gov",
     "website": "https://www.spokanevalleywa.gov/directory.aspx?EID=23",
-    "term_date": "2022 to 2025",
+    "start_date": "2021-11",
+    "end_date": "2025",
     "sources": [
+      "https://www.spokanevalleywa.gov/193/City-Council",
+      "https://www.spokanevalleywa.gov/Directory.aspx?DID=8",
+      "https://spokanevalleywa.gov/Directory.aspx?DID=8",
       "https://www.spokanevalleywa.gov/directory.aspx?EID=23",
-      "https://www.spokanevalleywa.gov/193/City-Council"
-    ]
+      "https://spokanevalleywa.gov/directory.aspx?EID=23"
+    ],
+    "updated_at": "2025-06-16T17:52:25Z"
   }
 ]
