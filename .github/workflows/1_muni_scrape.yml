@@ -52,7 +52,7 @@ jobs:
           echo "geoids_to_ignore: $geoids_to_ignore"
 
           # Extract GEOIDs from branch names like pipeline-municipal-scrapes-wa-2410494-14096425230
-          geoids=$(echo $geoids_to_ignore | sed -E 's/.*-([0-9]+)-[0-9]+$/\1/g' | tr ' ' ',')
+          geoids=$(for branch in $geoids_to_ignore; do echo "$branch" | sed -E 's/.*-([0-9]+)-[0-9]+$/\1/'; done | paste -sd, -)
           echo "geoids: $geoids"
 
           # Now the rake task returns JSON array of objects
