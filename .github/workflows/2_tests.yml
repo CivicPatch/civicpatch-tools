@@ -1,4 +1,4 @@
-name: 2b. 🧪 - Tests
+name: 2. Tests
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-ruby@v1
 
       - name: Run unit tests
-        run:
+        run: |
           cd civpatch
           TEST_PATTERN="test/unit/**/*_test.rb" bundle exec rake test
       

@@ -41,7 +41,7 @@ module Scrapers
     end
 
     def self.fetch(state)
-      # scraper = get_scraper(state)
+      scraper = get_scraper(state)
       statefp = Services::Census::STATE_TO_STATEFP[state]
 
       raise "No statefp found for #{state}" if statefp.nil?
@@ -50,7 +50,7 @@ module Scrapers
       descending = -1
       municipalities_with_census_data = municipalities_with_census_data
                                         .sort_by { |m| m["population"] * descending }
-      # additional_info_hash_by_municipality_name = scraper.fetch
+      additional_info_hash_by_municipality_name = scraper.fetch
 
       municipalities_with_census_data.map do |m|
         # if additional_info_hash_by_municipality_name.nil?
@@ -61,14 +61,14 @@ module Scrapers
         # NOTE: Need to specify by county for states with duplicates.
         # See: Michigan
         {
-          **m
-          # **additional_info_hash_by_municipality_name[m["name"]]
+          **m,
+          **additional_info_hash_by_municipality_name[m["name"]]
           # Properties available:
-          # address
-          # phone_number
-          # website
-          # email
-          # government_type
+          # -> address
+          # -> phone_number
+          # -> website
+          # -> email
+          # -> government_type
         }
       end
     end
@@ -103,9 +103,7 @@ module Scrapers
           "type" => type,
           # https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html
           "geoid" => "#{statefp}#{municipality_codes["PLACEFP"]}",
-          # "fips" => "#{statefp}-#{municipality_codes["PLACEFP"]}",
-          # "gnis" => format_gnis(municipality_codes["PLACENS"]),
-          "counties" => format_counties(municipality_codes["COUNTIES"])
+          "counties" => format_counties(municipality_codes["COUNTIES"]),
         }
       end
 

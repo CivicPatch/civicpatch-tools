@@ -219,7 +219,7 @@ DEPENDENCIES
   fuzzy_match (~> 2.1)
   google-apis-sheets_v4 (~> 0.41.0)
   googleauth (~> 1.14)
-  httparty
+  httparty (~> 0.23.1)
   json
   minitest (~> 5.16)
   namae (~> 1.2)

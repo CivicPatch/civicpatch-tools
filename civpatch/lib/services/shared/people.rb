@@ -113,7 +113,6 @@ module Services
       end
 
       def self.data_point?(data_point)
-        puts "DATA POINT: #{data_point}"
         return false unless data_point.is_a?(Hash)
 
         data_point["data"]&.present? &&

@@ -10,7 +10,7 @@ gem "rubocop", "~> 1.75"
 
 gem "activesupport", "~> 7.0"
 
-gem "httparty"
+gem "httparty", "~> 0.23.1"
 
 gem "nokogiri"
 

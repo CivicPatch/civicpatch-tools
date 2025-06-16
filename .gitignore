@@ -4,6 +4,7 @@ todo.md
 .bundle/
 .yardoc
 _yardoc/
+.ruby-lsp/
 coverage/
 doc/
 pkg/

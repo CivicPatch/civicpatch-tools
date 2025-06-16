@@ -10,41 +10,44 @@ module Scrapers
 
       def self.fetch
         title = "List_of_municipalities_in_Washington"
-        cities = Services::Wikipedia.fetch_places_from_wikipedia("wa", title)
+        # cities = Services::Wikipedia.fetch_places_from_wikipedia("wa", title)
 
-        sorted_cities = cities.sort_by { |city| city["population"] }.reverse
-        source_cities = get_places_list
-        with_government_types(source_cities, sorted_cities)
+        # sorted_cities = cities.sort_by { |city| city["population"] }.reverse
+        source_cities = get_places_map
+        # with_government_types(source_cities)
       end
 
-      def self.with_government_types(source_cities, cities)
-        cities.each do |city|
-          # Assumption: no cities in washington
-          # have the same name
-          city_with_info = source_cities.find do |source_city|
-            source_city["name"].downcase == city["name"].gsub("_", " ").downcase
-          end
+      #def self.with_government_types(source_cities, cities)
+      #  cities.each do |city|
+      #    # Assumption: no cities in washington
+      #    # have the same name
+      #    city_with_info = source_cities.find do |source_city|
+      #      source_city["name"].downcase == city["name"].gsub("_", " ").downcase
+      #    end
 
-          next unless city_with_info.present?
+      #    next unless city_with_info.present?
 
-          city["government_type"] = city_with_info["government_type"]
-        end
-      end
+      #    city["government_type"] = city_with_info["government_type"]
+      #  end
+      #end
 
-      def self.get_places_list
+      def self.get_places_map
         response = HTTParty.get(STATE_SOURCE_URL)
         document = Nokogiri::HTML(response.body)
 
         data = document.css("#tableCityProfiles").attr("data-data")
         cities = JSON.parse(data)
-        cities.map do |city|
-          {
+        cities_map = {}
+        cities.each do |city|
+          cities_map[city["CityName"]] = {
             "name" => city["CityName"],
-            "city_id" => city["CityID"],
+            "meta" => { "city_id" => city["CityID"] },
             "website" => city["Website"],
-            "government_type" => city["FormofGov"]
+            "government_type" => "mayor_council" # Sometimes council-managers also have decorative mayors
           }
         end
+
+        cities_map
       end
     end
   end
