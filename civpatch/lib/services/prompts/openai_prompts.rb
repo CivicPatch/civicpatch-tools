@@ -96,6 +96,7 @@ module Services
           - Contact Details (Phone/Email/Website):
             - Associate details logically if near the person's name/section.
             - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
+              Pick the most relevant phone number if multiple are present.
             - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
             - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
             - `email` data should ONLY contain email addresses.
