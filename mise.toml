@@ -3,3 +3,4 @@ go = 'latest'
 air = 'latest'
 gitleaks = 'latest'
 python = 'latest' # For gitleaks
+ruby = "latest"

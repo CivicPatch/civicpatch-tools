@@ -6,6 +6,14 @@ require "core/config_manager"
 require "scrapers/municipalities"
 
 namespace :one_off do
+  task "determine_gov" do
+    state = "wa"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    count = municipalities.select do |municipality|
+      municipality["government_type"] == "Mayor-Councl" || "Council-Manager"
+    end
+    puts "Count of municipalities with Mayor-Council or Council-Manager: #{count.length}"
+  end
   task "count_municipalities" do
     state = "nh"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
