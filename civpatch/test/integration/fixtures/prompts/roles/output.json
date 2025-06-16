@@ -1,0 +1,70 @@
+[
+  {
+    "name": "Michael Cathcart",
+    "sources": [
+      "https://testville.gov/council"
+    ],
+    "images": [
+      {
+        "data": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/3x4/medium/michael-cathcart.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with Michael Cathcart's profile.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member, District 1' in the content."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'District 1' in the content."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509.625.6224",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under Legislative Assistant Shae Blackwell, likely the contact for Michael Cathcart's office.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mcathcart@spokanecity.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Michael Cathcart's name.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL is the profile page for Michael Cathcart on the city council website.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term stated as 2024-2027; start date taken as 2024.",
+        "source": "https://testville.gov/council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term stated as 2024-2027; end date taken as 2027.",
+        "source": "https://testville.gov/council"
+      }
+    ]
+  }
+]
