@@ -173,7 +173,6 @@ namespace :pipeline do
 
   def on_scrape_complete(municipality_context)
     geoid = municipality_context[:municipality_entry]["geoid"]
-    people = Core::PeopleManager.get_people(municipality_context[:state], geoid)
     state = municipality_context[:state]
 
     Core::CacheManager.clean(state, geoid)

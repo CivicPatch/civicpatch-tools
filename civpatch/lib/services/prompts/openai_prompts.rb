@@ -15,7 +15,7 @@ module Services
 
         content_type = if person_name.present?
                          "First, determine if the content contains information about the target person: #{person_name}."
-                       else
+                       elsif maybe_target_people.present? && maybe_target_people.count.positive?
                          %(Your primary task is to identify and extract information for the members of
                          the primary governing body (e.g., Town Council, City Council, Select Board,
                          Board of Aldermen, Commissioners) of the target municipality found within the provided content.
@@ -31,6 +31,12 @@ module Services
                          If the content does not appear to contain any members of the primary governing body,
                          return an empty JSON array `[]`.
                          )
+                       else
+                         %(Your primary task is to identify and extract information for the members of
+                         the primary governing body (e.g., Town Council, City Council, Select Board,
+                         Board of Aldermen, Commissioners) of the target municipality found within the provided content.
+                         Be cautious with other municipal boards (e.g., Planning Board, Zoning Board,
+                         Conservation Commission, etc.) -- they are not the primary governing body.)
                        end
 
         system_instructions = <<~INSTRUCTIONS
@@ -74,14 +80,13 @@ module Services
           - Roles:
             - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
             - **Focus on Main Governing Body**: Prioritize extracting members of the primary municipal governing body
-              (e.g., Town Council, City Council, Select Board). The `Key roles` and `Examples` provided to you#{" "}
-              primarily refer to oooooooo on this main body.
-            - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned, vacated their position, is deceased,
-              or their position is otherwise noted as vacant (e.g., "applications being accepted for this seat")**,
-              DO NOT include them as a current office holder or extract their position.
-              The statement of resignation or vacancy takes precedence over any listed future term dates when determining current active status.
-              For example, if a person was "Elected Nov 2024 for term ending Dec 2028" but then "Resigned April 15",#{" "}
-              they should NOT be included in the output as an active member.
+              (e.g., Town Council, City Council, Select Board).
+            - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
+              (e.g., "Youth Councilor", "Student Representative", "Vice Chair of the Finance and Administration Committee"),
+              or non-voting unless they are explicitly listed in the Target Municipal Roles.
+              Focus on the primary elected/appointed governing body members.
+              We are only interested in roles that are related to the main governing body of the municipality.
+            - **EXCLUDE**: Do NOT extract roles for any committees, authorities, commissions, or boards that are not the main governing body, even if the title sounds official (e.g., "Vice Chair of Transit Authority", "Chair of Finance Committee", "Member, Planning Board"). Only include roles that match the Target roles list exactly.
             - Divisions should NOT be included under roles.
           - Divisions:
             - A person can have multiple divisions. List them separately.
@@ -106,7 +111,7 @@ module Services
             - Acceptable date phrases include:
               - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
               - For vague phrases like "Spring 2025", extract the year only.
-            - If more than one term is mentioned, extract the most recent term dates. 
+            - If more than one term is mentioned, extract the most recent term dates.#{" "}
             - If more than one start date is mentioned, use the most recent one (actual start date is preferred over elected term date).
             - Examples:
               - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
