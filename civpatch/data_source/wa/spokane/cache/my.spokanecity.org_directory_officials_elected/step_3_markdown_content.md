@@ -1,9 +1,3 @@
-##### Checking Your Browser
-
-Starting Session...Continue
-
-Browser cookies and javascript are enabled.
-
 Garbage, recycling, and food &amp; yard waste services are on their normal schedule this week. Reminder! Carts need to be at the curb by 6 a.m. on your regular collection day. [See more information](https://my.spokanecity.org/news/releases/2025/06/16/city-closures-planned-for-juneteenth) regarding other City closures.
 
 - [City of Spokane](https://my.spokanecity.org "City of Spokane Home Page")
@@ -17,93 +11,98 @@ Garbage, recycling, and food &amp; yard waste services are on their normal sched
 - [Search](https://my.spokanecity.org/search "Website Search")
 - [My Account](https://my.spokanecity.org/account "My Account")
 
-[Menu](https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke)
+[Menu](https://my.spokanecity.org/directory/officials/elected)
 
-- [City Council](https://my.spokanecity.org/citycouncil)More
+- [Directory](https://my.spokanecity.org/directory)More
   
-  - [Council Members](https://my.spokanecity.org/citycouncil/members)
-  - [Items of Interest](https://my.spokanecity.org/citycouncil/items-of-interest)
-  - [Meetings](https://my.spokanecity.org/citycouncil/meetings)
-  - [Documents](https://my.spokanecity.org/citycouncil/documents)
-  - [FAQs](https://my.spokanecity.org/citycouncil/faqs)
-  - [Blogs](https://my.spokanecity.org/citycouncil/blogs)
-  - [Video Programs](https://my.spokanecity.org/citycouncil/videos)
-- [Council Members](https://my.spokanecity.org/citycouncil/members)More
+  - [Officials](https://my.spokanecity.org/directory/officials)
+  - [Agencies](https://my.spokanecity.org/directory/agencies)
+  - [Boards &amp; Commissions](https://my.spokanecity.org/directory/bcc)
+  - [Locations](https://my.spokanecity.org/directory/locations)
+- [Officials](https://my.spokanecity.org/directory/officials)More
   
-  - [Betsy Wilkerson](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson)
-  - [Jonathan Bingle](https://my.spokanecity.org/citycouncil/members/jonathan-bingle)
-  - [Michael Cathcart](https://my.spokanecity.org/citycouncil/members/michael-cathcart)
-  - [Paul Dillon](https://my.spokanecity.org/citycouncil/members/paul-dillon)
-  - [Lili Navarrete](https://my.spokanecity.org/citycouncil/members/lili-navarrete)
-  - [Zack Zappone](https://my.spokanecity.org/citycouncil/members/zack-zappone)
-  - [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/kitty-klitzke)
-  - [Vacancy](https://my.spokanecity.org/citycouncil/members/vacancy)
-- [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/kitty-klitzke)
+  - [Elected](https://my.spokanecity.org/directory/officials/elected)
+  - [By Division](https://my.spokanecity.org/directory/officials/by-division)
+  - [A-Z](https://my.spokanecity.org/directory/officials/a-z)
+- [Elected](https://my.spokanecity.org/directory/officials/elected)
 
-# [City Council](https://my.spokanecity.org/citycouncil/default.aspx "City Council")
+# [Directory](https://my.spokanecity.org/directory/default.aspx "Directory")
 
 ![City of Spokane, Washington](https://static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/Full/clock-tower-and-pavilion.jpg)
 
 - Previous
 - Next
 
-## Kitty Klitzke
+### Office of the Mayor
 
-![Kitty Klitzke](https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/3x4/medium/kitty-klitzke.jpg)
+City Hall, Seventh Floor • [808 W. Spokane Falls Blvd., Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+Spokane,+WA+99201)
 
-*City Council Member, District 3*  
-Term: 2024-2027  
-[kklitzke@spokanecity.org](mailto:kklitzke@spokanecity.org)
+#### Lisa Brown
 
-Council member Klitzke is an accomplished land use and transportation advocate excited to take on the city's long-term planning and vision needs. She is a former army reserve medic, former chair of Spokane's Community Assembly Pedestrian, Transportation, and Traffic Committee, chair of the Spokane Regional Transportation Advisory Committee, and president of the Spokane Regional Food Policy Council. She led Complete Streets Spokane, which successfully advocated for bike and pedestrian infrastructure requirements when planning and building streets.
+Mayor  
+Phone: 509.625.6250  
+Email: [mayor@spokanecity.org](mailto:mayor@spokanecity.org)
 
-Council member Klitzke is a lifelong resident of Spokane. She grew up in Northeast Spokane and has lived in Northwest Spokane since 2003. She and her husband, Rick, have two children, one in college and one in public school. They enjoy Nordic skiing, kayaking, rafting, hiking, backpacking, and staying active in the community.
+### City Council
 
-#### Current Council Related Boards, Committees and Commissions
+City Hall, Seventh Floor • [808 W. Spokane Falls Blvd., Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+Spokane,+WA+99201)
 
-- [Public Infrastructure, Environment and Sustainability Committee](https://my.spokanecity.org/bcc/committees/public-infrastructure-environment-and-sustainability), Chair
-- [Plan Commission](https://my.spokanecity.org/bcc/commissions/plan-commission), Liaison
-- [GMA Steering Committee of Association of Washington](https://my.spokanecity.org/bcc/committees/spokane-county-growth-management-steering-committee), Elected Officials
-- [Spokane Library Board of Trustees](https://my.spokanecity.org/bcc/boards/spokane-public-library-board-of-trustees), Liaison
-- [Spokane Transit Authority](https://my.spokanecity.org/bcc/boards/spokane-transit-authority)
-- [Spokane Regional Transportation Commission](https://my.spokanecity.org/bcc/commissions/transportation-commission)
-- [Spokane Regional Solid Waste](https://www.spokanecounty.org/1270/Solid-Waste-Advisory-Committee)
-- [Salmon Restoration Lead Entity](https://spokanesalmon.org/about/lead-entities)
-- [Veterans' Advisory Board](https://www.spokanecounty.org/3951/Veterans-Advisory-Board-VAB)
-- [Cooper Jones Active Transportation Safety Council (ATSC)](https://wtsc.wa.gov/safe-driving/active-transportation-safety-council)
+#### Betsy Wilkerson
 
-#### Legislative Assistant
+City Council President  
+Phone: 509.625.6258  
+Email: [bwilkerson@spokanecity.org](mailto:bwilkerson@spokanecity.org)
 
-Sarah Sirott  
-[ssirott@spokanecity.org](mailto:ssirott@spokanecity.org)
+#### Michael Cathcart
 
-#### Voting History
+City Council, District 1  
+Phone: 509.625.6257  
+Email: [mcathcart@spokanecity.org](mailto:mcathcart@spokanecity.org)
 
-Show 102550100 entries
+#### Jonathan Bingle
 
-Search:
+City Council, District 1  
+Phone: 509.625.6275  
+Email: [jbingle@spokanecity.org](mailto:jbingle@spokanecity.org)
 
-Date Description Vote [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36658** - Vacation of Latah Place between Inland Empire Way and the Union Pacific Railroad, as requested by adjacent property owners. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36681** - Relating to Employee Leave, amending SMC sections 03.04.010, 03.04.020, 03.04.040, 03.04.070, 03.04.200, 03.04.220, 03.04.230, to chapter 03.04 of the Spokane Municipal Code; repealing SMC section 03.04.030, to chapter 03.04 of the Spokane Municipal Code; and setting an effective date. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36683** - Correcting position titles in SMC Chapter 07.06; amending Sections 07.06.097 and 07.06.271 of the Spokane Municipal Code. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Ordinance C36696** - Hearing on Final Reading Ordinance C36696 Amending Title 17 of the Spokane Municipal Code to update regulations governing accessory dwelling units (ADU’s) in accordance with House Bill 1337. Specifically amending Section 17A.020.010 “A” Definitions, Chapter 17C.111.205 Development Standards Tables, Chapter 17C.300 Accessory Dwelling Units, Section 17H.010.040 Initiation of Street Improvement Projects, setting an effective date, and other matters properly related thereto. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Resolution 2025-0035** - Providing for the issuance and sale of taxable Limited Tax General Obligation Bonds in the aggregate principal amount of not to exceed $6,800,000. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Resolution 2025-0037** - Declaring Leads Online, formerly Forensic Technology (Largo, FL), a sole-source provider and authorizing the City to enter into a five (5) year contract for IBIS ClearCase – approximately $356,963.20, without public bidding. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Resolution 2025-0038** - Approving settlement with Krista Tripp-$400,000. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Special Budget Ordinance C36687** - Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to finance capital needs in the Fire Department, and declaring an emergency. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Special Budget Ordinance C36688** - Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to increase a part time employee to a full time employee in the cares program, and declaring an emergency. Yea [06/02/25](https://my.spokanecity.org/citycouncil/meetings/2025/06/02/legislative-meeting) **Special Budget Ordinance C36689** - Amending Ordinance No. C36626, entitled in part, “An Ordinance adopting a Biennial Budget for the City of Spokane,” and amending it to replace damaged multi-purpose armored vehicle, and declaring an emergency. Yea
+#### Paul Dillon
 
-Showing 1 to 10 of 346 entries
+City Council, District 2  
+Phone: 509.625.6254  
+Email: [pdillon@spokanecity.org](mailto:pdillon@spokanecity.org)
 
-Previous12345…35Next
+#### Lili Navarrete
+
+City Council, District 2  
+Phone: 509.768.6738  
+Email: [lnavarrete@spokanecity.org](mailto:lnavarrete@spokanecity.org)
+
+#### Kitty Klitzke
+
+City Council, District 3  
+Phone: 509.625.6291  
+Email: [kklitzke@spokanecity.org](mailto:kklitzke@spokanecity.org)
+
+#### Zack Zappone
+
+City Council, District 3  
+Phone: 509.625.6256  
+Email: [zzappone@spokanecity.org](mailto:zzappone@spokanecity.org)
+
+* * *
+
+#### Other Resources
+
+- [Boards &amp; Commissions](https://my.spokanecity.org/bcc)
 
 *The City of Choice*
 
 * * *
 
-#### City Council
+[808 W. Spokane Falls Blvd.  
+Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+Spokane,+WA+99201)
 
-808 W. Spokane Falls Blvd.  
-Spokane, WA 99201  
-509.625.6255
-
-- [X/Twitter](https://twitter.com/spokane_council "Follow us on X/Twitter")
-- [Facebook](https://facebook.com/spokanecitycouncil "Find us on Facebook")
-- [Vimeo](https://vimeo.com/spokanecitycouncil "Watch us on Vimeo")
-
-<!--THE END-->
+Dial 311 or 509.755.CITY (2489)
 
 - spokanecity
 
@@ -222,7 +221,7 @@ Spokane, WA 99201
 - [Vimeo](https://vimeo.com/spokanecity "Watch us on Vimeo")
 - [Instagram](https://instagram.com/spokanecity "See us on Instagram")
 
-[Back Top](https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/ "Back Top")
+[Back Top](https://my.spokanecity.org/directory/officials/elected/ "Back Top")
 
 - [Terms of Use](https://my.spokanecity.org/website/terms "Terms of Use & Disclaimer")
 - [Your Privacy](https://my.spokanecity.org/website/privacy "Privacy Policy")

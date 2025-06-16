@@ -1,136 +1,174 @@
 [
   {
     "name": "Lisa Brown",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
+    "divisions": [],
     "image": null,
-    "phone_number": null,
-    "email": null,
+    "phone_number": "509.625.6250",
+    "email": "mayor@spokanecity.org",
     "website": "https://my.spokanecity.org/mayor/about",
-    "term_date": null,
+    "start_date": null,
+    "end_date": null,
     "sources": [
-      "https://my.spokanecity.org/mayor"
-    ]
-  },
-  {
-    "name": "Betsy Wilkerson",
-    "positions": [
-      "City Council President"
+      "https://my.spokanecity.org/mayor/about",
+      "https://my.spokanecity.org/mayor",
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/directory/officials/elected"
     ],
-    "image": null,
-    "phone_number": null,
-    "email": "bwilkerson@spokanecity.org",
-    "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson",
-    "term_date": "2024-2027",
-    "sources": [
-      "https://my.spokanecity.org/citycouncil/members"
-    ]
-  },
-  {
-    "name": "Jonathan Bingle",
-    "positions": [
-      "City Council Member",
-      "District 1"
-    ],
-    "image": null,
-    "phone_number": null,
-    "email": "jbingle@spokanecity.org",
-    "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle",
-    "term_date": "2022-2025",
-    "sources": [
-      "https://my.spokanecity.org/citycouncil/members"
-    ]
+    "updated_at": "2025-06-16T17:54:43Z"
   },
   {
     "name": "Michael Cathcart",
-    "positions": [
-      "City Council Member",
+    "roles": [
+      "Council Member",
+      "Vice Chair",
+      "Chairman",
+      "Vice Chairman"
+    ],
+    "divisions": [
       "District 1"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "509.625.6257",
     "email": "mcathcart@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
-    "term_date": "2024-2027",
+    "start_date": "2024",
+    "end_date": "2027",
     "sources": [
-      "https://my.spokanecity.org/citycouncil/members"
-    ]
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/directory/officials/elected"
+    ],
+    "updated_at": "2025-06-16T17:54:43Z"
+  },
+  {
+    "name": "Betsy Wilkerson",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "509.625.6258",
+    "email": "bwilkerson@spokanecity.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/directory/officials/elected"
+    ],
+    "updated_at": "2025-06-16T17:54:43Z"
+  },
+  {
+    "name": "Jonathan Bingle",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 1"
+    ],
+    "image": null,
+    "phone_number": "509.625.6275",
+    "email": "jbingle@spokanecity.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/directory/officials/elected"
+    ],
+    "updated_at": "2025-06-16T17:54:43Z"
   },
   {
     "name": "Paul Dillon",
-    "positions": [
-      "City Council Member",
-      "District 2",
-      "City Council Member, District 2",
+    "roles": [
+      "Council Member",
       "Council President Pro-Tempore",
-      "Chair",
-      "Member",
-      "Liaison"
+      "Chair"
+    ],
+    "divisions": [
+      "District 2"
     ],
     "image": null,
     "phone_number": "509.564.4569",
     "email": "pdillon@spokanecity.org",
     "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon",
-    "term_date": "2024-2027",
+    "start_date": "2024",
+    "end_date": "2027",
     "sources": [
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
       "https://my.spokanecity.org/citycouncil/members/paul-dillon",
-      "https://my.spokanecity.org/citycouncil/members"
-    ]
+      "https://my.spokanecity.org/directory/officials/elected"
+    ],
+    "updated_at": "2025-06-16T17:54:43Z"
   },
   {
     "name": "Lili Navarrete",
-    "positions": [
-      "City Council Member",
-      "District 2",
-      "Member of Finance and Administration Committee",
-      "Member of Public Safety & Community Health Committee",
-      "Member of Public Infrastructure, Environment and Sustainability Committee",
-      "Vice Chair of Urban Experience Committee"
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 2"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "509.768.6738",
     "email": "lnavarrete@spokanecity.org",
-    "website": "https://my.spokanecity.org/citycouncil/members/lili-navarrete",
-    "term_date": "2024-2025",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
     "sources": [
-      "https://my.spokanecity.org/citycouncil/members"
-    ]
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/directory/officials/elected"
+    ],
+    "updated_at": "2025-06-16T17:54:43Z"
   },
   {
     "name": "Zack Zappone",
-    "positions": [
-      "City Council Member",
-      "District 3",
-      "Member of Finance and Administration Committee",
-      "Member of Public Infrastructure, Environment and Sustainability Committee",
-      "Chair of Public Safety & Community Health Committee",
-      "Member of Urban Experience Committee"
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 3"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "509.625.6256",
     "email": "zzappone@spokanecity.org",
-    "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone",
-    "term_date": "2022-2025",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
     "sources": [
-      "https://my.spokanecity.org/citycouncil/members"
-    ]
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/directory/officials/elected"
+    ],
+    "updated_at": "2025-06-16T17:54:43Z"
   },
   {
     "name": "Kitty Klitzke",
-    "positions": [
-      "City Council Member",
-      "District 3",
-      "Chair",
-      "Liaison"
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 3"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "509.625.6291",
     "email": "kklitzke@spokanecity.org",
-    "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke",
-    "term_date": "2024-2027",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
     "sources": [
-      "https://my.spokanecity.org/citycouncil/members"
-    ]
+      "https://my.spokanecity.org/citycouncil/members/michael-cathcart",
+      "https://my.spokanecity.org/citycouncil/members/paul-dillon",
+      "https://my.spokanecity.org/directory/officials/elected"
+    ],
+    "updated_at": "2025-06-16T17:54:43Z"
   }
 ]
