@@ -42,6 +42,28 @@ jobs:
         run: |
           go build -o bin/cli
 
+      - name: Compute Docker cache key
+        id: docker-key
+        run: echo "key=docker-cache-${{ hashFiles('Dockerfile', 'civicpatch_cli/go.mod', '**/*.go') }}" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: docker-latest.tar
+          key: ${{ steps.docker-key.outputs.key }}
+          restore-keys: |
+            docker-cache-
+
+      - name: Load Docker image from cache
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: docker load -i docker-latest.tar
+
+      - name: Pull latest image if not cached
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          docker pull ghcr.io/civicpatch/civpatch:latest
+          docker save ghcr.io/civicpatch/civpatch:latest -o docker-latest.tar
+
       - name: Get scrape candidates from queue
         id: set-municipalities
         run: |
