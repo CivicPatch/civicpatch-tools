@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"civpatch/utils"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"os"
 	"os/exec"
 	"time"
+	"encoding/json"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
@@ -396,59 +396,46 @@ func (c *Client) GetContainerId(ctx context.Context, labels map[string]string) (
 }
 
 func (c *Client) PullImage(ctx context.Context, imageTag string) error {
-	fmt.Printf("Attempting to pull %s without explicit credentials (anonymous pull).\n", imageTag)
+	// First check if image exists locally
+    _, _, err := c.client.ImageInspectWithRaw(ctx, imageTag)
+    if err == nil {
+        fmt.Println("Image already exists locally:", imageTag)
+        return nil
+    }
 
-	pullResp, err_pull := c.client.ImagePull(ctx, imageTag, image.PullOptions{})
-	if err_pull != nil {
-		return fmt.Errorf("error initiating image pull for %s: %v", imageTag, err_pull)
-	}
-	defer pullResp.Close()
+    if client.IsErrNotFound(err) {
+        fmt.Println("Image not found locally, pulling:", imageTag)
 
-	// Stream the pull output
-	decoder := json.NewDecoder(pullResp)
-	for {
-		var pullOutput struct {
-			Status         string `json:"status"`
-			Error          string `json:"error"`
-			Progress       string `json:"progress"`
-			ProgressDetail struct {
-				Current int `json:"current"`
-				Total   int `json:"total"`
-			} `json:"progressDetail"`
-			ID string `json:"id"`
-		}
-		// Use a new variable for decode error
-		err_decode := decoder.Decode(&pullOutput)
-		if err_decode != nil {
-			if err_decode == io.EOF {
-				break // End of stream
-			}
-			break
-		}
+        reader, err := c.client.ImagePull(ctx, imageTag, types.ImagePullOptions{})
+        if err != nil {
+            return fmt.Errorf("pull failed: %w", err)
+        }
+        defer reader.Close()
 
-		if pullOutput.Error != "" {
-			return fmt.Errorf("image pull error for %s: %s", imageTag, pullOutput.Error)
-		}
+        // Read and decode the JSON stream line-by-line
+        decoder := json.NewDecoder(reader)
+        for {
+            var msg map[string]interface{}
+            if err := decoder.Decode(&msg); err == io.EOF {
+                break
+            } else if err != nil {
+                return fmt.Errorf("error reading pull response: %w", err)
+            }
 
-		if pullOutput.Status != "" {
-			logMsg := fmt.Sprintf("Status: %s", pullOutput.Status)
-			if pullOutput.ID != "" {
-				logMsg += fmt.Sprintf(", ID: %s", pullOutput.ID)
-			}
-			if pullOutput.Progress != "" {
-				logMsg += fmt.Sprintf(", Progress: %s", pullOutput.Progress)
-			}
-			fmt.Println(logMsg)
-		}
-	}
+            if status, ok := msg["status"]; ok {
+                if id, hasID := msg["id"]; hasID {
+                    fmt.Printf("%s: %s\n", id, status)
+                } else {
+                    fmt.Println(status)
+                }
+            } else if errMsg, ok := msg["error"]; ok {
+                return fmt.Errorf("pull error: %s", errMsg)
+            }
+        }
 
-	// Verify the image exists locally
-	// Use a new variable for inspect error
-	_, _, err_inspect := c.client.ImageInspectWithRaw(ctx, imageTag)
-	if err_inspect != nil {
-		return fmt.Errorf("error verifying image %s locally after pull: %v", imageTag, err_inspect)
-	}
+        fmt.Printf("Successfully pulled image %s\n", imageTag)
+        return nil
+    }
 
-	fmt.Printf("Successfully pulled image %s\n", imageTag)
-	return nil
+    return fmt.Errorf("failed to inspect image: %w", err)	
 }
