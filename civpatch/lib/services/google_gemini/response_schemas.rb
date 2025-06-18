@@ -29,7 +29,8 @@ module Services
       GEMINI_PEOPLE_ARRAY_SCHEMA = {
         type: :object,
         properties: {
-          people: { type: :array, items: GEMINI_PERSON_SCHEMA }
+          people: { type: :array, items: GEMINI_PERSON_SCHEMA },
+          thought: { type: :string, description: "Thoughts or reasoning behind the response" }
         },
         required: ["people"]
       }.freeze

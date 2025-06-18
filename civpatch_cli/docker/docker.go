@@ -406,7 +406,7 @@ func (c *Client) PullImage(ctx context.Context, imageTag string) error {
     if client.IsErrNotFound(err) {
         fmt.Println("Image not found locally, pulling:", imageTag)
 
-        reader, err := c.client.ImagePull(ctx, imageTag, image.ImagePullOptions{})
+        reader, err := c.client.ImagePull(ctx, imageTag, image.PullOptions{})
         if err != nil {
             return fmt.Errorf("pull failed: %w", err)
         }

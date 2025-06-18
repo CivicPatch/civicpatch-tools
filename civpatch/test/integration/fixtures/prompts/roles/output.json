@@ -14,7 +14,7 @@
     ],
     "roles": [
       {
-        "data": "City Council Member",
+        "data": "Council Member",
         "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated as 'City Council Member, District 1' in the content."
       }

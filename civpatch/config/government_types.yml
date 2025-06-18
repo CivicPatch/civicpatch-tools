@@ -51,10 +51,13 @@ government_types:
       - role: council president
         aliases:
         - city council president
+      - role: council president pro tem
+        aliases:
+        - council president pro-tem
+        - council president pro tempore
       - role: deputy council president
       - role: council vice president
       - role: council manager
-      - role: deputy council manager
       - role: commisioner
       - role: council member
         aliases:
@@ -196,7 +199,6 @@ government_types:
         - about the mayor
         - mayor
         - council president
-        - council manager
       council members:
         - meet the council
         - meet your city council members
