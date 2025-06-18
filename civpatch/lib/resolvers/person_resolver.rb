@@ -35,8 +35,9 @@ module Resolvers
       # Example: "David (Narh) Amanor" => []
       # Example: "Abigail Elder => []"
       name = Namae.parse(person_name).first
-
-      given_name = name&.given
+      # given_name has bug with namae. Replace?
+      # Kim-Khanh Van turns into given=nil, particle= "Kim-Khanh"
+      given_name = name&.given || name&.particle
       last_name = name&.family
 
       [given_name, last_name]
@@ -44,20 +45,23 @@ module Resolvers
 
     def self.similar_name?(person_name1, person_name2)
       return true if person_name1 == person_name2
+      return false if person_name1.blank? || person_name2.blank?
+
+      # Normalize names by removing diacritics and converting to lowercase
+      normalized_name1 = person_name1.unicode_normalize(:nfd).gsub(/\p{Mn}/, "").downcase
+      normalized_name2 = person_name2.unicode_normalize(:nfd).gsub(/\p{Mn}/, "").downcase
 
       # Ignore initials
-      given_name1, last_name1 = parse_name(person_name1)
-      given_name2, last_name2 = parse_name(person_name2)
+      given_name1, last_name1 = parse_name(normalized_name1)
+      given_name2, last_name2 = parse_name(normalized_name2)
 
       return false if given_name1.blank? || last_name1.blank? || given_name2.blank? || last_name2.blank?
 
-      # Ignore Prefixed names
-      ((person_name1&.downcase&.include?(person_name2&.downcase) ||
-        person_name2&.downcase&.include?(person_name1&.downcase)) && last_name1&.downcase == last_name2&.downcase) ||
-        # Ignore initials
-        ((given_name1.downcase&.include?(given_name2&.downcase) ||
-          given_name2.downcase&.include?(given_name1.downcase)) && last_name1&.downcase == last_name2&.downcase) ||
-        (given_name1&.downcase == given_name2&.downcase && last_name1&.downcase == last_name2&.downcase)
+      # Ignore prefixed names and initials
+      ((normalized_name1.include?(normalized_name2) || normalized_name2.include?(normalized_name1)) &&
+                last_name1 == last_name2) ||
+        ((given_name1.include?(given_name2) || given_name2.include?(given_name1)) && last_name1 == last_name2) ||
+        (given_name1 == given_name2 && last_name1 == last_name2)
     end
 
     def self.find_by_name(people_config, haystack_people, needle_person_name)

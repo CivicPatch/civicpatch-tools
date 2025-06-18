@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "minitest/test_task"
-
 require "bundler/setup"
 $LOAD_PATH.unshift(File.expand_path("lib", __dir__))
 
@@ -18,27 +17,27 @@ require_relative "lib/open_data"
 
 OpenData.load_tasks
 
+require "rake/testtask"
+
 namespace :test do
-  desc "Run tests (use TEST_PATTERN=test/integration/**/*_test.rb to run specific tests)"
-  task :run do
-    test_files = Dir.glob(ENV["TEST_PATTERN"] || "test/**/*_test.rb")
+  desc "Run all tests"
+  Rake::TestTask.new(:all) do |t|
+    t.pattern = "test/**/*_test.rb"
+    t.libs << "test"
+  end
 
-    if test_files.empty?
-      puts "No test files found matching pattern: #{ENV["TEST_PATTERN"]}"
-      exit 1
-    end
+  desc "Run integration tests"
+  Rake::TestTask.new(:integration) do |t|
+    t.pattern = "test/integration/**/*_test.rb"
+    t.libs << "test"
+  end
 
-    puts "\nRunning tests:"
-    test_files.each { |f| puts "  #{f}" }
-    puts "\n"
-
-    # Run the tests using ruby directly with both test and lib in the load path
-    cmd = ["bundle", "exec", "ruby", "-Ilib:test", *test_files]
-    system(*cmd) or exit(1)
+  desc "Run unit tests"
+  Rake::TestTask.new(:unit) do |t|
+    t.pattern = "test/unit/**/*_test.rb"
+    t.libs << "test"
   end
 end
-
-task test: "test:run"
 
 require "rubocop/rake_task"
 

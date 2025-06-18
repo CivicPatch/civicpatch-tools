@@ -216,8 +216,8 @@ module Services
 
         {
           "name" => llm_person["name"],
-          "roles" => llm_person["roles"].map { |role| role["data"] }.uniq,
-          "divisions" => llm_person["divisions"].map { |division| division["data"] }.uniq,
+          "roles" => llm_person["roles"]&.map { |role| role["data"] }&.uniq,
+          "divisions" => llm_person["divisions"]&.map { |division| division["data"] }&.uniq,
           "image" => selected_data_points["image"].present? ? selected_data_points["image"]["data"] : nil,
           "phone_number" => if selected_data_points["phone_number"].present?
                               selected_data_points["phone_number"]["data"]

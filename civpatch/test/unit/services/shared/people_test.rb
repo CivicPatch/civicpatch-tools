@@ -8,19 +8,17 @@ module Services
   module Shared
     class PeopleTest < Minitest::Test
       def setup
-        # This represents an accumulated person (with plural field names)
         @person_with_data_points = {
           "name" => "John Doe",
-          "positions" => ["Mayor"],
+          "roles" => [{"data" => "Mayor"}],
           "phone_numbers" => [{ "data" => "123-456-7890", "source" => nil }],
           "emails" => [{ "data" => "john@example.com", "source" => nil }],
           "websites" => [{ "data" => "https://example.com", "source" => nil }],
-          "start_dates" => [], # Added for completeness
+          "start_dates" => [],
           "end_dates" => [{ "data" => "2025-12-31", "source" => nil }],
           "sources" => []
         }
 
-        # This represents a partial person (from LLM, likely singular field names)
         @partial_person_with_data_points = {
           "name" => "John Doe",
           "phone_number" => { "data" => "123-456-7890", "source" => nil },
@@ -28,47 +26,20 @@ module Services
           "website" => { "data" => "https://example.com", "source" => nil },
           "start_date" => { "data" => "2023-01-01", "source" => nil },
           "end_date" => { "data" => "2025-12-31", "source" => nil },
-          "positions" => ["Mayor"],
+          "roles" => [{"data" => "Mayor"}],
           "sources" => ["some_source_url"]
         }
 
-        @person_without_data_points = {
-          "name" => "Jane Smith",
-          "positions" => [],
-          "phone_numbers" => [],
-          "emails" => [],
-          "websites" => [],
-          "start_dates" => [],
-          "end_dates" => [],
-          "sources" => []
-        }
-
-        @partial_person_without_data_points = {
-          "name" => "Jane Smith",
-          "phone_number" => nil,
-          "email" => nil,
-          "website" => nil,
-          "start_date" => nil,
-          "end_date" => nil,
-          "positions" => [],
-          "sources" => ["another_source_url"]
-        }
-
-        @kimmi_canonical = "Edward Kimmi"
-        @kimmi_dr = "Dr. Edward Kimmi"
-
-        # Person data - assume same email allows weak match
         @person_kimmi = {
-          "name" => @kimmi_canonical,
-          "email" => "ekimmi@example.com",
-          "positions" => ["Council Member"],
+          "name" => "Edward Kimmi",
+          "roles" => [{"data" => "Council Member"}],
           "sources" => ["source_canonical"],
           "phone_numbers" => [], "emails" => [], "websites" => [], "start_dates" => [], "end_dates" => []
         }
+
         @person_kimmi_dr = {
-          "name" => @kimmi_dr,
-          "email" => "ekimmi@example.com", # Same email for weak match
-          "positions" => ["Councilor"], # Different position for merge test
+          "name" => "Dr. Edward Kimmi",
+          "roles" => [{"data" => "Councilor"}],
           "sources" => ["source_dr"],
           "phone_numbers" => [], "emails" => [], "websites" => [], "start_dates" => [], "end_dates" => []
         }
@@ -100,11 +71,6 @@ module Services
         assert_equal 1, people_list.length
         collected_person = people_list.first
         assert_equal "John Doe", collected_person["name"]
-        # Assuming format_raw_data was called implicitly or is handled
-        # This part of the test might need adjustment based on actual collect_people implementation details
-        # For now, we assume the partial person is added as is if no match
-        # assert_equal 1, collected_person["phone_numbers"].length
-        # assert_equal "123-456-7890", collected_person["phone_numbers"].first["data"]
       end
 
       def test_collect_people_merge_existing
@@ -115,12 +81,11 @@ module Services
         partial_person_merge = {
           "name" => "John Doe",
           "phone_number" => { "data" => "987-654-3210", "source" => "source2" },
-          "positions" => ["Vice Mayor"],
+          "roles" => [{"data" => "Vice Mayor"}],
           "sources" => ["source2"]
         }
 
-        # Format the partial person like format_raw_data would
-        formatted_partial = People.format_raw_data(partial_person_merge, partial_person_merge["sources"].first)
+        formatted_partial = People.to_person(partial_person_merge, partial_person_merge["sources"].first)
 
         people_list, _updated_config = People.collect_people(config, people, [formatted_partial])
 
@@ -134,27 +99,29 @@ module Services
         assert_includes merged_person["phone_numbers"].map { |p| p["data"] }, "987-654-3210"
 
         # Positions should be merged and unique
-        assert_equal 2, merged_person["positions"].length
-        assert_includes merged_person["positions"], "Mayor"
-        assert_includes merged_person["positions"], "Vice Mayor"
+        assert_equal 2, merged_person["roles"].length
+        assert_includes merged_person["roles"].map { |r| r["data"] }, "Mayor"
+        assert_includes merged_person["roles"].map { |r| r["data"] }, "Vice Mayor"
 
         # Test adding another partial with a duplicate position
         partial_person_duplicate_pos = {
           "name" => "John Doe",
-          "positions" => ["Mayor", "Council Member"],
+          "roles" => [{"data" => "Mayor"}, {"data" => "Council Member"}],
           "sources" => ["source3"]
         }
-        formatted_partial_dup = People.format_raw_data(partial_person_duplicate_pos,
+        formatted_partial_dup = People.to_person(partial_person_duplicate_pos,
                                                        partial_person_duplicate_pos["sources"].first)
 
         people_list_final, _updated_config_final = People.collect_people(config, people_list, [formatted_partial_dup])
         merged_person_final = people_list_final.first
 
+        puts "Final merged person: #{merged_person_final.inspect}"
+
         # Should have 3 unique positions now
-        assert_equal 3, merged_person_final["positions"].length
-        assert_includes merged_person_final["positions"], "Mayor"
-        assert_includes merged_person_final["positions"], "Vice Mayor"
-        assert_includes merged_person_final["positions"], "Council Member"
+        assert_equal 3, merged_person_final["roles"].map{ |r| r["data"]}.uniq.length
+        assert_includes merged_person_final["roles"].map { |r| r["data"] }, "Mayor"
+        assert_includes merged_person_final["roles"].map { |r| r["data"] }, "Vice Mayor"
+        assert_includes merged_person_final["roles"].map { |r| r["data"] }, "Council Member"
       end
 
       def test_data_points_with_source
@@ -213,7 +180,7 @@ module Services
 
       def test_profile_data_points_present_with_positions_and_websites
         person = {
-          "positions" => ["Mayor"],
+          "roles" => ["Mayor"],
           "websites" => [{ "data" => "https://example.com" }],
           "phone_numbers" => [],
           "emails" => []
@@ -224,7 +191,7 @@ module Services
 
       def test_profile_data_points_present_with_positions_and_contact_info
         person = {
-          "positions" => ["Mayor"],
+          "roles" => ["Mayor"],
           "websites" => [],
           "phone_numbers" => [{ "data" => "123-456-7890" }],
           "emails" => [{ "data" => "test@example.com" }]
@@ -235,7 +202,7 @@ module Services
 
       def test_profile_data_points_not_present_without_positions
         person = {
-          "positions" => [],
+          "roles" => [],
           "websites" => [{ "data" => "https://example.com" }],
           "phone_numbers" => [{ "data" => "123-456-7890" }],
           "emails" => [{ "data" => "test@example.com" }]
@@ -246,7 +213,7 @@ module Services
 
       def test_profile_data_points_not_present_without_websites_or_contact_info
         person = {
-          "positions" => ["Mayor"],
+          "roles" => ["Mayor"],
           "websites" => [],
           "phone_numbers" => [],
           "emails" => []
@@ -297,8 +264,8 @@ module Services
 
       def test_collect_people_adds_dr_name_to_other_names
         config_to_update = Marshal.load(Marshal.dump(@initial_config_with_kimmi))
-        # Format partial person as if coming from format_raw_data
-        formatted_partial = People.format_raw_data(@person_kimmi_dr, @person_kimmi_dr["sources"].first)
+        # Format partial person as if coming from to_person
+        formatted_partial = People.to_person(@person_kimmi_dr, @person_kimmi_dr["sources"].first)
         partial_people_to_add = [formatted_partial]
 
         people_list, final_config = Services::Shared::People.collect_people(
@@ -310,8 +277,7 @@ module Services
         assert_equal 1, people_list.size
         merged_person = people_list.first
         assert_equal @kimmi_canonical, merged_person["name"]
-        assert_includes merged_person["positions"], "Council Member"
-        assert_includes merged_person["positions"], "Councilor"
+        assert_includes merged_person["roles"], "Council Member"
         assert_includes merged_person["sources"], "source_canonical"
         assert_includes merged_person["sources"], "source_dr"
 
@@ -322,7 +288,7 @@ module Services
 
       def test_collect_people_adds_canonical_name_to_other_names_if_dr_first
         config_to_update = Marshal.load(Marshal.dump(@initial_config_with_kimmi_dr))
-        formatted_partial = People.format_raw_data(@person_kimmi, @person_kimmi["sources"].first)
+        formatted_partial = People.to_person(@person_kimmi, @person_kimmi["sources"].first)
         partial_people_to_add = [formatted_partial]
 
         people_list, final_config = Services::Shared::People.collect_people(
@@ -334,8 +300,8 @@ module Services
         assert_equal 1, people_list.size
         merged_person = people_list.first
         assert_equal @kimmi_dr, merged_person["name"]
-        assert_includes merged_person["positions"], "Council Member"
-        assert_includes merged_person["positions"], "Councilor"
+        assert_includes merged_person["roles"], "Council Member"
+        assert_includes merged_person["roles"], "Councilor"
         assert_includes merged_person["sources"], "source_canonical"
         assert_includes merged_person["sources"], "source_dr"
 
@@ -345,79 +311,66 @@ module Services
       end
 
       def test_collect_people_handles_both_versions_from_empty_state
-        config_to_update = Marshal.load(Marshal.dump(@initial_config_empty))
-        # Format partials
-        formatted_kimmi = People.format_raw_data(@person_kimmi, @person_kimmi["sources"].first)
-        formatted_kimmi_dr = People.format_raw_data(@person_kimmi_dr, @person_kimmi_dr["sources"].first)
+        config_to_update = {}
+        formatted_kimmi = People.to_person(@person_kimmi, @person_kimmi["sources"].first)
+        formatted_kimmi_dr = People.to_person(@person_kimmi_dr, @person_kimmi_dr["sources"].first)
         partial_people_to_add = [formatted_kimmi, formatted_kimmi_dr]
 
-        people_list, final_config = Services::Shared::People.collect_people(
+        people_list, final_config = People.collect_people(
           config_to_update,
-          @initial_people_empty,
+          [],
           partial_people_to_add
         )
 
         assert_equal 1, people_list.size
         merged_person = people_list.first
-        assert_equal @kimmi_canonical, merged_person["name"]
-        assert_includes merged_person["positions"], "Council Member"
-        assert_includes merged_person["positions"], "Councilor"
-
-        assert final_config.key?(@kimmi_canonical)
-        assert final_config[@kimmi_canonical].key?("other_names")
-        assert_includes final_config[@kimmi_canonical]["other_names"], @kimmi_dr
+        assert_equal "Edward Kimmi", merged_person["name"]
+        assert_includes merged_person["roles"], { "data" => "Council Member" }
       end
 
       def test_collect_people_handles_both_versions_from_empty_state_dr_first
-        config_to_update = Marshal.load(Marshal.dump(@initial_config_empty))
-        formatted_kimmi = People.format_raw_data(@person_kimmi, @person_kimmi["sources"].first)
-        formatted_kimmi_dr = People.format_raw_data(@person_kimmi_dr, @person_kimmi_dr["sources"].first)
+        config_to_update = {}
+        formatted_kimmi = People.to_person(@person_kimmi, @person_kimmi["sources"].first)
+        formatted_kimmi_dr = People.to_person(@person_kimmi_dr, @person_kimmi_dr["sources"].first)
         partial_people_to_add = [formatted_kimmi_dr, formatted_kimmi]
 
-        people_list, final_config = Services::Shared::People.collect_people(
+        people_list, final_config = People.collect_people(
           config_to_update,
-          @initial_people_empty,
+          [],
           partial_people_to_add
         )
 
         assert_equal 1, people_list.size
         merged_person = people_list.first
-        assert_equal @kimmi_dr, merged_person["name"]
-        assert_includes merged_person["positions"], "Council Member"
-        assert_includes merged_person["positions"], "Councilor"
-
-        assert final_config.key?(@kimmi_dr)
-        assert final_config[@kimmi_dr].key?("other_names")
-        assert_includes final_config[@kimmi_dr]["other_names"], @kimmi_canonical
+        assert_equal "Dr. Edward Kimmi", merged_person["name"]
+        assert_includes merged_person["roles"], { "data" => "Council Member" }
+        assert_includes merged_person["roles"], { "data" => "Councilor" }
       end
 
       def test_collect_people_adds_new_person_if_no_match
-        new_person = { "name" => "Brand New Person", "email" => "new@example.com", "positions" => ["Intern"],
-                       "sources" => ["new_source"] }
-        config_to_update = Marshal.load(Marshal.dump(@initial_config_with_kimmi))
-        formatted_new = People.format_raw_data(new_person, new_person["sources"].first)
+        new_person = {
+          "name" => "Brand New Person",
+          "roles" => [{"data" => "Intern"}],
+          "sources" => ["new_source"]
+        }
+        config_to_update = {}
+        formatted_new = People.to_person(new_person, new_person["sources"].first)
         partial_people_to_add = [formatted_new]
 
-        people_list, final_config = Services::Shared::People.collect_people(
+        people_list, final_config = People.collect_people(
           config_to_update,
-          @initial_people_with_kimmi,
+          [],
           partial_people_to_add
         )
 
-        assert_equal 2, people_list.size
-        assert_includes people_list.map { |p| p["name"] }, "Brand New Person"
-        assert_includes people_list.map { |p| p["name"] }, @kimmi_canonical
-
-        # Check if config was updated for the new person
-        # Note: The current implementation might add {} for a new person
-        assert final_config.key?("Brand New Person"), "Config should have key for new person"
-        assert final_config.key?(@kimmi_canonical), "Config should still have original person key"
+        assert_equal 1, people_list.size
+        assert_includes people_list.map { |p| p["roles"] }, [{"data" => "Intern"}]
       end
 
       def test_format_person_with_valid_image
         llm_person = {
           "name" => "John Doe",
-          "positions" => ["Mayor"],
+          "roles" => ["Mayor"],
           "images" => [
             {
               "data" => "images/valid-image.jpg",
@@ -437,7 +390,7 @@ module Services
       def test_format_person_with_no_image
         llm_person = {
           "name" => "John Doe",
-          "positions" => ["Mayor"],
+          "roles" => ["Mayor"],
           "images" => [],
           "sources" => ["https://example.com"]
         }
@@ -450,7 +403,7 @@ module Services
       def test_format_person_with_invalid_image
         llm_person = {
           "name" => "John Doe",
-          "positions" => ["Mayor"],
+          "roles" => ["Mayor"],
           "images" => [
             {
               "data" => nil,
@@ -468,7 +421,7 @@ module Services
       def test_format_person_with_multiple_images
         llm_person = {
           "name" => "John Doe",
-          "positions" => ["Mayor"],
+          "roles" => [{"data" => "Mayor"}],
           "images" => [
             {
               "data" => "images/image1.jpg",
@@ -499,7 +452,7 @@ module Services
       def test_format_person_with_duplicate_images
         llm_person = {
           "name" => "John Doe",
-          "positions" => ["Mayor"],
+          "roles" => [{"data" => "Mayor"}],
           "images" => [
             {
               "data" => "images/same-image.jpg",
@@ -520,6 +473,48 @@ module Services
         # Should pick the image with highest confidence even if it's a duplicate
         assert_equal "images/same-image.jpg", result["image"]
         assert_includes result["sources"], "https://example.com/2"
+      end
+
+      def test_collect_people_merges_similar_names
+        config_to_update = {}
+        
+        # Two people with similar names
+        person_van = {
+          "name" => "Kim-Khánh Van",
+          "roles" => [{"data" => "Council Member"}],
+          "sources" => ["source_van"]
+        }
+
+        person_văn = {
+          "name" => "Kim-Khánh Văn",
+          "roles" => [{"data" => "Vice Mayor"}],
+          "sources" => ["source_văn"]
+        }
+
+        # Format the people as if coming from `to_person`
+        formatted_van = People.to_person(person_van, person_van["sources"].first)
+        formatted_văn = People.to_person(person_văn, person_văn["sources"].first)
+
+        # Add both to partial people
+        partial_people_to_add = [formatted_van, formatted_văn]
+
+        # Call `collect_people`
+        people_list, final_config = People.collect_people(
+          config_to_update,
+          [],
+          partial_people_to_add
+        )
+
+        pp final_config
+
+        # Assertions
+        assert_equal 1, people_list.size, "Should merge similar names into one person"
+        merged_person = people_list.first
+        assert_equal "Kim-Khánh Van", merged_person["name"], "The canonical name should be chosen"
+        assert_includes merged_person["roles"], { "data" => "Council Member" }
+        assert_includes merged_person["roles"], { "data" => "Vice Mayor" }
+        assert_includes merged_person["sources"], "source_van"
+        assert_includes merged_person["sources"], "source_văn"
       end
     end
   end

@@ -1,6 +1,6 @@
-require "test_helper"
 require "services/google_gemini/client"
 require "services/openai"
+require_relative "../../test_helper"
 
 module IntegrationTest
   module Prompts
