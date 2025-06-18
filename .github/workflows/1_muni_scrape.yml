@@ -42,27 +42,7 @@ jobs:
         run: |
           go build -o bin/cli
 
-      - name: Compute Docker cache key
-        id: docker-key
-        run: echo "key=docker-cache-${{ hashFiles('Dockerfile', '**/*.rb') }}" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v4
-        id: cache
-        with:
-          path: docker-latest.tar
-          key: ${{ steps.docker-key.outputs.key }}
-          restore-keys: |
-            docker-cache-
-
-      - name: Load Docker image from cache
-        if: steps.cache.outputs.cache-hit == 'true'
-        run: docker load -i docker-latest.tar
-
-      - name: Pull latest image if not cached
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          docker pull ghcr.io/civicpatch/civpatch:latest
-          docker save ghcr.io/civicpatch/civpatch:latest -o docker-latest.tar
+      - uses: ./.github/workflows/zz_partials_load_docker_cache.yml
 
       - name: Get scrape candidates from queue
         id: set-municipalities
@@ -127,6 +107,8 @@ jobs:
         with:
             app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
             private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+      
+      - uses: ./.github/workflows/zz_partials_load_docker_cache.yml
 
       - name: Scrape municipal officials
         env:
