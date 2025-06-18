@@ -285,7 +285,7 @@ module Resolvers
         end
       end
 
-      hash_counts.keys.select { |key| hash_counts[key] > 1 }
+      hash_counts.keys.select { |key| hash_counts[key] > 1 }.uniq
     end
   end
 end

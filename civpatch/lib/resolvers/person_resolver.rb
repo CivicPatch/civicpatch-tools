@@ -5,6 +5,8 @@ require "namae"
 module Resolvers
   class PersonResolver
     def self.same_email?(person1, person2)
+      return false if person1["email"].blank? || person2["email"].blank?
+
       emails1 = person1["email"].present? ? [person1["email"]] : person1["emails"]&.map { |email| email["data"] } || []
       emails2 = person2["email"].present? ? [person2["email"]] : person2["emails"]&.map { |email| email["data"] } || []
 
@@ -12,6 +14,8 @@ module Resolvers
     end
 
     def self.same_website?(person1, person2)
+      return false if person1["website"].blank? || person2["website"].blank?
+
       websites1 = if person1["website"].present?
                     [person1["website"]]
                   else
@@ -95,14 +99,18 @@ module Resolvers
 
     def self.match_by_weak_ties(haystack_people, needle_person)
       _, needle_last_name = parse_name(needle_person["name"])
+
       haystack_people.each do |haystack_person|
         _, haystack_last_name = parse_name(haystack_person["name"])
-        next if haystack_last_name.blank? # TODO: namae sometimes can't handle different formats of names
-        next if needle_last_name.blank?
 
-        return haystack_person if haystack_last_name.downcase == needle_last_name.downcase &&
-                                  (same_email?(haystack_person, needle_person) ||
-                                  same_website?(haystack_person, needle_person))
+        next if haystack_last_name.blank? || needle_last_name.blank?
+
+        email_match = same_email?(haystack_person, needle_person)
+        website_match = same_website?(haystack_person, needle_person)
+
+        if haystack_last_name.downcase == needle_last_name.downcase && (email_match || website_match)
+          return haystack_person
+        end
       end
 
       nil
@@ -119,12 +127,14 @@ module Resolvers
     end
 
     def self.find_existing_person(people_config, people, maybe_new_person)
-      updated_people_config = people_config.dup
-      found_person = find_by_name(updated_people_config, people, maybe_new_person["name"]) ||
-                     match_by_weak_ties(people, maybe_new_person)
+      found_person = people.find do |person|
+        canonical_name = get_canonical_name(people_config, maybe_new_person)
+        similar_name?(person["name"], canonical_name)
+      end
+
+      found_person = match_by_weak_ties(people, maybe_new_person) if found_person.blank?
 
       canonical_name = get_canonical_name(people_config, maybe_new_person)
-
       updated_people_config = maybe_add_other_name(people_config, canonical_name, maybe_new_person)
 
       [found_person, updated_people_config]

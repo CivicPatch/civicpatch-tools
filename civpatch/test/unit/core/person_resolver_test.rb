@@ -160,7 +160,7 @@ class PersonResolverTest < Minitest::Test
   def test_find_by_name_similar_names
     # Add two people with similar names to the people array
     person_van = { "name" => "Kim-Khánh Van", "email" => "van@example.com", "website" => "https://van.example.com" }
-    person_văn = { "name" => "Kim-Khánh Văn", "email" => "van@example.com", "website" => "https://van.example.com" }
+    _person_văn = { "name" => "Kim-Khánh Văn", "email" => "van@example.com", "website" => "https://van.example.com" }
 
     # Add them to the people array
     people = @people + [person_van]
@@ -245,6 +245,7 @@ class PersonResolverTest < Minitest::Test
     # Find person2 via weak ties using its own data (should resolve to itself)
     person2_weak_match = @person2.dup
     original_config_copy = Marshal.load(Marshal.dump(@people_config))
+
     found, config = Resolvers::PersonResolver.find_existing_person(@config_for_update, @people, person2_weak_match)
     assert_equal @person2, found
     assert_equal original_config_copy, config # Config shouldn't change
