@@ -18,11 +18,16 @@ jobs:
 
       - name: Set up ruby
         uses: actions/setup-ruby@v1
+    
+      - name: Install dependencies
+        run: |
+          cd civpatch
+          bundle install
 
       - name: Run unit tests
         run: |
           cd civpatch
-          TEST_PATTERN="test/unit/**/*_test.rb" bundle exec rake test
+          bundle exec rake test:unit
       
       - name: Run integration tests (if needed)
         env:
@@ -35,5 +40,5 @@ jobs:
           contains(join(github.event.commits.*.removed, '\n') , 'civpatch/lib/services/')
         run:
           cd civpatch
-          TEST_PATTERN="test/integration/**/*_test.rb" bundle exec rake test
+          bundle exec rake test:integration
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "resolvers/person_resolver"
 require "utils/url_helper"
 require "utils/phone_helper"
 require "core/person_manager/utils"
@@ -36,10 +37,12 @@ module Core
 
         person["roles"] = Array(person["roles"])
                           .flat_map { |role| Core::PersonManager::Utils.normalize_role(government_type, role) }
+                          .uniq
                           .compact
                           .sort_by(&:downcase)
         person["divisions"] = Array(person["divisions"])
                               .map { |division| Core::PersonManager::Utils.normalize_division(division) }
+                              .uniq
                               .compact
                               .sort_by(&:downcase)
 

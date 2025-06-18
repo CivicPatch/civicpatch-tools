@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "core/city_manager"
+
 module Core
   module PersonManager
     class Utils

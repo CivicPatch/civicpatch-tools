@@ -13,7 +13,7 @@ module Services
         government_type: "mayor_council",
 
       }
-      @content_file = File.join(__dir__, "..", "..", "fixtures", "spokane_markdown.md")
+      @content_file = File.join(__dir__, "..", "..", "fixtures", "baseline", "input.md")
       @page_url = "https://testville.gov/council"
     end
 

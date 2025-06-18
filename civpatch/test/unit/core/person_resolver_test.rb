@@ -151,10 +151,26 @@ class PersonResolverTest < Minitest::Test
   end
 
   def test_find_by_name_config_present_but_no_other_names_match
-    needle_name = "Janet Doe" # Similar name, but not in other_names
+    needle_name = "Mullet Doe" # Similar name, but not in other_names
     # Should not match based on name_in_config? alone if substring fails
     refute Resolvers::PersonResolver.name_in_config?({ "Jane Doe" => @people_config["Jane Doe"] }, needle_name)
     assert_nil Resolvers::PersonResolver.find_by_name(@people_config, @people, needle_name)
+  end
+
+  def test_find_by_name_similar_names
+    # Add two people with similar names to the people array
+    person_van = { "name" => "Kim-Khánh Van", "email" => "van@example.com", "website" => "https://van.example.com" }
+    person_văn = { "name" => "Kim-Khánh Văn", "email" => "van@example.com", "website" => "https://van.example.com" }
+
+    # Add them to the people array
+    people = @people + [person_van]
+
+    # Search for one of the similar names
+    needle_name = "Kim-Khánh Văn"
+    found_person = Resolvers::PersonResolver.find_by_name(@people_config, people, needle_name)
+
+    # Assertions
+    assert_equal person_van, found_person, "Should match 'Kim-Khánh Văn' to the canonical person 'Kim-Khánh Van'"
   end
 
   # --- .match_by_weak_ties Tests ---
@@ -264,5 +280,41 @@ class PersonResolverTest < Minitest::Test
     # Ensure the config wasn't mutated unnecessarily (Eddy was already there)
     assert_equal config_before["Eduardo Morales"], config_after["Eduardo Morales"],
                  "Config for Eduardo Morales should not change when found via existing other_name"
+  end
+
+  # --- .similar_name? Tests ---
+  def test_similar_name_match_title
+    assert Resolvers::PersonResolver.similar_name?("Jane Doe", "Dr. Jane Doe")
+  end
+
+  def test_similar_name_exact_match
+    assert Resolvers::PersonResolver.similar_name?("Jane Doe", "Jane Doe")
+  end
+
+  def test_similar_name_case_insensitive_match
+    assert Resolvers::PersonResolver.similar_name?("Jane Doe", "jane doe")
+  end
+
+  def test_similar_name_different
+    refute Resolvers::PersonResolver.similar_name?("Jane Doe", "John Doe")
+  end
+
+  def test_similar_name_with_diacritics
+    assert Resolvers::PersonResolver.similar_name?("Kim-Khánh Van", "Kim-Khanh Van")
+  end
+
+  def test_similar_name_partial_no_match
+    refute Resolvers::PersonResolver.similar_name?("Jane", "Jane Doe")
+    refute Resolvers::PersonResolver.similar_name?("Doe", "John Doe")
+  end
+
+  def test_similar_name_no_match
+    refute Resolvers::PersonResolver.similar_name?("Jane Doe", "Jane Smith")
+  end
+
+  def test_similar_name_handles_nil
+    assert Resolvers::PersonResolver.similar_name?(nil, nil)
+    refute Resolvers::PersonResolver.similar_name?(nil, "Jane Doe")
+    refute Resolvers::PersonResolver.similar_name?("Jane Doe", nil)
   end
 end
