@@ -76,9 +76,7 @@ module Services
                         #{maybe_target_people.join(", ")}
                         )
                       else
-                        %(the main governing body of the target municipality.
-                          You are looking for specific types of roles: #{roles.join(", ")}
-                        )
+                        %(the main governing body of the target municipality.)
                       end
 
         %(
@@ -91,7 +89,7 @@ module Services
 
         Return a JSON object with people, each having:
         - name: Full name only (not titles)
-        - phone_number: {data, llm_confidence, llm_confidence_reason, }
+        - phone_number: {data, llm_confidence, llm_confidence_reason}
         - email: {data, llm_confidence, llm_confidence_reason}
         - website: {data, llm_confidence, llm_confidence_reason}
         - roles: [{data, llm_confidence, llm_confidence_reason}]
@@ -99,10 +97,15 @@ module Services
         - start_date: {data, llm_confidence, llm_confidence_reason}
         - end_date: {data, llm_confidence, llm_confidence_reason}
 
+        The JSON object should have the following structure:
+        {
+          "people": [],
+          "thought": "Your reasoning or thought process behind the extraction" // Restrict to 1 sentence.
+        }
+
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - Roles extraction:
-          - **CRITICAL**: Extract roles that EXACTLY MATCH or are CLEAR SYNONYMS for the
             **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
           - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned,
             vacated their role, is deceased, or their role is otherwise noted as vacant
@@ -118,7 +121,9 @@ module Services
             or non-voting unless they are explicitly listed in the Target Municipal Roles.
             Focus on the primary elected/appointed governing body members.
             We are only interested in roles that are related to the main governing body of the municipality.
-          - **EXCLUDE**: Do NOT extract roles for any committees, authorities, commissions, or boards that are not the main governing body, even if the title sounds official (e.g., "Vice Chair of Transit Authority", "Chair of Finance Committee", "Member, Planning Board"). Only include roles that match the Target Roles list exactly.
+          - **EXCLUDE**: Do NOT extract roles for any committees, authorities, commissions, or boards that are not the
+            main governing body, even if the title sounds official (e.g., "Vice Chair of Transit Authority",
+            "Chair of Finance Committee", "Member, Planning Board").
           - Include only active roles (today is #{current_date}).
         - Division extraction:
           - Extract divisions if they are explicitly mentioned in the text

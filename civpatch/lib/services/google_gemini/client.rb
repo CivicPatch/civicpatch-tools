@@ -13,10 +13,13 @@ module Services
   module GoogleGemini
     class Client
       MODELS = %w[
-        gemini-2.5-flash-preview-05-20
-        gemini-2.0-flash
+        gemini-2.5-flash
+        gemini-2.5-flash-lite-preview-06-17
       ].freeze
+      # gemini-2.5-flash
+      # gemini-2.5-flash-preview-05-20
       # gemini-2.5-flash-preview-04-17 broken as of 06/10
+      # Note: CANNOT get flash-lite to extract dates
 
       BASE_URI = "https://generativelanguage.googleapis.com"
       DEFAULT_TIMEOUT = 180
@@ -77,16 +80,6 @@ module Services
         end
       end
 
-      def get_cost(input_tokens_num, output_tokens_num)
-        input_cost_per_million = 0.15 # USD
-        output_cost_per_million = 0.60 # USD
-
-        input_millions = input_tokens_num / 1_000_000.0
-        output_millions = output_tokens_num / 1_000_000.0
-
-        input_millions * input_cost_per_million + output_millions * output_cost_per_million
-      end
-
       private
 
       def make_request(model, request_options)
@@ -131,7 +124,7 @@ module Services
         Utils::CostsHelper.log_llm_cost(
           request_options[:state], request_options[:municipality_name], "google_gemini",
           usage["promptTokenCount"],
-          usage["candidatesTokenCount"] + usage["thoughtsTokenCount"].to_i,
+          usage["candidatesTokenCount"].to_i + usage["thoughtsTokenCount"].to_i,
           model, with_search: request_options[:with_search]
         )
       end

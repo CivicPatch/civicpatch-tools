@@ -4,3 +4,12 @@ air = 'latest'
 gitleaks = 'latest'
 python = 'latest' # For gitleaks
 ruby = "latest"
+
+[env]
+_.file = '../.env'
+
+[tasks.testint]
+run = """
+cd civpatch
+TEST_PATTERN="test/integration/**/*_test.rb" bundle exec rake test
+"""

@@ -87,6 +87,8 @@ module Services
               Focus on the primary elected/appointed governing body members.
               We are only interested in roles that are related to the main governing body of the municipality.
             - **EXCLUDE**: Do NOT extract roles for any committees, authorities, commissions, or boards that are not the main governing body, even if the title sounds official (e.g., "Vice Chair of Transit Authority", "Chair of Finance Committee", "Member, Planning Board"). Only include roles that match the Target roles list exactly.
+            - **Normalize role titles:** If a role is a clear synonym or a reordering of a Target Role (e.g., "President, City Council" vs "City Council President"), treat them as equivalent and output the normalized Target Role as listed in the Target Roles.
+              - For example, if the text says "President, City Council" and the Target Role is "City Council President", output "City Council President".
             - Divisions should NOT be included under roles.
           - Divisions:
             - A person can have multiple divisions. List them separately.
