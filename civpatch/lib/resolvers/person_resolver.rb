@@ -43,7 +43,6 @@ module Resolvers
       # Kim-Khanh Van turns into given=nil, particle= "Kim-Khanh"
       given_name = name&.given || name&.particle
       last_name = name&.family
-      pp name
 
       [given_name, last_name]
     end

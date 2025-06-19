@@ -175,7 +175,9 @@ namespace :pipeline do
     geoid = municipality_context[:municipality_entry]["geoid"]
     state = municipality_context[:state]
 
-    Core::CacheManager.clean(state, geoid)
+    urls_to_keep = municipality_context[:config]["sources"] || []
+
+    Core::CacheManager.clean(state, geoid, urls_to_keep)
     Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
   end
 

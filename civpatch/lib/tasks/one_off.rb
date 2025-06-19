@@ -4,8 +4,52 @@ require "services/spaces"
 require "utils/folder_helper"
 require "core/config_manager"
 require "scrapers/municipalities"
+require "openai"
 
 namespace :one_off do
+  task "determine_average_token_count" do
+    state = "wa"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+    total_token_count = 0
+    max_token_count = 0
+    average_token_count = 0
+    output_token_count = 0
+    num_cities = 0
+    
+    municipalities.each do |municipality|
+      cache_path = Core::PathHelper.get_city_cache_path(state, municipality["geoid"])
+      markdown_files = Dir.glob(File.join(cache_path, "**", "*.md"))
+
+      next if markdown_files.empty?
+      num_cities += 1 
+      avg_count = 0
+      markdown_files.each do |markdown_file|
+        content = File.read(markdown_file)
+        token_count = OpenAI.rough_token_count(content)
+        if token_count > max_token_count
+          max_token_count = token_count
+        end
+        avg_count += token_count
+        total_token_count += token_count
+        puts "Municipality: #{municipality["name"]}, File: #{File.basename(markdown_file)}, Tokens: #{token_count}"
+      end
+      average_token_count += avg_count / markdown_files.length
+
+
+      city_path = Core::PathHelper.get_data_source_city_path(state, municipality["geoid"])
+      openai_file = File.join(city_path, "people", "people_openai-scrape-collected.before.json")
+      openai_content = File.read(openai_file) if File.exist?(openai_file)
+      output_token_count += OpenAI.rough_token_count(openai_content) if openai_content
+    end
+
+
+    puts "Over #{num_cities} municipalities in #{state}"
+    puts "Average token count per municipality: #{total_token_count / num_cities}" if num_cities > 0
+    puts "Max token count for a single file: #{max_token_count}"
+    puts "Average token count per file: #{average_token_count / num_cities}" if num_cities > 0
+    puts "Average output token count: #{output_token_count / num_cities}" if num_cities > 0
+  end
+
   task "determine_gov" do
     state = "wa"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
