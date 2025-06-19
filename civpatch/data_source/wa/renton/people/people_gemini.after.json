@@ -2,7 +2,6 @@
   {
     "name": "Armondo Pavone",
     "roles": [
-      "Mayor",
       "Mayor"
     ],
     "divisions": [],
@@ -15,15 +14,15 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
-      "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   },
   {
     "name": "James Alberson, Jr.",
     "roles": [
-      "Council Member",
       "Council Member",
       "Council President"
     ],
@@ -39,17 +38,17 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
-      "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
       "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   },
   {
     "name": "Ruth Pérez",
     "roles": [
       "Council Member",
-      "Council Member"
+      "Council President Pro Tem"
     ],
     "divisions": [
       "Position 6"
@@ -63,17 +62,15 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
-      "https://www.rentonwa.gov/Government/City-Council/prince",
+      "https://www.rentonwa.gov/Government/City-Council/van",
       "https://www.rentonwa.gov/Government/City-Council/perez",
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   },
   {
     "name": "Ryan McIrvin",
     "roles": [
-      "Council Member",
-      "Council Member",
       "Council Member"
     ],
     "divisions": [
@@ -88,15 +85,16 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
-      "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/mcirvin",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   },
   {
     "name": "Valerie O'Halloran",
     "roles": [
-      "Council Member",
       "Council Member"
     ],
     "divisions": [
@@ -112,15 +110,15 @@
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
       "https://www.rentonwa.gov/Government/City-Council/ohalloran",
-      "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   },
   {
     "name": "Ed Prince",
     "roles": [
-      "Council Member",
       "Council Member"
     ],
     "divisions": [
@@ -136,14 +134,15 @@
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
       "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   },
   {
     "name": "Carmen Rivera",
     "roles": [
-      "Council Member",
       "Council Member"
     ],
     "divisions": [
@@ -158,15 +157,15 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
-      "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   },
   {
-    "name": "Kim-Khánh Văn",
+    "name": "Kim-Khánh Van",
     "roles": [
-      "Council Member",
       "Council Member"
     ],
     "divisions": [
@@ -181,26 +180,10 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone",
       "https://www.rentonwa.gov/Government/City-Council/rivera",
-      "https://www.rentonwa.gov/Government/City-Council/prince",
-      "https://www.rentonwa.gov/Government/City-Council/van"
+      "https://www.rentonwa.gov/Government/City-Council/van",
+      "https://www.rentonwa.gov/Government/City-Council/perez",
+      "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:56:29Z"
-  },
-  {
-    "name": "Kim-Khánh Van",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.rentonwa.gov/Government/City-Council/van",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.rentonwa.gov/Government/City-Council/mcirvin"
-    ],
-    "updated_at": "2025-06-16T20:56:29Z"
+    "updated_at": "2025-06-18T23:59:39Z"
   }
 ]

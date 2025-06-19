@@ -14,12 +14,12 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Carmen Rivera",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
       "Position 2"
@@ -33,13 +33,13 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/rivera"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Valerie O'Halloran",
     "roles": [
       "Council President",
-      "Councilmember",
+      "Council Member",
       "Chair, Community Services Committee",
       "Vice Chair, Finance Committee",
       "Member, Utilities Committee"
@@ -56,12 +56,12 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/ohalloran"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Ed Prince",
     "roles": [
-      "Councilmember",
+      "Council Member",
       "Chair, Planning & Development Committee",
       "Vice Chair, Public Safety Committee",
       "Member, Transportation/Aviation Committee"
@@ -78,15 +78,15 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/prince"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Kim-Khánh Văn",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position No. 7"
+      "Position 7"
     ],
     "image": "https://www.rentonwa.gov/files/assets/city/v/1/elected/city-council/images/cm-van/img_2776.jpg",
     "phone_number": "425-430-6501",
@@ -97,7 +97,7 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/van"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Ruth Pérez",
@@ -120,12 +120,12 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/perez"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Ryan McIrvin",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
       "Position No. 4"
@@ -139,12 +139,12 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/mcirvin"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "James Alberson, Jr.",
     "roles": [
-      "Council President, Position No. 1"
+      "Council President"
     ],
     "divisions": [
       "Position No. 1"
@@ -158,6 +158,6 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   }
 ]
