@@ -1,403 +1,2594 @@
 [
   {
+    "name": "Nancy Backus",
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' for Nancy Backus."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Meet Auburn Mayor Nancy Backus.'"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Auburn's first female mayor' and 'began her mayoral term'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Meet Auburn Mayor Nancy Backus.'"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Auburn Mayor Nancy Backus'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Nancy Backus'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Nancy Backus'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Nancy Backus' and linked to a 'Mayor' page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Nancy Backus'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Meet Auburn Mayor Nancy Backus.\""
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Auburn Mayor Nancy Backus'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Auburn Mayor Nancy Backus'."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated and confirmed as current."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "253-931-3041",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided as '253-931-3041 (p)'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "253-931-3041",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to '(p)'.",
+        "source": "https://www.auburnwa.gov/city_hall/mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "nbackus@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "nbackus@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://www.auburnwa.gov/city_hall/mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Mayor's page provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Mayor Nancy Backus' in the navigation.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The website link is provided as a clean URL for the Mayor's page, which is a stable profile page.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the mayor's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the Mayor's page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the Mayor's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from 'MayorMeet Auburn Mayor Nancy Backus.'.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'Mayor' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the Mayor's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Mayor Nancy Backus' and appears to be her profile page.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name and role in the navigation menu.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the Mayor's section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as the Mayor's page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with the 'Mayor' section and Nancy Backus's profile, indicating it's her primary page.",
+        "source": "https://www.auburnwa.gov/city_hall/mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'Current term began: January 1, 2022'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as 'Current term began: January 1, 2022'.",
+        "source": "https://www.auburnwa.gov/city_hall/mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/city_hall/mayor"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
+  },
+  {
     "name": "Cheryl Rakes",
-    "image": null,
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor' for Cheryl Rakes."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Cheryl Rakes."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Cheryl Rakes is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 1' for Cheryl Rakes."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and Cheryl Rakes is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' under the 'City Councilmembers' section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Auburn's seven at-large councilmembers', indicating the division for all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' under the City Councilmembers section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers' and Cheryl Rakes is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Information about Auburn's seven at-large councilmembers\" under the 'City Councilmembers' section where this person is listed."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' and Cheryl Rakes is listed among them."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the section title 'Information about Auburn's seven at-large councilmembers' which applies to all listed councilmembers."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "crakes@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       }
     ],
     "websites": [
       {
         "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=19424702",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Councilmembers.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Cheryl Rakes' profile page provided.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
-        "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=19424702",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found in the document.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=19424702"
-      }
-    ],
-    "term_dates": [
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Cheryl Rakes' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
       {
-        "data": "February 6, 2023",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated in the document.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=19424702"
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for Cheryl Rakes' profile.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Cheryl Rakes' profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name 'Cheryl Rakes' under City Councilmembers.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'City Councilmembers' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/cheryl_rakes",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilmember's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Cheryl Rakes' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name in the navigation menu.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from her name under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as Cheryl Rakes' page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
       }
     ],
-    "positions": [
-      "Deputy Mayor",
-      "Councilmember",
-      "Position No. 1"
-    ],
-    "sources": []
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Kate Baldwin",
-    "image": null,
-    "phone_numbers": [],
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Kate Baldwin."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Kate Baldwin is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'City Councilmembers' and is part of the target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Kate Baldwin under 'City Councilmembers' and refers to her as 'Councilmember Kate Baldwin'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 2' for Kate Baldwin."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and Kate Baldwin is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' under the 'City Councilmembers' section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers.'"
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Auburn's seven at-large councilmembers', indicating the division for all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' under the City Councilmembers section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers' and Kate Baldwin is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Information about Auburn's seven at-large councilmembers\" under the 'City Councilmembers' section where this person is listed."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' and Kate Baldwin is listed among them."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the section title 'Information about Auburn's seven at-large councilmembers' which applies to all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Auburn's seven at-large councilmembers' in the context of the City Councilmembers section, which includes Kate Baldwin."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "253-259-0861",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided in the contact section for Kate Baldwin, formatted as (p).",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "253-259-0861",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided in the 'CONTACT' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "253-259-0861",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as '253-259-0861 (p)'",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin"
+      }
+    ],
     "emails": [
       {
         "data": "kbaldwin@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
+      },
+      {
+        "data": "kbaldwin@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in the contact section for Kate Baldwin, formatted as a mailto link text and also as (e).",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "kbaldwin@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in the 'CONTACT' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "kbaldwin@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link text: 'Email Kate Baldwin (mailto:kbaldwin@auburnwa.gov)'",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin"
       }
     ],
     "websites": [
       {
         "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Councilmembers.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Kate Baldwin's profile page provided.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
-        "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under City Councilmembers.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
-      }
-    ],
-    "term_dates": [
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Kate Baldwin' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
       {
-        "data": "January 1, 2022",
+        "data": "https://www.auburnwa.ow/cms/One.aspx?portalId=11470638&pageId=18268118",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the council member's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for Kate Baldwin's profile.",
         "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Kate Baldwin's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name 'Kate Baldwin' under City Councilmembers.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'City Councilmembers' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilmember's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Kate Baldwin' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name in the navigation menu.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from her name under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as Kate Baldwin's page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with Kate Baldwin's name in the navigation and main content, indicating it is her profile page.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 2",
-      "City Councilmember"
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Current term began: January 1, 2022'.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term began: January 1, 2022'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Current term began: January 1, 2022'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Tracy Taylor-Turner",
-    "image": null,
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Tracy Taylor-Turner."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Tracy Taylor-Turner is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'City Councilmembers' and is part of the target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section and confirmed by the page content."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section and has a dedicated profile page as a councilmember."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers' and has a dedicated profile page as a councilmember."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 3' for Tracy Taylor-Turner."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and Tracy Taylor-Turner is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' under the 'City Councilmembers' section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers.'"
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Auburn's seven at-large councilmembers', indicating the division for all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' under the City Councilmembers section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and this person is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers' and Tracy Taylor-Turner is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Information about Auburn's seven at-large councilmembers\" under the 'City Councilmembers' section where this person is listed."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' and Tracy Taylor-Turner is listed among them."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the section title 'Information about Auburn's seven at-large councilmembers' which applies to all listed councilmembers."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-308-5171",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided in the 'CONTACT' section for Tracy Taylor-Turner.",
         "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "253-308-5171",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided under 'CONTACT:' section for Tracy Taylor-Turner, labeled as '(p)'",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "253-308-5171",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided under 'CONTACT'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
       }
     ],
     "emails": [
       {
         "data": "ttaylor@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
         "data": "ttaylor@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in the 'CONTACT' section for Tracy Taylor-Turner.",
         "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "ttaylor@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided under 'CONTACT:' section for Tracy Taylor-Turner, linked as 'Email Tracy Taylor-Turner (e)'",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "ttaylor@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided under 'CONTACT'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
       }
     ],
     "websites": [
       {
         "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Councilmembers.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Tracy Taylor-Turner's profile page provided.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
-        "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under header",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
-      }
-    ],
-    "term_dates": [
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Tracy Taylor-Turner' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
       {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under header.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the council member's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for Tracy Taylor-Turner's profile.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Tracy Taylor-Turner's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name 'Tracy Taylor-Turner' in the sidebar navigation, which is a more specific profile page than the general City Councilmembers page.",
         "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'City Councilmembers' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilmember's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Tracy Taylor-Turner' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name in the navigation menu.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from her name under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as Tracy Taylor-Turner's page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 3",
-      "City Councilmember"
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly provided as 'January 1, 2024' in the 'Current term began' field.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term began: January 1, 2024'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly provided as 'January 1, 2024'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly provided as 'December 31, 2027' in the 'Current term ends' field.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term ends: December 31, 2027'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly provided as 'December 31, 2027'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Yolanda Trout-Manuel",
-    "image": null,
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Yolanda Trout-Manuel."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Yolanda Trout-Manuel is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'City Councilmembers' and is part of the target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'began her first term on the Auburn City Council'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states she 'began her first term on the Auburn City Council' and is listed under 'City Councilmembers'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "Position No. 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 4' for Yolanda Trout-Manuel."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and Yolanda Trout-Manuel is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' under the 'City Councilmembers' section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers.'"
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Auburn's seven at-large councilmembers', indicating the division for all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' under the City Councilmembers section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers' and Yolanda Trout-Manuel is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Information about Auburn's seven at-large councilmembers\" under the 'City Councilmembers' section where this person is listed."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' and Yolanda Trout-Manuel is listed among them."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the section title 'Information about Auburn's seven at-large councilmembers' which applies to all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text mentions 'Auburn's seven at-large councilmembers' in a general description of the council, implying her division."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-288-4310",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under Contact.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 5,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to '(p)'.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "253-288-4310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided next to '(p)' under the contact information.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel"
       }
     ],
     "emails": [
       {
         "data": "ytrout@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
         "data": "ytrout@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to '(e)'.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "ytrout@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided next to '(e)' under the contact information.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel"
       }
     ],
     "websites": [
       {
         "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Councilmembers.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Yolanda Trout-Manuel's profile page provided.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
         "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and photo.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
-      }
-    ],
-    "term_dates": [
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Yolanda Trout-Manuel' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
       {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under contact information.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the council member's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for Yolanda Trout-Manuel's profile.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Yolanda Trout-Manuel's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name 'Yolanda Trout-Manuel' under City Councilmembers.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'City Councilmembers' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilmember's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Yolanda Trout-Manuel' and serves as her profile page.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name in the navigation menu.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from her name under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as Yolanda Trout-Manuel's page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with her name as a link to her profile page.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 4",
-      "City Councilmember",
-      "Vice Chair of the Sound Cities Association (SCA) Domestic Violence Initiative Regional Task Force",
-      "SCA Children and Youth Advisory Board",
-      "SCA Regional Water Quality Committee"
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'Current term began: January 1, 2022'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as 'Current term began: January 1, 2022'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Clinton Taylor",
-    "image": null,
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Clinton Taylor."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Clinton Taylor is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'City Councilmembers' and is part of the target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section and the text states \"Information about Auburn's seven at-large councilmembers\" and \"Clinton currently serves as a council member\" (though the latter is for a state partnership, the context of being listed under City Councilmembers implies the city role)."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section and implied by the context of his profile page."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Clinton Taylor is listed under 'City Councilmembers' and the text refers to him as a 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "Position No. 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 5' for Clinton Taylor."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and Clinton Taylor is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' under the 'City Councilmembers' section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers.'"
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Auburn's seven at-large councilmembers', indicating the division for all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' under the City Councilmembers section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers' and Clinton Taylor is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Information about Auburn's seven at-large councilmembers\" under the 'City Councilmembers' section where this person is listed."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' and Clinton Taylor is listed among them."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the section title 'Information about Auburn's seven at-large councilmembers' which applies to all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' in the context of the City Councilmembers section where Clinton Taylor is listed."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-308-5204",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under contact information for Clinton Taylor.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 5,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided next to '(p)' for this person's contact information.",
         "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "253-308-5204",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided in the 'CONTACT' section for Clinton Taylor.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "253-308-5204",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided next to '(p)'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor"
       }
     ],
     "emails": [
       {
         "data": "ctaylor@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
         "data": "ctaylor@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name Clinton Taylor.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 5,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided next to the 'Email Clinton Taylor (e)' link for this person's contact information.",
         "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "ctaylor@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in the 'CONTACT' section for Clinton Taylor.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "ctaylor@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link text.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor"
       }
     ],
     "websites": [
       {
         "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Councilmembers.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Clinton Taylor's profile page provided.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
-        "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct profile page for Clinton Taylor on the Auburn, WA website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
-      }
-    ],
-    "term_dates": [
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Clinton Taylor' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
       {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated for Clinton Taylor.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 5,
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the council member's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for Clinton Taylor's profile.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Clinton Taylor's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name 'Clinton Taylor' under City Councilmembers.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'City Councilmembers' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilmember's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Clinton Taylor' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name in the navigation menu and as a dedicated page.",
         "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from his name under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as Clinton Taylor's page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with Clinton Taylor's name in the navigation and main content, indicating it's his profile page.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 5",
-      "council member"
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Current term began: January 1, 2024\" for this person's role, and the date is in the correct format. ",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly provided as 'January 1, 2024' in the 'Current term began' field.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as 'Current term began: January 1, 2024'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Current term ends: December 31, 2027\" for this person's role, and the date is in the correct format. ",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly provided as 'December 31, 2027' in the 'Current term ends' field.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Current term ends: December 31, 2027'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
+  },
+  {
+    "name": "Lisa Stirgus",
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Lisa Stirgus."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Lisa Stirgus is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role. The text also mentions her swearing-in ceremony, confirming her current active status."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'City Councilmembers' and is part of the target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Lisa Stirgus' and listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Lisa Stirgus was appointed to the Auburn City Council'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilmember Lisa Stirgus was appointed to the Auburn City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 6' for Lisa Stirgus."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and Lisa Stirgus is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' under the 'City Councilmembers' section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers.'"
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Auburn's seven at-large councilmembers', indicating the division for all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' under the City Councilmembers section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers' and Lisa Stirgus is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Information about Auburn's seven at-large councilmembers\" under the 'City Councilmembers' section where this person is listed."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' and Lisa Stirgus is listed among them."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the section title 'Information about Auburn's seven at-large councilmembers' which applies to all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' in the context of City Councilmembers, which includes Lisa Stirgus."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "253-258-1898",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to '(p)' under 'CONTACT'.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "253-258-1898",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided in the text.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "253-258-1898",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided next to her contact information, labeled '(p)' for phone.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus"
+      }
+    ],
+    "emails": [
+      {
+        "data": "LStirgus@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
+      },
+      {
+        "data": "LStirgus@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to 'Email Lisa Stirgus (e)'.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "LStirgus@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in the text.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "LStirgus@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link next to her contact information, labeled '(e)' for email.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Lisa Stirgus' profile page provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Lisa Stirgus' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the council member's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for Lisa Stirgus' profile.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Lisa Stirgus' profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name 'Lisa Stirgus' under City Councilmembers.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'City Councilmembers' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilmember's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Lisa Stirgus' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name in the navigation menu.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from her name under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as Lisa Stirgus' page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name and is her profile page.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with her name in the navigation and appears to be her profile page.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-04-15",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term began: April 15, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "2025-04-15",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'April 15, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "2025-04-15",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as 'Current term began: April 15, 2025'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Current term ends: December 31, 2025'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Hanan Amer",
-    "image": null,
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Hanan Amer."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Hanan Amer is listed under 'City Councilmembers' and referred to as 'Councilmember Hanan Amer'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'City Councilmembers' and is part of the target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Councilmembers'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Councilmembers' section, indicating their role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers'."
+      },
+      {
+        "data": "City Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'City Councilmembers' section."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists 'Hanan Amer' under 'City Councilmembers' and refers to her as 'Councilmember Hanan Amer'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "Position No. 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 7' for Hanan Amer."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', and Hanan Amer is listed as a councilmember."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers' under the 'City Councilmembers' section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers.'"
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Auburn's seven at-large councilmembers', indicating the division for all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' under the City Councilmembers section."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers', implying all listed councilmembers are at-large."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Information about Auburn's seven at-large councilmembers' and Hanan Amer is listed under 'City Councilmembers'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states \"Information about Auburn's seven at-large councilmembers\" under the 'City Councilmembers' section where this person is listed."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn's councilmembers are 'at-large'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that Auburn has 'seven at-large councilmembers' and Hanan Amer is listed among them."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the section title 'Information about Auburn's seven at-large councilmembers' which applies to all listed councilmembers."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Information about Auburn's seven at-large councilmembers', indicating the division for all council members, including Hanan Amer."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-388-3350",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under contact information for Hanan Amer.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to '(p)'.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
+      {
+        "data": "253-388-3350",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided next to '(p)' under 'CONTACT:'",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer"
       }
     ],
     "emails": [
       {
         "data": "hamer@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
         "data": "hamer@auburnwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name Hanan Amer.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
+      {
+        "data": "hamer@auburnwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link text next to 'Email Hanan Amer (e)'",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer"
       }
     ],
     "websites": [
       {
         "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Councilmembers.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Hanan Amer's profile page provided.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
       },
       {
         "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct profile page for Hanan Amer on the Auburn WA website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website link is directly associated with 'Hanan Amer' under 'City Councilmembers' and in the breadcrumbs.",
         "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
-      }
-    ],
-    "term_dates": [
+      },
       {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term dates are explicitly stated for Hanan Amer.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the council member's page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for Hanan Amer's profile.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Hanan Amer's profile page is provided.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the name 'Hanan Amer' under City Councilmembers.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name under the 'City Councilmembers' section.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603"
+      },
+      {
+        "data": "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilmember's profile page is provided.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is directly associated with 'Hanan Amer' under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with the person's name in the navigation menu.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from her name under 'City Councilmembers'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked as Hanan Amer's page.",
+        "source": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked website provided next to the name.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+      },
+      {
+        "data": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly associated with Hanan Amer's name in the navigation and as the current page URL.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 7",
-      "City Councilmember"
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Current term began: January 1, 2024'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as 'Current term began: January 1, 2024'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer"
+      }
     ],
-    "sources": []
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Current term ends: December 31, 2027'.",
+        "source": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Current term ends: December 31, 2027'.",
+        "source": "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   }
 ]

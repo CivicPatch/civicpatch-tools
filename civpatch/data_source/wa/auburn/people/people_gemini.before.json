@@ -1,107 +1,297 @@
 [
   {
+    "name": "Nancy Backus",
+    "roles": [
+      "Mayor",
+      "mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "253-931-3041",
+    "email": "nbackus@auburnwa.gov",
+    "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/mayor"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
+  },
+  {
     "name": "Cheryl Rakes",
-    "positions": [
+    "roles": [
       "Deputy Mayor",
       "Councilmember",
+      "Council Member",
+      "City Councilmember",
+      "council member"
+    ],
+    "divisions": [
+      "at-large",
       "Position No. 1"
     ],
     "image": null,
     "phone_number": null,
     "email": "crakes@auburnwa.gov",
-    "website": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=19424702",
-    "term_date": "February 6, 2023",
+    "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+    "start_date": null,
+    "end_date": null,
     "sources": [
       "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
-      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=19424702"
-    ]
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Kate Baldwin",
-    "positions": [
+    "roles": [
       "Councilmember",
-      "Position No. 2",
-      "City Councilmember"
+      "Council Member",
+      "Council member",
+      "City Councilmember",
+      "council member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 2"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "253-259-0861",
     "email": "kbaldwin@auburnwa.gov",
-    "website": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
-    "term_date": "January 1, 2022",
+    "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
     "sources": [
       "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
-      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118"
-    ]
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/kate_baldwin"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Tracy Taylor-Turner",
-    "positions": [
+    "roles": [
       "Councilmember",
-      "Position No. 3",
-      "City Councilmember"
+      "Council Member",
+      "Council member",
+      "City Councilmember",
+      "council member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 3"
     ],
     "image": null,
     "phone_number": "253-308-5171",
     "email": "ttaylor@auburnwa.gov",
-    "website": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
-    "term_date": "January 1, 2024 to December 31, 2027",
+    "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
     "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
       "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
-      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
-    ]
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Yolanda Trout-Manuel",
-    "positions": [
+    "roles": [
       "Councilmember",
-      "Position No. 4",
+      "Council Member",
+      "Council member",
       "City Councilmember",
-      "Vice Chair of the Sound Cities Association (SCA) Domestic Violence Initiative Regional Task Force",
-      "SCA Children and Youth Advisory Board",
-      "SCA Regional Water Quality Committee"
+      "council member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 4"
     ],
     "image": null,
     "phone_number": "253-288-4310",
     "email": "ytrout@auburnwa.gov",
     "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
-    "term_date": "January 1, 2022 to December 31, 2025",
+    "start_date": "2022-01-01",
+    "end_date": "2025-12-31",
     "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
       "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
-      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
-    ]
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/yolanda_trout-_manuel"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Clinton Taylor",
-    "positions": [
+    "roles": [
       "Councilmember",
-      "Position No. 5",
+      "Council Member",
+      "Council member",
+      "City Councilmember",
       "council member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 5"
     ],
     "image": null,
     "phone_number": "253-308-5204",
     "email": "ctaylor@auburnwa.gov",
-    "website": "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
-    "term_date": "January 1, 2024 to December 31, 2027",
+    "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
     "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
       "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
-      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
-    ]
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/clinton_taylor"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
+  },
+  {
+    "name": "Lisa Stirgus",
+    "roles": [
+      "Councilmember",
+      "Council Member",
+      "Council member",
+      "City Councilmember",
+      "council member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 6"
+    ],
+    "image": null,
+    "phone_number": "253-258-1898",
+    "email": "LStirgus@auburnwa.gov",
+    "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+    "start_date": "2025-04-15",
+    "end_date": "2025-12-31",
+    "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/lisa_stirgus"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   },
   {
     "name": "Hanan Amer",
-    "positions": [
+    "roles": [
       "Councilmember",
-      "Position No. 7",
-      "City Councilmember"
+      "Council Member",
+      "Council member",
+      "City Councilmember",
+      "council member"
+    ],
+    "divisions": [
+      "at-large",
+      "Position No. 7"
     ],
     "image": null,
     "phone_number": "253-388-3350",
     "email": "hamer@auburnwa.gov",
     "website": "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
-    "term_date": "January 1, 2024 to December 31, 2027",
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
     "sources": [
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708",
       "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521769",
-      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521708"
-    ]
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521655",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=19424702",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=18268118",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316603",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/tracy_taylor-turner",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=12521755",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=16316622",
+      "https://www.auburnwa.gov/cms/one.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/cms/One.aspx?portalId=11470638&pageId=20799076",
+      "https://www.auburnwa.gov/city_hall/city_councilmembers/hanan_amer"
+    ],
+    "updated_at": "2025-06-19T18:56:50Z"
   }
 ]
