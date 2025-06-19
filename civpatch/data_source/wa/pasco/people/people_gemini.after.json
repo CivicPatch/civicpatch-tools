@@ -1,13 +1,13 @@
 [
   {
     "name": "Pete Serrano",
-    "positions": [
-      "Mayor",
-      "Council Member",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
       "District 4"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 545-3404",
     "email": "serranocouncil@pasco-wa.gov",
     "website": null,
@@ -17,17 +17,17 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-19T18:43:34Z"
   },
   {
     "name": "David Milne",
-    "positions": [
-      "Mayor Pro Tempore",
-      "Council Member",
+    "roles": [
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [
       "District 5"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 545-3404",
     "email": "milnecouncil@pasco-wa.gov",
     "website": null,
@@ -37,34 +37,17 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
-  },
-  {
-    "name": "Peter Harpster",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(509) 905-2677",
-    "email": "harpstercouncil@pasco-wa.gov",
-    "website": null,
-    "start_date": "2024-01-01",
-    "end_date": "2027-12-31",
-    "sources": [
-      "https://www.pasco-wa.gov/122/City-Council",
-      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
-    ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-19T18:43:34Z"
   },
   {
     "name": "Blanche Barajas",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "District 1"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 545-3404",
     "email": "barajascouncil@pasco-wa.gov",
     "website": null,
@@ -74,16 +57,17 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-19T18:43:34Z"
   },
   {
     "name": "Charles Grimm",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "District 2"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 905-2672",
     "email": "grimmcouncil@pasco-wa.gov",
     "website": null,
@@ -93,16 +77,17 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-19T18:43:34Z"
   },
   {
     "name": "Leo Perales",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "District 3"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 905-2673",
     "email": "peralescouncil@pasco-wa.gov",
     "website": null,
@@ -112,16 +97,17 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-19T18:43:34Z"
   },
   {
     "name": "Melissa Blasdel",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "District 6"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(509) 905-2676",
     "email": "blasdelcouncil@pasco-wa.gov",
     "website": null,
@@ -131,6 +117,26 @@
       "https://www.pasco-wa.gov/122/City-Council",
       "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
     ],
-    "updated_at": "2025-05-09"
+    "updated_at": "2025-06-19T18:43:34Z"
+  },
+  {
+    "name": "Peter Harpster",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "At-large"
+    ],
+    "image": null,
+    "phone_number": "(509) 905-2677",
+    "email": "harpstercouncil@pasco-wa.gov",
+    "website": null,
+    "start_date": "2024-01-01",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://www.pasco-wa.gov/122/City-Council",
+      "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c"
+    ],
+    "updated_at": "2025-06-19T18:43:34Z"
   }
 ]
