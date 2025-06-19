@@ -10,7 +10,9 @@
 * Actions -> Run "Municipal Officials - Scrape"
 
 ## Contribute
+
 ### Run Scrapes
+
 1. Download latest [release](https://github.com/CivicPatch/civicpatch-tools/releases)
 2. Set environment variables:
   * OPENAI_TOKEN

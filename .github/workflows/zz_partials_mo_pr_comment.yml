@@ -1,4 +1,4 @@
-name: ZZ. partial
+name: . partiaoad
 
 on:
   workflow_call:
@@ -50,9 +50,10 @@ jobs:
         run: |
           cd ./civpatch_cli
           go build -o bin/cli
-      
-      - uses: ./.github/workflows/zz_partials_load_docker_cache.yml
 
+      - name: Load Docker cache
+        uses: ./.github/actions/load-docker-cache
+      
       - name: Generate GitHub App Pipeline Token
         id: generate-pipeline-token
         uses: actions/create-github-app-token@v2
