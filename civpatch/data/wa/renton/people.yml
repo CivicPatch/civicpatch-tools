@@ -13,9 +13,10 @@
   sources:
   - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
   - https://www.rentonwa.gov/Government/City-Council/rivera
-  - https://www.rentonwa.gov/Government/City-Council/prince
-  - https://www.rentonwa.gov/Government/City-Council/mcirvin
-  updated_at: '2025-06-16T20:56:33Z'
+  - https://www.rentonwa.gov/Government/City-Council/van
+  - https://www.rentonwa.gov/Government/City-Council/perez
+  - https://www.rentonwa.gov/Government/City-Council/alberson
+  updated_at: '2025-06-18T23:59:43Z'
 - name: James Alberson, Jr.
   roles:
   - Council President
@@ -32,24 +33,30 @@
   sources:
   - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
   - https://www.rentonwa.gov/Government/City-Council/rivera
-  - https://www.rentonwa.gov/Government/City-Council/prince
-  - https://www.rentonwa.gov/Government/City-Council/mcirvin
+  - https://www.rentonwa.gov/Government/City-Council/van
+  - https://www.rentonwa.gov/Government/City-Council/perez
   - https://www.rentonwa.gov/Government/City-Council/alberson
-  updated_at: '2025-06-16T20:56:33Z'
-- name: Kim-Khánh Van
+  updated_at: '2025-06-18T23:59:43Z'
+- name: Ruth Pérez
   roles:
+  - Council President Pro Tem
   - Council Member
   divisions:
-  image:
-  cdn_image:
-  email: kvan@rentonwa.gov
-  phone_number:
-  website: https://www.rentonwa.gov/Government/City-Council/van
-  start_date:
-  end_date:
+  - Position 6
+  image: https://www.rentonwa.gov/files/assets/city/v/1/elected/city-council/images/cm-perez/img_0057.jpeg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/renton/images/10124b2e7c04f63ab642aa9ca94439e28662d0c1b1e90bf9312a6c86fa51368e.jpg
+  email: rperez@rentonwa.gov
+  phone_number: "(425) 430-6501"
+  website: https://www.rentonwa.gov/Government/City-Council/perez
+  start_date: '2021'
+  end_date: '2025'
   sources:
-  - https://www.rentonwa.gov/Government/City-Council/mcirvin
-  updated_at: '2025-06-16T20:56:33Z'
+  - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
+  - https://www.rentonwa.gov/Government/City-Council/rivera
+  - https://www.rentonwa.gov/Government/City-Council/van
+  - https://www.rentonwa.gov/Government/City-Council/perez
+  - https://www.rentonwa.gov/Government/City-Council/alberson
+  updated_at: '2025-06-18T23:59:43Z'
 - name: Carmen Rivera
   roles:
   - Council Member
@@ -65,9 +72,10 @@
   sources:
   - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
   - https://www.rentonwa.gov/Government/City-Council/rivera
-  - https://www.rentonwa.gov/Government/City-Council/prince
-  - https://www.rentonwa.gov/Government/City-Council/mcirvin
-  updated_at: '2025-06-16T20:56:33Z'
+  - https://www.rentonwa.gov/Government/City-Council/van
+  - https://www.rentonwa.gov/Government/City-Council/perez
+  - https://www.rentonwa.gov/Government/City-Council/alberson
+  updated_at: '2025-06-18T23:59:43Z'
 - name: Valerie O'Halloran
   roles:
   - Council Member
@@ -84,16 +92,17 @@
   - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
   - https://www.rentonwa.gov/Government/City-Council/rivera
   - https://www.rentonwa.gov/Government/City-Council/ohalloran
-  - https://www.rentonwa.gov/Government/City-Council/prince
-  - https://www.rentonwa.gov/Government/City-Council/mcirvin
-  updated_at: '2025-06-16T20:56:33Z'
+  - https://www.rentonwa.gov/Government/City-Council/van
+  - https://www.rentonwa.gov/Government/City-Council/perez
+  - https://www.rentonwa.gov/Government/City-Council/alberson
+  updated_at: '2025-06-18T23:59:43Z'
 - name: Ryan McIrvin
   roles:
   - Council Member
   divisions:
   - Position 4
   image: https://www.rentonwa.gov/files/assets/city/v/1/elected/city-council/images/ryan-mcirvin_900x900.jpg?dimension=pageimage&w=480
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/renton/images/5d1f0a17ff3032c8b24c48da58221aef96cc661e8332410f85ab82ce3cbeab56.png
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/renton/images/5d1f0a17ff3032c8b24c48da58221aef96cc661e8332410f85ab82ce3cbeab56.jpg
   email: rmcirvin@rentonwa.gov
   phone_number: "(425) 430-6501"
   website: https://www.rentonwa.gov/Government/City-Council/mcirvin
@@ -102,16 +111,18 @@
   sources:
   - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
   - https://www.rentonwa.gov/Government/City-Council/rivera
-  - https://www.rentonwa.gov/Government/City-Council/prince
+  - https://www.rentonwa.gov/Government/City-Council/van
+  - https://www.rentonwa.gov/Government/City-Council/perez
   - https://www.rentonwa.gov/Government/City-Council/mcirvin
-  updated_at: '2025-06-16T20:56:33Z'
+  - https://www.rentonwa.gov/Government/City-Council/alberson
+  updated_at: '2025-06-18T23:59:43Z'
 - name: Ed Prince
   roles:
   - Council Member
   divisions:
   - Position 5
   image: https://www.rentonwa.gov/files/assets/city/v/2/elected/city-council/images/ed-prince_900x900.jpg?dimension=pageimage&w=480
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/renton/images/eec3e2f90890f7067c0a981b3e44f567dd4684ee6003ba3b319e3c3acb390498.png
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/renton/images/eec3e2f90890f7067c0a981b3e44f567dd4684ee6003ba3b319e3c3acb390498.jpg
   email: eprince@rentonwa.gov
   phone_number: "(425) 430-6501"
   website: https://www.rentonwa.gov/Government/City-Council/prince
@@ -121,28 +132,11 @@
   - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
   - https://www.rentonwa.gov/Government/City-Council/rivera
   - https://www.rentonwa.gov/Government/City-Council/prince
-  - https://www.rentonwa.gov/Government/City-Council/mcirvin
-  updated_at: '2025-06-16T20:56:33Z'
-- name: Ruth Pérez
-  roles:
-  - Council Member
-  divisions:
-  - Position 6
-  image: https://www.rentonwa.gov/files/assets/city/v/1/elected/city-council/images/cm-perez/img_0057.jpeg
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/renton/images/10124b2e7c04f63ab642aa9ca94439e28662d0c1b1e90bf9312a6c86fa51368e.jpg
-  email: rperez@rentonwa.gov
-  phone_number: "(425) 430-6501"
-  website: https://www.rentonwa.gov/Government/City-Council/perez
-  start_date: '2021'
-  end_date: '2025'
-  sources:
-  - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
-  - https://www.rentonwa.gov/Government/City-Council/rivera
-  - https://www.rentonwa.gov/Government/City-Council/prince
+  - https://www.rentonwa.gov/Government/City-Council/van
   - https://www.rentonwa.gov/Government/City-Council/perez
-  - https://www.rentonwa.gov/Government/City-Council/mcirvin
-  updated_at: '2025-06-16T20:56:33Z'
-- name: Kim-Khánh Văn
+  - https://www.rentonwa.gov/Government/City-Council/alberson
+  updated_at: '2025-06-18T23:59:43Z'
+- name: Kim-Khánh Van
   roles:
   - Council Member
   divisions:
@@ -157,6 +151,7 @@
   sources:
   - https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone
   - https://www.rentonwa.gov/Government/City-Council/rivera
-  - https://www.rentonwa.gov/Government/City-Council/prince
   - https://www.rentonwa.gov/Government/City-Council/van
-  updated_at: '2025-06-16T20:56:33Z'
+  - https://www.rentonwa.gov/Government/City-Council/perez
+  - https://www.rentonwa.gov/Government/City-Council/alberson
+  updated_at: '2025-06-18T23:59:43Z'

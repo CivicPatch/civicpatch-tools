@@ -14,7 +14,7 @@
     "sources": [
       "https://www.rentonwa.gov/Government/Mayor-Armondo-Pavone"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Carmen Rivera",
@@ -33,7 +33,7 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/rivera"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Valerie O'Halloran",
@@ -55,7 +55,7 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/ohalloran"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Ed Prince",
@@ -76,10 +76,10 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/prince"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
-    "name": "Kim-Khánh Văn",
+    "name": "Kim-Khánh Van",
     "roles": [
       "Council Member"
     ],
@@ -95,13 +95,14 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/van"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Ruth Pérez",
     "roles": [
       "Chair",
       "Council Member",
+      "Council President Pro Tem",
       "Vice Chair"
     ],
     "divisions": [
@@ -116,7 +117,7 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/perez"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "Ryan McIrvin",
@@ -135,7 +136,7 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/mcirvin"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   },
   {
     "name": "James Alberson, Jr.",
@@ -154,6 +155,6 @@
     "sources": [
       "https://www.rentonwa.gov/Government/City-Council/alberson"
     ],
-    "updated_at": "2025-06-16T20:55:07Z"
+    "updated_at": "2025-06-18T23:58:12Z"
   }
 ]
