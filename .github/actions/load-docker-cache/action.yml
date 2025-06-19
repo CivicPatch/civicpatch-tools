@@ -6,6 +6,7 @@ runs:
     - name: Compute Docker cache key
       id: docker-key
       run: echo "key=docker-cache-${{ hashFiles('Dockerfile', '**/*.rb') }}" >> $GITHUB_OUTPUT
+      shell: bash
 
     - uses: actions/cache@v4
       id: cache
@@ -18,10 +19,12 @@ runs:
     - name: Load Docker image from cache
       if: steps.cache.outputs.cache-hit == 'true'
       run: docker load -i docker-latest.tar
+      shell: bash
 
     - name: Pull latest image if not cached
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         docker pull ghcr.io/civicpatch/civpatch:latest
         docker save ghcr.io/civicpatch/civpatch:latest -o docker-latest.tar
+      shell: bash
 
