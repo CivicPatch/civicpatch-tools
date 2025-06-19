@@ -1,12 +1,16 @@
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=114%2F)
+
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=113%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=114%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
 - [Website Sign In](https://bremertonwa.gov/MyAccount)
 
-<!--THE END-->
+Accessible Menu
 
 1. [Our Government](https://bremertonwa.gov/27/Our-Government)
 2. [City Services](https://bremertonwa.gov/101/City-Services)
@@ -19,22 +23,23 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-# Greg Wheeler
+# Michael Goodnow
 
  
 
-[Mayor's Office](https://bremertonwa.gov/Directory.aspx?DID=19)  
-Title: Mayor  
-Phone: 360-473-5266  
-[Email](mailto:Greg.Wheeler@ci.bremerton.wa.us)
+[City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
+Title: City Council District Number 5  
+Phone: 360-473-5280  
+[Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
+[Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Mayor Greg Wheeler began serving his first term as Mayor in 2018 and his second term in January 2022. From 2010 through 2017 he served on the Bremerton City Council in District 4. He served as President of the Council from 2013 to 2015.
+Michael Goodnow represents Bremerton City Council District 5, which includes the area next to Puget Sound Naval Shipyard, Charleston, and Forest Ridge Park with the district bounded by 11th Street.    
 
-He serves on the Puget Sound Regional Council Executive Board, Central Puget Sound Economic Development District Board, Transportation Board and Growth Management Policy Board.  He represents the City of Bremerton on the boards of Kitsap Transit, Kitsap Public Health, Emergency Management, Kitsap Economic Development Alliance, Kitsap Regional Coordinating Council, 911 Executive Committee and also serves on the Gorst Coalition Executive Committee. 
+Michael is serving his second term though 2025. He was the Council President in 2022.
 
-He is a member of the Bremerton Kiwanis and Bremerton Rotary Clubs.
+In 2025, Michael is Chair for the Public Safety Committee and Vice Chair for the Parks, Finance, Investment &amp; Parking Committee.  
 
-Mayor Wheeler is a lifelong resident of Bremerton, Navy veteran, and retiree from the Puget Sound Naval Shipyard Engineering Department. He holds an MBA from Brandman University and BA from Chapman University. He and his wife Sunny have three adult children, two grandchildren and two dogs.
+Michael will “keep the Council focused on our neighborhoods. I will continue to improve infrastructure through our roads and sidewalks, including the rebuilding of 6th Street and Callow Avenue. We need to continue to fill vacant spaces and create good paying jobs. I will work to ensure that increased density in our community is balanced with affordable and low-income housing. I will work with Council to create and implement long-term growth plans with smart growth policies that lift everyone up. I pledge on behalf of the council and staff that we will move forward with a commitment to diversity, equity and inclusion.”
 
  
 
@@ -136,3 +141,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options

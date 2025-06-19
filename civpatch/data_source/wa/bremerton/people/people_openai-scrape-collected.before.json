@@ -1,0 +1,1187 @@
+[
+  {
+    "name": "Greg Wheeler",
+    "sources": [
+      "https://bremertonwa.gov/194/Mayor-Greg-Wheeler",
+      "https://bremertonwa.gov/directory.aspx?EID=113"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page title and multiple references clearly state Greg Wheeler is the Mayor of Bremerton."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor of Bremerton in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "360-473-5266",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed under contact info for Greg Wheeler, labeled 'Ph'.",
+        "source": "https://bremertonwa.gov/194/Mayor-Greg-Wheeler"
+      },
+      {
+        "data": "360-473-5266",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Mayor Greg Wheeler's contact info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=113"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Greg.Wheeler@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed under contact info for Greg Wheeler.",
+        "source": "https://bremertonwa.gov/194/Mayor-Greg-Wheeler"
+      },
+      {
+        "data": "Greg.Wheeler@ci.bremerton.wa.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address explicitly provided for Greg Wheeler.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=113"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=113",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Wheeler' likely leads to official profile page.",
+        "source": "https://bremertonwa.gov/194/Mayor-Greg-Wheeler"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states second term began January 2022; first term started in 2018 but most recent term start used.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=113"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-19T18:56:22Z"
+  },
+  {
+    "name": "Eric Younger",
+    "sources": [
+      "https://bremertonwa.gov/directory.aspx?EID=79",
+      "https://bremertonwa.gov/Directory.aspx?DID=38",
+      "https://bremertonwa.gov/693/Council-President",
+      "https://bremertonwa.gov/635/Council-Districts"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states 'City Council District Number 7' and describes council membership and leadership roles."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'In 2025, Eric is Council President' indicating active leadership role."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'City Council District Number 7' indicates a council member role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' for 2022-2025 and described as the Council President role."
+      },
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states Council President is Mayor Pro Tempore in case of Mayor's absence or disability."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under District 7 council district members, which implies council member role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 2025 Council President."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 7",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states 'City Council District Number 7' and describes geographic boundaries."
+      },
+      {
+        "data": "District 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District Number 7'."
+      },
+      {
+        "data": "District 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as District 7 representative."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed directly under the council member's contact info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=79"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under City Council contact.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under Eric Younger's contact info as 'Ph: 360-473-5280'.",
+        "source": "https://bremertonwa.gov/693/Council-President"
+      }
+    ],
+    "emails": [
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is provided in the council member's contact section.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=79"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email listed near name for City Council members.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly linked as contact for Eric Younger.",
+        "source": "https://bremertonwa.gov/693/Council-President"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' is associated with the member's section.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=79"
+      },
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=79",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile link directly associated with Eric Younger.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "https://bremertonwa.gov/693/Council-President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the Council President page for Eric Younger.",
+        "source": "https://bremertonwa.gov/693/Council-President"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Most recent election term started in 2022 as per text: 'elected three more times to serve 4-year terms beginning in 2014, 2018, and 2022.'",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=79"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term indicated as 2022 - 2025, start date taken as 2022.",
+        "source": "https://bremertonwa.gov/693/Council-President"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Assuming 4-year term from 2022, term likely ends in 2026.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=79"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term indicated as 2022 - 2025, end date taken as 2025.",
+        "source": "https://bremertonwa.gov/693/Council-President"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:22Z"
+  },
+  {
+    "name": "Jennifer Chamberlin",
+    "sources": [
+      "https://bremertonwa.gov/Directory.aspx?DID=38",
+      "https://bremertonwa.gov/635/Council-Districts",
+      "https://bremertonwa.gov/directory.aspx?EID=193",
+      "https://bremertonwa.gov/Directory.aspx?EID=193"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'City Council District Number 1' indicates a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under District 1 council district members, which implies council member role."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she represents Bremerton City Council District 1 and was Council President in 2024, indicating active council membership."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she represents Bremerton City Council District 1 and was Council President in 2024, indicating active council membership."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District Number 1'."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as District 1 representative."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as City Council District Number 1."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as City Council District Number 1."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under City Council contact.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under Jennifer Chamberlin's contact info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=193"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under Jennifer Chamberlin's contact info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=193"
+      }
+    ],
+    "emails": [
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email listed near name for City Council members.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email provided in the contact section for Jennifer Chamberlin.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=193"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link labeled 'Email' under Jennifer Chamberlin's section.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=193"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=193",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile link directly associated with Jennifer Chamberlin.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' near Jennifer Chamberlin's name likely leads to council member directory.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=193"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' near Jennifer Chamberlin's name likely leads to council info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=193"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2023",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "She is serving her first term through 2025; assuming a 4-year term starting in 2022 or 2023, 2023 is a reasonable estimate.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=193"
+      },
+      {
+        "data": "2023",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "She is serving her first term through 2025; assuming a 4-year term starting in 2022 or 2023, 2023 is a reasonable estimate.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=193"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states she is serving her first term through 2025.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=193"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states she is serving her first term through 2025.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=193"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:22Z"
+  },
+  {
+    "name": "Jeff Coughlin",
+    "sources": [
+      "https://bremertonwa.gov/Directory.aspx?DID=38",
+      "https://bremertonwa.gov/635/Council-Districts",
+      "https://bremertonwa.gov/directory.aspx?EID=194",
+      "https://bremertonwa.gov/Directory.aspx?EID=194"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'City Council District Number 3' indicates a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under District 3 council district members, which implies council member role."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'City Council District Number 3' and 'Council Member Coughlin' indicating role as City Council Member."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states he was Council President in 2023, indicating a past leadership role within the council."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'City Council District Number 3' and 'Council Member Coughlin' indicating active council member role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states he was Council President in 2023, indicating a past leadership role within the council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District Number 3'."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as District 3 representative."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District Number 3'."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District Number 3'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under City Council contact.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under contact info for Jeff Coughlin.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=194"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under his name and title.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=194"
+      }
+    ],
+    "emails": [
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email listed near name for City Council members.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided as contact for Jeff Coughlin.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=194"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email provided near his contact information.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=194"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=194",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile link directly associated with Jeff Coughlin.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' likely leads to council member directory or info page.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=194"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' near his name likely leads to council member directory or info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=194"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2023",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Text states he is serving his first term through 2025 and was Council President in 2023, implying term started around 2023.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=194"
+      },
+      {
+        "data": "2023",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Text states he is serving his first term through 2025 and was Council President in 2023, implying term started in or before 2023.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=194"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states term through 2025.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=194"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states 'serving his first term though 2025'.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=194"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:22Z"
+  },
+  {
+    "name": "Denise Frey",
+    "sources": [
+      "https://bremertonwa.gov/Directory.aspx?DID=38",
+      "https://bremertonwa.gov/635/Council-Districts",
+      "https://bremertonwa.gov/directory.aspx?EID=199",
+      "https://bremertonwa.gov/Directory.aspx?EID=199"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'City Council District Number 2' indicates a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under District 2 council district members, which implies council member role."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'City Council District Number 2' and describes her as a Council Member."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'City Council District Number 2' and describes her role as a council member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District Number 2'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as District 2 representative."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District Number 2'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District Number 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under City Council contact.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under her contact info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=199"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under her name and role.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=199"
+      }
+    ],
+    "emails": [
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email listed near name for City Council members.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link text explicitly given.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=199"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link labeled 'Email' under her contact info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=199"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=199",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile link directly associated with Denise Frey.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2024 - 2027).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2022-03-23",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed March 23, 2022 to fill vacancy, then elected to full term through 2027.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=199"
+      },
+      {
+        "data": "2022-03-23",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed March 23, 2022 to fill vacancy, then elected to full term through 2027.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=199"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2024 - 2027).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Serving first full term through 2027 as stated.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=199"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Serving first full term through 2027 as stated.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=199"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:22Z"
+  },
+  {
+    "name": "Michael Goodnow",
+    "sources": [
+      "https://bremertonwa.gov/Directory.aspx?DID=38",
+      "https://bremertonwa.gov/635/Council-Districts",
+      "https://bremertonwa.gov/directory.aspx?EID=114",
+      "https://bremertonwa.gov/Directory.aspx?EID=114"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'City Council District Number 5' indicates a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under District 5 council district members, which implies council member role."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'City Council District Number 5' and describes council activities and leadership roles."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'City Council District Number 5' and describes council roles and committees."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District Number 5'."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as District 5 representative."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District Number 5'."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District Number 5'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under City Council contact.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under Michael Goodnow's contact info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=114"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under Michael Goodnow's contact info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=114"
+      }
+    ],
+    "emails": [
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email listed near name for City Council members.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link labeled 'Email' under Michael Goodnow's section.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=114"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link labeled 'Email' under Michael Goodnow's section.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=114"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=114",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile link directly associated with Michael Goodnow.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' near Michael Goodnow's name likely leads to council info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=114"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' near Michael Goodnow's name likely leads to council info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=114"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2020",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Serving second term through 2025 implies first term started approximately 2020.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=114"
+      },
+      {
+        "data": "2020",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Mentioned serving second term through 2025; assuming 4-year terms, start likely 2020.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=114"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2022 - 2025).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text states 'Michael is serving his second term though 2025.'",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=114"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states serving second term through 2025.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=114"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:22Z"
+  },
+  {
+    "name": "Anna Mockler",
+    "sources": [
+      "https://bremertonwa.gov/Directory.aspx?DID=38",
+      "https://bremertonwa.gov/635/Council-Districts",
+      "https://bremertonwa.gov/directory.aspx?EID=197",
+      "https://bremertonwa.gov/Directory.aspx?EID=197"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'City Council District Number 6' indicates a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under District 6 council district members, which implies council member role."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'City Council District Number 6' and describes her as representing the district on the City Council."
+      },
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states she was Council Vice President in 2024."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she represents Bremerton City Council District 6 and was Council Vice President in 2024, indicating active council membership."
+      },
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly mentioned as Council Vice President in 2024."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District Number 6'."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as District 6 representative."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District Number 6'."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states she represents City Council District Number 6."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under City Council contact.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under her name and title.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=197"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed directly under her name and title.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=197"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Anna.Mockler@ci.bremerton.wa.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Unique email address listed for Anna Mockler.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "Anna.Mockler@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link text explicitly shows this email address.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=197"
+      },
+      {
+        "data": "Anna.Mockler@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is provided as a mailto link directly associated with her.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=197"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=197",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile link directly associated with Anna Mockler.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link labeled 'City Council' near her name likely leads to council member directory or info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=197"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link labeled City Council near her name likely leads to council member directory or info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=197"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2024 - 2027).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Elected to first full term from 2024 through 2027; start assumed January 2024.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=197"
+      },
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "She was elected in a special election certified Feb 18 (assumed 2023) to finish term through 2023, then elected to full term 2024-2027; start of full term assumed January 2024.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=197"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2024 - 2027).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Term stated to run through 2027; assumed end December 2027.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=197"
+      },
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Full term mentioned as 2024 through 2027, assumed ending December 2027.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=197"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:22Z"
+  },
+  {
+    "name": "Jane Rebelowski",
+    "sources": [
+      "https://bremertonwa.gov/Directory.aspx?DID=38",
+      "https://bremertonwa.gov/635/Council-Districts",
+      "https://bremertonwa.gov/Directory.aspx?EID=230",
+      "https://bremertonwa.gov/directory.aspx?EID=230"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'City Council District Number 4' indicates a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under District 4 council district members, which implies council member role."
+      },
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 2025 Council Vice President."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she is elected to Bremerton City Council District 4 and is Council Vice President in 2025."
+      },
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated she is Council Vice President in 2025."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states 'City Council District Number 4' and she is serving a term as council member."
+      },
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states 'In 2025, Jane is the Council Vice President.'"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District Number 4'."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as District 4 representative."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text explicitly states she represents Bremerton City Council District 4."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states 'Jane Rebelowski represents Bremerton City Council District 4.'"
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under City Council contact.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under her name and role.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=230"
+      },
+      {
+        "data": "360-473-5280",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed directly under her contact info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=230"
+      }
+    ],
+    "emails": [
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email listed near name for City Council members.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link labeled 'Email' under her contact info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=230"
+      },
+      {
+        "data": "City.Council@ci.bremerton.wa.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is linked as mailto:City.Council@ci.bremerton.wa.us near her contact info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=230"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://bremertonwa.gov/directory.aspx?EID=230",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile link directly associated with Jane Rebelowski.",
+        "source": "https://bremertonwa.gov/Directory.aspx?DID=38"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' near her name likely leads to council member info.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=230"
+      },
+      {
+        "data": "https://bremertonwa.gov/Directory.aspx?DID=38",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'City Council' near her name likely leads to council member directory or info.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=230"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2024 - 2027).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she is serving her first term from 2024 through 2027.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=230"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states she is serving her first term from 2024 through 2027.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=230"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term indicated as (2024 - 2027).",
+        "source": "https://bremertonwa.gov/635/Council-Districts"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states term ends in 2027.",
+        "source": "https://bremertonwa.gov/Directory.aspx?EID=230"
+      },
+      {
+        "data": "2027",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states term ends in 2027.",
+        "source": "https://bremertonwa.gov/directory.aspx?EID=230"
+      }
+    ],
+    "updated_at": "2025-06-19T18:56:22Z"
+  }
+]

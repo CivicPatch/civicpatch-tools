@@ -1,12 +1,14 @@
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=230%2F)
+
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=113%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=230%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
 - [Website Sign In](https://bremertonwa.gov/MyAccount)
 
-<!--THE END-->
+Accessible Menu
 
 1. [Our Government](https://bremertonwa.gov/27/Our-Government)
 2. [City Services](https://bremertonwa.gov/101/City-Services)
@@ -19,22 +21,20 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-# Greg Wheeler
+# Jane Rebelowski
 
  
 
-[Mayor's Office](https://bremertonwa.gov/Directory.aspx?DID=19)  
-Title: Mayor  
-Phone: 360-473-5266  
-[Email](mailto:Greg.Wheeler@ci.bremerton.wa.us)
+[City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
+Title: City Council District Number 4  
+Phone: 360-473-5280  
+[Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Mayor Greg Wheeler began serving his first term as Mayor in 2018 and his second term in January 2022. From 2010 through 2017 he served on the Bremerton City Council in District 4. He served as President of the Council from 2013 to 2015.
+Following certification of election results, Jane Rebelowski was elected to complete the term of a previous Council Member who was appointed (due to a vacancy) through the end of 2023, and is now serving her first term from 2024 through 2027.  
 
-He serves on the Puget Sound Regional Council Executive Board, Central Puget Sound Economic Development District Board, Transportation Board and Growth Management Policy Board.  He represents the City of Bremerton on the boards of Kitsap Transit, Kitsap Public Health, Emergency Management, Kitsap Economic Development Alliance, Kitsap Regional Coordinating Council, 911 Executive Committee and also serves on the Gorst Coalition Executive Committee. 
+Jane Rebelowski represents Bremerton City Council District 4 which includes neighborhoods near Downtown, Puget Sound Naval Shipyard, Olympic College, and Kiwanis Park.  
 
-He is a member of the Bremerton Kiwanis and Bremerton Rotary Clubs.
-
-Mayor Wheeler is a lifelong resident of Bremerton, Navy veteran, and retiree from the Puget Sound Naval Shipyard Engineering Department. He holds an MBA from Brandman University and BA from Chapman University. He and his wife Sunny have three adult children, two grandchildren and two dogs.
+In 2025, Jane is the Council Vice President. She is the Chair for the Public Works Committee and serves on the Parks, Finance, Investment &amp; Parking Committee. 
 
  
 

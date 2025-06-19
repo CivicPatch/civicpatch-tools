@@ -1,12 +1,16 @@
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=197%2F)
+
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=113%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=197%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
 - [Website Sign In](https://bremertonwa.gov/MyAccount)
 
-<!--THE END-->
+Accessible Menu
 
 1. [Our Government](https://bremertonwa.gov/27/Our-Government)
 2. [City Services](https://bremertonwa.gov/101/City-Services)
@@ -19,22 +23,30 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-# Greg Wheeler
+# Anna Mockler
 
  
 
-[Mayor's Office](https://bremertonwa.gov/Directory.aspx?DID=19)  
-Title: Mayor  
-Phone: 360-473-5266  
-[Email](mailto:Greg.Wheeler@ci.bremerton.wa.us)
+[City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
+Title: City Council District Number 6  
+Phone: 360-473-5280  
+[Email](mailto:Anna.Mockler@ci.bremerton.wa.us)
 
-Mayor Greg Wheeler began serving his first term as Mayor in 2018 and his second term in January 2022. From 2010 through 2017 he served on the Bremerton City Council in District 4. He served as President of the Council from 2013 to 2015.
+Anna Mockler represents Bremerton City Council District 6 which includes Anderson Cove, Lilian A. and James Walker Park, Marine Drive, Madrona Point, and commercial and residential areas along 11th Street.  
 
-He serves on the Puget Sound Regional Council Executive Board, Central Puget Sound Economic Development District Board, Transportation Board and Growth Management Policy Board.  He represents the City of Bremerton on the boards of Kitsap Transit, Kitsap Public Health, Emergency Management, Kitsap Economic Development Alliance, Kitsap Regional Coordinating Council, 911 Executive Committee and also serves on the Gorst Coalition Executive Committee. 
+Due to a Special Election that was certified on February 18, Anna was elected to serve the remainder of an unexpired term through 2023. Anna was then elected to her first full term from 2024 through 2027. She was Council Vice President in 2024. 
 
-He is a member of the Bremerton Kiwanis and Bremerton Rotary Clubs.
+In 2025, Anna is Chair for the Audit Committee and Vice Chair for the Public Safety Committee. She is also a member of the Kitsap Transit Board of Commissioners; and is the alternate on the West Sound Partners For Ecosystem Recovery (WSPER) Executive Committee.
 
-Mayor Wheeler is a lifelong resident of Bremerton, Navy veteran, and retiree from the Puget Sound Naval Shipyard Engineering Department. He holds an MBA from Brandman University and BA from Chapman University. He and his wife Sunny have three adult children, two grandchildren and two dogs.
+These are the issues I campaigned on because they are the issues that my constituents told me they cared most about.
+
+- Good government, transparent and responsive
+- Safe streets and strong communities
+- Affordable housing
+- Living wage jobs in a sustainable city
+- Respect for human dignity — the basis of all the above.
+
+These are big ideas for making our daily lives better. I have workable plans to make them a reality.
 
  
 
@@ -136,3 +148,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options

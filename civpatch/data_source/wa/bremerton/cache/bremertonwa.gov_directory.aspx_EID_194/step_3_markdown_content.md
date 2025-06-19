@@ -1,12 +1,14 @@
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=194%2F)
+
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=113%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=194%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
 - [Website Sign In](https://bremertonwa.gov/MyAccount)
 
-<!--THE END-->
+Accessible Menu
 
 1. [Our Government](https://bremertonwa.gov/27/Our-Government)
 2. [City Services](https://bremertonwa.gov/101/City-Services)
@@ -19,22 +21,25 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-# Greg Wheeler
+# Jeff Coughlin
 
  
 
-[Mayor's Office](https://bremertonwa.gov/Directory.aspx?DID=19)  
-Title: Mayor  
-Phone: 360-473-5266  
-[Email](mailto:Greg.Wheeler@ci.bremerton.wa.us)
+[City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
+Title: City Council District Number 3  
+Phone: 360-473-5280  
+[Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
+[Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Mayor Greg Wheeler began serving his first term as Mayor in 2018 and his second term in January 2022. From 2010 through 2017 he served on the Bremerton City Council in District 4. He served as President of the Council from 2013 to 2015.
+Jeff Coughlin represents Bremerton City Council District 3 which includes the Downtown area “Harborside”, Manette (bounded by NE Stone Way and Jacobsen Boulevard), and  Evergreen Rotary Park and Kitsap 9/11 Memorial.   
 
-He serves on the Puget Sound Regional Council Executive Board, Central Puget Sound Economic Development District Board, Transportation Board and Growth Management Policy Board.  He represents the City of Bremerton on the boards of Kitsap Transit, Kitsap Public Health, Emergency Management, Kitsap Economic Development Alliance, Kitsap Regional Coordinating Council, 911 Executive Committee and also serves on the Gorst Coalition Executive Committee. 
+Jeff is serving his first term though 2025.   He was the Council President in 2023. 
 
-He is a member of the Bremerton Kiwanis and Bremerton Rotary Clubs.
+In 2025, Jeff is Chair for the Parks, Finance, Investment &amp; Parking Committee and Vice Chair for the Public Works Committee.  He also serves on the LEOFF 1 Fire Pension Board and the Development Block Grant (CDBG) Project Review Committee. Jeff is also a member of the Kitsap Regional Coordinating Council (KRCC) Executive Board and an alternate to the Mayor for the KRCC Transportation Policy Board.  
 
-Mayor Wheeler is a lifelong resident of Bremerton, Navy veteran, and retiree from the Puget Sound Naval Shipyard Engineering Department. He holds an MBA from Brandman University and BA from Chapman University. He and his wife Sunny have three adult children, two grandchildren and two dogs.
+Council Member Coughlin was awarded the Certificate of Municipal Leadership in July 2023 by the Association of Washington Cities. The CML Program provides elected officials “with the knowledge they need to effectively operate within the law, plan for the future, secure and manage funds, foster stronger relationships, and work to build more equitable communities.” To earn this certificate, the elected official attends AWC sponsored workshops across these competency areas: 1) Roles, responsibilities, and legal requirements; 2) Public sector resource management; 3) Community planning and development; 4) Effective local leadership; and 5) Diversity, equity, and inclusion.  
+
+Jeff will make “communication and collaboration” with constituents his top priority while in office; and will advocate “to use revenue resulting from the growth to improve our streets, parks, utilities, and critical community services.” 
 
  
 

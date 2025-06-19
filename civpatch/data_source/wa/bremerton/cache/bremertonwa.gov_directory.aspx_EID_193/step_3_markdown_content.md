@@ -1,12 +1,16 @@
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=193%2F)
+
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=113%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=193%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
 - [Website Sign In](https://bremertonwa.gov/MyAccount)
 
-<!--THE END-->
+Accessible Menu
 
 1. [Our Government](https://bremertonwa.gov/27/Our-Government)
 2. [City Services](https://bremertonwa.gov/101/City-Services)
@@ -19,22 +23,23 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-# Greg Wheeler
+# Jennifer Chamberlin
 
  
 
-[Mayor's Office](https://bremertonwa.gov/Directory.aspx?DID=19)  
-Title: Mayor  
-Phone: 360-473-5266  
-[Email](mailto:Greg.Wheeler@ci.bremerton.wa.us)
+[City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
+Title: City Council District Number 1  
+Phone: 360-473-5280  
+[Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
+[Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Mayor Greg Wheeler began serving his first term as Mayor in 2018 and his second term in January 2022. From 2010 through 2017 he served on the Bremerton City Council in District 4. He served as President of the Council from 2013 to 2015.
+Jennifer Chamberlin represents Bremerton City Council District 1 which includes the areas surrounding Tracyton Beach, Lions Park, Blueberry Park, Stephenson Canyon, as well as Pine Road and part of Wheaton Way bounded by Sylvan Way.     
 
-He serves on the Puget Sound Regional Council Executive Board, Central Puget Sound Economic Development District Board, Transportation Board and Growth Management Policy Board.  He represents the City of Bremerton on the boards of Kitsap Transit, Kitsap Public Health, Emergency Management, Kitsap Economic Development Alliance, Kitsap Regional Coordinating Council, 911 Executive Committee and also serves on the Gorst Coalition Executive Committee. 
+She is serving her first term through 2025 and was the Council President in 2024.
 
-He is a member of the Bremerton Kiwanis and Bremerton Rotary Clubs.
+In 2025, Jennifer is Chair for the Lodging Tax Advisory Committee and serves on the Audit Committee; represents the City of Bremerton on the Kitsap 911 Board of Directors, and Kitsap Regional Coordinating Council (KRCC) Executive Board. She is also the alternate to the Mayor for the KRCC Planning Policy Board.  
 
-Mayor Wheeler is a lifelong resident of Bremerton, Navy veteran, and retiree from the Puget Sound Naval Shipyard Engineering Department. He holds an MBA from Brandman University and BA from Chapman University. He and his wife Sunny have three adult children, two grandchildren and two dogs.
+Jennifer will “support programs in Bremerton that seek to assist in giving our neighbors who are experiencing crisis the tools and resources needed to rise up and out of trauma with dignity and respect. I will assist our city leadership in lifting barriers that prevent our amazing young people from making their dreams become a reality. I will promote initiatives that make our community safe and inclusive for all.  I will partner with other service organizations to assist in creating strong networks of community-minded allies.”
 
  
 
@@ -136,3 +141,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options

@@ -1,12 +1,14 @@
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=79%2F)
+
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=113%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=79%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
 - [Website Sign In](https://bremertonwa.gov/MyAccount)
 
-<!--THE END-->
+Accessible Menu
 
 1. [Our Government](https://bremertonwa.gov/27/Our-Government)
 2. [City Services](https://bremertonwa.gov/101/City-Services)
@@ -19,22 +21,27 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-# Greg Wheeler
+# Eric Younger
 
  
 
-[Mayor's Office](https://bremertonwa.gov/Directory.aspx?DID=19)  
-Title: Mayor  
-Phone: 360-473-5266  
-[Email](mailto:Greg.Wheeler@ci.bremerton.wa.us)
+[City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
+Title: City Council District Number 7  
+Phone: 360-473-5280  
+[Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
+[Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Mayor Greg Wheeler began serving his first term as Mayor in 2018 and his second term in January 2022. From 2010 through 2017 he served on the Bremerton City Council in District 4. He served as President of the Council from 2013 to 2015.
+Eric Younger represents Bremerton City Council District 7 which includes Kitsap Lake Park, NAD Park, Pendergast Regional Park, a portion of Kitsap Way, and the area reaching south towards Gorst. Providing boundaries for the district are the Kitsap County neighborhoods called West Hills and Navy Yard City. 
 
-He serves on the Puget Sound Regional Council Executive Board, Central Puget Sound Economic Development District Board, Transportation Board and Growth Management Policy Board.  He represents the City of Bremerton on the boards of Kitsap Transit, Kitsap Public Health, Emergency Management, Kitsap Economic Development Alliance, Kitsap Regional Coordinating Council, 911 Executive Committee and also serves on the Gorst Coalition Executive Committee. 
+Eric was appointed by the Council Members on May 2, 2001 to fill a seat vacated when the elected Council Member resigned; and then was elected in the fall of that year to fill the remainder of the term through 2003 (2- ½ years total). Following an 8-year gap, Eric was elected again in 2012 to a 2-year term when the City of Bremerton transitioned from a 9-Member, to a 7-Member City Council; and has since been elected three more times to serve 4-year terms beginning in 2014, 2018, and 2022.   Eric was Council President previously from 2016 – 2020. 
 
-He is a member of the Bremerton Kiwanis and Bremerton Rotary Clubs.
+In 2025, Eric is Council President. He serves on the LEOFF 1 Police Pension Board, Kitsap 911 Board of Directors, Kitsap Economic Development Alliance (KEDA) Board of Directors, and an alternate to the Mayor for the Puget Sound Regional Council (PSRC) Board.
 
-Mayor Wheeler is a lifelong resident of Bremerton, Navy veteran, and retiree from the Puget Sound Naval Shipyard Engineering Department. He holds an MBA from Brandman University and BA from Chapman University. He and his wife Sunny have three adult children, two grandchildren and two dogs.
+Eric earned a Bachelor of Arts degree in History (University of Minnesota) and a Masters Degree in Business Administration (Eastern Michigan University). He moved to Bremerton in 1997 and is a Certified Public Accountant.   
+
+Eric will continue to advocate for “securing additional money for maintaining and improving our local streets and sidewalks.
+
+Besides ongoing removal of algae at Kitsap Lake Park and safety improvements along or near Kitsap Way, “I plan to place additional emphasis on identifying needed improvements in other parts of the district.”
 
  
 
