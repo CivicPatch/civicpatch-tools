@@ -235,17 +235,21 @@ module Core
       src = img_element.get_attribute("src")
       return false if src.nil? || src.empty?
 
+      # Exclude malformed or unsupported src values
+      unless src =~ /\Ahttps?:\/\// || src.start_with?("data:")
+        # puts "Excluded unsupported image src: #{src}"
+        return true
+      end
+
       if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
-        # puts "Removed spinner image element with src: #{src}" # Optional logging
-        return true # Don't process this element further
+        return true
       end
 
       if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
-        # puts "Removed excluded image element with src: #{src}" # Optional logging
-        return true # Don't process this element further
+        return true
       end
 
-      false # Don't process this element further
+      false
     rescue StandardError => e
       puts "maybe_exclude_image err: #{e.message}"
       false
@@ -337,7 +341,7 @@ module Core
     end
 
     private_class_method def self.capture_image_as_browser_screenshot(page, img_element)
-      data = img_element.screenshot
+      data = img_element.screenshot(timeout: 5000)
       tempfile = Tempfile.new(binmode: true)
       tempfile.write(data)
       tempfile.rewind
