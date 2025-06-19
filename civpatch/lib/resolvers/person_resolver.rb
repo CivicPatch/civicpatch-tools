@@ -43,6 +43,7 @@ module Resolvers
       # Kim-Khanh Van turns into given=nil, particle= "Kim-Khanh"
       given_name = name&.given || name&.particle
       last_name = name&.family
+      pp name
 
       [given_name, last_name]
     end
@@ -54,6 +55,10 @@ module Resolvers
       # Normalize names by removing diacritics and converting to lowercase
       normalized_name1 = person_name1.unicode_normalize(:nfd).gsub(/\p{Mn}/, "").downcase
       normalized_name2 = person_name2.unicode_normalize(:nfd).gsub(/\p{Mn}/, "").downcase
+
+      # Normalize names by removing quotation marks and other special characters
+      normalized_name1 = normalized_name1.gsub(/["'`“”]/, "")
+      normalized_name2 = normalized_name2.gsub(/["'`“”]/, "")
 
       # Ignore initials
       given_name1, last_name1 = parse_name(normalized_name1)
