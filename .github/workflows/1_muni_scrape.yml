@@ -42,7 +42,8 @@ jobs:
         run: |
           go build -o bin/cli
 
-      - uses: ./.github/workflows/zz_partials_load_docker_cache.yml
+      - name: Load Docker cache
+        uses: ./.github/actions/load-docker-cache
 
       - name: Get scrape candidates from queue
         id: set-municipalities
@@ -108,7 +109,8 @@ jobs:
             app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
             private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
       
-      - uses: ./.github/workflows/zz_partials_load_docker_cache.yml
+      - name: Load Docker cache
+        uses: ./.github/actions/load-docker-cache
 
       - name: Scrape municipal officials
         env:
