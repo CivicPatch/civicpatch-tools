@@ -9,20 +9,20 @@
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Jason Whalen (Mayor)'."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor of Lakewood City Council."
       },
       {
-        "data": "Councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by 'Council Position 3' within the 'Serving on City Council' section."
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council Position 3 – Jason Whalen' on the City Council page, indicating active council member role."
       }
     ],
     "divisions": [
       {
         "data": "Position 3",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position 3'."
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated as 'Position 3'."
       }
     ],
     "phone_numbers": [],
@@ -30,7 +30,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Mary Moss",
@@ -42,20 +42,20 @@
     "roles": [
       {
         "data": "Deputy Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mary Moss (Deputy Mayor)'."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Deputy Mayor of Lakewood City Council."
       },
       {
-        "data": "Councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by 'Council Position 1' within the 'Serving on City Council' section."
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council Position 1 – Mary Moss' on the City Council page, indicating active council member role."
       }
     ],
     "divisions": [
       {
         "data": "Position 1",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position 1'."
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated as 'Position 1'."
       }
     ],
     "phone_numbers": [],
@@ -63,7 +63,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Patti Belle",
@@ -76,19 +76,19 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly listed as a member of the 'Lakewood City Council' which consists of 'seven part-time, nonpartisan members elected to four-year terms'."
+        "llm_confidence_reason": "Listed as a member of the Lakewood City Council without specific title, assumed Council Member."
       },
       {
-        "data": "Councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by 'Council Position 5' within the 'Serving on City Council' section."
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council Position 5 – Patti Belle' on the City Council page, indicating active council member role."
       }
     ],
     "divisions": [
       {
         "data": "Position 5",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position 5'."
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated as 'Position 5'."
       }
     ],
     "phone_numbers": [],
@@ -96,7 +96,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Paul Bocchi",
@@ -108,7 +108,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly listed as a member of the 'Lakewood City Council' which consists of 'seven part-time, nonpartisan members elected to four-year terms'."
+        "llm_confidence_reason": "Listed as a member of the Lakewood City Council without specific title, assumed Council Member."
       }
     ],
     "divisions": [],
@@ -117,7 +117,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Mike Brandstetter",
@@ -130,19 +130,19 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly listed as a member of the 'Lakewood City Council' which consists of 'seven part-time, nonpartisan members elected to four-year terms'."
+        "llm_confidence_reason": "Listed as a member of the Lakewood City Council without specific title, assumed Council Member."
       },
       {
-        "data": "Councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by 'Council Position 2' within the 'Serving on City Council' section."
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council Position 2 – Mike Brandstetter' on the City Council page, indicating active council member role."
       }
     ],
     "divisions": [
       {
         "data": "Position 2",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position 2'."
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated as 'Position 2'."
       }
     ],
     "phone_numbers": [],
@@ -150,7 +150,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Ryan Pearson",
@@ -162,7 +162,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly listed as a member of the 'Lakewood City Council' which consists of 'seven part-time, nonpartisan members elected to four-year terms'."
+        "llm_confidence_reason": "Listed as a member of the Lakewood City Council without specific title, assumed Council Member."
       }
     ],
     "divisions": [],
@@ -171,7 +171,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "J. Trestin Lauricella",
@@ -183,7 +183,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly listed as a member of the 'Lakewood City Council' which consists of 'seven part-time, nonpartisan members elected to four-year terms'."
+        "llm_confidence_reason": "Listed as a member of the Lakewood City Council without specific title, assumed Council Member."
       }
     ],
     "divisions": [],
@@ -192,6 +192,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   }
 ]

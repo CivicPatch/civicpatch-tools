@@ -2,8 +2,8 @@
   {
     "name": "Jason Whalen",
     "roles": [
-      "Mayor",
-      "Councilmember"
+      "Council Member",
+      "Mayor"
     ],
     "divisions": [
       "Position 3"
@@ -18,13 +18,13 @@
       "https://cityoflakewood.us/meet-your-representatives",
       "https://cityoflakewood.us/serving-on-city-council"
     ],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Mary Moss",
     "roles": [
-      "Deputy Mayor",
-      "Councilmember"
+      "Council Member",
+      "Deputy Mayor"
     ],
     "divisions": [
       "Position 1"
@@ -39,13 +39,12 @@
       "https://cityoflakewood.us/meet-your-representatives",
       "https://cityoflakewood.us/serving-on-city-council"
     ],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Patti Belle",
     "roles": [
-      "Council Member",
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
       "Position 5"
@@ -60,7 +59,7 @@
       "https://cityoflakewood.us/meet-your-representatives",
       "https://cityoflakewood.us/serving-on-city-council"
     ],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Paul Bocchi",
@@ -77,13 +76,12 @@
     "sources": [
       "https://cityoflakewood.us/meet-your-representatives"
     ],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Mike Brandstetter",
     "roles": [
-      "Council Member",
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
       "Position 2"
@@ -98,7 +96,7 @@
       "https://cityoflakewood.us/meet-your-representatives",
       "https://cityoflakewood.us/serving-on-city-council"
     ],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
     "name": "Ryan Pearson",
@@ -115,10 +113,10 @@
     "sources": [
       "https://cityoflakewood.us/meet-your-representatives"
     ],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   },
   {
-    "name": "J. Trestin Lauricella",
+    "name": "Trestin Lauricella",
     "roles": [
       "Council Member"
     ],
@@ -132,6 +130,6 @@
     "sources": [
       "https://cityoflakewood.us/meet-your-representatives"
     ],
-    "updated_at": "2025-06-19T18:55:21Z"
+    "updated_at": "2025-06-19T18:54:44Z"
   }
 ]
