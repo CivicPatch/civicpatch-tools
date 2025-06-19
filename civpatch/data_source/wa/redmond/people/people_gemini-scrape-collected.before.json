@@ -1,380 +1,390 @@
 [
   {
     "name": "Angela Birney",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/284/Office-of-the-Mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Redmond Mayor Angela Birney' and 'Re-elected Mayor 2023, second term'."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "mayor@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the mayor's name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Angela Birney.",
         "source": "https://redmond.gov/284/Office-of-the-Mayor"
-      },
-      {
-        "data": "mayor@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the mayor's name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://redmond.gov/284/Office-of-the-Mayor#bio"
       }
     ],
-    "websites": [
+    "websites": [],
+    "start_dates": [
       {
-        "data": "https://redmond.gov/284/Office-of-the-Mayor#bio",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Points to the biography section of the mayor's office page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start year of her second term (2024 - 2027) is explicitly stated.",
         "source": "https://redmond.gov/284/Office-of-the-Mayor"
-      },
-      {
-        "data": "https://redmond.gov/284/Office-of-the-Mayor#bio",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Points to the biography section of the mayor's office page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://redmond.gov/284/Office-of-the-Mayor#bio"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "2024 - 2027",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term dates are explicitly stated in the biography.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end year of her second term (2024 - 2027) is explicitly stated.",
         "source": "https://redmond.gov/284/Office-of-the-Mayor"
-      },
-      {
-        "data": "2024 - 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Mayor's Biography.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://redmond.gov/284/Office-of-the-Mayor#bio"
       }
     ],
-    "positions": [
-      "Mayor",
-      "Board Member",
-      "Vice Chair",
-      "Committee Member",
-      "Executive Board Member",
-      "Governing Board Member",
-      "Past Board President",
-      "Public Issues Committee",
-      "Steering Committee Member",
-      "Community Development & Housing Committee Member",
-      "Large City Advisory Committee Member",
-      "Federal Legislative Committee Member",
-      "Housing Solutions Group Member",
-      "Ad Hoc Bylaws Committee Member"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:42:34Z"
   },
   {
     "name": "Jeralee Anderson",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/189"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Term Expires' and being listed under 'Meet the Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #6' directly under her name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-588-1619",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "emails": [
       {
         "data": "janderson@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "websites": [],
-    "term_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
-        "data": "Expires 12/31/25",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Term Expires 12/31/25'.",
         "source": "https://redmond.gov/189"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position #6"
-    ]
+    "updated_at": "2025-06-19T18:42:34Z"
   },
   {
     "name": "Steve Fields",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/189"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Term Expires' and being listed under 'Meet the Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #2' directly under his name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-403-9476",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to his name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "emails": [
       {
         "data": "sfields@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to his name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "websites": [],
-    "term_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
-        "data": "Expires 12/31/25",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Term Expires 12/31/25'.",
         "source": "https://redmond.gov/189"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position #2"
-    ]
+    "updated_at": "2025-06-19T18:42:34Z"
   },
   {
     "name": "Jessica Forsythe",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/189"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice President, City Council'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Term Expires' and being listed under 'Meet the Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #3' directly under her name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-305-7206",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "emails": [
       {
         "data": "jforsythe@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "websites": [],
-    "term_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
-        "data": "Expires 12/31/27",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Term Expires 12/31/27'.",
         "source": "https://redmond.gov/189"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position #3",
-      "Vice President, City Council"
-    ]
+    "updated_at": "2025-06-19T18:42:34Z"
   },
   {
     "name": "Vanessa Kritzer",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/189"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'President, City Council'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Term Expires' and being listed under 'Meet the Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #5' directly under her name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-305-9892",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "emails": [
       {
         "data": "vkritzer@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "websites": [],
-    "term_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
-        "data": "Expires 12/31/27",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Term Expires 12/31/27'.",
         "source": "https://redmond.gov/189"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position #5",
-      "President, City Council"
-    ]
+    "updated_at": "2025-06-19T18:42:34Z"
   },
   {
     "name": "Angie Nuevacamina",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/189"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council' and implied by 'Council Term Expires'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #7' directly under her name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-556-5846",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "emails": [
       {
         "data": "anuevacamina@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to her name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "websites": [],
-    "term_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
-        "data": "Expires 12/31/27",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Term Expires 12/31/27'.",
         "source": "https://redmond.gov/189"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position #7"
-    ]
+    "updated_at": "2025-06-19T18:42:34Z"
   },
   {
     "name": "Osman Salahuddin",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/189"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council' and implied by 'Council Term Expires'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #1' directly under his name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-556-5845",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to his name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "emails": [
       {
         "data": "osalahuddin@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to his name.",
         "source": "https://redmond.gov/189"
       }
     ],
     "websites": [],
-    "term_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
-        "data": "Expires 12/31/27",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Term Expires 12/31/27'.",
         "source": "https://redmond.gov/189"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position #1"
-    ]
+    "updated_at": "2025-06-19T18:42:34Z"
   },
   {
     "name": "Melissa Stuart",
-    "image": null,
+    "sources": [
+      "https://redmond.gov/189"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Term Expires' and being listed under 'Meet the Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #4' directly under her name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "425-588-6550",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to her name and under 'Ombud for June'.",
         "source": "https://redmond.gov/189"
       }
     ],
     "emails": [
       {
         "data": "mstuart@redmond.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to her name and under 'Ombud for June'.",
         "source": "https://redmond.gov/189"
       }
     ],
     "websites": [],
-    "term_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
-        "data": "Expires 12/31/25",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Term Expires 12/31/25'.",
         "source": "https://redmond.gov/189"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position #4"
-    ]
+    "updated_at": "2025-06-19T18:42:34Z"
   }
 ]

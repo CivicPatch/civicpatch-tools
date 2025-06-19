@@ -6,15 +6,15 @@
     ],
     "divisions": [],
     "image": null,
-    "phone_number": null,
+    "phone_number": "425-556-2900",
     "email": "mayor@redmond.gov",
-    "website": null,
+    "website": "https://redmond.gov/284/Office-of-the-Mayor",
     "start_date": "2024",
     "end_date": "2027",
     "sources": [
       "https://redmond.gov/284/Office-of-the-Mayor"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   },
   {
     "name": "Jeralee Anderson",
@@ -22,7 +22,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #6"
+      "Position 6"
     ],
     "image": null,
     "phone_number": "425-588-1619",
@@ -33,7 +33,7 @@
     "sources": [
       "https://redmond.gov/189"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   },
   {
     "name": "Steve Fields",
@@ -41,7 +41,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #2"
+      "Position 2"
     ],
     "image": null,
     "phone_number": "425-403-9476",
@@ -52,16 +52,15 @@
     "sources": [
       "https://redmond.gov/189"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   },
   {
     "name": "Jessica Forsythe",
     "roles": [
-      "Vice President",
-      "Council Member"
+      "Council Vice President"
     ],
     "divisions": [
-      "Position #3"
+      "Position 3"
     ],
     "image": null,
     "phone_number": "425-305-7206",
@@ -72,16 +71,15 @@
     "sources": [
       "https://redmond.gov/189"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   },
   {
     "name": "Vanessa Kritzer",
     "roles": [
-      "President",
-      "Council Member"
+      "Council President"
     ],
     "divisions": [
-      "Position #5"
+      "Position 5"
     ],
     "image": null,
     "phone_number": "425-305-9892",
@@ -92,7 +90,7 @@
     "sources": [
       "https://redmond.gov/189"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   },
   {
     "name": "Angie Nuevacamina",
@@ -100,7 +98,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #7"
+      "Position 7"
     ],
     "image": null,
     "phone_number": "425-556-5846",
@@ -111,7 +109,7 @@
     "sources": [
       "https://redmond.gov/189"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   },
   {
     "name": "Osman Salahuddin",
@@ -119,7 +117,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #1"
+      "Position 1"
     ],
     "image": null,
     "phone_number": "425-556-5845",
@@ -130,7 +128,7 @@
     "sources": [
       "https://redmond.gov/189"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   },
   {
     "name": "Melissa Stuart",
@@ -138,17 +136,17 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #4"
+      "Position 4"
     ],
     "image": null,
     "phone_number": "425-588-6550",
     "email": "mstuart@redmond.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2021",
     "end_date": "2025-12-31",
     "sources": [
       "https://redmond.gov/189"
     ],
-    "updated_at": "2025-06-19T18:42:34Z"
+    "updated_at": "2025-06-19T18:42:14Z"
   }
 ]
