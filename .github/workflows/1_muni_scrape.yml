@@ -42,8 +42,7 @@ jobs:
         run: |
           go build -o bin/cli
 
-      - name: Load Docker cache
-        uses: ./.github/actions/load-docker-cache
+      - uses: ./.github/actions/load-docker-cache
 
       - name: Get scrape candidates from queue
         id: set-municipalities
