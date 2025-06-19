@@ -87,6 +87,8 @@ jobs:
           cd ./civpatch_cli
           go build -o bin/cli
       
+      - uses: ./.github/workflows/zz_partials_load_docker_cache.yml
+
       - name: Generate GitHub App Token
         id: generate-pipeline-token
         uses: actions/create-github-app-token@v2
