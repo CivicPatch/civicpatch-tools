@@ -1,0 +1,885 @@
+[
+  {
+    "name": "Mason Thompson",
+    "sources": [
+      "https://www.bothellwa.gov/directory.aspx?EID=302",
+      "https://www.bothellwa.gov/Directory.aspx?DID=25",
+      "https://www.bothellwa.gov/261/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Title: Mayor, Position 2' under City Council."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Title explicitly stated as 'Mayor, Position 2'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the councilmembers list."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position 2 is explicitly mentioned in the title."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position number explicitly stated."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 2 is explicitly mentioned next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-471-8723",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is clearly listed next to Mason Thompson's name.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=302"
+      },
+      {
+        "data": "425-471-8723",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mason.thompson@bothellwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is provided as a mailto link next to Mason Thompson's name.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=302"
+      },
+      {
+        "data": "mason.thompson@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=302",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link directly associated with person.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=302",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link directly associated with Mason Thompson.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2027.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-19T18:54:52Z"
+  },
+  {
+    "name": "Amanda Dodd",
+    "sources": [
+      "https://www.bothellwa.gov/Directory.aspx?DID=25",
+      "https://www.bothellwa.gov/261/City-Council",
+      "https://www.bothellwa.gov/Directory.aspx?EID=350",
+      "https://www.bothellwa.gov/directory.aspx?EID=350"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title listed as 'Councilmember, Position 6' indicating active council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Position 6 councilmember; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Councilmember, Position 6' and she is currently serving a full term on the City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember, Position 6' on Bothell City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 6 explicitly mentioned."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position 6 is explicitly mentioned as her council seat."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 6 is specified as her council seat."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-806-6100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number listed for Bothell City Hall, no direct personal number found.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=350"
+      }
+    ],
+    "emails": [
+      {
+        "data": "amanda.dodd@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "amanda.dodd@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided in the content.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=350"
+      },
+      {
+        "data": "amanda.dodd@bothellwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to her name.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=350"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=350",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link directly associated with person.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=350",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link directly associated with Amanda Dodd.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=350",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The page URL is the profile page for Amanda Dodd.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=350"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=350",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Page URL is her official directory profile.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=350"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term runs from January 1, 2024, through December 31, 2037, indicating start date of current term.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=350"
+      },
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2024.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=350"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2027.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      },
+      {
+        "data": "2037-12-31",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2037.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=350"
+      },
+      {
+        "data": "2037-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2037.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=350"
+      }
+    ],
+    "updated_at": "2025-06-19T18:54:52Z"
+  },
+  {
+    "name": "Benjamin Mahnkey",
+    "sources": [
+      "https://www.bothellwa.gov/Directory.aspx?DID=25",
+      "https://www.bothellwa.gov/261/City-Council",
+      "https://www.bothellwa.gov/directory.aspx?EID=328",
+      "https://www.bothellwa.gov/Directory.aspx?EID=328"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title listed as 'Councilmember, Position 5' indicating active council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Position 5 councilmember; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states 'Councilmember, Position 5' and he is currently serving on City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Councilmember, Position 5' which matches the target role 'council member' with a division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 5 explicitly mentioned."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 5 is explicitly mentioned as his council position."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is specified as 'Councilmember, Position 5' indicating the division is Position 5."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-471-8417",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "425-471-8417",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is clearly listed under his contact info.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=328"
+      },
+      {
+        "data": "425-471-8417",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is clearly listed next to the name and role.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=328"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Benjamin.Mahnkey@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "Benjamin.Mahnkey@bothellwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided as a mailto link.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=328"
+      },
+      {
+        "data": "Benjamin.Mahnkey@bothellwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=328"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=328",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link directly associated with person.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=328",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link directly associated with Benjamin Mahnkey.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=328",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL provided is the profile page for Benjamin Mahnkey on the official Bothell website.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=328"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "He was elected to City Council Position 5 in 2021, indicating term start.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=328"
+      },
+      {
+        "data": "2021",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states 'Councilmember Mahnkey was elected to City Council Position 5 in 2021'.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=328"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2025.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-19T18:54:52Z"
+  },
+  {
+    "name": "Rami Al-Kabra",
+    "sources": [
+      "https://www.bothellwa.gov/Directory.aspx?DID=25",
+      "https://www.bothellwa.gov/261/City-Council",
+      "https://www.bothellwa.gov/Directory.aspx?EID=327",
+      "https://www.bothellwa.gov/directory.aspx?EID=327"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Title explicitly stated as 'Deputy Mayor, Position 7'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor' in the councilmembers list."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly stated as 'Deputy Mayor, Position 7' on the City Council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Described as 'Councilmember' and elected to Bothell City Council."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Title explicitly stated as 'Deputy Mayor, Position 7' on the Bothell city website."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Described as 'Councilmember, Rami Al-Kabra' indicating active council membership."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position number explicitly stated."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 7 is explicitly mentioned next to the name."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position 7 explicitly mentioned in the title."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 7 is explicitly mentioned in the title."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-471-8513",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "425-471-8513",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=327"
+      },
+      {
+        "data": "425-471-8513",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and title.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=327"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Rami.Al-Kabra@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "Rami.Al-Kabra@bothellwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email link provided directly under the name and title.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=327"
+      },
+      {
+        "data": "Rami.Al-Kabra@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link text explicitly shows this email address.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=327"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=327",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link directly associated with person.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=327",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link directly associated with Rami Al-Kabra.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=327",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the profile page for Rami Al-Kabra.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=327"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=327",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL provided is the official city directory page for Rami Al-Kabra.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=327"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "He was elected to serve on Bothell City Council in 2021, which is the most recent start date mentioned.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=327"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2025.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-19T18:54:52Z"
+  },
+  {
+    "name": "Jenne Alderks",
+    "sources": [
+      "https://www.bothellwa.gov/Directory.aspx?DID=25",
+      "https://www.bothellwa.gov/261/City-Council",
+      "https://www.bothellwa.gov/Directory.aspx?EID=326",
+      "https://www.bothellwa.gov/directory.aspx?EID=326"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title listed as 'Councilmember, Position 3' indicating active council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Position 3 councilmember; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly states 'Councilmember, Position 3' which is a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Councilmember, Jenne Alderks' and the role matches the target roles list."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 3 explicitly mentioned."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position 3 is explicitly mentioned as the division."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text specifies 'Councilmember, Position 3' indicating the division."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-471-8034",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "425-471-8034",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under the council member's contact info.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=326"
+      },
+      {
+        "data": "425-471-8034",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is clearly listed under Jenne Alderks' contact info.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=326"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Jenne.Alderks@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "Jenne.Alderks@bothellwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is provided as a mailto link directly associated with the council member.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=326"
+      },
+      {
+        "data": "Jenne.Alderks@bothellwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is explicitly provided as a mailto link for Jenne Alderks.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=326"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=326",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link directly associated with person.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=326",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link directly associated with Jenne Alderks.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2025.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-19T18:54:52Z"
+  },
+  {
+    "name": "Jeanne Zornes",
+    "sources": [
+      "https://www.bothellwa.gov/Directory.aspx?DID=25",
+      "https://www.bothellwa.gov/261/City-Council",
+      "https://www.bothellwa.gov/directory.aspx?EID=250"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title listed as 'Councilmember, Position 1' indicating active council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Position 1 councilmember; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly states 'Councilmember, Position 1' which is a council member role."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states 'Deputy Mayor Zornes' indicating active deputy mayor role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 1 explicitly mentioned."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position 1 is explicitly mentioned as her council position."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-471-8376",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "425-471-8376",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under her name and title.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=250"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Jeanne.Zornes@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "Jeanne.Zornes@bothellwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is linked with her name and role.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=250"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=250",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link directly associated with person.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=250",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link directly associated with Jeanne Zornes.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2025.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-19T18:54:52Z"
+  },
+  {
+    "name": "Carston Curd",
+    "sources": [
+      "https://www.bothellwa.gov/Directory.aspx?DID=25",
+      "https://www.bothellwa.gov/261/City-Council",
+      "https://www.bothellwa.gov/Directory.aspx?EID=379",
+      "https://www.bothellwa.gov/directory.aspx?EID=379"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title listed as 'Councilmember, Position 4' indicating active council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Position 4 councilmember; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states 'Councilmember, Position 4' which is a council member role; normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states 'Councilmember Carston Curd' and role matches target roles."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position number explicitly stated."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 4 explicitly mentioned."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position 4 is explicitly mentioned as the division."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states 'Councilmember, Position 4'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "425-476-5711",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "425-476-5711",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is clearly listed under Carston Curd's contact info.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=379"
+      },
+      {
+        "data": "425-476-5711",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed directly under Carston Curd's name and role.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=379"
+      }
+    ],
+    "emails": [
+      {
+        "data": "carston.curd@bothellwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "carston.curd@bothellwa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is explicitly provided in the content.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=379"
+      },
+      {
+        "data": "carston.curd@bothellwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is linked and clearly associated with Carston Curd.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=379"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bothellwa.gov/directory.aspx?EID=379",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link directly associated with person.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?DID=25"
+      },
+      {
+        "data": "https://www.bothellwa.gov/Directory.aspx?EID=379",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link directly associated with Carston Curd.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected to City Council in 2023 as stated.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=379"
+      },
+      {
+        "data": "2023",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states 'elected to City Council in 2023'.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=379"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2027.",
+        "source": "https://www.bothellwa.gov/261/City-Council"
+      },
+      {
+        "data": "2027-12",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires December 2027 as stated.",
+        "source": "https://www.bothellwa.gov/Directory.aspx?EID=379"
+      },
+      {
+        "data": "2027-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states term expires in December of 2027.",
+        "source": "https://www.bothellwa.gov/directory.aspx?EID=379"
+      }
+    ],
+    "updated_at": "2025-06-19T18:54:52Z"
+  }
+]

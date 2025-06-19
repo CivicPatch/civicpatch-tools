@@ -2,8 +2,7 @@
   {
     "name": "Mason Thompson",
     "roles": [
-      "Mayor",
-      "Councilmember"
+      "Mayor"
     ],
     "divisions": [
       "Position 2"
@@ -19,12 +18,11 @@
       "https://www.bothellwa.gov/Directory.aspx?DID=25",
       "https://www.bothellwa.gov/261/City-Council"
     ],
-    "updated_at": "2025-06-19T18:59:00Z"
+    "updated_at": "2025-06-19T18:54:52Z"
   },
   {
     "name": "Amanda Dodd",
     "roles": [
-      "Councilmember",
       "Council Member"
     ],
     "divisions": [
@@ -35,19 +33,18 @@
     "email": "amanda.dodd@bothellwa.gov",
     "website": "https://www.bothellwa.gov/Directory.aspx?EID=350",
     "start_date": "2024-01-01",
-    "end_date": "2027-12-31",
+    "end_date": "2037-12-31",
     "sources": [
       "https://www.bothellwa.gov/Directory.aspx?DID=25",
       "https://www.bothellwa.gov/261/City-Council",
       "https://www.bothellwa.gov/Directory.aspx?EID=350",
       "https://www.bothellwa.gov/directory.aspx?EID=350"
     ],
-    "updated_at": "2025-06-19T18:59:00Z"
+    "updated_at": "2025-06-19T18:54:52Z"
   },
   {
     "name": "Benjamin Mahnkey",
     "roles": [
-      "Councilmember",
       "Council Member"
     ],
     "divisions": [
@@ -56,7 +53,7 @@
     "image": null,
     "phone_number": "425-471-8417",
     "email": "Benjamin.Mahnkey@bothellwa.gov",
-    "website": "https://www.bothellwa.gov/directory.aspx?EID=328",
+    "website": "https://www.bothellwa.gov/Directory.aspx?EID=328",
     "start_date": "2021",
     "end_date": "2025-12-31",
     "sources": [
@@ -65,13 +62,13 @@
       "https://www.bothellwa.gov/directory.aspx?EID=328",
       "https://www.bothellwa.gov/Directory.aspx?EID=328"
     ],
-    "updated_at": "2025-06-19T18:59:00Z"
+    "updated_at": "2025-06-19T18:54:52Z"
   },
   {
     "name": "Rami Al-Kabra",
     "roles": [
       "Deputy Mayor",
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
       "Position 7"
@@ -79,7 +76,7 @@
     "image": null,
     "phone_number": "425-471-8513",
     "email": "Rami.Al-Kabra@bothellwa.gov",
-    "website": "https://www.bothellwa.gov/directory.aspx?EID=327",
+    "website": "https://www.bothellwa.gov/Directory.aspx?EID=327",
     "start_date": "2021",
     "end_date": "2025-12-31",
     "sources": [
@@ -88,12 +85,11 @@
       "https://www.bothellwa.gov/Directory.aspx?EID=327",
       "https://www.bothellwa.gov/directory.aspx?EID=327"
     ],
-    "updated_at": "2025-06-19T18:59:00Z"
+    "updated_at": "2025-06-19T18:54:52Z"
   },
   {
     "name": "Jenne Alderks",
     "roles": [
-      "Councilmember",
       "Council Member"
     ],
     "divisions": [
@@ -111,12 +107,11 @@
       "https://www.bothellwa.gov/Directory.aspx?EID=326",
       "https://www.bothellwa.gov/directory.aspx?EID=326"
     ],
-    "updated_at": "2025-06-19T18:59:00Z"
+    "updated_at": "2025-06-19T18:54:52Z"
   },
   {
     "name": "Jeanne Zornes",
     "roles": [
-      "Councilmember",
       "Council Member",
       "Deputy Mayor"
     ],
@@ -134,12 +129,11 @@
       "https://www.bothellwa.gov/261/City-Council",
       "https://www.bothellwa.gov/directory.aspx?EID=250"
     ],
-    "updated_at": "2025-06-19T18:59:00Z"
+    "updated_at": "2025-06-19T18:54:52Z"
   },
   {
     "name": "Carston Curd",
     "roles": [
-      "Councilmember",
       "Council Member"
     ],
     "divisions": [
@@ -157,6 +151,6 @@
       "https://www.bothellwa.gov/Directory.aspx?EID=379",
       "https://www.bothellwa.gov/directory.aspx?EID=379"
     ],
-    "updated_at": "2025-06-19T18:59:00Z"
+    "updated_at": "2025-06-19T18:54:52Z"
   }
 ]
