@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Theresa Richardson",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "trichardson@ci.richland.wa.us",
+    "updated_at": "2025-06-19T18:44:36Z",
+    "divisions": []
+  },
+  {
+    "name": "Jhoanna Jones",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "jjones@ci.richland.wa.us",
+    "updated_at": "2025-06-19T18:44:36Z",
+    "divisions": []
+  },
+  {
+    "name": "Ryan Lukson",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "rlukson@ci.richland.wa.us",
+    "updated_at": "2025-06-19T18:44:36Z",
+    "divisions": []
+  },
+  {
+    "name": "Kurt Maier",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "kmaier@ci.richland.wa.us",
+    "updated_at": "2025-06-19T18:44:36Z",
+    "divisions": []
+  },
+  {
+    "name": "Shane VanDyke",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "svandyke@ci.richland.wa.us",
+    "updated_at": "2025-06-19T18:44:36Z",
+    "divisions": []
+  },
+  {
+    "name": "Ryan Whitten",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "rwhitten@ci.richland.wa.us",
+    "updated_at": "2025-06-19T18:44:36Z",
+    "divisions": []
+  }
+]

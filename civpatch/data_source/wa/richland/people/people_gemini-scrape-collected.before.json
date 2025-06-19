@@ -1,624 +1,987 @@
 [
   {
     "name": "Theresa Richardson",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
+    "sources": [
+      "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+      "https://www.ci.richland.wa.us/government/city-council",
+      "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+      "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'began serving as a City of Richland councilmember'."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'selected as Mayor Pro Tem'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'selected as Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under City Council and the overview stating the mayor is elected from council members."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under the 'City Council' section."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, indicating this role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 2'."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the overview that all council members are at-large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No individual phone number found for this person.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "trichardson@ci.richland.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address found in mailto link associated with her profile section.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly to her profile page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to her profile page found in the navigation and breadcrumbs.",
         "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "http://www.ci.richland.wa.us/government/city-council"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a link associated with the person's name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to person's profile page found.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL found associated with the name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found under 'City Council'.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'began serving... in January 2022'.",
         "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
-        "data": "December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
-      },
-      {
-        "data": "December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit start date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       }
     ],
-    "positions": [
-      "Mayor",
-      "Position No. 2",
-      "Council Member"
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Expires: December 31, 2027'.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
+      },
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit end date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-19T18:49:17Z"
   },
   {
     "name": "Sandra Kent",
-    "image": null,
-    "phone_numbers": [],
+    "sources": [
+      "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+      "https://www.ci.richland.wa.us/government/city-council",
+      "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+      "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as listed under 'City Council' in the navigation."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under City Council and holding a mayoral pro tem role."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as a heading and role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being appointed to and elected to the Richland City Council."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, indicating this role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the overview that all council members are at-large."
+      },
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No individual phone number found for this person.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
     "emails": [
       {
         "data": "skent@CI.RICHLAND.WA.US",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
-      },
-      {
-        "data": "skent@CI.RICHLAND.WA.US",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
-      },
-      {
-        "data": "skent@CI.RICHLAND.WA.US",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
       }
     ],
     "websites": [
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "http://www.ci.richland.wa.us/government/city-council"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to her profile page found in the navigation.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a link associated with the person's name.",
         "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to person's profile page found.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL found associated with the name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found under 'City Council'.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit start date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "2009-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected in November 2009' for the unexpired term, which is the most recent start date mentioned.",
         "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit end date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration date listed directly below name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
-      },
-      {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Expires: December 31, 2025'.",
         "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
       }
     ],
-    "positions": [
-      "Mayor Pro Tem",
-      "Position No. 3",
-      "Council Member"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:49:17Z"
   },
   {
     "name": "Jhoanna Jones",
-    "image": null,
-    "phone_numbers": [],
+    "sources": [
+      "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+      "https://www.ci.richland.wa.us/government/city-council",
+      "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+      "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+      "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as listed under 'City Council' in the navigation."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under the 'City Council' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Jhoanna Jones."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, indicating this role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the overview that all council members are at-large."
+      },
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 1' for Jhoanna Jones."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No individual phone number found for this person.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
     "emails": [
       {
         "data": "jjones@ci.richland.wa.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
-      },
-      {
-        "data": "jjones@ci.richland.wa.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
-      },
-      {
-        "data": "jjones@ci.richland.wa.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link for Jhoanna Jones.",
         "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
       }
     ],
     "websites": [
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "http://www.ci.richland.wa.us/government/city-council"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to her profile page found in the navigation.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a link associated with the person's name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Jhoanna Jones.",
         "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the direct link to the council member's profile page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 5,
-        "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to person's profile page found.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL found associated with the name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found under 'City Council'.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit start date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'joined the Richland City Council in January 2022' for Jhoanna Jones.",
         "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "Expires: December 31, 2027",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit end date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
-        "data": "Expires: December 31, 2027",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date is explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 5,
-        "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
-      },
-      {
-        "data": "Expires: December 31, 2027",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Expires: December 31, 2027' for Jhoanna Jones.",
         "source": "https://www.ci.richland.wa.us/government/city-council/jhoanna-jones"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 1"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:49:17Z"
   },
   {
     "name": "Ryan Lukson",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
+    "sources": [
+      "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+      "https://www.ci.richland.wa.us/government/city-council",
+      "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+      "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as listed under 'City Council' in the navigation."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under the 'City Council' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as current."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, indicating this role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the overview that all council members are at-large."
+      },
+      {
+        "data": "Position No. 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No individual phone number found for this person.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rlukson@ci.richland.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in a mailto link.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "http://www.ci.richland.wa.us/government/city-council"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to his profile page found in the navigation.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a link associated with the person's name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to person's profile page found.",
         "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL found associated with the name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found under 'City Council'.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit start date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "2017",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'first elected to the Richland City Council in 2017'.",
         "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "Expires: December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit end date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
-        "data": "Expires: December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
-      },
-      {
-        "data": "Expires: December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Expires: December 31, 2025'.",
         "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 4",
-      "Mayor"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:49:17Z"
   },
   {
     "name": "Shayne VanDyke",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
+    "sources": [
+      "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+      "https://www.ci.richland.wa.us/government/city-council",
+      "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+      "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as listed under 'City Council' in the navigation."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under the 'City Council' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, indicating this role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the overview that all council members are at-large."
+      },
+      {
+        "data": "Position No. 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Position No. 5'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No individual phone number found for this person.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "svandyke@ci.richland.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "http://www.ci.richland.wa.us/government/city-council"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to his profile page found in the navigation.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a link associated with the person's name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to person's profile page found.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL found associated with the name.",
         "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found under 'City Council'.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit start date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit end date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
-        "data": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 'December 31, 2027'.",
         "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
       }
     ],
-    "term_dates": [
-      {
-        "data": "December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
-      },
-      {
-        "data": "December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
-      },
-      {
-        "data": "December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
-      }
-    ],
-    "positions": [
-      "Councilmember",
-      "Position No. 5",
-      "position 5"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:49:17Z"
   },
   {
     "name": "Kurt Maier",
-    "image": null,
-    "phone_numbers": [],
-    "emails": [],
+    "sources": [
+      "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+      "https://www.ci.richland.wa.us/government/city-council",
+      "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+      "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+      "https://www.ci.richland.wa.us/government/kurt-maier",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as listed under 'City Council' in the navigation."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under the 'City Council' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the text."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, indicating this role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the overview that all council members are at-large."
+      },
+      {
+        "data": "Position No. 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 6' in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No individual phone number found for this person.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kmaier@ci.richland.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://www.ci.richland.wa.us/government/kurt-maier"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.ci.richland.wa.us/government/kurt-maier",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "http://www.ci.richland.wa.us/government/city-council"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to his profile page found in the navigation.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/kurt-maier",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/kurt-maier",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a link associated with the person's name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/kurt-maier",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to person's profile page found.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/kurt-maier",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL found associated with the name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/kurt-maier",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the current page, which is Kurt Maier's profile.",
         "source": "https://www.ci.richland.wa.us/government/kurt-maier"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/kurt-maier",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name on City Council page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/kurt-maier"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found under 'Government'.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit start date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
-        "data": "https://www.ci.richland.wa.us/government/kurt-maier",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name on City Council page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2024-01-02",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'begins his term January 2. 2024'.",
         "source": "https://www.ci.richland.wa.us/government/kurt-maier"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "Expires: December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/kurt-maier"
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit end date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/kurt-maier"
-      },
-      {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Expires: December 31, 2025'.",
         "source": "https://www.ci.richland.wa.us/government/kurt-maier"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 6",
-      "Council Member"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:49:17Z"
   },
   {
     "name": "Ryan Whitten",
-    "image": null,
-    "phone_numbers": [],
+    "sources": [
+      "https://www.ci.richland.wa.us/government/city-council/theresa-richardson",
+      "https://www.ci.richland.wa.us/government/city-council",
+      "https://www.ci.richland.wa.us/government/city-council/sandra-kent",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-lukson",
+      "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke",
+      "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as listed under 'City Council' in the navigation."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under the 'City Council' section."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and listed under 'City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the overview that all council members are at-large."
+      },
+      {
+        "data": "Position No. 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Position Number 7' and 'Position No. 7'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No individual phone number found for this person.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
     "emails": [
       {
         "data": "rwhitten@ci.richland.wa.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
       }
     ],
     "websites": [
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "http://www.ci.richland.wa.us/government/city-council"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to his profile page found in the navigation.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/theresa-richardson"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for the person's profile.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to profile page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as a link associated with the person's name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/sandra-kent"
       },
       {
         "data": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link directly associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to person's profile page found.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-lukson"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL found associated with the name.",
+        "source": "https://www.ci.richland.wa.us/government/city-council/shayne-vandyke"
+      },
+      {
+        "data": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found in the heading and navigation.",
         "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit start date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": ".",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No explicit end date found for this person's term.",
+        "source": "https://www.ci.richland.wa.us/government/city-council"
       },
       {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration date listed on page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
-      },
-      {
-        "data": "December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated term expiration date.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Expires: December 31, 2025'.",
         "source": "https://www.ci.richland.wa.us/government/city-council/ryan-whitten"
       }
     ],
-    "positions": [
-      "Councilmember",
-      "Position No. 7",
-      "Position 7",
-      "position 7"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:49:17Z"
   }
 ]
