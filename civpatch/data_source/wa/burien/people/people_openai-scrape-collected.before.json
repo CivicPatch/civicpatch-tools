@@ -1,0 +1,586 @@
+[
+  {
+    "name": "Jimmy Matta",
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall"
+    ],
+    "images": [
+      {
+        "data": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11045935/Image/City%20Hall/City%20Council/Jimmy-Matta-2024-web.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a councilmember portrait near the name on the official city council page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is from the City of Burien official site under City Council, and states 'Position: 3' and 'Time on Council' with term dates, indicating he is a council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a City Council member; no specific role title given beyond council member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Position: 3' for Jimmy Matta."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city hall phone number listed; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jimmym@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed under Contact for Jimmy Matta.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the official city council profile page URL for Jimmy Matta.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
+      },
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city website page dedicated to Jimmy Matta.",
+        "source": "https://www.burienwa.gov/city_hall"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current term is stated as January 1, 2022 to December 31, 2025; start date taken as 2022-01-01.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The current term is stated as January 1, 2022 to December 31, 2025; end date taken as 2025-12-31.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
+      }
+    ],
+    "updated_at": "2025-06-19T18:50:51Z"
+  },
+  {
+    "name": "Kevin Schilling",
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall"
+    ],
+    "images": [
+      {
+        "data": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11045935/Image/City%20Hall/City%20Council/Kevin-Schilling-2024.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is a headshot near the name on the official city council page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor of Burien from 2024 to present on official city council page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor Kevin Schilling on the City Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed on the city page footer likely for city hall contact; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
+      },
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kevins@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed under contact for Kevin Schilling on the official page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official city council webpage URL for Mayor Kevin Schilling.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
+      },
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city website page dedicated to Mayor Kevin Schilling.",
+        "source": "https://www.burienwa.gov/city_hall"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2024.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2027.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
+      }
+    ],
+    "updated_at": "2025-06-19T18:50:51Z"
+  },
+  {
+    "name": "Sarah Moore",
+    "sources": [
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
+    ],
+    "images": [
+      {
+        "data": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11045935/Image/City%20Hall/City%20Council/Sarah-Moore-2024.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is a headshot near her name and role on the page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Deputy Mayor Sarah Moore on the City Council page."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Deputy Mayor on the page and in the title."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 5 explicitly mentioned as her position on the council."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city hall phone number listed; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall"
+      },
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city phone number listed on the page; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
+      }
+    ],
+    "emails": [
+      {
+        "data": "sarahm@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed under contact section for Sarah Moore.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city website page dedicated to Sarah Moore.",
+        "source": "https://www.burienwa.gov/city_hall"
+      },
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official profile page for Sarah Moore.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Current term explicitly stated as January 1, 2022 start.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Current term explicitly stated as ending December 31, 2025.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
+      }
+    ],
+    "updated_at": "2025-06-19T18:50:51Z"
+  },
+  {
+    "name": "Hugo Garcia",
+    "sources": [
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
+    ],
+    "images": [
+      {
+        "data": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11045935/Image/City%20Hall/City%20Council/Hugo-Garcia-2024.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is a headshot near the name Hugo Garcia on the official city council page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a City Council member; no specific role title given beyond council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Councilmember Hugo Garcia' and 'Position: 1' indicating he is a City Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: 1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city hall phone number listed; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall"
+      }
+    ],
+    "emails": [
+      {
+        "data": "hugog@burienwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed under Contact section for Hugo Garcia.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city website page dedicated to Hugo Garcia.",
+        "source": "https://www.burienwa.gov/city_hall"
+      },
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official city council profile page URL for Hugo Garcia.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page states 'Current term: January 1, 2022 to December 31, 2025'.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page states 'Current term: January 1, 2022 to December 31, 2025'.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
+      }
+    ],
+    "updated_at": "2025-06-19T18:50:51Z"
+  },
+  {
+    "name": "Linda Akey",
+    "sources": [
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey"
+    ],
+    "images": [
+      {
+        "data": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11045935/Image/City%20Hall/City%20Council/Linda-Akey-2024.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly associated with Linda Akey on the official city council page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a City Council member; no specific role title given beyond council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Time on Council' and 'Position: 2' indicating she is a City Council member; no other specific title like Mayor or Deputy Mayor is given."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: 2' for Linda Akey."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city hall phone number listed; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall"
+      }
+    ],
+    "emails": [
+      {
+        "data": "lindaa@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed under Contact section for Linda Akey.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city website page dedicated to Linda Akey.",
+        "source": "https://www.burienwa.gov/city_hall"
+      },
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the official city council profile page URL for Linda Akey.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page states 'Current term: January 1, 2024 to December 31, 2027' indicating term start date.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page states 'Current term: January 1, 2024 to December 31, 2027' indicating term end date.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
+      }
+    ],
+    "updated_at": "2025-06-19T18:50:51Z"
+  },
+  {
+    "name": "Alex Andrade",
+    "sources": [
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+    ],
+    "images": [
+      {
+        "data": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11045935/Image/City%20Hall/City%20Council/Alex-Andrade-2024.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is a headshot near the name on the official city council page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a City Council member; no specific role title given beyond council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Position: 6' and 'Time on Council' with term dates, indicating a City Council Member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: 6' for Alex Andrade."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city hall phone number listed; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall"
+      }
+    ],
+    "emails": [
+      {
+        "data": "alexa@burienwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed under contact for Alex Andrade.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city website page dedicated to Alex Andrade.",
+        "source": "https://www.burienwa.gov/city_hall"
+      },
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official city council profile page URL for Alex Andrade.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term start date is explicitly stated as January 1, 2024.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term end date is explicitly stated as December 31, 2027.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+      }
+    ],
+    "updated_at": "2025-06-19T18:50:51Z"
+  },
+  {
+    "name": "Stephanie Mora",
+    "sources": [
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+    ],
+    "images": [
+      {
+        "data": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11045935/Image/City%20Hall/City%20Council/Stephanie-Mora-2024.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is a clear headshot of Stephanie Mora on the city council page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as Deputy Mayor Stephanie Mora on the City Council page."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Deputy Mayor from 2024 to present on the official city council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as holding Position 7 on the City Council with term dates provided."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 7 explicitly mentioned as her council seat."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city hall phone number listed; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall"
+      },
+      {
+        "data": "(206) 241-4647",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no direct personal phone found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+      }
+    ],
+    "emails": [
+      {
+        "data": "stephaniem@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct email address provided on the council member's contact section.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city website page dedicated to Stephanie Mora.",
+        "source": "https://www.burienwa.gov/city_hall"
+      },
+      {
+        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official city council profile page URL for Stephanie Mora.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2022.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2025.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+      }
+    ],
+    "updated_at": "2025-06-19T18:50:51Z"
+  }
+]

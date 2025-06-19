@@ -1,1683 +1,938 @@
 [
   {
     "name": "Kevin Schilling",
-    "image": null,
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated as 'Mayor' next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Kevin Schilling'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Kevin Schilling' and 'Mayor: 2024 to present'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Time on Council: 2020 to present' and being listed under 'City Council'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated as 'Mayor Kevin Schilling' under the City Council section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Council' section, implying they are a council member."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the navigation link text"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The position is explicitly stated as 'Position: 4' on his profile page."
+      }
+    ],
     "phone_numbers": [],
-    "emails": [],
+    "emails": [
+      {
+        "data": "kevins@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided under the 'Contact' section.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Mayor Kevin Schilling'",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to the person's name.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council and matches the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
         "source": "https://www.burienwa.gov/city_hall"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to his name in the navigation and breadcrumbs.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Mayor Kevin Schilling.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and specific website link for the person's profile was found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Mayor Kevin Schilling's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the navigation link",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
+      }
+    ],
+    "start_dates": [
       {
-        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated for his current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Stated current term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Stated current term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Stated current term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Stated current term.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated for his current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       }
     ],
-    "positions": [
-      "Mayor"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:53:21Z"
   },
   {
     "name": "Sarah Moore",
-    "image": null,
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated as 'Deputy Mayor' next to the person's name."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor Sarah Moore'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor Sarah Moore' in the navigation."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the text."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated as 'Deputy Mayor Sarah Moore' under the City Council section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Council' section, implying they are a council member."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Deputy Mayor' is explicitly stated next to the name."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the navigation link text"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division is explicitly stated in the text."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "sarahm@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly stated in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       }
     ],
     "websites": [
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Deputy Mayor Sarah Moore'",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to the person's name.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council and matches the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
         "source": "https://www.burienwa.gov/city_hall"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to her name in the navigation.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city council website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and specific website link for the person's profile was found.",
         "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Deputy Mayor Sarah Moore.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Deputy Mayor Sarah Moore's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the navigation link",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
+      }
+    ],
+    "start_dates": [
       {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city council website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city council website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city council website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city council website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is the main page for Sarah Moore on the city website.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 20,
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 20,
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 20,
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 20,
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       }
     ],
-    "positions": [
-      "Deputy Mayor",
-      "Council Member"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:53:21Z"
   },
   {
     "name": "Hugo Garcia",
-    "image": null,
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, implying a Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with an individual link, implying a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by being listed directly under 'City Council' without another specific title."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council', implying a Council Member role, though not explicitly stated with the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated on the person's profile page and implied by being listed under the City Council section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, implying a Council Member role, though not explicitly stated next to their name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' without a specific title"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position: 1' is explicitly stated on the person's profile page."
+      }
+    ],
     "phone_numbers": [],
-    "emails": [],
+    "emails": [
+      {
+        "data": "hugog@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly listed on the person's profile page.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Hugo Garcia'",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to the person's name.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council and matches the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
         "source": "https://www.burienwa.gov/city_hall"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to his name in the navigation.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Council Member Hugo Garcia.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and specific website link for the person's profile was found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Hugo Garcia's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the navigation link",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
+      }
+    ],
+    "start_dates": [
       {
-        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Hugo Garcia.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Hugo Garcia.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Hugo Garcia.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Hugo Garcia.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Hugo Garcia's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Hugo Garcia.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Hugo Garcia.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'January 1, 2022' is explicitly stated for the current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for the current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position 1"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:53:21Z"
   },
   {
     "name": "Linda Akey",
-    "image": null,
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, implying a Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with an individual link, implying a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by being listed directly under 'City Council' without another specific title."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council', implying a Council Member role, though not explicitly stated with the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Council' section, implying they are a council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'City Council' and the page content confirms her role as 'City Councilmember'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' without a specific title"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position: 2' is explicitly stated on her profile page."
+      }
+    ],
     "phone_numbers": [],
-    "emails": [],
+    "emails": [
+      {
+        "data": "lindaa@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided in the 'Contact' section of her profile.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Linda Akey'",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to the person's name.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council and matches the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
         "source": "https://www.burienwa.gov/city_hall"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to her name in the navigation.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Council Member Linda Akey.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and specific website link for the person's profile was found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Linda Akey's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the navigation link",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
+      }
+    ],
+    "start_dates": [
       {
-        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/linda_akey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated as part of her current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated on the page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated as part of her current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Burien LEAD Policy Coordinating Group",
-      "Highline Forum",
-      "Soundside Alliance Policy Committee"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:53:21Z"
   },
   {
     "name": "Jimmy Matta",
-    "image": null,
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated in the image alt text and implied by 'Time on Council' section."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with an individual link, implying a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by being listed directly under 'City Council' without another specific title."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council', implying a Council Member role, though not explicitly stated with the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Council' section, implying they are a council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, implying a Council Member role, though not explicitly stated next to their name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' without a specific title"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position: 3' is explicitly stated in the text."
+      }
+    ],
     "phone_numbers": [],
-    "emails": [],
+    "emails": [
+      {
+        "data": "jimmym@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided under the 'Contact' section for this person.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Jimmy Matta'",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to the person's name and in the breadcrumb.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council and matches the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
         "source": "https://www.burienwa.gov/city_hall"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to his name in the navigation.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Council Member Jimmy Matta.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and specific website link for the person's profile was found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Jimmy Matta's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the navigation link",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
+      }
+    ],
+    "start_dates": [
       {
-        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Jimmy Matta'",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Jimmy Matta'",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Jimmy Matta'",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Jimmy Matta'",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled as Jimmy Matta",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled as Jimmy Matta",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled as Jimmy Matta",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'January 1, 2022' is explicitly stated for the current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       }
     ],
-    "term_dates": [
+    "end_dates": [
       {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for the current term.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       }
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "sources": []
+    "updated_at": "2025-06-19T18:53:21Z"
   },
   {
     "name": "Alex Andrade",
-    "image": null,
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, implying a Council Member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with an individual link, implying a council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by being listed directly under 'City Council' without another specific title."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council', implying a Council Member role, though not explicitly stated with the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Council' section, implying they are a council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'City Council' section, implying a Council Member role, though not explicitly stated next to their name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Implied by 'Time on Council' and 'Position: 6' under the 'City Council' section"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: 6'"
+      }
+    ],
     "phone_numbers": [],
-    "emails": [],
+    "emails": [
+      {
+        "data": "alexa@burienwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided",
+        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Alex Andrade'",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to the person's name.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council and matches the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
         "source": "https://www.burienwa.gov/city_hall"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to his name in the navigation.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Council Member Alex Andrade.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and specific website link for the person's profile was found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Alex Andrade's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the person's profile page URL",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
-      },
-      {
-        "data": "January 1, 2024 to December 31, 2027",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2024-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'January 1, 2024' explicitly stated",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
       }
     ],
-    "positions": [
-      "Council Member",
-      "Position 6"
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 31, 2027' explicitly stated",
+        "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-19T18:53:21Z"
   },
   {
     "name": "Stephanie Mora",
-    "image": null,
+    "sources": [
+      "https://www.burienwa.gov/city_hall/city_council/jimmy_matta",
+      "https://www.burienwa.gov/city_hall",
+      "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling",
+      "https://www.burienwa.gov/city_hall/city_council/sarah_moore",
+      "https://www.burienwa.gov/city_hall/city_council/hugo_garcia",
+      "https://www.burienwa.gov/city_hall/city_council/linda_akey",
+      "https://www.burienwa.gov/city_hall/city_council/alex_andrade",
+      "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated as 'Deputy Mayor' next to the person's name."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' and the associated URL contains 'deputy_mayor_stephanie_mora', strongly indicating the role."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor Stephanie Mora' in the navigation."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the text."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The link text for Stephanie Mora explicitly states 'deputy_mayor_stephanie_mora', indicating her role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'City Council' section, implying they are a council member."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Deputy Mayor' is explicitly stated next to the name."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the navigation link text"
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated role and active period on the person's profile page under 'Deputy Mayor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by the context of the 'City Council' page, 'Time on Council', and 'Position: 7', indicating a primary role within the governing body."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated division."
+      }
+    ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the Contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the Contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the Contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the Contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is listed under the Contact section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "stephaniem@burienwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address is directly associated with the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated email address for the person's official contact information on their profile page.",
         "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
       }
     ],
     "websites": [
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and labeled 'Deputy Mayor Stephanie Mora'",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to the person's name.",
         "source": "https://www.burienwa.gov/city_hall/city_council/jimmy_matta"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council and matches the name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
         "source": "https://www.burienwa.gov/city_hall"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to her name in the navigation.",
         "source": "https://www.burienwa.gov/city_hall/city_council/mayor_kevin_schilling"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Stephanie Mora.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and specific website link for the person's profile was found.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/sarah_moore"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to Deputy Mayor Stephanie Mora's page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the text.",
         "source": "https://www.burienwa.gov/city_hall/city_council/hugo_garcia"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link to personal page found under City Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.burienwa.gov/city_hall/city_council/linda_akey"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link found under City Council page and contains name.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the navigation link",
         "source": "https://www.burienwa.gov/city_hall/city_council/alex_andrade"
       },
       {
         "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Stephanie Mora.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Stephanie Mora.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Stephanie Mora.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "This is the main page for Stephanie Mora.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name and title.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the person, found in the navigation and breadcrumbs.",
         "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
       }
     ],
-    "term_dates": [
+    "start_dates": [
       {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term date is explicitly stated.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
-      },
-      {
-        "data": "January 1, 2022 to December 31, 2025",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Time on Council.",
-        "markdown_formatting": {
-          "in_list": false
-        },
+        "data": "2022-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated start date for the current term of office for the person's main role on the council, found on their profile page under 'Current term'.",
         "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
       }
     ],
-    "positions": [
-      "Deputy Mayor",
-      "Council Member"
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated end date for the current term of office for the person's main role on the council, found on their profile page under 'Current term'.",
+        "source": "https://www.burienwa.gov/city_hall/city_council/deputy_mayor_stephanie_mora"
+      }
     ],
-    "sources": []
+    "updated_at": "2025-06-19T18:53:21Z"
   }
 ]
