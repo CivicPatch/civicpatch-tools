@@ -99,6 +99,7 @@ module Services
             - It is important to return the division as an array of objects, not a string.
             - Loose associations (the person lives in a district, but not elected from it)
               should not be listed
+            - List the type of the division first, then the name (e.g., "Ward 1", "District 2").
           - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
           - Contact Details (Phone/Email/Website):
             - Associate details logically if near the person's name/section.

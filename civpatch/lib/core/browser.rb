@@ -13,7 +13,8 @@ module Core
     MAX_RETRIES = 5 # Maximum retry attempts for rate limits
     BASE_SLEEP = 2  # Base sleep time for exponential backoff
     EXCLUDE_IMAGE_URLS = ["tile.openstreetmap.org"].freeze
-    EXCLUDE_IMAGE_PATTERNS = ["spinner.gif", "loading.gif", "ajax-loader.gif", "loader.gif"].freeze
+    EXCLUDE_IMAGE_PATTERNS = ["spinner.gif", "loading.gif", "ajax-loader.gif", "loader.gif", "spinner.png",
+                              ".svg"].freeze
     INCLUDE_API_CONTENT = {
       mwjsPeople: {
         pattern: "mwjsPeople",
@@ -236,22 +237,15 @@ module Core
       return false if src.nil? || src.empty?
 
       # Exclude malformed or unsupported src values
-      unless src =~ /\Ahttps?:\/\// || src.start_with?("data:")
+      if src.start_with?("data:")
         # puts "Excluded unsupported image src: #{src}"
         return true
       end
 
-      if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
-        return true
-      end
+      return true if EXCLUDE_IMAGE_PATTERNS.any? { |pattern| src.downcase.include?(pattern) }
 
-      if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
-        return true
-      end
+      return true if EXCLUDE_IMAGE_URLS.any? { |url| src.downcase.include?(url) }
 
-      false
-    rescue StandardError => e
-      puts "maybe_exclude_image err: #{e.message}"
       false
     end
 

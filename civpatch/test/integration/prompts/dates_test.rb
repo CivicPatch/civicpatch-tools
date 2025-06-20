@@ -1,6 +1,6 @@
+require_relative "../../test_helper"
 require "services/google_gemini/client"
 require "services/openai"
-require_relative "../../test_helper"
 
 module IntegrationTest
   module Prompts
@@ -41,6 +41,10 @@ module IntegrationTest
           assert_equal expected.map { |p| p["end_dates"].map{ |d| d["data"] } }.sort,
                        result.map { |p| p["end_dates"].map{ |d| d["data"] } }.sort, "Model #{model.class.name} failed end date check"
         end
+      end
+
+      def test_dates_needle_in_haystack
+
       end
     end
   end
