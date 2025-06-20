@@ -137,6 +137,7 @@ module Services
               - "At-Large B" -> "At-Large B" ->
           - Loose associations (the person lives in a district, but not elected from it)
             should not be listed
+          - List the type of the division first, then the name (e.g., "Ward 1", "District 2").
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
@@ -162,54 +163,55 @@ module Services
             like `[email@example.com]()` or `[email@example.com](some-link)`.
             Extract the email address shown in the brackets.
           - Place extracted emails ONLY in the "email" field, NEVER in the "website" field.
-        - start_date and end_date extraction:
-          - **Default to Null**: The `data` field for `start_date` and `end_date` MUST be null by default.
-            Only populate it if you find an EXPLICIT date string in the text that meets the criteria below.
-          - **Prohibited Actions**:
-            - **DO NOT infer, assume, or calculate dates** based on context, patterns, "common practice",
-              "typical term start", "recently", the current date (`#{current_date}`), or any other non-explicit
-              information. **Confidence reasoning like "Common term start date..." is specifically forbidden
-              if the date wasn't explicitly written.** Output MUST be null in such cases.
-            - Do not add default days or months unless performing the specific `Month YYYY` -> `YYYY-MM` conversion.
-          - **Allowed Extraction & Formatting (Only if explicit date found)**:
-            - Allowed output formats: `YYYY`, `YYYY-MM`, `YYYY-MM-DD`.
-            - If the source text explicitly provides a date as `YYYY`, `YYYY-MM`,
-              or `YYYY-MM-DD`, output that exact string.
-            - If the source text explicitly provides a date as `Month YYYY` (e.g., "January 2027"),
-              convert it to `YYYY-MM` (e.g., "2027-01").
-            - If the source text provides an explicit date in any other format, treat it as not found and output null.
-          - **Identifying the Correct Start Date (if multiple 'elected' dates)**:
-            - If multiple "elected" or "reelected" dates are mentioned for a person, use the date associated with the
-              **most recent** election/re-election for the `start_date`.
-            - Example: "elected in November 2020 and was reelected in November 2024" → `start_date` should
-              be based on "November 2024".
+        - **Start and End Date Extraction Guidelines**:
+          - **Default to Null**:
+            - Both `start_date` and `end_date` must be `null` unless an explicit date is found in the text.
+            - Do not infer, assume, or calculate dates based on context, patterns, or common practices.
+          - **Allowed Formats**:
+            - Extract dates only if explicitly written in one of the following formats:
+              - `YYYY`, `YYYY-MM`, or `YYYY-MM-DD` (e.g., "2027", "2027-01", "2027-01-15").
+              - `Month YYYY` (e.g., "January 2027") → Convert to `YYYY-MM` (e.g., "2027-01").
+            - Any other format should be treated as not found, and the output must be `null`.
+
+          - **Identifying the Correct Start Date**:
+            - If multiple `start_date` keywords (e.g., "elected", "reelected") are found:
+              - Use the date associated with the **most recent election or re-election**.
+              - Example: "elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+
           - **Locating Dates**:
-            - Use keywords (`start_date` keywords: 'Elected:', 'Elected in', 'Appointed:', 'Term Began:', 'Sworn In:',
-            'Serving Since:', 'First Elected:', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced',
-            'Assumed Office:', 'Joined Council', 'Began Service', `end_date` keywords: 'Term Expires:', 'Term Ends:',
-            'Term ending', 'Serving Until:', 'Until:', 'Expires', 'Ending', 'Through', 'Next Election:', 'End of Term:')
-             and patterns (`Term: [Date1] to [Date2]`, `Term: YYYY-YYYY`) to find potential explicit date strings
-             **that are clearly associated with the specific person being processed.**
-            - When multiple `start_date` keywords like "elected" or "reelected" are found,
-              apply the "Identifying the Correct Start Date" rule above.
-            - When extracting from tables, ensure the date string is found
-              **within the same row or entry** as the person's name.
-            - Apply the formatting rules above ONLY to explicitly found and correctly associated dates.
-            - Extract both dates for `Term: ... to ...` pattern if both are explicit and
-              associated with the current person.
+            - Use the following keywords and patterns to locate explicit dates:
+              - **`start_date` keywords**:
+                - 'Elected:', 'Elected in', 'Appointed:', 'Term Began:', 'Sworn In:', 'Serving Since:',
+                  'First Elected:', 'Took Office', 'Started', 'Since:', 'Beginning', 'Commenced',
+                  'Assumed Office:', 'Joined Council', 'Began Service'.
+              - **`end_date` keywords**:
+                - 'Term Expires:', 'Term Ends:', 'Term ending', 'Serving Until:', 'Until:', 'Expires',
+                  'Ending', 'Through', 'Next Election:', 'End of Term:'.
+              - **Patterns**:
+                - `Term: [Date1] to [Date2]` → Extract both `start_date` and `end_date`.
+                - `Term: YYYY-YYYY` → Extract both `start_date` and `end_date`.
+
+            - Ensure the date is **clearly associated with the specific person** being processed:
+              - For tables, the date must appear in the same row or entry as the person's name.
+              - For text, the date must be explicitly linked to the person (e.g., "John Doe was elected in 2020").
+
+          - **Handling Ambiguities**:
+            - If the text uses vague terms like "last year" or "the usual date", set the date to `null`.
+            - If the person has resigned, vacated their role, or is deceased, exclude them entirely from the output.
+
           - **Key Examples**:
-            - "Term Expires January 2027" -> `end_date`: {"data": "2027-01"}
-            - "Serving through 2025" -> `end_date`: {"data": "2025"}
-            - "Term: Jan 2023 to Dec 31, 2026" -> `start_date`: {"data": "2023-01"}, `end_date`: {"data": "2026-12-31"}
-            - "Elected last year" -> `start_date`: null
-            - "Term began on the usual date" -> `start_date`: null
-            - "elected in Nov 2020, reelected Nov 2024" -> `start_date`: {"data": "2024-11"}
-            - "term ending December 2028" -> `end_date`: {"data": "2028-12"}
-            - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." -> (This person should NOT
-              be in the output).
-            - **Final Check**: Was the output date explicitly written in the text (or directly convertible via
-              the Month YYYY rule) **and clearly associated with the correct individual**? If not, it MUST be null.
-              No exceptions for inference or misattribution.
+            - "Term Expires January 2027" → `end_date`: `{"data": "2027-01"}`
+            - "Serving through 2025" → `end_date`: `{"data": "2025"}`
+            - "Term: Jan 2023 to Dec 31, 2026" → `start_date`: `{"data": "2023-01"}`, `end_date`: `{"data": "2026-12-31"}`
+            - "Elected last year" → `start_date`: `null`
+            - "Term began on the usual date" → `start_date`: `null`
+            - "elected in Nov 2020, reelected Nov 2024" → `start_date`: `{"data": "2024-11"}`
+            - "term ending December 2028" → `end_date`: `{"data": "2028-12"}`
+            - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." → Exclude this person from the output.
+
+          - **Final Check**:
+            - Ensure the extracted date is explicitly written in the text and clearly associated with the correct individual.
+            - If not, the output must be `null`. No exceptions for inference or misattribution.
         - Today is #{current_date}. Context only, do not use for date calculation.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'
           that appear structurally close (e.g., immediately following section) to a specific person's name or section
