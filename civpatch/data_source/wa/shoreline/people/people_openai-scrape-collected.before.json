@@ -5,41 +5,44 @@
       "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts",
       "https://www.shorelinewa.gov/government/city-council"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/914/638457619211730000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near Chris Roberts' name and contact section.",
+        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts"
+      },
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/15120/638446329827230000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image shown near the City Council section with caption including Mayor Chris Roberts.",
+        "source": "https://www.shorelinewa.gov/government/city-council"
+      }
+    ],
     "roles": [
       {
-        "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "He was elected to the Shoreline City Council multiple times, indicating he is a Council Member. This is a current role as he was re-elected to Mayor in 2024, implying continued council membership in some capacity, and his term expires in 2025. The Mayor role is a specific council role. "
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content and page title."
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states he 'was elected to the position again in 2024' and the page is titled 'Mayor Chris Roberts'."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Chris Roberts' and confirmed by the text 'The City Council chooses a Mayor and Deputy Mayor from among its members'."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor and shown in the photo caption as Mayor."
       }
     ],
     "divisions": [
       {
         "data": "Position 7",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position 7' under his contact information."
-      },
-      {
-        "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that all councilmembers are 'at-large'."
+        "llm_confidence_reason": "Position 7 is explicitly mentioned under Chris Roberts' contact info."
       }
     ],
     "phone_numbers": [
       {
         "data": "(206) 391-2733",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided under Chris Roberts' contact information section.",
+        "llm_confidence_reason": "Phone number labeled 'Phone' directly under Chris Roberts' contact info.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts"
       }
     ],
@@ -47,29 +50,29 @@
       {
         "data": "croberts@shorelinewa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link text for Chris Roberts' contact information.",
+        "llm_confidence_reason": "Email link text explicitly shows croberts@shorelinewa.gov.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts"
       }
     ],
     "websites": [
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page URL is a dedicated profile page for Chris Roberts.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official profile page for Chris Roberts as Mayor.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts"
       },
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked from the person's name in the 'Councilmembers' section.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile link provided for Chris Roberts.",
         "source": "https://www.shorelinewa.gov/government/city-council"
       }
     ],
     "start_dates": [
       {
         "data": "2024",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text states he 'was elected to the position again in 2024' for Mayor, which is his current primary role.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected as Mayor again in 2024, term expires Dec 31, 2025.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts"
       }
     ],
@@ -77,11 +80,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'His term expires December 31, 2025'.",
+        "llm_confidence_reason": "Term explicitly stated to expire December 31, 2025.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/roberts"
       }
     ],
-    "updated_at": "2025-06-21T02:59:54Z"
+    "updated_at": "2025-06-21T02:59:02Z"
   },
   {
     "name": "Laura Mork",
@@ -89,41 +92,49 @@
       "https://www.shorelinewa.gov/government/city-council",
       "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/15120/638446329827230000",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Image shown near the City Council section with caption including Deputy Mayor Laura Mork.",
+        "source": "https://www.shorelinewa.gov/government/city-council"
+      },
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/13935/638457617779800000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the name and contact section clearly a portrait of Laura Mork.",
+        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork"
+      }
+    ],
     "roles": [
       {
         "data": "Deputy Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor Laura Mork' and confirmed by the text 'The City Council chooses a Mayor and Deputy Mayor from among its members'."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'elected to the Shoreline City Council in 2021'."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Deputy Mayor and shown in the photo caption as Deputy Mayor."
       },
       {
         "data": "Deputy Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'elected as Deputy Mayor in 2024'."
+        "llm_confidence_reason": "Explicitly stated as Deputy Mayor and elected to City Council in 2021."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Elected to Shoreline City Council in 2021, serving as Position 3."
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that all councilmembers are 'at-large'."
-      },
-      {
         "data": "Position 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as her position."
+        "llm_confidence_reason": "Position 3 explicitly mentioned as her council seat."
       }
     ],
     "phone_numbers": [
       {
         "data": "(206) 801-2207",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as her voicemail number.",
+        "llm_confidence_reason": "Voicemail phone number listed directly under contact info for Laura Mork.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork"
       }
     ],
@@ -131,21 +142,21 @@
       {
         "data": "lmork@shorelinewa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as an email link.",
+        "llm_confidence_reason": "Email address explicitly provided in contact section.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork"
       }
     ],
     "websites": [
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked from the person's name in the 'Councilmembers' section.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile link provided for Laura Mork.",
         "source": "https://www.shorelinewa.gov/government/city-council"
       },
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL at the top of the page is a direct link to her profile.",
+        "llm_confidence_reason": "The URL of the page is the official profile page for Laura Mork on Shoreline city website.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork"
       }
     ],
@@ -153,7 +164,7 @@
       {
         "data": "2021",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'elected to the Shoreline City Council in 2021', which is her initial start date for the council.",
+        "llm_confidence_reason": "Elected to City Council in 2021 as stated in biography.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork"
       }
     ],
@@ -161,11 +172,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'term expires December 31, 2025'.",
+        "llm_confidence_reason": "Term expires December 31, 2025 as explicitly stated.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/mork"
       }
     ],
-    "updated_at": "2025-06-21T02:59:54Z"
+    "updated_at": "2025-06-21T02:59:02Z"
   },
   {
     "name": "Annette Ademasu",
@@ -173,36 +184,43 @@
       "https://www.shorelinewa.gov/government/city-council",
       "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/15041/638457652138530000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and role of Annette Ademasu.",
+        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu"
+      }
+    ],
     "roles": [
       {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed under 'Councilmembers' and confirmed by the general description of the City Council."
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as a Councilmember in the City Council section."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember Annette Ademasu' and 'Councilmember' under her contact."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the content."
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that all councilmembers are 'at-large'."
+        "data": "At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "All Councilmembers serve at-large as stated in the About the Council section."
       },
       {
         "data": "Position 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position 4' under her contact information."
+        "llm_confidence_reason": "Explicitly stated as 'Position 4' in the content."
       }
     ],
     "phone_numbers": [
       {
         "data": "(206) 801-2204",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Voicemail: (206) 801-2204'.",
+        "llm_confidence_reason": "Phone number labeled as 'Voicemail' near the councilmember's contact info.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu"
       }
     ],
@@ -210,41 +228,41 @@
       {
         "data": "aademasu@shorelinewa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "llm_confidence_reason": "Email address explicitly provided in mailto link near the councilmember's contact info.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu"
       }
     ],
     "websites": [
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked from the person's name in the 'Councilmembers' section.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile link provided for Annette Ademasu.",
         "source": "https://www.shorelinewa.gov/government/city-council"
       },
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is the specific page for Annette Ademasu, serving as her profile page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is the official profile page of Annette Ademasu.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu"
       }
     ],
     "start_dates": [
       {
         "data": "2023",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'elected to the Shoreline City Council in 2023'.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected to Shoreline City Council in 2023 as stated in the content.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu"
       }
     ],
     "end_dates": [
       {
         "data": "2027-12-31",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Her term expires December 31, 2027'.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term expires December 31, 2027 as explicitly stated.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ademasu"
       }
     ],
-    "updated_at": "2025-06-21T02:59:54Z"
+    "updated_at": "2025-06-21T02:59:02Z"
   },
   {
     "name": "Eben Pobee",
@@ -252,36 +270,43 @@
       "https://www.shorelinewa.gov/government/city-council",
       "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/13937/638106890076170000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
+        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee"
+      }
+    ],
     "roles": [
       {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed under 'Councilmembers' and confirmed by the general description of the City Council."
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as a Councilmember in the City Council section."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the heading and under his contact information."
+        "llm_confidence_reason": "Explicitly stated as Councilmember on the page."
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that all councilmembers are 'at-large'."
+        "data": "At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "All Councilmembers serve at-large as stated in the About the Council section."
       },
       {
         "data": "Position 5",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position 5' under his name and role."
+        "llm_confidence_reason": "Position 5 is explicitly mentioned as his council position."
       }
     ],
     "phone_numbers": [
       {
         "data": "(206) 801-2201",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided as 'Voicemail: (206) 801-2201' under the 'Contact' section for Eben Pobee.",
+        "llm_confidence_reason": "Voicemail phone number listed directly under contact info.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee"
       }
     ],
@@ -289,21 +314,21 @@
       {
         "data": "epobee@shorelinewa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Eben Pobee under the 'Contact' section.",
+        "llm_confidence_reason": "Email address explicitly provided.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee"
       }
     ],
     "websites": [
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked from the person's name in the 'Councilmembers' section.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile link provided for Eben Pobee.",
         "source": "https://www.shorelinewa.gov/government/city-council"
       },
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page is the dedicated profile page for Councilmember Eben Pobee.",
+        "llm_confidence_reason": "Page URL is the official profile page for Eben Pobee.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee"
       }
     ],
@@ -311,7 +336,7 @@
       {
         "data": "2021",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Eben Pobee was elected to City Council in 2021'.",
+        "llm_confidence_reason": "Elected to City Council in 2021 as stated.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee"
       }
     ],
@@ -319,11 +344,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'His term expires December 31, 2025'.",
+        "llm_confidence_reason": "Term expires December 31, 2025 as stated.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/pobee"
       }
     ],
-    "updated_at": "2025-06-21T02:59:54Z"
+    "updated_at": "2025-06-21T02:59:02Z"
   },
   {
     "name": "John Ramsdell",
@@ -331,36 +356,43 @@
       "https://www.shorelinewa.gov/government/city-council",
       "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/13939/638457618588870000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is a portrait near the name and role.",
+        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell"
+      }
+    ],
     "roles": [
       {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed under 'Councilmembers' and confirmed by the general description of the City Council."
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as a Councilmember in the City Council section."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and 'elected to the City Council'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and elected to City Council."
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that all councilmembers are 'at-large'."
+        "data": "At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "All Councilmembers serve at-large as stated in the About the Council section."
       },
       {
         "data": "Position 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position 1' under his contact information."
+        "llm_confidence_reason": "Explicitly stated as 'Position 1'."
       }
     ],
     "phone_numbers": [
       {
         "data": "(206) 801-2205",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as 'Voicemail: (206) 801-2205'.",
+        "llm_confidence_reason": "Phone number labeled as 'Voicemail' near the contact info.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell"
       }
     ],
@@ -368,21 +400,21 @@
       {
         "data": "jramsdell@shorelinewa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "llm_confidence_reason": "Email explicitly provided as mailto link near the contact info.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell"
       }
     ],
     "websites": [
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked from the person's name in the 'Councilmembers' section.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile link provided for John Ramsdell.",
         "source": "https://www.shorelinewa.gov/government/city-council"
       },
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the direct profile page for John Ramsdell.",
+        "llm_confidence_reason": "Page URL is the official profile page for John Ramsdell on Shoreline city website.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell"
       }
     ],
@@ -390,7 +422,7 @@
       {
         "data": "2021",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'elected to the City Council in 2021'.",
+        "llm_confidence_reason": "Text states 'John was elected to the City Council in 2021.'",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell"
       }
     ],
@@ -398,11 +430,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'His term expires December 31, 2025'.",
+        "llm_confidence_reason": "Text states 'His term expires December 31, 2025.'",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/ramsdell"
       }
     ],
-    "updated_at": "2025-06-21T02:59:54Z"
+    "updated_at": "2025-06-21T02:59:02Z"
   },
   {
     "name": "Betsy Robertson",
@@ -410,36 +442,43 @@
       "https://www.shorelinewa.gov/government/city-council",
       "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/11359/638457621187370000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and role section.",
+        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson"
+      }
+    ],
     "roles": [
       {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed under 'Councilmembers' and confirmed by the general description of the City Council."
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as a Councilmember in the City Council section."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and confirmed as current."
+        "llm_confidence_reason": "Explicitly stated as Councilmember and served as Deputy Mayor, which is a recognized council role."
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that all councilmembers are 'at-large'."
+        "data": "At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "All Councilmembers serve at-large as stated in the About the Council section."
       },
       {
         "data": "Position 6",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'elected to position 6'."
+        "llm_confidence_reason": "Explicitly stated as elected to position 6."
       }
     ],
     "phone_numbers": [
       {
         "data": "(206) 801-2206",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided as 'Voicemail: (206) 801-2206' under the 'Contact' section for Betsy Robertson.",
+        "llm_confidence_reason": "Phone number labeled as Voicemail near the councilmember contact info.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson"
       }
     ],
@@ -447,29 +486,23 @@
       {
         "data": "brobertson@shorelinewa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided under the 'Contact' section for Betsy Robertson.",
+        "llm_confidence_reason": "Email explicitly provided as contact for Betsy Robertson.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson"
       }
     ],
     "websites": [
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked from the person's name in the 'Councilmembers' section.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile link provided for Betsy Robertson.",
         "source": "https://www.shorelinewa.gov/government/city-council"
-      },
-      {
-        "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL of the page is the specific profile page for Betsy Robertson.",
-        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson"
       }
     ],
     "start_dates": [
       {
-        "data": "2023",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text states she was 'elected to position 6 in 2019 and 2023', with 2023 being the most recent election date for her current term.",
+        "data": "2019-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed January 2019 and elected in 2019, so start date taken as January 2019.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson"
       }
     ],
@@ -477,11 +510,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Her term expires December 31, 2027'.",
+        "llm_confidence_reason": "Term explicitly stated to expire December 31, 2027.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/robertson"
       }
     ],
-    "updated_at": "2025-06-21T02:59:54Z"
+    "updated_at": "2025-06-21T02:59:02Z"
   },
   {
     "name": "Keith Scully",
@@ -489,36 +522,53 @@
       "https://www.shorelinewa.gov/government/city-council",
       "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.shorelinewa.gov/home/showpublishedimage/7294/638457618252930000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the name and contact section clearly a portrait of Keith Scully.",
+        "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully"
+      }
+    ],
     "roles": [
       {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed under 'Councilmembers' and confirmed by the general description of the City Council."
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as a Councilmember in the City Council section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states he was Mayor in 2022 and currently on City Council; mayor is a primary governing body role."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states he was Deputy Mayor in 2020, a recognized primary governing body role."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and confirmed by his most recent election in 2023 and current term."
+        "llm_confidence_reason": "Explicitly stated as Councilmember on the page."
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that all councilmembers are 'at-large'."
+        "data": "At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "All Councilmembers serve at-large as stated in the About the Council section."
       },
       {
         "data": "Position 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position 2' under his contact information."
+        "llm_confidence_reason": "Explicitly stated as Position 2 on the page."
       }
     ],
     "phone_numbers": [
       {
         "data": "(206) 801-2202",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided under 'Voicemail'.",
+        "llm_confidence_reason": "Voicemail number explicitly listed under contact info for Keith Scully.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully"
       }
     ],
@@ -526,29 +576,29 @@
       {
         "data": "kscully@shorelinewa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "llm_confidence_reason": "Email explicitly listed as mailto link for Keith Scully.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully"
       }
     ],
     "websites": [
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked from the person's name in the 'Councilmembers' section.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile link provided for Keith Scully.",
         "source": "https://www.shorelinewa.gov/government/city-council"
       },
       {
         "data": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the direct profile page for Keith Scully, indicated by the page title and content.",
+        "llm_confidence_reason": "Page URL is the official profile page for Keith Scully on Shoreline City Council site.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully"
       }
     ],
     "start_dates": [
       {
         "data": "2023",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text states he was 'elected to City Council in 2015, 2019, and 2023', with 2023 being the most recent election for his current term.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Most recent election to City Council was in 2023, indicating current term start.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully"
       }
     ],
@@ -556,10 +606,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'His term expires December 31, 2027'.",
+        "llm_confidence_reason": "Text explicitly states term expires December 31, 2027.",
         "source": "https://www.shorelinewa.gov/government/elected-and-appointed-officials/shoreline-city-council/scully"
       }
     ],
-    "updated_at": "2025-06-21T02:59:54Z"
+    "updated_at": "2025-06-21T02:59:02Z"
   }
 ]
