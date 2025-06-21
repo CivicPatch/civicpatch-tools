@@ -84,8 +84,8 @@ module Core
 
         # Remove quotation marks (curly and normal) and parentheses
         division_identifier_to_find = division_identifier_to_find.gsub(/["“”‘’()]/, "").strip
-        # Remove prefixes like "no1", "no 1", "no.1", "no. 1", "#1", "# 1"
-        division_identifier_to_find = division_identifier_to_find.sub(/^(no\.?\s*|#\.?\s*)/, "").strip
+        # Remove prefixes like "no1", "no 1", "no.1", "no. 1", "#1", "# 1", "number 1"
+        division_identifier_to_find = division_identifier_to_find.sub(/^(no\.?\s*|#\.?\s*|number\s*)/, "").strip
         # Remove ordinal suffixes like "rd", "st", "nd", "th"
         division_identifier_to_find = division_identifier_to_find.gsub(/(rd|st|nd|th)$/i, "").strip
 
