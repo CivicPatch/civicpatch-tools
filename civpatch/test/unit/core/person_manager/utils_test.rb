@@ -115,4 +115,15 @@ class CorePersonManagerUtilsTest < Minitest::Test
       assert_equal ["Known", "Unknown"], sorted.map { |p| p["name"] }
     end
   end
+
+  def test_normalize_division
+    # Test case: "3rd Ward" -> "Ward 3"
+    assert_equal "Ward 3", Core::PersonManager::Utils.normalize_division("3rd Ward")
+
+    # Test case: "Ward One" -> "Ward 1"
+    assert_equal "Ward 1", Core::PersonManager::Utils.normalize_division("Ward One")
+
+    # Test case: "1st Random" -> "1st Random" (no normalization)
+    assert_equal "1st Random", Core::PersonManager::Utils.normalize_division("1st Random")
+  end
 end
