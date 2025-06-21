@@ -8,7 +8,7 @@
     "images": [
       {
         "data": "https://cob.org/wp-content/smush-webp/Lund1a810-320x400.jpg.webp",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Image URL is a portrait near the Mayor Kim Lund biography.",
         "source": "https://cob.org/gov/mayor/bio"
       }
@@ -16,41 +16,41 @@
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor of Bellingham, WA."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor of Bellingham, WA in the content."
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page is titled 'Office of Mayor Kim Lund' and the content clearly identifies Kim Lund as the mayor of Bellingham, WA."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page is titled 'Office of Mayor Kim Lund' and the content clearly identifies Kim Lund as the Mayor of Bellingham, WA."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(360) 778-8100",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number listed under Mayor’s Office contacts.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed under Mayor's Office contact.",
         "source": "https://cob.org/gov/mayor/bio"
       },
       {
         "data": "+1 360-778-8000",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The general city hall phone number is provided near the mayor's office contact information; no direct mayor-specific phone number found.",
+        "llm_confidence_reason": "The phone number +1 360-778-8000 is listed as the main City Hall contact number near the Mayor's office information, likely the best available contact.",
         "source": "https://cob.org/gov/mayor"
       }
     ],
     "emails": [
       {
         "data": "mayorsoffice@cob.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed under Mayor’s Office contacts.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email listed under Mayor's Office contact.",
         "source": "https://cob.org/gov/mayor/bio"
       },
       {
         "data": "info@cob.org",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city hall email is provided near mayor's office contact info; no direct mayor-specific email found.",
+        "llm_confidence_reason": "The email info@cob.org is provided as the general city contact near the Mayor's office info; no specific mayoral email found.",
         "source": "https://cob.org/gov/mayor"
       }
     ],
@@ -58,26 +58,26 @@
       {
         "data": "https://cob.org/gov/mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Official Mayor's office page URL inferred from site navigation.",
+        "llm_confidence_reason": "Official Mayor's office page URL inferred from navigation and content.",
         "source": "https://cob.org/gov/mayor/bio"
       },
       {
         "data": "https://cob.org/gov/mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the official mayor's office page for Kim Lund.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is the official Mayor's office page for Kim Lund.",
         "source": "https://cob.org/gov/mayor"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01-01",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Text states Mayor Kim Lund took office January 1, 2024.",
         "source": "https://cob.org/gov/mayor/bio"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   },
   {
     "name": "Michael Lilliquist",
@@ -89,7 +89,7 @@
       {
         "data": "https://cob.org/wp-content/smush-webp/p950132-1-320x400.jpg.webp",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the name and role.",
+        "llm_confidence_reason": "Image is a portrait near the name and title.",
         "source": "https://cob.org/gov/council/michael-lilliquist"
       }
     ],
@@ -118,7 +118,7 @@
       },
       {
         "data": "Ward 6",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 6th Ward."
       }
     ],
@@ -147,8 +147,8 @@
       },
       {
         "data": "https://cob.org/gov/council/michael-lilliquist",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official council member bio page linked.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official council member bio page linked from name.",
         "source": "https://cob.org/gov/council/contacts-bios"
       }
     ],
@@ -168,7 +168,7 @@
         "source": "https://cob.org/gov/council/michael-lilliquist"
       }
     ],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   },
   {
     "name": "Hannah Stone",
@@ -179,8 +179,8 @@
     "images": [
       {
         "data": "https://cob.org/wp-content/smush-webp/p950127-1-430x245.jpg.webp",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL directly associated with Hannah Stone's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Hannah Stone's name and council member section.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
@@ -215,7 +215,7 @@
     "divisions": [
       {
         "data": "Ward 1",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 1st Ward."
       },
       {
@@ -243,34 +243,34 @@
     "websites": [
       {
         "data": "https://cob.org/gov/council/hanna-stone",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official council member bio page linked.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official council member bio page linked from name.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
         "data": "https://cob.org/gov/council/hanna-stone",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official city council member webpage URL.",
+        "llm_confidence_reason": "Official council member page URL.",
         "source": "https://cob.org/gov/council/hanna-stone"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term stated as Jan 2024 to Dec 2027; start date taken as January 2024.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 2024.",
         "source": "https://cob.org/gov/council/hanna-stone"
       }
     ],
     "end_dates": [
       {
         "data": "2027-12",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term stated as Jan 2024 to Dec 2027; end date taken as December 2027.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2027.",
         "source": "https://cob.org/gov/council/hanna-stone"
       }
     ],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   },
   {
     "name": "Hollie Huthman",
@@ -281,14 +281,14 @@
     "images": [
       {
         "data": "https://cob.org/wp-content/uploads/p950131-1-430x245.jpg?theia_smart_thumbnails_file_version=2",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL directly associated with Hollie Huthman's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Hollie Huthman's name and council member section.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
         "data": "https://cob.org/wp-content/smush-webp/p950131-1-320x400.jpg.webp",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and clearly a portrait.",
+        "llm_confidence_reason": "The image is a headshot near the name and title on the official city council page.",
         "source": "https://cob.org/gov/council/hollie-huthman"
       }
     ],
@@ -307,7 +307,7 @@
     "divisions": [
       {
         "data": "Ward 2",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 2nd Ward."
       },
       {
@@ -320,7 +320,7 @@
       {
         "data": "(360) 778-8216",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly listed under contact info for Hollie Huthman.",
+        "llm_confidence_reason": "Phone number is listed twice near the name and contact section.",
         "source": "https://cob.org/gov/council/hollie-huthman"
       }
     ],
@@ -328,21 +328,21 @@
       {
         "data": "hahuthman@cob.org",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed and linked as mailto for Hollie Huthman.",
+        "llm_confidence_reason": "Email is clearly listed near the name and contact section.",
         "source": "https://cob.org/gov/council/hollie-huthman"
       }
     ],
     "websites": [
       {
         "data": "https://cob.org/gov/council/hollie-huthman",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official council member bio page linked.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official council member bio page linked from name.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
         "data": "https://cob.org/gov/council/hollie-huthman",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The URL provided is the official city council profile page for Hollie Huthman.",
+        "llm_confidence_reason": "This is the official profile page URL for Hollie Huthman on the city website.",
         "source": "https://cob.org/gov/council/hollie-huthman"
       }
     ],
@@ -362,7 +362,7 @@
         "source": "https://cob.org/gov/council/hollie-huthman"
       }
     ],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   },
   {
     "name": "Daniel Hammill",
@@ -373,8 +373,8 @@
     "images": [
       {
         "data": "https://cob.org/wp-content/smush-webp/p001179-council-430x245.jpg.webp",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL directly associated with Daniel Hammill's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Daniel Hammill's name and council member section.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
@@ -404,7 +404,7 @@
     "divisions": [
       {
         "data": "Ward 3",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 3rd Ward."
       },
       {
@@ -425,15 +425,15 @@
       {
         "data": "dchammill@cob.org",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed and repeated multiple times as his contact.",
+        "llm_confidence_reason": "Email is explicitly listed and linked as Daniel Hammill's contact.",
         "source": "https://cob.org/gov/council/daniel-hammill"
       }
     ],
     "websites": [
       {
         "data": "https://cob.org/gov/council/daniel-hammill",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official council member bio page linked.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official council member bio page linked from name.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
@@ -447,7 +447,7 @@
       {
         "data": "2023-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term is explicitly stated as Jan 2023 – Dec 2027; start date is Jan 2023.",
+        "llm_confidence_reason": "Term is stated as Jan 2023 – Dec 2027; start date is Jan 2023.",
         "source": "https://cob.org/gov/council/daniel-hammill"
       }
     ],
@@ -455,11 +455,11 @@
       {
         "data": "2027-12",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term is explicitly stated as Jan 2023 – Dec 2027; end date is Dec 2027.",
+        "llm_confidence_reason": "Term is stated as Jan 2023 – Dec 2027; end date is Dec 2027.",
         "source": "https://cob.org/gov/council/daniel-hammill"
       }
     ],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   },
   {
     "name": "Edwin H. “Skip” Williams",
@@ -471,7 +471,7 @@
       {
         "data": "https://cob.org/wp-content/smush-webp/Skip-Williams-2024-1.jpg.webp",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image URL is directly associated with Edwin H. “Skip” Williams on the page.",
+        "llm_confidence_reason": "The image is a headshot near the name on the page.",
         "source": "https://cob.org/gov/council/edwin-williams"
       }
     ],
@@ -490,7 +490,7 @@
     "divisions": [
       {
         "data": "Ward 4",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 4th Ward."
       },
       {
@@ -503,7 +503,7 @@
       {
         "data": "360-778-8215",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly listed under his contact information.",
+        "llm_confidence_reason": "Phone number is explicitly listed under contact info for Edwin H. Skip Williams.",
         "source": "https://cob.org/gov/council/edwin-williams"
       }
     ],
@@ -511,21 +511,21 @@
       {
         "data": "ehwilliams@cob.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is explicitly listed under his contact information.",
+        "llm_confidence_reason": "Email is explicitly listed and linked as mailto:ehwilliams@cob.org.",
         "source": "https://cob.org/gov/council/edwin-williams"
       }
     ],
     "websites": [
       {
         "data": "https://cob.org/gov/council/edwin-williams",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official council member bio page linked.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official council member bio page linked from name.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
         "data": "https://cob.org/gov/council/edwin-williams",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL provided is the official city council profile page for Edwin H. Williams.",
+        "llm_confidence_reason": "The URL provided is the official council member page for Edwin Williams.",
         "source": "https://cob.org/gov/council/edwin-williams"
       }
     ],
@@ -533,7 +533,7 @@
       {
         "data": "2022-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term start date is explicitly stated as January 2022.",
+        "llm_confidence_reason": "Term start date is explicitly stated as Jan 2022.",
         "source": "https://cob.org/gov/council/edwin-williams"
       }
     ],
@@ -541,11 +541,11 @@
       {
         "data": "2025-12",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term end date is explicitly stated as December 2025.",
+        "llm_confidence_reason": "Term end date is explicitly stated as Dec 2025.",
         "source": "https://cob.org/gov/council/edwin-williams"
       }
     ],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   },
   {
     "name": "Lisa Anderson",
@@ -556,8 +556,8 @@
     "images": [
       {
         "data": "https://cob.org/wp-content/smush-webp/p950129-1-320x400.jpg.webp",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is a headshot near the name Lisa Anderson.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a portrait near the name Lisa Anderson on the page.",
         "source": "https://cob.org/gov/council/lisa-anderson"
       }
     ],
@@ -569,69 +569,69 @@
       },
       {
         "data": "Council Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Council Member Lisa Anderson' and described as City Councilor."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council Member Lisa Anderson' and describes her role on the City Council."
       }
     ],
     "divisions": [
       {
         "data": "Ward 5",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 5th Ward."
       },
       {
         "data": "5th Ward",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'Represents: 5th Ward'."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states she represents the 5th Ward."
       }
     ],
     "phone_numbers": [
       {
         "data": "(360) 778-8217",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number explicitly listed under contact info for Lisa Anderson.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed twice near the name and contact section.",
         "source": "https://cob.org/gov/council/lisa-anderson"
       }
     ],
     "emails": [
       {
         "data": "laanderson@cob.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed as laanderson@cob.org.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed twice near the name and contact section.",
         "source": "https://cob.org/gov/council/lisa-anderson"
       }
     ],
     "websites": [
       {
         "data": "https://cob.org/gov/council/lisa-anderson",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official council member bio page linked.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official council member bio page linked from name.",
         "source": "https://cob.org/gov/council/contacts-bios"
       },
       {
         "data": "https://cob.org/gov/council/lisa-anderson",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Page URL is the official profile page for Lisa Anderson on the city council site.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL provided is the official council member page for Lisa Anderson.",
         "source": "https://cob.org/gov/council/lisa-anderson"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Term explicitly stated as 'Jan 2024 – Dec 2027', so start date is January 2024.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date is explicitly stated as Jan 2024.",
         "source": "https://cob.org/gov/council/lisa-anderson"
       }
     ],
     "end_dates": [
       {
         "data": "2027-12",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Term explicitly stated as 'Jan 2024 – Dec 2027', so end date is December 2027.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date is explicitly stated as Dec 2027.",
         "source": "https://cob.org/gov/council/lisa-anderson"
       }
     ],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   },
   {
     "name": "Jace Cotton",
@@ -643,7 +643,7 @@
       {
         "data": "https://cob.org/wp-content/smush-webp/image.jpeg.webp",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The only image on the page is a portrait near the name 'Jace Cotton', likely his official photo.",
+        "llm_confidence_reason": "Image is a portrait near the name on the council member page.",
         "source": "https://cob.org/gov/council/council-member-jace-cotton"
       }
     ],
@@ -651,31 +651,31 @@
       {
         "data": "Council Member At-Large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as At-large council member, indicating council member role at-large."
+        "llm_confidence_reason": "Listed as At-large council member, indicating council member role with at-large division."
       },
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The page title and content explicitly state 'Council Member Jace Cotton' and describe his role on the Bellingham City Council."
+        "llm_confidence_reason": "Explicitly stated as 'At-Large City Council Member' and 'serving on Bellingham City Council'."
       }
     ],
     "divisions": [
       {
         "data": "At-Large",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as At-large."
       },
       {
         "data": "At-Large",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The text states 'At-Large' as the division for Jace Cotton."
+        "llm_confidence_reason": "Described as 'At-Large' in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "(360) 778-8214",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly listed twice near the name and contact section.",
+        "llm_confidence_reason": "Phone number explicitly listed under contact info for Jace Cotton.",
         "source": "https://cob.org/gov/council/council-member-jace-cotton"
       }
     ],
@@ -683,7 +683,7 @@
       {
         "data": "jacotton@cob.org",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed twice near the name and contact section.",
+        "llm_confidence_reason": "Email explicitly listed under contact info for Jace Cotton.",
         "source": "https://cob.org/gov/council/council-member-jace-cotton"
       }
     ],
@@ -691,7 +691,7 @@
       {
         "data": "https://cob.org/gov/council/council-member-jace-cotton",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The URL provided is the official council member page for Jace Cotton.",
+        "llm_confidence_reason": "The source page URL is the official profile page for Jace Cotton.",
         "source": "https://cob.org/gov/council/council-member-jace-cotton"
       }
     ],
@@ -699,7 +699,7 @@
       {
         "data": "2024-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date is explicitly stated as 'Jan 2024'.",
+        "llm_confidence_reason": "Term start date explicitly stated as 'Jan 2024'.",
         "source": "https://cob.org/gov/council/council-member-jace-cotton"
       }
     ],
@@ -707,10 +707,10 @@
       {
         "data": "2025-12",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date is explicitly stated as 'Dec 2025'.",
+        "llm_confidence_reason": "Term end date explicitly stated as 'Dec 2025'.",
         "source": "https://cob.org/gov/council/council-member-jace-cotton"
       }
     ],
-    "updated_at": "2025-06-20T19:14:18Z"
+    "updated_at": "2025-06-21T01:52:26Z"
   }
 ]
