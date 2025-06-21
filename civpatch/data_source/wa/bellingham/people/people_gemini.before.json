@@ -16,7 +16,7 @@
       "https://cob.org/gov/mayor/bio",
       "https://cob.org/gov/mayor"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   },
   {
     "name": "Michael Lilliquist",
@@ -36,12 +36,13 @@
       "https://cob.org/gov/council/michael-lilliquist",
       "https://cob.org/gov/council/contacts-bios"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   },
   {
     "name": "Hannah Stone",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Chair of Public Works and Natural Resources"
     ],
     "divisions": [
       "1st Ward",
@@ -57,27 +58,29 @@
       "https://cob.org/gov/council/contacts-bios",
       "https://cob.org/gov/council/hanna-stone"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   },
   {
     "name": "Hollie Huthman",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Council President"
     ],
     "divisions": [
-      "2nd Ward"
+      "2nd Ward",
+      "Ward 2"
     ],
     "image": null,
     "phone_number": "(360) 778-8216",
-    "email": "ccmail@cob.org",
+    "email": "hahuthman@cob.org",
     "website": "https://cob.org/gov/council/hollie-huthman",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2022-01",
+    "end_date": "2025-12",
     "sources": [
       "https://cob.org/gov/council/contacts-bios",
       "https://cob.org/gov/council/hollie-huthman"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   },
   {
     "name": "Daniel Hammill",
@@ -86,8 +89,7 @@
       "Council President"
     ],
     "divisions": [
-      "3rd Ward",
-      "Ward 3rd"
+      "3rd Ward"
     ],
     "image": null,
     "phone_number": "(360) 778-8213",
@@ -99,16 +101,16 @@
       "https://cob.org/gov/council/contacts-bios",
       "https://cob.org/gov/council/daniel-hammill"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   },
   {
     "name": "Edwin H. “Skip” Williams",
     "roles": [
-      "Council Member",
-      "Council member"
+      "Council Member"
     ],
     "divisions": [
-      "4th Ward"
+      "4th Ward",
+      "Ward 4"
     ],
     "image": null,
     "phone_number": "360-778-8215",
@@ -120,27 +122,28 @@
       "https://cob.org/gov/council/contacts-bios",
       "https://cob.org/gov/council/edwin-williams"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   },
   {
     "name": "Lisa Anderson",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "City Councilor"
     ],
     "divisions": [
       "5th Ward"
     ],
     "image": null,
     "phone_number": "(360) 778-8217",
-    "email": "ccmail@cob.org",
+    "email": "laanderson@cob.org",
     "website": "https://cob.org/gov/council/lisa-anderson",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2024-01",
+    "end_date": "2027-12",
     "sources": [
       "https://cob.org/gov/council/contacts-bios",
       "https://cob.org/gov/council/lisa-anderson"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   },
   {
     "name": "Jace Cotton",
@@ -161,6 +164,6 @@
       "https://cob.org/gov/council/contacts-bios",
       "https://cob.org/gov/council/council-member-jace-cotton"
     ],
-    "updated_at": "2025-06-20T19:21:26Z"
+    "updated_at": "2025-06-21T01:53:29Z"
   }
 ]
