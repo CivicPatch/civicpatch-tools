@@ -134,10 +134,10 @@ module Services
             - Examples:
               - "Citywide Position 7" -> "Citywide", "Position 7"
               - "At-Large 1, Seat 2" -> "At-Large 1", "Seat 2"
-              - "At-Large B" -> "At-Large B" ->
+              - "At-Large B" -> "At-Large B"
+              - "1st Ward" -> "Ward 1"
           - Loose associations (the person lives in a district, but not elected from it)
             should not be listed
-          - List the type of the division first, then the name (e.g., "Ward 1", "District 2").
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names

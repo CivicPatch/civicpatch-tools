@@ -36,31 +36,40 @@ module Core
 
       def self.normalize_division(division)
         division_types = Core::CityManager.divisions
-        # First normalize the division to a standard format
         division_to_find = division&.downcase&.strip
 
         return nil if division_to_find.blank?
 
-        # First, check if the division is valid as-is
-        found_division = division_types.keys.find { |d| division_to_find.start_with?(d) }
-        if found_division.blank? # If not, check if it is an alias of another division
+        # Dynamically handle division types based on `division_types`
+        division_keys = division_types.keys.map(&:downcase)
+        matched_key = division_keys.find { |key| division_to_find.match(/\b#{key}\b/) }
+
+        if matched_key
+          # Extract the division key (e.g., "Ward" or "District")
+          division_key = matched_key.capitalize
+
+          # Extract the numeric or ordinal identifier (e.g., "1st", "3rd")
+          division_rest = division_to_find.gsub(/\b#{matched_key}\b/i, "").strip
+          division_rest = format_division_identifier(division_rest)
+
+          return [division_key, division_rest].compact.join(" ").strip
+        end
+
+        # Check if the division is valid as-is
+        found_division = division_types.keys.find { |d| division_to_find.include?(d) }
+        if found_division.blank? # Check for aliases
           aliased_division_key, _value = division_types.find do |_key, value|
-            value["aliases"]&.any? { |alias_name| division_to_find.start_with?(alias_name) }
+            value["aliases"]&.any? { |alias_name| division_to_find.include?(alias_name) }
           end
 
-          # Replace with the aliased division key if found
           division_to_find = aliased_division_key if aliased_division_key.present?
         end
 
         division_key, division_rest = division_to_find.split(" ", 2)
-
-        # If the division identifier is a single word, attempt to format it
         division_rest = format_division_identifier(division_rest)
 
         normalized_division = [division_key, division_rest].compact.join(" ").strip
-
-        # return the normalized division
-        normalized_division.split(" ").map(&:capitalize)&.join(" ")
+        normalized_division.split(" ").map(&:capitalize).join(" ")
       end
 
       # NOTE: Assume no one is going to use non-numeric characters
@@ -77,13 +86,16 @@ module Core
         division_identifier_to_find = division_identifier_to_find.gsub(/["“”‘’()]/, "").strip
         # Remove prefixes like "no1", "no 1", "no.1", "no. 1", "#1", "# 1"
         division_identifier_to_find = division_identifier_to_find.sub(/^(no\.?\s*|#\.?\s*)/, "").strip
+        # Remove ordinal suffixes like "rd", "st", "nd", "th"
+        division_identifier_to_find = division_identifier_to_find.gsub(/(rd|st|nd|th)$/i, "").strip
 
+        # Convert English or Roman numerals to numbers
         if number_words_in_english.include?(division_identifier_to_find)
-          return (number_words_in_english.index(division_rest_string) + 1).to_s
+          return (number_words_in_english.index(division_identifier_to_find) + 1).to_s
         end
 
         if number_words_in_roman.include?(division_identifier_to_find)
-          return (number_words_in_roman.index(division_rest_string) + 1).to_s
+          return (number_words_in_roman.index(division_identifier_to_find) + 1).to_s
         end
 
         division_identifier_to_find
