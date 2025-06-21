@@ -1,10 +1,8 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
-[Skip To Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=199%2F)
 
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=199%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -22,30 +20,29 @@ Accessible Menu
 
 Search
 
-![](https://bremertonwa.gov/ImageRepository/Document?documentID=10784)
+![](https://bremertonwa.gov/ImageRepository/Document?documentID=10783)
 
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-![Michael Goodnow](https://bremertonwa.gov/ImageRepository/Document?documentID=5596)
+![Denise Frey](https://bremertonwa.gov/ImageRepository/Document?documentID=9528)
 
-# Michael Goodnow
+# Denise Frey
 
  
 
 [City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
-Title: City Council District Number 5  
+Title: City Council District Number 2  
 Phone: 360-473-5280  
-[Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
 [Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Michael Goodnow represents Bremerton City Council District 5, which includes the area next to Puget Sound Naval Shipyard, Charleston, and Forest Ridge Park with the district bounded by 11th Street.    
+Denise Frey represents Bremerton City Council District 2, which includes Bataan Park and Eastpark Nature Area (Madrona Trails), and areas along the Wheaton Way corridor bounded at the north by Riddell Road. 
 
-Michael is serving his second term though 2025. He was the Council President in 2022.
+Due to a vacancy left when the previous Council Member resigned, Denise was appointed by the City Council on March 23, 2022 to fill the position until the November 7, 2023 General Election Results were certified.  Denise was then elected, so she completed the end of that unexpired term to the end of 2023. Denise is now serving her first full term through 2027. 
 
-In 2025, Michael is Chair for the Public Safety Committee and Vice Chair for the Parks, Finance, Investment &amp; Parking Committee.  
+In 2025, Denise serves on the Public Works Committee and Public Safety Committee.
 
-Michael will “keep the Council focused on our neighborhoods. I will continue to improve infrastructure through our roads and sidewalks, including the rebuilding of 6th Street and Callow Avenue. We need to continue to fill vacant spaces and create good paying jobs. I will work to ensure that increased density in our community is balanced with affordable and low-income housing. I will work with Council to create and implement long-term growth plans with smart growth policies that lift everyone up. I pledge on behalf of the council and staff that we will move forward with a commitment to diversity, equity and inclusion.”
+Council Member Denise Frey is committed to smart and sustainable development along the Wheaton Way Corridor and within the Eastside Village (old Harrison Hospital area) Project. Bringing the East Bremerton community together to address issues specific to its health and well-being is her priority. Council Member Frey will balance the needs of East Bremerton residents, businesses and commuters while building collaborations between the public and private sectors to improve the quality of life for all Bremertonians. 
 
  
 
@@ -147,5 +144,3 @@ Excel Download
 PowerPoint Download
 
 Document Download
-
-Explore your accessibility options

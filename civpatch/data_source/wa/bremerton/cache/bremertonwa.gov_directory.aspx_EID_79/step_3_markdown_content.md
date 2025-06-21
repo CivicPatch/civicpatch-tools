@@ -1,10 +1,8 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
-[Skip To Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=79%2F)
 
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=79%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -22,30 +20,34 @@ Accessible Menu
 
 Search
 
-![](https://bremertonwa.gov/ImageRepository/Document?documentID=10784)
+![](https://bremertonwa.gov/ImageRepository/Document?documentID=10785)
 
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-![Michael Goodnow](https://bremertonwa.gov/ImageRepository/Document?documentID=5596)
+![District 7 - Eric Younger](https://bremertonwa.gov/ImageRepository/Document?documentID=1342)
 
-# Michael Goodnow
+# Eric Younger
 
  
 
 [City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
-Title: City Council District Number 5  
+Title: City Council District Number 7  
 Phone: 360-473-5280  
 [Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
 [Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Michael Goodnow represents Bremerton City Council District 5, which includes the area next to Puget Sound Naval Shipyard, Charleston, and Forest Ridge Park with the district bounded by 11th Street.    
+Eric Younger represents Bremerton City Council District 7 which includes Kitsap Lake Park, NAD Park, Pendergast Regional Park, a portion of Kitsap Way, and the area reaching south towards Gorst. Providing boundaries for the district are the Kitsap County neighborhoods called West Hills and Navy Yard City. 
 
-Michael is serving his second term though 2025. He was the Council President in 2022.
+Eric was appointed by the Council Members on May 2, 2001 to fill a seat vacated when the elected Council Member resigned; and then was elected in the fall of that year to fill the remainder of the term through 2003 (2- ½ years total). Following an 8-year gap, Eric was elected again in 2012 to a 2-year term when the City of Bremerton transitioned from a 9-Member, to a 7-Member City Council; and has since been elected three more times to serve 4-year terms beginning in 2014, 2018, and 2022.   Eric was Council President previously from 2016 – 2020. 
 
-In 2025, Michael is Chair for the Public Safety Committee and Vice Chair for the Parks, Finance, Investment &amp; Parking Committee.  
+In 2025, Eric is Council President. He serves on the LEOFF 1 Police Pension Board, Kitsap 911 Board of Directors, Kitsap Economic Development Alliance (KEDA) Board of Directors, and an alternate to the Mayor for the Puget Sound Regional Council (PSRC) Board.
 
-Michael will “keep the Council focused on our neighborhoods. I will continue to improve infrastructure through our roads and sidewalks, including the rebuilding of 6th Street and Callow Avenue. We need to continue to fill vacant spaces and create good paying jobs. I will work to ensure that increased density in our community is balanced with affordable and low-income housing. I will work with Council to create and implement long-term growth plans with smart growth policies that lift everyone up. I pledge on behalf of the council and staff that we will move forward with a commitment to diversity, equity and inclusion.”
+Eric earned a Bachelor of Arts degree in History (University of Minnesota) and a Masters Degree in Business Administration (Eastern Michigan University). He moved to Bremerton in 1997 and is a Certified Public Accountant.   
+
+Eric will continue to advocate for “securing additional money for maintaining and improving our local streets and sidewalks.
+
+Besides ongoing removal of algae at Kitsap Lake Park and safety improvements along or near Kitsap Way, “I plan to place additional emphasis on identifying needed improvements in other parts of the district.”
 
  
 
@@ -147,5 +149,3 @@ Excel Download
 PowerPoint Download
 
 Document Download
-
-Explore your accessibility options

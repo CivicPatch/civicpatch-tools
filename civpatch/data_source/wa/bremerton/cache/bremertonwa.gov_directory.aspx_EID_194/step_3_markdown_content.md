@@ -1,10 +1,10 @@
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-[Skip To Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=194%2F)
 
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=194%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -27,25 +27,27 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-![Michael Goodnow](https://bremertonwa.gov/ImageRepository/Document?documentID=5596)
+![JeffCoughlin](https://bremertonwa.gov/ImageRepository/Document?documentID=9333)
 
-# Michael Goodnow
+# Jeff Coughlin
 
  
 
 [City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
-Title: City Council District Number 5  
+Title: City Council District Number 3  
 Phone: 360-473-5280  
 [Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
 [Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Michael Goodnow represents Bremerton City Council District 5, which includes the area next to Puget Sound Naval Shipyard, Charleston, and Forest Ridge Park with the district bounded by 11th Street.    
+Jeff Coughlin represents Bremerton City Council District 3 which includes the Downtown area “Harborside”, Manette (bounded by NE Stone Way and Jacobsen Boulevard), and  Evergreen Rotary Park and Kitsap 9/11 Memorial.   
 
-Michael is serving his second term though 2025. He was the Council President in 2022.
+Jeff is serving his first term though 2025.   He was the Council President in 2023. 
 
-In 2025, Michael is Chair for the Public Safety Committee and Vice Chair for the Parks, Finance, Investment &amp; Parking Committee.  
+In 2025, Jeff is Chair for the Parks, Finance, Investment &amp; Parking Committee and Vice Chair for the Public Works Committee.  He also serves on the LEOFF 1 Fire Pension Board and the Development Block Grant (CDBG) Project Review Committee. Jeff is also a member of the Kitsap Regional Coordinating Council (KRCC) Executive Board and an alternate to the Mayor for the KRCC Transportation Policy Board.  
 
-Michael will “keep the Council focused on our neighborhoods. I will continue to improve infrastructure through our roads and sidewalks, including the rebuilding of 6th Street and Callow Avenue. We need to continue to fill vacant spaces and create good paying jobs. I will work to ensure that increased density in our community is balanced with affordable and low-income housing. I will work with Council to create and implement long-term growth plans with smart growth policies that lift everyone up. I pledge on behalf of the council and staff that we will move forward with a commitment to diversity, equity and inclusion.”
+Council Member Coughlin was awarded the Certificate of Municipal Leadership in July 2023 by the Association of Washington Cities. The CML Program provides elected officials “with the knowledge they need to effectively operate within the law, plan for the future, secure and manage funds, foster stronger relationships, and work to build more equitable communities.” To earn this certificate, the elected official attends AWC sponsored workshops across these competency areas: 1) Roles, responsibilities, and legal requirements; 2) Public sector resource management; 3) Community planning and development; 4) Effective local leadership; and 5) Diversity, equity, and inclusion.  
+
+Jeff will make “communication and collaboration” with constituents his top priority while in office; and will advocate “to use revenue resulting from the growth to improve our streets, parks, utilities, and critical community services.” 
 
  
 
