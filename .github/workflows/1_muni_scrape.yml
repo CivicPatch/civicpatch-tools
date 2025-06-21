@@ -75,7 +75,7 @@ jobs:
 
   populate_city_directory:
     environment: env-${{ github.actor }}
-    timeout-minutes: 20
+    timeout-minutes: 25
     needs: get_municipalities_from_queue
     runs-on: ubuntu-latest
     strategy:
