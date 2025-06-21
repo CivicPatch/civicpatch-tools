@@ -9,19 +9,20 @@
     "phone_number": "(425) 837-3020",
     "email": "mayor@issaquahwa.gov",
     "website": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
-    "start_date": "2021-11-02",
+    "start_date": "2021-11",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
-      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
+      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   },
   {
     "name": "Lindsey Walsh",
     "roles": [
-      "Council Member",
       "Council President"
     ],
     "divisions": [
@@ -34,12 +35,13 @@
     "start_date": "2023-11-07",
     "end_date": "2027-12-31",
     "sources": [
-      "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
+      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   },
   {
     "name": "Zach Hall",
@@ -56,12 +58,12 @@
     "start_date": "2023-11-07",
     "end_date": "2027-12-31",
     "sources": [
-      "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
       "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   },
   {
     "name": "Kelly Jiang",
@@ -78,12 +80,13 @@
     "start_date": "2025-02-10",
     "end_date": "2025-11",
     "sources": [
-      "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
-      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
+      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   },
   {
     "name": "Russell Joe",
@@ -100,12 +103,13 @@
     "start_date": "2021-11-02",
     "end_date": "2025-12-31",
     "sources": [
-      "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
+      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   },
   {
     "name": "Barbara de Michele",
@@ -122,12 +126,13 @@
     "start_date": "2021-11-02",
     "end_date": "2025-12-31",
     "sources": [
-      "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
       "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
+      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   },
   {
     "name": "Chris Reh",
@@ -144,12 +149,12 @@
     "start_date": "2021-11-02",
     "end_date": "2025-12-31",
     "sources": [
-      "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
       "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
-      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
+      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   },
   {
     "name": "Tola Marts",
@@ -166,10 +171,11 @@
     "start_date": "2021-11-02",
     "end_date": "2025-12-31",
     "sources": [
-      "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
-      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
+      "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
     ],
-    "updated_at": "2025-06-21T03:24:32Z"
+    "updated_at": "2025-06-21T04:50:44Z"
   }
 ]
