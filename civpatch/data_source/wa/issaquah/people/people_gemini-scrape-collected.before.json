@@ -4,24 +4,34 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Mayor' is explicitly stated multiple times in the heading, body text, and contact section for Mary Lou Pauly, confirming her current active role."
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated multiple times and is the primary role associated with Mary Lou Pauly."
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the list of officials."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Mary Lou Pauly, Mayor' in the navigation list, indicating a current role."
       },
       {
         "data": "Mayor",
@@ -31,27 +41,17 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Mary Lou Pauly, Mayor'."
+        "llm_confidence_reason": "Explicitly listed as 'Mayor' in the navigation list."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Mary Lou Pauly, Mayor' in the navigation list."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role 'Mayor' is explicitly stated in the link text for Mary Lou Pauly."
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the list of officials."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to their name in the list."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mary Lou Pauly, Mayor'."
+        "llm_confidence_reason": "Explicitly stated in the navigation list."
       }
     ],
     "divisions": [],
@@ -59,7 +59,7 @@
       {
         "data": "425-837-3020",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number '425-837-3020' is explicitly stated in the 'Contact Us' section directly below Mary Lou Pauly's name and contact details, indicating high relevance and accuracy for her official contact information. ",
+        "llm_confidence_reason": "Phone number is explicitly stated in the 'Contact Us' section for Mary Lou Pauly.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       }
     ],
@@ -67,7 +67,7 @@
       {
         "data": "mayor@issaquahwa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided in the 'Contact Us' section for Mayor Pauly, and also linked in 'Connect with Mayor Pauly' section, indicating high relevance and accuracy for contact information related to her official role. The 'mayor@issaquahwa.gov' is chosen over 'MaryLouP@issaquahwa.gov' as it appears in the dedicated 'Contact Us' section for her official role, suggesting it's the primary official contact.",
+        "llm_confidence_reason": "Email address is explicitly stated and linked in the 'Contact Us' section for Mary Lou Pauly.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       }
     ],
@@ -75,45 +75,45 @@
       {
         "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided as the main page for Mary Lou Pauly in the breadcrumbs and the list of council members at the bottom, indicating it is her official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Mary Lou Pauly's profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
       },
       {
         "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is specific to Mary Lou Pauly's profile.",
-        "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided in the list of council members.",
-        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as the link for their name.",
-        "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "A dedicated profile page URL is provided for this person.",
+        "llm_confidence_reason": "The URL is the direct profile page for Mary Lou Pauly.",
         "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is a direct profile page for Mary Lou Pauly, indicated by the URL path.",
+        "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Mary Lou Pauly.",
+        "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a specific profile page for Mary Lou Pauly.",
+        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2021-11-02",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'Nov. 2, 2021' is explicitly stated under 'Elected' in the 'Contact Us' section for Mary Lou Pauly, directly associated with her most recent election. The text also mentions 're-elected in 2021', confirming the year.",
+        "llm_confidence_reason": "Start date 'Nov. 2, 2021' is explicitly stated as the election date in the 'Contact Us' section for Mary Lou Pauly, representing her most recent re-election for the current term.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       }
     ],
@@ -121,35 +121,45 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Dec. 31, 2025' is explicitly stated under 'Term Expires' in the 'Contact Us' section for Mary Lou Pauly, directly associated with her.",
+        "llm_confidence_reason": "End date 'Dec. 31, 2025' is explicitly stated in the 'Contact Us' section for Mary Lou Pauly.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Lindsey Walsh",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council President' is explicitly stated next to Lindsey Walsh's name in the list of council members at the bottom of the page, indicating her current active role."
+        "llm_confidence_reason": "Role 'Council President' is explicitly stated next to the name."
       },
       {
         "data": "Council President",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' in the list of officials."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Lindsey Walsh, Council President' in the navigation list, indicating a current role."
       },
       {
         "data": "Council President",
@@ -158,28 +168,23 @@
       },
       {
         "data": "Council President",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The page title and contact section list her as 'Council President', indicating it's her current role, despite a past term mention."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' in the heading and contact section, and confirmed as a current role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'serving her third term on Council' and 'Position Number 4 on the City Council'."
       },
       {
         "data": "Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Lindsey Walsh, Council President' in the navigation list."
-      },
-      {
-        "data": "Council President",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role 'Council President' is explicitly stated in the link text for Lindsey Walsh."
+        "llm_confidence_reason": "Explicitly stated as 'Council President' in the list of officials."
       },
       {
         "data": "Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to their name in the list."
-      },
-      {
-        "data": "Council President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Lindsey Walsh, Council President'."
+        "llm_confidence_reason": "Explicitly stated in the navigation list."
       }
     ],
     "divisions": [
@@ -193,7 +198,7 @@
       {
         "data": "425-918-2512",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided in the contact section for Lindsey Walsh.",
+        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact Us' section for Lindsey Walsh.",
         "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
       }
     ],
@@ -201,7 +206,7 @@
       {
         "data": "lindseyw@issaquahwa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and linked to the person.",
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
         "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
       }
     ],
@@ -209,14 +214,26 @@
       {
         "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided next to Lindsey Walsh's name in the list of council members at the bottom of the page, indicating it is her official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Lindsey Walsh's profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Lindsey Walsh.",
+        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is a direct profile page for Lindsey Walsh, indicated by the URL path.",
+        "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
       },
       {
         "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
@@ -227,33 +244,15 @@
       {
         "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is specific to Lindsey Walsh's profile.",
-        "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided in the list of council members.",
+        "llm_confidence_reason": "The URL is a specific profile page for Lindsey Walsh.",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as the link for their name.",
-        "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "A dedicated profile page URL is provided for this person.",
-        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2023-11-07",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 7, 2023', which is the most recent election date.",
+        "llm_confidence_reason": "Explicitly stated 'Elected: Nov. 7, 2023' for the current term.",
         "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
       }
     ],
@@ -261,85 +260,79 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: Dec. 31, 2027'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: Dec. 31, 2027'.",
         "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Zach Hall",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
-      "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
       "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
+      "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to Zach Hall's name in the list of council members at the bottom of the page, indicating his current active role."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Zach Hall, Councilmember'."
+        "llm_confidence_reason": "Role explicitly stated in the text."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Zach Hall, Councilmember'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Zach Hall, Councilmember' and 'Councilmember Hall currently holds Position Number 2 on the City Council'."
+        "llm_confidence_reason": "Explicitly listed as 'Zach Hall, Councilmember' in the navigation list, indicating a current role."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Zach Hall, Councilmember' in the navigation list."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the link text for Zach Hall."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and is his current role."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to their name in the list."
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' in the navigation list."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Zach Hall, Councilmember'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the navigation list."
       }
     ],
     "divisions": [
       {
         "data": "Position Number 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position Number 2 on the City Council'."
+        "llm_confidence_reason": "Explicitly stated as 'Position Number 2' for Councilmember Hall."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-436-1554",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact Us' section for Zach Hall.",
+        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact Us' for Zach Hall.",
         "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
       }
     ],
@@ -355,51 +348,45 @@
       {
         "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided next to Zach Hall's name in the list of council members at the bottom of the page, indicating it is his official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Zach Hall's profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
       },
       {
         "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the current page and is a direct profile page for Zach Hall.",
+        "llm_confidence_reason": "The URL is the direct profile page for Zach Hall.",
+        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Zach Hall, indicated by the page title and URL path.",
         "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
       },
       {
         "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is specific to Zach Hall's profile.",
-        "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
+        "llm_confidence_reason": "The URL is the direct profile page for Zach Hall.",
+        "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
       },
       {
         "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided in the list of council members.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a specific profile page for Zach Hall.",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as the link for their name.",
-        "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "A dedicated profile page URL is provided for this person.",
-        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       }
     ],
     "start_dates": [
       {
-        "data": "2023-11-07",
+        "data": "2023-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 7, 2023' for his current term.",
+        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 7, 2023' and 're-elected in 2023', indicating the most recent start of his current term.",
         "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
       }
     ],
@@ -411,31 +398,42 @@
         "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Kelly Jiang",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
       "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to Kelly Jiang's name in the list of council members at the bottom of the page, indicating her current active role."
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name."
       },
       {
         "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Kelly Jiang, Councilmember' in the navigation list, indicating a current role."
       },
       {
         "data": "Councilmember",
@@ -445,41 +443,36 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Kelly Jiang, Councilmember'."
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' in the navigation list."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Kelly Jiang, Councilmember' in the heading and 'Councilmember Jiang' throughout the text."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the link text for Kelly Jiang."
+        "llm_confidence_reason": "Role 'Councilmember' explicitly stated."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to their name in the list."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Kelly Jiang, Councilmember'."
+        "llm_confidence_reason": "Explicitly stated in the navigation list."
       }
     ],
     "divisions": [
       {
-        "data": "Position Number 6",
+        "data": "Position 6",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jiang currently holds Position Number 6 on the City Council.'"
+        "llm_confidence_reason": "Explicitly stated as 'Position Number 6'."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-521-0240",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided in Kelly Jiang's contact information section",
+        "llm_confidence_reason": "Phone number explicitly provided.",
         "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
       }
     ],
@@ -487,7 +480,7 @@
       {
         "data": "kelly.jiang@issaquahwa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and linked to Kelly Jiang's contact information section",
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
       }
     ],
@@ -495,45 +488,51 @@
       {
         "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided next to Kelly Jiang's name in the list of council members at the bottom of the page, indicating it is her official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Kelly Jiang's profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
       },
       {
         "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the current page and is specific to Kelly Jiang's profile.",
+        "llm_confidence_reason": "The URL is the direct profile page for Kelly Jiang.",
+        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is a direct profile page for Kelly Jiang, indicated by the URL path.",
+        "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Kelly Jiang.",
+        "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is the current page and is specific to Kelly Jiang, indicating it's her profile page.",
         "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
       },
       {
         "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided in the list of council members.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a specific profile page for Kelly Jiang.",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as the link for their name.",
-        "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "A dedicated profile page URL is provided for this person.",
-        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2025-02-10",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Appointed: Feb. 10, 2025' and 'On Feb. 10, 2025 the City Council appointed Kelly Jiang'.",
+        "llm_confidence_reason": "Appointment date 'Feb. 10, 2025' explicitly stated.",
         "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
       }
     ],
@@ -541,35 +540,45 @@
       {
         "data": "2025-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires: November 2025' and 'appointment runs until the certification of the next general election in November.'",
+        "llm_confidence_reason": "Term expiration date 'November 2025' explicitly stated.",
         "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Russell Joe",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to Russell Joe's name in the list of council members at the bottom of the page, indicating his current active role."
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name."
       },
       {
         "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Russell Joe, Councilmember' in the navigation list, indicating a current role."
       },
       {
         "data": "Councilmember",
@@ -579,49 +588,39 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Russell Joe, Councilmember'."
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' in the navigation list."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Russell Joe, Councilmember' in the navigation list."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated multiple times as 'Councilmember'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' for Russell Joe."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to their name in the list."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Russell Joe, Councilmember'."
+        "llm_confidence_reason": "Explicitly stated in the navigation list."
       }
     ],
     "divisions": [
       {
-        "data": "Position Number 5",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Position Number 5 on the City Council'."
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position Number 5' for Councilmember Joe."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-667-0126",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact Us' for Russell Joe.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under Russell Joe's contact information",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
     "emails": [
       {
         "data": "russellj@issaquahwa.gov",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Russell Joe",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
@@ -629,81 +628,91 @@
       {
         "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided next to Russell Joe's name in the list of council members at the bottom of the page, indicating it is his official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Russell Joe's profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
       },
       {
         "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is specific to Russell Joe's profile.",
-        "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided at the top of the page and in the list of council members.",
-        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as the link for their name.",
-        "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "A dedicated profile page URL is provided for this person.",
+        "llm_confidence_reason": "The URL is the direct profile page for Russell Joe.",
         "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is a direct profile page for Russell Joe, indicated by the URL path.",
+        "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Russell Joe.",
+        "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the current page and is a specific profile page for Russell Joe.",
+        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2021-11-02",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 2, 2021'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Election date is explicitly stated as 'Nov. 2, 2021'.",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: Dec. 31, 2025'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'Dec. 31, 2025'.",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Barbara de Michele",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Deputy Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Deputy Council President' is explicitly stated next to Barbara de Michele's name in the list of council members at the bottom of the page, indicating her current active role."
+        "llm_confidence_reason": "Role 'Deputy Council President' is explicitly stated next to the name."
       },
       {
         "data": "Deputy Council President",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      },
+      {
+        "data": "Deputy Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Council President' in the list of officials."
+      },
+      {
+        "data": "Deputy Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Barbara de Michele, Deputy Council President' in the navigation list, indicating a current role."
       },
       {
         "data": "Deputy Council President",
@@ -713,46 +722,31 @@
       {
         "data": "Deputy Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Barbara de Michele, Deputy Council President'."
+        "llm_confidence_reason": "Explicitly listed as 'Deputy Council President' in the navigation list."
       },
       {
         "data": "Deputy Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Barbara de Michele, Deputy Council President' in the navigation list."
-      },
-      {
-        "data": "Deputy Council President",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role 'Deputy Council President' is explicitly stated in the link text for Barbara de Michele."
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Council President' in the list of officials."
       },
       {
         "data": "Deputy Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the heading and contact section."
-      },
-      {
-        "data": "Council Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Implied by 'holds Position Number 3 on the City Council' and 'served on the Issaquah City Council'."
-      },
-      {
-        "data": "Deputy Council President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Barbara de Michele, Deputy Council President'."
+        "llm_confidence_reason": "Explicitly stated as her current role."
       }
     ],
     "divisions": [
       {
         "data": "Position Number 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position Number 3 on the City Council'."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-436-1577",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided in the contact section.",
+        "llm_confidence_reason": "Phone number explicitly stated in the contact section.",
         "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
       }
     ],
@@ -760,7 +754,7 @@
       {
         "data": "barbd@issaquahwa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a mailto link.",
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
         "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
       }
     ],
@@ -768,45 +762,51 @@
       {
         "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided next to Barbara de Michele's name in the list of council members at the bottom of the page, indicating it is her official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Barbara de Michele's profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
       },
       {
         "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is specific to Barbara de Michele's profile.",
-        "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
+        "llm_confidence_reason": "The URL is the direct profile page for Barbara de Michele.",
+        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       },
       {
         "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided in the list of council members.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is a direct profile page for Barbara de Michele, indicated by the URL path.",
+        "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Barbara de Michele.",
+        "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a specific profile page for Barbara de Michele.",
         "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       },
       {
         "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked profile page URL provided in the breadcrumbs and as the main page URL.",
+        "llm_confidence_reason": "The URL is the direct profile page for Barbara de Michele.",
         "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "A dedicated profile page URL is provided for this person.",
-        "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2021-11-02",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 2, 2021'.",
+        "llm_confidence_reason": "Explicitly stated 'Elected: Nov. 2, 2021'.",
         "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
       }
     ],
@@ -814,35 +814,45 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: Dec. 31, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: Dec. 31, 2025'.",
         "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Chris Reh",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to Chris Reh's name in the list of council members at the bottom of the page, indicating his current active role."
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name."
       },
       {
         "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the heading and contact section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Chris Reh, Councilmember' in the navigation list, indicating a current role."
       },
       {
         "data": "Councilmember",
@@ -852,41 +862,31 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Chris Reh, Councilmember'."
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' in the navigation list."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Chris Reh, Councilmember' in the navigation list."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the link text for Chris Reh."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to their name in the list."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Chris Reh, Councilmember' and 'Councilmember Reh'."
+        "llm_confidence_reason": "Explicitly stated in the navigation list."
       }
     ],
     "divisions": [
       {
         "data": "Position Number 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember Reh currently holds Position Number 1 on the City Council'."
+        "llm_confidence_reason": "Explicitly stated in the text as 'Position Number 1'."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-436-1553",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact Us' section for Chris Reh.",
+        "llm_confidence_reason": "Phone number is explicitly provided in the text.",
         "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       }
     ],
@@ -902,45 +902,45 @@
       {
         "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided next to Chris Reh's name in the list of council members at the bottom of the page, indicating it is his official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Chris Reh's profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
       },
       {
         "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is specific to Chris Reh's profile.",
-        "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided in the list of council members.",
-        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as the link for their name.",
-        "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page URL is a dedicated profile page for Chris Reh.",
+        "llm_confidence_reason": "The URL is the direct profile page for Chris Reh.",
         "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is a direct profile page for Chris Reh, indicated by the URL path.",
+        "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Chris Reh.",
+        "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a specific profile page for Chris Reh.",
+        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2021-11-02",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 2, 2021' and 'reelected to the Issaquah City Council in Nov. 2021'.",
+        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 2, 2021'.",
         "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       }
     ],
@@ -952,36 +952,41 @@
         "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Tola Marts",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to Tola Marts' name in the list of council members at the bottom of the page, indicating his current active role."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly stated in the text"
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember Marts currently holds Position Number 7 on the City Council' and listed in the navigation as 'Tola Marts, Councilmember'."
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Tola Marts, Councilmember' in the heading and 'Councilmember' under his contact information. He was reelected in 2021, making this his current role."
       },
       {
         "data": "Councilmember",
@@ -991,36 +996,31 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed as 'Tola Marts, Councilmember' in the navigation list."
-      },
-      {
-        "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the link text for Tola Marts."
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' in the navigation list."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to their name in the list."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the list of officials."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Tola Marts, Councilmember'."
+        "llm_confidence_reason": "Explicitly stated in the navigation list."
       }
     ],
     "divisions": [
       {
-        "data": "Position 7",
+        "data": "Position Number 7",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position Number 7 on the City Council'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Marts currently holds Position Number 7 on the City Council.'"
       }
     ],
     "phone_numbers": [
       {
         "data": "425-829-0812",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided in the contact section for Tola Marts.",
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Contact Us' section for Tola Marts: 'Phone: 425-829-0812'.",
         "source": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
       }
     ],
@@ -1028,7 +1028,7 @@
       {
         "data": "tolam@issaquahwa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and linked to the person's contact information section, including a mailto link and plain text.",
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link text 'Email Tola Marts' with the email 'tolam@issaquahwa.gov'.",
         "source": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
       }
     ],
@@ -1036,45 +1036,45 @@
       {
         "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The website URL is explicitly provided next to Tola Marts' name in the list of council members at the bottom of the page, indicating it is his official profile page.",
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to Tola Marts' profile page.",
         "source": "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor"
       },
       {
         "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Directly linked in the text",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.issaquahwa.gov/27/Your-Government"
       },
       {
         "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is specific to Tola Marts's profile.",
-        "source": "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Direct profile URL is provided in the list of council members.",
-        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as the link for their name.",
-        "source": "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
-      },
-      {
-        "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "A dedicated profile page URL is provided for this person.",
+        "llm_confidence_reason": "The URL is the direct profile page for Tola Marts.",
         "source": "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is a direct profile page for Tola Marts, indicated by the URL path.",
+        "source": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Tola Marts.",
+        "source": "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President"
+      },
+      {
+        "data": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a specific profile page for Tola Marts.",
+        "source": "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2021-11-02",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Elected: Nov. 2, 2021' for his most recent election.",
+        "llm_confidence_reason": "Explicitly stated 'Elected: Nov. 2, 2021' as his most recent election date.",
         "source": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
       }
     ],
@@ -1082,10 +1082,10 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: Dec. 31, 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: Dec. 31, 2025'.",
         "source": "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember"
       }
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   }
 ]

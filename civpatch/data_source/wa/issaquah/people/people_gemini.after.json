@@ -14,22 +14,23 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Lindsey Walsh",
     "roles": [
+      "Council Member",
       "Council President"
     ],
     "divisions": [
-      "Position Number 4"
+      "Position 4"
     ],
     "image": null,
     "phone_number": "(425) 918-2512",
@@ -40,14 +41,14 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Zach Hall",
@@ -55,26 +56,25 @@
       "Council Member"
     ],
     "divisions": [
-      "Position Number 2"
+      "Position 2"
     ],
     "image": null,
     "phone_number": "(425) 436-1554",
     "email": "zachh@issaquahwa.gov",
     "website": "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
-    "start_date": "2023-11-07",
+    "start_date": "2023-11",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
-      "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
       "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
+      "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Kelly Jiang",
@@ -82,7 +82,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position Number 6"
+      "Position 6"
     ],
     "image": null,
     "phone_number": "(425) 521-0240",
@@ -93,14 +93,15 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
       "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Russell Joe",
@@ -108,7 +109,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position Number 5"
+      "Position 5"
     ],
     "image": null,
     "phone_number": "(425) 667-0126",
@@ -119,23 +120,22 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Barbara de Michele",
     "roles": [
-      "Council Member",
       "Deputy Council President"
     ],
     "divisions": [
-      "Position Number 3"
+      "Position 3"
     ],
     "image": null,
     "phone_number": "(425) 436-1577",
@@ -146,14 +146,14 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Chris Reh",
@@ -161,7 +161,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position Number 1"
+      "Position 1"
     ],
     "image": null,
     "phone_number": "(425) 436-1553",
@@ -172,14 +172,14 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   },
   {
     "name": "Tola Marts",
@@ -198,13 +198,13 @@
     "sources": [
       "https://www.issaquahwa.gov/528/Mary-Lou-Pauly-Mayor",
       "https://www.issaquahwa.gov/27/Your-Government",
+      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember",
       "https://www.issaquahwa.gov/534/Tola-Marts-Councilmember",
+      "https://www.issaquahwa.gov/3183/Zach-Hall-Councilmember",
       "https://www.issaquahwa.gov/531/Lindsey-Walsh-Council-President",
-      "https://www.issaquahwa.gov/3556/Kelly-Jiang-Councilmember",
       "https://www.issaquahwa.gov/3322/Russell-Joe-Councilmember",
-      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid",
-      "https://www.issaquahwa.gov/532/Chris-Reh-Councilmember"
+      "https://www.issaquahwa.gov/3138/Barbara-de-Michele-Deputy-Council-Presid"
     ],
-    "updated_at": "2025-06-21T03:26:27Z"
+    "updated_at": "2025-06-21T04:52:38Z"
   }
 ]
