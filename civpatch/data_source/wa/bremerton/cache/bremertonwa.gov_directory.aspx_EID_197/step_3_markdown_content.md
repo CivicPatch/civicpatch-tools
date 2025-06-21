@@ -1,10 +1,10 @@
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-[Skip To Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=197%2F)
 
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=197%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -22,30 +22,37 @@ Accessible Menu
 
 Search
 
-![](https://bremertonwa.gov/ImageRepository/Document?documentID=10784)
+![](https://bremertonwa.gov/ImageRepository/Document?documentID=10785)
 
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-![Michael Goodnow](https://bremertonwa.gov/ImageRepository/Document?documentID=5596)
+![Anna Mockler](https://bremertonwa.gov/ImageRepository/Document?documentID=12008)
 
-# Michael Goodnow
+# Anna Mockler
 
  
 
 [City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
-Title: City Council District Number 5  
+Title: City Council District Number 6  
 Phone: 360-473-5280  
-[Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
-[Email](mailto:City.Council@ci.bremerton.wa.us)
+[Email](mailto:Anna.Mockler@ci.bremerton.wa.us)
 
-Michael Goodnow represents Bremerton City Council District 5, which includes the area next to Puget Sound Naval Shipyard, Charleston, and Forest Ridge Park with the district bounded by 11th Street.    
+Anna Mockler represents Bremerton City Council District 6 which includes Anderson Cove, Lilian A. and James Walker Park, Marine Drive, Madrona Point, and commercial and residential areas along 11th Street.  
 
-Michael is serving his second term though 2025. He was the Council President in 2022.
+Due to a Special Election that was certified on February 18, Anna was elected to serve the remainder of an unexpired term through 2023. Anna was then elected to her first full term from 2024 through 2027. She was Council Vice President in 2024. 
 
-In 2025, Michael is Chair for the Public Safety Committee and Vice Chair for the Parks, Finance, Investment &amp; Parking Committee.  
+In 2025, Anna is Chair for the Audit Committee and Vice Chair for the Public Safety Committee. She is also a member of the Kitsap Transit Board of Commissioners; and is the alternate on the West Sound Partners For Ecosystem Recovery (WSPER) Executive Committee.
 
-Michael will “keep the Council focused on our neighborhoods. I will continue to improve infrastructure through our roads and sidewalks, including the rebuilding of 6th Street and Callow Avenue. We need to continue to fill vacant spaces and create good paying jobs. I will work to ensure that increased density in our community is balanced with affordable and low-income housing. I will work with Council to create and implement long-term growth plans with smart growth policies that lift everyone up. I pledge on behalf of the council and staff that we will move forward with a commitment to diversity, equity and inclusion.”
+These are the issues I campaigned on because they are the issues that my constituents told me they cared most about.
+
+- Good government, transparent and responsive
+- Safe streets and strong communities
+- Affordable housing
+- Living wage jobs in a sustainable city
+- Respect for human dignity — the basis of all the above.
+
+These are big ideas for making our daily lives better. I have workable plans to make them a reality.
 
  
 

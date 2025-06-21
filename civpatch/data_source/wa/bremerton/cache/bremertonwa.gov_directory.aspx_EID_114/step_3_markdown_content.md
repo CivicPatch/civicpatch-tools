@@ -1,10 +1,10 @@
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-[Skip To Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=114%2F)
 
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=114%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 

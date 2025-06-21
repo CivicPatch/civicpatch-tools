@@ -1,10 +1,8 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
-[Skip To Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip To Main Content](https://bremertonwa.gov/directory.aspx?EID=193%2F)
 
 Loading
 
-[Skip to Main Content](https://bremertonwa.gov/Directory.aspx?EID=114%2F)
+[Skip to Main Content](https://bremertonwa.gov/directory.aspx?EID=193%2F)
 
 [Create a Website Account](https://bremertonwa.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -27,25 +25,25 @@ Search
 1. [Home](https://bremertonwa.gov)
 2. Staff Directory
 
-![Michael Goodnow](https://bremertonwa.gov/ImageRepository/Document?documentID=5596)
+![JenniferChamberlin](https://bremertonwa.gov/ImageRepository/Document?documentID=9334)
 
-# Michael Goodnow
+# Jennifer Chamberlin
 
  
 
 [City Council](https://bremertonwa.gov/Directory.aspx?DID=38)  
-Title: City Council District Number 5  
+Title: City Council District Number 1  
 Phone: 360-473-5280  
 [Council Districts Page](https://bremertonwa.gov/635/Council-Districts)  
 [Email](mailto:City.Council@ci.bremerton.wa.us)
 
-Michael Goodnow represents Bremerton City Council District 5, which includes the area next to Puget Sound Naval Shipyard, Charleston, and Forest Ridge Park with the district bounded by 11th Street.    
+Jennifer Chamberlin represents Bremerton City Council District 1 which includes the areas surrounding Tracyton Beach, Lions Park, Blueberry Park, Stephenson Canyon, as well as Pine Road and part of Wheaton Way bounded by Sylvan Way.     
 
-Michael is serving his second term though 2025. He was the Council President in 2022.
+She is serving her first term through 2025 and was the Council President in 2024.
 
-In 2025, Michael is Chair for the Public Safety Committee and Vice Chair for the Parks, Finance, Investment &amp; Parking Committee.  
+In 2025, Jennifer is Chair for the Lodging Tax Advisory Committee and serves on the Audit Committee; represents the City of Bremerton on the Kitsap 911 Board of Directors, and Kitsap Regional Coordinating Council (KRCC) Executive Board. She is also the alternate to the Mayor for the KRCC Planning Policy Board.  
 
-Michael will “keep the Council focused on our neighborhoods. I will continue to improve infrastructure through our roads and sidewalks, including the rebuilding of 6th Street and Callow Avenue. We need to continue to fill vacant spaces and create good paying jobs. I will work to ensure that increased density in our community is balanced with affordable and low-income housing. I will work with Council to create and implement long-term growth plans with smart growth policies that lift everyone up. I pledge on behalf of the council and staff that we will move forward with a commitment to diversity, equity and inclusion.”
+Jennifer will “support programs in Bremerton that seek to assist in giving our neighbors who are experiencing crisis the tools and resources needed to rise up and out of trauma with dignity and respect. I will assist our city leadership in lifting barriers that prevent our amazing young people from making their dreams become a reality. I will promote initiatives that make our community safe and inclusive for all.  I will partner with other service organizations to assist in creating strong networks of community-minded allies.”
 
  
 
@@ -147,5 +145,3 @@ Excel Download
 PowerPoint Download
 
 Document Download
-
-Explore your accessibility options
