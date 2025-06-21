@@ -125,5 +125,8 @@ class CorePersonManagerUtilsTest < Minitest::Test
 
     # Test case: "1st Random" -> "1st Random" (no normalization)
     assert_equal "1st Random", Core::PersonManager::Utils.normalize_division("1st Random")
+
+    # Test Case: "District Number 4" -> "District 4"
+    assert_equal "District 4", Core::PersonManager::Utils.normalize_division("District Number 4")
   end
 end

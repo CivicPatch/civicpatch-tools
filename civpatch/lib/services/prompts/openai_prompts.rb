@@ -114,11 +114,12 @@ module Services
             - Acceptable date phrases include:
               - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
               - For vague phrases like "Spring 2025", extract the year only.
-            - If more than one term is mentioned, extract the most recent term dates.#{" "}
+            - If more than one term is mentioned, extract the most recent term dates.
             - If more than one start date is mentioned, use the most recent one (actual start date is preferred over elected term date).
             - Examples:
               - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
               - "Served January 2018 until December 2021 - Re-elected and serving January 2022 and until December 2025" -> start_date: "2022-01", end_date: "2025-12"
+              - "Elected in 2017 and re-elected in 2021 for the 2022-2025 term." -> start_date: "2022", end_date: "2025"
 
           **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
             paying close attention to the date extraction, conversion, and term identification rules.
