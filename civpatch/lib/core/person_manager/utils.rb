@@ -52,7 +52,7 @@ module Core
           division_rest = division_to_find.gsub(/\b#{matched_key}\b/i, "").strip
           division_rest = format_division_identifier(division_rest)
 
-          return [division_key, division_rest].compact.join(" ").strip
+          return [division_key, division_rest].compact.map(&:capitalize).join(" ").strip
         end
 
         # Check if the division is valid as-is
@@ -86,8 +86,8 @@ module Core
         division_identifier_to_find = division_identifier_to_find.gsub(/["“”‘’()]/, "").strip
         # Remove prefixes like "no1", "no 1", "no.1", "no. 1", "#1", "# 1", "number 1"
         division_identifier_to_find = division_identifier_to_find.sub(/^(no\.?\s*|#\.?\s*|number\s*)/, "").strip
-        # Remove ordinal suffixes like "rd", "st", "nd", "th"
-        division_identifier_to_find = division_identifier_to_find.gsub(/(rd|st|nd|th)$/i, "").strip
+        # Remove ordinal suffixes like "rd", "st", "nd", "th" ONLY if preceded by a number
+        division_identifier_to_find = division_identifier_to_find.gsub(/(\d+)(rd|st|nd|th)$/i, '\1').strip
 
         # Convert English or Roman numerals to numbers
         if number_words_in_english.include?(division_identifier_to_find)

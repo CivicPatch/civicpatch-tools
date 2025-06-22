@@ -128,5 +128,7 @@ class CorePersonManagerUtilsTest < Minitest::Test
 
     # Test Case: "District Number 4" -> "District 4"
     assert_equal "District 4", Core::PersonManager::Utils.normalize_division("District Number 4")
+
+    assert_equal "Ward Central", Core::PersonManager::Utils.normalize_division("Central Ward")
   end
 end
