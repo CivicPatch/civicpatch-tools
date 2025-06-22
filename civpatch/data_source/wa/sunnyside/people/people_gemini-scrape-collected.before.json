@@ -4,34 +4,38 @@
     "sources": [
       "https://www.sunnyside-wa.gov/325/Dean-Broersma",
       "https://www.sunnyside-wa.gov/202/City-Council",
-      "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
     ],
     "images": [],
     "roles": [
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Mayor' as his current role, elected on January 8, 2024."
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated as the current position, with a recent re-election date of January 8, 2024, confirming its active status and direct relevance to the main governing body as per the target roles. "
       },
       {
-        "data": "council member",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed under 'Members' as 'Council District 2'."
+        "llm_confidence_reason": "Identified as a 'Council District' member under 'Members' of the 'City Council'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in a section with links to City Council members' profiles, and the prompt indicates these individuals are very likely on the council."
       }
     ],
     "divisions": [
       {
-        "data": "Council District 2",
+        "data": "District 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the 'Members' section."
       }
     ],
     "phone_numbers": [
       {
         "data": "(509) 952-4456",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "llm_confidence_reason": "Phone number is explicitly provided in the text directly associated with the person's name and contact information section, and is in a standard format for phone number extraction, ensuring high accuracy and direct verification from the source content. ",
         "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
       }
     ],
@@ -39,7 +43,7 @@
       {
         "data": "dbroersma@sunnyside-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "llm_confidence_reason": "Email address is explicitly provided in the text directly associated with the person's name and contact information section, and is in a standard format for email extraction, ensuring high accuracy and direct verification from the source content. ",
         "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
       }
     ],
@@ -47,33 +51,27 @@
       {
         "data": "https://www.sunnyside-wa.gov/325/Dean-Broersma",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is a direct profile page for Dean Broersma, indicated by the breadcrumbs and the page title.",
+        "llm_confidence_reason": "The website URL is directly provided as a link to the person's profile page within the municipality's official domain, ensuring high accuracy and direct verification from the source content. ",
         "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
       },
       {
         "data": "https://www.sunnyside-wa.gov/325/Dean-Broersma",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a link to the individual's profile page.",
+        "llm_confidence_reason": "Direct link to individual's profile page found in the document.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
         "data": "https://www.sunnyside-wa.gov/325/Dean-Broersma",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is explicitly listed next to the name in the 'City Council' section.",
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
-      },
-      {
-        "data": "https://www.sunnyside-wa.gov/325/Dean-Broersma",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
-        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01-08",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states he was 'elected as Mayor... again on January 8, 2024', indicating the most recent start date for his current mayoral term.",
+        "llm_confidence_reason": "The start date is explicitly stated as the most recent election date for the current role ('elected as Mayor...again on January 8, 2024'), directly adhering to the guideline of using the most recent election/re-election date. ",
         "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
       }
     ],
@@ -81,38 +79,42 @@
       {
         "data": "2025",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to the name.",
+        "llm_confidence_reason": "Explicitly stated as the term end year.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       }
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Theresa Hancock",
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
-      "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
     ],
     "images": [],
     "roles": [
       {
-        "data": "council member",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed under 'Members' as 'Council District 1'."
+        "llm_confidence_reason": "Identified as a 'Council District' member under 'Members' of the 'City Council'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Councilmember' directly under her name."
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated directly under her name in the 'Contact Information' section."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in a section with links to City Council members' profiles, and the prompt indicates these individuals are very likely on the council."
       }
     ],
     "divisions": [
       {
-        "data": "Council District 1",
+        "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the 'Members' section."
       }
     ],
     "phone_numbers": [],
@@ -120,7 +122,7 @@
       {
         "data": "thancock@sunnyside-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated and linked directly under her name and role.",
+        "llm_confidence_reason": "Email address is explicitly provided as a direct link for Theresa Hancock under 'Contact Information'.",
         "source": "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
       }
     ],
@@ -128,26 +130,20 @@
       {
         "data": "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a link to the individual's profile page.",
+        "llm_confidence_reason": "Direct link to individual's profile page found in the document.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
         "data": "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page URL is her dedicated profile page.",
+        "llm_confidence_reason": "The URL is directly associated with her name in the breadcrumb and as the main heading link for her profile page.",
         "source": "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
       },
       {
         "data": "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is explicitly listed next to the name in the 'City Council' section.",
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
-      },
-      {
-        "data": "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
-        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
     "start_dates": [
@@ -162,7 +158,7 @@
       {
         "data": "2025",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to the name.",
+        "llm_confidence_reason": "Explicitly stated as the term end year.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
@@ -172,38 +168,37 @@
         "source": "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
       }
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Vicky Frausto",
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
-      "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
     ],
     "images": [],
     "roles": [
       {
-        "data": "council member",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed under 'Members' as 'Council District 3'."
+        "llm_confidence_reason": "Identified as a 'Council District' member under 'Members' of the 'City Council'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Councilmember' as her role."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
       }
     ],
     "divisions": [
       {
-        "data": "Council District 3",
+        "data": "District 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the 'Members' section."
       },
       {
         "data": "at-large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'meaningful representation that reflects our community at-large'."
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'meaningful representation that reflects our community at-large', implying an at-large division."
       }
     ],
     "phone_numbers": [],
@@ -211,7 +206,7 @@
       {
         "data": "vfrausto@sunnyside-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email address is explicitly provided next to her name.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
       }
     ],
@@ -219,27 +214,21 @@
       {
         "data": "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a link to the individual's profile page.",
+        "llm_confidence_reason": "Direct link to individual's profile page found in the document.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
         "data": "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is present in the breadcrumbs and as a 'Skip to Main Content' link, directly corresponding to her profile page.",
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
-      },
-      {
-        "data": "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
-        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'serving her first term as of January 2024'.",
+        "llm_confidence_reason": "Explicitly stated 'first term as of January 2024'.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
       }
     ],
@@ -247,38 +236,42 @@
       {
         "data": "2025",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to the name.",
+        "llm_confidence_reason": "Explicitly stated as the term end year.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       }
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Vicki Ripley",
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
     ],
     "images": [],
     "roles": [
       {
-        "data": "council member",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed under 'Members' as 'Council District 4'."
+        "llm_confidence_reason": "Identified as a 'Council District' member under 'Members' of the 'City Council'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in a section with links to City Council members' profiles, and the prompt indicates these individuals are very likely on the council."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as a heading and under her contact information."
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated multiple times directly under Vicki Ripley's name and as a heading for her section."
       }
     ],
     "divisions": [
       {
-        "data": "Council District 4",
+        "data": "District 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the 'Members' section."
       }
     ],
     "phone_numbers": [],
@@ -286,7 +279,7 @@
       {
         "data": "vripley@sunnyside-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's contact information section.",
+        "llm_confidence_reason": "Email address is explicitly provided in the text as a mailto link associated with Vicki Ripley's contact information section.",
         "source": "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
       }
     ],
@@ -294,26 +287,20 @@
       {
         "data": "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a link to the individual's profile page.",
+        "llm_confidence_reason": "Direct link to individual's profile page found in the document.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
         "data": "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is explicitly listed next to the name in the 'City Council' section.",
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
       },
       {
         "data": "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is a direct profile page for the person and is explicitly linked to her name.",
+        "llm_confidence_reason": "The current page URL is a direct profile page for Vicki Ripley, indicating it is her primary website.",
         "source": "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
-      },
-      {
-        "data": "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
-        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
     "start_dates": [],
@@ -321,45 +308,49 @@
       {
         "data": "2025",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to the name.",
+        "llm_confidence_reason": "Explicitly stated as the term end year.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       }
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Keren J. Vazquez",
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
     ],
     "images": [],
     "roles": [
       {
-        "data": "council member",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed under 'Members' as 'Council Position 5'."
+        "llm_confidence_reason": "Identified as a 'Council Position' member under 'Members' of the 'City Council'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in a section with links to City Council members' profiles, and the prompt indicates these individuals are very likely on the council."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated as her current position and is a target role."
+        "llm_confidence_reason": "Role is explicitly stated as a heading and in the introductory sentence for the person"
       }
     ],
     "divisions": [
       {
-        "data": "Council Position 5",
+        "data": "Position 5",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the 'Members' section."
       }
     ],
     "phone_numbers": [
       {
         "data": "(509) 305-9020",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's contact information section, directly next to her name and email. ",
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person's contact information section on their profile page",
         "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
       }
     ],
@@ -367,7 +358,7 @@
       {
         "data": "kvazquez@sunnyside-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's contact information section.",
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's contact information section on their profile page",
         "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
       }
     ],
@@ -375,33 +366,27 @@
       {
         "data": "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a link to the individual's profile page.",
+        "llm_confidence_reason": "Direct link to individual's profile page found in the document.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
         "data": "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is explicitly listed next to the name in the 'City Council' section.",
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
       },
       {
         "data": "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is a direct link to Keren Vazquez's profile page, which is the primary, stable profile page for the person.",
+        "llm_confidence_reason": "The current page URL is the dedicated profile page for Keren Vazquez",
         "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
-      },
-      {
-        "data": "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
-        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'serving her first term as of January 2024', clearly indicating the start date of her current term.",
+        "llm_confidence_reason": "Start date is explicitly stated as 'as of January 2024' for her first term",
         "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
       }
     ],
@@ -409,46 +394,50 @@
       {
         "data": "2027",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to the name.",
+        "llm_confidence_reason": "Explicitly stated as the term end year.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       }
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Julia Hart",
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/522/Julia-Hart",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/522/Julia-Hart"
     ],
     "images": [],
     "roles": [
       {
-        "data": "council member",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed under 'Members' as 'Council Position 6'."
+        "llm_confidence_reason": "Identified as a 'Council Position' member under 'Members' of the 'City Council'."
       },
       {
         "data": "Councilmember",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and is her current role."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in a section with links to City Council members' profiles, and the prompt indicates these individuals are very likely on the council."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as her current role and confirmed by the context of her serving her sixth term."
       }
     ],
     "divisions": [
       {
-        "data": "Council Position 6",
+        "data": "Position 6",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the 'Members' section."
       }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jhart@sunnyside-wa.gov",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with Julia Hart.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's name and profile section.",
         "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
       }
     ],
@@ -456,33 +445,27 @@
       {
         "data": "https://www.sunnyside-wa.gov/522/Julia-Hart",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a link to the individual's profile page.",
+        "llm_confidence_reason": "Direct link to individual's profile page found in the document.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
         "data": "https://www.sunnyside-wa.gov/522/Julia-Hart",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is explicitly listed next to the name in the 'City Council' section.",
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
       },
       {
         "data": "https://www.sunnyside-wa.gov/522/Julia-Hart",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "A direct link to Julia Hart's profile page is provided at the top of the content.",
-        "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
-      },
-      {
-        "data": "https://www.sunnyside-wa.gov/522/Julia-Hart",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
-        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+        "llm_confidence_reason": "The current page URL is her dedicated profile page, which is the most relevant website.",
+        "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
       }
     ],
     "start_dates": [
       {
         "data": "2015-11",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'elected to the Sunnyside City Council in November 2015'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that she was 'elected to the Sunnyside City Council in November 2015'.",
         "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
       }
     ],
@@ -490,11 +473,11 @@
       {
         "data": "2027",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to the name.",
+        "llm_confidence_reason": "Explicitly stated as the term end year.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       }
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Jorge Galvan",
@@ -506,33 +489,38 @@
     "images": [],
     "roles": [
       {
-        "data": "council member",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed under 'Members' as 'Council Position 7'."
+        "llm_confidence_reason": "Identified as a 'Council Position' member under 'Members' of the 'City Council'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in a section with links to City Council members' profiles, and the prompt indicates these individuals are very likely on the council."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'newly elected member of the Sunnyside City Council'."
       },
       {
         "data": "Deputy Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated and current as of January 8, 2024."
-      },
-      {
-        "data": "council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'newly elected member of the Sunnyside City Council'."
+        "llm_confidence_reason": "Explicitly stated as 'elected Deputy Mayor'."
       }
     ],
     "divisions": [
       {
-        "data": "Council Position 7",
+        "data": "Position 7",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the 'Members' section."
       }
     ],
     "phone_numbers": [
       {
         "data": "(509) 502-7751",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly stated and directly associated with the person.",
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
         "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
@@ -540,7 +528,7 @@
       {
         "data": "jgalvan@sunnyside-wa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated and directly associated with the person.",
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
         "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
@@ -548,19 +536,19 @@
       {
         "data": "https://www.sunnyside-wa.gov/519/Jorge-Galvan",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly provided as a link to the individual's profile page.",
+        "llm_confidence_reason": "Direct link to individual's profile page found in the document.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       },
       {
         "data": "https://www.sunnyside-wa.gov/519/Jorge-Galvan",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is explicitly listed next to the name in the 'City Council' section.",
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
       },
       {
         "data": "https://www.sunnyside-wa.gov/519/Jorge-Galvan",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
+        "llm_confidence_reason": "The URL is a direct link to Jorge Galvan's profile page.",
         "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
@@ -568,7 +556,7 @@
       {
         "data": "2024-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date for the first term as council member is explicitly stated as 'January 2024'.",
+        "llm_confidence_reason": "Explicitly stated 'serving his first term as of January 2024' and 'elected Deputy Mayor on January 8, 2024'.",
         "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
       }
     ],
@@ -576,10 +564,10 @@
       {
         "data": "2027",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated next to the name.",
+        "llm_confidence_reason": "Explicitly stated as the term end year.",
         "source": "https://www.sunnyside-wa.gov/202/City-Council"
       }
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   }
 ]
