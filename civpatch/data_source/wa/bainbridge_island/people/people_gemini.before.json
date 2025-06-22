@@ -2,8 +2,7 @@
   {
     "name": "Ashley Mathews",
     "roles": [
-      "Mayor",
-      "Council Member"
+      "Mayor"
     ],
     "divisions": [
       "South Ward",
@@ -19,13 +18,13 @@
       "https://bainbridgewa.gov/217/City-Council",
       "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
     ],
-    "updated_at": "2025-06-22T02:07:05Z"
+    "updated_at": "2025-06-22T02:51:28Z"
   },
   {
     "name": "Jon Quitslund",
     "roles": [
       "Deputy Mayor",
-      "council member"
+      "Council Member"
     ],
     "divisions": [
       "South Ward",
@@ -41,7 +40,7 @@
       "https://bainbridgewa.gov/217/City-Council",
       "https://www.bainbridgewa.gov/directory.aspx?EID=293"
     ],
-    "updated_at": "2025-06-22T02:07:05Z"
+    "updated_at": "2025-06-22T02:51:28Z"
   },
   {
     "name": "Kirsten Hytopoulos",
@@ -54,16 +53,17 @@
       "District 1"
     ],
     "image": null,
-    "phone_number": "(206) 482-4958",
+    "phone_number": "206-482-4958",
     "email": "khytopoulos@bainbridgewa.gov",
     "website": "https://www.bainbridgewa.gov/directory.aspx?EID=260",
-    "start_date": null,
+    "start_date": "2019",
     "end_date": "2027-12-31",
     "sources": [
       "https://bainbridgewa.gov/217/City-Council",
-      "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      "https://www.bainbridgewa.gov/directory.aspx?EID=260",
+      "https://www.bainbridgewa.gov/Directory.aspx?DID=14"
     ],
-    "updated_at": "2025-06-22T02:07:05Z"
+    "updated_at": "2025-06-22T02:51:28Z"
   },
   {
     "name": "Brenda Fantroy-Johnson",
@@ -85,7 +85,7 @@
       "https://bainbridgewa.gov/217/City-Council",
       "https://www.bainbridgewa.gov/directory.aspx?EID=274"
     ],
-    "updated_at": "2025-06-22T02:07:05Z"
+    "updated_at": "2025-06-22T02:51:28Z"
   },
   {
     "name": "Leslie Schneider",
@@ -107,7 +107,7 @@
       "https://bainbridgewa.gov/217/City-Council",
       "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
     ],
-    "updated_at": "2025-06-22T02:07:05Z"
+    "updated_at": "2025-06-22T02:51:28Z"
   },
   {
     "name": "Clarence Moriwaki",
@@ -129,13 +129,12 @@
       "https://bainbridgewa.gov/217/City-Council",
       "https://www.bainbridgewa.gov/directory.aspx?EID=296"
     ],
-    "updated_at": "2025-06-22T02:07:05Z"
+    "updated_at": "2025-06-22T02:51:28Z"
   },
   {
     "name": "Joe Deets",
     "roles": [
-      "Council Member",
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
       "North Ward",
@@ -151,6 +150,6 @@
       "https://bainbridgewa.gov/217/City-Council",
       "https://www.bainbridgewa.gov/directory.aspx?EID=229"
     ],
-    "updated_at": "2025-06-22T02:07:05Z"
+    "updated_at": "2025-06-22T02:51:28Z"
   }
 ]
