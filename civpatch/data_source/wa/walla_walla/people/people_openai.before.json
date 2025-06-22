@@ -3,7 +3,7 @@
     "name": "Tom Scribner",
     "roles": [
       "Mayor",
-      "Council Member At-Large"
+      "Council Member"
     ],
     "divisions": [
       "At-Large",
@@ -18,13 +18,13 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Steve Moss",
     "roles": [
       "Mayor Pro Tempore",
-      "Council Member At-Large"
+      "Council Member"
     ],
     "divisions": [
       "At-Large",
@@ -39,7 +39,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Brian Casey",
@@ -59,7 +59,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Rick Eskil",
@@ -79,7 +79,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Monte A. Willis",
@@ -99,7 +99,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Jeffrey Robinson",
@@ -119,12 +119,12 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Gustavo Reyna",
     "roles": [
-      "Council Member At-Large"
+      "Council Member"
     ],
     "divisions": [
       "At-Large",
@@ -139,6 +139,6 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   }
 ]

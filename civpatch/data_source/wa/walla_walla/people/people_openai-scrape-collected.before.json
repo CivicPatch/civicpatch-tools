@@ -8,7 +8,7 @@
       {
         "data": "https://www.wallawallawa.gov/home/showpublishedimage/8996/638416065938370000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "llm_confidence_reason": "Image URL is near the name and labeled with the person's name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -19,21 +19,21 @@
         "llm_confidence_reason": "Explicitly stated as Mayor in the text."
       },
       {
-        "data": "Council Member At-Large",
+        "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as AT-LARGE, POSITION 6, which is a council member role."
+        "llm_confidence_reason": "Also holds position as At-Large, Position 6 on City Council."
       }
     ],
     "divisions": [
       {
         "data": "At-Large",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position described as AT-LARGE."
+        "llm_confidence_reason": "Explicitly stated as At-Large."
       },
       {
         "data": "Position 6",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position number explicitly given as POSITION 6."
+        "llm_confidence_reason": "Explicitly stated as Position 6."
       }
     ],
     "phone_numbers": [],
@@ -41,7 +41,7 @@
       {
         "data": "tscribner@wallawallawa.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -50,7 +50,7 @@
       {
         "data": "2015-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected 11/2015; most recent term re-elected 11/2023.",
+        "llm_confidence_reason": "Elected 11/2015, with subsequent re-elections; earliest start date used.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -62,7 +62,7 @@
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Steve Moss",
@@ -73,7 +73,7 @@
       {
         "data": "https://www.wallawallawa.gov/home/showpublishedimage/9084/638657234970000000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "llm_confidence_reason": "Image URL is near the name and labeled with the person's name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -84,21 +84,21 @@
         "llm_confidence_reason": "Explicitly stated as Mayor Pro Tempore."
       },
       {
-        "data": "Council Member At-Large",
+        "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as AT-LARGE, POSITION 7, a council member role."
+        "llm_confidence_reason": "Also holds position as At-Large, Position 7 on City Council."
       }
     ],
     "divisions": [
       {
         "data": "At-Large",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position described as AT-LARGE."
+        "llm_confidence_reason": "Explicitly stated as At-Large."
       },
       {
         "data": "Position 7",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position number explicitly given as POSITION 7."
+        "llm_confidence_reason": "Explicitly stated as Position 7."
       }
     ],
     "phone_numbers": [],
@@ -106,7 +106,7 @@
       {
         "data": "smoss@wallawallawa.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -115,7 +115,7 @@
       {
         "data": "2015-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected 11/2015; most recent term re-elected 11/2023.",
+        "llm_confidence_reason": "Elected 11/2015, with subsequent re-elections; earliest start date used.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -127,7 +127,7 @@
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Brian Casey",
@@ -138,7 +138,7 @@
       {
         "data": "https://www.wallawallawa.gov/home/showpublishedimage/8998/638416071725330000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "llm_confidence_reason": "Image URL is near the name and labeled with the person's name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -153,12 +153,12 @@
       {
         "data": "Central Ward",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward explicitly stated as Central Ward."
+        "llm_confidence_reason": "Explicitly stated as Central Ward."
       },
       {
         "data": "Position 2",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position number explicitly given as POSITION 2."
+        "llm_confidence_reason": "Explicitly stated as Position 2."
       }
     ],
     "phone_numbers": [],
@@ -166,7 +166,7 @@
       {
         "data": "bcasey@wallawallawa.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -174,7 +174,7 @@
     "start_dates": [
       {
         "data": "2021-11",
-        "llm_confidence": 1,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Elected 11/2021.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
@@ -187,7 +187,7 @@
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Rick Eskil",
@@ -198,7 +198,7 @@
       {
         "data": "https://www.wallawallawa.gov/home/showpublishedimage/9000/638416072463800000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "llm_confidence_reason": "Image URL is near the name and labeled with the person's name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -213,12 +213,12 @@
       {
         "data": "South Ward",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward explicitly stated as South Ward."
+        "llm_confidence_reason": "Explicitly stated as South Ward."
       },
       {
         "data": "Position 1",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position number explicitly given as POSITION 1."
+        "llm_confidence_reason": "Explicitly stated as Position 1."
       }
     ],
     "phone_numbers": [],
@@ -226,7 +226,7 @@
       {
         "data": "reskil@wallawallawa.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -234,7 +234,7 @@
     "start_dates": [
       {
         "data": "2021-11",
-        "llm_confidence": 1,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Elected 11/2021.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
@@ -247,7 +247,7 @@
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Monte A. Willis",
@@ -258,7 +258,7 @@
       {
         "data": "https://www.wallawallawa.gov/home/showpublishedimage/9002/638416073171970000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "llm_confidence_reason": "Image URL is near the name and labeled with the person's name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -273,12 +273,12 @@
       {
         "data": "East Ward",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward explicitly stated as East Ward."
+        "llm_confidence_reason": "Explicitly stated as East Ward."
       },
       {
         "data": "Position 4",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position number explicitly given as POSITION 4."
+        "llm_confidence_reason": "Explicitly stated as Position 4."
       }
     ],
     "phone_numbers": [],
@@ -286,7 +286,7 @@
       {
         "data": "mwillis@wallawallawa.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -294,7 +294,7 @@
     "start_dates": [
       {
         "data": "2023-11",
-        "llm_confidence": 1,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Elected 11/2023.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
@@ -307,7 +307,7 @@
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Jeffrey Robinson",
@@ -318,7 +318,7 @@
       {
         "data": "https://www.wallawallawa.gov/home/showpublishedimage/9004/638416074005770000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "llm_confidence_reason": "Image URL is near the name and labeled with the person's name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -333,12 +333,12 @@
       {
         "data": "West Ward",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward explicitly stated as West Ward."
+        "llm_confidence_reason": "Explicitly stated as West Ward."
       },
       {
         "data": "Position 5",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position number explicitly given as POSITION 5."
+        "llm_confidence_reason": "Explicitly stated as Position 5."
       }
     ],
     "phone_numbers": [],
@@ -346,7 +346,7 @@
       {
         "data": "jrobinson@wallawallawa.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -354,7 +354,7 @@
     "start_dates": [
       {
         "data": "2023-11",
-        "llm_confidence": 1,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Elected 11/2023.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
@@ -367,7 +367,7 @@
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Gustavo Reyna",
@@ -378,27 +378,27 @@
       {
         "data": "https://www.wallawallawa.gov/home/showpublishedimage/9006/638416074749400000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "llm_confidence_reason": "Image URL is near the name and labeled with the person's name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
     "roles": [
       {
-        "data": "Council Member At-Large",
+        "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as AT-LARGE, POSITION 3, a council member role."
+        "llm_confidence_reason": "Explicitly stated as Council Member."
       }
     ],
     "divisions": [
       {
         "data": "At-Large",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position described as AT-LARGE."
+        "llm_confidence_reason": "Explicitly stated as At-Large."
       },
       {
         "data": "Position 3",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Position number explicitly given as POSITION 3."
+        "llm_confidence_reason": "Explicitly stated as Position 3."
       }
     ],
     "phone_numbers": [],
@@ -406,7 +406,7 @@
       {
         "data": "greyna@wallawallawa.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
@@ -414,7 +414,7 @@
     "start_dates": [
       {
         "data": "2021-11",
-        "llm_confidence": 1,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Elected 11/2021.",
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
@@ -427,6 +427,6 @@
         "source": "https://www.wallawallawa.gov/government/city-council"
       }
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   }
 ]
