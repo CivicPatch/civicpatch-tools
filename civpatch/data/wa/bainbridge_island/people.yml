@@ -15,7 +15,7 @@
   sources:
   - https://bainbridgewa.gov/217/City-Council
   - https://www.bainbridgewa.gov/Directory.aspx?EID=338
-  updated_at: '2025-06-22T02:07:07Z'
+  updated_at: '2025-06-22T02:51:31Z'
 - name: Jon Quitslund
   roles:
   - Deputy Mayor
@@ -33,7 +33,7 @@
   sources:
   - https://bainbridgewa.gov/217/City-Council
   - https://www.bainbridgewa.gov/directory.aspx?EID=293
-  updated_at: '2025-06-22T02:07:07Z'
+  updated_at: '2025-06-22T02:51:31Z'
 - name: Kirsten Hytopoulos
   roles:
   - Council Member
@@ -45,18 +45,19 @@
   email: khytopoulos@bainbridgewa.gov
   phone_number: "(206) 482-4958"
   website: https://www.bainbridgewa.gov/directory.aspx?EID=260
-  start_date: '2023'
+  start_date: '2019'
   end_date: '2027-12-31'
   sources:
   - https://bainbridgewa.gov/217/City-Council
   - https://www.bainbridgewa.gov/directory.aspx?EID=260
-  updated_at: '2025-06-22T02:07:07Z'
+  - https://www.bainbridgewa.gov/Directory.aspx?DID=14
+  updated_at: '2025-06-22T02:51:31Z'
 - name: Brenda Fantroy-Johnson
   roles:
   - Council Member
   divisions:
   - District 2
-  - Ward Rth
+  - Ward North
   image: https://www.bainbridgewa.gov/ImageRepository/Document?documentID=18414
   cdn_image: https://cdn.civicpatch.org/open-data/wa/bainbridge_island/images/981b1af24c91abea5478e38320de1386359c4a441fe88ab55df9f3a58284c3e3.jpg
   email: bfantroy-johnson@bainbridgewa.gov
@@ -67,7 +68,7 @@
   sources:
   - https://bainbridgewa.gov/217/City-Council
   - https://www.bainbridgewa.gov/directory.aspx?EID=274
-  updated_at: '2025-06-22T02:07:07Z'
+  updated_at: '2025-06-22T02:51:31Z'
 - name: Leslie Schneider
   roles:
   - Council Member
@@ -84,7 +85,7 @@
   sources:
   - https://bainbridgewa.gov/217/City-Council
   - https://www.bainbridgewa.gov/Directory.aspx?EID=250
-  updated_at: '2025-06-22T02:07:07Z'
+  updated_at: '2025-06-22T02:51:31Z'
 - name: Clarence Moriwaki
   roles:
   - Council Member
@@ -101,13 +102,13 @@
   sources:
   - https://bainbridgewa.gov/217/City-Council
   - https://www.bainbridgewa.gov/directory.aspx?EID=296
-  updated_at: '2025-06-22T02:07:07Z'
+  updated_at: '2025-06-22T02:51:31Z'
 - name: Joe Deets
   roles:
   - Council Member
   divisions:
   - District 7
-  - Ward Rth
+  - Ward North
   image: https://www.bainbridgewa.gov/ImageRepository/Document?documentID=18376
   cdn_image: https://cdn.civicpatch.org/open-data/wa/bainbridge_island/images/1997397fe02ec597b38e44381d1e99a210155bc35dfd19378e43335b26b3a37b.jpg
   email: jdeets@bainbridgewa.gov
@@ -118,4 +119,4 @@
   sources:
   - https://bainbridgewa.gov/217/City-Council
   - https://www.bainbridgewa.gov/directory.aspx?EID=229
-  updated_at: '2025-06-22T02:07:07Z'
+  updated_at: '2025-06-22T02:51:31Z'
