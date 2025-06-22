@@ -3,10 +3,11 @@
     "name": "Dean Broersma",
     "roles": [
       "Mayor",
-      "council member"
+      "Council Member",
+      "Councilmember"
     ],
     "divisions": [
-      "Council District 2"
+      "District 2"
     ],
     "image": null,
     "phone_number": "(509) 952-4456",
@@ -17,19 +18,18 @@
     "sources": [
       "https://www.sunnyside-wa.gov/325/Dean-Broersma",
       "https://www.sunnyside-wa.gov/202/City-Council",
-      "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Theresa Hancock",
     "roles": [
-      "council member",
+      "Council Member",
       "Councilmember"
     ],
     "divisions": [
-      "Council District 1"
+      "District 1"
     ],
     "image": null,
     "phone_number": null,
@@ -40,19 +40,18 @@
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
-      "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Vicky Frausto",
     "roles": [
-      "council member",
+      "Council Member",
       "Councilmember"
     ],
     "divisions": [
-      "Council District 3",
+      "District 3",
       "at-large"
     ],
     "image": null,
@@ -63,19 +62,18 @@
     "end_date": "2025",
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
-      "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Vicki Ripley",
     "roles": [
-      "council member",
+      "Council Member",
       "Councilmember"
     ],
     "divisions": [
-      "Council District 4"
+      "District 4"
     ],
     "image": null,
     "phone_number": null,
@@ -86,19 +84,18 @@
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Keren J. Vazquez",
     "roles": [
-      "council member",
+      "Council Member",
       "Councilmember"
     ],
     "divisions": [
-      "Council Position 5"
+      "Position 5"
     ],
     "image": null,
     "phone_number": "(509) 305-9020",
@@ -109,19 +106,18 @@
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Julia Hart",
     "roles": [
-      "council member",
+      "Council Member",
       "Councilmember"
     ],
     "divisions": [
-      "Council Position 6"
+      "Position 6"
     ],
     "image": null,
     "phone_number": null,
@@ -132,19 +128,20 @@
     "sources": [
       "https://www.sunnyside-wa.gov/202/City-Council",
       "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
-      "https://www.sunnyside-wa.gov/522/Julia-Hart",
-      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      "https://www.sunnyside-wa.gov/522/Julia-Hart"
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   },
   {
     "name": "Jorge Galvan",
     "roles": [
-      "council member",
+      "Council Member",
+      "Councilmember",
+      "City Council Member",
       "Deputy Mayor"
     ],
     "divisions": [
-      "Council Position 7"
+      "Position 7"
     ],
     "image": null,
     "phone_number": "(509) 502-7751",
@@ -157,6 +154,6 @@
       "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
       "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
     ],
-    "updated_at": "2025-06-22T04:35:34Z"
+    "updated_at": "2025-06-22T05:09:35Z"
   }
 ]
