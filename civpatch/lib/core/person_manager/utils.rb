@@ -40,6 +40,28 @@ module Core
 
         return nil if division_to_find.blank?
 
+        # Check if the division is valid as-is
+        division_aliases = division_types.each_with_object({}) do |(key, value), hash|
+          # Create a hash of aliases for quick lookup
+          value["aliases"]&.each do |alias_name|
+            hash[alias_name.downcase] = key
+          end
+        end
+
+        found_division_alias = division_aliases.find { |alias_name, _key| division_to_find.include?(alias_name) }
+        # aliased_division_key, _value = division_types.find do |_key, value|
+        #   value["aliases"]&.any? { |alias_name| division_to_find.include?(alias_name) }
+        # end
+        if found_division_alias.present?
+          division_alias = found_division_alias.first
+          division_key = found_division_alias.last
+          # Replace alias with its corresponding key and normalize the rest of the string
+          division_to_find = division_to_find.gsub(/\b#{division_alias}\b/i, division_key.capitalize)
+          division_key, division_rest = division_to_find.split(" ", 2)
+          division_rest = format_division_identifier(division_rest)
+          return [division_key, division_rest].compact.map(&:capitalize).join(" ").strip
+        end
+
         # Dynamically handle division types based on `division_types`
         division_keys = division_types.keys.map(&:downcase)
         matched_key = division_keys.find { |key| division_to_find.match(/\b#{key}\b/) }
@@ -53,16 +75,6 @@ module Core
           division_rest = format_division_identifier(division_rest)
 
           return [division_key, division_rest].compact.map(&:capitalize).join(" ").strip
-        end
-
-        # Check if the division is valid as-is
-        found_division = division_types.keys.find { |d| division_to_find.include?(d) }
-        if found_division.blank? # Check for aliases
-          aliased_division_key, _value = division_types.find do |_key, value|
-            value["aliases"]&.any? { |alias_name| division_to_find.include?(alias_name) }
-          end
-
-          division_to_find = aliased_division_key if aliased_division_key.present?
         end
 
         division_key, division_rest = division_to_find.split(" ", 2)

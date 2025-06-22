@@ -135,4 +135,9 @@ class CorePersonManagerUtilsTest < Minitest::Test
 
     assert_equal "Ward North", Core::PersonManager::Utils.normalize_division("Ward North")
   end
+
+  def test_normalize_division_alias_match
+    assert_equal "Ward North", Core::PersonManager::Utils.normalize_division("Council Ward North")
+    assert_equal "Ward North", Core::PersonManager::Utils.normalize_division("Ward Council North")
+  end
 end
