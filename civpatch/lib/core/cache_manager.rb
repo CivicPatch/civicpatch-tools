@@ -14,7 +14,7 @@ module Core
         if urls_to_keep.any? { |url| cache_folder.include?(url) }
           # Remove everything except the markdown file
           files_to_remove = Dir.glob(File.join(cache_folder, "*")).reject { |file| file.end_with?(".md") }
-          
+
           FileUtils.rm_rf(files_to_remove)
           next
         end
