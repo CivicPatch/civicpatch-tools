@@ -85,9 +85,12 @@ module Core
         # Remove quotation marks (curly and normal) and parentheses
         division_identifier_to_find = division_identifier_to_find.gsub(/["“”‘’()]/, "").strip
         # Remove prefixes like "no1", "no 1", "no.1", "no. 1", "#1", "# 1", "number 1"
-        division_identifier_to_find = division_identifier_to_find.sub(/^(no\.?\s*|#\.?\s*|number\s*)/, "").strip
+        division_identifier_to_find = division_identifier_to_find.gsub(/\b(no\.?\s*\d*|number)\b/i, "").strip
+
         # Remove ordinal suffixes like "rd", "st", "nd", "th" ONLY if preceded by a number
-        division_identifier_to_find = division_identifier_to_find.gsub(/(\d+)(rd|st|nd|th)$/i, '\1').strip
+        if division_identifier_to_find.match?(/^\d+/) # Ensure the string starts with a number
+          division_identifier_to_find = division_identifier_to_find.gsub(/(\d+)(rd|st|nd|th)$/i, '\1').strip
+        end
 
         # Convert English or Roman numerals to numbers
         if number_words_in_english.include?(division_identifier_to_find)
