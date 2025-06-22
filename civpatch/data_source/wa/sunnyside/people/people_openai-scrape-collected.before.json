@@ -1,0 +1,548 @@
+[
+  {
+    "name": "Dean Broersma",
+    "sources": [
+      "https://www.sunnyside-wa.gov/325/Dean-Broersma",
+      "https://www.sunnyside-wa.gov/202/City-Council"
+    ],
+    "images": [
+      {
+        "data": "https://www.sunnyside-wa.gov/ImageRepository/Document?documentID=2741",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near name and title on official city page.",
+        "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor and elected by City Council on January 10, 2021 and again on January 8, 2024."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Served as Deputy Mayor for two terms: 2016-2017 and again starting February 8, 2021, but currently Mayor, so Deputy Mayor role is likely past."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Appointed to City Council March 25, 2013, elected November 2013, and served continuously."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council District 2 - Dean R. Broersma' indicating council member role for District 2."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council District 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 952-4456",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed near name and role.",
+        "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dbroersma@sunnyside-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed near name and role.",
+        "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sunnyside-wa.gov/325/Dean-Broersma",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL of the page containing the detailed profile.",
+        "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
+      },
+      {
+        "data": "https://www.sunnyside-wa.gov/325/Dean-Broersma",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city website profile link for Dean Broersma.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-08",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Most recent mayoral term started January 8, 2024.",
+        "source": "https://www.sunnyside-wa.gov/325/Dean-Broersma"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-22T04:34:24Z"
+  },
+  {
+    "name": "Theresa Hancock",
+    "sources": [
+      "https://www.sunnyside-wa.gov/202/City-Council",
+      "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council District 1 - Theresa Hancock' indicating council member role for District 1."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states Theresa Hancock was appointed to fill a City Council vacancy and is identified as Councilmember."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council District 1'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "thancock@sunnyside-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is clearly listed next to Theresa Hancock's name.",
+        "source": "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city website profile link for Theresa Hancock.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      },
+      {
+        "data": "https://www.sunnyside-wa.gov/413/Theresa-Hancock",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the profile page for Theresa Hancock on the Sunnyside city website.",
+        "source": "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-03",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed in March 2025 to fill the vacancy, so start date is March 2025.",
+        "source": "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states serving until December 31, 2025.",
+        "source": "https://www.sunnyside-wa.gov/413/Theresa-Hancock"
+      }
+    ],
+    "updated_at": "2025-06-22T04:34:24Z"
+  },
+  {
+    "name": "Vicky Frausto",
+    "sources": [
+      "https://www.sunnyside-wa.gov/202/City-Council",
+      "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
+    ],
+    "images": [
+      {
+        "data": "https://www.sunnyside-wa.gov/ImageRepository/Document?documentID=3239",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image near the name and labeled 'VICKY FRAUSTO PHOTO' is a headshot.",
+        "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council District 3 - Vicky Frausto' indicating council member role for District 3."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Councilmember' and 'newly elected member of the Sunnyside City Council' indicating active council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council District 3'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "vfrausto@sunnyside-wa.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email explicitly listed near the name and role.",
+        "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sunnyside-wa.gov/520/Vicky-Frausto",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city website profile link for Vicky Frausto.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      },
+      {
+        "data": "https://www.sunnyside-wa.gov/directory.aspx?eid=87",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Profile page link labeled 'More Information' near the contact details.",
+        "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'serving her first term as of January 2024'.",
+        "source": "https://www.sunnyside-wa.gov/520/Vicky-Frausto"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-22T04:34:24Z"
+  },
+  {
+    "name": "Vicki Ripley",
+    "sources": [
+      "https://www.sunnyside-wa.gov/202/City-Council",
+      "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
+    ],
+    "images": [
+      {
+        "data": "https://www.sunnyside-wa.gov/ImageRepository/Document?documentID=3277",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image is a portrait near her name and labeled 'COUNCILOR VICKI RIPLEY'.",
+        "source": "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council District 4 - Vicki Ripley' indicating council member role for District 4."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Councilmember' as her role, which matches the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council District 4'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "vripley@sunnyside-wa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed under her contact information.",
+        "source": "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city website profile link for Vicki Ripley.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      },
+      {
+        "data": "https://www.sunnyside-wa.gov/442/Vicki-Ripley",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL provided is the official city council member profile page for Vicki Ripley.",
+        "source": "https://www.sunnyside-wa.gov/442/Vicki-Ripley"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-22T04:34:24Z"
+  },
+  {
+    "name": "Keren J. Vazquez",
+    "sources": [
+      "https://www.sunnyside-wa.gov/202/City-Council",
+      "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
+    ],
+    "images": [
+      {
+        "data": "https://www.sunnyside-wa.gov/ImageRepository/Document?documentID=3716",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image is directly associated with Keren Vazquez's contact information and name.",
+        "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council Position 5 - Keren J. Vazquez' indicating council member role for Position 5."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Councilmember' and 'newly elected member of the Sunnyside City Council' indicating an active council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 5'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 305-9020",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Keren Vazquez's contact information.",
+        "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
+      }
+    ],
+    "emails": [
+      {
+        "data": "kvazquez@sunnyside-wa.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is listed directly under Keren Vazquez's contact information.",
+        "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city website profile link for Keren Vazquez.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      },
+      {
+        "data": "https://www.sunnyside-wa.gov/521/Keren-Vazquez",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the URL of the page dedicated to Keren Vazquez.",
+        "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'serving her first term as of January 2024' indicating term start date.",
+        "source": "https://www.sunnyside-wa.gov/521/Keren-Vazquez"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly stated as 2027.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-22T04:34:24Z"
+  },
+  {
+    "name": "Julia Hart",
+    "sources": [
+      "https://www.sunnyside-wa.gov/202/City-Council",
+      "https://www.sunnyside-wa.gov/522/Julia-Hart"
+    ],
+    "images": [
+      {
+        "data": "https://www.sunnyside-wa.gov/ImageRepository/Document?documentID=2742",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image near Julia Hart's name and role, appears to be a portrait.",
+        "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council Position 6 - Julia Hart' indicating council member role for Position 6."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' currently serving on Sunnyside City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 6'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jhart@sunnyside-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed near Julia Hart's name and role.",
+        "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sunnyside-wa.gov/522/Julia-Hart",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city website profile link for Julia Hart.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      },
+      {
+        "data": "https://www.sunnyside-wa.gov/522/Julia-Hart",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Page URL is the official profile page for Julia Hart.",
+        "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2015-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected to City Council in November 2015, currently serving sixth term.",
+        "source": "https://www.sunnyside-wa.gov/522/Julia-Hart"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly stated as 2027.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-22T04:34:24Z"
+  },
+  {
+    "name": "Jorge Galvan",
+    "sources": [
+      "https://www.sunnyside-wa.gov/202/City-Council",
+      "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+    ],
+    "images": [
+      {
+        "data": "https://www.sunnyside-wa.gov/ImageRepository/Document?documentID=3214",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a portrait labeled 'Councilmember Jorge Galvan' near his name.",
+        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Council Position 7 - Jorge Galvan' indicating council member role for Position 7."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Deputy Mayor and member of Sunnyside City Council."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Described as a newly elected member of the Sunnyside City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 7'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(509) 502-7751",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed near Jorge Galvan's contact info.",
+        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jgalvan@sunnyside-wa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed near Jorge Galvan's contact info.",
+        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sunnyside-wa.gov/519/Jorge-Galvan",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city website profile link for Jorge Galvan.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      },
+      {
+        "data": "https://www.sunnyside-wa.gov/519/Jorge-Galvan",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Page URL is the official profile page for Jorge Galvan.",
+        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states he is serving his first term as of January 2024 and was elected Deputy Mayor on January 8, 2024.",
+        "source": "https://www.sunnyside-wa.gov/519/Jorge-Galvan"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end year explicitly stated as 2027.",
+        "source": "https://www.sunnyside-wa.gov/202/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-22T04:34:24Z"
+  }
+]
