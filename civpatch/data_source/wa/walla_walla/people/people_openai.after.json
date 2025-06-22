@@ -2,6 +2,7 @@
   {
     "name": "Tom Scribner",
     "roles": [
+      "Council Member",
       "Mayor"
     ],
     "divisions": [
@@ -17,11 +18,12 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Steven Moss",
     "roles": [
+      "Council Member",
       "Mayor Pro Tempore"
     ],
     "divisions": [
@@ -37,7 +39,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Brian Casey",
@@ -46,7 +48,7 @@
     ],
     "divisions": [
       "Position 2",
-      "Ward central"
+      "Ward Central"
     ],
     "image": "https://www.wallawallawa.gov/home/showpublishedimage/8998/638416071725330000",
     "phone_number": null,
@@ -57,7 +59,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Rick Eskil",
@@ -66,7 +68,7 @@
     ],
     "divisions": [
       "Position 1",
-      "Ward sou"
+      "Ward South"
     ],
     "image": "https://www.wallawallawa.gov/home/showpublishedimage/9000/638416072463800000",
     "phone_number": null,
@@ -77,7 +79,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Monte A. Willis",
@@ -86,7 +88,7 @@
     ],
     "divisions": [
       "Position 4",
-      "Ward ea"
+      "Ward East"
     ],
     "image": "https://www.wallawallawa.gov/home/showpublishedimage/9002/638416073171970000",
     "phone_number": null,
@@ -97,7 +99,7 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
   },
   {
     "name": "Jeffrey Robinson",
@@ -106,7 +108,7 @@
     ],
     "divisions": [
       "Position 5",
-      "Ward we"
+      "Ward West"
     ],
     "image": "https://www.wallawallawa.gov/home/showpublishedimage/9004/638416074005770000",
     "phone_number": null,
@@ -117,6 +119,26 @@
     "sources": [
       "https://www.wallawallawa.gov/government/city-council"
     ],
-    "updated_at": "2025-06-21T21:15:35Z"
+    "updated_at": "2025-06-22T01:33:28Z"
+  },
+  {
+    "name": "Gustavo Reyna",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "At-large",
+      "Position 3"
+    ],
+    "image": "https://www.wallawallawa.gov/home/showpublishedimage/9006/638416074749400000",
+    "phone_number": null,
+    "email": "greyna@wallawallawa.gov",
+    "website": null,
+    "start_date": "2021-11",
+    "end_date": "2025-12-31",
+    "sources": [
+      "https://www.wallawallawa.gov/government/city-council"
+    ],
+    "updated_at": "2025-06-22T01:33:28Z"
   }
 ]

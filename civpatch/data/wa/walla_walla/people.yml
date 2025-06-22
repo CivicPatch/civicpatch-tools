@@ -6,7 +6,7 @@
   - At-large
   - Position 6
   image: https://www.wallawallawa.gov/home/showpublishedimage/8996/638416065938370000
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/b31d7b61bf1eb73385ebc4f9a3be264a458456e8ddbd08cd698c326010e1801e.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/b31d7b61bf1eb73385ebc4f9a3be264a458456e8ddbd08cd698c326010e1801e.png
   email: tscribner@wallawallawa.gov
   phone_number:
   website:
@@ -14,7 +14,7 @@
   end_date: '2027-12-31'
   sources:
   - https://www.wallawallawa.gov/government/city-council
-  updated_at: '2025-06-21T21:15:52Z'
+  updated_at: '2025-06-22T01:33:46Z'
 - name: Steven Moss
   roles:
   - Mayor Pro Tempore
@@ -30,13 +30,15 @@
   end_date: '2027-12-31'
   sources:
   - https://www.wallawallawa.gov/government/city-council
-  updated_at: '2025-06-21T21:15:52Z'
+  updated_at: '2025-06-22T01:33:46Z'
 - name: Gustavo Reyna
   roles:
   - Council Member
-  divisions: []
-  image:
-  cdn_image:
+  divisions:
+  - At-large
+  - Position 3
+  image: https://www.wallawallawa.gov/home/showpublishedimage/9006/638416074749400000
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/b91403213f3b1fa296952b39b070fe2a241808bdf6117be25f8af9fbe889efd2.png
   email: greyna@wallawallawa.gov
   phone_number:
   website:
@@ -44,13 +46,13 @@
   end_date: '2025-12-31'
   sources:
   - https://www.wallawallawa.gov/government/city-council
-  updated_at: '2025-06-21T21:15:52Z'
+  updated_at: '2025-06-22T01:33:46Z'
 - name: Rick Eskil
   roles:
   - Council Member
   divisions:
   - Position 1
-  - Ward sou
+  - Ward South
   image: https://www.wallawallawa.gov/home/showpublishedimage/9000/638416072463800000
   cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/e7b600012dd2677cbc8d92d515330e7e6bba3a38fb12028aeeac726b1af9b2d8.jpg
   email: reskil@wallawallawa.gov
@@ -60,15 +62,15 @@
   end_date: '2025-12-31'
   sources:
   - https://www.wallawallawa.gov/government/city-council
-  updated_at: '2025-06-21T21:15:52Z'
+  updated_at: '2025-06-22T01:33:46Z'
 - name: Brian Casey
   roles:
   - Council Member
   divisions:
   - Position 2
-  - Ward central
+  - Ward Central
   image: https://www.wallawallawa.gov/home/showpublishedimage/8998/638416071725330000
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/b217ba8ffc93e403a4e4cd355fc90cfeac33e82b05bcfcb8245f6141255f8527.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/b217ba8ffc93e403a4e4cd355fc90cfeac33e82b05bcfcb8245f6141255f8527.png
   email: bcasey@wallawallawa.gov
   phone_number:
   website:
@@ -76,15 +78,15 @@
   end_date: '2025-12-31'
   sources:
   - https://www.wallawallawa.gov/government/city-council
-  updated_at: '2025-06-21T21:15:52Z'
+  updated_at: '2025-06-22T01:33:46Z'
 - name: Monte A. Willis
   roles:
   - Council Member
   divisions:
   - Position 4
-  - Ward ea
+  - Ward East
   image: https://www.wallawallawa.gov/home/showpublishedimage/9002/638416073171970000
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/097177d50cc7939f4478a9a38c16ae432fb4201019125edb377c36d62085043a.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/097177d50cc7939f4478a9a38c16ae432fb4201019125edb377c36d62085043a.png
   email: mwillis@wallawallawa.gov
   phone_number:
   website:
@@ -92,15 +94,15 @@
   end_date: '2027-12-31'
   sources:
   - https://www.wallawallawa.gov/government/city-council
-  updated_at: '2025-06-21T21:15:52Z'
+  updated_at: '2025-06-22T01:33:46Z'
 - name: Jeffrey Robinson
   roles:
   - Council Member
   divisions:
   - Position 5
-  - Ward we
+  - Ward West
   image: https://www.wallawallawa.gov/home/showpublishedimage/9004/638416074005770000
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/5050e816ff499b1b969123c0601d9059e8558fbdd1be1ec8e613388caf25b99e.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/walla_walla/images/5050e816ff499b1b969123c0601d9059e8558fbdd1be1ec8e613388caf25b99e.png
   email: jrobinson@wallawallawa.gov
   phone_number:
   website:
@@ -108,4 +110,4 @@
   end_date: '2027-12-31'
   sources:
   - https://www.wallawallawa.gov/government/city-council
-  updated_at: '2025-06-21T21:15:52Z'
+  updated_at: '2025-06-22T01:33:46Z'
