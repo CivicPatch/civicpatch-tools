@@ -68,6 +68,7 @@ government_types:
       - role: commisioner
       - role: council member
         aliases:
+          - council member at-large
           - councilmember
           - councilwoman
           - councilman
