@@ -177,9 +177,12 @@ namespace :pipeline do
     geoid = municipality_context[:municipality_entry]["geoid"]
     state = municipality_context[:state]
 
-    urls_to_keep = municipality_context[:config]["sources"] || []
+    people = Core::PeopleManager.get_people(state, geoid)
+    source_urls = people.flat_map do |person|
+      person["sources"]
+    end.uniq
 
-    Core::CacheManager.clean(state, geoid, urls_to_keep)
+    Core::CacheManager.clean(state, geoid, source_urls)
     Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
   end
 
