@@ -1,0 +1,649 @@
+[
+  {
+    "name": "Ashley Mathews",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated as 'Title: Mayor' directly under the person's name, ensuring high accuracy and direct association. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text explicitly mentions 'City Council' and 'About Councilmember Mathews', strongly implying the role of Council Member, although not explicitly stated as 'Council Member' in a title field. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "South Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 949-7413",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-949-7413",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as 'Phone: 206-949-7413' directly under the person's name, ensuring high accuracy and direct association. ",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+      }
+    ],
+    "emails": [
+      {
+        "data": "amathews@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, and confirmed by a mailto link and plain text version. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "amathews@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's name and role in the text, making extraction highly reliable and unambiguous. ",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/Directory.aspx?EID=338",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked to the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '12/31/2027' is explicitly stated in the 'Term Expires' column for this person and converted to YYYY-MM-DD format. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2027' directly under the person's information, ensuring high accuracy and direct association. ",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=338"
+      }
+    ],
+    "updated_at": "2025-06-22T02:07:05Z"
+  },
+  {
+    "name": "Jon Quitslund",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Deputy Mayor' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Title: Deputy Mayor'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to him as 'Councilmember Quitslund' and states 'I feel well-prepared to serve the people of Bainbridge Island on the City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "South Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 450-6218",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-450-6218",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jquitslund@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, and confirmed by a mailto link and plain text version. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "jquitslund@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=293",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked to the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=293",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current URL is the profile page for Jon Quitslund.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '12/31/2025' is explicitly stated in the 'Term Expires' column for this person and converted to YYYY-MM-DD format. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires December 31, 2025'.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=293"
+      }
+    ],
+    "updated_at": "2025-06-22T02:07:05Z"
+  },
+  {
+    "name": "Kirsten Hytopoulos",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council' and the text states 'The City Council members are elected officers', implying 'Council Member' as their role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as her current title"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as part of her current title"
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as part of her current title"
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 482-4958",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-482-4958",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "emails": [
+      {
+        "data": "khytopoulos@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, and confirmed by a mailto link and plain text version. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "khytopoulos@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=260",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked to the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=260",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This URL is the specific directory page for Kirsten Hytopoulos, serving as her profile.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '12/31/2027' is explicitly stated in the 'Term Expires' column for this person and converted to YYYY-MM-DD format. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as '12/31/2027'",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=260"
+      }
+    ],
+    "updated_at": "2025-06-22T02:07:05Z"
+  },
+  {
+    "name": "Brenda Fantroy-Johnson",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council' and the text states 'The City Council members are elected officers', implying 'Council Member' as their role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated as her title, which is a direct extraction and matches a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "North Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "North Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'North Ward' is explicitly stated as part of her title 'Councilmember, North Ward'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 498-4294",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-498-4294",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided and clearly associated with the person's name and role, directly extracted from the 'Phone:' field.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bfantroy-johnson@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, and confirmed by a mailto link and plain text version. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "bfantroy-johnson@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided and clearly associated with the person's name and role, formatted as a mailto link text, which is a direct extraction.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=274",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked to the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '12/31/2027' is explicitly stated in the 'Term Expires' column for this person and converted to YYYY-MM-DD format. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date '12/31/2027' is explicitly stated under 'Term Expires:' for the person, which is a direct extraction and conversion to YYYY-MM-DD format. The date is in the future, confirming active status for today's date (2025-06-22).",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=274"
+      }
+    ],
+    "updated_at": "2025-06-22T02:07:05Z"
+  },
+  {
+    "name": "Leslie Schneider",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council' and the text states 'The City Council members are elected officers', implying 'Council Member' as their role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Title: Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Central Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "Central Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Central Ward' for her councilmember title."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 200-4502",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-200-4502",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's contact information section. ",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "emails": [
+      {
+        "data": "lschneider@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, and confirmed by a mailto link and plain text version. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "lschneider@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's contact information section. ",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/Directory.aspx?EID=250",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked to the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2018",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'since 2018' for her service on city council.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '12/31/2027' is explicitly stated in the 'Term Expires' column for this person and converted to YYYY-MM-DD format. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term expires 12/31/2027'.",
+        "source": "https://www.bainbridgewa.gov/Directory.aspx?EID=250"
+      }
+    ],
+    "updated_at": "2025-06-22T02:07:05Z"
+  },
+  {
+    "name": "Clarence Moriwaki",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council' and the text states 'The City Council members are elected officers', implying 'Council Member' as their role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' under 'Title:' for Clarence Moriwaki, which is a direct extraction and matches a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Central Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "Central Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Central Ward' in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 491-6131",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-491-6131",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's name and role, which is a direct extraction.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cmoriwaki@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, and confirmed by a mailto link and plain text version. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "cmoriwaki@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's name and role, formatted as a mailto link text, which is a direct extraction.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=296",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked to the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '12/31/2025' is explicitly stated in the 'Term Expires' column for this person and converted to YYYY-MM-DD format. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term end date '12/31/2025' is explicitly stated under 'Term Expires:' for Clarence Moriwaki, which is a direct extraction and conversion to YYYY-MM-DD format as per guidelines. The date is in the future relative to today's date (2025-06-22), confirming active status.",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=296"
+      }
+    ],
+    "updated_at": "2025-06-22T02:07:05Z"
+  },
+  {
+    "name": "Joe Deets",
+    "sources": [
+      "https://bainbridgewa.gov/217/City-Council",
+      "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council' and the text states 'The City Council members are elected officers', implying 'Council Member' as their role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated as his title and is a target municipal role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "North Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "District 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text under 'Ward/District'."
+      },
+      {
+        "data": "North Ward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'North Ward' is explicitly stated as part of his title 'Councilmember, North Ward'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(206) 473-1864",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "206-473-1864",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided and clearly associated with Joe Deets under the 'Phone:' label. ",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jdeets@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, and confirmed by a mailto link and plain text version. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "jdeets@bainbridgewa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided and clearly associated with Joe Deets, formatted as a mailto link text and directly under his contact information section. ",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.bainbridgewa.gov/directory.aspx?EID=229",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked to the person's name.",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '12/31/2025' is explicitly stated in the 'Term Expires' column for this person and converted to YYYY-MM-DD format. ",
+        "source": "https://bainbridgewa.gov/217/City-Council"
+      },
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date '12/31/2025' is explicitly stated under 'Term Expires:' for Joe Deets. ",
+        "source": "https://www.bainbridgewa.gov/directory.aspx?EID=229"
+      }
+    ],
+    "updated_at": "2025-06-22T02:07:05Z"
+  }
+]
