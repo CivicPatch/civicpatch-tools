@@ -29,6 +29,8 @@ namespace :pipeline do
     # If we're not creating a PR, let's copy the people.yml file
     # to the output directoryfor the docker container to copy to the host
     container_output(context) unless create_pr
+
+    Services::GoogleSheets.send_costs if Services::GoogleSheets.enabled?
   end
 
   desc "Fetch city officials from state source"
