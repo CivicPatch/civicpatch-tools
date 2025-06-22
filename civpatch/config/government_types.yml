@@ -8,12 +8,19 @@ divisions:
       - city wide
   ward:
     aliases:
+      - council ward
+      - ward council
   district:
     aliases:
+      - council district
+      - district council
   position:
     aliases:
+      - council position
+      - position council
   seat:
     aliases:
+      - council seat
 #position_examples: &position_examples | # Useful for LLM prompts
 #  * council member ward 3 -> ["council member", "ward 3"]
 #  * ward #3 -> ["ward 3"]
