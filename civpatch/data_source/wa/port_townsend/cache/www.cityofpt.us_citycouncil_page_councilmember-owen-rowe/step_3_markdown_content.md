@@ -6,7 +6,7 @@ Navigation
 
 [![Home](https://cityofpt.us/sites/all/themes/aha_compass/logo.png)  
 \
-Starter Site State](https://www.cityofpt.us)
+Starter Site State](https://www.cityofpt.us "Home")
 
 - Government
   
@@ -311,11 +311,11 @@ Owen’s work on Council focuses on supporting and strengthening our cultural an
 
 ![Owen Rowe](https://cityofpt.us/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2101/owen_rowe_for_website_2022.jpg?itok=dfrSPVg5) [Owen Rowe](https://www.cityofpt.us/directory-listing/owen-rowe) Position #4 01/2024 to 12/2027 (360) 379-2980 [orowe@cityofpt.us](mailto:orowe@cityofpt.us)
 
-- ![Printer-friendly version](https://cityofpt.us/sites/all/modules/print/icons/print_icon.png)
+- ![Printer-friendly version](https://cityofpt.us/sites/all/modules/print/icons/print_icon.png "Printer-friendly version")
 
 <!--THE END-->
 
-- [City Council Home](https://www.cityofpt.us/citycouncil)
+- [City Council Home](https://www.cityofpt.us/citycouncil "City Council Home")
 - [Meeting Calendar](https://www.cityofpt.us/calendar/month?field_microsite_tid=27 "City Meetings Calendar")
 - [Agendas, Minutes, Videos](https://www.cityofpt.us/citycouncil/page/agendasminutesvideos)
 - [Minutes (Archive)](https://weblink.cityofpt.us/WebLink/Browse.aspx?id=12&dbid=0&repo=PTDocuments "Archive of past City Council Meeting Minutes")

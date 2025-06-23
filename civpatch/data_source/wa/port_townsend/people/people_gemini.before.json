@@ -3,29 +3,29 @@
     "name": "David Faber",
     "roles": [
       "Mayor",
-      "mayor",
       "Council Member"
     ],
     "divisions": [
-      "Position #7",
       "Position 7"
     ],
     "image": null,
     "phone_number": "(360) 379-2980",
     "email": "dfaber@cityofpt.us",
-    "website": "https://www.cityofpt.us/directory-listing/david-faber",
+    "website": "https://cityofpt.us/citycouncil/page/mayor-david-faber",
     "start_date": "2024-01",
     "end_date": "2027-12",
     "sources": [
-      "https://www.cityofpt.us/contact.html",
-      "https://www.cityofpt.us/directory-listing/david-faber",
-      "https://www.cityofpt.us/directory-listing/neil-nelson",
-      "https://www.cityofpt.us/directory-listing/owen-rowe",
       "https://www.cityofpt.us/council",
-      "https://cityofpt.us/citycouncil/page/mayor-david-faber",
-      "https://www.cityofpt.us/citycouncil/page/mayor-david-faber"
+      "https://www.cityofpt.us/citycouncil/page/mayor-david-faber",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-neil-nelson",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-ben-thomas",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-libby-urner-wennstrom",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-monica-mickhager",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-owen-rowe",
+      "https://www.cityofpt.us/directory-listing/david-faber",
+      "https://cityofpt.us/citycouncil/page/mayor-david-faber"
     ],
-    "updated_at": "2025-06-23T01:15:34Z"
+    "updated_at": "2025-06-23T03:14:16Z"
   },
   {
     "name": "Amy Howard",
@@ -33,140 +33,131 @@
       "Deputy Mayor"
     ],
     "divisions": [
-      "Position #6"
+      "Position #6",
+      "Position 6"
     ],
     "image": null,
     "phone_number": "(360) 379-2980",
     "email": "ahoward@cityofpt.us",
-    "website": "https://www.cityofpt.us/directory-listing/amy-howard",
+    "website": "https://www.cityofpt.us/citycouncil/page/deputy-mayor-amy-howard",
     "start_date": "2024-01",
     "end_date": "2027-12",
     "sources": [
-      "https://www.cityofpt.us/contact.html",
-      "https://www.cityofpt.us/directory-listing/amy-howard",
       "https://www.cityofpt.us/council",
-      "https://www.cityofpt.us/citycouncil/page/deputy-mayor-amy-howard"
+      "https://www.cityofpt.us/citycouncil/page/deputy-mayor-amy-howard",
+      "https://www.cityofpt.us/directory-listing/amy-howard"
     ],
-    "updated_at": "2025-06-23T01:15:34Z"
+    "updated_at": "2025-06-23T03:14:16Z"
   },
   {
     "name": "Neil Nelson",
     "roles": [
+      "Councilmember",
       "Council Member",
       "Council member"
     ],
     "divisions": [
-      "Position #2",
       "Position 2"
     ],
     "image": null,
-    "phone_number": "(360)379-2980",
-    "email": "nnelson@cityofpt.us",
-    "website": "https://www.cityofpt.us/directory-listing/neil-nelson",
+    "phone_number": "(360) 379-2980",
+    "email": "citycouncil@cityofpt.us",
+    "website": "https://www.cityofpt.us/citycouncil/page/councilmember-neil-nelson",
     "start_date": "2024-08",
     "end_date": "2025-12",
     "sources": [
-      "https://www.cityofpt.us/contact.html",
-      "https://www.cityofpt.us/directory-listing/neil-nelson",
       "https://www.cityofpt.us/council",
-      "https://www.cityofpt.us/citycouncil/page/councilmember-neil-nelson"
+      "https://www.cityofpt.us/citycouncil/page/mayor-david-faber",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-neil-nelson",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-ben-thomas",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-libby-urner-wennstrom",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-monica-mickhager",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-owen-rowe"
     ],
-    "updated_at": "2025-06-23T01:15:34Z"
+    "updated_at": "2025-06-23T03:14:16Z"
   },
   {
     "name": "Ben Thomas",
     "roles": [
-      "council member",
-      "Council Member"
+      "Councilmember"
     ],
     "divisions": [
-      "Position #1",
       "Position 1"
     ],
     "image": null,
     "phone_number": "(360) 379-2980",
-    "email": "bthomas@cityofpt.us",
-    "website": "https://www.cityofpt.us/directory-listing/ben-thomas",
+    "email": "citycouncil@cityofpt.us",
+    "website": "https://www.cityofpt.us/citycouncil/page/councilmember-ben-thomas",
     "start_date": "2022-01",
     "end_date": "2025-12",
     "sources": [
-      "https://www.cityofpt.us/contact.html",
-      "https://www.cityofpt.us/directory-listing/ben-thomas",
       "https://www.cityofpt.us/council",
       "https://www.cityofpt.us/citycouncil/page/councilmember-ben-thomas"
     ],
-    "updated_at": "2025-06-23T01:15:34Z"
-  },
-  {
-    "name": "Monica MickHager",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      "Position #3",
-      "Position 3"
-    ],
-    "image": null,
-    "phone_number": "(360) 379-2980",
-    "email": "mmickhager@cityofpt.us",
-    "website": "https://www.cityofpt.us/directory-listing/monica-mickhager",
-    "start_date": "2020-01",
-    "end_date": "2027-12",
-    "sources": [
-      "https://www.cityofpt.us/contact.html",
-      "https://www.cityofpt.us/directory-listing/monica-mickhager",
-      "https://www.cityofpt.us/council",
-      "https://www.cityofpt.us/citycouncil/page/councilmember-monica-mickhager"
-    ],
-    "updated_at": "2025-06-23T01:15:34Z"
-  },
-  {
-    "name": "Owen Rowe",
-    "roles": [
-      "council member",
-      "Council Member",
-      "Council member"
-    ],
-    "divisions": [
-      "Position #4",
-      "Position 4"
-    ],
-    "image": null,
-    "phone_number": "(360) 379-2980",
-    "email": "orowe@cityofpt.us",
-    "website": "https://www.cityofpt.us/directory-listing/owen-rowe",
-    "start_date": "2024-01",
-    "end_date": "2027-12",
-    "sources": [
-      "https://www.cityofpt.us/contact.html",
-      "https://www.cityofpt.us/directory-listing/owen-rowe",
-      "https://www.cityofpt.us/council",
-      "https://www.cityofpt.us/citycouncil/page/councilmember-owen-rowe"
-    ],
-    "updated_at": "2025-06-23T01:15:34Z"
+    "updated_at": "2025-06-23T03:14:16Z"
   },
   {
     "name": "Libby Urner Wennstrom",
     "roles": [
-      "Council Member",
-      "Council member"
+      "Councilmember",
+      "Council Member"
     ],
     "divisions": [
-      "Position #5",
       "Position 5"
     ],
     "image": null,
     "phone_number": "(360) 379-2980",
-    "email": "lwennstrom@cityofpt.us",
-    "website": "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom",
+    "email": "citycouncil@cityofpt.us",
+    "website": "https://www.cityofpt.us/citycouncil/page/councilmember-libby-urner-wennstrom",
     "start_date": "2022-01",
     "end_date": "2025-12",
     "sources": [
-      "https://www.cityofpt.us/contact.html",
-      "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom",
       "https://www.cityofpt.us/council",
       "https://www.cityofpt.us/citycouncil/page/councilmember-libby-urner-wennstrom"
     ],
-    "updated_at": "2025-06-23T01:15:34Z"
+    "updated_at": "2025-06-23T03:14:16Z"
+  },
+  {
+    "name": "Monica MickHager",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "Position 3"
+    ],
+    "image": null,
+    "phone_number": "(360) 379-2980",
+    "email": "citycouncil@cityofpt.us",
+    "website": "https://www.cityofpt.us/citycouncil/page/councilmember-monica-mickhager",
+    "start_date": "2020-01",
+    "end_date": "2027-12",
+    "sources": [
+      "https://www.cityofpt.us/council",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-monica-mickhager"
+    ],
+    "updated_at": "2025-06-23T03:14:16Z"
+  },
+  {
+    "name": "Owen Rowe",
+    "roles": [
+      "Councilmember",
+      "council member"
+    ],
+    "divisions": [
+      "Position 4",
+      "Position #4"
+    ],
+    "image": null,
+    "phone_number": "(360) 379-2980",
+    "email": "orowe@cityofpt.us",
+    "website": "https://www.cityofpt.us/citycouncil/page/councilmember-owen-rowe",
+    "start_date": "2024-01",
+    "end_date": "2027-12",
+    "sources": [
+      "https://www.cityofpt.us/council",
+      "https://www.cityofpt.us/citycouncil/page/councilmember-owen-rowe",
+      "https://www.cityofpt.us/directory-listing/owen-rowe"
+    ],
+    "updated_at": "2025-06-23T03:14:16Z"
   }
 ]
