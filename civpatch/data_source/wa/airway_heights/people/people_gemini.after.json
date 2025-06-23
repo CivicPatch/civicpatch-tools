@@ -17,7 +17,7 @@
       "https://cawh.org/city-council-members",
       "https://cawh.org/city-council-members/councilmember-hank-bynaker"
     ],
-    "updated_at": "2025-06-23T00:59:26Z"
+    "updated_at": "2025-06-23T01:27:38Z"
   },
   {
     "name": "Jesse Camacho",
@@ -36,7 +36,7 @@
     "sources": [
       "https://cawh.org/city-council-members"
     ],
-    "updated_at": "2025-06-23T00:59:26Z"
+    "updated_at": "2025-06-23T01:27:38Z"
   },
   {
     "name": "William Campbell",
@@ -55,7 +55,7 @@
     "sources": [
       "https://cawh.org/city-council-members"
     ],
-    "updated_at": "2025-06-23T00:59:26Z"
+    "updated_at": "2025-06-23T01:27:38Z"
   },
   {
     "name": "Dave Malet",
@@ -75,11 +75,12 @@
       "https://cawh.org/city-council-members",
       "https://cawh.org/city-council-members/councilmember-dave-malet"
     ],
-    "updated_at": "2025-06-23T00:59:26Z"
+    "updated_at": "2025-06-23T01:27:38Z"
   },
   {
     "name": "Larry Bowman",
     "roles": [
+      "Chair",
       "Council Member"
     ],
     "divisions": [
@@ -95,7 +96,7 @@
       "https://cawh.org/city-council-members",
       "https://cawh.org/city-council-members/council-chair-larry-bowman"
     ],
-    "updated_at": "2025-06-23T00:59:26Z"
+    "updated_at": "2025-06-23T01:27:38Z"
   },
   {
     "name": "Davin Perry",
@@ -115,7 +116,7 @@
       "https://cawh.org/city-council-members",
       "https://cawh.org/city-council-members/councilmember-davin-perry"
     ],
-    "updated_at": "2025-06-23T00:59:26Z"
+    "updated_at": "2025-06-23T01:27:38Z"
   },
   {
     "name": "Jennifer Morton",
@@ -135,6 +136,6 @@
       "https://cawh.org/city-council-members",
       "https://cawh.org/city-council-members/councilmember-jennifer-morton"
     ],
-    "updated_at": "2025-06-23T00:59:26Z"
+    "updated_at": "2025-06-23T01:27:38Z"
   }
 ]
