@@ -73,6 +73,9 @@ module Core
         # Remove quotation marks and parentheses
         division_identifier_to_find = division_identifier_to_find.gsub(/["“”‘’()]/, "").strip
 
+        # Remove "#" ONLY if followed by a number
+        division_identifier_to_find = division_identifier_to_find.gsub(/#\s*(?=\d)/i, "").strip
+
         # Remove prefixes like "no.", "number", etc., ONLY if followed by a number
         division_identifier_to_find = division_identifier_to_find.gsub(/\b(no\.?\s*|number\s*)(?=\d)/i, "").strip
 
