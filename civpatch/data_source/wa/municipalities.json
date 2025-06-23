@@ -1994,10 +1994,12 @@
       "type": "city",
       "population": 8153,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "3422383c94f6e8862ed04887f48be480",
+      "meta_updated_at": "2025-06-23T04:29:49Z",
+      "meta_hash": "a5d89ec66ebd91330caa1a441352dbf4",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "5363280"
     },
