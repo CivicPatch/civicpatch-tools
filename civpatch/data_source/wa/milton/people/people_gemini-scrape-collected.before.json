@@ -1,0 +1,413 @@
+[
+  {
+    "name": "Shanna Styron Sherrell",
+    "sources": [
+      "https://www.cityofmilton.net/286/Mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Shanna Styron Sherrell was elected Mayor of Milton in 2017' and refers to her as 'Mayor' multiple times."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "253-922-8733 ext. 2705",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is clearly associated with Shanna Styron Sherrell under the 'Contact Us' section for the Mayor.",
+        "source": "https://www.cityofmilton.net/286/Mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states she was elected in 2017 and re-elected in 2021, and today's date is 2025-06-23, making the 2021 election the most recent start date.",
+        "source": "https://www.cityofmilton.net/286/Mayor"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-23T04:26:44Z"
+  },
+  {
+    "name": "Steve Whitaker",
+    "sources": [
+      "https://www.cityofmilton.net/199/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Position 1' and being listed under 'Members' of the City Council, which is the main governing body. 'Council member' is a target role."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem 2025' and 'mayor pro tempore' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 1'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are 'elected at-large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "swhitaker@cityofmilton.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked to the person's name in the text via mailto link.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'. This is the most recent start date for the current term, overriding 'In office since 2017'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-23T04:26:44Z"
+  },
+  {
+    "name": "Dave Strader",
+    "sources": [
+      "https://www.cityofmilton.net/199/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Position 5' and being listed under 'Members' of the City Council, which is the main governing body. 'Council member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 5'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are 'elected at-large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dstrader@cityofmilton.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked to the person's name in the text via mailto link.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'. This is the most recent start date for the current term, overriding 'In office since 2022'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-23T04:26:44Z"
+  },
+  {
+    "name": "Bruce White",
+    "sources": [
+      "https://www.cityofmilton.net/199/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Position 2' and being listed under 'Members' of the City Council, which is the main governing body. 'Council member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 2'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are 'elected at-large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bwhite@cityofmilton.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked to the person's name in the text via mailto link.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'. This is the most recent start date for the current term, overriding 'In office since 2022'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-23T04:26:44Z"
+  },
+  {
+    "name": "Frances Hall",
+    "sources": [
+      "https://www.cityofmilton.net/199/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Position 6' and being listed under 'Members' of the City Council, which is the main governing body. 'Council member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 6'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are 'elected at-large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "fhall@cityofmilton.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked to the person's name in the text via mailto link.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2024 to 2027'. This is the most recent start date for the current term, overriding 'In office since 2022'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2024 to 2027'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-23T04:26:44Z"
+  },
+  {
+    "name": "Steve Peretti",
+    "sources": [
+      "https://www.cityofmilton.net/199/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Position 3' and being listed under 'Members' of the City Council, which is the main governing body. 'Council member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 3'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are 'elected at-large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "stevep@cityofmilton.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked to the person's name in the text via mailto link.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'. This is the most recent start date for the current term, overriding 'In office since 2020'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2022 to 2025'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-23T04:26:44Z"
+  },
+  {
+    "name": "Robert Whalen",
+    "sources": [
+      "https://www.cityofmilton.net/199/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Position 7' and being listed under 'Members' of the City Council, which is the main governing body. 'Council member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 7'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are 'elected at-large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rwhalen@cityofmilton.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked to the person's name in the text via mailto link.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2024 to 2027'. This is the most recent start date for the current term, overriding 'In office since 2003'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2024 to 2027'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-23T04:26:44Z"
+  },
+  {
+    "name": "Tim Ceder",
+    "sources": [
+      "https://www.cityofmilton.net/199/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Council Position 4' and being listed under 'Members' of the City Council, which is the main governing body. 'Council member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 4'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are 'elected at-large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tceder@cityofmilton.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked to the person's name in the text via mailto link.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2024 to 2027'. This is the most recent start date for the current term, overriding 'In office since 2021'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current Term: 2024 to 2027'.",
+        "source": "https://www.cityofmilton.net/199/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-23T04:26:44Z"
+  }
+]
