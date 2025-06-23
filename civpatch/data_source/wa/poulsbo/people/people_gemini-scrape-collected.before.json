@@ -1,0 +1,716 @@
+[
+  {
+    "name": "Becky Erickson",
+    "sources": [
+      "https://cityofpoulsbo.com/meet-your-mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states she was elected to the position of Mayor in 2010 and is currently serving. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The phone number is explicitly listed next to her name and title. ",
+        "source": "https://cityofpoulsbo.com/meet-your-mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/meet-your-mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is directly associated with the 'Meet Your Mayor' section and her profile. ",
+        "source": "https://cityofpoulsbo.com/meet-your-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2010",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states she was elected to the position of Mayor in 2010. ",
+        "source": "https://cityofpoulsbo.com/meet-your-mayor"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-23T01:02:27Z"
+  },
+  {
+    "name": "Pam Crowe",
+    "sources": [
+      "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/pam-crowe",
+      "https://cityofpoulsbo.com/doug-taber"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'Meet the Council' and the text states 'All seven councilmembers represent the whole city'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated under 'Elected Experience' for Pam Crowe."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'Meet the Council' which implies a Council Member role, but not explicitly stated next to their name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council positions are not defined by geographical areas (districts). All seven councilmembers represent the whole city.', indicating an at-large division."
+      },
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position No. 2' is explicitly stated on the page for Pam Crowe."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as the general contact for the City Council.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmembers@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as the contact for all City Council members.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "pcrowe@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link for Pam Crowe.",
+        "source": "https://cityofpoulsbo.com/pam-crowe"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/pam-crowe",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided under 'Meet the Council'.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/pam-crowe",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL for Pam Crowe's profile page is explicitly provided in the navigation and as the current page's URL.",
+        "source": "https://cityofpoulsbo.com/pam-crowe"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/pam-crowe",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A link to their specific profile page is provided.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start year '2024' is explicitly stated under 'Elected Experience' for Pam Crowe.",
+        "source": "https://cityofpoulsbo.com/pam-crowe"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The expiration date '12.31.2027' is explicitly stated for Pam Crowe's position.",
+        "source": "https://cityofpoulsbo.com/pam-crowe"
+      }
+    ],
+    "updated_at": "2025-06-23T01:02:27Z"
+  },
+  {
+    "name": "Doug Newell",
+    "sources": [
+      "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/doug-newell",
+      "https://cityofpoulsbo.com/doug-taber"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'Meet the Council' and the text states 'All seven councilmembers represent the whole city'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated under 'Elected Experience' and is current."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'Meet the Council' which implies a Council Member role, but not explicitly stated next to their name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council positions are not defined by geographical areas (districts). All seven councilmembers represent the whole city.', indicating an at-large division."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position No. 4' is explicitly stated."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as the general contact for the City Council.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmembers@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as the contact for all City Council members.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "dnewell@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided next to 'Email'.",
+        "source": "https://cityofpoulsbo.com/doug-newell"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/doug-newell",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided under 'Meet the Council'.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/doug-newell",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
+        "source": "https://cityofpoulsbo.com/doug-newell"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/doug-newell",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A link to their specific profile page is provided.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start year '2024' is explicitly stated as '2024-Current' under 'Elected Experience'.",
+        "source": "https://cityofpoulsbo.com/doug-newell"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The expiration date '12.31.2027' is explicitly stated.",
+        "source": "https://cityofpoulsbo.com/doug-newell"
+      }
+    ],
+    "updated_at": "2025-06-23T01:02:27Z"
+  },
+  {
+    "name": "Gary McVey",
+    "sources": [
+      "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/gary-mcvey",
+      "https://cityofpoulsbo.com/doug-taber"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'Meet the Council' and the text states 'All seven councilmembers represent the whole city'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'Meet the Council' which implies a Council Member role, but not explicitly stated next to their name."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council positions are not defined by geographical areas (districts). All seven councilmembers represent the whole city.', indicating an at-large division."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 7'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as the general contact for the City Council.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmembers@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as the contact for all City Council members.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "gmcvey@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://cityofpoulsbo.com/gary-mcvey"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/gary-mcvey",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided under 'Meet the Council'.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/gary-mcvey",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is the dedicated profile page for Gary McVey.",
+        "source": "https://cityofpoulsbo.com/gary-mcvey"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/gary-mcvey",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A link to their specific profile page is provided.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start year '2020' is explicitly stated in 'Council Member – City of Poulsbo (2020-Current)'.",
+        "source": "https://cityofpoulsbo.com/gary-mcvey"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Expiration date '12.31.2025' is explicitly stated.",
+        "source": "https://cityofpoulsbo.com/gary-mcvey"
+      }
+    ],
+    "updated_at": "2025-06-23T01:02:27Z"
+  },
+  {
+    "name": "Doug Taber",
+    "sources": [
+      "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/doug-taber"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'Meet the Council' and the text states 'All seven councilmembers represent the whole city'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' and 'City Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council positions are not defined by geographical areas (districts). All seven councilmembers represent the whole city.', indicating an at-large division."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 6'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as the general contact for the City Council.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmembers@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as the contact for all City Council members.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "dtaber@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/doug-taber",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided under 'Meet the Council'.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/doug-taber",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is the person's profile page.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-04-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'started my service on the Poulsbo City Council on April 3 2024'.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Expiration date '12.31.2025' is explicitly stated.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      }
+    ],
+    "updated_at": "2025-06-23T01:02:27Z"
+  },
+  {
+    "name": "Britt Livdahl",
+    "sources": [
+      "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/doug-taber",
+      "https://cityofpoulsbo.com/britt-livdahl"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'Meet the Council' and the text states 'All seven councilmembers represent the whole city'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'Meet the Council' which implies a Council Member role, but not explicitly stated next to their name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Elected Experience' as 'Council Member – City of Poulsbo'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council positions are not defined by geographical areas (districts). All seven councilmembers represent the whole city.', indicating an at-large division."
+      },
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 3' directly under her name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as the general contact for the City Council.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmembers@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as the contact for all City Council members.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "blivdahl@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to her name and expiration date.",
+        "source": "https://cityofpoulsbo.com/britt-livdahl"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/britt-livdahl",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided under 'Meet the Council'.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/britt-livdahl",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A link to their specific profile page is provided.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/britt-livdahl",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is her profile page.",
+        "source": "https://cityofpoulsbo.com/britt-livdahl"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Elected Experience' as 'Council Member – City of Poulsbo (2020-Current)'.",
+        "source": "https://cityofpoulsbo.com/britt-livdahl"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Expiration date '12.31.2027' is explicitly stated directly under her name and position.",
+        "source": "https://cityofpoulsbo.com/britt-livdahl"
+      }
+    ],
+    "updated_at": "2025-06-23T01:02:27Z"
+  },
+  {
+    "name": "Ed Stern",
+    "sources": [
+      "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/doug-taber",
+      "https://cityofpoulsbo.com/ed-stern"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'Meet the Council' and the text states 'All seven councilmembers represent the whole city'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'Meet the Council' which implies a Council Member role, but not explicitly stated next to their name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member – City of Poulsbo (1998-Current)' and confirmed by 'serving my seventh consecutive term on the Poulsbo City Council'."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Deputy Mayor – City of Poulsbo (2024 – Current)' and confirmed by 'In January 2024 I was elected unanimously to be Deputy Mayor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council positions are not defined by geographical areas (districts). All seven councilmembers represent the whole city.', indicating an at-large division."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position No. 5' is explicitly stated next to the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as the general contact for the City Council.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmembers@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as the contact for all City Council members.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "estern@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link.",
+        "source": "https://cityofpoulsbo.com/ed-stern"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/ed-stern",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided under 'Meet the Council'.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/ed-stern",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A link to their specific profile page is provided.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/ed-stern",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is dedicated to Ed Stern, serving as his profile page.",
+        "source": "https://cityofpoulsbo.com/ed-stern"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The most recent election date for a current target role is 'January 2024' for Deputy Mayor.",
+        "source": "https://cityofpoulsbo.com/ed-stern"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The expiration date '12.31.2025' is explicitly stated.",
+        "source": "https://cityofpoulsbo.com/ed-stern"
+      }
+    ],
+    "updated_at": "2025-06-23T01:02:27Z"
+  },
+  {
+    "name": "Rick Eckert",
+    "sources": [
+      "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/doug-taber",
+      "https://cityofpoulsbo.com/rick-eckert"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under 'Meet the Council' and the text states 'All seven councilmembers represent the whole city'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'Meet the Council' which implies a Council Member role, but not explicitly stated next to their name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Elected Experience' as 'Council Member – City of Poulsbo (2024-Current)'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council positions are not defined by geographical areas (districts). All seven councilmembers represent the whole city.', indicating an at-large division."
+      },
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 1' directly under his name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 779-3901",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided as the general contact for the City Council.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmembers@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as the contact for all City Council members.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "reckert@cityofpoulsbo.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://cityofpoulsbo.com/rick-eckert"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://cityofpoulsbo.com/rick-eckert",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided under 'Meet the Council'.",
+        "source": "https://cityofpoulsbo.com/poulsbo-city-council"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/rick-eckert",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A link to their specific profile page is provided.",
+        "source": "https://cityofpoulsbo.com/doug-taber"
+      },
+      {
+        "data": "https://cityofpoulsbo.com/rick-eckert",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
+        "source": "https://cityofpoulsbo.com/rick-eckert"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start year '2024' is explicitly stated under 'Elected Experience'.",
+        "source": "https://cityofpoulsbo.com/rick-eckert"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Expiration date '12.31.2027' is explicitly stated.",
+        "source": "https://cityofpoulsbo.com/rick-eckert"
+      }
+    ],
+    "updated_at": "2025-06-23T01:02:27Z"
+  }
+]
