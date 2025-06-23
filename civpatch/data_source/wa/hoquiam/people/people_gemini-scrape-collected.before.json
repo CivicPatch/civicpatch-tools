@@ -17,7 +17,7 @@
       {
         "data": "(360) 538-3971",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly stated next to the address for the Mayor's office, directly associated with Ben Winkelman. ",
+        "llm_confidence_reason": "Phone number is explicitly stated and directly associated with the Mayor's Office, which is linked to Ben Winkelman. ",
         "source": "https://www.cityofhoquiam.com/page/mayors-office"
       }
     ],
@@ -25,14 +25,14 @@
       {
         "data": "bwinkelman@cityofhoquiam.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated and linked in the text for Ben Winkelman, ensuring high accuracy and direct association with the individual and the 'Email Mayor' label confirms its purpose for contacting the mayor directly. ",
+        "llm_confidence_reason": "Email address is explicitly stated in the text and linked to the person's name and role, indicating high accuracy and direct association with the individual's contact information for their official capacity. The email is also repeated in the 'contact me via email' link, reinforcing its validity and direct association with Ben Winkelman. ",
         "source": "https://www.cityofhoquiam.com/page/mayors-office"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Brandon Pauley",
@@ -43,24 +43,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Brandon Pauley under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward One",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-209-4305",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Brandon Pauley.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "bpauley@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Mary Thornton",
@@ -71,24 +84,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Mary Thornton under the Hoquiam City Council section and associates her with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward One",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-593-4153",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Mary Thornton.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "mthornton@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Steven Puvogel",
@@ -99,24 +125,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Steven Puvogel under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Two",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-580-5585",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Steven Puvogel.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "spuvogel@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Dave Smith",
@@ -127,24 +166,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Dave Smith under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Two",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "206-799-9328",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Dave Smith.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "dsmith@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Richard Brooks Jr.",
@@ -155,24 +207,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Richard Brooks Jr. under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Three",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "253-217-5818",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Richard Brooks Jr..",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "rbrooks@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Bill Nelson",
@@ -183,24 +248,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Bill Nelson under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Three",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-589-4940",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Bill Nelson.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "bnelson@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Greg Larsen",
@@ -211,24 +289,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Greg Larsen under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Four",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-533-8083",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Greg Larsen.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "glarsen@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Rob Gillis",
@@ -239,24 +330,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Rob Gillis under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Four",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-970-2036",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Rob Gillis.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "rgillis@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Denise Anderson",
@@ -267,24 +371,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Denise Anderson under the Hoquiam City Council section and associates her with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Five",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-537-4765",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Denise Anderson.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "danderson@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Brenda Carlstrom",
@@ -295,24 +412,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Brenda Carlstrom under the Hoquiam City Council section and associates her with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Five",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-310-3330",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Brenda Carlstrom.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "bcarlstrom@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Elizabeth Reid",
@@ -323,24 +453,37 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Elizabeth Reid under the Hoquiam City Council section and associates her with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Six",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-490-6907",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Elizabeth Reid.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "ereid@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Dave Hinchen",
@@ -351,23 +494,36 @@
     "roles": [
       {
         "data": "council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text lists Dave Hinchen under the Hoquiam City Council section and associates him with a ward, implying a council member role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to these individuals as 'Hoquiam City Councilmembers'."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward Six",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "360-590-1136",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is clearly associated with Dave Hinchen.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
         "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "dhinchen@cityofhoquiam.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link next to the name.",
+        "source": "https://www.cityofhoquiam.com/page/hoquiam-city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   }
 ]

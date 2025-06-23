@@ -14,210 +14,234 @@
     "sources": [
       "https://www.cityofhoquiam.com/page/mayors-office"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Brandon Pauley",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 1"
+    ],
     "image": null,
     "phone_number": "(360) 209-4305",
-    "email": null,
+    "email": "bpauley@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Mary Thornton",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 1"
+    ],
     "image": null,
     "phone_number": "(360) 593-4153",
-    "email": null,
+    "email": "mthornton@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Steven Puvogel",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 2"
+    ],
     "image": null,
     "phone_number": "(360) 580-5585",
-    "email": null,
+    "email": "spuvogel@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Dave Smith",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 2"
+    ],
     "image": null,
     "phone_number": "(206) 799-9328",
-    "email": null,
+    "email": "dsmith@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Richard Brooks Jr.",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 3"
+    ],
     "image": null,
     "phone_number": "(253) 217-5818",
-    "email": null,
+    "email": "rbrooks@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Bill Nelson",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 3"
+    ],
     "image": null,
     "phone_number": "(360) 589-4940",
-    "email": null,
+    "email": "bnelson@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Greg Larsen",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 4"
+    ],
     "image": null,
     "phone_number": "(360) 533-8083",
-    "email": null,
+    "email": "glarsen@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Rob Gillis",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 4"
+    ],
     "image": null,
     "phone_number": "(360) 970-2036",
-    "email": null,
+    "email": "rgillis@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Denise Anderson",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 5"
+    ],
     "image": null,
     "phone_number": "(360) 537-4765",
-    "email": null,
+    "email": "danderson@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Brenda Carlstrom",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 5"
+    ],
     "image": null,
     "phone_number": "(360) 310-3330",
-    "email": null,
+    "email": "bcarlstrom@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Elizabeth Reid",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 6"
+    ],
     "image": null,
     "phone_number": "(360) 490-6907",
-    "email": null,
+    "email": "ereid@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   },
   {
     "name": "Dave Hinchen",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 6"
+    ],
     "image": null,
     "phone_number": "(360) 590-1136",
-    "email": null,
+    "email": "dhinchen@cityofhoquiam.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.cityofhoquiam.com/page/hoquiam-city-council"
     ],
-    "updated_at": "2025-06-23T04:25:54Z"
+    "updated_at": "2025-06-23T04:47:37Z"
   }
 ]
