@@ -1,0 +1,352 @@
+[
+  {
+    "name": "Hank Bynaker",
+    "sources": [
+      "https://cawh.org/city-council-members",
+      "https://cawh.org/city-council-members/councilmember-hank-bynaker"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilmember Hank Bynaker'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 1' is explicitly stated next to the person's name."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-hank-bynaker",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://cawh.org/city-council-members"
+      },
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-hank-bynaker",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with 'Councilmember Hank Bynaker' at the top of his dedicated section.",
+        "source": "https://cawh.org/city-council-members/councilmember-hank-bynaker"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for this person's term, and converted to YYYY-MM-DD format accurately. The term is active as of today's date (2025-06-23).",
+        "source": "https://cawh.org/city-council-members"
+      }
+    ],
+    "updated_at": "2025-06-23T00:59:26Z"
+  },
+  {
+    "name": "Jesse Camacho",
+    "sources": [
+      "https://cawh.org/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council Members' with a 'Position' and 'Term expires' date, strongly implying the role of Councilmember, although not explicitly stated as 'Councilmember Jesse Camacho'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 2' is explicitly stated next to the person's name."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for this person's term, and converted to YYYY-MM-DD format accurately. The term is active as of today's date (2025-06-23).",
+        "source": "https://cawh.org/city-council-members"
+      }
+    ],
+    "updated_at": "2025-06-23T00:59:26Z"
+  },
+  {
+    "name": "William Campbell",
+    "sources": [
+      "https://cawh.org/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council Members' with a 'Position' and 'Term expires' date, strongly implying the role of Councilmember, although not explicitly stated as 'Councilmember William Campbell'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 3' is explicitly stated next to the person's name."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated for this person's term, and converted to YYYY-MM-DD format accurately. The term is active as of today's date (2025-06-23).",
+        "source": "https://cawh.org/city-council-members"
+      }
+    ],
+    "updated_at": "2025-06-23T00:59:26Z"
+  },
+  {
+    "name": "Dave Malet",
+    "sources": [
+      "https://cawh.org/city-council-members",
+      "https://cawh.org/city-council-members/councilmember-dave-malet"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Dave Malet'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 4' is explicitly stated next to the person's name."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-dave-malet",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://cawh.org/city-council-members"
+      },
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-dave-malet",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with 'councilmember-dave-malet' and appears to be his profile page.",
+        "source": "https://cawh.org/city-council-members/councilmember-dave-malet"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for this person's term, and converted to YYYY-MM-DD format accurately. The term is active as of today's date (2025-06-23).",
+        "source": "https://cawh.org/city-council-members"
+      }
+    ],
+    "updated_at": "2025-06-23T00:59:26Z"
+  },
+  {
+    "name": "Larry Bowman",
+    "sources": [
+      "https://cawh.org/city-council-members",
+      "https://cawh.org/city-council-members/council-chair-larry-bowman"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Chair' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Council Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Chair' and 'served as Council Chair since 2022', indicating a current role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'decided to run for City Council and was elected in November of 2015', indicating a current role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 5' is explicitly stated next to the person's name."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cawh.org/city-council-members/council-chair-larry-bowman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://cawh.org/city-council-members"
+      },
+      {
+        "data": "https://cawh.org/city-council-members/council-chair-larry-bowman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a direct profile page for Larry Bowman.",
+        "source": "https://cawh.org/city-council-members/council-chair-larry-bowman"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2015-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected in November of 2015' for his City Council role, which is his primary and earliest current role.",
+        "source": "https://cawh.org/city-council-members/council-chair-larry-bowman"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated for this person's term, and converted to YYYY-MM-DD format accurately. The term is active as of today's date (2025-06-23).",
+        "source": "https://cawh.org/city-council-members"
+      }
+    ],
+    "updated_at": "2025-06-23T00:59:26Z"
+  },
+  {
+    "name": "Davin Perry",
+    "sources": [
+      "https://cawh.org/city-council-members",
+      "https://cawh.org/city-council-members/councilmember-davin-perry"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Davin Perry' and 'City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 6' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'position #6'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-davin-perry",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://cawh.org/city-council-members"
+      },
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-davin-perry",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a direct profile page for Davin Perry.",
+        "source": "https://cawh.org/city-council-members/councilmember-davin-perry"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for this person's term, and converted to YYYY-MM-DD format accurately. The term is active as of today's date (2025-06-23).",
+        "source": "https://cawh.org/city-council-members"
+      }
+    ],
+    "updated_at": "2025-06-23T00:59:26Z"
+  },
+  {
+    "name": "Jennifer Morton",
+    "sources": [
+      "https://cawh.org/city-council-members",
+      "https://cawh.org/city-council-members/councilmember-jennifer-morton"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jennifer Morton'"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 7' is explicitly stated next to the person's name."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-jennifer-morton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://cawh.org/city-council-members"
+      },
+      {
+        "data": "https://cawh.org/city-council-members/councilmember-jennifer-morton",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is directly associated with her name and profile.",
+        "source": "https://cawh.org/city-council-members/councilmember-jennifer-morton"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated for this person's term, and converted to YYYY-MM-DD format accurately. The term is active as of today's date (2025-06-23).",
+        "source": "https://cawh.org/city-council-members"
+      }
+    ],
+    "updated_at": "2025-06-23T00:59:26Z"
+  }
+]

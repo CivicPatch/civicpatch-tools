@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Larry Bowman",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "LBowman@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Hank Bynaker",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "hbynaker@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Dave Malet",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "dmalet@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Jennifer Morton",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "jmorton@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Davin Perry",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "dperry@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Kevin Richey",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "krichey@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Tanya Dashiell",
+    "roles": [
+      "Assistant City Clerk/Treasurer"
+    ],
+    "email": "tdashiell@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Daniel Gibbons",
+    "roles": [
+      "City Attorney"
+    ],
+    "email": "dgibbons@hawleytroxell.com",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Albert Tripp",
+    "roles": [
+      "City Manager"
+    ],
+    "email": "atripp@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Kati Dorman",
+    "roles": [
+      "Court Administrator"
+    ],
+    "email": null,
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Mitch Metzger",
+    "roles": [
+      "Fire Chief"
+    ],
+    "email": "mmetzger@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "J.C. Kennedy",
+    "roles": [
+      "Parks/Recreation Director"
+    ],
+    "email": "jkennedy@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Heather Trautman",
+    "roles": [
+      "Planning Director"
+    ],
+    "email": "htrautman@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Bradley Richmond",
+    "roles": [
+      "Police Chief"
+    ],
+    "email": "brichmond@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  },
+  {
+    "name": "Cindy Reddekopp",
+    "roles": [
+      "Senior Building Inspector"
+    ],
+    "email": "creddekopp@cawh.org",
+    "updated_at": "2025-06-23T00:57:14Z"
+  }
+]
