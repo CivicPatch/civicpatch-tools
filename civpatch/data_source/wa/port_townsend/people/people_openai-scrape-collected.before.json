@@ -1,0 +1,646 @@
+[
+  {
+    "name": "David Faber",
+    "sources": [
+      "https://www.cityofpt.us/contact.html",
+      "https://www.cityofpt.us/directory-listing/david-faber"
+    ],
+    "images": [
+      {
+        "data": "https://cityofpt.us/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2091/david_faber_2.jpg?itok=HyCQTb5H",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is a portrait near the name 'David Faber, Mayor' and clearly associated with him.",
+        "source": "https://www.cityofpt.us/directory-listing/david-faber"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position explicitly listed as 'Position #7 - Mayor' under City Council section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Position #7 - Mayor' indicating the role is Mayor."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number given as #7."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text states 'Position #7 - Mayor', so the division is Position 7."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly listed under David Faber's section.",
+        "source": "https://www.cityofpt.us/directory-listing/david-faber"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dfaber@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "dfaber@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed under David Faber's section.",
+        "source": "https://www.cityofpt.us/directory-listing/david-faber"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofpt.us/directory-listing/david-faber",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.cityofpt.us/contact.html"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date is given as January, 2024.",
+        "source": "https://www.cityofpt.us/directory-listing/david-faber"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date is given as December, 2027.",
+        "source": "https://www.cityofpt.us/directory-listing/david-faber"
+      }
+    ],
+    "updated_at": "2025-06-23T01:09:43Z"
+  },
+  {
+    "name": "Amy Howard",
+    "sources": [
+      "https://www.cityofpt.us/contact.html",
+      "https://www.cityofpt.us/directory-listing/amy-howard"
+    ],
+    "images": [
+      {
+        "data": "https://cityofpt.us/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2151/amy_howard_photo_for_website.jpg?itok=PSNVtChT",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name Amy Howard and clearly a portrait.",
+        "source": "https://www.cityofpt.us/directory-listing/amy-howard"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position explicitly listed as 'Position #6 - Deputy Mayor' under City Council section."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Position #6 - Deputy Mayor' as the role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number given as #6."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text specifies 'Position #6' which corresponds to 'Position 6'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly listed under Amy Howard's contact info.",
+        "source": "https://www.cityofpt.us/directory-listing/amy-howard"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ahoward@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "ahoward@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed under Amy Howard's contact info.",
+        "source": "https://www.cityofpt.us/directory-listing/amy-howard"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofpt.us/directory-listing/amy-howard",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.cityofpt.us/contact.html"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date is given as January, 2024.",
+        "source": "https://www.cityofpt.us/directory-listing/amy-howard"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date is given as December, 2027.",
+        "source": "https://www.cityofpt.us/directory-listing/amy-howard"
+      }
+    ],
+    "updated_at": "2025-06-23T01:09:43Z"
+  },
+  {
+    "name": "Neil Nelson",
+    "sources": [
+      "https://www.cityofpt.us/contact.html",
+      "https://www.cityofpt.us/directory-listing/neil-nelson"
+    ],
+    "images": [
+      {
+        "data": "https://cityofpt.us/sites/default/files/styles/full_node_primary/public/imageattachments/directory/23236/neil_photo_july_6_2024_edited.jpg?itok=-zSWLZRA",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a headshot near the name Neil Nelson.",
+        "source": "https://www.cityofpt.us/directory-listing/neil-nelson"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position listed as 'Position #2' under City Council section; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position #2 on a city council is typically a council member seat; no other mayor or special title indicated."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number given as #2."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "(360)379-2980",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed near Neil Nelson's name.",
+        "source": "https://www.cityofpt.us/directory-listing/neil-nelson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "nnelson@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "nnelson@cityofpt.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed near Neil Nelson's name.",
+        "source": "https://www.cityofpt.us/directory-listing/neil-nelson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofpt.us/directory-listing/neil-nelson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.cityofpt.us/contact.html"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-08",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as August 2024.",
+        "source": "https://www.cityofpt.us/directory-listing/neil-nelson"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2025.",
+        "source": "https://www.cityofpt.us/directory-listing/neil-nelson"
+      }
+    ],
+    "updated_at": "2025-06-23T01:09:43Z"
+  },
+  {
+    "name": "Ben Thomas",
+    "sources": [
+      "https://www.cityofpt.us/contact.html",
+      "https://www.cityofpt.us/directory-listing/ben-thomas"
+    ],
+    "images": [
+      {
+        "data": "https://cityofpt.us/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2111/ben2.jpg?itok=8HhjPpbj",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is a portrait near the name Ben Thomas.",
+        "source": "https://www.cityofpt.us/directory-listing/ben-thomas"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position listed as 'Position #1' under City Council section; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position #1 is a typical designation for a council member seat; no explicit mayor or other title given."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number given as #1."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under Ben Thomas.",
+        "source": "https://www.cityofpt.us/directory-listing/ben-thomas"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bthomas@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "bthomas@cityofpt.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed under Ben Thomas.",
+        "source": "https://www.cityofpt.us/directory-listing/ben-thomas"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofpt.us/directory-listing/ben-thomas",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.cityofpt.us/contact.html"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January, 2022.",
+        "source": "https://www.cityofpt.us/directory-listing/ben-thomas"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December, 2025.",
+        "source": "https://www.cityofpt.us/directory-listing/ben-thomas"
+      }
+    ],
+    "updated_at": "2025-06-23T01:09:43Z"
+  },
+  {
+    "name": "Monica MickHager",
+    "sources": [
+      "https://www.cityofpt.us/contact.html",
+      "https://www.cityofpt.us/directory-listing/monica-mickhager"
+    ],
+    "images": [
+      {
+        "data": "https://cityofpt.us/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2121/monica_mickhager_for_website.jpg?itok=3NEcbxL3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a portrait near the name Monica MickHager.",
+        "source": "https://www.cityofpt.us/directory-listing/monica-mickhager"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position listed as 'Position #3' under City Council section; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page lists 'Position #3' which is a council member position; no other role title is given, so normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number given as #3."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Position #3' on the page."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is clearly listed near the name and role.",
+        "source": "https://www.cityofpt.us/directory-listing/monica-mickhager"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mmickhager@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "mmickhager@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is clearly listed near the name and role.",
+        "source": "https://www.cityofpt.us/directory-listing/monica-mickhager"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofpt.us/directory-listing/monica-mickhager",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.cityofpt.us/contact.html"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date explicitly stated as January, 2024.",
+        "source": "https://www.cityofpt.us/directory-listing/monica-mickhager"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December, 2027.",
+        "source": "https://www.cityofpt.us/directory-listing/monica-mickhager"
+      }
+    ],
+    "updated_at": "2025-06-23T01:09:43Z"
+  },
+  {
+    "name": "Owen Rowe",
+    "sources": [
+      "https://www.cityofpt.us/contact.html",
+      "https://www.cityofpt.us/directory-listing/owen-rowe"
+    ],
+    "images": [
+      {
+        "data": "https://cityofpt.us/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2101/owen_rowe_for_website_2022.jpg?itok=goBbog1s",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name Owen Rowe.",
+        "source": "https://www.cityofpt.us/directory-listing/owen-rowe"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position listed as 'Position #4' under City Council section; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position #4 indicates a council member seat; no other role title given, so normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number given as #4."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #4'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under Owen Rowe's contact info.",
+        "source": "https://www.cityofpt.us/directory-listing/owen-rowe"
+      }
+    ],
+    "emails": [
+      {
+        "data": "orowe@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "orowe@cityofpt.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed under Owen Rowe's contact info.",
+        "source": "https://www.cityofpt.us/directory-listing/owen-rowe"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofpt.us/directory-listing/owen-rowe",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.cityofpt.us/contact.html"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 2024.",
+        "source": "https://www.cityofpt.us/directory-listing/owen-rowe"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2027.",
+        "source": "https://www.cityofpt.us/directory-listing/owen-rowe"
+      }
+    ],
+    "updated_at": "2025-06-23T01:09:43Z"
+  },
+  {
+    "name": "Libby Urner Wennstrom",
+    "sources": [
+      "https://www.cityofpt.us/contact.html",
+      "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom"
+    ],
+    "images": [
+      {
+        "data": "https://cityofpt.us/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2131/libby1.jpg?itok=lYxVQZ4P",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is a portrait near the name on the official city page.",
+        "source": "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position listed as 'Position #5' under City Council section; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Position #5 on city council strongly implies council member role; no other role title given."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number given as #5."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position #5."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "(360) 379-2980",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed under the person's contact info.",
+        "source": "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom"
+      }
+    ],
+    "emails": [
+      {
+        "data": "lwennstrom@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under name and position.",
+        "source": "https://www.cityofpt.us/contact.html"
+      },
+      {
+        "data": "lwennstrom@cityofpt.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed under the person's contact info.",
+        "source": "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL linked from name.",
+        "source": "https://www.cityofpt.us/contact.html"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term start date explicitly stated as January 2022.",
+        "source": "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2025.",
+        "source": "https://www.cityofpt.us/directory-listing/libby-urner-wennstrom"
+      }
+    ],
+    "updated_at": "2025-06-23T01:09:43Z"
+  }
+]
