@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Eric Zimmerman",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      "Position 6"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "Ezimmerman@normandyparkwa.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-12-31",
+    "sources": [
+      "https://normandyparkwa.gov/city-council"
+    ],
+    "updated_at": "2025-06-23T05:05:18Z"
+  },
+  {
+    "name": "Sue-Ann Hohimer",
+    "roles": [
+      "Deputy Mayor"
+    ],
+    "divisions": [
+      "Position 7"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "Sue-Ann.Hohimer@normandyparkwa.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://normandyparkwa.gov/city-council"
+    ],
+    "updated_at": "2025-06-23T05:05:18Z"
+  }
+]

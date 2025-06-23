@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Eric Zimmerman",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "ezimmerman@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Sue-Ann Hohimer",
+    "roles": [
+      "Deputy Mayor"
+    ],
+    "email": "sue-ann.hohimer@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Mike Bishoff",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "mike.bishoff@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Sheri Healey",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "sheri.healey@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Jack Lamanna",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "jack.lamanna@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Shawn McEvoy",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "shawn.mcevoy@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Susan West",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "susan.west@ci.normandy-park.wa.us",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Heidi Greenwood",
+    "roles": [
+      "City Attorney"
+    ],
+    "email": "hgreenwood@omwlaw.com",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Erin Smith",
+    "roles": [
+      "City Clerk"
+    ],
+    "email": "esmith@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Amy Arrington",
+    "roles": [
+      "City Manager"
+    ],
+    "email": "aarrington@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Janet Stebbins",
+    "roles": [
+      "Finance Director"
+    ],
+    "email": "jstebbins@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Aimee Lloyd",
+    "roles": [
+      "Parks/Recreation Manager"
+    ],
+    "email": "alloyd@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Dan Yourkoski",
+    "roles": [
+      "Police Chief"
+    ],
+    "email": "dyourkoski@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  },
+  {
+    "name": "Ken Courter",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "kcourter@normandyparkwa.gov",
+    "updated_at": "2025-06-23T05:04:18Z"
+  }
+]
