@@ -1,20 +1,18 @@
 [
   {
     "name": "Becky Erickson",
-    "roles": [
-      "Mayor"
-    ],
+    "roles": [],
     "divisions": [],
     "image": null,
     "phone_number": "(360) 779-3901",
     "email": null,
     "website": "https://cityofpoulsbo.com/meet-your-mayor",
-    "start_date": "2010",
+    "start_date": null,
     "end_date": null,
     "sources": [
       "https://cityofpoulsbo.com/meet-your-mayor"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   },
   {
     "name": "Pam Crowe",
@@ -28,16 +26,15 @@
     ],
     "image": null,
     "phone_number": "(360) 779-3901",
-    "email": "councilmembers@cityofpoulsbo.com",
+    "email": "pcrowe@cityofpoulsbo.com",
     "website": "https://cityofpoulsbo.com/pam-crowe",
     "start_date": "2024",
     "end_date": "2027-12-31",
     "sources": [
       "https://cityofpoulsbo.com/poulsbo-city-council",
-      "https://cityofpoulsbo.com/pam-crowe",
-      "https://cityofpoulsbo.com/doug-taber"
+      "https://cityofpoulsbo.com/pam-crowe"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   },
   {
     "name": "Doug Newell",
@@ -47,20 +44,20 @@
     ],
     "divisions": [
       "at-large",
-      "Position 4"
+      "Position No. 4"
     ],
     "image": null,
     "phone_number": "(360) 779-3901",
-    "email": "councilmembers@cityofpoulsbo.com",
+    "email": "dnewell@cityofpoulsbo.com",
     "website": "https://cityofpoulsbo.com/doug-newell",
     "start_date": "2024",
     "end_date": "2027-12-31",
     "sources": [
       "https://cityofpoulsbo.com/poulsbo-city-council",
-      "https://cityofpoulsbo.com/doug-newell",
-      "https://cityofpoulsbo.com/doug-taber"
+      "https://cityofpoulsbo.com/pam-crowe",
+      "https://cityofpoulsbo.com/doug-newell"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   },
   {
     "name": "Gary McVey",
@@ -70,20 +67,20 @@
     ],
     "divisions": [
       "at-large",
-      "Position 7"
+      "Position No. 7"
     ],
     "image": null,
     "phone_number": "(360) 779-3901",
-    "email": "councilmembers@cityofpoulsbo.com",
+    "email": "gmcvey@cityofpoulsbo.com",
     "website": "https://cityofpoulsbo.com/gary-mcvey",
     "start_date": "2020",
     "end_date": "2025-12-31",
     "sources": [
       "https://cityofpoulsbo.com/poulsbo-city-council",
-      "https://cityofpoulsbo.com/gary-mcvey",
-      "https://cityofpoulsbo.com/doug-taber"
+      "https://cityofpoulsbo.com/pam-crowe",
+      "https://cityofpoulsbo.com/gary-mcvey"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   },
   {
     "name": "Doug Taber",
@@ -97,15 +94,16 @@
     ],
     "image": null,
     "phone_number": "(360) 779-3901",
-    "email": "councilmembers@cityofpoulsbo.com",
+    "email": "dtaber@cityofpoulsbo.com",
     "website": "https://cityofpoulsbo.com/doug-taber",
     "start_date": "2024-04-03",
     "end_date": "2025-12-31",
     "sources": [
       "https://cityofpoulsbo.com/poulsbo-city-council",
+      "https://cityofpoulsbo.com/pam-crowe",
       "https://cityofpoulsbo.com/doug-taber"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   },
   {
     "name": "Britt Livdahl",
@@ -119,16 +117,16 @@
     ],
     "image": null,
     "phone_number": "(360) 779-3901",
-    "email": "councilmembers@cityofpoulsbo.com",
+    "email": "blivdahl@cityofpoulsbo.com",
     "website": "https://cityofpoulsbo.com/britt-livdahl",
     "start_date": "2020",
     "end_date": "2027-12-31",
     "sources": [
       "https://cityofpoulsbo.com/poulsbo-city-council",
-      "https://cityofpoulsbo.com/doug-taber",
+      "https://cityofpoulsbo.com/pam-crowe",
       "https://cityofpoulsbo.com/britt-livdahl"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   },
   {
     "name": "Ed Stern",
@@ -143,16 +141,16 @@
     ],
     "image": null,
     "phone_number": "(360) 779-3901",
-    "email": "councilmembers@cityofpoulsbo.com",
+    "email": "estern@cityofpoulsbo.com",
     "website": "https://cityofpoulsbo.com/ed-stern",
-    "start_date": "2024-01",
+    "start_date": "1998",
     "end_date": "2025-12-31",
     "sources": [
       "https://cityofpoulsbo.com/poulsbo-city-council",
-      "https://cityofpoulsbo.com/doug-taber",
+      "https://cityofpoulsbo.com/pam-crowe",
       "https://cityofpoulsbo.com/ed-stern"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   },
   {
     "name": "Rick Eckert",
@@ -162,19 +160,19 @@
     ],
     "divisions": [
       "at-large",
-      "Position No. 1"
+      "Position 1"
     ],
     "image": null,
     "phone_number": "(360) 779-3901",
-    "email": "councilmembers@cityofpoulsbo.com",
+    "email": "reckert@cityofpoulsbo.com",
     "website": "https://cityofpoulsbo.com/rick-eckert",
     "start_date": "2024",
     "end_date": "2027-12-31",
     "sources": [
       "https://cityofpoulsbo.com/poulsbo-city-council",
-      "https://cityofpoulsbo.com/doug-taber",
+      "https://cityofpoulsbo.com/pam-crowe",
       "https://cityofpoulsbo.com/rick-eckert"
     ],
-    "updated_at": "2025-06-23T01:02:27Z"
+    "updated_at": "2025-06-23T02:02:42Z"
   }
 ]

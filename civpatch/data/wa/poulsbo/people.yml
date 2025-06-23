@@ -12,7 +12,7 @@
   end_date:
   sources:
   - https://cityofpoulsbo.com/meet-your-mayor
-  updated_at: '2025-06-23T01:02:29Z'
+  updated_at: '2025-06-23T02:02:45Z'
 - name: Ed Stern
   roles:
   - Deputy Mayor
@@ -24,33 +24,18 @@
   email: estern@cityofpoulsbo.com
   phone_number: "(360) 779-3901"
   website: https://cityofpoulsbo.com/ed-stern
-  start_date: 2024-01
+  start_date: '1998'
   end_date: '2025-12-31'
   sources:
   - https://cityofpoulsbo.com/poulsbo-city-council
-  - https://cityofpoulsbo.com/doug-taber
+  - https://cityofpoulsbo.com/pam-crowe
   - https://cityofpoulsbo.com/ed-stern
-  updated_at: '2025-06-23T01:02:29Z'
-- name: Britt Livdahl
-  roles:
-  - Council Member
-  divisions: []
-  image: https://cityofpoulsbo.com/wp-content/uploads/2023/03/Bitt-Livdahl.jpg
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/poulsbo/images/78f45ab2740c189ec2d08098a7ac2d0caea21a85ffe5183eaf93c0bb0e2c049d.jpg
-  email: blivdahl@cityofpoulsbo.com
-  phone_number: "(360) 779-3901"
-  website: https://cityofpoulsbo.com/britt-livdahl
-  start_date: '2020'
-  end_date: '2027-12-31'
-  sources:
-  - https://cityofpoulsbo.com/poulsbo-city-council
-  - https://cityofpoulsbo.com/doug-taber
-  - https://cityofpoulsbo.com/britt-livdahl
-  updated_at: '2025-06-23T01:02:29Z'
+  updated_at: '2025-06-23T02:02:45Z'
 - name: Rick Eckert
   roles:
   - Council Member
-  divisions: []
+  divisions:
+  - Position 1
   image: https://cityofpoulsbo.com/wp-content/uploads/2024/01/Eckert-Position-1-Web.jpg
   cdn_image: https://cdn.civicpatch.org/open-data/wa/poulsbo/images/57520e68a6d67558800225744c8d2ac083ade033f0c3e99dc177f5a50650191c.jpg
   email: reckert@cityofpoulsbo.com
@@ -60,14 +45,14 @@
   end_date: '2027-12-31'
   sources:
   - https://cityofpoulsbo.com/poulsbo-city-council
-  - https://cityofpoulsbo.com/doug-taber
+  - https://cityofpoulsbo.com/pam-crowe
   - https://cityofpoulsbo.com/rick-eckert
-  updated_at: '2025-06-23T01:02:29Z'
+  updated_at: '2025-06-23T02:02:45Z'
 - name: Pam Crowe
   roles:
   - Council Member
   divisions:
-  - Position
+  - Position 2
   image: https://cityofpoulsbo.com/wp-content/uploads/2024/01/Crowe-WEB.jpg
   cdn_image: https://cdn.civicpatch.org/open-data/wa/poulsbo/images/2e0caed3e7e25010db5c1ba107e571e8a17008e404669d54768f4b4d2d32b570.jpg
   email: pcrowe@cityofpoulsbo.com
@@ -78,8 +63,24 @@
   sources:
   - https://cityofpoulsbo.com/poulsbo-city-council
   - https://cityofpoulsbo.com/pam-crowe
-  - https://cityofpoulsbo.com/doug-taber
-  updated_at: '2025-06-23T01:02:29Z'
+  updated_at: '2025-06-23T02:02:45Z'
+- name: Britt Livdahl
+  roles:
+  - Council Member
+  divisions:
+  - Position 3
+  image: https://cityofpoulsbo.com/wp-content/uploads/2023/03/Bitt-Livdahl.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/poulsbo/images/78f45ab2740c189ec2d08098a7ac2d0caea21a85ffe5183eaf93c0bb0e2c049d.jpg
+  email: blivdahl@cityofpoulsbo.com
+  phone_number: "(360) 779-3901"
+  website: https://cityofpoulsbo.com/britt-livdahl
+  start_date: '2020'
+  end_date: '2027-12-31'
+  sources:
+  - https://cityofpoulsbo.com/poulsbo-city-council
+  - https://cityofpoulsbo.com/pam-crowe
+  - https://cityofpoulsbo.com/britt-livdahl
+  updated_at: '2025-06-23T02:02:45Z'
 - name: Doug Newell
   roles:
   - Council Member
@@ -94,9 +95,9 @@
   end_date: '2027-12-31'
   sources:
   - https://cityofpoulsbo.com/poulsbo-city-council
+  - https://cityofpoulsbo.com/pam-crowe
   - https://cityofpoulsbo.com/doug-newell
-  - https://cityofpoulsbo.com/doug-taber
-  updated_at: '2025-06-23T01:02:29Z'
+  updated_at: '2025-06-23T02:02:45Z'
 - name: Doug Taber
   roles:
   - Council Member
@@ -111,8 +112,9 @@
   end_date: '2025-12-31'
   sources:
   - https://cityofpoulsbo.com/poulsbo-city-council
+  - https://cityofpoulsbo.com/pam-crowe
   - https://cityofpoulsbo.com/doug-taber
-  updated_at: '2025-06-23T01:02:29Z'
+  updated_at: '2025-06-23T02:02:45Z'
 - name: Gary McVey
   roles:
   - Council Member
@@ -127,6 +129,6 @@
   end_date: '2025-12-31'
   sources:
   - https://cityofpoulsbo.com/poulsbo-city-council
+  - https://cityofpoulsbo.com/pam-crowe
   - https://cityofpoulsbo.com/gary-mcvey
-  - https://cityofpoulsbo.com/doug-taber
-  updated_at: '2025-06-23T01:02:29Z'
+  updated_at: '2025-06-23T02:02:45Z'
