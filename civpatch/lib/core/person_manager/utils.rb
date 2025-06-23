@@ -45,6 +45,14 @@ module Core
           if key.downcase == division_to_find || value["aliases"]&.map(&:downcase)&.include?(division_to_find)
             return key.capitalize
           end
+
+          # Check for partial matches with aliases
+          value["aliases"]&.each do |alias_name|
+            if division_to_find.include?(alias_name.downcase)
+              remaining_text = division_to_find.gsub(/\b#{alias_name.downcase}\b/i, "").strip
+              return [key.capitalize, remaining_text.capitalize].compact.join(" ").strip
+            end
+          end
         end
 
         # Handle cases with numeric or ordinal identifiers
@@ -57,7 +65,7 @@ module Core
         end
 
         # Fallback: Return the original division text
-        division
+        division.capitalize
       end
 
       # NOTE: Assume no one is going to use non-numeric characters
