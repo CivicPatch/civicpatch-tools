@@ -35,53 +35,29 @@ module Core
       end
 
       def self.normalize_division(division)
+        return nil if division.nil? || division.strip.empty?
+
         division_types = Core::CityManager.divisions
-        division_to_find = division&.downcase&.strip
+        division_to_find = division.downcase.strip
 
-        return nil if division_to_find.blank?
-
-        # Check if the division is valid as-is
-        division_aliases = division_types.each_with_object({}) do |(key, value), hash|
-          # Create a hash of aliases for quick lookup
-          value["aliases"]&.each do |alias_name|
-            hash[alias_name.downcase] = key
+        # Check for exact matches or aliases
+        division_types.each do |key, value|
+          if key.downcase == division_to_find || value["aliases"]&.map(&:downcase)&.include?(division_to_find)
+            return key.capitalize
           end
         end
 
-        found_division_alias = division_aliases.find { |alias_name, _key| division_to_find.include?(alias_name) }
-        # aliased_division_key, _value = division_types.find do |_key, value|
-        #   value["aliases"]&.any? { |alias_name| division_to_find.include?(alias_name) }
-        # end
-        if found_division_alias.present?
-          division_alias = found_division_alias.first
-          division_key = found_division_alias.last
-          # Replace alias with its corresponding key and normalize the rest of the string
-          division_to_find = division_to_find.gsub(/\b#{division_alias}\b/i, division_key.capitalize)
-          division_key, division_rest = division_to_find.split(" ", 2)
+        # Handle cases with numeric or ordinal identifiers
+        division_types.each_key do |key|
+          next unless division_to_find.include?(key.downcase)
+
+          division_rest = division_to_find.gsub(/\b#{key}\b/i, "").strip
           division_rest = format_division_identifier(division_rest)
-          return [division_key, division_rest].compact.map(&:capitalize).join(" ").strip
+          return [key.capitalize, division_rest.capitalize].compact.join(" ").strip
         end
 
-        # Dynamically handle division types based on `division_types`
-        division_keys = division_types.keys.map(&:downcase)
-        matched_key = division_keys.find { |key| division_to_find.match(/\b#{key}\b/) }
-
-        if matched_key
-          # Extract the division key (e.g., "Ward" or "District")
-          division_key = matched_key.capitalize
-
-          # Extract the numeric or ordinal identifier (e.g., "1st", "3rd")
-          division_rest = division_to_find.gsub(/\b#{matched_key}\b/i, "").strip
-          division_rest = format_division_identifier(division_rest)
-
-          return [division_key, division_rest].compact.map(&:capitalize).join(" ").strip
-        end
-
-        division_key, division_rest = division_to_find.split(" ", 2)
-        division_rest = format_division_identifier(division_rest)
-
-        normalized_division = [division_key, division_rest].compact.join(" ").strip
-        normalized_division.split(" ").map(&:capitalize).join(" ")
+        # Fallback: Return the original division text
+        division
       end
 
       # NOTE: Assume no one is going to use non-numeric characters
@@ -94,13 +70,14 @@ module Core
 
         return "" if division_identifier_to_find.blank?
 
-        # Remove quotation marks (curly and normal) and parentheses
+        # Remove quotation marks and parentheses
         division_identifier_to_find = division_identifier_to_find.gsub(/["“”‘’()]/, "").strip
-        # Remove prefixes like "no1", "no 1", "no.1", "no. 1", "#1", "# 1", "number 1"
-        division_identifier_to_find = division_identifier_to_find.gsub(/\b(no\.?\s*\d*|number)\b/i, "").strip
+
+        # Remove prefixes like "no.", "number", etc., ONLY if followed by a number
+        division_identifier_to_find = division_identifier_to_find.gsub(/\b(no\.?\s*|number\s*)(?=\d)/i, "").strip
 
         # Remove ordinal suffixes like "rd", "st", "nd", "th" ONLY if preceded by a number
-        if division_identifier_to_find.match?(/^\d+/) # Ensure the string starts with a number
+        if division_identifier_to_find.match?(/^\d+/)
           division_identifier_to_find = division_identifier_to_find.gsub(/(\d+)(rd|st|nd|th)$/i, '\1').strip
         end
 
