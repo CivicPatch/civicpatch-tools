@@ -8,7 +8,7 @@
       {
         "data": "https://normandyparkwa.gov/wp-content/uploads/Sheri-Healey-e1666643680832.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Sheri Healey's section",
+        "llm_confidence_reason": "Image URL directly associated with Sheri Healey",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
@@ -41,11 +41,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2027 explicitly stated",
+        "llm_confidence_reason": "Term expires December 31, 2027",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
-    "updated_at": "2025-06-23T05:05:04Z"
+    "updated_at": "2025-06-24T04:23:14Z"
   },
   {
     "name": "Susan Jeanne West",
@@ -56,7 +56,7 @@
       {
         "data": "https://normandyparkwa.gov/wp-content/uploads/susan-west-npccm.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Susan Jeanne West's section",
+        "llm_confidence_reason": "Image URL directly associated with Susan Jeanne West",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
@@ -89,11 +89,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2025 explicitly stated",
+        "llm_confidence_reason": "Term expires December 31, 2025",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
-    "updated_at": "2025-06-23T05:05:04Z"
+    "updated_at": "2025-06-24T04:23:14Z"
   },
   {
     "name": "Shawn McEvoy",
@@ -104,7 +104,7 @@
       {
         "data": "https://normandyparkwa.gov/wp-content/uploads/shawn-mcevoy-npccm.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Shawn McEvoy's section",
+        "llm_confidence_reason": "Image URL directly associated with Shawn McEvoy",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
@@ -137,11 +137,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2027 explicitly stated",
+        "llm_confidence_reason": "Term expires December 31, 2027",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
-    "updated_at": "2025-06-23T05:05:04Z"
+    "updated_at": "2025-06-24T04:23:14Z"
   },
   {
     "name": "Mike Bishoff",
@@ -152,7 +152,7 @@
       {
         "data": "https://normandyparkwa.gov/wp-content/uploads/mike-bishoff-npccm.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Mike Bishoff's section",
+        "llm_confidence_reason": "Image URL directly associated with Mike Bishoff",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
@@ -185,11 +185,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2025 explicitly stated",
+        "llm_confidence_reason": "Term expires December 31, 2025",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
-    "updated_at": "2025-06-23T05:05:04Z"
+    "updated_at": "2025-06-24T04:23:14Z"
   },
   {
     "name": "Jack Lamanna",
@@ -200,7 +200,7 @@
       {
         "data": "https://normandyparkwa.gov/wp-content/uploads/LamannaHeadshot-1-scaled-e1690497948716-480x480.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Jack Lamanna's section",
+        "llm_confidence_reason": "Image URL directly associated with Jack Lamanna",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
@@ -233,11 +233,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2027 explicitly stated",
+        "llm_confidence_reason": "Term expires December 31, 2027",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
-    "updated_at": "2025-06-23T05:05:04Z"
+    "updated_at": "2025-06-24T04:23:14Z"
   },
   {
     "name": "Eric Zimmerman",
@@ -248,7 +248,7 @@
       {
         "data": "https://normandyparkwa.gov/wp-content/uploads/Eric-Zimmerman-Photo-e1666714999910-480x480.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Eric Zimmerman's section",
+        "llm_confidence_reason": "Image URL directly associated with Eric Zimmerman",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
@@ -281,11 +281,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2025 explicitly stated",
+        "llm_confidence_reason": "Term expires December 31, 2025",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
-    "updated_at": "2025-06-23T05:05:04Z"
+    "updated_at": "2025-06-24T04:23:14Z"
   },
   {
     "name": "Sue-Ann Hohimer",
@@ -296,7 +296,7 @@
       {
         "data": "https://normandyparkwa.gov/wp-content/uploads/sue-ann-npccm.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Sue-Ann Hohimer's section",
+        "llm_confidence_reason": "Image URL directly associated with Sue-Ann Hohimer",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
@@ -329,10 +329,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2027 explicitly stated",
+        "llm_confidence_reason": "Term expires December 31, 2027",
         "source": "https://normandyparkwa.gov/city-council"
       }
     ],
-    "updated_at": "2025-06-23T05:05:04Z"
+    "updated_at": "2025-06-24T04:23:14Z"
   }
 ]
