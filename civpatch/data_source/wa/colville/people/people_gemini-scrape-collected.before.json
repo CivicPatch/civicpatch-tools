@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Jack Smith",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Jack Smith'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 684-5095",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Jack Smith and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  },
+  {
+    "name": "Kim Gallo",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Kim Gallo' under 'Ward I' and lists 'Position 4'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 385-1645",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Kim Gallo and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  },
+  {
+    "name": "Vickie Strong",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Vickie Strong' under 'Ward I' and lists 'Position 1'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 684-2776",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Vickie Strong and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  },
+  {
+    "name": "Ben Cosby",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Ben Cosby' under 'Ward II' and lists 'Position 5'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 690-2206",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Ben Cosby and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  },
+  {
+    "name": "Thomas Carpenter",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Thomas Carpenter' under 'Ward II' and lists 'Position 3'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 680-0661",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Thomas Carpenter and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  },
+  {
+    "name": "Ben Nielsen",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Ben Nielsen' under 'Ward III' and lists 'Position 6'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 999-8563",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Ben Nielsen and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  },
+  {
+    "name": "Robin Kurowski",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Robin Kurowski' under 'Ward III' and lists 'Position 2'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 685-7460",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Robin Kurowski and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  },
+  {
+    "name": "Dick Nichols",
+    "sources": [
+      "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Dick Nichols' under 'Councilmember at Large'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 690-8988",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly associated with Dick Nichols and is in a standard format.",
+        "source": "https://www.colville.wa.us/pview.aspx?id=35906&catid=0"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:26Z"
+  }
+]
