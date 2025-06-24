@@ -1,0 +1,374 @@
+[
+  {
+    "name": "Ron Smith",
+    "sources": [
+      "https://www.cityofbuckley.com/250/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member' directly under the person's name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "206-786-5456",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and labeled 'Phone:'",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rsmith@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email Ron Smith'.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbuckley.com/directory.aspx?eid=23",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as 'More Information' link next to the person's details.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:39:04Z"
+  },
+  {
+    "name": "Connie Bender",
+    "sources": [
+      "https://www.cityofbuckley.com/250/City-Council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member' directly under the person's name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "360-829-5184",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and labeled 'Phone:'",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cbender@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email Connie Bender'.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbuckley.com/directory.aspx?eid=24",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as 'More Information' link next to the person's details.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:39:04Z"
+  },
+  {
+    "name": "Mackenzie Anderson",
+    "sources": [
+      "https://www.cityofbuckley.com/250/City-Council",
+      "https://www.cityofbuckley.com/directory.aspx?eid=25"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member' directly under the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated as the person's title and is a target role for the main governing body. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "253-377-6609",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person's name and contact information section. ",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=25"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mbreeden@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email Mackenzie Anderson'.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "mbreeden@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's name and contact information section, and is in a standard email format. It is also provided as a mailto link text, which is a strong indicator of accuracy. ",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=25"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbuckley.com/directory.aspx?eid=25",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as 'More Information' link next to the person's details.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:39:04Z"
+  },
+  {
+    "name": "Kenny Arsanto",
+    "sources": [
+      "https://www.cityofbuckley.com/250/City-Council",
+      "https://www.cityofbuckley.com/directory.aspx?eid=26"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member' directly under the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated as 'Title: Council Member' directly under Kenny Arsanto's name, indicating a direct and unambiguous extraction. The role is a target role and is presented as current. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "253-377-3729",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and labeled 'Phone:'",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "253-377-3729",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person's name and contact information section, ensuring high accuracy and direct extraction from the text provided. No inference or external knowledge was required for this extraction, making the confidence level maximal. ",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=26"
+      }
+    ],
+    "emails": [
+      {
+        "data": "karsanto@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email Kenny Arsanto'.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "karsanto@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's name and contact information section, ensuring high accuracy and direct extraction from the text provided. No inference or external knowledge was required for this extraction, making the confidence level maximal. ",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=26"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbuckley.com/directory.aspx?eid=26",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as 'More Information' link next to the person's details.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:39:04Z"
+  },
+  {
+    "name": "Amanda Burbank",
+    "sources": [
+      "https://www.cityofbuckley.com/250/City-Council",
+      "https://www.cityofbuckley.com/directory.aspx?eid=27"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member' directly under the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member' and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "206-200-6128",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and labeled 'Phone:'",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "206-200-6128",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=27"
+      }
+    ],
+    "emails": [
+      {
+        "data": "aburbank@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email Amanda Burbank'.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "aburbank@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=27"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbuckley.com/directory.aspx?eid=27",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as 'More Information' link next to the person's details.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:39:04Z"
+  },
+  {
+    "name": "Denice Bergerson",
+    "sources": [
+      "https://www.cityofbuckley.com/250/City-Council",
+      "https://www.cityofbuckley.com/directory.aspx?eid=28"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member' directly under the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated under 'Title:' for Denice Bergerson, and 'City Council' is also mentioned, confirming her role on the main governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "253-632-9066",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's name via a 'Phone:' label. ",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=28"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dbergerson@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email Denice Bergerson'.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "dbergerson@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's name via a mailto link and text label 'Email Denice Bergerson'.",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=28"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbuckley.com/directory.aspx?eid=28",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as 'More Information' link next to the person's details.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:39:04Z"
+  },
+  {
+    "name": "Brandon Green",
+    "sources": [
+      "https://www.cityofbuckley.com/250/City-Council",
+      "https://www.cityofbuckley.com/directory.aspx?eid=29"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member' directly under the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name and is a target role, ensuring high accuracy and direct extraction without inference or ambiguity. The role is clearly current as no past dates or resignations are mentioned. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "253-389-6229",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and labeled 'Phone:'",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "253-389-6229",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person's name and role in the provided text, ensuring high accuracy and direct extraction without inference or ambiguity. The format is standard and verifiable within the context provided by the source document. ",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=29"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bgreen@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email Brandon Green'.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      },
+      {
+        "data": "bgreen@cityofbuckley.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's name and role in the provided text, ensuring high accuracy and direct extraction without inference or ambiguity. The format is standard and verifiable within the context provided by the source document. ",
+        "source": "https://www.cityofbuckley.com/directory.aspx?eid=29"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbuckley.com/directory.aspx?eid=29",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as 'More Information' link next to the person's details.",
+        "source": "https://www.cityofbuckley.com/250/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:39:04Z"
+  }
+]
