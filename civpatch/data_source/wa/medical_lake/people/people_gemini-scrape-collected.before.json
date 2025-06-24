@@ -1,0 +1,307 @@
+[
+  {
+    "name": "Terri Cooper",
+    "sources": [
+      "https://medical-lake.org/city-government/office-of-the-mayor",
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Terri Cooper, Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Terri Cooper Mayor 2025'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5049",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated under 'Contact Information' for the Office of the Mayor.",
+        "source": "https://medical-lake.org/city-government/office-of-the-mayor"
+      },
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://medical-lake.org/city-government/office-of-the-mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the dedicated page for the Office of the Mayor, which features Terri Cooper prominently.",
+        "source": "https://medical-lake.org/city-government/office-of-the-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected and sworn into office in January 2022'.",
+        "source": "https://medical-lake.org/city-government/office-of-the-mayor"
+      },
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2025, implying a start date prior to or in 2025, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Don Kennedy",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Don Kennedy Council Position 1 2025'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2025, implying a start date prior to or in 2025, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Ted Olson",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Ted Olson Council Position 2 2027'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2027, implying a start date prior to or in 2027, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Bob Maxwell",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Bob Maxwell Council Position 3 2025'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2025, implying a start date prior to or in 2025, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Tony Harbolt",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Tony Harbolt Council Position 4 2025'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2025, implying a start date prior to or in 2025, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Lance Speirs",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Lance Speirs Council Position 5 2027'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2027, implying a start date prior to or in 2027, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Keli Shaffer",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Keli Shaffer Council Position 6 2027'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2027, implying a start date prior to or in 2027, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Chad Pritchard",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Chad Pritchard Council Position 7 2027'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed at the bottom of the page under 'Main Office' and is the only general contact number provided.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The 'Term End Year' is listed as 2027, implying a start date prior to or in 2027, but no explicit start date is given.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:40:30Z"
+  }
+]

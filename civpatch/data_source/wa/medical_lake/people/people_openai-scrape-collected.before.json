@@ -1,0 +1,358 @@
+[
+  {
+    "name": "Terri Cooper",
+    "sources": [
+      "https://medical-lake.org/city-government/office-of-the-mayor",
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [
+      {
+        "data": "https://medical-lake.org/wp-content/uploads/2022/10/Terri-Cooper-pic-wo-background.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image directly associated with Terri Cooper's section.",
+        "source": "https://medical-lake.org/city-government/office-of-the-mayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor and Chief Executive Officer of Medical Lake."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor in the elected officials section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 565-5049",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed under Office of the Mayor contact information.",
+        "source": "https://medical-lake.org/city-government/office-of-the-mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tcooper@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://medical-lake.org/contact-us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contact link labeled 'Email the Mayor' likely leads to official contact page.",
+        "source": "https://medical-lake.org/city-government/office-of-the-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Elected and sworn into office in January 2022.",
+        "source": "https://medical-lake.org/city-government/office-of-the-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  },
+  {
+    "name": "Don Kennedy",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Position 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Position 1, normalized to Council Member, Position 1."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dkennedy@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  },
+  {
+    "name": "Ted Olson",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Position 2, normalized to Council Member, Position 2."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tolson@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2027.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  },
+  {
+    "name": "Bob Maxwell",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Position 3, normalized to Council Member, Position 3."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bmaxwell@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  },
+  {
+    "name": "Tony Harbolt",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Position 4, normalized to Council Member, Position 4."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tharbolt@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2025.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  },
+  {
+    "name": "Lance Speirs",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Position 5, normalized to Council Member, Position 5."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "lspeirs@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2027.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  },
+  {
+    "name": "Keli Shaffer",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Position 6, normalized to Council Member, Position 6."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kshaffer@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2027.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  },
+  {
+    "name": "Chad Pritchard",
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Position 7",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Position 7, normalized to Council Member, Position 7."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position number explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "cpritchard@medical-lake.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email provided next to name in elected officials section.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end year explicitly stated as 2027.",
+        "source": "https://medical-lake.org/city-government/city-council-2"
+      }
+    ],
+    "updated_at": "2025-06-24T04:37:20Z"
+  }
+]

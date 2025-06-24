@@ -1,33 +1,114 @@
 ---
 - name: Terri Cooper
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image: https://medical-lake.org/wp-content/uploads/2022/10/Terri-Cooper-pic-wo-background.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/medical_lake/images/93a94f07c3f2d4c4dd19e66b793da92e6b7cbc774db7773c429caa48daba6cb8.png
   email: tcooper@medical-lake.org
+  phone_number: "(509) 565-5049"
+  website: https://medical-lake.org/city-government/office-of-the-mayor
+  start_date: 2022-01
+  end_date: '2025'
+  sources:
+  - https://medical-lake.org/city-government/office-of-the-mayor
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'
 - name: Bob Maxwell
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: bmaxwell@medical-lake.org
+  phone_number:
+  website:
+  start_date:
+  end_date: '2025'
+  sources:
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'
 - name: Chad Pritchard
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: cpritchard@medical-lake.org
+  phone_number:
+  website:
+  start_date:
+  end_date: '2027'
+  sources:
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'
 - name: Don Kennedy
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: dkennedy@medical-lake.org
+  phone_number:
+  website:
+  start_date:
+  end_date: '2025'
+  sources:
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'
 - name: Keli Shaffer
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: kshaffer@medical-lake.org
+  phone_number:
+  website:
+  start_date:
+  end_date: '2027'
+  sources:
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'
 - name: Lance Speirs
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: lspeirs@medical-lake.org
+  phone_number:
+  website:
+  start_date:
+  end_date: '2027'
+  sources:
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'
 - name: Ted Olson
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: tolson@medical-lake.org
+  phone_number:
+  website:
+  start_date:
+  end_date: '2027'
+  sources:
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'
 - name: Tony Harbolt
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: tharbolt@medical-lake.org
+  phone_number:
+  website:
+  start_date:
+  end_date: '2025'
+  sources:
+  - https://medical-lake.org/city-government/city-council-2
+  updated_at: '2025-06-24T04:40:31Z'

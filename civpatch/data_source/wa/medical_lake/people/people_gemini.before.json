@@ -1,0 +1,139 @@
+[
+  {
+    "name": "Terri Cooper",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5049",
+    "email": null,
+    "website": "https://medical-lake.org/city-government/office-of-the-mayor",
+    "start_date": "2022-01",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/office-of-the-mayor",
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Don Kennedy",
+    "roles": [
+      "Council Position 1"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5000",
+    "email": null,
+    "website": null,
+    "start_date": "2025",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Ted Olson",
+    "roles": [
+      "Council Position 2"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5000",
+    "email": null,
+    "website": null,
+    "start_date": "2027",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Bob Maxwell",
+    "roles": [
+      "Council Position 3"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5000",
+    "email": null,
+    "website": null,
+    "start_date": "2025",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Tony Harbolt",
+    "roles": [
+      "Council Position 4"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5000",
+    "email": null,
+    "website": null,
+    "start_date": "2025",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Lance Speirs",
+    "roles": [
+      "Council Position 5"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5000",
+    "email": null,
+    "website": null,
+    "start_date": "2027",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Keli Shaffer",
+    "roles": [
+      "Council Position 6"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5000",
+    "email": null,
+    "website": null,
+    "start_date": "2027",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  },
+  {
+    "name": "Chad Pritchard",
+    "roles": [
+      "Council Position 7"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(509) 565-5000",
+    "email": null,
+    "website": null,
+    "start_date": "2027",
+    "end_date": null,
+    "sources": [
+      "https://medical-lake.org/city-government/city-council-2"
+    ],
+    "updated_at": "2025-06-24T04:40:30Z"
+  }
+]
