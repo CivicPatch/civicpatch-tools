@@ -1,0 +1,261 @@
+[
+  {
+    "name": "Margaret Estrada",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor in the content."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Council, Position 1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position 1 is specified next to council role."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2023 is listed next to name and position.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T05:00:34Z"
+  },
+  {
+    "name": "Robert Reyna",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under council members with no specific title other than council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2025 is listed next to name.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "updated_at": "2025-06-24T05:00:34Z"
+  },
+  {
+    "name": "Rita Alvarado",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Council, Position 2."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 2 explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2023 is listed next to name.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T05:00:34Z"
+  },
+  {
+    "name": "Frank Jaime",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Council, Position 3."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 3 explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2025 is listed next to name.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "updated_at": "2025-06-24T05:00:34Z"
+  },
+  {
+    "name": "Ken Workman",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under council members with no specific position but under council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2023 is listed next to name.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T05:00:34Z"
+  },
+  {
+    "name": "Oscar Gonzalez",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Council, Position 5."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 5 explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2024 is listed next to name.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "updated_at": "2025-06-24T05:00:34Z"
+  },
+  {
+    "name": "Elizabeth Villa",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council, Position 6 and At-Large."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Position 6 explicitly stated."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "At-Large explicitly stated."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2023 is listed next to name.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T05:00:34Z"
+  },
+  {
+    "name": "Caroline Solis",
+    "sources": [
+      "https://wapato-city.org/city_council/council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under council members with no specific position but under council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Year 2023 is listed next to name.",
+        "source": "https://wapato-city.org/city_council/council_members.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T05:00:34Z"
+  }
+]
