@@ -1,0 +1,498 @@
+[
+  {
+    "name": "Tim Verzal",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=62A27A8B-4838-44BF-A0F2-A1B606254FE1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor, Tim Verzal' and 'Mayor Tim Verzal'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "509-276-8801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=62A27A8B-4838-44BF-A0F2-A1B606254FE1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Mayor@ci.deerpark.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=62A27A8B-4838-44BF-A0F2-A1B606254FE1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=62A27A8B-4838-44BF-A0F2-A1B606254FE1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  },
+  {
+    "name": "Jason Upchurch",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=146DFE7C-F7AC-4B6D-A5B6-E8BD41E4C012"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name (implied by 'Council Position #1')."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #1' and contextually implies 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #1' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-994-1360",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=146DFE7C-F7AC-4B6D-A5B6-E8BD41E4C012"
+      }
+    ],
+    "emails": [
+      {
+        "data": "councilmember1@ci.deerpark.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=146DFE7C-F7AC-4B6D-A5B6-E8BD41E4C012"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=146DFE7C-F7AC-4B6D-A5B6-E8BD41E4C012",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      },
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=146DFE7C-F7AC-4B6D-A5B6-E8BD41E4C012",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Jason Upchurch.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=146DFE7C-F7AC-4B6D-A5B6-E8BD41E4C012"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'successfully ran for Council Position 1 in 2021'.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=146DFE7C-F7AC-4B6D-A5B6-E8BD41E4C012"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  },
+  {
+    "name": "Fred Senn",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=F24E7F2B-9E65-409D-8A7B-E7F5ABF6F1DD"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name (implied by 'Council Position #2')."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #2' and contextually under 'Mayor & Council Member' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #2' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #2' in the heading."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Councilmember2@ci.deerpark.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly listed under Fred Senn's section.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=F24E7F2B-9E65-409D-8A7B-E7F5ABF6F1DD"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=F24E7F2B-9E65-409D-8A7B-E7F5ABF6F1DD",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      },
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=F24E7F2B-9E65-409D-8A7B-E7F5ABF6F1DD",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Fred Senn.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=F24E7F2B-9E65-409D-8A7B-E7F5ABF6F1DD"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  },
+  {
+    "name": "Ellen Standen",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=1F487502-79C7-4999-8711-CF17BA7D5D88"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name (implied by 'Council Position #3')."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #3' and 'council person' in the text, and 'Mayor & Council Member' in navigation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #3' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the heading and text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "councilmember3@ci.deerpark.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with Ellen Standen.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=1F487502-79C7-4999-8711-CF17BA7D5D88"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=1F487502-79C7-4999-8711-CF17BA7D5D88",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      },
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=1F487502-79C7-4999-8711-CF17BA7D5D88",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a direct link to Ellen Standen's profile page.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=1F487502-79C7-4999-8711-CF17BA7D5D88"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  },
+  {
+    "name": "Billy Costello",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=21AAB2B8-847B-4E18-A4AA-928E136176D1",
+      "https://www.facebook.com/councilmanbillycostello"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name (implied by 'Council Position #4')."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #4' and 'Council Member' is a target role."
+      },
+      {
+        "data": "Mayor Pro-Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'serves as Mayor Pro-Tem' and 'Mayor Pro-Tem' is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The title 'Councilman Billy Costello' directly indicates the role of 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #4' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #4'."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The email address 'councilmember4@ci.deerpark.wa.us' strongly implies 'Position 4' for the council member."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-939-1426",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=21AAB2B8-847B-4E18-A4AA-928E136176D1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Councilmember4@ci.deerpark.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=21AAB2B8-847B-4E18-A4AA-928E136176D1"
+      },
+      {
+        "data": "councilmember4@ci.deerpark.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated in the 'Intro' section.",
+        "source": "https://www.facebook.com/councilmanbillycostello"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=21AAB2B8-847B-4E18-A4AA-928E136176D1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      },
+      {
+        "data": "https://www.facebook.com/councilmanbillycostello",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A Facebook profile URL is provided, which is a valid web URL, but not a dedicated official city profile page.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=21AAB2B8-847B-4E18-A4AA-928E136176D1"
+      },
+      {
+        "data": "https://www.facebook.com/councilmanbillycostello",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The Facebook page URL is clearly the primary profile link for 'Councilman Billy Costello'.",
+        "source": "https://www.facebook.com/councilmanbillycostello"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  },
+  {
+    "name": "Diane Pfaeffle",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=15A8C44C-AC6A-4F6F-8511-BC395470D5D8"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name (implied by 'Council Position #5')."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #5' and 'city council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #5' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #5' is explicitly stated in the heading and URL."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "509-727-5792",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided next to her name.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=15A8C44C-AC6A-4F6F-8511-BC395470D5D8"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Councilmember5@ci.deerpark.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided next to her name.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=15A8C44C-AC6A-4F6F-8511-BC395470D5D8"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=15A8C44C-AC6A-4F6F-8511-BC395470D5D8",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      },
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=15A8C44C-AC6A-4F6F-8511-BC395470D5D8",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the direct URL to her profile page, clearly associated with her name and role.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=15A8C44C-AC6A-4F6F-8511-BC395470D5D8"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  },
+  {
+    "name": "Ross Hall",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=78656665-B9D8-499C-8EA5-4C8E0EFFE879"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name (implied by 'Council Position #6')."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #6', which is a council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #6' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #6'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=78656665-B9D8-499C-8EA5-4C8E0EFFE879",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      },
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=78656665-B9D8-499C-8EA5-4C8E0EFFE879",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This URL is directly associated with Ross Hall's profile page, but it's a generic index page with a specific ID, not a clean profile URL.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=78656665-B9D8-499C-8EA5-4C8E0EFFE879"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  },
+  {
+    "name": "Chase Vining",
+    "sources": [
+      "https://www.cityofdeerparkwa.com/council",
+      "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=7FA0094F-4FFF-4CF9-B3C8-5FA94F0DC3A1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the person's name (implied by 'Council Position #7')."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #7' under 'Mayor & Council Member' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Council Position #7' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #7'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=7FA0094F-4FFF-4CF9-B3C8-5FA94F0DC3A1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to the person's name.",
+        "source": "https://www.cityofdeerparkwa.com/council"
+      },
+      {
+        "data": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=7FA0094F-4FFF-4CF9-B3C8-5FA94F0DC3A1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Chase Vining.",
+        "source": "https://www.cityofdeerparkwa.com/index.asp?SEC=B5032113-9910-43CC-9A94-4846DB542A53&DE=7FA0094F-4FFF-4CF9-B3C8-5FA94F0DC3A1"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:47:01Z"
+  }
+]

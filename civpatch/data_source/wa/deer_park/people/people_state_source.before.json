@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Timothy Verzal",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "Mayor@ci.deerpark.wa.us",
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Billy Costello",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Heather Newsom",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Dianne Pfaeffle",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Fred Senn",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Jason Upchurch",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Darold Schultz",
+    "roles": [
+      "Airport Manager"
+    ],
+    "email": "deerparkairport@qwestoffice.net",
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Charles D. Zimmerman",
+    "roles": [
+      "Attorney"
+    ],
+    "email": "czimmerman@omwlaw.com",
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Debra L. Cragun",
+    "roles": [
+      "Clerk/Treasurer"
+    ],
+    "email": "dcragun@ci.deerpark.wa.us",
+    "updated_at": "2025-06-24T04:42:56Z"
+  },
+  {
+    "name": "Spokane County (Contract)",
+    "roles": [
+      "Police Chief"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:42:56Z"
+  }
+]
