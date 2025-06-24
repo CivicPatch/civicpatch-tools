@@ -1,0 +1,539 @@
+[
+  {
+    "name": "Carol Benson",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/460"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated in the table."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Benson' and 'Mayor & Council Active Membership'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 851-4500",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly stated twice on the page for Carol Benson.",
+        "source": "https://www.blackdiamondwa.gov/node/460"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/460",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      },
+      {
+        "data": "https://www.blackdiamondwa.gov/node/460",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the direct profile page for Carol Benson.",
+        "source": "https://www.blackdiamondwa.gov/node/460"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'January 2022' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2025' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "updated_at": "2025-06-24T04:46:12Z"
+  },
+  {
+    "name": "Tamie Deady",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/461"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states she 'is currently the longest-tenured Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      },
+      {
+        "data": "No. 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 'No. 1' is explicitly stated in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 851-4500",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The phone number is clearly listed under 'Contact Info' on her dedicated profile page.",
+        "source": "https://www.blackdiamondwa.gov/node/461"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/461",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      },
+      {
+        "data": "https://www.blackdiamondwa.gov/mayor-council",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the direct URL to her profile page, which serves as her primary online presence.",
+        "source": "https://www.blackdiamondwa.gov/node/461"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'January 2024' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      },
+      {
+        "data": "2019",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states she was 're-elected in 2019', which is the most recent election date mentioned for her current tenure.",
+        "source": "https://www.blackdiamondwa.gov/node/461"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2027' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "updated_at": "2025-06-24T04:46:12Z"
+  },
+  {
+    "name": "Sara Nielsen",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/25011"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Sara Nielsen is listed with an 'Active Membership' to 'Mayor & Council', which directly corresponds to the target role 'council member'. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      },
+      {
+        "data": "No. 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 'No. 2' is explicitly stated in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 851-4500",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed under 'Contact Info' directly associated with Sara Nielsen, ensuring high accuracy and direct relevance. ",
+        "source": "https://www.blackdiamondwa.gov/node/25011"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/25011",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-02",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'February 2025' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:46:12Z"
+  },
+  {
+    "name": "Darcey Peterson",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/23646"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page is titled with the person's name and is located under the 'Mayor & Council' section, with 'Active Membership' to 'Mayor & Council' explicitly stated."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      },
+      {
+        "data": "No. 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 'No. 3' is explicitly stated in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 851-4500",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Contact Info' for Darcey Peterson.",
+        "source": "https://www.blackdiamondwa.gov/node/23646"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/23646",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      },
+      {
+        "data": "https://www.blackdiamondwa.gov/node/23646",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current URL is a dedicated profile page for Darcey Peterson.",
+        "source": "https://www.blackdiamondwa.gov/node/23646"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'July 2024' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:46:12Z"
+  },
+  {
+    "name": "Leih Mulvihill",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/15926"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text refers to her as 'Councilmember Mulvihill' and states 'Active Membership' in 'Mayor & Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      },
+      {
+        "data": "No. 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 'No. 4' is explicitly stated in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 851-4500",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed under 'Contact Info' for Leih Mulvihill.",
+        "source": "https://www.blackdiamondwa.gov/node/15926"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/15926",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      },
+      {
+        "data": "https://www.blackdiamondwa.gov/node/15926",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is a dedicated profile page for Leih Mulvihill.",
+        "source": "https://www.blackdiamondwa.gov/node/15926"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'January 2022' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2025' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "updated_at": "2025-06-24T04:46:12Z"
+  },
+  {
+    "name": "Jesse Young",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/25006"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Jesse Young is listed under 'Mayor & Council' with 'Active Membership', indicating a role within the governing body. 'Council member' is a highly probable role given the context."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      },
+      {
+        "data": "No. 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 'No. 5' is explicitly stated in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 851-4500",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Contact Info' for Jesse Young.",
+        "source": "https://www.blackdiamondwa.gov/node/25006"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/25006",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-02",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'February 2025' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-24T04:46:12Z"
+  },
+  {
+    "name": "Nathan Jones",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/19936"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Jones'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      },
+      {
+        "data": "No. 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 'No. 6' is explicitly stated in the table."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(360) 851-4500",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Contact Info' on his profile page.",
+        "source": "https://www.blackdiamondwa.gov/node/19936"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/19936",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      },
+      {
+        "data": "https://www.blackdiamondwa.gov/node/19936",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is the dedicated profile page for Nathan Jones.",
+        "source": "https://www.blackdiamondwa.gov/node/19936"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'January 2024' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2025' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "updated_at": "2025-06-24T04:46:12Z"
+  },
+  {
+    "name": "Debbie Page",
+    "sources": [
+      "https://www.blackdiamondwa.gov/mayor-council",
+      "https://www.blackdiamondwa.gov/node/15921"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated in the table."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Page' and 'city council appointment'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that all members serve 'at Large'."
+      },
+      {
+        "data": "No. 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Position 'No. 7' is explicitly stated in the table."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.blackdiamondwa.gov/node/15921",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'January 2024' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      },
+      {
+        "data": "2021-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'city council appointment in April of 2021'.",
+        "source": "https://www.blackdiamondwa.gov/node/15921"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2027' is explicitly stated.",
+        "source": "https://www.blackdiamondwa.gov/mayor-council"
+      }
+    ],
+    "updated_at": "2025-06-24T04:46:12Z"
+  }
+]

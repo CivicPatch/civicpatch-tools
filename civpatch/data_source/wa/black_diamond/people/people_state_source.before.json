@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Carol Benson",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "cbenson@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Tamie Deady",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "tdeady@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Nate Jones",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "njones@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Leih Mulvihill",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "lmulvihill@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Sara Nielsen",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "snielsen@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Debbie Page",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "dpage@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Darcy Peterson",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "dpeterson@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Jesse Young",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "jyoung@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Kevin O'Neill",
+    "roles": [
+      "City Administrator"
+    ],
+    "email": "koneill@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "David Linehan",
+    "roles": [
+      "City Attorney"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Brenda L. Martinez, MMC",
+    "roles": [
+      "City Clerk"
+    ],
+    "email": "bmartinez@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Tawnya Parks",
+    "roles": [
+      "Court Administrator"
+    ],
+    "email": "tparks@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Xavier Mason",
+    "roles": [
+      "Finance Director"
+    ],
+    "email": "xmason@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Brenda L. Martinez, CMC",
+    "roles": [
+      "Human Resources Manager"
+    ],
+    "email": "bmartinez@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Andrew Williamson",
+    "roles": [
+      "Master Development Review Team/Economic Development Director"
+    ],
+    "email": "awilliamson@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Jamey Kiblinger",
+    "roles": [
+      "Police Chief"
+    ],
+    "email": "jkiblinger@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  },
+  {
+    "name": "Scott Hanis",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "shanis@blackdiamondwa.gov",
+    "updated_at": "2025-06-24T04:41:28Z"
+  }
+]
