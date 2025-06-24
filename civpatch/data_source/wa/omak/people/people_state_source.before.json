@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Cindy Gagné",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "mayor@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Nattalie Cariker",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "nattalie@gmail.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Steve Clark",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "clark@northcascades.net",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Michael Foth",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Barry Freel",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "barryf@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Michelle Gaines",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "michelleg@charter.net",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Maria Lassila",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "mlassila@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Dave Womack",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "davew@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Michael D. Howe",
+    "roles": [
+      "Attorney"
+    ],
+    "email": null,
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Tyler Wells",
+    "roles": [
+      "Building Official"
+    ],
+    "email": "build@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Todd McDaniel",
+    "roles": [
+      "City Administrator"
+    ],
+    "email": "admin@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Connie Thomas",
+    "roles": [
+      "City Clerk"
+    ],
+    "email": "clerk@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Danyle Gaines",
+    "roles": [
+      "Court Administrator"
+    ],
+    "email": "omakcourt@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Jeremy Patrick",
+    "roles": [
+      "Fire Chief"
+    ],
+    "email": "fire51@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Alyssa Collins",
+    "roles": [
+      "Librarian"
+    ],
+    "email": "acollins@ncrl.org",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Daniel Christensen",
+    "roles": [
+      "Police Chief"
+    ],
+    "email": "chief.christensen@omakpd.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  },
+  {
+    "name": "Wayne Beetchenow",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "publicworks@omakcity.com",
+    "updated_at": "2025-06-24T04:36:26Z"
+  }
+]

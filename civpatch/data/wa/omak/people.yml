@@ -1,33 +1,170 @@
 ---
 - name: Cindy Gagné
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image: https://www.omakcity.com/sites/default/files/styles/full_node_primary/public/imageattachments/bc-mayor/page/1451/cindy_gagne-mayor.jpg?itok=2l_L3M38
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/54f3de8b1f0f74bff94630f9d912342c2d9cc00f316e77e6f3e111453dc106d1.jpg
   email: mayor@omakcity.com
-- name: Barry Freel
-  positions:
-  - Council Member
-  email: barryf@omakcity.com
-- name: Dave Womack
-  positions:
-  - Council Member
-  email: davew@omakcity.com
-- name: Maria Lassila
-  positions:
-  - Council Member
-  email: mlassila@omakcity.com
+  phone_number: "(509) 826-1170"
+  website: https://www.omakcity.com/bc-mayor
+  start_date: 2009-05
+  end_date:
+  sources:
+  - https://www.omakcity.com/bc-mayor
+  updated_at: '2025-06-24T04:41:06Z'
 - name: Michael Foth
-  positions:
+  roles:
+  - Mayor Pro Tempore
   - Council Member
-  email:
+  divisions:
+  - Position 1
+  image: https://www.omakcity.com/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2776/405a2297.png?itok=3-JtpOhx
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/54d54a4378da611a865fc292051335d6f532c7390d04f70dcff9aa63c7a052cd.png
+  email: mikef@omakcity.com
+  phone_number:
+  website: https://www.omakcity.com/directory-listing/michael-foth
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.omakcity.com/citycouncil
+  - https://www.omakcity.com/directory-listing/michael-foth
+  - https://www.omakcity.com/directory-listing/michelle-gaines
+  - https://www.omakcity.com/directory-listing/nattalie-cariker
+  - https://www.omakcity.com/directory-listing/dave-womack
+  - https://www.omakcity.com/directory-listing/barry-freel
+  - https://www.omakcity.com/directory-listing/steve-clark
+  - https://www.omakcity.com/directory-listing/maria-lassila
+  updated_at: '2025-06-24T04:41:06Z'
 - name: Michelle Gaines
-  positions:
+  roles:
   - Council Member
-  email: michelleg@charter.net
+  divisions:
+  - Position 2
+  image: https://www.omakcity.com/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2777/michele_gaines.jpg?itok=jZ_NTWHq
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/db237fc63ae1659d1fd00bd3322612b2563821e39c97fd6fe9969a530900fc06.jpg
+  email: michelleg@omakcity.com
+  phone_number:
+  website: https://www.omakcity.com/directory-listing/michelle-gaines
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.omakcity.com/citycouncil
+  - https://www.omakcity.com/directory-listing/michael-foth
+  - https://www.omakcity.com/directory-listing/michelle-gaines
+  - https://www.omakcity.com/directory-listing/nattalie-cariker
+  - https://www.omakcity.com/directory-listing/dave-womack
+  - https://www.omakcity.com/directory-listing/barry-freel
+  - https://www.omakcity.com/directory-listing/steve-clark
+  - https://www.omakcity.com/directory-listing/maria-lassila
+  updated_at: '2025-06-24T04:41:06Z'
 - name: Nattalie Cariker
-  positions:
+  roles:
   - Council Member
-  email: nattalie@gmail.com
+  divisions:
+  - Position 3
+  image: https://www.omakcity.com/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2778/nattalie_cariker.jpg?itok=sCCjkpei
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/34b8f8c11f73836da584d0167874c91ef5a16f97b119e875b348de4f5b90d5da.jpg
+  email: nattaliec@omakcity.com
+  phone_number:
+  website: https://www.omakcity.com/directory-listing/nattalie-cariker
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.omakcity.com/citycouncil
+  - https://www.omakcity.com/directory-listing/michael-foth
+  - https://www.omakcity.com/directory-listing/michelle-gaines
+  - https://www.omakcity.com/directory-listing/nattalie-cariker
+  - https://www.omakcity.com/directory-listing/dave-womack
+  - https://www.omakcity.com/directory-listing/barry-freel
+  - https://www.omakcity.com/directory-listing/steve-clark
+  - https://www.omakcity.com/directory-listing/maria-lassila
+  updated_at: '2025-06-24T04:41:06Z'
+- name: Dave Womack
+  roles:
+  - Council Member
+  divisions:
+  - Position 4
+  image: https://www.omakcity.com/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2779/dave_womack.jpg?itok=WfH7xSft
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/f2d829a0d0fe575614dd7fd37b64c702150ed2781790d7250ccc06070ab732fe.jpg
+  email: davew@omakcity.com
+  phone_number:
+  website: https://www.omakcity.com/directory-listing/dave-womack
+  start_date:
+  end_date: '2027-12-31'
+  sources:
+  - https://www.omakcity.com/citycouncil
+  - https://www.omakcity.com/directory-listing/michael-foth
+  - https://www.omakcity.com/directory-listing/michelle-gaines
+  - https://www.omakcity.com/directory-listing/nattalie-cariker
+  - https://www.omakcity.com/directory-listing/dave-womack
+  - https://www.omakcity.com/directory-listing/barry-freel
+  - https://www.omakcity.com/directory-listing/steve-clark
+  - https://www.omakcity.com/directory-listing/maria-lassila
+  updated_at: '2025-06-24T04:41:06Z'
+- name: Barry Freel
+  roles:
+  - Council Member
+  divisions:
+  - Position 5
+  image: https://www.omakcity.com/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2780/barry_freel.jpg?itok=c6assoB7
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/797147f6b28abca7c3cb0f35a454d197e9d012a69e87d77600362444ec686097.jpg
+  email: barryf@omakcity.com
+  phone_number:
+  website: https://www.omakcity.com/directory-listing/barry-freel
+  start_date:
+  end_date: '2027-12-31'
+  sources:
+  - https://www.omakcity.com/citycouncil
+  - https://www.omakcity.com/directory-listing/michael-foth
+  - https://www.omakcity.com/directory-listing/michelle-gaines
+  - https://www.omakcity.com/directory-listing/nattalie-cariker
+  - https://www.omakcity.com/directory-listing/dave-womack
+  - https://www.omakcity.com/directory-listing/barry-freel
+  - https://www.omakcity.com/directory-listing/steve-clark
+  - https://www.omakcity.com/directory-listing/maria-lassila
+  updated_at: '2025-06-24T04:41:06Z'
 - name: Steve Clark
-  positions:
+  roles:
   - Council Member
-  email: clark@northcascades.net
+  divisions:
+  - Position 6
+  image: https://www.omakcity.com/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2781/405a2333.jpg?itok=-AQVmerq
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/5102500ec04a922094a51f78856e2f18b662f4390625369ebc503ad0ffd3f08a.jpg
+  email: stevec@omakcity.com
+  phone_number:
+  website: https://www.omakcity.com/directory-listing/steve-clark
+  start_date:
+  end_date: '2027-12-31'
+  sources:
+  - https://www.omakcity.com/citycouncil
+  - https://www.omakcity.com/directory-listing/michael-foth
+  - https://www.omakcity.com/directory-listing/michelle-gaines
+  - https://www.omakcity.com/directory-listing/nattalie-cariker
+  - https://www.omakcity.com/directory-listing/dave-womack
+  - https://www.omakcity.com/directory-listing/barry-freel
+  - https://www.omakcity.com/directory-listing/steve-clark
+  - https://www.omakcity.com/directory-listing/maria-lassila
+  updated_at: '2025-06-24T04:41:06Z'
+- name: Maria Lassila
+  roles:
+  - Council Member
+  divisions:
+  - Position 7
+  image: https://www.omakcity.com/sites/default/files/styles/directory_listings_-_body__4-column/public/default_images/profile-photo-placeholder.jpg?itok=zDK2E3zK
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/omak/images/82f09dfd294c57dfe46e2d71faf0c0ad5feebd2ac0b0dacc1a378da7af853f4a.jpg
+  email: mlassila@omakcity.com
+  phone_number:
+  website: https://www.omakcity.com/directory-listing/maria-lassila
+  start_date:
+  end_date: '2025-11-25'
+  sources:
+  - https://www.omakcity.com/citycouncil
+  - https://www.omakcity.com/directory-listing/michael-foth
+  - https://www.omakcity.com/directory-listing/michelle-gaines
+  - https://www.omakcity.com/directory-listing/nattalie-cariker
+  - https://www.omakcity.com/directory-listing/dave-womack
+  - https://www.omakcity.com/directory-listing/barry-freel
+  - https://www.omakcity.com/directory-listing/steve-clark
+  - https://www.omakcity.com/directory-listing/maria-lassila
+  updated_at: '2025-06-24T04:41:06Z'
