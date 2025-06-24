@@ -34,7 +34,8 @@
 - name: Alan Gothelf
   roles:
   - Council Member
-  divisions: []
+  divisions:
+  - Position 2
   image: https://wa-northbend.civicplus.com/ImageRepository/Document?documentID=9694
   cdn_image: https://cdn.civicpatch.org/open-data/wa/north_bend/images/60e8748c54364203e49c63d796a2abfbdf12484a079b75c654bf6597fdb0c44e.jpg
   email: agothelf@northbendwa.gov
