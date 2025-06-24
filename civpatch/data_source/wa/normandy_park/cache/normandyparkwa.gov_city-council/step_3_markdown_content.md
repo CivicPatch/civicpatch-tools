@@ -1,4 +1,4 @@
-Press Alt+1 for screen-reader mode, Alt+0 to cancel[Accessibility Screen-Reader Guide, Feedback, and Issue Reporting | New window](https://accessibe.com/blog/knowledgebase/screen-reader-guide)
+Press Option+1 for screen-reader mode, Option+0 to cancel[Accessibility Screen-Reader Guide, Feedback, and Issue Reporting | New window](https://accessibe.com/blog/knowledgebase/screen-reader-guide)
 
 - [News](https://normandyparkwa.gov/news)
 - [Events](https://normandyparkwa.gov/events)
