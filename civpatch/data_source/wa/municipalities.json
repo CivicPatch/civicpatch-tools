@@ -2812,10 +2812,12 @@
       "type": "city",
       "population": 3290,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "2c031973ad3dddeca33a92af28931090",
+      "meta_updated_at": "2025-06-25T03:07:59Z",
+      "meta_hash": "4835999b328a077a6300477def1e8da5",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "5301290"
     },
