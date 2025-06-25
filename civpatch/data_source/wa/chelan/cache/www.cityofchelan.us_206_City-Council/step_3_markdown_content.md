@@ -1,5 +1,3 @@
-[Skip To Main Content](https://www.cityofchelan.us/206/City-Council/)
-
 Loading
 
 [Skip to Main Content](https://www.cityofchelan.us/206/City-Council/)
