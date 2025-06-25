@@ -18,20 +18,8 @@ git -C ./tmp/civicpatch-tools checkout -B $BRANCH_NAME
 # Pull latest changes from the branch if it exists
 git -C ./tmp/civicpatch-tools pull origin $BRANCH_NAME || true
 
-# Backup the lock files if they exist
-[ -f civpatch/Gemfile.lock ] && cp civpatch/Gemfile.lock ./tmp/Gemfile.lock.backup
-[ -f civpatch/package-lock.json ] && cp civpatch/package-lock.json ./tmp/package-lock.json.backup
-
 # Copy everything except the lock files
-cp -rn ./tmp/civicpatch-tools/. /app
-# Force overwrite data and data_source directories
-rm -rf /app/civpatch/data /app/civpatch/data_source
-cp -r ./tmp/civicpatch-tools/civpatch/data /app/civpatch/
-cp -r ./tmp/civicpatch-tools/civpatch/data_source /app/civpatch/
-
-# Restore the lock files if they existed
-[ -f ./tmp/Gemfile.lock.backup ] && cp ./tmp/Gemfile.lock.backup /app/civpatch/Gemfile.lock
-[ -f ./tmp/package-lock.json.backup ] && cp ./tmp/package-lock.json.backup /app/civpatch/package-lock.json
+cp -r ./tmp/civicpatch-tools/. /app
 
 rm -rf ./tmp
 cd /app/civpatch

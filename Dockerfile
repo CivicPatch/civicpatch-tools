@@ -33,8 +33,6 @@ COPY --chown=civicpatch_user civpatch/Gemfile civpatch/Gemfile.lock civpatch/Rak
 
 WORKDIR /app/civpatch
 
-RUN ls -la
-
 RUN npm ci
 RUN bundle install
 

@@ -7,3 +7,8 @@ ruby = "latest"
 
 [env]
 _.file = '../.env'
+
+[tasks.devimg]
+run = """
+RELEASE_VERSION=develop IMAGE_NAME=ghcr.io/civicpatch/civpatch PUSH_IMAGE=true ./civpatch/build.sh
+"""

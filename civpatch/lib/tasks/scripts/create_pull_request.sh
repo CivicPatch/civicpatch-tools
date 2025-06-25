@@ -24,5 +24,5 @@ PR_BODY=$(printf "$PULL_REQUEST_DETAILS" | jq --raw-output '.pr_body' | tr -d '"
 if [[ -n $GITHUB_ENV ]]; then
   gh pr create --title "$PR_TITLE" --body "$PR_BODY" --label "$GITHUB_ENV" --base main
 else
-  gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base mainh
+  gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base main
 fi
