@@ -3,142 +3,142 @@
     "name": "Kelli Curtis",
     "roles": [
       "Mayor",
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position #2",
-      "at large"
+      "Position 2",
+      "at-large"
     ],
     "image": null,
     "phone_number": "425-587-3532",
     "email": "kcurtis@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2024-01-01",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:41:12Z"
   },
   {
     "name": "Jay Arnold",
     "roles": [
       "Deputy Mayor",
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position #1",
-      "at large"
+      "Position 1",
+      "at-large"
     ],
     "image": null,
     "phone_number": "425-587-3535",
     "email": "jarnold@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2022-01-01",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:41:12Z"
   },
   {
     "name": "Neal Black",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position #5",
-      "at large"
+      "Position 5",
+      "at-large"
     ],
     "image": null,
     "phone_number": "425-587-3544",
     "email": "nblack@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2022-01-01",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:41:12Z"
   },
   {
     "name": "Amy Falcone",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position #6",
-      "at large"
+      "Position 6",
+      "at-large"
     ],
     "image": null,
     "phone_number": null,
     "email": null,
     "website": null,
-    "start_date": null,
+    "start_date": "2024-01-01",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:41:12Z"
   },
   {
     "name": "Jon Pascal",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position #7",
-      "at large"
+      "Position 7",
+      "at-large"
     ],
     "image": null,
     "phone_number": "425-587-3530",
     "email": "jpascal@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2021-11",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:41:12Z"
   },
   {
     "name": "Penny Sweet",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position #3",
-      "at large"
+      "Position 3",
+      "at-large"
     ],
     "image": null,
     "phone_number": "425-587-3534",
     "email": "psweet@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2022-01-01",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:41:12Z"
   },
   {
     "name": "John Tymczyszyn",
     "roles": [
-      "Councilmember"
+      "Council Member"
     ],
     "divisions": [
-      "Position #4",
-      "at large"
+      "Position 4",
+      "at-large"
     ],
     "image": null,
     "phone_number": null,
     "email": "JohnT@Kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2023-11",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:41:12Z"
   }
 ]
