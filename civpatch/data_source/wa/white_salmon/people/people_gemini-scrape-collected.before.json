@@ -1,0 +1,832 @@
+[
+  {
+    "name": "Patty Fink",
+    "sources": [
+      "https://www.white-salmon.net/citycouncil",
+      "https://www.white-salmon.net/directory-listing/patty-fink",
+      "https://www.white-salmon.net/directory-listing/david-lindley",
+      "https://www.white-salmon.net/directory-listing/jason-hartmann",
+      "https://www.white-salmon.net/directory-listing/morella-mora",
+      "https://www.white-salmon.net/directory-listing/ben-giant",
+      "https://www.white-salmon.net/directory-listing/marla-keethler"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #1'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #1' for City Councilor."
+      },
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Position #1' in the text."
+      },
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #1' for the City Councilor role."
+      },
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #1'."
+      },
+      {
+        "data": "Position #1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated next to the role."
+      },
+      {
+        "data": "Position #1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated as 'Position #1'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "PattyF@whitesalmonwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the text next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "PattyF@whitesalmonwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.white-salmon.net/directory-listing/patty-fink"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.white-salmon.net/directory-listing/patty-fink",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/patty-fink",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://www.white-salmon.net/directory-listing/patty-fink"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/patty-fink",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the text.",
+        "source": "https://www.white-salmon.net/directory-listing/jason-hartmann"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/patty-fink",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is explicitly linked to the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/morella-mora"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/patty-fink",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the directory.",
+        "source": "https://www.white-salmon.net/directory-listing/ben-giant"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/patty-fink",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website is a direct link associated with the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly provided in a table column next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      }
+    ],
+    "updated_at": "2025-06-25T05:05:25Z"
+  },
+  {
+    "name": "David Lindley",
+    "sources": [
+      "https://www.white-salmon.net/citycouncil",
+      "https://www.white-salmon.net/directory-listing/patty-fink",
+      "https://www.white-salmon.net/directory-listing/jason-hartmann",
+      "https://www.white-salmon.net/directory-listing/morella-mora",
+      "https://www.white-salmon.net/directory-listing/ben-giant",
+      "https://www.white-salmon.net/directory-listing/marla-keethler"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #2'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #2' for City Councilor."
+      },
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #2' for the City Councilor role."
+      },
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #2'."
+      },
+      {
+        "data": "Position #2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated next to the role."
+      },
+      {
+        "data": "Position #2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated as 'Position #2'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "DavidL@whitesalmonwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the text next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.white-salmon.net/directory-listing/david-lindley",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/david-lindley",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://www.white-salmon.net/directory-listing/patty-fink"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/david-lindley",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the text.",
+        "source": "https://www.white-salmon.net/directory-listing/jason-hartmann"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/david-lindley",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is explicitly linked to the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/morella-mora"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/david-lindley",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the directory.",
+        "source": "https://www.white-salmon.net/directory-listing/ben-giant"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/david-lindley",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website is a direct link associated with the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly provided in a table column next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      }
+    ],
+    "updated_at": "2025-06-25T05:05:25Z"
+  },
+  {
+    "name": "Jason Hartmann",
+    "sources": [
+      "https://www.white-salmon.net/citycouncil",
+      "https://www.white-salmon.net/directory-listing/patty-fink",
+      "https://www.white-salmon.net/directory-listing/david-lindley",
+      "https://www.white-salmon.net/directory-listing/morella-mora",
+      "https://www.white-salmon.net/directory-listing/ben-giant",
+      "https://www.white-salmon.net/directory-listing/marla-keethler"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #3'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #3' for City Councilor."
+      },
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Position #3' in the text."
+      },
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #3'."
+      },
+      {
+        "data": "Position #3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated next to the role."
+      },
+      {
+        "data": "Position #3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated as 'Position #3'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "JasonH@whitesalmonwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the text next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.white-salmon.net/directory-listing/jason-hartmann",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/jason-hartmann",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://www.white-salmon.net/directory-listing/patty-fink"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/jason-hartmann",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is explicitly linked to the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/morella-mora"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/jason-hartmann",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the directory.",
+        "source": "https://www.white-salmon.net/directory-listing/ben-giant"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/jason-hartmann",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website is a direct link associated with the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly provided in a table column next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      }
+    ],
+    "updated_at": "2025-06-25T05:05:25Z"
+  },
+  {
+    "name": "Morella Mora",
+    "sources": [
+      "https://www.white-salmon.net/citycouncil",
+      "https://www.white-salmon.net/directory-listing/patty-fink",
+      "https://www.white-salmon.net/directory-listing/david-lindley",
+      "https://www.white-salmon.net/directory-listing/jason-hartmann",
+      "https://www.white-salmon.net/directory-listing/morella-mora",
+      "https://www.white-salmon.net/directory-listing/ben-giant",
+      "https://www.white-salmon.net/directory-listing/marla-keethler"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #4'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #4' for City Councilor."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Position #4' in the text."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #4' for the City Councilor role."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #4'."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated next to the role."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated as 'Position #4'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "MorellaM@whitesalmonwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the text next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "morellam@ci.white-salmon.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.white-salmon.net/directory-listing/morella-mora"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.white-salmon.net/directory-listing/morella-mora",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/morella-mora",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://www.white-salmon.net/directory-listing/patty-fink"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/morella-mora",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the text.",
+        "source": "https://www.white-salmon.net/directory-listing/jason-hartmann"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/morella-mora",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is explicitly linked to the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/morella-mora"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/morella-mora",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the directory.",
+        "source": "https://www.white-salmon.net/directory-listing/ben-giant"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/morella-mora",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website is a direct link associated with the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly provided in a table column next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      }
+    ],
+    "updated_at": "2025-06-25T05:05:25Z"
+  },
+  {
+    "name": "Ben Giant",
+    "sources": [
+      "https://www.white-salmon.net/citycouncil",
+      "https://www.white-salmon.net/directory-listing/patty-fink",
+      "https://www.white-salmon.net/directory-listing/david-lindley",
+      "https://www.white-salmon.net/directory-listing/jason-hartmann",
+      "https://www.white-salmon.net/directory-listing/morella-mora",
+      "https://www.white-salmon.net/directory-listing/ben-giant",
+      "https://www.white-salmon.net/directory-listing/marla-keethler"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #5'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor' in the text."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #5' for City Councilor."
+      },
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Position #5' in the text."
+      },
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #5' for the City Councilor role."
+      },
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Position #5'."
+      },
+      {
+        "data": "Position #5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated next to the role."
+      },
+      {
+        "data": "Position #5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated as 'Position #5'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "BenG@whitesalmonwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the text next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "BenG@whitesalmonwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly stated on the person's profile page.",
+        "source": "https://www.white-salmon.net/directory-listing/ben-giant"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.white-salmon.net/directory-listing/ben-giant",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/ben-giant",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://www.white-salmon.net/directory-listing/patty-fink"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/ben-giant",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the text.",
+        "source": "https://www.white-salmon.net/directory-listing/jason-hartmann"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/ben-giant",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is explicitly linked to the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/morella-mora"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/ben-giant",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL is the current page URL and is linked to the person's name in the directory.",
+        "source": "https://www.white-salmon.net/directory-listing/ben-giant"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/ben-giant",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website is a direct link associated with the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly provided in a table column next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      }
+    ],
+    "updated_at": "2025-06-25T05:05:25Z"
+  },
+  {
+    "name": "Marla Keethler",
+    "sources": [
+      "https://www.white-salmon.net/citycouncil",
+      "https://www.white-salmon.net/directory-listing/patty-fink",
+      "https://www.white-salmon.net/directory-listing/david-lindley",
+      "https://www.white-salmon.net/directory-listing/jason-hartmann",
+      "https://www.white-salmon.net/directory-listing/morella-mora",
+      "https://www.white-salmon.net/directory-listing/ben-giant",
+      "https://www.white-salmon.net/directory-listing/marla-keethler"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text next to the name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor' in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "509-493-1133 #206",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided in the text next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "509-493-1133 #206",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Mayor@whitesalmonwa.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the text next to the name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "Mayor@whitesalmonwa.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.white-salmon.net/directory-listing/marla-keethler",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name.",
+        "source": "https://www.white-salmon.net/citycouncil"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/marla-keethler",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://www.white-salmon.net/directory-listing/patty-fink"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/marla-keethler",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the text.",
+        "source": "https://www.white-salmon.net/directory-listing/jason-hartmann"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/marla-keethler",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is explicitly linked to the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/morella-mora"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/marla-keethler",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name in the directory.",
+        "source": "https://www.white-salmon.net/directory-listing/ben-giant"
+      },
+      {
+        "data": "https://www.white-salmon.net/directory-listing/marla-keethler",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website is a direct link associated with the person's name.",
+        "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:05:25Z"
+  }
+]
