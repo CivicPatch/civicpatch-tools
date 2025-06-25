@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Art Smyth",
+    "sources": [
+      "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'MAYOR ART SMYTH' and 'Mayor' directly below his name, clearly indicating his current role. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "509-689-3464",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The phone number is listed as the general contact number for the City of Brewster, not explicitly for Art Smyth, but it is the only phone number provided on the page related to the city's governing body, making it the most relevant available contact. ",
+        "source": "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "brewstermayor1@frontier.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link for Art Smyth, the Mayor, on the page itself, indicating high accuracy and direct association with the individual and role mentioned in the text. The text also states 'Please call us for the mayor's email address.' but the mailto link is a direct and explicit email address for the mayor, so it takes precedence. ",
+        "source": "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:34:09Z"
+  }
+]

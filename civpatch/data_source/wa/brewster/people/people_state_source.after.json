@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Art Smyth",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "brewstermayor1@frontier.com",
+    "updated_at": "2025-06-25T22:29:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Pedro De La Cerda",
+    "roles": [
+      "Council Member"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Glenn Farrington",
+    "roles": [
+      "Council Member"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z",
+    "divisions": []
+  },
+  {
+    "name": "John Housden",
+    "roles": [
+      "Council Member"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Jan May",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "janmay2@frontier.com",
+    "updated_at": "2025-06-25T22:29:50Z",
+    "divisions": []
+  }
+]

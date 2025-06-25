@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Art Smyth",
+    "sources": [
+      "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 689-3464",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed near mayor's contact info, likely main city contact.",
+        "source": "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "brewstermayor1@frontier.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly given next to Art Smyth's name.",
+        "source": "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL is the official Mayor & City Council page.",
+        "source": "https://www.cityofbrewsterwashington.org/government/mayor_city_council.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:33:26Z"
+  }
+]

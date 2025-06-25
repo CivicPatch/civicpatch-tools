@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Art Smyth",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "brewstermayor1@frontier.com",
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Pedro De La Cerda",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Glenn Farrington",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "John Housden",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Jan May",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": "janmay2@frontier.com",
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Chuck Zimmerman",
+    "roles": [
+      "Attorney"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Juana Garcia Escobar",
+    "roles": [
+      "Court Administrator"
+    ],
+    "email": "juanaescobar@brewsterpd.org",
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Misty Ruiz",
+    "roles": [
+      "Finance Director/City Clerk"
+    ],
+    "email": "Misty.Ruiz@brewsterwa.us",
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Dylan Gamble",
+    "roles": [
+      "Fire Chief"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Rebecca Zion",
+    "roles": [
+      "Librarian"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Marcos Ruiz",
+    "roles": [
+      "Police Chief"
+    ],
+    "email": "chiefruiz@brewsterpd.org",
+    "updated_at": "2025-06-25T22:29:50Z"
+  },
+  {
+    "name": "Lee Webster",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "brewsterpwd@frontier.com",
+    "updated_at": "2025-06-25T22:29:50Z"
+  }
+]
