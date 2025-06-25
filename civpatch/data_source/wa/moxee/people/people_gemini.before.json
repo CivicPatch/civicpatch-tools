@@ -4,9 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "divisions": [
-      "at-large"
-    ],
+    "divisions": [],
     "image": null,
     "phone_number": null,
     "email": null,
@@ -16,7 +14,7 @@
     "sources": [
       "https://cityofmoxee.us/city-government"
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Greg Spurgin",
@@ -24,8 +22,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #2",
-      "at-large"
+      "Position #2"
     ],
     "image": null,
     "phone_number": null,
@@ -36,7 +33,7 @@
     "sources": [
       "https://cityofmoxee.us/city-government"
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Rob Layman",
@@ -44,8 +41,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #1",
-      "at-large"
+      "Position #1"
     ],
     "image": null,
     "phone_number": null,
@@ -56,7 +52,7 @@
     "sources": [
       "https://cityofmoxee.us/city-government"
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Jan Hutchinson",
@@ -64,8 +60,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #3",
-      "at-large"
+      "Position #3"
     ],
     "image": null,
     "phone_number": null,
@@ -76,7 +71,7 @@
     "sources": [
       "https://cityofmoxee.us/city-government"
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "David Roy",
@@ -84,8 +79,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #4",
-      "at-large"
+      "Position #4"
     ],
     "image": null,
     "phone_number": null,
@@ -96,7 +90,7 @@
     "sources": [
       "https://cityofmoxee.us/city-government"
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Larry Frank",
@@ -104,8 +98,7 @@
       "Council Member"
     ],
     "divisions": [
-      "Position #5",
-      "at-large"
+      "Position #5"
     ],
     "image": null,
     "phone_number": null,
@@ -116,6 +109,6 @@
     "sources": [
       "https://cityofmoxee.us/city-government"
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   }
 ]

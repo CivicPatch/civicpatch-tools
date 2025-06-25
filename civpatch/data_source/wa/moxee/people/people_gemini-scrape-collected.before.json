@@ -9,16 +9,10 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the name."
       }
     ],
-    "divisions": [
-      {
-        "data": "at-large",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text states '5 elected at large City Council Members' and LeRoy Lenseigne is the Mayor of this council, implying an at-large position."
-      }
-    ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [],
     "websites": [],
@@ -27,11 +21,11 @@
       {
         "data": "2027",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "llm_confidence_reason": "The end date 'Term ends 2027' is explicitly stated.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Greg Spurgin",
@@ -43,19 +37,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members' and Greg Spurgin is listed under 'City Council' with a 'Position #2', indicating he is a council member."
       }
     ],
     "divisions": [
       {
         "data": "Position #2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position #2'."
-      },
-      {
-        "data": "at-large",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Greg Spurgin is one of them."
+        "llm_confidence_reason": "The division 'Position #2' is explicitly stated next to the name."
       }
     ],
     "phone_numbers": [],
@@ -66,11 +55,11 @@
       {
         "data": "2025",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term ends 2025'.",
+        "llm_confidence_reason": "The end date 'Term ends 2025' is explicitly stated.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Rob Layman",
@@ -82,19 +71,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members' and Rob Layman is listed under 'City Council' with a 'Position #1', indicating he is a council member."
       }
     ],
     "divisions": [
       {
         "data": "Position #1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position #1'."
-      },
-      {
-        "data": "at-large",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Rob Layman is one of them."
+        "llm_confidence_reason": "The division 'Position #1' is explicitly stated next to the name."
       }
     ],
     "phone_numbers": [],
@@ -105,11 +89,11 @@
       {
         "data": "2025",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term ends 2025'.",
+        "llm_confidence_reason": "The end date 'Term ends 2025' is explicitly stated.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Jan Hutchinson",
@@ -121,19 +105,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members' and Jan Hutchinson is listed under 'City Council' with a 'Position #3', indicating she is a council member."
       }
     ],
     "divisions": [
       {
         "data": "Position #3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position #3'."
-      },
-      {
-        "data": "at-large",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Jan Hutchinson is one of them."
+        "llm_confidence_reason": "The division 'Position #3' is explicitly stated next to the name."
       }
     ],
     "phone_numbers": [],
@@ -144,11 +123,11 @@
       {
         "data": "2027",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "llm_confidence_reason": "The end date 'Term ends 2027' is explicitly stated.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "David Roy",
@@ -160,19 +139,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members' and David Roy is listed under 'City Council' with a 'Position #4', indicating he is a council member."
       }
     ],
     "divisions": [
       {
         "data": "Position #4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position #4'."
-      },
-      {
-        "data": "at-large",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and David Roy is one of them."
+        "llm_confidence_reason": "The division 'Position #4' is explicitly stated next to the name."
       }
     ],
     "phone_numbers": [],
@@ -183,11 +157,11 @@
       {
         "data": "2027",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "llm_confidence_reason": "The end date 'Term ends 2027' is explicitly stated.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   },
   {
     "name": "Larry Frank",
@@ -199,19 +173,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members' and Larry Frank is listed under 'City Council' with a 'Position #5', indicating he is a council member."
       }
     ],
     "divisions": [
       {
         "data": "Position #5",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position #5'."
-      },
-      {
-        "data": "at-large",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Larry Frank is one of them."
+        "llm_confidence_reason": "The division 'Position #5' is explicitly stated next to the name."
       }
     ],
     "phone_numbers": [],
@@ -222,10 +191,10 @@
       {
         "data": "2027",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "llm_confidence_reason": "The end date 'Term ends 2027' is explicitly stated.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:43:19Z"
+    "updated_at": "2025-06-25T04:50:51Z"
   }
 ]
