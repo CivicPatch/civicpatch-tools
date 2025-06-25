@@ -1,25 +1,72 @@
 ---
 - name: Bruce Bosch
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image:
+  cdn_image:
   email: bbosch@cityofsumas.com
-- name: Bob Bromley
-  positions:
-  - Council Member
-  email: bbromley@cityofsumas.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofsumas.com
+  - https://www.cityofsumas.com/contact-us
+  updated_at: '2025-06-25T23:10:41Z'
 - name: Jesse Clawson
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: JAClawson@cityofsumas.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2027-12-31'
+  sources:
+  - https://www.cityofsumas.com/contact-us
+  updated_at: '2025-06-25T23:10:41Z'
 - name: Josh Clawson
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: jclawson@cityofsumas.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofsumas.com/contact-us
+  updated_at: '2025-06-25T23:10:41Z'
 - name: Rich Postma
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: rpostma@cityofsumas.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofsumas.com/contact-us
+  updated_at: '2025-06-25T23:10:41Z'
 - name: Todd Daniels
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: tdaniels@cityofsumas.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2025-12-31'
+  sources:
+  - https://www.cityofsumas.com/contact-us
+  updated_at: '2025-06-25T23:10:41Z'
