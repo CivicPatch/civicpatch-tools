@@ -6,7 +6,7 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position #2",
+      "Position 2",
       "at large"
     ],
     "image": null,
@@ -18,7 +18,7 @@
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:14:18Z"
   },
   {
     "name": "Jay Arnold",
@@ -27,19 +27,19 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position #1",
+      "Position 1",
       "at large"
     ],
     "image": null,
     "phone_number": "425-587-3535",
     "email": "jarnold@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2014-01",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:14:18Z"
   },
   {
     "name": "Neal Black",
@@ -47,19 +47,19 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position #5",
+      "Position 5",
       "at large"
     ],
     "image": null,
     "phone_number": "425-587-3544",
     "email": "nblack@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2019-11",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:14:18Z"
   },
   {
     "name": "Amy Falcone",
@@ -67,19 +67,19 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position #6",
+      "Position 6",
       "at large"
     ],
     "image": null,
     "phone_number": null,
     "email": null,
     "website": null,
-    "start_date": null,
+    "start_date": "2019-11",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:14:18Z"
   },
   {
     "name": "Jon Pascal",
@@ -87,19 +87,19 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position #7",
+      "Position 7",
       "at large"
     ],
     "image": null,
     "phone_number": "425-587-3530",
     "email": "jpascal@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2021",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:14:18Z"
   },
   {
     "name": "Penny Sweet",
@@ -107,19 +107,19 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position #3",
+      "Position 3",
       "at large"
     ],
     "image": null,
     "phone_number": "425-587-3534",
     "email": "psweet@kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2010-01",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:14:18Z"
   },
   {
     "name": "John Tymczyszyn",
@@ -127,18 +127,18 @@
       "Councilmember"
     ],
     "divisions": [
-      "Position #4",
+      "Position 4",
       "at large"
     ],
     "image": null,
     "phone_number": null,
     "email": "JohnT@Kirklandwa.gov",
     "website": null,
-    "start_date": null,
+    "start_date": "2023-11",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:14:18Z"
   }
 ]
