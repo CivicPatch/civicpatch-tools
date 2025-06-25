@@ -1,0 +1,152 @@
+[
+  {
+    "name": "James Retzer",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-mayor-1"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  },
+  {
+    "name": "Blaine Golden",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [
+      "Position 1"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  },
+  {
+    "name": "Anne McRae",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [
+      "Position 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  },
+  {
+    "name": "Travis Schaefer",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [
+      "Position 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  },
+  {
+    "name": "Mark Mackleit",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [
+      "Position 4"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  },
+  {
+    "name": "Crystn Guenthner",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [
+      "Position 5"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  },
+  {
+    "name": "Sarah Sevedge",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [
+      "Position 6"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  },
+  {
+    "name": "Thomas Huntwork",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [
+      "Position 7"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "updated_at": "2025-06-25T05:05:43Z"
+  }
+]

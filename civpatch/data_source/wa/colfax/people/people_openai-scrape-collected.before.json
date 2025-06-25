@@ -1,0 +1,233 @@
+[
+  {
+    "name": "James Retzer",
+    "sources": [
+      "https://colfaxwa.org/city-mayor-1"
+    ],
+    "images": [
+      {
+        "data": "https://colfaxwa.org/images/images_mi/mi_351_Retzer_edited_1352902479_4582.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image near the 'Mayor Retzer' heading is likely his official portrait.",
+        "source": "https://colfaxwa.org/city-mayor-1"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is titled 'City Mayor' and shows an image with caption 'Mayor Retzer', indicating James Retzer is the Mayor."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(509) 397-3861",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number is provided; no direct mayor phone found, so city hall main line is used.",
+        "source": "https://colfaxwa.org/city-mayor-1"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://colfaxwa.org/city-mayor-1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is the official city mayor page.",
+        "source": "https://colfaxwa.org/city-mayor-1"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  },
+  {
+    "name": "Blaine Golden",
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Position 1 on City Council, which implies council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position 1."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  },
+  {
+    "name": "Anne McRae",
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Position 2 on City Council, which implies council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position 2."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  },
+  {
+    "name": "Travis Schaefer",
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Position 3 on City Council, which implies council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position 3."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  },
+  {
+    "name": "Mark Mackleit",
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Position 4 on City Council, which implies council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position 4."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  },
+  {
+    "name": "Crystn Guenthner",
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Position 5 on City Council, which implies council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position 5."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  },
+  {
+    "name": "Sarah Sevedge",
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Position 6 on City Council, which implies council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position 6."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  },
+  {
+    "name": "Thomas Huntwork",
+    "sources": [
+      "https://colfaxwa.org/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Position 7 on City Council, which implies council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Position 7."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T05:04:27Z"
+  }
+]
