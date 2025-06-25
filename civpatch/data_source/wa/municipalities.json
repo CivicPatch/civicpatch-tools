@@ -3120,7 +3120,6 @@
       "counties": [
         "Grant"
       ],
-      "website": "http://www.cityofwarden.org",
       "fips": "53-76160",
       "gnis": "2412179",
       "type": "city",
@@ -3133,6 +3132,7 @@
         "gemini",
         "openai"
       ],
+      "meta_comment": "no contact information on website: https://cityofwarden.org/council",
       "geoid": "5376160"
     },
     {
