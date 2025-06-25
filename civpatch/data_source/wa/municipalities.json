@@ -2552,10 +2552,12 @@
       "type": "city",
       "population": 4383,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "60848fda417dfc62e37bb67abe40c193",
+      "meta_updated_at": "2025-06-25T02:28:56Z",
+      "meta_hash": "4cdbc4566e56c7fff43d92b3d0c507f7",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "5317320"
     },
