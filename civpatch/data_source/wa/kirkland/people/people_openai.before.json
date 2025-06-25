@@ -10,13 +10,13 @@
     "image": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/kelli-curtis.jpg?w=334&h=506",
     "phone_number": "425-587-3532",
     "email": "kcurtis@kirklandwa.gov",
-    "website": "https://www.kirklandwa.gov/Government/City-Council",
+    "website": null,
     "start_date": null,
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:40:52Z"
   },
   {
     "name": "Jay Arnold",
@@ -29,13 +29,13 @@
     "image": "https://www.kirklandwa.gov/files/sharedassets/public/v/3/city-council/images/jay-arnold.jpg?w=300&h=450",
     "phone_number": "425-587-3535",
     "email": "jarnold@kirklandwa.gov",
-    "website": "https://www.kirklandwa.gov/Government/City-Council",
+    "website": null,
     "start_date": "2014-01",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:40:52Z"
   },
   {
     "name": "Neal Black",
@@ -48,13 +48,13 @@
     "image": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/neal-black.jpg?w=300&h=450",
     "phone_number": "425-587-3544",
     "email": "nblack@kirklandwa.gov",
-    "website": "https://www.kirklandwa.gov/Government/City-Council",
+    "website": null,
     "start_date": "2019-11",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:40:52Z"
   },
   {
     "name": "Amy Falcone",
@@ -67,13 +67,13 @@
     "image": "https://www.kirklandwa.gov/files/sharedassets/public/v/3/city-council/images/amy-falcone-2024.jpg?w=300&h=450",
     "phone_number": null,
     "email": null,
-    "website": "https://www.kirklandwa.gov/Government/City-Council",
+    "website": null,
     "start_date": "2019-11",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:40:52Z"
   },
   {
     "name": "Jon Pascal",
@@ -86,13 +86,13 @@
     "image": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/jon-pascal.jpg?w=300&h=450",
     "phone_number": "425-587-3530",
     "email": "jpascal@kirklandwa.gov",
-    "website": "https://www.kirklandwa.gov/Government/City-Council",
-    "start_date": "2016-12",
+    "website": null,
+    "start_date": "2021",
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:40:52Z"
   },
   {
     "name": "Penny Sweet",
@@ -105,13 +105,13 @@
     "image": "https://www.kirklandwa.gov/files/sharedassets/public/v/2/city-council/images/penny-sweet.jpg?w=300&h=450",
     "phone_number": "425-587-3534",
     "email": "psweet@kirklandwa.gov",
-    "website": "https://www.kirklandwa.gov/Government/City-Council",
-    "start_date": "2010-01",
+    "website": null,
+    "start_date": null,
     "end_date": "2025-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:40:52Z"
   },
   {
     "name": "John Tymczyszyn",
@@ -124,12 +124,12 @@
     "image": "https://www.kirklandwa.gov/files/sharedassets/public/v/1/city-council/images/john-tymczyszyn.jpg?w=300&h=450",
     "phone_number": null,
     "email": "JohnT@Kirklandwa.gov",
-    "website": "https://www.kirklandwa.gov/Government/City-Council",
+    "website": null,
     "start_date": "2023-11",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.kirklandwa.gov/Government/City-Council"
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:40:52Z"
   }
 ]
