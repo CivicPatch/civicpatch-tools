@@ -12,6 +12,7 @@ args_bin = [
   "-run", 
   "-state", "wa", 
   "-geoid", "5335940",
+  "-create-pr",
   # "-develop"
 ]
 #args_bin = [
