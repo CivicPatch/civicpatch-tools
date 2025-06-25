@@ -7,9 +7,6 @@ fi
 
 REPO_URL="https://github.com/CivicPatch/civicpatch-tools.git"
 
-echo "Before cloning:"
-rm -rf /app/*
-
 cd /app
 
 # Clone the repository into the current directory
@@ -21,8 +18,7 @@ git clone -b $BRANCH_NAME $REPO_URL . || {
 # Checkout the target branch (create it if it doesn't exist locally)
 git checkout -B $BRANCH_NAME origin/$BRANCH_NAME || git checkout -B $BRANCH_NAME
 
-# Restore node_modules from /tmp/node_modules
-mv /tmp/node_modules /app/civpatch/node_modules || {
+mv /tmp/civpatch/node_modules /app/civpatch/node_modules || {
   echo "Failed to restore node_modules from /tmp/node_modules"
   exit 1
 }

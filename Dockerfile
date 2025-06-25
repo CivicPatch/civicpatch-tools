@@ -22,9 +22,9 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y
   && sudo apt install gh -y
 
 RUN adduser --disabled-password civicpatch_user
-WORKDIR /app
+WORKDIR /tmp
 RUN mkdir -p /scripts
-RUN mkdir -p /tmp
+RUN mkdir -p /app
 RUN chown -R civicpatch_user:civicpatch_user /app /scripts /tmp && \
   chmod -R 755 /app /scripts /tmp
 
@@ -33,7 +33,7 @@ USER civicpatch_user
 COPY --chown=civicpatch_user civpatch/package.json civpatch/package-lock.json ./civpatch/
 COPY --chown=civicpatch_user civpatch/Gemfile civpatch/Gemfile.lock civpatch/Rakefile ./civpatch/
 
-WORKDIR /app/civpatch
+WORKDIR /tmp/civpatch
 
 RUN npm ci
 RUN bundle install
@@ -44,10 +44,8 @@ RUN ./node_modules/.bin/patchright install-deps
 USER civicpatch_user
 RUN ./node_modules/.bin/patchright install chromium
 
-COPY --chown=civicpatch_user civpatch/lib/tasks/scripts /scripts/
+COPY --chown=civicpatch_user ./civpatch/lib/tasks/scripts /scripts/
 
-RUN rm /app/civpatch/package.json /app/civpatch/package-lock.json
-RUN rm /app/civpatch/Gemfile /app/civpatch/Gemfile.lock /app/civpatch/Rakefile
-RUN mv /app/civpatch/node_modules /tmp
+WORKDIR /app
 
 CMD ["tail", "-f", "/dev/null"]

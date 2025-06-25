@@ -16,6 +16,8 @@ source "$(dirname "$0")/update_branch.sh" $STATE $GEOID
 echo "Creating pull request for $STATE $GEOID"
 BRANCH_NAME=$(git branch --show-current)
 
+cd /app/civpatch || exit 1
+
 PULL_REQUEST_DETAILS=$(rake "github_pipeline:pr_details[$STATE,$GEOID,$BRANCH_NAME]")
 
 PR_TITLE=$(printf "$PULL_REQUEST_DETAILS" | jq --raw-output '.pr_title' | tr -d '"')

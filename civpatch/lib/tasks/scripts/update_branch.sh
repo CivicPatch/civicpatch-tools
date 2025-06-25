@@ -22,9 +22,9 @@ if [ -z "$STATE" ] || [ -z "$GEOID" ]; then
 fi
 
 FOLDERS_TO_COPY=(
-  "./config"
-  "./data"
-  "./data_source"
+  "/app/civpatch/config"
+  "/app/civpatch/data"
+  "/app/civpatch/data_source"
 )
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -38,17 +38,13 @@ COMMIT_MESSAGE="Municipality officials scrape for state: $STATE geoid: $GEOID"
 
 echo "Committing changes (if any) to branch ($CURRENT_BRANCH): ${FOLDERS_TO_COPY[@]}"
 
-echo "in remote, not local:"
-git log --oneline $CURRENT_BRANCH..origin/$CURRENT_BRANCH
-
-echo "in local, not remote:"
-git log --oneline origin/$CURRENT_BRANCH..$CURRENT_BRANCH
-
 REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/CivicPatch/civicpatch-tools.git"
 git remote set-url origin $REPO_URL
 
 git config --global user.name "$GITHUB_USERNAME"
 git config --global user.email "civicpatch-tools@civicpatch.org"
+
+cd /app
 
 git add "${FOLDERS_TO_COPY[@]}"
 git commit -m "$COMMIT_MESSAGE"

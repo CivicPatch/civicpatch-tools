@@ -15,6 +15,8 @@ if [ -z "$GITHUB_TOKEN" ]; then
   exit 1
 fi
 
+cd /app/civpatch || exit 1
+
 REVIEW=$(rake "github_pipeline:generate_review[$STATE,$GEOID]")
 
 SCORE=$(printf '%s' "$REVIEW" | jq '.score' )
