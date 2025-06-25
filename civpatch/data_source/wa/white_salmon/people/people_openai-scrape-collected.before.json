@@ -9,7 +9,7 @@
       {
         "data": "https://www.whitesalmonwa.gov/sites/default/files/styles/full_node_primary/public/default_images/profile-photo-placeholder.jpg?itok=IR-m7pEf",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The image is directly under the heading with Marla Keethler's name and appears to be a profile photo placeholder.",
+        "llm_confidence_reason": "The image is directly under the heading 'Marla Keethler' and appears to be a profile photo placeholder.",
         "source": "https://www.white-salmon.net/directory-listing/marla-keethler"
       }
     ],
@@ -58,7 +58,7 @@
       {
         "data": "https://www.white-salmon.net/directory-listing/marla-keethler",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL linked with the name.",
+        "llm_confidence_reason": "Profile link provided for Marla Keethler.",
         "source": "https://www.white-salmon.net/contact"
       },
       {
@@ -70,7 +70,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:31:44Z"
+    "updated_at": "2025-06-25T21:54:19Z"
   },
   {
     "name": "Patty Fink",
@@ -95,7 +95,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'City Councilor Position #1' which is equivalent to 'Council Member' as a municipal legislative role."
+        "llm_confidence_reason": "The text states 'City Councilor Position #1' which corresponds to a Council Member role."
       }
     ],
     "divisions": [
@@ -107,7 +107,7 @@
       {
         "data": "Position 1",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "The text explicitly states 'City Councilor Position #1', indicating the division as Position 1."
+        "llm_confidence_reason": "The text explicitly states 'City Councilor Position #1'."
       }
     ],
     "phone_numbers": [],
@@ -121,7 +121,7 @@
       {
         "data": "PattyF@whitesalmonwa.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email is explicitly listed next to Patty Fink's name.",
+        "llm_confidence_reason": "Email is explicitly listed next to Patty Fink's name.",
         "source": "https://www.white-salmon.net/directory-listing/patty-fink"
       }
     ],
@@ -129,19 +129,19 @@
       {
         "data": "https://www.white-salmon.net/directory-listing/patty-fink",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL linked with the name.",
+        "llm_confidence_reason": "Profile link provided for Patty Fink.",
         "source": "https://www.white-salmon.net/contact"
       },
       {
         "data": "https://www.white-salmon.net/directory-listing/patty-fink",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL provided is the directory listing page for Patty Fink.",
+        "llm_confidence_reason": "The URL provided is the profile page for Patty Fink.",
         "source": "https://www.white-salmon.net/directory-listing/patty-fink"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:31:44Z"
+    "updated_at": "2025-06-25T21:54:19Z"
   },
   {
     "name": "David Lindley",
@@ -153,7 +153,7 @@
       {
         "data": "https://www.whitesalmonwa.gov/sites/default/files/styles/full_node_primary/public/default_images/profile-photo-placeholder.jpg?itok=IR-m7pEf",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The only image near the name is a profile photo placeholder, likely representing David Lindley.",
+        "llm_confidence_reason": "This is the only image near the name and appears to be a profile placeholder image.",
         "source": "https://www.white-salmon.net/directory-listing/david-lindley"
       }
     ],
@@ -166,7 +166,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'City Councilor Position #2', which corresponds to a council member role."
+        "llm_confidence_reason": "The text states 'City Councilor Position #2' which is equivalent to 'Council Member' as a normalized role."
       }
     ],
     "divisions": [
@@ -178,7 +178,7 @@
       {
         "data": "Position 2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The role is specified as 'City Councilor Position #2'."
+        "llm_confidence_reason": "The text explicitly states 'Position #2' for the council seat."
       }
     ],
     "phone_numbers": [],
@@ -200,14 +200,8 @@
       {
         "data": "https://www.white-salmon.net/directory-listing/david-lindley",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL linked with the name.",
+        "llm_confidence_reason": "Profile link provided for David Lindley.",
         "source": "https://www.white-salmon.net/contact"
-      },
-      {
-        "data": "https://www.white-salmon.net/directory-listing/david-lindley",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page URL is the profile page for David Lindley.",
-        "source": "https://www.white-salmon.net/directory-listing/david-lindley"
       }
     ],
     "start_dates": [],
@@ -215,11 +209,11 @@
       {
         "data": "2019-12-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term End Date is explicitly stated as Sunday, December 1, 2019.",
+        "llm_confidence_reason": "Term end date is explicitly stated as 'Sunday, December 1, 2019'.",
         "source": "https://www.white-salmon.net/directory-listing/david-lindley"
       }
     ],
-    "updated_at": "2025-06-25T21:31:44Z"
+    "updated_at": "2025-06-25T21:54:19Z"
   },
   {
     "name": "Jason Hartmann",
@@ -244,7 +238,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'City Councilor Position #3' which corresponds to a council member role."
+        "llm_confidence_reason": "The text states 'City Councilor Position #3' which corresponds to a Council Member role."
       }
     ],
     "divisions": [
@@ -255,7 +249,7 @@
       },
       {
         "data": "Position 3",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "The text explicitly states 'Position #3' for the councilor role."
       }
     ],
@@ -270,7 +264,7 @@
       {
         "data": "jasonh@ci.white-salmon.wa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email is explicitly listed next to the name and role.",
+        "llm_confidence_reason": "The email is explicitly provided and linked as a mailto: link.",
         "source": "https://www.white-salmon.net/directory-listing/jason-hartmann"
       }
     ],
@@ -278,7 +272,7 @@
       {
         "data": "https://www.white-salmon.net/directory-listing/jason-hartmann",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL linked with the name.",
+        "llm_confidence_reason": "Profile link provided for Jason Hartmann.",
         "source": "https://www.white-salmon.net/contact"
       }
     ],
@@ -287,11 +281,11 @@
       {
         "data": "2021-12-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The term end date is explicitly stated as Wednesday, December 1, 2021.",
+        "llm_confidence_reason": "The text explicitly states 'Term End Date: Wednesday, December 1, 2021'.",
         "source": "https://www.white-salmon.net/directory-listing/jason-hartmann"
       }
     ],
-    "updated_at": "2025-06-25T21:31:44Z"
+    "updated_at": "2025-06-25T21:54:19Z"
   },
   {
     "name": "Morella Mora",
@@ -303,7 +297,7 @@
       {
         "data": "https://www.whitesalmonwa.gov/sites/default/files/styles/full_node_primary/public/default_images/profile-photo-placeholder.jpg?itok=IR-m7pEf",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The only image near the name is a profile photo placeholder, likely representing Morella Mora.",
+        "llm_confidence_reason": "The image is directly under the name Morella Mora and appears to be a profile photo placeholder.",
         "source": "https://www.white-salmon.net/directory-listing/morella-mora"
       }
     ],
@@ -327,7 +321,7 @@
       },
       {
         "data": "Position 4",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "The text explicitly states 'Position #4' for the councilor role."
       }
     ],
@@ -342,7 +336,7 @@
       {
         "data": "morellam@ci.white-salmon.wa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email is explicitly listed near the name and role.",
+        "llm_confidence_reason": "The email is explicitly listed and linked as Morella Mora's contact.",
         "source": "https://www.white-salmon.net/directory-listing/morella-mora"
       }
     ],
@@ -350,13 +344,13 @@
       {
         "data": "https://www.white-salmon.net/directory-listing/morella-mora",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL linked with the name.",
+        "llm_confidence_reason": "Profile link provided for Morella Mora.",
         "source": "https://www.white-salmon.net/contact"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:31:44Z"
+    "updated_at": "2025-06-25T21:54:19Z"
   },
   {
     "name": "Ben Giant",
@@ -368,7 +362,7 @@
       {
         "data": "https://www.whitesalmonwa.gov/sites/default/files/styles/full_node_primary/public/default_images/profile-photo-placeholder.jpg?itok=IR-m7pEf",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The image is a profile photo placeholder near the name Ben Giant.",
+        "llm_confidence_reason": "The image is directly under the name Ben Giant and appears to be a profile photo placeholder.",
         "source": "https://www.white-salmon.net/directory-listing/ben-giant"
       }
     ],
@@ -381,7 +375,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'City Councilor Position #5' which is equivalent to 'Council Member' as per target roles."
+        "llm_confidence_reason": "The text states 'City Councilor Position #5' which corresponds to a Council Member role."
       }
     ],
     "divisions": [
@@ -393,7 +387,7 @@
       {
         "data": "Position 5",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text explicitly states 'Position #5' for the councilor role."
+        "llm_confidence_reason": "The text explicitly states 'Position #5' for the council seat."
       }
     ],
     "phone_numbers": [],
@@ -415,7 +409,7 @@
       {
         "data": "https://www.white-salmon.net/directory-listing/ben-giant",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL linked with the name.",
+        "llm_confidence_reason": "Profile link provided for Ben Giant.",
         "source": "https://www.white-salmon.net/contact"
       },
       {
@@ -427,6 +421,6 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:31:44Z"
+    "updated_at": "2025-06-25T21:54:19Z"
   }
 ]
