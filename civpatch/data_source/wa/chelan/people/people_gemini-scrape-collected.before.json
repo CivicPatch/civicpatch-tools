@@ -9,7 +9,7 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
@@ -21,7 +21,7 @@
     "divisions": [
       {
         "data": "Position No. 1",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
@@ -42,8 +42,8 @@
     "websites": [
       {
         "data": "https://cityofchelan.us/directory.aspx?EID=79",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a contact and biography link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as contact and biography page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       }
     ],
@@ -63,7 +63,7 @@
         "source": "https://cityofchelan.us/directory.aspx?EID=79"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   },
   {
     "name": "Bob Goedde",
@@ -75,25 +75,25 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' under his name."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
       }
     ],
     "divisions": [
       {
         "data": "Position No. 2",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
-        "data": "Position 2",
+        "data": "Position No. 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position No. 2'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Position No. 2'."
       }
     ],
     "phone_numbers": [],
@@ -108,8 +108,8 @@
     "websites": [
       {
         "data": "https://cityofchelan.us/directory.aspx?EID=82",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a contact and biography link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as contact and biography page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       }
     ],
@@ -117,7 +117,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated in the text for his term.",
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated for his term, and it is a past date from today's date (2025-06-25).",
         "source": "https://cityofchelan.us/directory.aspx?EID=82"
       }
     ],
@@ -125,11 +125,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated in the text for his term.",
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for his term, and it is a future date from today's date (2025-06-25).",
         "source": "https://cityofchelan.us/directory.aspx?EID=82"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   },
   {
     "name": "Brad Chitty",
@@ -141,25 +141,25 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated in the text as his title."
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated in the text as 'Title: Councilmember Position No. 3'."
       }
     ],
     "divisions": [
       {
         "data": "Position No. 3",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
         "data": "Position No. 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Position No. 3' is explicitly stated in the text as part of his title."
+        "llm_confidence_reason": "The division 'Position No. 3' is explicitly stated in the text as 'Councilmember Position No. 3'."
       }
     ],
     "phone_numbers": [],
@@ -167,15 +167,15 @@
       {
         "data": "bchitty@cityofchelan.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email address is explicitly provided as a mailto link for Brad Chitty.",
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link for Brad Chitty: 'Email Brad Chitty mailto:bchitty@cityofchelan.us'.",
         "source": "https://cityofchelan.us/directory.aspx?EID=78"
       }
     ],
     "websites": [
       {
         "data": "https://cityofchelan.us/directory.aspx?EID=78",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a contact and biography link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as contact and biography page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       }
     ],
@@ -183,7 +183,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated in the text for his term.",
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated in the text as part of his term: 'Term: January 1, 2024 - December 31, 2027'.",
         "source": "https://cityofchelan.us/directory.aspx?EID=78"
       }
     ],
@@ -191,11 +191,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated in the text for his term.",
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated in the text as part of his term: 'Term: January 1, 2024 - December 31, 2027'.",
         "source": "https://cityofchelan.us/directory.aspx?EID=78"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   },
   {
     "name": "Jon Higgins",
@@ -207,25 +207,25 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Title: Councilmember' under his profile."
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated in the text."
       }
     ],
     "divisions": [
       {
         "data": "Position No. 4",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
-        "data": "Position No. 4",
+        "data": "Position 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Position No. 4' for the councilmember role."
+        "llm_confidence_reason": "The division 'Position No. 4' is explicitly stated in the text."
       }
     ],
     "phone_numbers": [],
@@ -233,15 +233,15 @@
       {
         "data": "jhiggins@cityofchelan.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and linked to Jon Higgins under his profile section ('Email Jon Higgins').",
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link for Jon Higgins.",
         "source": "https://cityofchelan.us/directory.aspx?EID=80"
       }
     ],
     "websites": [
       {
         "data": "https://cityofchelan.us/directory.aspx?EID=80",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a contact and biography link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as contact and biography page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       }
     ],
@@ -249,7 +249,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated as part of his term information ('Term: January 1, 2024 - December 31, 2027').",
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated as part of the term.",
         "source": "https://cityofchelan.us/directory.aspx?EID=80"
       }
     ],
@@ -257,11 +257,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated as part of his term information ('Term: January 1, 2024 - December 31, 2027').",
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated as part of the term.",
         "source": "https://cityofchelan.us/directory.aspx?EID=80"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   },
   {
     "name": "Mark Ericks",
@@ -274,7 +274,7 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
@@ -291,7 +291,7 @@
     "divisions": [
       {
         "data": "Position No. 5",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
@@ -323,8 +323,8 @@
     "websites": [
       {
         "data": "https://www.cityofchelan.us/Directory.aspx?EID=39",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a contact and biography link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as contact and biography page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       }
     ],
@@ -356,7 +356,7 @@
         "source": "https://www.cityofchelan.us/Directory.aspx?EID=39"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   },
   {
     "name": "Tim Hollingsworth",
@@ -368,7 +368,7 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
@@ -380,7 +380,7 @@
     "divisions": [
       {
         "data": "Position No. 6",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
@@ -401,8 +401,8 @@
     "websites": [
       {
         "data": "https://www.cityofchelan.us/Directory.aspx?EID=40",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a contact and biography link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as contact and biography page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       }
     ],
@@ -422,7 +422,7 @@
         "source": "https://www.cityofchelan.us/Directory.aspx?EID=40"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   },
   {
     "name": "Shari Dietrich",
@@ -434,7 +434,7 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
@@ -446,11 +446,11 @@
     "divisions": [
       {
         "data": "Position No. 7",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
-        "data": "Position No. 7",
+        "data": "Position 7",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 'Councilmember Position No. 7'."
       }
@@ -467,8 +467,8 @@
     "websites": [
       {
         "data": "https://www.cityofchelan.us/Directory.aspx?EID=41",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a contact and biography link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as contact and biography page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       }
     ],
@@ -488,7 +488,7 @@
         "source": "https://www.cityofchelan.us/Directory.aspx?EID=41"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   },
   {
     "name": "Erin McCardle",
@@ -500,20 +500,20 @@
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the navigation link as 'Mayor Erin McCardle'."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the navigation link."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Erin McCardle' and her current term as Mayor is provided."
+        "llm_confidence_reason": "The text explicitly states 'Mayor Erin McCardle' and details her current term as Mayor."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that the Mayor is elected at-large."
+        "llm_confidence_reason": "The text explicitly states the Mayor is 'elected at-large'."
       }
     ],
     "phone_numbers": [],
@@ -521,21 +521,21 @@
       {
         "data": "mayor@cityofchelan.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a direct link for Mayor McCardle's contact information under 'Contact Us'.",
+        "llm_confidence_reason": "Email address is directly provided and clearly associated with Erin McCardle under 'Contact Us'.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided as a navigation link for the person.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked as mayor's page.",
         "source": "https://www.cityofchelan.us/206/City-Council"
       },
       {
         "data": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is directly associated with 'Mayor Erin McCardle' in the breadcrumbs and the main heading, indicating it is her specific profile page.",
+        "llm_confidence_reason": "The URL is directly associated with 'Mayor Erin McCardle' as her profile page.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
@@ -543,7 +543,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated for her term as Mayor under the 'TERM' section, including the day, month, and year, which matches the required YYYY-MM-DD format for full confidence. ",
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated under 'TERM'.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
@@ -551,10 +551,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated for her term as Mayor under the 'TERM' section, including the day, month, and year, which matches the required YYYY-MM-DD format for full confidence. ",
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated under 'TERM'.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
-    "updated_at": "2025-06-25T17:33:40Z"
+    "updated_at": "2025-06-25T17:42:42Z"
   }
 ]
