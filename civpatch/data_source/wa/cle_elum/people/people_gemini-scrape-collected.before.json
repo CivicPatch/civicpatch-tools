@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Jay McGowan",
+    "sources": [
+      "https://www.cityofcleelum.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jay McGowan' under 'Mayor's Office' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:10:57Z"
+  }
+]
