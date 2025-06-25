@@ -1,0 +1,185 @@
+[
+  {
+    "name": "Scott Carmack",
+    "sources": [
+      "https://www.cityofzillah.us/government/mayors_corner.php",
+      "https://www.cityofzillah.us/government/elected_officials.php"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofzillah.us/442409735_410794448488586_1785903735130864830_n.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the mayor's section with the name Scott Carmack.",
+        "source": "https://www.cityofzillah.us/government/mayors_corner.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states Scott Carmack holds the position of Mayor for the City of Zillah."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed explicitly as 'MAYOR' with name 'Dr. Scott Carmack' under elected officials."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "509-829-5151",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed on the page as the main city phone number, likely the contact for the mayor's office.",
+        "source": "https://www.cityofzillah.us/government/mayors_corner.php"
+      },
+      {
+        "data": "509-829-5151",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number listed on page, no direct personal phone found.",
+        "source": "https://www.cityofzillah.us/government/elected_officials.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cityhall@cityofzillah.us",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email is listed prominently on the page as cityhall@cityofzillah.us, likely the official contact email.",
+        "source": "https://www.cityofzillah.us/government/mayors_corner.php"
+      },
+      {
+        "data": "cityhall@cityofzillah.us",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city email listed on page, no direct personal email found.",
+        "source": "https://www.cityofzillah.us/government/elected_officials.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofzillah.us/government/mayors_corner.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the page containing the mayor's information.",
+        "source": "https://www.cityofzillah.us/government/mayors_corner.php"
+      },
+      {
+        "data": "https://www.cityofzillah.us/government/elected_officials.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is official elected officials page listing the mayor.",
+        "source": "https://www.cityofzillah.us/government/elected_officials.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T04:55:45Z"
+  },
+  {
+    "name": "Beth Husted",
+    "sources": [
+      "https://www.cityofzillah.us/government/elected_officials.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'CITY COUNCIL' with other council members; no specific seat or division given."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T04:55:45Z"
+  },
+  {
+    "name": "Janice Gonzales",
+    "sources": [
+      "https://www.cityofzillah.us/government/elected_officials.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'CITY COUNCIL' with other council members; no specific seat or division given."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T04:55:45Z"
+  },
+  {
+    "name": "Doug Stewart",
+    "sources": [
+      "https://www.cityofzillah.us/government/elected_officials.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'CITY COUNCIL' with other council members; no specific seat or division given."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T04:55:45Z"
+  },
+  {
+    "name": "Brian Williams",
+    "sources": [
+      "https://www.cityofzillah.us/government/elected_officials.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'CITY COUNCIL' with other council members; no specific seat or division given."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T04:55:45Z"
+  },
+  {
+    "name": "Wes Argo",
+    "sources": [
+      "https://www.cityofzillah.us/government/elected_officials.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'CITY COUNCIL' with other council members; no specific seat or division given."
+      },
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed as 'Mayor Pro-Tem' in committees section, indicating a leadership role on council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T04:55:45Z"
+  }
+]
