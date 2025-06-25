@@ -101,7 +101,7 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           STATE=$(echo "$BRANCH_NAME" | awk -F'-' '{print $4}')
-          GEOID=$(echo "$BRANCH_NAME" | awk -F'-' '{print $7}')
+          GEOID=$(echo "$BRANCH_NAME" | awk -F'-' '{print $5})
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           echo "STATE=$STATE" >> $GITHUB_ENV
