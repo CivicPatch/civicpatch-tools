@@ -1,0 +1,267 @@
+[
+  {
+    "name": "Jon Stanfill",
+    "sources": [
+      "https://www.cityofkalama.com/o/city-of-kalama/page/city-council",
+      "https://www.cityofkalama.com/staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #1'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated as 'Council Position #1' which maps to 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #1, Jon Stanfill'."
+      },
+      {
+        "data": "Position #1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jstanfill01@cityofkalama.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.cityofkalama.com/staff"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T21:12:07Z"
+  },
+  {
+    "name": "Scott Moon",
+    "sources": [
+      "https://www.cityofkalama.com/o/city-of-kalama/page/city-council",
+      "https://www.cityofkalama.com/staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #2'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated as 'Council Position #2' which maps to 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #2, Scott Moon'."
+      },
+      {
+        "data": "Position #2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Smoon02@cityofkalama.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.cityofkalama.com/staff"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T21:12:07Z"
+  },
+  {
+    "name": "Wendy Conradi",
+    "sources": [
+      "https://www.cityofkalama.com/o/city-of-kalama/page/city-council",
+      "https://www.cityofkalama.com/staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #3'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated as 'Council Position #3' which maps to 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #3, Wendy (Conradi) Christianson'."
+      },
+      {
+        "data": "Position #3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "wconradi03@cityofkalama.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.cityofkalama.com/staff"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T21:12:07Z"
+  },
+  {
+    "name": "Steve Kallio",
+    "sources": [
+      "https://www.cityofkalama.com/o/city-of-kalama/page/city-council",
+      "https://www.cityofkalama.com/staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #4'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated as 'Council Position #4' which maps to 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #4, Steve Kallio'."
+      },
+      {
+        "data": "Position #4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "skallio04@cityofkalama.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.cityofkalama.com/staff"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T21:12:07Z"
+  },
+  {
+    "name": "Deb Geiger",
+    "sources": [
+      "https://www.cityofkalama.com/o/city-of-kalama/page/city-council",
+      "https://www.cityofkalama.com/staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #5'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated as 'Council Position #5' which maps to 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position #5, Deb Geiger'."
+      },
+      {
+        "data": "Position #5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dgeiger05@cityofkalama.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.cityofkalama.com/staff"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T21:12:07Z"
+  },
+  {
+    "name": "Mike Reuter",
+    "sources": [
+      "https://www.cityofkalama.com/o/city-of-kalama/page/city-council",
+      "https://www.cityofkalama.com/live-feed?page_no=2",
+      "https://www.cityofkalama.com/staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Mike Reuter'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Reuter' multiple times in the text, indicating a current and active role."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kalamamayor@cityofkalama.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.cityofkalama.com/staff"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T21:12:07Z"
+  }
+]
