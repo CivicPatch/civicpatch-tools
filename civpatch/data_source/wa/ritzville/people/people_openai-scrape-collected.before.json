@@ -25,7 +25,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   },
   {
     "name": "Jessica Quinn",
@@ -44,7 +44,7 @@
       {
         "data": "Ward 1",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'Ward 1' next to name."
+        "llm_confidence_reason": "Explicitly stated division 'Ward 1' next to name."
       }
     ],
     "phone_numbers": [],
@@ -59,7 +59,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   },
   {
     "name": "Brooke Scheel",
@@ -78,7 +78,7 @@
       {
         "data": "Ward 2",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'Ward 2' next to name."
+        "llm_confidence_reason": "Explicitly stated division 'Ward 2' next to name."
       }
     ],
     "phone_numbers": [],
@@ -93,7 +93,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   },
   {
     "name": "William Green",
@@ -112,7 +112,7 @@
       {
         "data": "Ward 3",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'Ward 3' next to name."
+        "llm_confidence_reason": "Explicitly stated division 'Ward 3' next to name."
       }
     ],
     "phone_numbers": [],
@@ -127,7 +127,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   },
   {
     "name": "Dennis Chamberlain",
@@ -146,7 +146,7 @@
       {
         "data": "Ward 4",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'Ward 4' next to name."
+        "llm_confidence_reason": "Explicitly stated division 'Ward 4' next to name."
       }
     ],
     "phone_numbers": [],
@@ -161,7 +161,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   },
   {
     "name": "Mike Schrag",
@@ -180,7 +180,7 @@
       {
         "data": "Ward 5",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'Ward 5' next to name."
+        "llm_confidence_reason": "Explicitly stated division 'Ward 5' next to name."
       }
     ],
     "phone_numbers": [],
@@ -195,7 +195,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   },
   {
     "name": "Jen Verhey",
@@ -205,16 +205,16 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Mayor & City Council with '2 yr at large' indicating council membership at-large."
+        "data": "Council Member At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as '2 yr at large' indicating at-large council member."
       }
     ],
     "divisions": [
       {
         "data": "At-Large",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated '2 yr at large' indicating at-large division."
+        "llm_confidence_reason": "Explicitly stated 'at large' division."
       }
     ],
     "phone_numbers": [],
@@ -229,7 +229,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   },
   {
     "name": "Michelle Plumb",
@@ -239,16 +239,16 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed under Mayor & City Council with '4 yr at large' indicating council membership at-large."
+        "data": "Council Member At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as '4 yr at large' indicating at-large council member."
       }
     ],
     "divisions": [
       {
         "data": "At-Large",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated '4 yr at large' indicating at-large division."
+        "llm_confidence_reason": "Explicitly stated 'at large' division."
       }
     ],
     "phone_numbers": [],
@@ -263,6 +263,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T22:41:28Z"
+    "updated_at": "2025-06-25T22:53:24Z"
   }
 ]
