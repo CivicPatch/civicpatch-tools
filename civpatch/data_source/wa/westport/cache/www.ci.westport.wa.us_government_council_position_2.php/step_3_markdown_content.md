@@ -82,7 +82,7 @@ This website uses cookies to store your accessibility preferences. No personal /
 
 ![search website](https://www.ci.westport.wa.us/council_position_2.php/_assets_/images/icon-search-toggle.png)
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.ci.westport.wa.us/council_position_2.php)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.ci.westport.wa.us/council_position_2.php)![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.ci.westport.wa.us/council_position_2.php)
 
 - Translate
   
@@ -168,7 +168,7 @@ This website uses cookies to store your accessibility preferences. No personal /
   - [Yoruba](https://www.ci.westport.wa.us/council_position_2.php/government/council_position_2.php)
   - [Zulu](https://www.ci.westport.wa.us/council_position_2.php/government/council_position_2.php)
 
-61° Clouds
+62° Clouds
 
 [Facebook](https://facebook.com)
 
@@ -258,6 +258,12 @@ Powered by [revize.](https://revize.com) [login](https://cms8.revize.com/revize/
 City Hall Hours: M-F: 8:30-12:30 &amp; 1:30-5:00.  
 Closed Daily 12:30-1:30 pm.  
 [Public Notices](https://www.ci.westport.wa.us/council_position_2.php/residents/public_notices.php)
+
+Original text
+
+Rate this translation
+
+Your feedback will be used to help improve Google Translate
 
 Original text
 
