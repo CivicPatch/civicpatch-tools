@@ -1,0 +1,324 @@
+[
+  {
+    "name": "Scott Yaeger",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Scott Yaeger Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "scott.yaeger@ritzville-wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name Scott Yaeger and the role Mayor.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  },
+  {
+    "name": "Jessica Quinn",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Jessica Quinn under 'Mayor & City Council' and associates her with 'Ward 1', indicating a council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jessica.quinn@ritzville-wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name Jessica Quinn and the role Ward 1.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofritzville.com/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city council page is the most likely place to find individual council member information if specific pages are not provided.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text mentions 'Jen Verhey 2 yr at large' and 'Michelle Plumb 4 yr at large', implying current terms. While not explicit for Jessica Quinn, her listing under 'Mayor & City Council' suggests an active role.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  },
+  {
+    "name": "Brooke Scheel",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Brooke Scheel under 'Mayor & City Council' and associates her with 'Ward 2', indicating a council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "brooke.scheel@ritzville-wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name Brooke Scheel and the role Ward 2.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofritzville.com/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city council page is the most likely place to find individual council member information if specific pages are not provided.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text mentions 'Jen Verhey 2 yr at large' and 'Michelle Plumb 4 yr at large', implying current terms. While not explicit for Brooke Scheel, her listing under 'Mayor & City Council' suggests an active role.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  },
+  {
+    "name": "William Green",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists William Green under 'Mayor & City Council' and associates him with 'Ward 3', indicating a council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "william.green@ritzville-wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name William Green and the role Ward 3.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofritzville.com/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city council page is the most likely place to find individual council member information if specific pages are not provided.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text mentions 'Jen Verhey 2 yr at large' and 'Michelle Plumb 4 yr at large', implying current terms. While not explicit for William Green, his listing under 'Mayor & City Council' suggests an active role.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  },
+  {
+    "name": "Dennis Chamberlain",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Dennis Chamberlain under 'Mayor & City Council' and associates him with 'Ward 4', indicating a council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dennisormary@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name Dennis Chamberlain and the role Ward 4.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofritzville.com/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city council page is the most likely place to find individual council member information if specific pages are not provided.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text mentions 'Jen Verhey 2 yr at large' and 'Michelle Plumb 4 yr at large', implying current terms. While not explicit for Dennis Chamberlain, his listing under 'Mayor & City Council' suggests an active role.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  },
+  {
+    "name": "Mike Schrag",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Mike Schrag under 'Mayor & City Council' and associates him with 'Ward 5', indicating a council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mschrag4@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name Mike Schrag and the role Ward 5.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofritzville.com/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city council page is the most likely place to find individual council member information if specific pages are not provided.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text mentions 'Jen Verhey 2 yr at large' and 'Michelle Plumb 4 yr at large', implying current terms. While not explicit for Mike Schrag, his listing under 'Mayor & City Council' suggests an active role.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  },
+  {
+    "name": "Jen Verhey",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Jen Verhey under 'Mayor & City Council' and associates her with '2 yr at large', indicating a council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jen.verhey@ritzville-wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name Jen Verhey and the role 2 yr at large.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofritzville.com/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city council page is the most likely place to find individual council member information if specific pages are not provided.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text explicitly states 'Jen Verhey 2 yr at large', implying a current term that would include 2025.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  },
+  {
+    "name": "Michelle Plumb",
+    "sources": [
+      "https://www.cityofritzville.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Michelle Plumb under 'Mayor & City Council' and associates her with '4 yr at large', indicating a council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "michelle.plumb@ritzville-wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly associated with the name Michelle Plumb and the role 4 yr at large.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofritzville.com/city-council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city council page is the most likely place to find individual council member information if specific pages are not provided.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text explicitly states 'Michelle Plumb 4 yr at large', implying a current term that would include 2025.",
+        "source": "https://www.cityofritzville.com/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-25T22:44:34Z"
+  }
+]

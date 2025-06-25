@@ -1,33 +1,113 @@
 ---
 - name: Scott Yaeger
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image:
+  cdn_image:
   email: scott.yaeger@ritzville-wa.us
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
 - name: Brooke Scheel
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: brookescheel@ritzville-wa.us
+  phone_number:
+  website: https://www.cityofritzville.com/city-council
+  start_date: '2025'
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
 - name: Dennis Chamberlain
-  positions:
+  roles:
   - Council Member
-  email: dennis.chamberlain@ritzville-wa.us
+  divisions: []
+  image:
+  cdn_image:
+  email: dennisormary@gmail.com
+  phone_number:
+  website: https://www.cityofritzville.com/city-council
+  start_date: '2025'
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
 - name: Jen Verhey
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: jen.verhey@ritzville-wa.us
+  phone_number:
+  website: https://www.cityofritzville.com/city-council
+  start_date: '2025'
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
 - name: Jessica Quinn
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: jessica.quinn@ritzville-wa.us
+  phone_number:
+  website: https://www.cityofritzville.com/city-council
+  start_date: '2025'
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
 - name: Michelle Plumb
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: michelle.plumb@ritzville-wa.us
+  phone_number:
+  website: https://www.cityofritzville.com/city-council
+  start_date: '2025'
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
 - name: Mike Schrag
-  positions:
+  roles:
   - Council Member
-  email:
+  divisions: []
+  image:
+  cdn_image:
+  email: mschrag4@gmail.com
+  phone_number:
+  website: https://www.cityofritzville.com/city-council
+  start_date: '2025'
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
 - name: William Green
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: william.green@ritzville-wa.us
+  phone_number:
+  website: https://www.cityofritzville.com/city-council
+  start_date: '2025'
+  end_date:
+  sources:
+  - https://www.cityofritzville.com/city-council
+  updated_at: '2025-06-25T22:44:34Z'
