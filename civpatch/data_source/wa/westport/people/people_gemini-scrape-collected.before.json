@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Troy Meyers",
+    "sources": [
+      "https://www.ci.westport.wa.us/government/council_position_2.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page is titled 'Council Position 2' and Troy Meyers is listed as holding this position, implying he is a council member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position 2' and associated with the person."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-268-0131",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact' for Troy Meyers.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tmeyers@ci.westport.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided under 'Contact' for Troy Meyers.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date '12/31/2027' is explicitly stated.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "updated_at": "2025-06-25T22:13:51Z"
+  }
+]
