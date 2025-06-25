@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Troy Meyers",
+    "sources": [
+      "https://www.ci.westport.wa.us/government/council_position_2.php"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.westport.wa.us/council_position_2.php/TMeyers.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is directly next to the name Troy Meyers on the Council Position 2 page.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page is titled 'Council Position 2' and features Troy Meyers with contact info and term expiration, indicating he is a City Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is specifically for 'Council Position 2', so the division is Position 2."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-268-0131",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed under contact info for Troy Meyers on the page.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tmeyers@ci.westport.wa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is listed under contact info for Troy Meyers on the page.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.westport.wa.us/government/council_position_2.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the page dedicated to Council Position 2, Troy Meyers.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 12/31/2027.",
+        "source": "https://www.ci.westport.wa.us/government/council_position_2.php"
+      }
+    ],
+    "updated_at": "2025-06-25T22:13:18Z"
+  }
+]
