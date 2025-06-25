@@ -73,7 +73,7 @@ government_types:
         - council president pro tempore
       - role: deputy council president
       - role: council vice president
-        - aliases:
+        aliases:
           - council vice-president
       - role: council manager
       - role: commisioner
