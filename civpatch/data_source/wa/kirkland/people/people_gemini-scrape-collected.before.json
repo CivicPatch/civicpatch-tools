@@ -8,54 +8,63 @@
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Mayor Kelli Curtis'."
       },
       {
         "data": "Councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed as Mayor and part of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Councilmember Curtis received a Certificate of Municipal Leadership'."
       }
     ],
     "divisions": [
       {
         "data": "Position #2",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated under the person's name."
-      },
-      {
-        "data": "at large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated in the general description of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3532",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "emails": [
       {
         "data": "kcurtis@kirklandwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "websites": [],
-    "start_dates": [],
+    "websites": [
+      {
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page, using the general City Council page as the most relevant.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states she was selected as Mayor for the remainder of 2019, implying she was a councilmember before that. However, the text also states 'Prior to becoming a Councilmember, Curtis served on the City of Kirkland Park Board (appointed in 2015)'. The exact start date as a councilmember is not explicitly stated with a 'start date' keyword, but her mayoral term began in 2019, and she was a councilmember before that. Given the context, 2019 is the most recent election/appointment year for a council role.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
     "end_dates": [
       {
         "data": "2027-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2027'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Term Expires December 31, 2027'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:11:10Z"
   },
   {
     "name": "Jay Arnold",
@@ -66,54 +75,63 @@
     "roles": [
       {
         "data": "Deputy Mayor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Deputy Mayor Jay Arnold'."
       },
       {
         "data": "Councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being listed as Deputy Mayor and part of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Deputy Mayor Jay Arnold began his first term on the Kirkland City Council'."
       }
     ],
     "divisions": [
       {
         "data": "Position #1",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated under the person's name."
-      },
-      {
-        "data": "at large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated in the general description of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3535",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "emails": [
       {
         "data": "jarnold@kirklandwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "websites": [],
-    "start_dates": [],
+    "websites": [
+      {
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page, using the general City Council page as the most relevant.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2014-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'began his first term on the Kirkland City Council in January 2014'.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2025'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Term Expires December 31, 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:11:10Z"
   },
   {
     "name": "Neal Black",
@@ -124,49 +142,58 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Councilmember Neal Black' and 'has served on the Kirkland City Council since November 2019'."
       }
     ],
     "divisions": [
       {
         "data": "Position #5",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated under the person's name."
-      },
-      {
-        "data": "at large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated in the general description of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3544",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "emails": [
       {
         "data": "nblack@kirklandwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "websites": [],
-    "start_dates": [],
+    "websites": [
+      {
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page, using the general City Council page as the most relevant.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'has served on the Kirkland City Council since November 2019'.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2025'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Term Expires December 31, 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:11:10Z"
   },
   {
     "name": "Amy Falcone",
@@ -177,35 +204,58 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Councilmember Amy Falcone' and 'was elected to Position 6 on the Kirkland City Council in November of 2019'."
       }
     ],
     "divisions": [
       {
         "data": "Position #6",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated under the person's name."
-      },
-      {
-        "data": "at large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated in the general description of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
       }
     ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "phone_numbers": [
       {
-        "data": "2027-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2027'.",
+        "data": "425-587-3190",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No phone number is provided for Amy Falcone. The phone number '425-587-3190' is for the City Clerk's Office, not specifically for Amy Falcone.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "updated_at": "2025-06-04"
+    "emails": [
+      {
+        "data": "adacoordinator@kirklandwa.gov",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No email address is provided for Amy Falcone. The email 'adacoordinator@kirklandwa.gov' is for the City's ADA Coordinator, not specifically for Amy Falcone.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page, using the general City Council page as the most relevant.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2019-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'was elected to Position 6 on the Kirkland City Council in November of 2019'.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Term Expires December 31, 2027'.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "updated_at": "2025-06-25T01:11:10Z"
   },
   {
     "name": "Jon Pascal",
@@ -216,49 +266,58 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Councilmember Jon Pascal' and 'was first elected to Position 7 on the Kirkland City Council in November 2017'."
       }
     ],
     "divisions": [
       {
         "data": "Position #7",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated under the person's name."
-      },
-      {
-        "data": "at large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated in the general description of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3530",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "emails": [
       {
         "data": "jpascal@kirklandwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "websites": [],
-    "start_dates": [],
+    "websites": [
+      {
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page, using the general City Council page as the most relevant.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'He was re-elected to his second term in 2021'.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
     "end_dates": [
       {
-        "data": "2025-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'will expire in December 2025'.",
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'will serve a four-year position which will expire in December 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:11:10Z"
   },
   {
     "name": "Penny Sweet",
@@ -269,49 +328,58 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Councilmember Penny Sweet' and 'began her first term on the Kirkland City Council in January 2010'."
       }
     ],
     "divisions": [
       {
         "data": "Position #3",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated under the person's name."
-      },
-      {
-        "data": "at large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated in the general description of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "425-587-3534",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
     "emails": [
       {
         "data": "psweet@kirklandwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "websites": [],
-    "start_dates": [],
+    "websites": [
+      {
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page, using the general City Council page as the most relevant.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2010-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'began her first term on the Kirkland City Council in January 2010'.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2025'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Term Expires December 31, 2025'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:11:10Z"
   },
   {
     "name": "John Tymczyszyn",
@@ -322,41 +390,57 @@
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as current role under the person's name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Councilmember John Tymczyszyn' and 'was elected to Position 4 on the Kirkland City Council in November of 2023'."
       }
     ],
     "divisions": [
       {
         "data": "Position #4",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated under the person's name."
-      },
-      {
-        "data": "at large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated in the general description of the City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
       }
     ],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "425-587-3007",
+        "llm_confidence": 0.0,
+        "llm_confidence_reason": "No phone number is provided for John Tymczyszyn. The phone number '425-587-3007' is for Amy Bolen, Executive Assistant, for scheduling assistance, not specifically for John Tymczyszyn.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
     "emails": [
       {
         "data": "JohnT@Kirklandwa.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "websites": [],
-    "start_dates": [],
+    "websites": [
+      {
+        "data": "https://www.kirklandwa.gov/Government/City-Council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No specific profile page, using the general City Council page as the most relevant.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'was elected to Position 4 on the Kirkland City Council in November of 2023'.",
+        "source": "https://www.kirklandwa.gov/Government/City-Council"
+      }
+    ],
     "end_dates": [
       {
         "data": "2027-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires December 31, 2027'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Term Expires December 31, 2027'.",
         "source": "https://www.kirklandwa.gov/Government/City-Council"
       }
     ],
-    "updated_at": "2025-06-04"
+    "updated_at": "2025-06-25T01:11:10Z"
   }
 ]
