@@ -3444,10 +3444,12 @@
       "type": "town",
       "population": 1942,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "f8233d602e5cb43f1eb0881647c23e4d",
+      "meta_updated_at": "2025-06-25T22:31:05Z",
+      "meta_hash": "5884c6f2d97bbda1561fa739775ba85c",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "5315185"
     },
