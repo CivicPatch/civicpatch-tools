@@ -1,12 +1,8 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
 [Skip To Main Content](https://cityofchelan.us/directory.aspx?EID=82%2F)
 
 Loading
 
 [Skip to Main Content](https://cityofchelan.us/directory.aspx?EID=82%2F)
-
-![Chelan, WA](https://cityofchelan.us/ImageRepository/Document?documentID=27)
 
 [Create a Website Account](https://cityofchelan.us/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -117,5 +113,3 @@ Excel Download
 PowerPoint Download
 
 Document Download
-
-Explore your accessibility options

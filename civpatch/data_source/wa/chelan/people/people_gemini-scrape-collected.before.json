@@ -63,7 +63,7 @@
         "source": "https://cityofchelan.us/directory.aspx?EID=79"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   },
   {
     "name": "Bob Goedde",
@@ -81,7 +81,7 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Position No. 2'."
       }
     ],
     "divisions": [
@@ -101,7 +101,7 @@
       {
         "data": "rgoedde@cityofchelan.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Bob Goedde.",
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
         "source": "https://cityofchelan.us/directory.aspx?EID=82"
       }
     ],
@@ -117,7 +117,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated for his term, and it is a past date from today's date (2025-06-25).",
+        "llm_confidence_reason": "Explicitly stated 'Term: January 1, 2024 - December 31, 2025'.",
         "source": "https://cityofchelan.us/directory.aspx?EID=82"
       }
     ],
@@ -125,11 +125,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated for his term, and it is a future date from today's date (2025-06-25).",
+        "llm_confidence_reason": "Explicitly stated 'Term: January 1, 2024 - December 31, 2025'.",
         "source": "https://cityofchelan.us/directory.aspx?EID=82"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   },
   {
     "name": "Brad Chitty",
@@ -195,7 +195,7 @@
         "source": "https://cityofchelan.us/directory.aspx?EID=78"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   },
   {
     "name": "Jon Higgins",
@@ -261,7 +261,7 @@
         "source": "https://cityofchelan.us/directory.aspx?EID=80"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   },
   {
     "name": "Mark Ericks",
@@ -356,7 +356,7 @@
         "source": "https://www.cityofchelan.us/Directory.aspx?EID=39"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   },
   {
     "name": "Tim Hollingsworth",
@@ -422,7 +422,7 @@
         "source": "https://www.cityofchelan.us/Directory.aspx?EID=40"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   },
   {
     "name": "Shari Dietrich",
@@ -450,7 +450,7 @@
         "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
-        "data": "Position 7",
+        "data": "Position No. 7",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 'Councilmember Position No. 7'."
       }
@@ -488,7 +488,7 @@
         "source": "https://www.cityofchelan.us/Directory.aspx?EID=41"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   },
   {
     "name": "Erin McCardle",
@@ -506,14 +506,14 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Erin McCardle' and her current term as Mayor is provided."
+        "llm_confidence_reason": "The text explicitly states 'Mayor Erin McCardle' and details her current term as Mayor."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated that the Mayor is elected at-large."
+        "llm_confidence_reason": "The text explicitly states the Mayor is 'elected at-large'."
       }
     ],
     "phone_numbers": [],
@@ -521,7 +521,7 @@
       {
         "data": "mayor@cityofchelan.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a direct link for Mayor McCardle's contact information under 'Contact Us'.",
+        "llm_confidence_reason": "Email address is directly provided and clearly associated with Erin McCardle under 'Contact Us'.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
@@ -535,7 +535,7 @@
       {
         "data": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is directly associated with 'Mayor Erin McCardle' in the breadcrumbs and the main heading, indicating it is her specific profile page.",
+        "llm_confidence_reason": "The URL is directly associated with 'Mayor Erin McCardle' as her profile page.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
@@ -543,7 +543,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated for her term as Mayor under the 'TERM' section, including the day, month, and year, which matches the required YYYY-MM-DD format for full confidence. ",
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated under 'TERM'.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
@@ -551,10 +551,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated for her term as Mayor under the 'TERM' section, including the day, month, and year, which matches the required YYYY-MM-DD format for full confidence. ",
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated under 'TERM'.",
         "source": "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
       }
     ],
-    "updated_at": "2025-06-25T18:00:24Z"
+    "updated_at": "2025-06-25T20:52:22Z"
   }
 ]
