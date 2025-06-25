@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Jesse Garrett",
+    "roles": [
+      "Mayor"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Shellee Haynes",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Cliff King",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "John Ridlington",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Chris Shurrum",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Michael Weatherman",
+    "roles": [
+      "Councilmember"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Logan Worley",
+    "roles": [
+      "City Attorney"
+    ],
+    "email": "logan@mcgraneschuerman.com",
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Raena Hallam",
+    "roles": [
+      "Clerk/Treasurer"
+    ],
+    "email": "rhallam@kettle-falls.com",
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Phillip Adams",
+    "roles": [
+      "Fire Chief"
+    ],
+    "email": null,
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Chris Courchene",
+    "roles": [
+      "Police Chief"
+    ],
+    "email": "ccourchene@kettle-falls.com",
+    "updated_at": "2025-06-25T23:08:48Z"
+  },
+  {
+    "name": "Dave Willey",
+    "roles": [
+      "Superintendent of Public Works"
+    ],
+    "email": "Dwilley@kettle-falls.com",
+    "updated_at": "2025-06-25T23:08:48Z"
+  }
+]
