@@ -88,7 +88,7 @@ jobs:
           GEOID=${{ steps.extract-vars.outputs.GEOID }}
           BRANCH_NAME=${{ steps.extract-vars.outputs.BRANCH_NAME }}
           PR_NUMBER=${{ inputs.pr_number }}
-          COMMAND="/app/civpatch/lib/tasks/scripts/pull_request_comment.sh $STATE $GEOID $PR_NUMBER"
+          COMMAND="/scripts/pull_request_comment.sh $STATE $GEOID $PR_NUMBER"
 
           ./civpatch_cli/bin/cli run-task -branch-name $BRANCH_NAME -command "$COMMAND"
 
@@ -101,5 +101,5 @@ jobs:
           GEOID=${{ steps.extract-vars.outputs.GEOID }}
           BRANCH_NAME=${{ steps.extract-vars.outputs.BRANCH_NAME }}
           PR_NUMBER=${{ inputs.pr_number }}
-          COMMAND="/app/civpatch/lib/tasks/scripts/pull_request_review.sh $STATE $GEOID $PR_NUMBER"
+          COMMAND="/scripts/pull_request_review.sh $STATE $GEOID $PR_NUMBER"
           ./civpatch_cli/bin/cli run-task -branch-name $BRANCH_NAME -command "$COMMAND"

@@ -11,9 +11,9 @@ if [ -z "$STATE" ] || [ -z "$GEOID" ] ; then
   exit 1
 fi
 
-echo "Creating pull request for $STATE $GEOID"
 source "$(dirname "$0")/update_branch.sh" $STATE $GEOID
 
+echo "Creating pull request for $STATE $GEOID"
 BRANCH_NAME=$(git branch --show-current)
 
 PULL_REQUEST_DETAILS=$(rake "github_pipeline:pr_details[$STATE,$GEOID,$BRANCH_NAME]")

@@ -15,6 +15,13 @@ if [ -z "$GITHUB_TOKEN" ]; then
   exit 1
 fi
 
+cd /app/civpatch || exit 1
+pwd
+echo "Permissions for /app/civpatch:"
+ls -ld /app/civpatch
+echo "Contents of /app/civpatch:"
+ls -la /app/civpatch
+
 echo "Generating comment for $STATE $GEOID"
 DATA=$(rake "github_pipeline:generate_comment[$STATE,$GEOID]")
 COMMENT=$(printf "%s" "$DATA" | jq -r '.comment' |  sed 's/\\n/\n/g' )

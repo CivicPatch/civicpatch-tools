@@ -133,4 +133,4 @@ jobs:
             -state ${{ github.event.inputs.state }} \
             -geoid ${{ matrix.municipality_entry.geoid }} \
             -github-env env-${{ github.actor }} \
-            -create-pr -with-ci -send-costs
+            -with-ci -send-costs
