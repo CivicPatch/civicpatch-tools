@@ -17,7 +17,7 @@
       "https://www.cityofchelan.us/206/City-Council",
       "https://cityofchelan.us/directory.aspx?EID=79"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   },
   {
     "name": "Bob Goedde",
@@ -27,7 +27,7 @@
     "divisions": [
       "Position 2"
     ],
-    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentId=937",
+    "image": "https://cityofchelan.us/ImageRepository/Document?documentID=937",
     "phone_number": null,
     "email": "rgoedde@cityofchelan.us",
     "website": "https://cityofchelan.us/directory.aspx?EID=82",
@@ -37,7 +37,7 @@
       "https://www.cityofchelan.us/206/City-Council",
       "https://cityofchelan.us/directory.aspx?EID=82"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   },
   {
     "name": "Brad Chitty",
@@ -47,7 +47,7 @@
     "divisions": [
       "Position 3"
     ],
-    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentId=936",
+    "image": "https://cityofchelan.us/ImageRepository/Document?documentID=936",
     "phone_number": null,
     "email": "bchitty@cityofchelan.us",
     "website": "https://cityofchelan.us/directory.aspx?EID=78",
@@ -57,7 +57,7 @@
       "https://www.cityofchelan.us/206/City-Council",
       "https://cityofchelan.us/directory.aspx?EID=78"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   },
   {
     "name": "Jon Higgins",
@@ -67,7 +67,7 @@
     "divisions": [
       "Position 4"
     ],
-    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentId=934",
+    "image": "https://cityofchelan.us/ImageRepository/Document?documentID=934",
     "phone_number": null,
     "email": "jhiggins@cityofchelan.us",
     "website": "https://cityofchelan.us/directory.aspx?EID=80",
@@ -77,7 +77,7 @@
       "https://www.cityofchelan.us/206/City-Council",
       "https://cityofchelan.us/directory.aspx?EID=80"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   },
   {
     "name": "Mark Ericks",
@@ -87,17 +87,17 @@
     "divisions": [
       "Position 5"
     ],
-    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentId=935",
+    "image": "https://cityofchelan.us/ImageRepository/Document?documentID=935",
     "phone_number": null,
     "email": "mericks@cityofchelan.us",
-    "website": "https://cityofchelan.us/directory.aspx?EID=39",
+    "website": "https://cityofchelan.us/Directory.aspx?EID=39",
     "start_date": "2024-01-01",
     "end_date": "2027-12-31",
     "sources": [
       "https://www.cityofchelan.us/206/City-Council",
       "https://cityofchelan.us/directory.aspx?EID=39"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   },
   {
     "name": "Tim Hollingsworth",
@@ -107,7 +107,7 @@
     "divisions": [
       "Position 6"
     ],
-    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentId=933",
+    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentID=933",
     "phone_number": null,
     "email": "thollingsworth@cityofchelan.us",
     "website": "https://www.cityofchelan.us/Directory.aspx?EID=40",
@@ -117,7 +117,7 @@
       "https://www.cityofchelan.us/206/City-Council",
       "https://www.cityofchelan.us/Directory.aspx?EID=40"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   },
   {
     "name": "Shari Dietrich",
@@ -127,7 +127,7 @@
     "divisions": [
       "Position 7"
     ],
-    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentId=1193",
+    "image": "https://www.cityofchelan.us/ImageRepository/Document?documentID=1193",
     "phone_number": null,
     "email": "Sdietrich@cityofchelan.us",
     "website": "https://www.cityofchelan.us/Directory.aspx?EID=41",
@@ -137,7 +137,7 @@
       "https://www.cityofchelan.us/206/City-Council",
       "https://www.cityofchelan.us/Directory.aspx?EID=41"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   },
   {
     "name": "Erin McCardle",
@@ -157,6 +157,6 @@
       "https://www.cityofchelan.us/206/City-Council",
       "https://www.cityofchelan.us/207/Mayor-Erin-McCardle"
     ],
-    "updated_at": "2025-06-25T17:50:30Z"
+    "updated_at": "2025-06-25T17:59:21Z"
   }
 ]
