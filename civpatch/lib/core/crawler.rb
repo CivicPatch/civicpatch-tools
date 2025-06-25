@@ -100,6 +100,8 @@ module Core
 
     def self.fetch_page(url)
       html = Core::Browser.fetch_page_content(url)
+
+      return nil unless html
       Nokolexbor::HTML(html)
     end
 
